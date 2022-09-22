@@ -30,19 +30,12 @@ function getPath(fileOrDirectory: Directory | SourceFile | string): string {
 }
 
 function getDirectory(fileOrDirectory: Directory | SourceFile | string): string {
-    if (typeof fileOrDirectory === "string") {
-        if (path.extname(fileOrDirectory).length === 0) {
-            return fileOrDirectory;
-        } else {
-            return fileOrDirectory;
-        }
+    const pathStr = getPath(fileOrDirectory);
+    if (path.extname(pathStr).length === 0) {
+        return pathStr;
+    } else {
+        return path.dirname(pathStr);
     }
-
-    if (isSourceFile(fileOrDirectory)) {
-        return path.dirname(fileOrDirectory.getFilePath());
-    }
-
-    return fileOrDirectory.getPath();
 }
 
 function isSourceFile(item: SourceFile | Directory): item is SourceFile {

@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/core-utils";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 import { getFileNameForType } from "../types/getFileNameForType";
+import { createRootApiFilePathPart } from "../utils/createRootApiFilePathPart";
 import { getExportedDirectoriesForFernFilepath } from "../utils/getExportedDirectoriesForFernFilepath";
 
 const ERRORS_DIRECTORY_NAME = "errors";
@@ -9,9 +10,9 @@ const ERRORS_DIRECTORY_NAME = "errors";
 export function getExportedFilepathForError(errorName: DeclaredErrorName, apiName: string): ExportedFilePath {
     return {
         directories: [
+            createRootApiFilePathPart(apiName),
             ...getExportedDirectoriesForFernFilepath({
                 fernFilepath: errorName.fernFilepath,
-                apiName,
                 subExports: {
                     [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                         exportAll: true,

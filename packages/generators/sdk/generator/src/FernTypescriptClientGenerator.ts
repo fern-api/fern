@@ -7,23 +7,23 @@ import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-type
 import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { convertExportedFilePathToFilePath, ExportedFilePath } from "../exports-manager/ExportedFilePath";
-import { ExportsManager } from "../exports-manager/ExportsManager";
-import { createExternalDependencies } from "../external-dependencies/ExternalDependencies";
-import { generateTypeScriptProject } from "../generate-ts-project/generateTypeScriptProject";
-import { ImportsManager } from "../imports-manager/ImportsManager";
-import { parseAuthSchemes } from "./auth-schemes/parseAuthSchemes";
-import { getExportedFilepathForError } from "./errors/getExportedFilepathForError";
-import { getReferenceToError } from "./errors/getReferenceToError";
-import { getExportedFilepathForService } from "./services/getExportedFilepathForService";
-import { getReferenceToService } from "./services/getReferenceToService";
-import { getExportedFilepathForType } from "./types/getExportedFilepathForType";
-import { getReferenceToType } from "./types/getReferenceToType";
-import { getReferenceToExport } from "./utils/getReferenceToExport";
-import { constructWrapperDeclarations } from "./wrappers/constructWrapperDeclarations";
-import { getExportedFilepathForWrapper } from "./wrappers/getExportedFilepathForWrapper";
-import { getReferenceToWrapper } from "./wrappers/getReferenceToWrapper";
+import { parseAuthSchemes } from "./declarations/auth-schemes/parseAuthSchemes";
+import { getExportedFilepathForError } from "./declarations/errors/getExportedFilepathForError";
+import { getReferenceToError } from "./declarations/errors/getReferenceToError";
+import { getExportedFilepathForService } from "./declarations/services/getExportedFilepathForService";
+import { getReferenceToService } from "./declarations/services/getReferenceToService";
+import { getExportedFilepathForType } from "./declarations/types/getExportedFilepathForType";
+import { getReferenceToType } from "./declarations/types/getReferenceToType";
+import { getReferenceToExport } from "./declarations/utils/getReferenceToExport";
+import { constructWrapperDeclarations } from "./declarations/wrappers/constructWrapperDeclarations";
+import { getExportedFilepathForWrapper } from "./declarations/wrappers/getExportedFilepathForWrapper";
+import { getReferenceToWrapper } from "./declarations/wrappers/getReferenceToWrapper";
+import { DependencyManager } from "./dependency-manager/DependencyManager";
+import { convertExportedFilePathToFilePath, ExportedFilePath } from "./exports-manager/ExportedFilePath";
+import { ExportsManager } from "./exports-manager/ExportsManager";
+import { createExternalDependencies } from "./external-dependencies/ExternalDependencies";
+import { generateTypeScriptProject } from "./generate-ts-project/generateTypeScriptProject";
+import { ImportsManager } from "./imports-manager/ImportsManager";
 
 export declare namespace FernTypescriptClientGenerator {
     export interface Init {

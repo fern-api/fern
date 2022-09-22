@@ -1,9 +1,7 @@
 import { WrapperName } from "@fern-typescript/commons-v2";
 import { ExportedFilePath } from "../../exports-manager/ExportedFilePath";
-import {
-    createExportForFernFilepathDirectory,
-    createRootApiFilePathPart,
-} from "../utils/getExportedDirectoriesForFernFilepath";
+import { createRootApiFilePathPart } from "../utils/createRootApiFilePathPart";
+import { createExportForFernFilepathDirectory } from "../utils/getExportedDirectoriesForFernFilepath";
 import { getFileNameForWrapper } from "./getFileNameForWrapper";
 
 export function getExportedFilepathForWrapper(wrapperName: WrapperName, apiName: string): ExportedFilePath {
