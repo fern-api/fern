@@ -1,11 +1,10 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, FilePath, join, RelativeFilePath, resolve } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { rm } from "fs/promises";
 import { Volume } from "memfs/lib/volume";
-import path from "path";
 import { installAndCompileGeneratedProject } from "./installAndCompileGeneratedProject";
 
 export declare namespace runEteTest {
@@ -13,13 +12,13 @@ export declare namespace runEteTest {
         /**
          * the file where the test lives.
          */
-        testFile: string;
+        testFile: AbsoluteFilePath;
 
         /**
          * fixture for the ETE test. Should contain a src/ directory will the
          * fern yaml files.
          */
-        pathToFixture: string;
+        pathToFixture: FilePath;
 
         generateFiles: (args: {
             volume: Volume;
@@ -29,15 +28,15 @@ export declare namespace runEteTest {
 }
 
 export async function runEteTest({ testFile, pathToFixture, generateFiles }: runEteTest.Args): Promise<void> {
-    const testDirectory = path.dirname(testFile);
+    const testDirectory = dirname(testFile);
 
-    const absolutePathToFixture = path.resolve(testDirectory, pathToFixture);
+    const absolutePathToFixture = resolve(testDirectory, pathToFixture);
 
-    const pathToGenerated = path.join(absolutePathToFixture, "generated");
+    const pathToGenerated = join(absolutePathToFixture, RelativeFilePath.of("generated"));
     await deleteDirectory(pathToGenerated);
 
     const parseWorkspaceResult = await loadWorkspace({
-        absolutePathToWorkspace: AbsoluteFilePath.of(absolutePathToFixture),
+        absolutePathToWorkspace: absolutePathToFixture,
     });
     if (!parseWorkspaceResult.didSucceed) {
         throw new Error(JSON.stringify(parseWorkspaceResult.failures));

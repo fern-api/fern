@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-exec-client";
 import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
@@ -52,7 +53,7 @@ export async function runCommand({
         context: generatorContext,
     });
 
-    await writeVolumeToDisk(volume, outputPath);
+    await writeVolumeToDisk(volume, AbsoluteFilePath.of(outputPath));
 
     if (!generatorContext.didSucceed()) {
         throw new Error("Failed to generate TypeScript project.");

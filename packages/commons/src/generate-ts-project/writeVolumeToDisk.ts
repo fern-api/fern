@@ -1,9 +1,10 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 
-export async function writeVolumeToDisk(volume: Volume, directoyOnDiskToWriteTo: string): Promise<void> {
+export async function writeVolumeToDisk(volume: Volume, directoyOnDiskToWriteTo: AbsoluteFilePath): Promise<void> {
     await writeVolumeToDiskRecursive({
         volume,
         directoyOnDiskToWriteTo,

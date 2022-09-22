@@ -1,0 +1,21 @@
+types:
+  MigrationStatus:
+    enum:
+      - RUNNING
+      - FAILED
+      - FINISHED
+  Migration:
+    properties:
+      name: string
+      status: MigrationStatus
+
+services:
+  http:
+    MigrationInfoService:
+      base-path: /migration-info
+      auth: false
+      endpoints:
+        getAttemptedMigrations:
+          method: GET
+          path: /all
+          response: list<Migration>

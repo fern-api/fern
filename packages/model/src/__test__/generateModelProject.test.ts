@@ -1,13 +1,13 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { itFernETE } from "@fern-typescript/testing-utils";
-import path from "path";
 import { generateModelProject } from "../generateModelProject";
 
-const FIXTURES_DIR = "fixtures";
+const FIXTURES_DIR = RelativeFilePath.of("fixtures");
 
 describe("generateModelProject", () => {
     itFernETE("posts", {
-        testFile: __filename,
-        pathToFixture: path.join(FIXTURES_DIR, "posts"),
+        testFile: AbsoluteFilePath.of(__filename),
+        pathToFixture: join(FIXTURES_DIR, RelativeFilePath.of("posts")),
         generateFiles: async ({ volume, intermediateRepresentation }) => {
             await generateModelProject({
                 packageName: "posts",
@@ -19,8 +19,8 @@ describe("generateModelProject", () => {
     });
 
     itFernETE("fern IR", {
-        testFile: __filename,
-        pathToFixture: path.join(FIXTURES_DIR, "fern-ir"),
+        testFile: AbsoluteFilePath.of(__filename),
+        pathToFixture: join(FIXTURES_DIR, RelativeFilePath.of("fern-ir")),
         generateFiles: async ({ volume, intermediateRepresentation }) => {
             await generateModelProject({
                 packageName: "posts",

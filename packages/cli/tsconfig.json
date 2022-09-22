@@ -5,11 +5,11 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../client" },
-    { "path": "../client-v2" },
     { "path": "../commons" },
     { "path": "../commons-v2" },
     { "path": "../declaration-handler" },
-    { "path": "../errors-v2" },
+    { "path": "../generators/sdk/errors-v2" },
+    { "path": "../generators/sdk/service-declaration-handler" },
     { "path": "../model" },
     { "path": "../resolvers" },
     { "path": "../server" },

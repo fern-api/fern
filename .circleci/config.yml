@@ -85,7 +85,7 @@ jobs:
           name: Publish all packages
           command: yarn run publish --tag next
 
-  publish-docker:
+  publish-dockers:
     machine:
       image: ubuntu-2004:current
     steps:
@@ -99,6 +99,13 @@ jobs:
             yarn workspace fern-typescript dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript:"$projectVersion"
+      - run:
+          name: Publish fern-typescript-sdk Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript-sdk:"$projectVersion"
 
   publish:
     docker:
@@ -152,7 +159,7 @@ workflows:
             - npm
             - auth0-dev
 
-      - publish-docker:
+      - publish-dockers:
           filters:
             branches:
               only: main

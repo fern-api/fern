@@ -1,15 +1,15 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { itFernETE } from "@fern-typescript/testing-utils";
-import path from "path";
 import { generateClientProject } from "../generateClientProject";
 
-const FIXTURES_DIR = path.join(__dirname, "fixtures");
-const FIXTURES = ["posts", "no-errors", "chat", "auth"];
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const FIXTURES = ["posts", "no-errors", "chat", "auth"].map(RelativeFilePath.of);
 
 describe("generateClientProject", () => {
     for (const fixture of FIXTURES) {
         itFernETE(fixture, {
-            testFile: __filename,
-            pathToFixture: path.join(FIXTURES_DIR, fixture),
+            testFile: AbsoluteFilePath.of(__filename),
+            pathToFixture: join(FIXTURES_DIR, fixture),
             generateFiles: async ({ volume, intermediateRepresentation }) => {
                 await generateClientProject({
                     packageName: fixture,

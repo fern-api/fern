@@ -26,7 +26,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
-    "add-package": "yarn mrlint add-package",
+    "add-workspace": "yarn mrlint add-workspace",
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix"
   },
