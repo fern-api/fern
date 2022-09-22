@@ -31,13 +31,13 @@
     "root-package:fix": "yarn root-package:check --fix"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
     "@types/is-ci": "^3.0.0",
     "@types/jest": "^28.1.6",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "^18.0.3",
+    "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "eslint": "^8.19.0",
