@@ -6,14 +6,15 @@ Upgrade version in `fern.config.json` and code generator versions in `generators
 
 ## Usage
 
-```bash
+<!-- markdownlint-disable MD040 -->
+
+```
 fern upgrade
 ```
 
 ## Examples of changes
 
-```diff
-# fern.config.json
+```diff title="/fern/fern.config.json"
 {
    "organization": "imdb",
 -  "version": "0.0.182"
@@ -21,8 +22,7 @@ fern upgrade
 }
 ```
 
-```diff
-# generators.yml
+```diff title="/fern/api/generators.yml"
 draft:
    - name: fernapi/fern-typescript
 -    version: 0.0.189

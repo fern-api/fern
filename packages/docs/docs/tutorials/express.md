@@ -21,14 +21,14 @@ We're here to help! Reach out in [Discord](https://discord.gg/JkkXumPzcG).
 
 Create a new folder for this tutorial and `cd` into it. Let's create a new npm project.
 
-```bash
+```
 npm init -y
 npm install typescript express @types/express ts-node
 ```
 
 This will set us up for a new TypeScript Express backend repo. We'll also install fern:
 
-```bash
+```
 npm install -g fern-api
 ```
 
@@ -36,7 +36,7 @@ npm install -g fern-api
 
 In the root of your backend repo, run:
 
-```bash
+```
 fern init
 ```
 
@@ -58,14 +58,13 @@ fern.config.json # Your organization name and Fern CLI version
 
 When adding a generator, Fern defaults to the SDK (aka client). We'll see this by running:
 
-```bash
+```
 fern add typescript
 ```
 
 This will add:
 
-```diff
-# in generators.yml
+```diff title="/fern/api/generators.yml"
 -draft: []
 +draft:
 +  - name: fernapi/fern-typescript
@@ -77,8 +76,7 @@ This will add:
 
 For this tutorial, we want to generate a TypeScript Express server, so we'll change this to:
 
-```diff
-# in generators.yml
+```diff title="/fern/api/generators.yml"
  draft:
    - name: fernapi/fern-typescript
      version: 0.0.189
@@ -96,7 +94,7 @@ We're here to help! Reach out in [Discord](https://discord.gg/JkkXumPzcG).
 
 Next we'll invoke the TypeScript server code generator by running:
 
-```bash
+```
 fern generate
 ```
 
@@ -116,8 +114,7 @@ This tells npm the location of your generated package. By default, packages are 
 
 Next we'll install the package by running `npm install @imdb-fern/api-server@0.0.3`. This will add the dependency to `package.json`:
 
-```diff
-# in package.json
+```diff title="/fern/api/generators.yml"
    "dependencies": {
      "@types/express": "^4.17.14",
      "express": "^4.18.1",
@@ -167,7 +164,7 @@ app.listen(8080);
 
 ### Step 7: Run the server
 
-```bash
+```
 npx ts-node server.ts
 ```
 
@@ -177,7 +174,7 @@ In the terminal, you should see `Listening for requests...` Great, our server is
 
 Open a new terminal window and run:
 
-```bash
+```
 fern add postman
 fern generate
 ```

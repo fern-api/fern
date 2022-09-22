@@ -7,7 +7,9 @@ Create a new **Fern Definition**.
 
 ## Usage
 
-```bash
+<!-- markdownlint-disable MD040 -->
+
+```
 fern init
 ```
 
