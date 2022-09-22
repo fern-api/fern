@@ -43,7 +43,7 @@ function handleWorkspaceParserFailureForFile({
                         formatLog({
                             title,
                             subtitle,
-                            breadcrumbs: issue.path,
+                            breadcrumbs: [relativeFilepath, ...issue.path],
                         })
                     );
                 }

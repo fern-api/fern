@@ -22,7 +22,9 @@ function itFixture(fixtureName: string) {
                 cwd: fixturePath,
                 reject: false,
             });
-            expect(stripAnsi(stdout)).toContain("Type MissingType is not defined");
+
+            // for some reason, locally the output contains a newline that Circle doesn't...
+            expect(stripAnsi(stdout).trim()).toMatchSnapshot();
         },
         90_000
     );
