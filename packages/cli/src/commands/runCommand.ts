@@ -2,14 +2,14 @@ import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-exec-client";
 import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
-import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
+import { createLogger, Logger, LogLevel } from "@fern-typescript/commons-v2";
+import { GeneratorContext } from "@fern-typescript/declaration-handler";
 import execa from "execa";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import { GeneratorNotificationService } from "../utils/GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
-import { GeneratorContextImpl } from "../v2/generator-context/GeneratorContextImpl";
 import { Command } from "./Command";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.logging.LogLevel> = {
@@ -101,5 +101,19 @@ export async function runCommand({
         await generatorNotificationService.sendUpdate(
             GeneratorUpdate.published(command.npmPackage.publishInfo.packageCoordinate)
         );
+    }
+}
+
+class GeneratorContextImpl implements GeneratorContext {
+    private isSuccess = true;
+
+    constructor(public readonly logger: Logger) {}
+
+    public fail(): void {
+        this.isSuccess = false;
+    }
+
+    public didSucceed(): boolean {
+        return this.isSuccess;
     }
 }

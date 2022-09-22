@@ -7,7 +7,6 @@ import { NpmPackage } from "./constructNpmPackageForCommand";
 export const CommandKey = {
     Server: "server",
     Client: "client",
-    ClientV2: "client-v2",
     Model: "model",
 } as const;
 export type CommandKey = Values<typeof CommandKey>;

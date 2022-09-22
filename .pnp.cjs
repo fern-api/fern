@@ -9528,13 +9528,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
             ["@fern-typescript/declaration-handler", "workspace:packages/declaration-handler"],\
-            ["@fern-typescript/errors-v2", "workspace:packages/generators/sdk/errors-v2"],\
             ["@fern-typescript/model", "workspace:packages/model"],\
-            ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
-            ["@fern-typescript/sdk-service-declaration-handler", "workspace:packages/generators/sdk/service-declaration-handler"],\
             ["@fern-typescript/server", "workspace:packages/server"],\
             ["@fern-typescript/testing-utils", "workspace:packages/testing-utils"],\
-            ["@fern-typescript/types-v2", "workspace:packages/types-v2"],\
             ["@ts-morph/common", "npm:0.16.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
@@ -9544,17 +9540,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
             ["execa", "npm:5.1.1"],\
-            ["immer", "npm:9.0.15"],\
             ["jest", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:29.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
             ["memfs", "npm:3.4.7"],\
             ["node-loader", "virtual:ce91d8810e742073bcaa5694d2239e99edd0bde6cb6e1f3a988f0c1dd12d941a63212f64842d564affafdb83dba6beb2b3da6f2be078a1fd8d24c8539a6b8840#npm:2.0.0"],\
-            ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:ce91d8810e742073bcaa5694d2239e99edd0bde6cb6e1f3a988f0c1dd12d941a63212f64842d564affafdb83dba6beb2b3da6f2be078a1fd8d24c8539a6b8840#npm:2.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["ts-loader", "virtual:ce91d8810e742073bcaa5694d2239e99edd0bde6cb6e1f3a988f0c1dd12d941a63212f64842d564affafdb83dba6beb2b3da6f2be078a1fd8d24c8539a6b8840#npm:9.3.1"],\
-            ["ts-morph", "npm:15.1.0"],\
             ["ts-node", "virtual:ce91d8810e742073bcaa5694d2239e99edd0bde6cb6e1f3a988f0c1dd12d941a63212f64842d564affafdb83dba6beb2b3da6f2be078a1fd8d24c8539a6b8840#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["umd-compat-loader", "npm:2.1.2"],\

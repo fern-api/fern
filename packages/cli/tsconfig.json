@@ -8,12 +8,8 @@
     { "path": "../commons" },
     { "path": "../commons-v2" },
     { "path": "../declaration-handler" },
-    { "path": "../generators/sdk/errors-v2" },
-    { "path": "../generators/sdk/service-declaration-handler" },
     { "path": "../model" },
-    { "path": "../resolvers" },
     { "path": "../server" },
-    { "path": "../testing-utils" },
-    { "path": "../types-v2" }
+    { "path": "../testing-utils" }
   ]
 }

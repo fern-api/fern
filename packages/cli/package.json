@@ -37,18 +37,12 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/declaration-handler": "workspace:*",
-    "@fern-typescript/errors-v2": "workspace:*",
     "@fern-typescript/model": "workspace:*",
-    "@fern-typescript/resolvers": "workspace:*",
-    "@fern-typescript/sdk-service-declaration-handler": "workspace:*",
     "@fern-typescript/server": "workspace:*",
-    "@fern-typescript/types-v2": "workspace:*",
     "execa": "^5.1.1",
-    "immer": "^9.0.15",
     "lodash-es": "^4.17.21",
     "memfs": "^3.4.1",
-    "tmp-promise": "^3.0.3",
-    "ts-morph": "^15.1.0"
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -67,7 +61,6 @@
     "eslint": "^8.23.1",
     "jest": "^29.0.3",
     "node-loader": "^2.0.0",
-    "package-json-type": "^1.0.3",
     "prettier": "^2.7.1",
     "simple-progress-webpack-plugin": "^2.0.0",
     "ts-loader": "^9.3.1",

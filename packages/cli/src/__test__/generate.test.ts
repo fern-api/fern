@@ -13,7 +13,7 @@ import { runGenerator } from "../generator/runGenerator";
 const FIXTURES = ["trace"];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
-const MODES = ["client-v2", "client", "server", "client_and_server"];
+const MODES = ["client", "server", "client_and_server"];
 
 describe("runGenerator", () => {
     // mock generator version
