@@ -324,11 +324,11 @@ export * from \\"./NoopWithoutAuthResponse\\";
 
 export declare namespace Author {
     interface Anonymous {
-        _type: \\"anonymous\\";
+        type: \\"anonymous\\";
     }
 
     interface Named {
-        _type: \\"named\\";
+        type: \\"named\\";
         named: string;
     }
 
@@ -341,23 +341,23 @@ export declare namespace Author {
 
 export const Author = {
     anonymous: (): Author.Anonymous => ({
-        _type: \\"anonymous\\"
+        type: \\"anonymous\\"
     }),
 
     named: (value: string): Author.Named => ({
         named: value,
-        _type: \\"named\\"
+        type: \\"named\\"
     }),
 
     _visit: <Result>(value: Author, visitor: Author._Visitor<Result>): Result => {
-        switch (value._type) {
+        switch (value.type) {
             case \\"anonymous\\": return visitor.anonymous();
             case \\"named\\": return visitor.named(value.named);
             default: return visitor._unknown();
         }
     },
 
-    _types: (): Author[\\"_type\\"][] => [\\"anonymous\\", \\"named\\"],
+    _types: (): Author[\\"type\\"][] => [\\"anonymous\\", \\"named\\"],
 } as const;
 ",
   "/model/posts/_types/CreatePostRequest.ts": "import * as model from \\"../..\\";

@@ -12,6 +12,9 @@ types:
       content: string
       customConfig: unknown
   BlogPostReference:
+    discriminant:
+      name: referenceType
+      value: _type
     union:
       post: Post
 

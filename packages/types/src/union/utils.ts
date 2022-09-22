@@ -1,7 +1,7 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { ResolvedTypeReference, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
-import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
+import { ModelContext } from "@fern-typescript/model-context";
 import upperFirst from "lodash-es/upperFirst";
 import { SourceFile, ts } from "ts-morph";
 
@@ -47,6 +47,6 @@ export function getResolvedValueTypeForSingleUnionType({
     };
 }
 
-export function isTypeExtendable(resolvedType: ResolvedType): boolean {
-    return resolvedType._type === "object";
+export function isTypeExtendable(resolvedType: ResolvedTypeReference): boolean {
+    return resolvedType._type === "named" && resolvedType.shape === ShapeType.Object;
 }

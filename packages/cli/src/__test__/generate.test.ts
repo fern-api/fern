@@ -1,7 +1,7 @@
 import { validateWorkspaceAndLogIssues } from "@fern-api/cli";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
@@ -39,7 +39,11 @@ describe("runGenerator", () => {
                     throw new Error(JSON.stringify(parseWorkspaceResult.failures));
                 }
 
-                await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace, createMockTaskContext());
+                const taskContext = createMockTaskContext();
+                await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace, taskContext);
+                if (taskContext.getResult() === TaskResult.Failure) {
+                    throw new Error("Failed to validate workspace");
+                }
 
                 const intermediateRepresentation = await generateIntermediateRepresentation(
                     parseWorkspaceResult.workspace

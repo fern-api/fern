@@ -10,4 +10,3 @@ export {
     type WebSocketChannelTypeMetadata,
     type WebSocketChannelTypeReference,
 } from "./service-type-context/WebSocketChannelTypeContext";
-export { ResolvedType } from "./type-context/ResolvedType";

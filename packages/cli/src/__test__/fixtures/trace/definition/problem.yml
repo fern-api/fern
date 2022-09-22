@@ -50,6 +50,9 @@ types:
       problemVersion: integer
 
   CreateProblemError:
+    discriminant:
+      value: _type
+      name: errorType
     union:
       generic: GenericCreateProblemError
   GenericCreateProblemError:

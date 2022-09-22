@@ -1,6 +1,6 @@
 import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ResolvedTypeReference, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { ErrorContext } from "./error-context/ErrorContext";
@@ -17,7 +17,6 @@ import {
     WebSocketChannelTypeMetadata,
     WebSocketChannelTypeReference,
 } from "./service-type-context/WebSocketChannelTypeContext";
-import { ResolvedType } from "./type-context/ResolvedType";
 import { TypeContext } from "./type-context/TypeContext";
 
 export class ModelContext {
@@ -55,16 +54,16 @@ export class ModelContext {
         return this.typeContext.getReferenceToTypeUtils(args);
     }
 
-    public resolveTypeName(typeName: DeclaredTypeName): ResolvedType {
+    public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
         return this.typeContext.resolveTypeName(typeName);
     }
 
-    public resolveTypeReference(typeReference: TypeReference): ResolvedType {
+    public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {
         return this.typeContext.resolveTypeReference(typeReference);
     }
 
-    public resolveTypeDeclaration(type: Type): ResolvedType {
-        return this.typeContext.resolveTypeDeclaration(type);
+    public resolveTypeDeclaration(typeName: DeclaredTypeName, type: Type): ResolvedTypeReference {
+        return this.typeContext.resolveTypeDeclaration(typeName, type);
     }
 
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {

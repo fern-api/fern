@@ -1,10 +1,16 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { ContainerType, DeclaredTypeName, PrimitiveType, Type, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    ContainerType,
+    DeclaredTypeName,
+    PrimitiveType,
+    ResolvedTypeReference,
+    Type,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
+import { TypeResolver } from "@fern-typescript/resolvers";
 import { Directory, SourceFile, ts } from "ts-morph";
 import { BaseModelContext } from "../base-model-context/BaseModelContext";
-import { ResolvedType } from "./ResolvedType";
-import { TypeResolver } from "./TypeResolver";
 
 export declare namespace TypeContext {
     namespace getReferenceToType {
@@ -154,16 +160,16 @@ export class TypeContext extends BaseModelContext {
         });
     }
 
-    public resolveTypeName(typeName: DeclaredTypeName): ResolvedType {
+    public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
         return this.typeResolver.resolveTypeName(typeName);
     }
 
-    public resolveTypeReference(typeReference: TypeReference): ResolvedType {
+    public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {
         return this.typeResolver.resolveTypeReference(typeReference);
     }
 
-    public resolveTypeDeclaration(type: Type): ResolvedType {
-        return this.typeResolver.resolveTypeDeclaration(type);
+    public resolveTypeDeclaration(typeName: DeclaredTypeName, type: Type): ResolvedTypeReference {
+        return this.typeResolver.resolveTypeDeclaration(typeName, type);
     }
 
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {

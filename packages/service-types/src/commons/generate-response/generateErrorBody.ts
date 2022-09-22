@@ -1,11 +1,11 @@
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernConstants } from "@fern-fern/ir-model/ir";
 import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
-import { PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import { PrimitiveType, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
 import { DependencyManager, generateUuidCall } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
 import {
     generateUnionType,
-    isTypeExtendable,
     ResolvedSingleUnionValueType,
     UNION_TYPE_MODEL_IMPORT_STRATEGY,
 } from "@fern-typescript/types";
@@ -61,18 +61,33 @@ function getValueType({
     modelContext: ModelContext;
 }): ResolvedSingleUnionValueType | undefined {
     const errorDeclaration = modelContext.getErrorDeclarationFromName(error.error);
-    const resolvedType = modelContext.resolveTypeDeclaration(errorDeclaration.type);
 
-    if (resolvedType._type === "void") {
+    if (errorDeclaration.type._type === "alias" && errorDeclaration.type.resolvedType._type === "void") {
         return undefined;
     }
 
     return {
-        isExtendable: isTypeExtendable(resolvedType),
+        isExtendable: isErrorExtendable(errorDeclaration),
         type: modelContext.getReferenceToError({
             errorName: error.error,
             referencedIn: file,
             importStrategy: UNION_TYPE_MODEL_IMPORT_STRATEGY,
         }),
     };
+}
+
+function isErrorExtendable(declaration: ErrorDeclaration): boolean {
+    if (declaration.type._type === "object") {
+        return true;
+    }
+
+    if (
+        declaration.type._type === "alias" &&
+        declaration.type.resolvedType._type === "named" &&
+        declaration.type.resolvedType.shape === ShapeType.Object
+    ) {
+        return true;
+    }
+
+    return false;
 }

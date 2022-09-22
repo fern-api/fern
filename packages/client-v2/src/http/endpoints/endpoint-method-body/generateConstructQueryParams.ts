@@ -1,6 +1,11 @@
-import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    ContainerType,
+    PrimitiveType,
+    ResolvedTypeReference,
+    ShapeType,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
 import { File } from "@fern-typescript/declaration-handler";
-import { ResolvedType } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
@@ -102,7 +107,7 @@ function getValueAsString({
         throw new Error("Type cannot be converted to string: " + resolvedType._type);
     }
 
-    return ResolvedType._visit<ts.Expression>(resolvedType, {
+    return ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
         primitive: (primitive) => {
             return PrimitiveType._visit(primitive, {
                 integer: () => getNumberAsString(value),
@@ -117,9 +122,7 @@ function getValueAsString({
                 long: () => getNumberAsString(value),
                 dateTime: () => value,
                 uuid: () => value,
-                _unknown: () => {
-                    throw new Error("Unkown primitive type: " + primitive);
-                },
+                _unknown: throwNotSupported,
             });
         },
         container: (container) =>
@@ -128,15 +131,18 @@ function getValueAsString({
                 list: throwNotSupported,
                 map: throwNotSupported,
                 set: throwNotSupported,
-                _unknown: () => {
-                    throw new Error("Unkown container type: " + container._type);
-                },
+                _unknown: throwNotSupported,
             }),
-        object: throwNotSupported,
-        union: throwNotSupported,
-        enum: () => value,
+        named: ({ shape }) =>
+            ShapeType._visit<ts.Expression>(shape, {
+                object: throwNotSupported,
+                union: throwNotSupported,
+                enum: () => value,
+                _unknown: throwNotSupported,
+            }),
         unknown: () => ts.factory.createAsExpression(value, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
         void: throwNotSupported,
+        _unknown: throwNotSupported,
     });
 }
 

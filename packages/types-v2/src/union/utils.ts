@@ -1,8 +1,7 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { ResolvedTypeReference, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
-import { ResolvedType } from "@fern-typescript/resolvers";
 
 // don't used named imports for type reference to prevent clashing with union subtypes
 export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
@@ -40,6 +39,6 @@ export function getResolvedValueTypeForSingleUnionType({
     };
 }
 
-export function isTypeExtendable(resolvedType: ResolvedType): boolean {
-    return resolvedType._type === "object";
+export function isTypeExtendable(resolvedType: ResolvedTypeReference): boolean {
+    return resolvedType._type === "named" && resolvedType.shape === ShapeType.Object;
 }

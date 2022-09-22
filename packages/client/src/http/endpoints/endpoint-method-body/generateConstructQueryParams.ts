@@ -1,6 +1,12 @@
 import { HttpEndpoint, QueryParameter } from "@fern-fern/ir-model/services/http";
-import { DeclaredTypeName, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
-import { ModelContext, ResolvedType } from "@fern-typescript/model-context";
+import {
+    DeclaredTypeName,
+    PrimitiveType,
+    ResolvedTypeReference,
+    ShapeType,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
+import { ModelContext } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 
@@ -114,10 +120,16 @@ function isTypeNameStringLike({
     typeName: DeclaredTypeName;
     modelContext: ModelContext;
 }): boolean {
-    return ResolvedType._visit(modelContext.resolveTypeName(typeName), {
-        object: () => false,
-        union: () => false,
-        enum: () => true,
+    return ResolvedTypeReference._visit(modelContext.resolveTypeName(typeName), {
+        named: ({ shape }) =>
+            ShapeType._visit<boolean>(shape, {
+                object: () => false,
+                union: () => false,
+                enum: () => true,
+                _unknown: () => {
+                    throw new Error("Unknown resolved shape: " + shape);
+                },
+            }),
         container: () => false,
         primitive: isPrimitiveStringLike,
         unknown: () => false,

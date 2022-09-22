@@ -1,8 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ResolvedTypeReference, ShapeType, Type, TypeReference } from "@fern-fern/ir-model/types";
 import path from "path";
-import { ResolvedType } from "./ResolvedType";
-import { StringifiedFernFilepath, stringifyFernFilepath } from "./stringify-fern-filepath";
+import { stringifyFernFilepath } from "./stringify-fern-filepath";
 
 type Filepath = string;
 type SimpleTypeName = string;
@@ -13,17 +12,11 @@ type SimpleTypeName = string;
  */
 export class TypeResolver {
     private allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
-    private resolvedTypes: Record<StringifiedFernFilepath, Record<SimpleTypeName, ResolvedType>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const type of intermediateRepresentation.types) {
             const typesAtFilepath = (this.allTypes[stringifyFernFilepath(type.name.fernFilepath)] ??= {});
             typesAtFilepath[type.name.name] = type.shape;
-        }
-        for (const type of intermediateRepresentation.types) {
-            this.resolveTypeRecursive({
-                typeName: type.name,
-            });
         }
     }
 
@@ -35,80 +28,50 @@ export class TypeResolver {
         return type;
     }
 
-    public resolveTypeName(typeName: DeclaredTypeName): ResolvedType {
-        const resolvedType = this.resolvedTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[typeName.name];
-        if (resolvedType == null) {
-            throw new Error("Type not found: " + typeNameToString(typeName));
-        }
-        return resolvedType;
+    public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
+        const declaration = this.getTypeDeclarationFromName(typeName);
+        return this.resolveTypeDeclaration(typeName, declaration);
     }
 
-    public resolveTypeReference(type: TypeReference): ResolvedType {
-        return this.resolveTypeDeclaration(Type.alias({ aliasOf: type }));
+    public resolveTypeReference(type: TypeReference): ResolvedTypeReference {
+        return TypeReference._visit<ResolvedTypeReference>(type, {
+            named: (typeName) => this.resolveTypeName(typeName),
+            container: ResolvedTypeReference.container,
+            primitive: ResolvedTypeReference.primitive,
+            unknown: ResolvedTypeReference.unknown,
+            void: ResolvedTypeReference.void,
+            _unknown: () => {
+                throw new Error("Unknown type reference type: " + type._type);
+            },
+        });
     }
 
-    public resolveTypeDeclaration(type: Type): ResolvedType {
-        return this.resolveTypeDeclarationWithContinuation(type, (typeName) => this.resolveTypeName(typeName));
+    public resolveTypeDeclaration(typeName: DeclaredTypeName, declaration: Type): ResolvedTypeReference {
+        return Type._visit<ResolvedTypeReference>(declaration, {
+            alias: ({ resolvedType }) => resolvedType,
+            enum: () =>
+                ResolvedTypeReference.named({
+                    name: typeName,
+                    shape: ShapeType.Enum,
+                }),
+            object: () =>
+                ResolvedTypeReference.named({
+                    name: typeName,
+                    shape: ShapeType.Object,
+                }),
+            union: () =>
+                ResolvedTypeReference.named({
+                    name: typeName,
+                    shape: ShapeType.Union,
+                }),
+            _unknown: () => {
+                throw new Error("Unknown type declaration type: " + declaration._type);
+            },
+        });
     }
 
     public doesTypeExist(typeName: DeclaredTypeName): boolean {
         return this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[typeName.name] != null;
-    }
-
-    private resolveTypeRecursive({
-        typeName,
-        seen = {},
-    }: {
-        typeName: DeclaredTypeName;
-        seen?: Record<Filepath, Set<SimpleTypeName>>;
-    }): ResolvedType {
-        const seenAtFilepath = (seen[stringifyFernFilepath(typeName.fernFilepath)] ??= new Set());
-        if (seenAtFilepath.has(typeName.name)) {
-            throw new Error("Detected cycle when resolving type: " + typeNameToString(typeName));
-        }
-        seenAtFilepath.add(typeName.name);
-
-        const type = this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[typeName.name];
-        if (type == null) {
-            throw new Error("Type not found: " + typeNameToString(typeName));
-        }
-
-        const resolvedType = this.resolveTypeDeclarationWithContinuation(type, (typeName) =>
-            this.resolveTypeRecursive({
-                typeName,
-                seen,
-            })
-        );
-
-        const resolvedTypesAtFilepath = (this.resolvedTypes[stringifyFernFilepath(typeName.fernFilepath)] ??= {});
-        resolvedTypesAtFilepath[typeName.name] = resolvedType;
-
-        return resolvedType;
-    }
-
-    private resolveTypeDeclarationWithContinuation(
-        type: Type,
-        resolveNamedType: (typeName: DeclaredTypeName) => ResolvedType
-    ): ResolvedType {
-        return Type._visit<ResolvedType>(type, {
-            object: ResolvedType.object,
-            union: ResolvedType.union,
-            alias: (alias) =>
-                TypeReference._visit<ResolvedType>(alias.aliasOf, {
-                    named: resolveNamedType,
-                    primitive: ResolvedType.primitive,
-                    container: ResolvedType.container,
-                    void: ResolvedType.void,
-                    unknown: ResolvedType.unknown,
-                    _unknown: () => {
-                        throw new Error("Unkonwn Alias type reference: " + alias.aliasOf._type);
-                    },
-                }),
-            enum: ResolvedType.enum,
-            _unknown: () => {
-                throw new Error("Unkonwn Type: " + type._type);
-            },
-        });
     }
 }
 
