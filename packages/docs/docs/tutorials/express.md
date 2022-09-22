@@ -2,7 +2,7 @@
 title: TypeScript Express
 ---
 
-<!-- markdownlint-disable MD033 MD025 MD010 -->
+<!-- markdownlint-disable MD040 MD010 -->
 
 This guide uses an example API for [IMDb](https://www.imdb.com/title/tt0111161/) that introduces you to using Fern. We'll generate a TypeScript Express server and a Postman collection to implement and test our API.
 
@@ -112,9 +112,9 @@ Create a new file `.npmrc` at the root of our project and add the following:
 
 This tells npm the location of your generated package. By default, packages are published to a private registry.
 
-Next we'll install the package by running `npm install @imdb-fern/api-server@0.0.3`. This will add the dependency to `package.json`:
+Next we'll install the package by running `npm install @imdb-fern/api-server@0.0.3`. This will add the dependency:
 
-```diff title="/fern/api/generators.yml"
+```diff title="/package.json"
    "dependencies": {
      "@types/express": "^4.17.14",
      "express": "^4.18.1",
@@ -129,9 +129,9 @@ Next we'll install the package by running `npm install @imdb-fern/api-server@0.0
 
 Create a new file `server.ts` at the root of our project. This will be the server which serves the API.
 
-Copy and paste the following into `server.ts`:
+Copy and paste the following:
 
-```ts
+```ts title="/server.ts"
 import { GetMovieErrorBody } from "@imdb-fern/api-server/model/imdb";
 import { MoviesService } from "@imdb-fern/api-server/services/imdb";
 import express from "express";
