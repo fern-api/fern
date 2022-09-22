@@ -6,7 +6,9 @@ Check whether your **Fern Definition** is valid and ready to be used by code gen
 
 ## Usage
 
-```bash
+<!-- markdownlint-disable MD040 -->
+
+```
 fern check
 ```
 

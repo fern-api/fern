@@ -8,37 +8,37 @@ Fern makes it easy to code generate SDKs, server interfaces, a Postman collectio
 
 #### JavaScript/TypeScript
 
-**fern-typescript**: A JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
+`fern-typescript`: A JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
 
 #### Java
 
-**fern-java**: A Java SDK.
+`fern-java`: A Java SDK.
 
 #### Python
 
-**fern-python**: A Python SDK. _(coming soon!)_
+`fern-python`: A Python SDK. _(coming soon!)_
 
 ### Generate server interfaces
 
 #### TypeScript Express
 
-**fern-typescript**: Validation that your JavaScript or TypeScript Express server correctly implements your API.
+`fern-typescript`: Validation that your JavaScript or TypeScript Express server correctly implements your API.
 
 #### Java Spring
 
-**fern-java**: Validation that your Java Spring server correctly implements your API.
+`fern-java`: Validation that your Java Spring server correctly implements your API.
 
 #### Python FastAPI
 
-**fern-python**: Validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
+`fern-python`: Validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
 
 ### Generate a Postman Collection
 
-**postman**: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
+`postman`: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
 
 ### Generate an OpenAPI document
 
-**openapi**: generates an [OpenAPI document](https://swagger.io/resources/open-api/).
+`openapi`: generates an [OpenAPI document](https://swagger.io/resources/open-api/) (also known as an OpenAPI spec).
 
 ## Contributing
 

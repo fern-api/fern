@@ -18,8 +18,7 @@ Step 3: Generate a Postman API key [here](https://go.postman.co/settings/me/api-
 
 Step 4: Add the
 
-```diff
-# generators.yml
+```diff title="/fern/api/generators.yml"
 draft:
   - name: fernapi/fern-postman
     version: 0.0.xx
