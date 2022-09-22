@@ -2,6 +2,5 @@
 
 exports[`validate simple 1`] = `
 "[simple-api]: other.yml -> types -> MyType
-              Type MissingType is not defined.
-"
+              Type MissingType is not defined."
 `;

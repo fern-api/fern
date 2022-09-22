@@ -22,7 +22,9 @@ function itFixture(fixtureName: string) {
                 cwd: fixturePath,
                 reject: false,
             });
-            expect(stripAnsi(stdout)).toMatchSnapshot();
+
+            // for some reason, on Circle the output contains a newline...
+            expect(stripAnsi(stdout).trim()).toMatchSnapshot();
         },
         90_000
     );
