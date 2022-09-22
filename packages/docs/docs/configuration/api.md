@@ -10,8 +10,7 @@ In `api.yml` you must set the name of your API. This is used as the name of your
 
 ### Example
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 ```
 
@@ -32,8 +31,7 @@ If you integrate Fern with your backend, it will check that the required authent
 
 If no authentication is required, leave it out:
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 ```
 
@@ -41,8 +39,7 @@ name: imdb-api
 
 If bearer authentication is required:
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 auth: bearer
 ```
@@ -51,8 +48,7 @@ auth: bearer
 
 If basic authentication is required:
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 auth: basic
 ```
@@ -61,8 +57,7 @@ auth: basic
 
 If authentication is required via headers, you must define custom auth-schemes:
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 auth: api-key
 auth-schemes:
@@ -79,8 +74,7 @@ You can define multiple auth schemes for your API.
 
 If multiple authentication schemes are allowed, but only one is required, you can use the `any` property:
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 auth:
   any:
@@ -92,8 +86,7 @@ auth:
 
 If multiple authentication schemes are required, you can use the `all` property:
 
-```yaml
-# api.yml
+```yaml title="/fern/api/definition/api.yml"
 name: imdb-api
 auth:
   all:

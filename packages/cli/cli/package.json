@@ -61,6 +61,7 @@
     "is-ci": "^3.0.1",
     "js-yaml": "^4.1.0",
     "latest-version": "^7.0.0",
+    "lodash-es": "^4.17.21",
     "ora": "^6.1.2",
     "validate-npm-package-name": "^4.0.0",
     "yargs": "^17.4.1"
@@ -75,6 +76,7 @@
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.5",
     "@types/latest-version": "^4.0.1",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
     "@types/validate-npm-package-name": "^4.0.0",
     "@types/yargs": "^17.0.12",

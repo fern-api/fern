@@ -9,12 +9,13 @@ export declare namespace formatLog {
 }
 
 export function formatLog({ breadcrumbs = [], title, subtitle }: formatLog.Args): string {
-    let str = title;
-    if (subtitle != null) {
-        str += "\n" + chalk.dim(subtitle);
-    }
+    const lines: string[] = [];
     if (breadcrumbs.length > 0) {
-        str += "\n" + chalk.blue(breadcrumbs.join(" -> "));
+        lines.push(chalk.blue(breadcrumbs.join(" -> ")));
     }
-    return str;
+    lines.push(title);
+    if (subtitle != null) {
+        lines.push(chalk.dim(subtitle));
+    }
+    return lines.join("\n");
 }

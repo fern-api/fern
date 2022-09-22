@@ -7,7 +7,9 @@ Invoke your code generators defined in `generators.yml` for your **Fern Definiti
 
 ## Usage
 
-```bash
+<!-- markdownlint-disable MD040 -->
+
+```
 fern generate
 ```
 
@@ -15,7 +17,7 @@ fern generate
 
 If we have previously run `fern add typescript` and now run `fern generate`, the output will look similar to:
 
-```bash
+```
 ┌─
 │ ✓  fernapi/fern-typescript
 │    ◦ @fern-examples-fern/imdb-client@0.0.1
