@@ -3,6 +3,7 @@ import { isVersionAhead } from "@fern-api/semver-utils";
 import { Finishable, Startable, TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
+import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment";
 import { constructErrorMessage } from "./constructErrorMessage";
 import { Log } from "./Log";
@@ -111,9 +112,15 @@ export class CliContext {
         process.exit(this.didSucceed ? 0 : 1);
     }
 
-    private longestWorkspaceNameLength = 0;
+    private longestWorkspaceName = "";
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
-        this.longestWorkspaceNameLength = Math.max(...workspaces.map((workspace) => workspace.name.length));
+        const longestWorkspaceName = maxBy(
+            workspaces.map((workspace) => workspace.name),
+            (name) => name.length
+        );
+        if (longestWorkspaceName != null) {
+            this.longestWorkspaceName = longestWorkspaceName;
+        }
     }
 
     public async runTask(run: (context: TaskContext) => void | Promise<void>): Promise<void> {
@@ -193,9 +200,13 @@ export class CliContext {
     }
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
-        const prefix = wrapWorkspaceNameForPrefix(workspace.name).padEnd(
-            wrapWorkspaceNameForPrefix("X".repeat(this.longestWorkspaceNameLength)).length
-        );
+        const prefixForLongestWorkspaceName = wrapWorkspaceNameForPrefix(this.longestWorkspaceName);
+        const prefix = wrapWorkspaceNameForPrefix(workspace.name)
+            // pad endings so that:
+            //   1. all the workspace prefixes are the same length
+            //   2. the +1 is so even the longest workspace has a space after its prefix
+            .padEnd(prefixForLongestWorkspaceName.length + 1, " ");
+
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);

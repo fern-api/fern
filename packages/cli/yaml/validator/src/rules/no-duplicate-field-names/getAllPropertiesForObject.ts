@@ -5,7 +5,15 @@ import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 
 export interface ObjectPropertyWithPath {
     name: string;
-    path: string[];
+    path: ObjectPropertyPath;
+    finalPropertyKey: string;
+}
+
+export type ObjectPropertyPath = ObjectPropertyPathPart[];
+
+export interface ObjectPropertyPathPart {
+    name: string;
+    followedVia: "alias" | "extension";
 }
 
 export function getAllPropertiesForObject({
@@ -22,7 +30,7 @@ export function getAllPropertiesForObject({
     serviceFile: RawSchemas.ServiceFileSchema;
     workspace: Workspace;
     typeResolver: TypeResolver;
-    path?: string[];
+    path?: ObjectPropertyPath;
 }): ObjectPropertyWithPath[] {
     const properties: ObjectPropertyWithPath[] = [];
 
@@ -30,7 +38,8 @@ export function getAllPropertiesForObject({
         for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
             properties.push({
                 name: getPropertyName({ propertyKey, declaration: propertyDeclaration }).name,
-                path: [...path, propertyKey],
+                path,
+                finalPropertyKey: propertyKey,
             });
         }
     }
@@ -39,8 +48,8 @@ export function getAllPropertiesForObject({
         const extensions =
             typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends;
         for (const extension of extensions) {
-            const resolvedTypeOfExtension = typeResolver.resolveType({
-                type: extension,
+            const resolvedTypeOfExtension = typeResolver.resolveNamedType({
+                referenceToNamedType: extension,
                 file: constructFernFileContext({
                     relativeFilepath: filepathOfDeclaration,
                     serviceFile,
@@ -48,7 +57,7 @@ export function getAllPropertiesForObject({
             });
 
             if (
-                resolvedTypeOfExtension._type === "named" &&
+                resolvedTypeOfExtension?._type === "named" &&
                 isRawObjectDefinition(resolvedTypeOfExtension.declaration)
             ) {
                 const serviceFile = workspace.serviceFiles[resolvedTypeOfExtension.filepath];
@@ -60,7 +69,19 @@ export function getAllPropertiesForObject({
                             serviceFile,
                             workspace,
                             typeResolver,
-                            path: [...path, ...resolvedTypeOfExtension.objectPath],
+                            path: [
+                                ...path,
+                                {
+                                    name: extension,
+                                    followedVia: "extension",
+                                },
+                                ...resolvedTypeOfExtension.objectPath.map(
+                                    (objectName): ObjectPropertyPathPart => ({
+                                        name: objectName,
+                                        followedVia: "alias",
+                                    })
+                                ),
+                            ],
                         })
                     );
                 }

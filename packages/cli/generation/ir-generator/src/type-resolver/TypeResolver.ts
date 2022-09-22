@@ -1,6 +1,6 @@
 import { Workspace } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, RAW_DEFAULT_ID_TYPE, ServiceFileSchema } from "@fern-api/yaml-schema";
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -12,6 +12,7 @@ export interface TypeResolver {
         referenceToNamedType: string;
         file: FernFileContext;
     }) => { declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined;
+    resolveNamedType: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType | undefined;
 }
 
 export class TypeResolverImpl implements TypeResolver {
@@ -70,10 +71,9 @@ export class TypeResolverImpl implements TypeResolver {
             primitive: (primitive) => ({ _type: "primitive", primitive }),
             unknown: () => ({ _type: "unknown" }),
             void: () => ({ _type: "void" }),
-            named: (parsedTypeName) => {
+            named: () => {
                 const declaration = this.resolveNamedType({
                     referenceToNamedType: type,
-                    parsedTypeName,
                     file,
                     objectPath: [...objectPath, type],
                 });
@@ -88,16 +88,14 @@ export class TypeResolverImpl implements TypeResolver {
         });
     }
 
-    private resolveNamedType({
+    public resolveNamedType({
         referenceToNamedType,
-        parsedTypeName,
         file,
-        objectPath,
+        objectPath = [],
     }: {
         referenceToNamedType: string;
-        parsedTypeName: DeclaredTypeName;
         file: FernFileContext;
-        objectPath: string[];
+        objectPath?: string[];
     }): ResolvedType | undefined {
         const maybeDeclaration = this.getDeclarationOfNamedType({
             referenceToNamedType,
@@ -114,6 +112,11 @@ export class TypeResolverImpl implements TypeResolver {
                 file: fileOfResolvedDeclaration,
                 objectPath,
             });
+        }
+
+        const parsedTypeName = parseInlineType({ type: referenceToNamedType, file });
+        if (parsedTypeName._type !== "named") {
+            return undefined;
         }
 
         return {
