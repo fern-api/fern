@@ -4,7 +4,7 @@ import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { HttpService } from "@fern-fern/ir-model/services/http";
 import { ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { WrapperName } from "@fern-typescript/commons-v2";
-import { SourceFile, ts } from "ts-morph";
+import { SourceFile } from "ts-morph";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { Reference } from "./Reference";
@@ -15,7 +15,7 @@ export interface SdkFile {
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
     resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;
     getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
-    getReferenceToError: (errorName: DeclaredErrorName) => ts.TypeNode;
+    getReferenceToError: (errorName: DeclaredErrorName) => Reference;
     addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
     addNamedExport: (namedExport: string) => void;
     getReferenceToExportInSameFile: (exportedName: string) => Reference;

@@ -1,6 +1,6 @@
 import { ExternalDependencies } from "@fern-typescript/sdk-declaration-handler";
-import { ModuleSpecifier } from "../declarations/utils/ModuleSpecifier";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
+import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { FernServiceUtilsImpl } from "./implementations/FernServiceUtilsImpl";
 import { UrlJoinImpl } from "./implementations/UrlJoinImpl";
 

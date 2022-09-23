@@ -155,7 +155,7 @@ function parseServerErrors({
 }): ServerErrors | undefined {
     const serverErrors = endpoint.errors.map((error) => {
         const errorDeclaration = file.getErrorDeclaration(error.error);
-        const referenceToErrorBodyType = file.getReferenceToError(error.error);
+        const referenceToErrorBodyType = file.getReferenceToError(error.error).typeNode;
         return {
             responseError: error,
             declaration: errorDeclaration,
@@ -182,7 +182,7 @@ function parseServerErrors({
         isExported: true,
         type: getWriterForMultiLineUnionType(
             endpoint.errors.map((error) => ({
-                node: file.getReferenceToError(error.error),
+                node: file.getReferenceToError(error.error).typeNode,
                 docs: error.docs,
             }))
         ),

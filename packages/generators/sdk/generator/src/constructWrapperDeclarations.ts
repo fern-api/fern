@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { WrapperDeclaration, WrapperName } from "@fern-typescript/commons-v2";
 import { isEqual } from "lodash-es";
-import { StringifiedFernFilepath, stringifyFernFilepath } from "../utils/stringifyFernFilepath";
+import { StringifiedFernFilepath, stringifyFernFilepath } from "./utils/stringifyFernFilepath";
 
 const ROOT_WRAPPER_NAME = "Client";
 const NON_ROOT_WRAPPER_NAME = "Wrapper";

@@ -20,8 +20,11 @@ export interface ExportedFilePathPart {
 
 export function convertExportedFilePathToFilePath(exportedFilePath: ExportedFilePath): string {
     return path.join(
-        "/",
-        ...exportedFilePath.directories.map((directory) => directory.nameOnDisk),
+        convertExportedDirectoiesToFilePath(exportedFilePath.directories),
         exportedFilePath.file.nameOnDisk
     );
+}
+
+export function convertExportedDirectoiesToFilePath(exportedDirectories: readonly ExportedDirectory[]): string {
+    return path.join("/", ...exportedDirectories.map((directory) => directory.nameOnDisk));
 }

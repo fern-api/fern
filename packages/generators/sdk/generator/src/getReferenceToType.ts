@@ -1,34 +1,22 @@
-import { ContainerType, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, DeclaredTypeName, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/sdk-declaration-handler";
-import { SourceFile, ts } from "ts-morph";
-import { ImportDeclaration } from "../../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../utils/ModuleSpecifier";
-import { getReferenceToExportedType } from "./getReferenceToExportedType";
+import { ts } from "ts-morph";
 
 export declare namespace getReferenceToType {
     export interface Args {
-        apiName: string;
-        referencedIn: SourceFile;
         typeReference: TypeReference;
-        addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+        getReferenceToNamedType: (typeName: DeclaredTypeName) => ts.TypeNode;
     }
 }
 
 export function getReferenceToType({
-    apiName,
-    referencedIn,
     typeReference,
-    addImport,
+    getReferenceToNamedType,
 }: getReferenceToType.Args): TypeReferenceNode {
     return TypeReference._visit<TypeReferenceNode>(typeReference, {
         named: (typeName) => {
             return {
-                typeNode: getReferenceToExportedType({
-                    apiName,
-                    referencedIn,
-                    typeName,
-                    addImport,
-                }),
+                typeNode: getReferenceToNamedType(typeName),
                 isOptional: false,
             };
         },
@@ -56,16 +44,12 @@ export function getReferenceToType({
                 map: (map) => ({
                     typeNode: ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                         getReferenceToType({
-                            apiName,
-                            referencedIn,
                             typeReference: map.keyType,
-                            addImport,
+                            getReferenceToNamedType,
                         }).typeNode,
                         getReferenceToType({
-                            apiName,
-                            referencedIn,
                             typeReference: map.valueType,
-                            addImport,
+                            getReferenceToNamedType,
                         }).typeNode,
                     ]),
                     isOptional: false,
@@ -73,10 +57,8 @@ export function getReferenceToType({
                 list: (valueType) => ({
                     typeNode: ts.factory.createArrayTypeNode(
                         getReferenceToType({
-                            apiName,
-                            referencedIn,
                             typeReference: valueType,
-                            addImport,
+                            getReferenceToNamedType,
                         }).typeNode
                     ),
                     isOptional: false,
@@ -84,20 +66,16 @@ export function getReferenceToType({
                 set: (valueType) => ({
                     typeNode: ts.factory.createArrayTypeNode(
                         getReferenceToType({
-                            apiName,
-                            referencedIn,
                             typeReference: valueType,
-                            addImport,
+                            getReferenceToNamedType,
                         }).typeNode
                     ),
                     isOptional: false,
                 }),
                 optional: (valueType) => {
                     const referencedToValueType = getReferenceToType({
-                        apiName,
-                        referencedIn,
                         typeReference: valueType,
-                        addImport,
+                        getReferenceToNamedType,
                     }).typeNode;
                     return {
                         typeNode: ts.factory.createUnionTypeNode([
