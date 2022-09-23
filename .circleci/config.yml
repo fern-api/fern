@@ -17,6 +17,21 @@ jobs:
           name: pre-commit
           command: poetry run pre-commit run --all-files
 
+  publish-docker:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            docker build -f ./docker/pydantic-model/Dockerfile -t pydantic-model:${projectVersion}  .
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag pydantic-model:"$projectVersion" fernapi/fern-pydantic-model:"$projectVersion"
+            docker push fernapi/fern-pydantic-model:"$projectVersion"
+
+
 workflows:
   build:
     jobs:
@@ -27,3 +42,13 @@ workflows:
       - python/test:
           pkg-manager: poetry
           test-tool: pytest
+      - publish-docker:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          requires:
+            - check
+          context:
+            - docker-hub
