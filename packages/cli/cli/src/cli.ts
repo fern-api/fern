@@ -152,7 +152,7 @@ async function askForOrganization() {
 function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "add <generator>",
-        "Add a generator to generators.yml",
+        "Add a code generator to generators.yml",
         (yargs) =>
             yargs
                 .positional("generator", {
@@ -252,7 +252,7 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "ir",
-        "Compiles your Fern API Definition",
+        "Compiles your Fern Definition",
         (yargs) =>
             yargs
                 .option("output", {
@@ -280,7 +280,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "check",
-        "Validates your Fern API Definition",
+        "Validates your Fern Definition",
         (yargs) =>
             yargs.option("api", {
                 string: true,
@@ -307,7 +307,7 @@ function addUpgradeCommand({
     cliContext: CliContext;
     onRun: () => void;
 }) {
-    cli.command("upgrade", "Upgrades generator versions in your workspace", noop, async () => {
+    cli.command("upgrade", "Upgrades generator versions in generators.yml", noop, async () => {
         await upgrade({
             cliContext,
         });
