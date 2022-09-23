@@ -1,6 +1,6 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { StatementStructures, StructureKind, ts, VariableDeclarationKind } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { ClientEndpointRequest, ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
@@ -11,7 +11,7 @@ export function generateFetcherCall({
     file,
 }: {
     endpoint: ParsedClientEndpoint;
-    file: File;
+    file: SdkFile;
 }): StatementStructures {
     const fetcherArgs: ts.ObjectLiteralElementLike[] = [
         createPropertyAssignment(

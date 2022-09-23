@@ -1,4 +1,4 @@
-import { UrlJoin } from "@fern-typescript/declaration-handler";
+import { UrlJoin } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { ExternalDependency } from "../ExternalDependency";
 

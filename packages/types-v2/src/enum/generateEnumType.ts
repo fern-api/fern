@@ -6,7 +6,7 @@ import {
     maybeAddDocs,
     visitorUtils,
 } from "@fern-typescript/commons";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import lowerFirst from "lodash-es/lowerFirst";
 import { ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForEnum } from "./utils";
@@ -19,7 +19,7 @@ export function generateEnumType({
     docs,
     shape,
 }: {
-    file: File;
+    file: SdkFile;
     typeName: string;
     docs: string | null | undefined;
     shape: EnumTypeDeclaration;

@@ -2,7 +2,7 @@ import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
-import { ExternalDependencies, ParsedAuthSchemes } from "@fern-typescript/declaration-handler";
+import { ExternalDependencies, ParsedAuthSchemes } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 
 const AUTHORIZATION_HEADER_NAME = "Authorization";

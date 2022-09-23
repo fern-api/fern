@@ -1,6 +1,6 @@
 import { ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { getPropertyKey, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export function generateObjectType({
@@ -10,7 +10,7 @@ export function generateObjectType({
     shape,
     additionalProperties = {},
 }: {
-    file: File;
+    file: SdkFile;
     docs: string | null | undefined;
     typeName: string;
     shape: ObjectTypeDeclaration;

@@ -1,9 +1,9 @@
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { getBaseResponseProperties } from "./getBaseResponseProperties";
 
-export function generateReturnErrorResponse({ file, body }: { file: File; body: ts.Expression }): ts.Statement {
+export function generateReturnErrorResponse({ file, body }: { file: SdkFile; body: ts.Expression }): ts.Statement {
     return ts.factory.createReturnStatement(
         ts.factory.createObjectLiteralExpression(
             [

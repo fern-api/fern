@@ -2023,26 +2023,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/declaration-handler@workspace:*, @fern-typescript/declaration-handler@workspace:packages/declaration-handler":
-  version: 0.0.0-use.local
-  resolution: "@fern-typescript/declaration-handler@workspace:packages/declaration-handler"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.205
-    "@fern-typescript/commons-v2": "workspace:*"
-    "@types/jest": ^28.1.6
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.3
-    eslint: ^8.23.1
-    jest: ^28.1.3
-    prettier: ^2.7.1
-    ts-morph: ^15.1.0
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
 "@fern-typescript/errors@workspace:*, @fern-typescript/errors@workspace:packages/errors":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/errors@workspace:packages/errors"
@@ -2130,6 +2110,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/sdk-declaration-handler@workspace:*, @fern-typescript/sdk-declaration-handler@workspace:packages/generators/sdk/declaration-handler":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/sdk-declaration-handler@workspace:packages/generators/sdk/declaration-handler"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.205
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/sdk-errors@workspace:*, @fern-typescript/sdk-errors@workspace:packages/generators/sdk/errors":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-errors@workspace:packages/generators/sdk/errors"
@@ -2138,7 +2138,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.205
-    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/types-v2": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2167,7 +2167,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.205
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/sdk-generator": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@ts-morph/common": ^0.16.0
@@ -2207,8 +2207,8 @@ __metadata:
     "@fern-fern/ir-model": 0.0.205
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/declaration-handler": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/sdk-errors": "workspace:*"
     "@fern-typescript/sdk-service-declaration-handler": "workspace:*"
     "@fern-typescript/types-v2": "workspace:*"
@@ -2238,7 +2238,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.205
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2376,7 +2376,7 @@ __metadata:
     "@fern-fern/ir-model": 0.0.205
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/declaration-handler": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -5657,8 +5657,8 @@ __metadata:
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/declaration-handler": "workspace:*"
     "@fern-typescript/model": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/server": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@ts-morph/common": ^0.16.0

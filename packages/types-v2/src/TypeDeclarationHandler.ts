@@ -1,11 +1,11 @@
 import { EnumTypeDeclaration, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
-import { DeclarationHandler } from "@fern-typescript/declaration-handler";
+import { SdkDeclarationHandler } from "@fern-typescript/sdk-declaration-handler";
 import { generateEnumType } from "./enum/generateEnumType";
 import { generateAliasType } from "./generateAliasType";
 import { generateObjectType } from "./generateObjectType";
 import { generateUnionType } from "./union/generateUnionType";
 
-export const TypeDeclarationHandler: DeclarationHandler<TypeDeclaration> = {
+export const TypeDeclarationHandler: SdkDeclarationHandler<TypeDeclaration> = {
     run: async (typeDeclaration, { file }) => {
         const typeName = file.sourceFile.getBaseNameWithoutExtension();
 

@@ -5,9 +5,9 @@
   "references": [
     { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
-    { "path": "../../../declaration-handler" },
     { "path": "../../../resolvers" },
     { "path": "../../../types-v2" },
+    { "path": "../declaration-handler" },
     { "path": "../errors" },
     { "path": "../service-declaration-handler" }
   ]

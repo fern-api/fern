@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { TypeReference } from "@fern-fern/ir-model/types";
-import { File, GeneratorContext } from "@fern-typescript/declaration-handler";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/sdk-errors";
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/sdk-service-declaration-handler";
 import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
@@ -154,7 +154,7 @@ export class FernTypescriptClientGenerator {
         run,
         filepath,
     }: {
-        run: (file: File) => void | Promise<void>;
+        run: (file: SdkFile) => void | Promise<void>;
         filepath: ExportedFilePath;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
@@ -184,7 +184,7 @@ export class FernTypescriptClientGenerator {
                 importsManager.addImport(moduleSpecifier, importDeclaration),
         });
 
-        const file: File = {
+        const file: SdkFile = {
             sourceFile,
             getReferenceToType: getReferenceToTypeForFile,
             getServiceDeclaration: (serviceName) => this.serviceResolver.getServiceDeclarationFromName(serviceName),

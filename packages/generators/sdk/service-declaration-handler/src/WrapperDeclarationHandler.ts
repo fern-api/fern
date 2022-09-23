@@ -1,16 +1,16 @@
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment, WrapperDeclaration } from "@fern-typescript/commons-v2";
-import { DeclarationHandler, File } from "@fern-typescript/declaration-handler";
+import { SdkDeclarationHandler, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { Scope, ts } from "ts-morph";
 import { ClientConstants } from "./constants";
 
-export const WrapperDeclarationHandler: DeclarationHandler<WrapperDeclaration> = {
+export const WrapperDeclarationHandler: SdkDeclarationHandler<WrapperDeclaration> = {
     run: async (wrapper, { file }) => {
         generateWrapper({ wrapper, file });
     },
 };
 
-export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration; file: File }): void {
+export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration; file: SdkFile }): void {
     const apiModule = file.sourceFile.addModule({
         name: wrapper.name.name,
         isExported: true,

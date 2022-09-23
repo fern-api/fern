@@ -7,7 +7,7 @@
     { "path": "../client" },
     { "path": "../commons" },
     { "path": "../commons-v2" },
-    { "path": "../declaration-handler" },
+    { "path": "../generators/sdk/declaration-handler" },
     { "path": "../model" },
     { "path": "../server" },
     { "path": "../testing-utils" }

@@ -7,7 +7,7 @@ import {
 } from "@fern-fern/ir-model/services/http";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { File, TypeReferenceNode } from "@fern-typescript/declaration-handler";
+import { SdkFile, TypeReferenceNode } from "@fern-typescript/sdk-declaration-handler";
 import { InterfaceDeclaration, ModuleDeclaration, ts } from "ts-morph";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
 
@@ -31,7 +31,7 @@ export function constructRequestWrapper({
     endpointModule,
 }: {
     endpoint: HttpEndpoint;
-    file: File;
+    file: SdkFile;
     endpointModule: ModuleDeclaration;
 }): RequestWrapper {
     const wrapperInterface = endpointModule.addInterface({
@@ -97,7 +97,7 @@ function constructWrapperFields<T>({
     getInfo,
 }: {
     items: T[];
-    file: File;
+    file: SdkFile;
     wrapperInterface: InterfaceDeclaration;
     getInfo: (item: T) => { key: string; typeReference: TypeReference; docs: string | null | undefined };
 }): WrapperField<T>[] {
@@ -126,7 +126,7 @@ function constructBody({
     wrapperInterface,
 }: {
     request: HttpRequest;
-    file: File;
+    file: SdkFile;
     wrapperInterface: InterfaceDeclaration;
 }): WrapperField<HttpRequest> | undefined {
     const bodyType = getReferenceToMaybeVoidType(request.type, file);

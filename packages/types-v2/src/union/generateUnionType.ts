@@ -14,13 +14,13 @@ import {
     visitorUtils,
 } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { InterfaceDeclarationStructure, OptionalKind, ts, VariableDeclarationKind, WriterFunction } from "ts-morph";
 import { getKeyForUnion } from "./utils";
 
 export declare namespace generateUnionType {
     export interface Args {
-        file: File;
+        file: SdkFile;
         typeName: string;
         docs: string | null | undefined;
         union: UnionTypeDeclaration;
@@ -153,7 +153,7 @@ function createUtils({
     union: UnionTypeDeclaration;
     visitorItems: visitorUtils.VisitableItems;
     discriminant: WireStringWithAllCasings;
-    file: File;
+    file: SdkFile;
 }): WriterFunction {
     const writer = FernWriters.object.writer({ asConst: true });
 
@@ -221,7 +221,7 @@ function generateCreator({
     typeName: string;
     discriminant: WireStringWithAllCasings;
     singleUnionType: SingleUnionType;
-    file: File;
+    file: SdkFile;
 }): ts.ArrowFunction {
     const VALUE_PARAMETER_NAME = "value";
 

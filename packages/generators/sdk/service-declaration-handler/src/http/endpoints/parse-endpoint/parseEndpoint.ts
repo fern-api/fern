@@ -1,13 +1,13 @@
 import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { constructEndpointErrors } from "./constructEndpointErrors";
 import { constructRequestWrapper } from "./constructRequestWrapper";
 import { getReferenceToMaybeVoidType } from "./getReferenceToMaybeVoidType";
 import { ClientEndpointRequest, ParsedClientEndpoint } from "./ParsedClientEndpoint";
 
-export function parseEndpoint({ endpoint, file }: { endpoint: HttpEndpoint; file: File }): ParsedClientEndpoint {
+export function parseEndpoint({ endpoint, file }: { endpoint: HttpEndpoint; file: SdkFile }): ParsedClientEndpoint {
     const endpointModule = file.sourceFile.addModule({
         name: endpoint.name.camelCase,
         isExported: true,
@@ -54,7 +54,7 @@ function parseRequest({
     endpointModule,
 }: {
     endpoint: HttpEndpoint;
-    file: File;
+    file: SdkFile;
     endpointModule: ModuleDeclaration;
 }): ClientEndpointRequest | undefined {
     if (

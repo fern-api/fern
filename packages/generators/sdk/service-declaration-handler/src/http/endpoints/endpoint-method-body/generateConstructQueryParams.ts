@@ -5,7 +5,7 @@ import {
     ShapeType,
     TypeReference,
 } from "@fern-fern/ir-model/types";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
@@ -15,7 +15,7 @@ export function generateConstructQueryParams({
     file,
 }: {
     endpoint: ParsedClientEndpoint;
-    file: File;
+    file: SdkFile;
 }): ts.Statement[] {
     const statements: ts.Statement[] = [];
     if (endpoint.request == null || !endpoint.request.isWrapped || endpoint.request.queryParameters.length === 0) {
@@ -99,7 +99,7 @@ function getValueAsString({
 }: {
     value: ts.Expression;
     type: TypeReference;
-    file: File;
+    file: SdkFile;
 }): ts.Expression {
     const resolvedType = file.resolveTypeReference(type);
 

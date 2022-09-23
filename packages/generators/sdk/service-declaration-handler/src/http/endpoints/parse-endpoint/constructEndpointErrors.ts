@@ -4,7 +4,7 @@ import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode, getWriterForMultiLineUnionType, visitorUtils } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { TsNodeMaybeWithDocs } from "@fern-typescript/commons/src/writers/getWriterForMultiLineUnionType";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, OptionalKind, PropertySignature, PropertySignatureStructure, ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { generateReturnErrorResponse } from "../endpoint-method-body/generateReturnErrorResponse";
@@ -28,7 +28,7 @@ export function constructEndpointErrors({
     addEndpointUtil,
 }: {
     endpoint: HttpEndpoint;
-    file: File;
+    file: SdkFile;
     endpointModule: ModuleDeclaration;
     addEndpointUtil: (util: ts.ObjectLiteralElementLike) => void;
 }): ClientEndpointError {
@@ -149,7 +149,7 @@ function parseServerErrors({
     referenceToEndpointModule,
 }: {
     endpoint: HttpEndpoint;
-    file: File;
+    file: SdkFile;
     endpointModule: ModuleDeclaration;
     referenceToEndpointModule: ts.EntityName;
 }): ServerErrors | undefined {
@@ -201,7 +201,7 @@ function getErrorBodyProperty({
     file,
 }: {
     referenceToErrorBodyType: ts.TypeNode | undefined;
-    file: File;
+    file: SdkFile;
 }): OptionalKind<PropertySignatureStructure> {
     const errorBodySubTypes: TsNodeMaybeWithDocs[] = [];
     if (referenceToErrorBodyType != null) {
@@ -232,7 +232,7 @@ function constructErrorParser({
     errorBodyProperty,
     referenceToErrorType,
 }: {
-    file: File;
+    file: SdkFile;
     serverErrors: ServerErrors;
     errorBodyProperty: PropertySignature;
     referenceToErrorType: ts.TypeReferenceNode;
@@ -308,7 +308,7 @@ function generateConstructNetworkErrorBody({
     visitProperty,
     networkErrorVisitableItem,
 }: {
-    file: File;
+    file: SdkFile;
     errorBodyProperty: PropertySignature;
     visitProperty: PropertySignature;
     networkErrorVisitableItem: visitorUtils.VisitableItem;
@@ -364,7 +364,7 @@ function generateConstructServerErrorStatements({
     unknownVisitorArgument,
     errorBodyProperty,
 }: {
-    file: File;
+    file: SdkFile;
     referenceToErrorParser: ts.Expression;
     serverErrors: ServerErrors | undefined;
     unknownVisitorArgument: visitorUtils.Argument;
@@ -453,7 +453,7 @@ function getServerErrorCaseStatements({
 }: {
     serverErrors: ServerErrors;
     referenceToErrorParser: ts.Expression;
-    file: File;
+    file: SdkFile;
 }): ts.CaseClause[] {
     const lastServerError = serverErrors.errors[serverErrors.errors.length - 1];
     if (lastServerError == null) {

@@ -1,10 +1,10 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ObjectTypeDeclaration } from "@fern-fern/ir-model/types";
-import { DeclarationHandler, File } from "@fern-typescript/declaration-handler";
+import { SdkDeclarationHandler, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { generateObjectType } from "@fern-typescript/types-v2";
 import { ts } from "ts-morph";
 
-export const ErrorDeclarationHandler: DeclarationHandler<ErrorDeclaration> = {
+export const ErrorDeclarationHandler: SdkDeclarationHandler<ErrorDeclaration> = {
     run: async (errorDeclaration, { file }) => {
         generateObjectType({
             typeName: file.sourceFile.getBaseNameWithoutExtension(),
@@ -22,7 +22,7 @@ export const ErrorDeclarationHandler: DeclarationHandler<ErrorDeclaration> = {
 
 function getErrorShapeWithoutAdditionalProperties(
     errorDeclaration: ErrorDeclaration,
-    file: File
+    file: SdkFile
 ): ObjectTypeDeclaration {
     if (errorDeclaration.type._type === "alias") {
         const resolvedType = file.resolveTypeReference(errorDeclaration.type.aliasOf);

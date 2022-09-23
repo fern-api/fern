@@ -1,7 +1,7 @@
-export { type DeclarationHandler, type DeclarationHandlerArgs } from "./DeclarationHandler";
 export * from "./external-dependencies";
-export { type File } from "./File";
 export { type GeneratorContext } from "./GeneratorContext";
 export { type ParsedAuthSchemes } from "./ParsedAuthSchemes";
 export { type Reference } from "./Reference";
+export { type SdkDeclarationHandler } from "./SdkDeclarationHandler";
+export { type SdkFile } from "./SdkFile";
 export { type TypeReferenceNode } from "./TypeReferenceNode";

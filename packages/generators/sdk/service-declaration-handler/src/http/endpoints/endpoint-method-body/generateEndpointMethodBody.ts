@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { StatementStructures, WriterFunction } from "ts-morph";
 import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
 import { generateConstructQueryParams } from "./generateConstructQueryParams";
@@ -11,7 +11,7 @@ export function generateEndpointMethodBody({
     file,
 }: {
     endpoint: ParsedClientEndpoint;
-    file: File;
+    file: SdkFile;
 }): (StatementStructures | WriterFunction | string)[] {
     const queryParameterStatements = generateConstructQueryParams({ endpoint, file });
 

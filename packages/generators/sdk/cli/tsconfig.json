@@ -6,8 +6,8 @@
   "references": [
     { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
-    { "path": "../../../declaration-handler" },
     { "path": "../../../testing-utils" },
+    { "path": "../declaration-handler" },
     { "path": "../generator" }
   ]
 }

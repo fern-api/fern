@@ -1,5 +1,5 @@
 import { getGeneratorVersion } from "@fern-typescript/commons-v2";
-import { FernServiceUtils } from "@fern-typescript/declaration-handler";
+import { FernServiceUtils } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { ExternalDependency } from "../ExternalDependency";
 

@@ -6,6 +6,6 @@
   "references": [
     { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
-    { "path": "../../../declaration-handler" }
+    { "path": "../declaration-handler" }
   ]
 }

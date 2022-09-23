@@ -3,5 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../commons" }, { "path": "../commons-v2" }, { "path": "../declaration-handler" }]
+  "references": [
+    { "path": "../commons" },
+    { "path": "../commons-v2" },
+    { "path": "../generators/sdk/declaration-handler" }
+  ]
 }

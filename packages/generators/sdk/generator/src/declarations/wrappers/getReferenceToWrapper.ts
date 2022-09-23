@@ -1,5 +1,5 @@
 import { WrapperName } from "@fern-typescript/commons-v2";
-import { Reference } from "@fern-typescript/declaration-handler";
+import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
 import { getDirectReferenceToExport } from "../utils/getDirectReferenceToExport";

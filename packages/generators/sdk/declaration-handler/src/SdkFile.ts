@@ -10,7 +10,7 @@ import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { Reference } from "./Reference";
 import { TypeReferenceNode } from "./TypeReferenceNode";
 
-export interface File {
+export interface SdkFile {
     sourceFile: SourceFile;
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
     resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;

@@ -1,5 +1,5 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { Reference } from "@fern-typescript/declaration-handler";
+import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { ClientConstants } from "@fern-typescript/sdk-service-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";

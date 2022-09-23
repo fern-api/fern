@@ -1,5 +1,5 @@
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
-import { File } from "@fern-typescript/declaration-handler";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { ClientConstants } from "../../../constants";
 import { ParsedClientEndpoint } from "../parse-endpoint/ParsedClientEndpoint";
@@ -11,7 +11,7 @@ export function generateReturnResponse({
     file,
 }: {
     endpoint: ParsedClientEndpoint;
-    file: File;
+    file: SdkFile;
 }): ts.Statement[] {
     return [
         ts.factory.createIfStatement(
@@ -48,7 +48,7 @@ function generateReturnSuccessResponse({
     file,
 }: {
     endpoint: ParsedClientEndpoint;
-    file: File;
+    file: SdkFile;
 }): ts.Statement {
     return ts.factory.createReturnStatement(
         ts.factory.createObjectLiteralExpression(
