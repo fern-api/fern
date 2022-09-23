@@ -45,9 +45,10 @@ workflows:
       - publish-docker:
           filters:
             branches:
-              only: main
+              ignore: /.*/
             tags:
-              only: /.*/
+              only:
+                - /.*/
           requires:
             - check
           context:
