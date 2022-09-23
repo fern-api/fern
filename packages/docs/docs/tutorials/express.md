@@ -46,12 +46,12 @@ This will add the following:
 
 ```yml
 fern/
-└─ api
-	├─ definition
-		├─ api.yml # Your API name and authentication
-		└─ imdb.yml # An example Fern Definition
-	└─ generators.yml # Code generators you're using
-fern.config.json # Your organization name and Fern CLI version
+├─ fern.config.json # root-level configuration
+└─ api/ # your API
+  ├─ generators.yml # generators you're using
+  └─ definition/
+    ├─ api.yml  # configuration for your API
+    └─ imdb.yml # a Service, which includes some endpoints
 ```
 
 ### Step 3: Add TypeScript code generator
