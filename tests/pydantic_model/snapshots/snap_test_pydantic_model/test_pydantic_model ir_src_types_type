@@ -56,25 +56,25 @@ class Type(pydantic.BaseModel):
 
 class _Type:
     class Alias(AliasTypeDeclaration):
-        type: typing.Literal["alias"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["alias"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Enum(EnumTypeDeclaration):
-        type: typing.Literal["enum"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["enum"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Object(ObjectTypeDeclaration):
-        type: typing.Literal["object"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["object"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Union(UnionTypeDeclaration):
-        type: typing.Literal["union"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["union"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
