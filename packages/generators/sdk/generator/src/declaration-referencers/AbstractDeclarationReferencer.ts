@@ -1,15 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
-import { SourceFile, ts } from "ts-morph";
-import {
-    convertExportedFilePathToFilePath,
-    ExportedDirectory,
-    ExportedFilePath,
-} from "../exports-manager/ExportedFilePath";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../utils/ModuleSpecifier";
+import { ExportedDirectory, ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { DeclarationReferencer } from "./DeclarationReferencer";
+import { getDirectReferenceToExport } from "./utils/getDirectReferenceToExport";
 import { getReferenceToExportFromRoot } from "./utils/getReferenceToExportFromRoot";
 
 export declare namespace AbstractDeclarationReferencer {
@@ -35,8 +28,9 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
     ): Reference {
         switch (importStrategy.type) {
             case "direct":
-                return this.getDirectReferenceToExport({
-                    name,
+                return getDirectReferenceToExport({
+                    exportedName: this.getExportedName(name),
+                    exportedFromPath: this.getExportedFilepath(name),
                     importAlias: importStrategy.alias,
                     addImport,
                     referencedIn,
@@ -51,42 +45,5 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
             default:
                 assertNever(importStrategy);
         }
-    }
-
-    private getDirectReferenceToExport({
-        name,
-        addImport,
-        referencedIn,
-        importAlias,
-    }: {
-        name: Name;
-        addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
-        referencedIn: SourceFile;
-        importAlias: string | undefined;
-    }): Reference {
-        const moduleSpecifier = getRelativePathAsModuleSpecifierTo(
-            referencedIn,
-            convertExportedFilePathToFilePath(this.getExportedFilepath(name))
-        );
-
-        const exportedName = this.getExportedName(name);
-
-        addImport(moduleSpecifier, {
-            namedImports: [
-                {
-                    name: exportedName,
-                    alias: importAlias,
-                },
-            ],
-        });
-
-        const importedName = importAlias ?? exportedName;
-
-        const entityName = ts.factory.createIdentifier(importedName);
-        return {
-            typeNode: ts.factory.createTypeReferenceNode(entityName),
-            entityName,
-            expression: ts.factory.createIdentifier(importedName),
-        };
     }
 }

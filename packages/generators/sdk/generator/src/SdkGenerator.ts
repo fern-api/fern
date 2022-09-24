@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
@@ -8,6 +9,7 @@ import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
 import { constructWrapperDeclarations } from "./constructWrapperDeclarations";
+import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
@@ -20,13 +22,13 @@ import {
     ExportedFilePath,
 } from "./exports-manager/ExportedFilePath";
 import { ExportsManager } from "./exports-manager/ExportsManager";
-import { createExternalDependencies } from "./external-dependencies/ExternalDependencies";
+import { createExternalDependencies } from "./external-dependencies/createExternalDependencies";
 import { generateTypeScriptProject } from "./generate-ts-project/generateTypeScriptProject";
 import { getReferenceToType } from "./getReferenceToType";
 import { ImportsManager } from "./imports-manager/ImportsManager";
 import { parseAuthSchemes } from "./parseAuthSchemes";
 
-export declare namespace FernTypescriptClientGenerator {
+export declare namespace SdkGenerator {
     export interface Init {
         apiName: string;
         intermediateRepresentation: IntermediateRepresentation;
@@ -37,7 +39,7 @@ export declare namespace FernTypescriptClientGenerator {
     }
 }
 
-export class FernTypescriptClientGenerator {
+export class SdkGenerator {
     private apiName: string;
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
@@ -45,6 +47,7 @@ export class FernTypescriptClientGenerator {
     private rootDirectory: Directory;
     private exportsManager = new ExportsManager();
     private dependencyManager = new DependencyManager();
+    private coreUtilitiesManager = new CoreUtilitiesManager();
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
     private serviceResolver: ServiceResolver;
@@ -63,7 +66,7 @@ export class FernTypescriptClientGenerator {
         volume,
         packageName,
         packageVersion,
-    }: FernTypescriptClientGenerator.Init) {
+    }: SdkGenerator.Init) {
         this.apiName = apiName;
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -111,6 +114,10 @@ export class FernTypescriptClientGenerator {
             sourceFile.formatText();
         }
         await this.generatePackage();
+    }
+
+    public async copyCoreUtilities({ pathToPackage }: { pathToPackage: AbsoluteFilePath }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToPackage });
     }
 
     private async generateTypeDeclarations() {
@@ -204,8 +211,7 @@ export class FernTypescriptClientGenerator {
 
         const externalDependencies = createExternalDependencies({
             addDependency,
-            addImport: (moduleSpecifier, importDeclaration) =>
-                importsManager.addImport(moduleSpecifier, importDeclaration),
+            addImport,
         });
 
         const file: SdkFile = {
@@ -233,6 +239,7 @@ export class FernTypescriptClientGenerator {
                     addImport,
                 }),
             externalDependencies,
+            coreUtilities: this.coreUtilitiesManager.getCoreUtilities({ sourceFile, addImport }),
             addDependency,
             authSchemes: parseAuthSchemes({
                 apiAuth: this.intermediateRepresentation.auth,

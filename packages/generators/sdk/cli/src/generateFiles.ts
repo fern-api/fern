@@ -5,7 +5,7 @@ import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging"
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, Logger, LogLevel } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
-import { FernTypescriptClientGenerator } from "@fern-typescript/sdk-generator";
+import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
 import { NpmPackage } from "./npm-package/NpmPackage";
@@ -44,20 +44,24 @@ export async function generateFiles({
 
     const volume = new Volume();
 
-    await new FernTypescriptClientGenerator({
+    const sdkGenerator = new SdkGenerator({
         apiName: upperFirst(camelCase(config.workspaceName)),
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         context: generatorContext,
         volume,
         packageName: npmPackage.packageName,
         packageVersion: npmPackage.publishInfo?.packageCoordinate.version,
-    }).generate();
+    });
+
+    await sdkGenerator.generate();
 
     if (!generatorContext.didSucceed()) {
         throw new Error("Failed to generate TypeScript project.");
     }
 
     await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
+
+    await sdkGenerator.copyCoreUtilities({ pathToPackage: directoyOnDiskToWriteTo });
 
     return { writtenTo: directoyOnDiskToWriteTo };
 }

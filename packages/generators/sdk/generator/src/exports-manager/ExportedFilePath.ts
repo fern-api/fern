@@ -20,11 +20,15 @@ export interface ExportedFilePathPart {
 
 export function convertExportedFilePathToFilePath(exportedFilePath: ExportedFilePath): string {
     return path.join(
-        convertExportedDirectoiesToFilePath(exportedFilePath.directories),
+        convertExportedDirectoryPathToFilePath(exportedFilePath.directories),
         exportedFilePath.file.nameOnDisk
     );
 }
 
-export function convertExportedDirectoiesToFilePath(exportedDirectories: readonly ExportedDirectory[]): string {
-    return path.join("/", ...exportedDirectories.map((directory) => directory.nameOnDisk));
+export function convertExportedDirectoryPathToFilePath(exportedDirectoryPath: ExportedDirectory[]): string {
+    return path.join(
+        // within a ts-morph Project, we treat "/" as the root of the project
+        "/",
+        ...exportedDirectoryPath.map((directory) => RelativeFilePath.of(directory.nameOnDisk))
+    );
 }

@@ -5,6 +5,7 @@ import { HttpService } from "@fern-fern/ir-model/services/http";
 import { ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { WrapperName } from "@fern-typescript/commons-v2";
 import { SourceFile } from "ts-morph";
+import { CoreUtilities } from "./core-utilities";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { Reference } from "./Reference";
@@ -23,6 +24,7 @@ export interface SdkFile {
     getReferenceToService: (serviceName: DeclaredServiceName, options: { importAlias: string }) => Reference;
     getReferenceToWrapper: (wrapperName: WrapperName, options: { importAlias: string }) => Reference;
     externalDependencies: ExternalDependencies;
+    coreUtilities: CoreUtilities;
     authSchemes: ParsedAuthSchemes;
     fernConstants: FernConstants;
 }

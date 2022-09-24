@@ -25,32 +25,43 @@ export abstract class ExternalDependency {
         this.addDependency = init.addDependency;
     }
 
-    protected withNamedImport<T>(namedImport: string, run: (addImport: () => void, namedImport: string) => T): T {
+    protected withNamedImport<T>(
+        namedImport: string,
+        run: (withImport: <F extends Function>(f: F) => F, namedImport: string) => T
+    ): T {
         return this.withImport(namedImport, { namedImports: [namedImport] }, run);
     }
 
     protected withNamespaceImport<T>(
         namespaceImport: string,
-        run: (addImport: () => void, namedImport: string) => T
+        run: (withImport: <F extends Function>(f: F) => F, namedImport: string) => T
     ): T {
         return this.withImport(namespaceImport, { namespaceImport }, run);
     }
 
-    protected withDefaultImport<T>(defaultImport: string, run: (addImport: () => void, defaultImport: string) => T): T {
+    protected withDefaultImport<T>(
+        defaultImport: string,
+        run: (withImport: <F extends Function>(f: F) => F, defaultImport: string) => T
+    ): T {
         return this.withImport(defaultImport, { defaultImport }, run);
     }
 
     private withImport<T>(
         importedItem: string,
         importDeclaration: ImportDeclaration,
-        run: (addImport: () => void, importedItem: string) => T
+        run: (withImport: <F extends Function>(f: F) => F, importedItem: string) => T
     ): T {
-        return run(() => {
-            this.addDependency(this.PACKAGE.name, this.PACKAGE.version);
-            if (this.TYPES_PACKAGE != null) {
-                this.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
-            }
-            this.addImport(this.PACKAGE.name, importDeclaration);
+        return run(<F extends Function>(f: F): F => {
+            const wrapped = (...args: unknown[]) => {
+                this.addDependency(this.PACKAGE.name, this.PACKAGE.version);
+                if (this.TYPES_PACKAGE != null) {
+                    this.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
+                }
+                this.addImport(this.PACKAGE.name, importDeclaration);
+
+                return f(...args);
+            };
+            return wrapped as unknown as F;
         }, importedItem);
     }
 }

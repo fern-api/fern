@@ -12,15 +12,13 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
 
     public readonly Supplier = this.withNamedImport(
         "Supplier",
-        (addImport, Supplier) =>
+        (withImport, Supplier) =>
             ({
-                _getReferenceToType: (typeArgument: ts.TypeNode) => {
-                    addImport();
+                _getReferenceToType: withImport((typeArgument: ts.TypeNode) => {
                     return ts.factory.createTypeReferenceNode(Supplier, [typeArgument]);
-                },
+                }),
 
-                get: (supplierExpression: ts.Expression) => {
-                    addImport();
+                get: withImport((supplierExpression: ts.Expression) => {
                     return ts.factory.createAwaitExpression(
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -31,18 +29,17 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                             [supplierExpression]
                         )
                     );
-                },
+                }),
             } as const)
     );
 
     public readonly _Response = this.withNamedImport(
         "_Response",
-        (addImport, _Response) =>
+        (withImport, _Response) =>
             ({
-                _getReferenceToType: (successType: ts.TypeNode, failureType: ts.TypeNode) => {
-                    addImport();
+                _getReferenceToType: withImport((successType: ts.TypeNode, failureType: ts.TypeNode) => {
                     return ts.factory.createTypeReferenceNode(_Response, [successType, failureType]);
-                },
+                }),
 
                 OK_DISCRIMINANT: "ok",
                 Success: {
@@ -56,12 +53,11 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
 
     public readonly Fetcher = this.withNamedImport(
         "FetcherV2",
-        (addImport, Fetcher) =>
+        (withImport, Fetcher) =>
             ({
-                _getReferenceToType: () => {
-                    addImport();
+                _getReferenceToType: withImport(() => {
                     return ts.factory.createTypeReferenceNode(Fetcher);
-                },
+                }),
 
                 Parameters: {
                     URL: "url",
@@ -89,52 +85,45 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
             } as const)
     );
 
-    public readonly defaultFetcher = this.withNamedImport(
-        "defaultFetcherV2",
-        (addImport, defaultFetcher) => (fetcherArgs: ts.Expression) => {
-            addImport();
+    public readonly defaultFetcher = this.withNamedImport("defaultFetcherV2", (withImport, defaultFetcher) =>
+        withImport((fetcherArgs: ts.Expression) => {
             return ts.factory.createCallExpression(ts.factory.createIdentifier(defaultFetcher), undefined, [
                 fetcherArgs,
             ]);
-        }
+        })
     );
 
-    public readonly NetworkError = this.withNamedImport("_NetworkError", (addImport, _NetworkError) => ({
+    public readonly NetworkError = this.withNamedImport("_NetworkError", (withImport, _NetworkError) => ({
         ERROR_NAME: "_NetworkError",
 
-        _getReferenceToType: () => {
-            addImport();
+        _getReferenceToType: withImport(() => {
             return ts.factory.createTypeReferenceNode(_NetworkError);
-        },
+        }),
     }));
 
-    public readonly UnknownError = this.withNamedImport("_UnknownError", (addImport, _UnknownError) => ({
-        _getReferenceToType: () => {
-            addImport();
+    public readonly UnknownError = this.withNamedImport("_UnknownError", (withImport, _UnknownError) => ({
+        _getReferenceToType: withImport(() => {
             return ts.factory.createTypeReferenceNode(_UnknownError);
-        },
+        }),
     }));
 
-    public readonly ErrorDetails = this.withNamedImport("ErrorDetails", (addImport, ErrorDetails) => ({
-        _getReferenceToType: () => {
-            addImport();
+    public readonly ErrorDetails = this.withNamedImport("ErrorDetails", (withImport, ErrorDetails) => ({
+        _getReferenceToType: withImport(() => {
             return ts.factory.createTypeReferenceNode(ErrorDetails);
-        },
+        }),
 
         STATUS_CODE: "statusCode",
     }));
 
     public readonly BearerToken = this.withNamedImport(
         "BearerToken",
-        (addImport, BearerToken) =>
+        (withImport, BearerToken) =>
             ({
-                _getReferenceToType: () => {
-                    addImport();
+                _getReferenceToType: withImport(() => {
                     return ts.factory.createTypeReferenceNode(BearerToken);
-                },
+                }),
 
-                toAuthorizationHeader: (token: ts.Expression) => {
-                    addImport();
+                toAuthorizationHeader: withImport((token: ts.Expression) => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(BearerToken),
@@ -143,10 +132,9 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                         undefined,
                         [token]
                     );
-                },
+                }),
 
-                fromAuthorizationHeader: (header: ts.Expression) => {
-                    addImport();
+                fromAuthorizationHeader: withImport((header: ts.Expression) => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(BearerToken),
@@ -155,21 +143,19 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                         undefined,
                         [header]
                     );
-                },
+                }),
             } as const)
     );
 
     public readonly BasicAuth = this.withNamedImport(
         "BasicAuth",
-        (addImport, BasicAuth) =>
+        (withImport, BasicAuth) =>
             ({
-                _getReferenceToType: () => {
-                    addImport();
+                _getReferenceToType: withImport(() => {
                     return ts.factory.createTypeReferenceNode(BasicAuth);
-                },
+                }),
 
-                toAuthorizationHeader: (token: ts.Expression) => {
-                    addImport();
+                toAuthorizationHeader: withImport((token: ts.Expression) => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(BasicAuth),
@@ -178,10 +164,9 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                         undefined,
                         [token]
                     );
-                },
+                }),
 
-                fromAuthorizationHeader: (header: ts.Expression) => {
-                    addImport();
+                fromAuthorizationHeader: withImport((header: ts.Expression) => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(BasicAuth),
@@ -190,7 +175,7 @@ export class FernServiceUtilsImpl extends ExternalDependency implements FernServ
                         undefined,
                         [header]
                     );
-                },
+                }),
             } as const)
     );
 }
