@@ -17,14 +17,6 @@ export function convertErrorDeclaration({
     typeResolver: TypeResolver;
 }): ErrorDeclaration {
     const rawType = typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type;
-    const type =
-        rawType != null
-            ? convertType({
-                  typeDeclaration: rawType,
-                  file,
-                  typeResolver,
-              })
-            : undefined;
 
     return {
         name: {
@@ -42,16 +34,13 @@ export function convertErrorDeclaration({
                       statusCode: errorDeclaration.http.statusCode,
                   }
                 : undefined,
-        // this is a semantic break! once all the generators are not using type
-        // (which is deprecated), we should instead delete type from the IR
-        type:
-            type ??
-            convertType({
-                typeDeclaration:
-                    typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type ?? "unknown",
-                file,
-                typeResolver,
-            }),
-        typeV2: type,
+        typeV2:
+            rawType != null
+                ? convertType({
+                      typeDeclaration: rawType,
+                      file,
+                      typeResolver,
+                  })
+                : undefined,
     };
 }

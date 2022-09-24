@@ -80,9 +80,6 @@ types:
     extends: commons.WithDocs
     properties:
       discriminantValue: commons.WireStringWithAllCasings
-      valueType:
-        type: TypeReference
-        docs: This is deprecated. Use shape instead.
       shape: SingleUnionTypeProperties
   SingleUnionTypeProperties:
     discriminant:

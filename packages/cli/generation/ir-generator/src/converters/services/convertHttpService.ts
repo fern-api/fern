@@ -24,7 +24,6 @@ export function convertHttpService({
             name: serviceId,
             fernFilepath: file.fernFilepath,
         },
-        basePath: serviceDefinition["base-path"],
         basePathV2: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null

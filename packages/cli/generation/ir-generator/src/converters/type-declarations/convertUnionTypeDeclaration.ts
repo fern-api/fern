@@ -1,5 +1,5 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
-import { SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { SingleUnionTypeProperties, Type } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../type-resolver/TypeResolver";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
@@ -38,20 +38,13 @@ export function convertUnionTypeDeclaration({
                 return {
                     discriminantValue,
                     docs,
-                    // this is a semantic break! once all the generators are not using
-                    // valueType (which is deprecated), we should instead delete
-                    // valueType from the IR
-                    valueType: TypeReference.unknown(),
                     shape: SingleUnionTypeProperties.noProperties(),
                 };
             }
 
-            const valueType = file.parseTypeReference(rawType);
-
             return {
                 discriminantValue,
-                valueType,
-                shape: getSingleUnionTypeProperties(rawType, valueType, file, typeResolver),
+                shape: getSingleUnionTypeProperties({ rawType, file, typeResolver }),
                 docs: getDocs(unionedType),
             };
         }),
@@ -104,13 +97,17 @@ export function getUnionedTypeName({
     };
 }
 
-function getSingleUnionTypeProperties(
-    rawType: string,
-    valueType: TypeReference,
-    file: FernFileContext,
-    typeResolver: TypeResolver
-): SingleUnionTypeProperties {
+function getSingleUnionTypeProperties({
+    rawType,
+    file,
+    typeResolver,
+}: {
+    rawType: string;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): SingleUnionTypeProperties {
     const resolvedType = typeResolver.resolveType({ type: rawType, file });
+    const valueType = file.parseTypeReference(rawType);
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);

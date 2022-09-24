@@ -43,26 +43,6 @@ describe("convertErrorDeclaration", () => {
                 screamingSnakeCase: "UNAUTHORIZED_ERROR",
             },
             http: undefined,
-            type: Type.object({
-                extends: [],
-                properties: [
-                    {
-                        docs: undefined,
-                        name: {
-                            wireValue: "postId",
-                            originalValue: "postId",
-                            camelCase: "postId",
-                            pascalCase: "PostId",
-                            snakeCase: "post_id",
-                            screamingSnakeCase: "POST_ID",
-                        },
-                        valueType: TypeReference.named({
-                            fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/commons")),
-                            name: "PostId",
-                        }),
-                    },
-                ],
-            }),
             typeV2: Type.object({
                 extends: [],
                 properties: [
