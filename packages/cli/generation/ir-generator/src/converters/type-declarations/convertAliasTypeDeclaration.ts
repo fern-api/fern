@@ -35,6 +35,8 @@ function constructResolvedTypeReference({
             return ResolvedTypeReference.primitive(resolvedType.primitive);
         case "container":
             return ResolvedTypeReference.container(resolvedType.container);
+        case "void":
+            return ResolvedTypeReference.void();
         case "unknown":
             return ResolvedTypeReference.unknown();
         case "named": {

@@ -64,6 +64,7 @@ export function getReferencedTypesFromRawDeclaration({
             optional: (valueType) => valueType,
             set: (valueType) => valueType,
             named: (name) => [name],
+            void: () => [],
             unknown: () => [],
         });
 

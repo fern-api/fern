@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../type-resolver/TypeResolver";
@@ -42,13 +42,13 @@ export function convertErrorDeclaration({
                       statusCode: errorDeclaration.http.statusCode,
                   }
                 : undefined,
-        // this is a semantic break! once all the generators are not using type
-        // (which is deprecated), we should instead delete type from the IR
         type:
             type ??
             convertType({
                 typeDeclaration:
-                    typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type ?? "unknown",
+                    typeof errorDeclaration === "string"
+                        ? errorDeclaration
+                        : errorDeclaration.type ?? RawPrimitiveType.void,
                 file,
                 typeResolver,
             }),
