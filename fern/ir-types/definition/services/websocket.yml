@@ -26,11 +26,11 @@ types:
   WebSocketRequest:
     extends: commons.WithDocs
     properties:
-      type: types.TypeReference
+      type: optional<types.TypeReference>
   WebSocketResponse:
     extends: commons.WithDocs
     properties:
-      type: types.TypeReference
+      type: optional<types.TypeReference>
   WebSocketOperationProperties:
     properties:
       id: string
