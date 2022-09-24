@@ -116,6 +116,20 @@ describe("union", () => {
         );
     });
 
+    describe("withProperties", () => {
+        it("Added property is included on parsed object", () => {
+            const schema = union("type", {
+                lion: object({}),
+                tiger: object({ value: string() }),
+            }).withProperties((parsed) => ({
+                printType: () => parsed.type,
+            }));
+
+            const parsed = schema.parse({ type: "lion" });
+            expect(parsed.printType()).toBe("lion");
+        });
+    });
+
     describe("compile", () => {
         // eslint-disable-next-line jest/expect-expect
         it("doesn't compile when discriminant is subtype is not an object", () => {

@@ -120,6 +120,20 @@ describe("object", () => {
         );
     });
 
+    describe("withProperties", () => {
+        it("Added property is included on parsed object", () => {
+            const schema = object({
+                foo: property("raw_foo", string()),
+                bar: stringLiteral("bar"),
+            }).withProperties((parsed) => ({
+                printFoo: () => parsed.foo,
+            }));
+
+            const parsed = schema.parse({ raw_foo: "value of foo", bar: "bar" });
+            expect(parsed.printFoo()).toBe("value of foo");
+        });
+    });
+
     describe("compile", () => {
         describe("parse()", () => {
             // eslint-disable-next-line jest/expect-expect
