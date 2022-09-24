@@ -40,7 +40,6 @@ types:
       named: ResolvedNamedType
       primitive: PrimitiveType
       unknown: {}
-      void: {}
   ResolvedNamedType:
     properties:
       name: DeclaredTypeName
@@ -107,7 +106,6 @@ types:
       named: DeclaredTypeName
       primitive: PrimitiveType
       unknown: {}
-      void: {}
   ContainerType:
     discriminant:
       value: _type

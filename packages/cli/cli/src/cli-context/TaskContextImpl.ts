@@ -108,7 +108,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             name,
             subtitle,
             log: (content) => this.log(content),
-            logPrefix: `${this.logPrefix} ${chalk.blackBright(name)}`,
+            logPrefix: `${this.logPrefix}${chalk.blackBright(name)} `,
             takeOverTerminal: this.takeOverTerminal,
         });
         this.subtasks.push(subtask);

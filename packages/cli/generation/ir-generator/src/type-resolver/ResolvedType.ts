@@ -6,8 +6,7 @@ export declare type ResolvedType =
     | ResolvedType.Container
     | ResolvedType.Named
     | ResolvedType.Primitive
-    | ResolvedType.Unknown
-    | ResolvedType.Void;
+    | ResolvedType.Unknown;
 
 export declare namespace ResolvedType {
     interface Container {
@@ -31,9 +30,5 @@ export declare namespace ResolvedType {
 
     interface Unknown {
         _type: "unknown";
-    }
-
-    interface Void {
-        _type: "void";
     }
 }

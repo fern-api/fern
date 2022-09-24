@@ -1,7 +1,6 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { ResolvedType } from "../../type-resolver/ResolvedType";
 import { TypeResolver } from "../../type-resolver/TypeResolver";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
@@ -27,28 +26,32 @@ export function convertUnionTypeDeclaration({
         types: Object.entries(union.union).map(([unionKey, unionedType]) => {
             const rawType: string | undefined =
                 typeof unionedType === "string" ? unionedType : unionedType.type != null ? unionedType.type : undefined;
-            const valueType = rawType != null ? file.parseTypeReference(rawType) : TypeReference.void();
-            const resolvedType: ResolvedType =
-                rawType != null ? typeResolver.resolveType({ type: rawType, file }) : { _type: "void" };
+
+            const discriminantValue = generateWireStringWithAllCasings({
+                wireValue: unionKey,
+                name: getUnionedTypeName({ unionKey, unionedType }).name,
+            });
+
+            const docs = getDocs(unionedType);
+
+            if (rawType == null) {
+                return {
+                    discriminantValue,
+                    docs,
+                    // this is a semantic break! once all the generators are not using
+                    // valueType (which is deprecated), we should instead delete
+                    // valueType from the IR
+                    valueType: TypeReference.unknown(),
+                    shape: SingleUnionTypeProperties.noProperties(),
+                };
+            }
+
+            const valueType = file.parseTypeReference(rawType);
 
             return {
-                discriminantValue: generateWireStringWithAllCasings({
-                    wireValue: unionKey,
-                    name: getUnionedTypeName({ unionKey, unionedType }).name,
-                }),
+                discriminantValue,
                 valueType,
-                shape:
-                    resolvedType._type === "void"
-                        ? SingleUnionTypeProperties.noProperties()
-                        : resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)
-                        ? SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name)
-                        : SingleUnionTypeProperties.singleProperty({
-                              name: generateWireStringWithAllCasings({
-                                  wireValue: UNION_VALUE_PROPERTY_NAME,
-                                  name: UNION_VALUE_PROPERTY_NAME,
-                              }),
-                              type: valueType,
-                          }),
+                shape: getSingleUnionTypeProperties(rawType, valueType, file, typeResolver),
                 docs: getDocs(unionedType),
             };
         }),
@@ -99,4 +102,25 @@ export function getUnionedTypeName({
         name: unionKey,
         wasExplicitlySet: false,
     };
+}
+
+function getSingleUnionTypeProperties(
+    rawType: string,
+    valueType: TypeReference,
+    file: FernFileContext,
+    typeResolver: TypeResolver
+): SingleUnionTypeProperties {
+    const resolvedType = typeResolver.resolveType({ type: rawType, file });
+
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
+        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
+    } else {
+        return SingleUnionTypeProperties.singleProperty({
+            name: generateWireStringWithAllCasings({
+                wireValue: UNION_VALUE_PROPERTY_NAME,
+                name: UNION_VALUE_PROPERTY_NAME,
+            }),
+            type: valueType,
+        });
+    }
 }

@@ -70,7 +70,6 @@ export class TypeResolverImpl implements TypeResolver {
             container: (container) => ({ _type: "container", container }),
             primitive: (primitive) => ({ _type: "primitive", primitive }),
             unknown: () => ({ _type: "unknown" }),
-            void: () => ({ _type: "void" }),
             named: () => {
                 const declaration = this.resolveNamedType({
                     referenceToNamedType: type,

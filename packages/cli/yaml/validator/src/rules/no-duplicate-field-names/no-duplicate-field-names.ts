@@ -5,7 +5,7 @@ import {
     getUnionedTypeName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
-import { isRawObjectDefinition, RawPrimitiveType, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import {
@@ -87,50 +87,53 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     ? unionedType
                                     : unionedType.type != null
                                     ? unionedType.type
-                                    : RawPrimitiveType.void;
-                            const resolvedType = typeResolver.resolveType({
-                                type: specifiedType,
-                                file: constructFernFileContext({
-                                    relativeFilepath,
-                                    serviceFile: contents,
-                                }),
-                            });
+                                    : undefined;
 
-                            if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-                                const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
-                                const serviceFile = workspace.serviceFiles[resolvedType.filepath];
-                                if (serviceFile == null) {
-                                    continue;
-                                }
-                                const propertiesOnObject = getAllPropertiesForObject({
-                                    objectDeclaration: resolvedType.declaration,
-                                    filepathOfDeclaration: resolvedType.filepath,
-                                    serviceFile,
-                                    workspace,
-                                    typeResolver,
+                            if (specifiedType != null) {
+                                const resolvedType = typeResolver.resolveType({
+                                    type: specifiedType,
+                                    file: constructFernFileContext({
+                                        relativeFilepath,
+                                        serviceFile: contents,
+                                    }),
                                 });
-                                const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
-                                    (property) => property.name === discriminantName
-                                );
-                                if (propertiesWithSameNameAsDiscriminant.length > 0) {
-                                    const message = [
-                                        `Discriminant "${discriminantName}" conflicts with extended ${
-                                            propertiesWithSameNameAsDiscriminant.length === 1
-                                                ? "property"
-                                                : "properties"
-                                        }:`,
-                                        ...propertiesWithSameNameAsDiscriminant.map(
-                                            (property) =>
-                                                `  - ${convertObjectPropertyWithPathToString({
-                                                    property,
-                                                    prefixBreadcrumbs: [unionKey, specifiedType],
-                                                })}`
-                                        ),
-                                    ].join("\n");
-                                    violations.push({
-                                        severity: "error",
-                                        message,
+
+                                if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
+                                    const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
+                                    const serviceFile = workspace.serviceFiles[resolvedType.filepath];
+                                    if (serviceFile == null) {
+                                        continue;
+                                    }
+                                    const propertiesOnObject = getAllPropertiesForObject({
+                                        objectDeclaration: resolvedType.declaration,
+                                        filepathOfDeclaration: resolvedType.filepath,
+                                        serviceFile,
+                                        workspace,
+                                        typeResolver,
                                     });
+                                    const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
+                                        (property) => property.name === discriminantName
+                                    );
+                                    if (propertiesWithSameNameAsDiscriminant.length > 0) {
+                                        const message = [
+                                            `Discriminant "${discriminantName}" conflicts with extended ${
+                                                propertiesWithSameNameAsDiscriminant.length === 1
+                                                    ? "property"
+                                                    : "properties"
+                                            }:`,
+                                            ...propertiesWithSameNameAsDiscriminant.map(
+                                                (property) =>
+                                                    `  - ${convertObjectPropertyWithPathToString({
+                                                        property,
+                                                        prefixBreadcrumbs: [unionKey, specifiedType],
+                                                    })}`
+                                            ),
+                                        ].join("\n");
+                                        violations.push({
+                                            severity: "error",
+                                            message,
+                                        });
+                                    }
                                 }
                             }
                         }
