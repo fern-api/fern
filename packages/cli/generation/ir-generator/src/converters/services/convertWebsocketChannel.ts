@@ -1,6 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services/websocket";
-import { TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { convertResponseErrors } from "./convertResponseErrors";
@@ -56,17 +55,12 @@ function convertWebSocketMessenger({
                           }),
                           request: {
                               docs: typeof operation.request !== "string" ? operation.request?.docs : undefined,
-                              type:
-                                  operation.request != null
-                                      ? file.parseTypeReference(operation.request)
-                                      : TypeReference.void(),
+                              type: operation.request != null ? file.parseTypeReference(operation.request) : undefined,
                           },
                           response: {
                               docs: typeof operation.response !== "string" ? operation.response?.docs : undefined,
                               type:
-                                  operation.response != null
-                                      ? file.parseTypeReference(operation.response)
-                                      : TypeReference.void(),
+                                  operation.response != null ? file.parseTypeReference(operation.response) : undefined,
                           },
                           errors: convertResponseErrors({
                               errors: operation.errors,

@@ -10,8 +10,10 @@ export function convertHttpRequest({
     request: RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
 }): HttpRequest {
+    const type = request != null ? file.parseTypeReference(request) : undefined;
     return {
         docs: typeof request !== "string" ? request?.docs : undefined,
-        type: request != null ? file.parseTypeReference(request) : TypeReference.void(),
+        type: type ?? TypeReference.void(),
+        typeV2: type,
     };
 }

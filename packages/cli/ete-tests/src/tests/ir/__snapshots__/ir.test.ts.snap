@@ -641,10 +641,36 @@ exports[`ir simple 1`] = `
                                     }
                                 ],
                                 "_type": "named"
+                            },
+                            "typeV2": {
+                                "name": "CreateMovieRequest",
+                                "fernFilepath": [
+                                    {
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
+                                    }
+                                ],
+                                "_type": "named"
                             }
                         },
                         "response": {
                             "type": {
+                                "name": "MovieId",
+                                "fernFilepath": [
+                                    {
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
+                                    }
+                                ],
+                                "_type": "named"
+                            },
+                            "typeV2": {
                                 "name": "MovieId",
                                 "fernFilepath": [
                                     {
@@ -713,6 +739,19 @@ exports[`ir simple 1`] = `
                         },
                         "response": {
                             "type": {
+                                "name": "Movie",
+                                "fernFilepath": [
+                                    {
+                                        "originalValue": "imdb",
+                                        "camelCase": "imdb",
+                                        "snakeCase": "imdb",
+                                        "pascalCase": "Imdb",
+                                        "screamingSnakeCase": "IMDB"
+                                    }
+                                ],
+                                "_type": "named"
+                            },
+                            "typeV2": {
                                 "name": "Movie",
                                 "fernFilepath": [
                                     {

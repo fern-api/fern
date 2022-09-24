@@ -9,7 +9,10 @@ types:
     properties:
       name: DeclaredErrorName
       discriminantValue: commons.WireStringWithAllCasings
-      type: types.Type
+      type:
+        docs: this is deprecated. use typeV2 instead.
+        type: types.Type
+      typeV2: optional<types.Type>
       http: optional<HttpErrorConfiguration>
   DeclaredErrorName:
     properties:

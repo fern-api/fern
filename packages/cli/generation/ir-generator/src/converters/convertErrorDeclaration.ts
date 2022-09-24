@@ -16,6 +16,16 @@ export function convertErrorDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): ErrorDeclaration {
+    const rawType = typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type;
+    const type =
+        rawType != null
+            ? convertType({
+                  typeDeclaration: rawType,
+                  file,
+                  typeResolver,
+              })
+            : undefined;
+
     return {
         name: {
             name: errorName,
@@ -32,13 +42,16 @@ export function convertErrorDeclaration({
                       statusCode: errorDeclaration.http.statusCode,
                   }
                 : undefined,
-        type: convertType({
-            typeDeclaration:
-                typeof errorDeclaration === "string"
-                    ? errorDeclaration
-                    : errorDeclaration.type ?? RawPrimitiveType.void,
-            file,
-            typeResolver,
-        }),
+        type:
+            type ??
+            convertType({
+                typeDeclaration:
+                    typeof errorDeclaration === "string"
+                        ? errorDeclaration
+                        : errorDeclaration.type ?? RawPrimitiveType.void,
+                file,
+                typeResolver,
+            }),
+        typeV2: type,
     };
 }
