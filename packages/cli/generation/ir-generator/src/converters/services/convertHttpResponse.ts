@@ -14,7 +14,10 @@ export function convertHttpResponse({
 
     return {
         docs: typeof response !== "string" ? response?.docs : undefined,
-        type: type ?? TypeReference.void(),
+        // this is a semantic break! once all the generators are not using
+        // HttpResponse (which is deprecated), we an delete endpoint.response
+        // from the IR.
+        type: type ?? TypeReference.unknown(),
         typeV2: type,
     };
 }

@@ -38,7 +38,10 @@ export function convertUnionTypeDeclaration({
                 return {
                     discriminantValue,
                     docs,
-                    valueType: TypeReference.void(),
+                    // this is a semantic break! once all the generators are not using
+                    // valueType (which is deprecated), we should instead delete
+                    // valueType from the IR
+                    valueType: TypeReference.unknown(),
                     shape: SingleUnionTypeProperties.noProperties(),
                 };
             }

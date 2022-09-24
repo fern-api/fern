@@ -13,7 +13,10 @@ export function convertHttpRequest({
     const type = request != null ? file.parseTypeReference(request) : undefined;
     return {
         docs: typeof request !== "string" ? request?.docs : undefined,
-        type: type ?? TypeReference.void(),
+        // this is a semantic break! once all the generators are not using
+        // HttpRequest (which is deprecated), we an delete endpoint.request from
+        // the IR.
+        type: type ?? TypeReference.unknown(),
         typeV2: type,
     };
 }
