@@ -26,18 +26,10 @@ draft: # Publishes the generated code to a private registry managed by Fern.
     generate: true
     config:
       mode: client-v2
-  - name: fernapi/fern-java
-    version: 0.0.109
-    generate: true
-    config:
-      mode: server
 
 release: # Publishes the generated code to a public registry (e.g. maven, npm, pypi).
-  - name: fernapi/fern-java
+  - name: fernapi/java-client
     version: 0.0.109
-    generate: true
-    config:
-      mode: client
     outputs:
       maven:
         url: https://s01.oss.sonatype.org/content/repositories/releases/

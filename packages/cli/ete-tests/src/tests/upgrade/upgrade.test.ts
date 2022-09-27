@@ -22,12 +22,8 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
             },
         },
         {
-            name: "fernapi/fern-java",
+            name: "fernapi/java-client",
             version: "0.0.81",
-            config: {
-                packagePrefix: "${SOME_ENV_VAR}",
-                mode: "client_and_server",
-            },
         },
         {
             name: "fernapi/fern-typescript",
