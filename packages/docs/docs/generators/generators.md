@@ -49,7 +49,7 @@ draft:
 + - name: fernapi/fern-typescript
 +   version: 0.0.xxx
 +   config:
-+     mode: client_and_server
++     mode: client-v2
 release: []
 ````
 
@@ -62,9 +62,8 @@ For example:
 ```diff title="/fern/api/generators.yml"
 draft: []
 release:
-  - name: fernapi/fern-java
+  - name: fernapi/java-client
     version: 0.0.xxx
-+   mode: client
 +   outputs:
 +     maven:
 +       url: https://s01.oss.sonatype.org/content/repositories/releases/
