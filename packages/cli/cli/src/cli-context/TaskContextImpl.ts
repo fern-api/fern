@@ -18,7 +18,10 @@ export declare namespace TaskContextImpl {
         log: (logs: Log[]) => void;
         takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
         logPrefix?: string;
-        onFinish?: (result: TaskResult) => void;
+        /**
+         * called when this task or any subtask finishes
+         */
+        onResult?: (result: TaskResult) => void;
     }
 }
 
@@ -29,13 +32,13 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected subtasks: InteractiveTaskContextImpl[] = [];
     private logs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
-    private onFinish: ((result: TaskResult) => void) | undefined;
+    private onResult: ((result: TaskResult) => void) | undefined;
 
-    public constructor({ log, logPrefix, takeOverTerminal, onFinish }: TaskContextImpl.Init) {
+    public constructor({ log, logPrefix, takeOverTerminal, onResult }: TaskContextImpl.Init) {
         this.log = log;
         this.logPrefix = logPrefix ?? "";
         this.takeOverTerminal = takeOverTerminal;
-        this.onFinish = onFinish;
+        this.onResult = onResult;
     }
 
     public start(): Finishable & TaskContext {
@@ -50,7 +53,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public finish(): void {
         this.status = "finished";
         this.flushLogs();
-        this.onFinish?.(this.getResult());
+        this.onResult?.(this.getResult());
     }
 
     public isFinished(): boolean {
@@ -110,6 +113,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             log: (content) => this.log(content),
             logPrefix: `${this.logPrefix}${chalk.blackBright(name)} `,
             takeOverTerminal: this.takeOverTerminal,
+            onResult: this.onResult,
         });
         this.subtasks.push(subtask);
         return subtask;
