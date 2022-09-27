@@ -12,25 +12,25 @@ Fern makes it easy to code generate SDKs, server interfaces, a Postman collectio
 
 #### Java
 
-`fern-java`: A Java SDK.
+`java-client`: A Java SDK.
 
 #### Python
 
-`fern-python`: A Python SDK. _(coming soon!)_
+`fern-python`: A Python SDK.
 
 ### Generate server interfaces
 
 #### TypeScript Express
 
-`fern-typescript`: Validation that your JavaScript or TypeScript Express server correctly implements your API.
+`fern-typescript`: Validation that your JavaScript or TypeScript Express server correctly implements your API. _(Requires private beta login!)_
 
 #### Java Spring
 
-`fern-java`: Validation that your Java Spring server correctly implements your API.
+`java-server`: Validation that your Java Spring server correctly implements your API. _(Requires private beta login!)_
 
 #### Python FastAPI
 
-`fern-python`: Validation that your Python FastAPI server correctly implements your API. _(coming soon!)_
+`fern-python`: Validation that your Python FastAPI server correctly implements your API. _(Requires private beta login!)_
 
 ### Generate a Postman Collection
 
