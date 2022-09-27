@@ -64,8 +64,14 @@ types:
   HttpRequest:
     extends: commons.WithDocs
     properties:
-      type: types.TypeReference
+      type:
+        docs: this is deprecated. use typeV2 instead.
+        type: types.TypeReference
+      typeV2: optional<types.TypeReference>
   HttpResponse:
     extends: commons.WithDocs
     properties:
-      type: types.TypeReference
+      type:
+        docs: this is deprecated. use typeV2 instead.
+        type: types.TypeReference
+      typeV2: optional<types.TypeReference>

@@ -6,15 +6,11 @@ Fern keeps your docs and SDKs in sync with your API.
 
 [Join the Discord ➚](https://discord.com/invite/JkkXumPzcG)
 
-**Fern is the single source of truth for your API.**
+**Fern** allows you to maintain a single source of truth for your API so that you can:
 
-Define your API in one place, and Fern will:
-
-1. **Generate idiomatic SDKs that feel hand-written**. Fern generates SDKs in the cloud and can publish them to public registries like npm, PyPi, and Maven.
-1. **Verify that your backend serves the API correctly**. Fern integrates with popular frameworks like Express, FastAPI, and Spring to add compile-time and run-time checks.
-1. **Build and host API documentation**. With Fern, you automatically get Stripe-like documentation with examples of using the SDKs, not just [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) and [requests](https://pypi.org/project/requests/).
-1. **Integrate with Postman**. A first-class integration with Postman; changes you make to your API automatically update in your Postman Workspace.
-1. **Leave you with an OpenAPI document**. Fern also generates OpenAPI, so you’re never locked in and can use any other tools that integrate with OpenAPI.
+1. **Generate idiomatic SDKs** in the most popular languages: TypeScript/JavaScript, Python, Java, Go. Fern also handles publishing to registries.
+2. **Serve your API accurately**. Fern integrates with popular frameworks like Express, FastAPI, and Spring to add compile-time and run-time checks.
+3. **Auto-update** your API documentation, Postman collection, and OpenAPI spec any time your API changes.
 
 We’re in private beta with a handful of customers. If you’re interested in using Fern, [**reach out**](mailto:hey@buildwithfern.com?subject=%5BPrivate%20beta%5D%20Interest%20in%20joining).
 

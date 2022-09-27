@@ -18,12 +18,12 @@ In the root of your repo, run `fern init`. This will create the following folder
 
 ```yml
 fern/
-└─ api
-	├─ definition
-		├─ api.yml # Your API name and authentication
-		└─ imdb.yml # An example Fern Definition
-	└─ generators.yml # Code generators you're using
-fern.config.json # Your organization name and Fern CLI version
+├─ fern.config.json # root-level configuration
+└─ api/ # your API
+  ├─ generators.yml # generators you're using
+  └─ definition/
+    ├─ api.yml  # configuration for your API
+    └─ imdb.yml # a Service, which includes some endpoints
 ```
 
 ### Defining your API
@@ -32,7 +32,7 @@ Your **Fern Definition** is a set of YAML files that are the single source of tr
 
 Check out [an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) on Github.
 
-:::tip Already have OpenAPI document?
+:::tip Already have OpenAPI spec?
 
 [Join our private beta](mailto:hey@buildwithfern.com?subject=%5BPrivate%20Beta%5D%20OpenAPI%20to%20Fern%20Definition%20converter) for access to our OpenAPI spec -> Fern Definition converter.
 

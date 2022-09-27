@@ -10,8 +10,11 @@ export function convertHttpResponse({
     response: RawSchemas.HttpResponseSchema | undefined;
     file: FernFileContext;
 }): HttpResponse {
+    const type = response != null ? file.parseTypeReference(response) : undefined;
+
     return {
         docs: typeof response !== "string" ? response?.docs : undefined,
-        type: response != null ? file.parseTypeReference(response) : TypeReference.void(),
+        type: type ?? TypeReference.void(),
+        typeV2: type,
     };
 }
