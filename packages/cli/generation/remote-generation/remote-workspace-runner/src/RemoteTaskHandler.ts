@@ -99,16 +99,12 @@ export class RemoteTaskHandler {
                 this.context.fail("No files available to download");
                 return;
             }
-            try {
-                await downloadFilesForTask({
-                    jobId: this.job.jobId,
-                    taskId: this.taskId,
-                    absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
-                    context: this.context,
-                });
-            } catch {
-                this.context.fail(`Failed to download ${this.generatorInvocation.absolutePathToLocalOutput}`);
-            }
+            await downloadFilesForTask({
+                jobId: this.job.jobId,
+                taskId: this.taskId,
+                absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
+                context: this.context,
+            });
         }
     }
 }
@@ -133,7 +129,7 @@ async function downloadFilesForTask({
             response.data.pipe(writer);
             context.logger.info(chalk.green("Downloaded: " + absolutePathToLocalOutput));
         })
-        .catch(() => {
-            context.fail("Failed to download: " + absolutePathToLocalOutput);
+        .catch((e) => {
+            context.fail("Failed to download: " + absolutePathToLocalOutput, e);
         });
 }
