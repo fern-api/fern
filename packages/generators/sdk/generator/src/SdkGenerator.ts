@@ -1,7 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ShapeType } from "@fern-fern/ir-model/types";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/sdk-errors";
@@ -166,6 +166,7 @@ export class SdkGenerator {
                                 context: this.context,
                             });
                         },
+                        typeNameBeingGenerated: typeDeclaration.name,
                     });
                 },
             });
@@ -227,9 +228,11 @@ export class SdkGenerator {
     private async withFile({
         run,
         filepath,
+        typeNameBeingGenerated,
     }: {
         run: (file: SdkFile) => void | Promise<void>;
         filepath: ExportedFilePath;
+        typeNameBeingGenerated?: DeclaredTypeName;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
@@ -275,8 +278,29 @@ export class SdkGenerator {
                 referencedIn: sourceFile,
             });
 
-        const getSchemaOfNamedType = (typeName: DeclaredTypeName) =>
-            coreUtilities.zurg.Schema._fromExpression(getReferenceToNamedTypeSchema(typeName).expression);
+        const stringifiedTypeNameBeingGenerated =
+            typeNameBeingGenerated != null ? stringifyTypeName(typeNameBeingGenerated) : undefined;
+        const getSchemaOfNamedType = (typeName: DeclaredTypeName) => {
+            let schema = coreUtilities.zurg.Schema._fromExpression(getReferenceToNamedTypeSchema(typeName).expression);
+
+            // if this type eventually references the type we're generating, then use lazy()
+            if (
+                stringifiedTypeNameBeingGenerated != null &&
+                this.typeResolver
+                    .getTypeDeclarationFromName(typeName)
+                    .referencedTypes.some(
+                        (referencedType) => stringifyTypeName(referencedType) === stringifiedTypeNameBeingGenerated
+                    )
+            ) {
+                const resolvedType = this.typeResolver.resolveTypeName(typeName);
+                schema =
+                    resolvedType._type === "named" && resolvedType.shape === ShapeType.Object
+                        ? coreUtilities.zurg.lazyObject(schema)
+                        : coreUtilities.zurg.lazy(schema);
+            }
+
+            return schema;
+        };
 
         const typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType,
@@ -365,4 +389,9 @@ export class SdkGenerator {
 
         this.context.logger.debug(`Generated ${filepathStr}`);
     }
+}
+
+type StringifiedTypeName = string;
+function stringifyTypeName(typeName: DeclaredTypeName): StringifiedTypeName {
+    return typeName.fernFilepath.map((part) => part.originalValue).join("/") + ":" + typeName.name;
 }

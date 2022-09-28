@@ -16,7 +16,7 @@ export declare namespace AbstractTypeReferenceConverter {
 }
 
 export abstract class AbstractTypeReferenceConverter<T> {
-    private resolveType: (typeName: DeclaredTypeName) => ResolvedTypeReference;
+    protected resolveType: (typeName: DeclaredTypeName) => ResolvedTypeReference;
 
     constructor({ resolveType }: AbstractTypeReferenceConverter.Init) {
         this.resolveType = resolveType;

@@ -14,7 +14,7 @@ export interface Zurg {
     any: () => Zurg.Schema;
     unknown: () => Zurg.Schema;
     lazy: (schema: Zurg.Schema) => Zurg.Schema;
-    lazyObject: (schema: Zurg.ObjectSchema) => Zurg.ObjectSchema;
+    lazyObject: (schema: Zurg.Schema) => Zurg.ObjectSchema;
 
     Schema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;

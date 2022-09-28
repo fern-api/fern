@@ -421,7 +421,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     public lazyObject = this.withExportedName(
         "lazyObject",
         (lazyObject) =>
-            (schema: Zurg.ObjectSchema): Zurg.ObjectSchema => {
+            (schema: Zurg.Schema): Zurg.ObjectSchema => {
                 const baseSchema: Zurg.BaseSchema = {
                     toExpression: () =>
                         ts.factory.createCallExpression(lazyObject.expression, undefined, [

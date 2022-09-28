@@ -173,7 +173,7 @@ export class TypeContext extends BaseModelContext {
     }
 
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {
-        return this.typeResolver.getTypeDeclarationFromName(typeName);
+        return this.typeResolver.getTypeDeclarationFromName(typeName).shape;
     }
 
     public doesTypeExist(typeName: DeclaredTypeName): boolean {

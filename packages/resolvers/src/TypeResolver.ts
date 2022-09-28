@@ -1,5 +1,12 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName, ResolvedTypeReference, ShapeType, Type, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    DeclaredTypeName,
+    ResolvedTypeReference,
+    ShapeType,
+    Type,
+    TypeDeclaration,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
 import path from "path";
 import { stringifyFernFilepath } from "./stringify-fern-filepath";
 
@@ -11,16 +18,16 @@ type SimpleTypeName = string;
  * aliases and unwrapping all containers.
  */
 export class TypeResolver {
-    private allTypes: Record<Filepath, Record<SimpleTypeName, Type>> = {};
+    private allTypes: Record<Filepath, Record<SimpleTypeName, TypeDeclaration>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const type of intermediateRepresentation.types) {
             const typesAtFilepath = (this.allTypes[stringifyFernFilepath(type.name.fernFilepath)] ??= {});
-            typesAtFilepath[type.name.name] = type.shape;
+            typesAtFilepath[type.name.name] = type;
         }
     }
 
-    public getTypeDeclarationFromName(typeName: DeclaredTypeName): Type {
+    public getTypeDeclarationFromName(typeName: DeclaredTypeName): TypeDeclaration {
         const type = this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[typeName.name];
         if (type == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
@@ -30,7 +37,7 @@ export class TypeResolver {
 
     public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
         const declaration = this.getTypeDeclarationFromName(typeName);
-        return this.resolveTypeDeclaration(typeName, declaration);
+        return this.resolveTypeDeclaration(typeName, declaration.shape);
     }
 
     public resolveTypeReference(type: TypeReference): ResolvedTypeReference {

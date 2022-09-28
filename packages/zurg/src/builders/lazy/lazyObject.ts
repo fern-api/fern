@@ -1,20 +1,10 @@
-import { getObjectUtils, PropertySchemas } from "../object";
+import { getObjectUtils } from "../object";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from "../object-like";
-import {
-    BaseObjectSchema,
-    inferObjectSchemaFromPropertySchemas,
-    inferParsedObjectFromPropertySchemas,
-    inferRawObjectFromPropertySchemas,
-} from "../object/types";
+import { BaseObjectSchema, ObjectSchema } from "../object/types";
 import { getSchemaUtils } from "../schema-utils";
 
-export function lazyObject<T extends PropertySchemas<keyof T>>(
-    getter: () => inferObjectSchemaFromPropertySchemas<T>
-): inferObjectSchemaFromPropertySchemas<T> {
-    const baseSchema: BaseObjectSchema<
-        inferRawObjectFromPropertySchemas<T>,
-        inferParsedObjectFromPropertySchemas<T>
-    > = {
+export function lazyObject<Raw, Parsed>(getter: () => ObjectSchema<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
+    const baseSchema: BaseObjectSchema<Raw, Parsed> = {
         ...OBJECT_LIKE_BRAND,
         parse: (raw, opts) => getter().parse(raw, opts),
         json: (parsed, opts) => getter().json(parsed, opts),

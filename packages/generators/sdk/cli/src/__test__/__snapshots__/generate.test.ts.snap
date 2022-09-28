@@ -7706,6 +7706,7 @@ export * from \\"./union\\";
                 "contents": Array [
                   Object {
                     "contents": "export { lazy } from \\"./lazy\\";
+export { lazyObject } from \\"./lazyObject\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -7730,23 +7731,13 @@ export function lazy<Raw, Parsed>(getter: () => Schema<Raw, Parsed>): Schema<Raw
                     "type": "file",
                   },
                   Object {
-                    "contents": "import { getObjectUtils, PropertySchemas } from \\"../object\\";
+                    "contents": "import { getObjectUtils } from \\"../object\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
-import {
-    BaseObjectSchema,
-    inferObjectSchemaFromPropertySchemas,
-    inferParsedObjectFromPropertySchemas,
-    inferRawObjectFromPropertySchemas,
-} from \\"../object/types\\";
+import { BaseObjectSchema, ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-export function lazyObject<T extends PropertySchemas<keyof T>>(
-    getter: () => inferObjectSchemaFromPropertySchemas<T>
-): inferObjectSchemaFromPropertySchemas<T> {
-    const baseSchema: BaseObjectSchema<
-        inferRawObjectFromPropertySchemas<T>,
-        inferParsedObjectFromPropertySchemas<T>
-    > = {
+export function lazyObject<Raw, Parsed>(getter: () => ObjectSchema<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
+    const baseSchema: BaseObjectSchema<Raw, Parsed> = {
         ...OBJECT_LIKE_BRAND,
         parse: (raw, opts) => getter().parse(raw, opts),
         json: (parsed, opts) => getter().json(parsed, opts),
@@ -8776,8 +8767,8 @@ import * as core from \\"../../../core\\";
 import { MyApi } from \\"../../..\\";
 
 export const DebugKeyValuePairs: core.schemas.ObjectSchema<DebugKeyValuePairs.Raw, MyApi.commons.DebugKeyValuePairs> = core.schemas.object({
-        key: schemas.commons.DebugVariableValue,
-        value: schemas.commons.DebugVariableValue
+        key: core.schemas.lazy(() => schemas.commons.DebugVariableValue),
+        value: core.schemas.lazy(() => schemas.commons.DebugVariableValue)
     });
 
 export declare namespace DebugKeyValuePairs {
@@ -8796,7 +8787,7 @@ import * as core from \\"../../../core\\";
 import { MyApi } from \\"../../..\\";
 
 export const DebugMapValue: core.schemas.ObjectSchema<DebugMapValue.Raw, MyApi.commons.DebugMapValue> = core.schemas.object({
-        keyValuePairs: core.schemas.list(schemas.commons.DebugKeyValuePairs)
+        keyValuePairs: core.schemas.list(core.schemas.lazyObject(() => schemas.commons.DebugKeyValuePairs))
     });
 
 export declare namespace DebugMapValue {
@@ -8829,9 +8820,9 @@ export const DebugVariableValue: core.schemas.Schema<DebugVariableValue.Raw, MyA
         charValue: core.schemas.object({
             value: core.schemas.property(\\"charValue\\", core.schemas.string())
         }),
-        mapValue: schemas.commons.DebugMapValue,
+        mapValue: core.schemas.lazyObject(() => schemas.commons.DebugMapValue),
         listValue: core.schemas.object({
-            value: core.schemas.property(\\"listValue\\", core.schemas.list(schemas.commons.DebugVariableValue))
+            value: core.schemas.property(\\"listValue\\", core.schemas.list(core.schemas.lazy(() => schemas.commons.DebugVariableValue)))
         }),
         binaryTreeNodeValue: schemas.commons.BinaryTreeNodeAndTreeValue,
         singlyLinkedListNodeValue: schemas.commons.SinglyLinkedListNodeAndListValue,
@@ -9100,8 +9091,8 @@ import * as core from \\"../../../core\\";
 import { MyApi } from \\"../../..\\";
 
 export const KeyValuePair: core.schemas.ObjectSchema<KeyValuePair.Raw, MyApi.commons.KeyValuePair> = core.schemas.object({
-        key: schemas.commons.VariableValue,
-        value: schemas.commons.VariableValue
+        key: core.schemas.lazy(() => schemas.commons.VariableValue),
+        value: core.schemas.lazy(() => schemas.commons.VariableValue)
     });
 
 export declare namespace KeyValuePair {
@@ -9154,7 +9145,7 @@ import * as core from \\"../../../core\\";
 import { MyApi } from \\"../../..\\";
 
 export const ListType: core.schemas.ObjectSchema<ListType.Raw, MyApi.commons.ListType> = core.schemas.object({
-        valueType: schemas.commons.VariableType,
+        valueType: core.schemas.lazy(() => schemas.commons.VariableType),
         isFixedLength: core.schemas.boolean().optional()
     });
 
@@ -9174,8 +9165,8 @@ import * as core from \\"../../../core\\";
 import { MyApi } from \\"../../..\\";
 
 export const MapType: core.schemas.ObjectSchema<MapType.Raw, MyApi.commons.MapType> = core.schemas.object({
-        keyType: schemas.commons.VariableType,
-        valueType: schemas.commons.VariableType
+        keyType: core.schemas.lazy(() => schemas.commons.VariableType),
+        valueType: core.schemas.lazy(() => schemas.commons.VariableType)
     });
 
 export declare namespace MapType {
@@ -9194,7 +9185,7 @@ import * as core from \\"../../../core\\";
 import { MyApi } from \\"../../..\\";
 
 export const MapValue: core.schemas.ObjectSchema<MapValue.Raw, MyApi.commons.MapValue> = core.schemas.object({
-        keyValuePairs: core.schemas.list(schemas.commons.KeyValuePair)
+        keyValuePairs: core.schemas.list(core.schemas.lazyObject(() => schemas.commons.KeyValuePair))
     });
 
 export declare namespace MapValue {
@@ -9358,8 +9349,8 @@ export const VariableType: core.schemas.Schema<VariableType.Raw, MyApi.commons.V
         booleanType: core.schemas.object({}),
         stringType: core.schemas.object({}),
         charType: core.schemas.object({}),
-        listType: schemas.commons.ListType,
-        mapType: schemas.commons.MapType,
+        listType: core.schemas.lazyObject(() => schemas.commons.ListType),
+        mapType: core.schemas.lazyObject(() => schemas.commons.MapType),
         binaryTreeType: core.schemas.object({}),
         singlyLinkedListType: core.schemas.object({}),
         doublyLinkedListType: core.schemas.object({})
@@ -9501,9 +9492,9 @@ export const VariableValue: core.schemas.Schema<VariableValue.Raw, MyApi.commons
         charValue: core.schemas.object({
             value: core.schemas.property(\\"charValue\\", core.schemas.string())
         }),
-        mapValue: schemas.commons.MapValue,
+        mapValue: core.schemas.lazyObject(() => schemas.commons.MapValue),
         listValue: core.schemas.object({
-            value: core.schemas.property(\\"listValue\\", core.schemas.list(schemas.commons.VariableValue))
+            value: core.schemas.property(\\"listValue\\", core.schemas.list(core.schemas.lazy(() => schemas.commons.VariableValue)))
         }),
         binaryTreeValue: schemas.commons.BinaryTreeValue,
         singlyLinkedListValue: schemas.commons.SinglyLinkedListValue,
