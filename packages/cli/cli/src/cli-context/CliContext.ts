@@ -220,7 +220,7 @@ export class CliContext {
         return {
             log: (content) => this.log(content),
             takeOverTerminal: (run) => this.ttyAwareLogger.takeOverTerminal(run),
-            onFinish: (result) => {
+            onResult: (result) => {
                 if (result === TaskResult.Failure) {
                     this.didSucceed = false;
                 }
