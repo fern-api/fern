@@ -5,7 +5,7 @@ import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { getExportedDirectoriesForFernFilepath } from "./utils/getExportedDirectoriesForFernFilepath";
 
-const ERRORS_DIRECTORY_NAME = "errors";
+export const ERRORS_DIRECTORY_NAME = "errors";
 
 export class ErrorDeclarationReferencer extends AbstractDeclarationReferencer<DeclaredErrorName> {
     public getExportedFilepath(errorName: DeclaredErrorName): ExportedFilePath {

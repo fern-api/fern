@@ -61,6 +61,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/generators/sdk/service-declaration-handler"\
       },\
       {\
+        "name": "@fern-typescript/type-reference-converters",\
+        "reference": "workspace:packages/generators/sdk/type-reference-converters"\
+      },\
+      {\
         "name": "@fern-typescript/model",\
         "reference": "workspace:packages/model"\
       },\
@@ -120,6 +124,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/service-types", ["workspace:packages/service-types"]],\
       ["@fern-typescript/service-utils", ["workspace:packages/service-utils"]],\
       ["@fern-typescript/testing-utils", ["workspace:packages/testing-utils"]],\
+      ["@fern-typescript/type-reference-converters", ["workspace:packages/generators/sdk/type-reference-converters"]],\
       ["@fern-typescript/types", ["workspace:packages/types"]],\
       ["@fern-typescript/types-v2", ["workspace:packages/types-v2"]],\
       ["@fern-typescript/zurg", ["workspace:packages/zurg"]],\
@@ -3637,7 +3642,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.23.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -3659,12 +3663,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/sdk-declaration-handler", "workspace:packages/generators/sdk/declaration-handler"],\
             ["@fern-typescript/sdk-errors", "workspace:packages/generators/sdk/errors"],\
             ["@fern-typescript/sdk-service-declaration-handler", "workspace:packages/generators/sdk/service-declaration-handler"],\
+            ["@fern-typescript/type-reference-converters", "workspace:packages/generators/sdk/type-reference-converters"],\
             ["@fern-typescript/types-v2", "workspace:packages/types-v2"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
+            ["glob", "npm:8.0.3"],\
+            ["glob-promise", "virtual:3ee50a5b3792b570ec68499546a46f1a1c0207ebe79287972d9500f1b080e4d058fefda0c1d14fc0fddd4b2770203fe939e2e9dd274a86653a5755d2cf0c9c35#npm:5.0.0"],\
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["lodash-es", "npm:4.17.21"],\
@@ -3870,6 +3877,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-typescript/type-reference-converters", [\
+        ["workspace:packages/generators/sdk/type-reference-converters", {\
+          "packageLocation": "./packages/generators/sdk/type-reference-converters/",\
+          "packageDependencies": [\
+            ["@fern-typescript/type-reference-converters", "workspace:packages/generators/sdk/type-reference-converters"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/core-utils", "npm:0.0.199"],\
+            ["@fern-fern/ir-model", "npm:0.0.205"],\
+            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
+            ["@types/jest", "npm:28.1.6"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.23.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["ts-morph", "npm:15.1.0"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-typescript/types", [\
         ["workspace:packages/types", {\
           "packageLocation": "./packages/types/",\
@@ -3908,12 +3938,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
             ["@fern-typescript/sdk-declaration-handler", "workspace:packages/generators/sdk/declaration-handler"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["lodash-es", "npm:4.17.21"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
@@ -8297,6 +8325,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["glob-promise", "npm:4.2.2"]\
           ],\
           "linkType": "SOFT"\
+        }],\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/glob-promise-npm-5.0.0-91cf9ab35f-2c48c52fda.zip/node_modules/glob-promise/",\
+          "packageDependencies": [\
+            ["glob-promise", "npm:5.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:3ee50a5b3792b570ec68499546a46f1a1c0207ebe79287972d9500f1b080e4d058fefda0c1d14fc0fddd4b2770203fe939e2e9dd274a86653a5755d2cf0c9c35#npm:5.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-5bc099d57c/0/cache/glob-promise-npm-5.0.0-91cf9ab35f-2c48c52fda.zip/node_modules/glob-promise/",\
+          "packageDependencies": [\
+            ["glob-promise", "virtual:3ee50a5b3792b570ec68499546a46f1a1c0207ebe79287972d9500f1b080e4d058fefda0c1d14fc0fddd4b2770203fe939e2e9dd274a86653a5755d2cf0c9c35#npm:5.0.0"],\
+            ["@types/glob", "npm:7.2.0"],\
+            ["glob", "npm:8.0.3"]\
+          ],\
+          "packagePeers": [\
+            "glob"\
+          ],\
+          "linkType": "HARD"\
         }],\
         ["virtual:f12ce74c17213ecd8973af2b6fa0736ee30cb3c20c7cf3081ceffec613b993cc5a8a91d5e6df737b8619b175f0a2c7f9c55788aeeab32aea48ca801e443efc80#npm:4.2.2", {\
           "packageLocation": "./.yarn/__virtual__/glob-promise-virtual-c606e96c75/0/cache/glob-promise-npm-4.2.2-30777327f7-c1a3d95f7c.zip/node_modules/glob-promise/",\

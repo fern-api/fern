@@ -1,5 +1,5 @@
 import { BaseSchema, Schema } from "../../Schema";
-import { getSchemaUtils } from "../../SchemaUtils";
+import { getSchemaUtils } from "../schema-utils";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {

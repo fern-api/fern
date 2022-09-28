@@ -1,5 +1,6 @@
 import { TypeReference } from "@fern-fern/ir-model/types";
-import { SdkFile, TypeReferenceNode } from "@fern-typescript/sdk-declaration-handler";
+import { TypeReferenceNode } from "@fern-typescript/commons-v2";
+import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 
 export function getReferenceToMaybeVoidType(reference: TypeReference, file: SdkFile): TypeReferenceNode | undefined {
     if (reference._type === "void") {

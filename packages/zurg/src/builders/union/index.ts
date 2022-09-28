@@ -1,5 +1,5 @@
+export { discriminant, type Discriminant } from "./discriminant";
 export {
-    type Discriminant,
     type inferParsedDiscriminant,
     type inferParsedUnion,
     type inferRawDiscriminant,

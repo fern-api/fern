@@ -11,12 +11,14 @@ export function getDirectReferenceToExport({
     addImport,
     referencedIn,
     importAlias,
+    subImport = [],
 }: {
     exportedName: string;
     exportedFromPath: ExportedFilePath;
     addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
     referencedIn: SourceFile;
     importAlias: string | undefined;
+    subImport?: string[];
 }): Reference {
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo(
         referencedIn,
@@ -34,7 +36,10 @@ export function getDirectReferenceToExport({
 
     const importedName = importAlias ?? exportedName;
 
-    const entityName = ts.factory.createIdentifier(importedName);
+    const entityName = subImport.reduce<ts.EntityName>(
+        (acc, subImport) => ts.factory.createQualifiedName(acc, subImport),
+        ts.factory.createIdentifier(importedName)
+    );
     return {
         typeNode: ts.factory.createTypeReferenceNode(entityName),
         entityName,

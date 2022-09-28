@@ -5,9 +5,17 @@ import { Scope, ts } from "ts-morph";
 import { ClientConstants } from "../constants";
 import { addEndpointToService } from "./endpoints/addEndpointToService";
 
-export function generateHttpService({ service, file }: { service: HttpService; file: SdkFile }): void {
+export function generateHttpService({
+    service,
+    serviceClassName,
+    file,
+}: {
+    service: HttpService;
+    serviceClassName: string;
+    file: SdkFile;
+}): void {
     const serviceInterface = file.sourceFile.addInterface({
-        name: ClientConstants.HttpService.SERVICE_NAME,
+        name: serviceClassName,
         isExported: true,
     });
 

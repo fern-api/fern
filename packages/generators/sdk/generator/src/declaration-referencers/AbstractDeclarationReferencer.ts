@@ -24,7 +24,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
 
     public getReferenceTo(
         name: Name,
-        { importStrategy, addImport, referencedIn }: DeclarationReferencer.getReferenceTo.Options
+        { importStrategy, addImport, referencedIn, subImport }: DeclarationReferencer.getReferenceTo.Options
     ): Reference {
         switch (importStrategy.type) {
             case "direct":
@@ -34,6 +34,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     importAlias: importStrategy.alias,
                     addImport,
                     referencedIn,
+                    subImport,
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({
@@ -41,6 +42,8 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     exportedFromPath: this.getExportedFilepath(name),
                     referencedIn,
                     addImport,
+                    namespaceImport: importStrategy.namespaceImport,
+                    subImport,
                 });
             default:
                 assertNever(importStrategy);

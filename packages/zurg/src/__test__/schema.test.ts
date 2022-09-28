@@ -1,4 +1,4 @@
-import { boolean, list, number, object, string, stringLiteral, union } from "../builders";
+import { boolean, discriminant, list, number, object, string, stringLiteral, union } from "../builders";
 import { property } from "../builders/object/property";
 import { itSchema } from "./utils/itSchema";
 
@@ -12,7 +12,7 @@ describe("Schema", () => {
                 "raw_c",
                 list(
                     object({
-                        animal: union(stringLiteral("type", "_type"), {
+                        animal: union(discriminant("type", "_type"), {
                             dog: object({ value: boolean() }),
                             cat: object({ value: property("raw_cat", number()) }),
                         }),

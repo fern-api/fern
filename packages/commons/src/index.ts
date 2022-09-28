@@ -40,5 +40,5 @@ export { getTextOfTsKeyword } from "./utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./utils/getTextOfTsNode";
 export { maybeAddDocs } from "./utils/maybeAddDocs";
 export * as visitorUtils from "./utils/visitorUtils";
-export { FernWriters } from "./writers";
+export { FernWriters, ObjectWriter } from "./writers";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType";

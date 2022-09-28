@@ -2,7 +2,7 @@ import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 import { getRelativePathAsModuleSpecifierTo } from "../utils/getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../utils/ModuleSpecifier";
-import { convertExportedFilePathToFilePath, ExportedFilePath } from "./ExportedFilePath";
+import { convertExportedFilePathToFilePath, ExportedDirectory, ExportedFilePath } from "./ExportedFilePath";
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -37,8 +37,15 @@ export class ExportsManager {
     }
 
     public addExportsForFilepath(filepath: ExportedFilePath): void {
+        this.addExportsForDirectories(filepath.directories);
+        if (filepath.file.exportDeclaration != null) {
+            this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file.exportDeclaration);
+        }
+    }
+
+    public addExportsForDirectories(directories: ExportedDirectory[]): void {
         let directoryFilepath = "/";
-        for (const part of filepath.directories) {
+        for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
             if (part.exportDeclaration != null) {
                 this.addExportDeclarationForDirectory({
@@ -60,10 +67,6 @@ export class ExportsManager {
                 }
             }
             directoryFilepath = nextDirectoryPath;
-        }
-
-        if (filepath.file.exportDeclaration != null) {
-            this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file.exportDeclaration);
         }
     }
 

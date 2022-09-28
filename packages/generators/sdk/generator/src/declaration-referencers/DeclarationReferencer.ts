@@ -4,7 +4,7 @@ import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 
-export type ImportStrategy = { type: "fromRoot" } | { type: "direct"; alias?: string };
+export type ImportStrategy = { type: "fromRoot"; namespaceImport?: string } | { type: "direct"; alias?: string };
 
 export interface DeclarationReferencer<Name> {
     getExportedFilepath: (name: Name) => ExportedFilePath;
@@ -19,6 +19,7 @@ export declare namespace DeclarationReferencer {
             importStrategy: ImportStrategy;
             addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
             referencedIn: SourceFile;
+            subImport?: string[];
         }
     }
 }

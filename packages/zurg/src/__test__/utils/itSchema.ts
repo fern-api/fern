@@ -44,7 +44,7 @@ export function itParse<Raw, Parsed>(
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, () => {
-        expect(schema.parse(raw, opts)).toEqual(parsed);
+        expect(schema.parse(raw, opts)).toStrictEqual(parsed);
     });
 }
 
@@ -63,6 +63,6 @@ export function itJson<Raw, Parsed>(
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, () => {
-        expect(schema.json(parsed, opts)).toEqual(raw);
+        expect(schema.json(parsed, opts)).toStrictEqual(raw);
     });
 }

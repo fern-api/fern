@@ -29,7 +29,6 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
-    "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {
@@ -37,7 +36,6 @@
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
-    "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.23.1",

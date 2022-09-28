@@ -1,3 +1,3 @@
-import { createIdentitySchemaCreator } from "../../utils/createIdentitySchema";
+import { createIdentitySchemaCreator } from "../identity";
 
 export const boolean = createIdentitySchemaCreator<boolean>();

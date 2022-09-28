@@ -31,9 +31,9 @@ describe("object", () => {
         }
     );
 
-    describe("unknown keys", () => {
-        itSchema(
-            "keeps unknown keys by default",
+    describe("skipUnknownKeysOnParse", () => {
+        itParse(
+            "includes unknown keys by default",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -51,34 +51,36 @@ describe("object", () => {
                     // @ts-expect-error
                     baz: "yoyo",
                 },
-            }
-        );
-
-        itSchema(
-            "keeps unknown values by when skipUnknownKeys == false",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                opts: { skipUnknownKeys: false },
             }
         );
 
         itParse(
-            "parse() skips unknown values by when skipUnknownKeys == true",
+            "includes unknown values by when skipUnknownKeysOnParse === false",
+            object({
+                foo: property("raw_foo", string()),
+                bar: stringLiteral("bar"),
+            }),
+            {
+                raw: {
+                    raw_foo: "foo",
+                    bar: "bar",
+                    // @ts-expect-error
+                    baz: "yoyo",
+                },
+                parsed: {
+                    foo: "foo",
+                    bar: "bar",
+                    // @ts-expect-error
+                    baz: "yoyo",
+                },
+                opts: {
+                    skipUnknownKeysOnParse: false,
+                },
+            }
+        );
+
+        itParse(
+            "skip unknown values by when skipUnknownKeysOnParse === true",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -94,12 +96,36 @@ describe("object", () => {
                     foo: "foo",
                     bar: "bar",
                 },
-                opts: { skipUnknownKeys: true },
+                opts: {
+                    skipUnknownKeysOnParse: true,
+                },
+            }
+        );
+    });
+
+    describe("includeUnknownKeysOnJson", () => {
+        itJson(
+            "skips unknown keys by default",
+            object({
+                foo: property("raw_foo", string()),
+                bar: stringLiteral("bar"),
+            }),
+            {
+                raw: {
+                    raw_foo: "foo",
+                    bar: "bar",
+                },
+                parsed: {
+                    foo: "foo",
+                    bar: "bar",
+                    // @ts-expect-error
+                    baz: "yoyo",
+                },
             }
         );
 
         itJson(
-            "json() skips unknown values by when skipUnknownKeys == true",
+            "skips unknown values by when includeUnknownKeysOnJson === false",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -115,29 +141,74 @@ describe("object", () => {
                     // @ts-expect-error
                     baz: "yoyo",
                 },
-                opts: { skipUnknownKeys: true },
+                opts: {
+                    includeUnknownKeysOnJson: false,
+                },
+            }
+        );
+
+        itJson(
+            "includes unknown values by when includeUnknownKeysOnJson === true",
+            object({
+                foo: property("raw_foo", string()),
+                bar: stringLiteral("bar"),
+            }),
+            {
+                raw: {
+                    raw_foo: "foo",
+                    bar: "bar",
+                    // @ts-expect-error
+                    baz: "yoyo",
+                },
+                parsed: {
+                    foo: "foo",
+                    bar: "bar",
+                    // @ts-expect-error
+                    baz: "yoyo",
+                },
+                opts: {
+                    includeUnknownKeysOnJson: true,
+                },
             }
         );
     });
 
-    describe("withProperties", () => {
-        it("Added property is included on parsed object", () => {
-            const schema = object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }).withProperties((parsed) => ({
-                printFoo: () => parsed.foo,
-            }));
+    describe("nullish properties", () => {
+        itSchema("optional properties are allowed to be omitted", object({ foo: string().optional() }), {
+            raw: {},
+            parsed: {},
+        });
 
-            const parsed = schema.parse({ raw_foo: "value of foo", bar: "bar" });
-            expect(parsed.printFoo()).toBe("value of foo");
+        describe("parse()", () => {
+            itParse("undefined properties are dropped", object({ foo: string().optional() }), {
+                raw: { foo: undefined },
+                parsed: {},
+            });
+
+            itParse("null properties are dropped", object({ foo: string().optional() }), {
+                raw: { foo: null },
+                parsed: {},
+            });
+        });
+
+        describe("json()", () => {
+            itJson("undefined properties are dropped", object({ foo: string().optional() }), {
+                raw: {},
+                parsed: { foo: undefined },
+            });
         });
     });
 
     describe("compile", () => {
+        // eslint-disable-next-line jest/expect-expect
+        it("doesn't compile with non-object in schema", () => {
+            // @ts-expect-error
+            object([]);
+        });
+
         describe("parse()", () => {
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with missing property", () => {
+            it("doesn't compile with missing property in input", () => {
                 const schema = object({
                     foo: string(),
                     bar: stringLiteral("bar"),
@@ -148,7 +219,7 @@ describe("object", () => {
             });
 
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with extra property", () => {
+            it("doesn't compile with extra property in input", () => {
                 const schema = object({
                     foo: string(),
                     bar: stringLiteral("bar"),
@@ -177,7 +248,7 @@ describe("object", () => {
 
         describe("json()", () => {
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with missing property", () => {
+            it("doesn't compile with missing property in input", () => {
                 const schema = object({
                     foo: string(),
                     bar: stringLiteral("bar"),
@@ -188,7 +259,7 @@ describe("object", () => {
             });
 
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with extra property", () => {
+            it("doesn't compile with extra property in input", () => {
                 const schema = object({
                     foo: string(),
                     bar: stringLiteral("bar"),
@@ -204,7 +275,7 @@ describe("object", () => {
             });
 
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-object as input", () => {
+            it("doesn't compile with non-object as input in input", () => {
                 const schema = object({
                     foo: string(),
                     bar: stringLiteral("bar"),

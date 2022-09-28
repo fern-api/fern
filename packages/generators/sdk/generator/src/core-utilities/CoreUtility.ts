@@ -1,18 +1,20 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/core-utils";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
-import { ExportedDirectory, ExportedFilePath } from "../exports-manager/ExportedFilePath";
+import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
+
+export type CoreUtilityName = string;
 
 export declare namespace CoreUtility {
     export interface Init {
-        getReferenceToExport: (args: {
-            manifest: CoreUtility.Manifest;
-            filepathInUtility: ExportedFilePath;
-            exportedName: string;
-        }) => Reference;
+        getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;
     }
 
     export interface Manifest {
-        originalPathInRepo: RelativeFilePath;
+        name: CoreUtilityName;
+        repoInfoForTesting: {
+            path: RelativeFilePath;
+            ignoreGlob?: string;
+        };
         originalPathOnDocker: AbsoluteFilePath;
         pathInCoreUtilities: ExportedDirectory[];
     }
@@ -23,7 +25,6 @@ export abstract class CoreUtility {
 
     private getReferenceToExportInCoreUtilities: (args: {
         manifest: CoreUtility.Manifest;
-        filepathInUtility: ExportedFilePath;
         exportedName: string;
     }) => Reference;
 
@@ -31,17 +32,18 @@ export abstract class CoreUtility {
         this.getReferenceToExportInCoreUtilities = init.getReferenceToExport;
     }
 
-    protected withReferenceToExport({
-        filepathInUtility,
-        exportedName,
-    }: {
-        filepathInUtility: ExportedFilePath;
-        exportedName: string;
-    }): Reference {
-        return this.getReferenceToExportInCoreUtilities({
-            manifest: this.MANIFEST,
-            filepathInUtility,
-            exportedName,
-        });
+    protected withExportedName<F extends Function>(
+        exportedName: string,
+        run: (referenceToExportedName: Reference) => F
+    ): F {
+        const wrapper = (...args: unknown[]) => {
+            const reference = this.getReferenceToExportInCoreUtilities({
+                manifest: this.MANIFEST,
+                exportedName,
+            });
+            return run(reference)(...args);
+        };
+
+        return wrapper as unknown as F;
     }
 }

@@ -4,7 +4,7 @@ import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { getExportedDirectoriesForFernFilepath } from "./utils/getExportedDirectoriesForFernFilepath";
 
-const TYPES_DIRECTORY_NAME = "types";
+export const TYPES_DIRECTORY_NAME = "types";
 
 export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<DeclaredTypeName> {
     public getExportedFilepath(typeName: DeclaredTypeName): ExportedFilePath {

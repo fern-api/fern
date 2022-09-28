@@ -5,4 +5,3 @@ export { type ParsedAuthSchemes } from "./ParsedAuthSchemes";
 export { type Reference } from "./Reference";
 export { type SdkDeclarationHandler } from "./SdkDeclarationHandler";
 export { type SdkFile } from "./SdkFile";
-export { type TypeReferenceNode } from "./TypeReferenceNode";

@@ -1,4 +1,4 @@
-import { SchemaUtils } from "./SchemaUtils";
+import { SchemaUtils } from "./builders";
 
 export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
 
@@ -7,9 +7,17 @@ export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> 
 
 export interface BaseSchema<Raw, Parsed> {
     parse: (raw: Raw, opts?: SchemaOptions) => Parsed;
-    json: (paresd: Parsed, opts?: SchemaOptions) => Raw;
+    json: (parsed: Parsed, opts?: SchemaOptions) => Raw;
 }
 
 export interface SchemaOptions {
-    skipUnknownKeys?: boolean;
+    /**
+     * @default false
+     */
+    skipUnknownKeysOnParse?: boolean;
+
+    /**
+     * @default false
+     */
+    includeUnknownKeysOnJson?: boolean;
 }

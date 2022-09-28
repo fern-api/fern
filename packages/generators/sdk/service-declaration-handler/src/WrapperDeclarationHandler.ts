@@ -5,14 +5,22 @@ import { Scope, ts } from "ts-morph";
 import { ClientConstants } from "./constants";
 
 export const WrapperDeclarationHandler: SdkDeclarationHandler<WrapperDeclaration> = {
-    run: async (wrapper, { file }) => {
-        generateWrapper({ wrapper, file });
+    run: async (wrapper, { file, exportedName }) => {
+        generateWrapper({ wrapper, file, wrapperTypeName: exportedName });
     },
 };
 
-export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration; file: SdkFile }): void {
+export function generateWrapper({
+    wrapper,
+    file,
+    wrapperTypeName,
+}: {
+    wrapper: WrapperDeclaration;
+    file: SdkFile;
+    wrapperTypeName: string;
+}): void {
     const apiModule = file.sourceFile.addModule({
-        name: wrapper.name.name,
+        name: wrapperTypeName,
         isExported: true,
     });
 
@@ -53,7 +61,7 @@ export function generateWrapper({ wrapper, file }: { wrapper: WrapperDeclaration
         const service = file.getServiceDeclaration(serviceName);
 
         const referenceToServiceClient = file.getReferenceToService(serviceName, {
-            importAlias: `${serviceName.name}${ClientConstants.HttpService.SERVICE_NAME}`,
+            importAlias: `${serviceName.name}Client`,
         });
         const referenceToServiceClientType = ts.factory.createTypeReferenceNode(referenceToServiceClient.entityName);
 

@@ -1,7 +1,5 @@
 export const ClientConstants = {
     HttpService: {
-        SERVICE_NAME: "Client",
-
         Files: {
             ENDPOINTS_DIRECTORY_NAME: "endpoints",
         },

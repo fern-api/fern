@@ -1,6 +1,6 @@
 import { BaseSchema, Schema } from "../../Schema";
-import { getSchemaUtils } from "../../SchemaUtils";
 import { entries } from "../../utils/entries";
+import { getSchemaUtils } from "../schema-utils";
 
 export function record<RawKey extends string | number, ParsedKey extends string | number, RawValue, ParsedValue>(
     keySchema: Schema<RawKey, ParsedKey>,

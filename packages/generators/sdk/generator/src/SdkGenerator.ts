@@ -1,18 +1,27 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/sdk-errors";
 import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/sdk-service-declaration-handler";
-import { TypeDeclarationHandler } from "@fern-typescript/types-v2";
+import {
+    TypeReferenceToParsedTypeNodeConverter,
+    TypeReferenceToRawTypeNodeConverter,
+    TypeReferenceToSchemaConverter,
+} from "@fern-typescript/type-reference-converters";
+import { RAW_TYPE_NAME, TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
 import { constructWrapperDeclarations } from "./constructWrapperDeclarations";
 import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
+import { ImportStrategy } from "./declaration-referencers/DeclarationReferencer";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
+import { ErrorSchemaDeclarationReferencer } from "./declaration-referencers/ErrorSchemaDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
+import { TypeSchemaDeclarationReferencer } from "./declaration-referencers/TypeSchemaDeclarationReferencer";
 import { getReferenceToExportFromRoot } from "./declaration-referencers/utils/getReferenceToExportFromRoot";
 import { WrapperDeclarationReferencer } from "./declaration-referencers/WrapperDeclarationReferencer";
 import { DependencyManager } from "./dependency-manager/DependencyManager";
@@ -24,9 +33,10 @@ import {
 import { ExportsManager } from "./exports-manager/ExportsManager";
 import { createExternalDependencies } from "./external-dependencies/createExternalDependencies";
 import { generateTypeScriptProject } from "./generate-ts-project/generateTypeScriptProject";
-import { getReferenceToType } from "./getReferenceToType";
 import { ImportsManager } from "./imports-manager/ImportsManager";
 import { parseAuthSchemes } from "./parseAuthSchemes";
+
+const SCHEMA_IMPORT_STRATEGY: ImportStrategy = { type: "fromRoot", namespaceImport: "schemas" };
 
 export declare namespace SdkGenerator {
     export interface Init {
@@ -53,7 +63,9 @@ export class SdkGenerator {
     private serviceResolver: ServiceResolver;
 
     private typeDeclarationReferencer: TypeDeclarationReferencer;
+    private typeSchemaDeclarationReferencer: TypeSchemaDeclarationReferencer;
     private errorDeclarationReferencer: ErrorDeclarationReferencer;
+    private errorSchemaDeclarationReferencer: ErrorSchemaDeclarationReferencer;
     private serviceDeclarationReferencer: ServiceDeclarationReferencer;
     private wrapperDeclarationReferencer: WrapperDeclarationReferencer;
 
@@ -79,12 +91,30 @@ export class SdkGenerator {
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
         this.serviceResolver = new ServiceResolver(intermediateRepresentation);
 
-        const apiDirectory = [this.getApiDirectory()];
+        const apiDirectory: ExportedDirectory[] = [
+            {
+                nameOnDisk: "api",
+                exportDeclaration: { namespaceExport: this.apiName },
+            },
+        ];
+
+        const schemaDirectory: ExportedDirectory[] = [
+            {
+                nameOnDisk: "schemas",
+            },
+        ];
+
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
         });
+        this.typeSchemaDeclarationReferencer = new TypeSchemaDeclarationReferencer({
+            containingDirectory: schemaDirectory,
+        });
         this.errorDeclarationReferencer = new ErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
+        });
+        this.errorSchemaDeclarationReferencer = new ErrorSchemaDeclarationReferencer({
+            containingDirectory: schemaDirectory,
         });
         this.serviceDeclarationReferencer = new ServiceDeclarationReferencer({
             containingDirectory: apiDirectory,
@@ -109,6 +139,7 @@ export class SdkGenerator {
         await this.generateErrorDeclarations();
         await this.generateServiceDeclarations();
         await this.generateWrappers();
+        this.coreUtilitiesManager.addExports(this.exportsManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         for (const sourceFile of this.rootDirectory.getSourceFiles()) {
             sourceFile.formatText();
@@ -124,10 +155,17 @@ export class SdkGenerator {
         for (const typeDeclaration of this.intermediateRepresentation.types) {
             await this.withFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                run: async (file) => {
-                    await TypeDeclarationHandler.run(typeDeclaration, {
-                        file,
-                        context: this.context,
+                run: async (typeFile) => {
+                    await this.withFile({
+                        filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                        run: async (schemaFile) => {
+                            await TypeDeclarationHandler.run(typeDeclaration, {
+                                typeFile,
+                                schemaFile,
+                                exportedName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+                                context: this.context,
+                            });
+                        },
                     });
                 },
             });
@@ -138,10 +176,17 @@ export class SdkGenerator {
         for (const errorDeclaration of this.intermediateRepresentation.errors) {
             await this.withFile({
                 filepath: this.errorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
-                run: async (file) => {
-                    await ErrorDeclarationHandler.run(errorDeclaration, {
-                        file,
-                        context: this.context,
+                run: async (errorFile) => {
+                    await this.withFile({
+                        filepath: this.errorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                        run: async (schemaFile) => {
+                            await ErrorDeclarationHandler.run(errorDeclaration, {
+                                errorFile,
+                                schemaFile,
+                                exportedName: this.errorDeclarationReferencer.getExportedName(errorDeclaration.name),
+                                context: this.context,
+                            });
+                        },
                     });
                 },
             });
@@ -155,6 +200,7 @@ export class SdkGenerator {
                 run: async (file) => {
                     await ServiceDeclarationHandler.run(serviceDeclaration, {
                         file,
+                        exportedName: this.serviceDeclarationReferencer.getExportedName(),
                         context: this.context,
                     });
                 },
@@ -170,6 +216,7 @@ export class SdkGenerator {
                 run: async (file) => {
                     await WrapperDeclarationHandler.run(wrapperDeclaration, {
                         file,
+                        exportedName: this.wrapperDeclarationReferencer.getExportedName(wrapperDeclaration.name),
                         context: this.context,
                     });
                 },
@@ -194,16 +241,48 @@ export class SdkGenerator {
         const importsManager = new ImportsManager();
         const addImport = importsManager.addImport.bind(importsManager);
 
-        const getReferenceToTypeForFile = (typeReference: TypeReference) =>
-            getReferenceToType({
-                typeReference,
-                getReferenceToNamedType: (typeName) =>
-                    this.typeDeclarationReferencer.getReferenceTo(typeName, {
-                        importStrategy: { type: "fromRoot" },
-                        referencedIn: sourceFile,
-                        addImport,
-                    }).typeNode,
+        const getReferenceToNamedType = (typeName: DeclaredTypeName) =>
+            this.typeDeclarationReferencer.getReferenceTo(typeName, {
+                importStrategy: { type: "fromRoot" },
+                referencedIn: sourceFile,
+                addImport,
             });
+
+        const typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
+            getReferenceToNamedType: (typeName) => getReferenceToNamedType(typeName).entityName,
+            resolveType: (typeName) => this.typeResolver.resolveTypeName(typeName),
+        });
+
+        const getReferenceToRawNamedType = (typeName: DeclaredTypeName) =>
+            this.typeSchemaDeclarationReferencer.getReferenceTo(typeName, {
+                importStrategy: SCHEMA_IMPORT_STRATEGY,
+                subImport: [RAW_TYPE_NAME],
+                addImport,
+                referencedIn: sourceFile,
+            });
+
+        const typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
+            getReferenceToNamedType: (typeName) => getReferenceToRawNamedType(typeName).entityName,
+            resolveType: (typeName) => this.typeResolver.resolveTypeName(typeName),
+        });
+
+        const coreUtilities = this.coreUtilitiesManager.getCoreUtilities({ sourceFile, addImport });
+
+        const getReferenceToNamedTypeSchema = (typeName: DeclaredTypeName) =>
+            this.typeSchemaDeclarationReferencer.getReferenceTo(typeName, {
+                importStrategy: SCHEMA_IMPORT_STRATEGY,
+                addImport,
+                referencedIn: sourceFile,
+            });
+
+        const getSchemaOfNamedType = (typeName: DeclaredTypeName) =>
+            coreUtilities.zurg.Schema._fromExpression(getReferenceToNamedTypeSchema(typeName).expression);
+
+        const typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
+            getSchemaOfNamedType,
+            zurg: coreUtilities.zurg,
+            resolveType: (typeName) => this.typeResolver.resolveTypeName(typeName),
+        });
 
         const addDependency = (name: string, version: string, options?: { preferPeer?: boolean }) => {
             this.dependencyManager.addDependency(name, version, options);
@@ -214,9 +293,19 @@ export class SdkGenerator {
             addImport,
         });
 
+        const getReferenceToErrorSchema = (errorName: DeclaredErrorName) =>
+            this.errorSchemaDeclarationReferencer.getReferenceTo(errorName, {
+                importStrategy: SCHEMA_IMPORT_STRATEGY,
+                addImport,
+                referencedIn: sourceFile,
+            });
+
         const file: SdkFile = {
             sourceFile,
-            getReferenceToType: getReferenceToTypeForFile,
+            getReferenceToType: typeReferenceToParsedTypeNodeConverter.convert.bind(
+                typeReferenceToParsedTypeNodeConverter
+            ),
+            getReferenceToNamedType,
             getServiceDeclaration: (serviceName) => this.serviceResolver.getServiceDeclarationFromName(serviceName),
             getReferenceToService: (serviceName, { importAlias }) =>
                 this.serviceDeclarationReferencer.getReferenceTo(serviceName, {
@@ -230,7 +319,7 @@ export class SdkGenerator {
                     addImport,
                     importStrategy: { type: "direct", alias: importAlias },
                 }),
-            resolveTypeReference: (typeReference) => this.typeResolver.resolveTypeReference(typeReference),
+            resolveTypeReference: this.typeResolver.resolveTypeReference.bind(this.typeResolver),
             getErrorDeclaration: (errorName) => this.errorResolver.getErrorDeclarationFromName(errorName),
             getReferenceToError: (errorName) =>
                 this.errorDeclarationReferencer.getReferenceTo(errorName, {
@@ -239,12 +328,16 @@ export class SdkGenerator {
                     addImport,
                 }),
             externalDependencies,
-            coreUtilities: this.coreUtilitiesManager.getCoreUtilities({ sourceFile, addImport }),
+            coreUtilities,
+            getSchemaOfNamedType,
+            getErrorSchema: (errorName) =>
+                coreUtilities.zurg.Schema._fromExpression(getReferenceToErrorSchema(errorName).expression),
             addDependency,
             authSchemes: parseAuthSchemes({
                 apiAuth: this.intermediateRepresentation.auth,
                 externalDependencies,
-                getReferenceToType: (typeReference) => getReferenceToTypeForFile(typeReference).typeNode,
+                getReferenceToType: (typeReference) =>
+                    typeReferenceToParsedTypeNodeConverter.convert(typeReference).typeNode,
             }),
             fernConstants: this.intermediateRepresentation.constants,
             addNamedExport: (namedExport) => {
@@ -259,6 +352,11 @@ export class SdkGenerator {
                     exportedFromPath: filepath,
                     addImport: importsManager.addImport.bind(importsManager),
                 }),
+            getReferenceToRawType: typeReferenceToRawTypeNodeConverter.convert.bind(
+                typeReferenceToRawTypeNodeConverter
+            ),
+            getReferenceToRawNamedType,
+            getSchemaOfTypeReference: typeReferenceToSchemaConverter.convert.bind(typeReferenceToSchemaConverter),
         };
 
         await run(file);
@@ -266,12 +364,5 @@ export class SdkGenerator {
         importsManager.writeImportsToSourceFile(sourceFile);
 
         this.context.logger.debug(`Generated ${filepathStr}`);
-    }
-
-    private getApiDirectory(): ExportedDirectory {
-        return {
-            nameOnDisk: "api",
-            exportDeclaration: { namespaceExport: this.apiName },
-        };
     }
 }
