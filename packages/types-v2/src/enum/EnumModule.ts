@@ -32,7 +32,18 @@ export class EnumModule extends AbstractEnumFileDeclaration {
     }
 
     public getReferenceToRawValue(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(this.getReferenceTo(EnumModule.RAW_VALUE_TYPE_ALIAS_NAME));
+        return EnumModule.getReferenceToRawValue({
+            referenceToModule: ts.factory.createIdentifier(this.getModuleName()),
+        });
+    }
+
+    public static getReferenceToRawValue({ referenceToModule }: { referenceToModule: ts.EntityName }): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(
+            EnumModule.getReferenceTo({
+                name: EnumModule.RAW_VALUE_TYPE_ALIAS_NAME,
+                referenceToModule,
+            })
+        );
     }
 
     public getReferenceToVisitorInterface(): ts.EntityName {
@@ -40,9 +51,19 @@ export class EnumModule extends AbstractEnumFileDeclaration {
     }
 
     private getReferenceTo(name: string): ts.EntityName {
-        return ts.factory.createQualifiedName(
-            ts.factory.createIdentifier(this.getModuleName()),
-            ts.factory.createIdentifier(name)
-        );
+        return EnumModule.getReferenceTo({
+            name,
+            referenceToModule: ts.factory.createIdentifier(this.getModuleName()),
+        });
+    }
+
+    private static getReferenceTo({
+        name,
+        referenceToModule,
+    }: {
+        name: string;
+        referenceToModule: ts.EntityName;
+    }): ts.EntityName {
+        return ts.factory.createQualifiedName(referenceToModule, ts.factory.createIdentifier(name));
     }
 }

@@ -6,7 +6,7 @@ export abstract class AbstractVisitHelper {
     public static readonly VISITOR_PARAMETER_NAME = "visitor";
     public static readonly VISITOR_INTERFACE_NAME = "_Visitor";
     public static readonly VISITOR_RETURN_TYPE = "Result";
-    public static readonly UNKNOWN_VISITOR_KEY = "_unknown";
+    public static readonly UNKNOWN_VISITOR_KEY = "_other";
     public static readonly VISITOR_INVOCATION_PARAMETER_NAME = "value";
 
     public static getSignature({

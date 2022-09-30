@@ -56,4 +56,12 @@ export class EnumInterface extends AbstractEnumFileDeclaration {
     private getInterfaceName(): string {
         return this.typeName;
     }
+
+    public static getReferenceToRawValue(referenceToEnumValue: ts.Expression): ts.Expression {
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(referenceToEnumValue, EnumInterface.GET_METHOD_NAME),
+            undefined,
+            undefined
+        );
+    }
 }

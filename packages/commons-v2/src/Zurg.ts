@@ -9,6 +9,7 @@ export interface Zurg {
     enum: (values: string[]) => Zurg.Schema;
     string: () => Zurg.Schema;
     stringLiteral: (literal: string) => Zurg.Schema;
+    date: () => Zurg.Schema;
     number: () => Zurg.Schema;
     boolean: () => Zurg.Schema;
     any: () => Zurg.Schema;
@@ -35,6 +36,8 @@ export declare namespace Zurg {
     }
 
     interface SchemaUtils {
+        parse: (raw: ts.Expression) => ts.Expression;
+        json: (parsed: ts.Expression) => ts.Expression;
         optional: () => Zurg.Schema;
         transform: (args: { newShape: ts.TypeNode; parse: ts.ArrowFunction; json: ts.ArrowFunction }) => Zurg.Schema;
     }

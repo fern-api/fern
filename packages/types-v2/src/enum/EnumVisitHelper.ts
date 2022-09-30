@@ -17,7 +17,7 @@ export class EnumVisitHelper extends AbstractVisitHelper {
         this.parsedEnumValues = init.parsedEnumValues;
     }
 
-    protected getProperties(): OptionalKind<PropertySignatureStructure>[] {
+    protected override getProperties(): OptionalKind<PropertySignatureStructure>[] {
         return this.parsedEnumValues.map<OptionalKind<PropertySignatureStructure>>((enumValue) => ({
             name: enumValue.getVisitorKey(),
             type: getTextOfTsNode(
@@ -28,7 +28,7 @@ export class EnumVisitHelper extends AbstractVisitHelper {
         }));
     }
 
-    protected getUnknownParameterType(): ts.TypeNode {
+    protected override getUnknownParameterType(): ts.TypeNode {
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
     }
 }

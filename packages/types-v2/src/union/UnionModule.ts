@@ -1,18 +1,26 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { InterfaceDeclarationStructure, OptionalKind, ts } from "ts-morph";
-import { AbstractUnionFileDeclaration } from "./AbstractUnionFileDeclaration";
-import {
-    AbstractParsedSingleUnionType,
-    ParsedSingleUnionType,
-} from "./parsed-single-union-type/AbstractParsedSingleUnionType";
+import { AbstractUnionDeclaration } from "./AbstractUnionDeclaration";
+import { AbstractParsedSingleUnionType } from "./parsed-single-union-type/AbstractParsedSingleUnionType";
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 import { UnionVisitHelper } from "./UnionVisitHelper";
+import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 
-export class UnionModule extends AbstractUnionFileDeclaration {
+export class UnionModule extends AbstractUnionDeclaration {
     public static readonly UTILS_INTERFACE_NAME = "_Utils";
     public static readonly VISIT_UTIL_PROPERTY_NAME = "_visit";
-    public static readonly UNKNOWN_DISCRIMINANT_TYPE = ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     public static readonly UNKNOWN_SINGLE_UNION_TYPE_INTERFACE_NAME = "_Unknown";
+
+    private unknownSingleUnionType: UnknownSingleUnionType;
+
+    constructor({
+        unknownSingleUnionType,
+        ...superInit
+    }: { unknownSingleUnionType: UnknownSingleUnionType } & AbstractUnionDeclaration.Init) {
+        super(superInit);
+        this.unknownSingleUnionType = unknownSingleUnionType;
+    }
 
     public writeToFile(file: SdkFile, unionVisitHelper: UnionVisitHelper): void {
         const module = file.sourceFile.addModule({
@@ -30,8 +38,9 @@ export class UnionModule extends AbstractUnionFileDeclaration {
             ...this.parsedSingleUnionTypes.map((singleUnionType) => singleUnionType.getInterfaceDeclaration(file)),
             AbstractParsedSingleUnionType.createDiscriminatedInterface({
                 typeName: UnionModule.UNKNOWN_SINGLE_UNION_TYPE_INTERFACE_NAME,
-                discriminantValue: UnionModule.UNKNOWN_DISCRIMINANT_TYPE,
-                union: this.union,
+                discriminant: this.discriminant,
+                discriminantValue: this.unknownSingleUnionType.discriminantType,
+                nonDiscriminantProperties: this.unknownSingleUnionType.getNonDiscriminantProperties?.(file),
                 isRaw: false,
             }),
         ];

@@ -1,7 +1,5 @@
-import { assertNever } from "@fern-api/core-utils";
-import { DeclaredTypeName, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, MapType, TypeReference } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToSchemaConverter {
@@ -21,44 +19,46 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         this.zurg = zurg;
     }
 
-    protected named(typeName: DeclaredTypeName): Zurg.Schema {
+    protected override named(typeName: DeclaredTypeName): Zurg.Schema {
         return this.getSchemaOfNamedType(typeName);
     }
 
-    protected primitive(primitive: PrimitiveType): Zurg.Schema {
-        const syntaxKind = this.getSyntaxKindForPrimitive(primitive);
-        switch (syntaxKind) {
-            case ts.SyntaxKind.StringKeyword:
-                return this.zurg.string();
-            case ts.SyntaxKind.NumberKeyword:
-                return this.zurg.number();
-            case ts.SyntaxKind.BooleanKeyword:
-                return this.zurg.boolean();
-            default:
-                assertNever(syntaxKind);
-        }
+    protected override boolean(): Zurg.Schema {
+        return this.zurg.boolean();
     }
 
-    protected optional(itemType: TypeReference): Zurg.Schema {
+    protected override string(): Zurg.Schema {
+        return this.zurg.string();
+    }
+
+    protected override number(): Zurg.Schema {
+        return this.zurg.number();
+    }
+
+    protected override dateTime(): Zurg.Schema {
+        return this.zurg.date();
+    }
+
+    protected override optional(itemType: TypeReference): Zurg.Schema {
         return this.convert(itemType).optional();
     }
 
-    protected unknown(): Zurg.Schema {
+    protected override unknown(): Zurg.Schema {
         return this.zurg.unknown();
     }
 
-    protected list(itemType: TypeReference): Zurg.Schema {
+    protected override list(itemType: TypeReference): Zurg.Schema {
         return this.zurg.list(this.convert(itemType));
     }
 
-    protected map({ keyType, valueType }: MapType): Zurg.Schema {
+    protected override map({ keyType, valueType }: MapType): Zurg.Schema {
         return this.zurg.record({
             keySchema: this.keyType(keyType),
             valueSchema: this.convert(valueType),
         });
     }
 
-    protected set(itemType: TypeReference): Zurg.Schema {
+    protected override set(itemType: TypeReference): Zurg.Schema {
         const itemSchema = this.convert(itemType);
         if (this.isTypeReferencePrimitive(itemType)) {
             return this.zurg.set(itemSchema);

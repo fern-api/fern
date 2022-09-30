@@ -1,26 +1,23 @@
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment, WrapperDeclaration } from "@fern-typescript/commons-v2";
-import { SdkDeclarationHandler, SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { Scope, ts } from "ts-morph";
-import { ClientConstants } from "./constants";
+import { Client } from "./http/Client";
 
-export const WrapperDeclarationHandler: SdkDeclarationHandler<WrapperDeclaration> = {
-    run: async (wrapper, { file, exportedName }) => {
-        generateWrapper({ wrapper, file, wrapperTypeName: exportedName });
-    },
-};
+export declare namespace WrapperDeclarationHandler {
+    export interface Args {
+        file: SdkFile;
+        wrapperClassName: string;
+        context: GeneratorContext;
+    }
+}
 
-export function generateWrapper({
-    wrapper,
-    file,
-    wrapperTypeName,
-}: {
-    wrapper: WrapperDeclaration;
-    file: SdkFile;
-    wrapperTypeName: string;
-}): void {
+export function WrapperDeclarationHandler(
+    wrapper: WrapperDeclaration,
+    { file, wrapperClassName }: WrapperDeclarationHandler.Args
+): void {
     const apiModule = file.sourceFile.addModule({
-        name: wrapperTypeName,
+        name: wrapperClassName,
         isExported: true,
     });
 
@@ -113,10 +110,7 @@ export function generateWrapper({
                                     ts.factory.createObjectLiteralExpression(
                                         [
                                             createPropertyAssignment(
-                                                ts.factory.createIdentifier(
-                                                    ClientConstants.HttpService.ServiceNamespace.Options.Properties
-                                                        .BASE_PATH
-                                                ),
+                                                ts.factory.createIdentifier(Client.BASE_PATH_OPTIONS_PROPERTY_NAME),
                                                 basePath
                                             ),
                                             ...authSchemeProperties.map(({ name: propertyName }) =>

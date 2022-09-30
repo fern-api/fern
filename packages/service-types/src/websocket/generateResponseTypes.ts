@@ -1,6 +1,7 @@
 import { FernConstants } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { DependencyManager, getTextOfTsKeyword } from "@fern-typescript/commons";
 import { GeneratedWebSocketOperationTypes, ModelContext } from "@fern-typescript/model-context";
 import { ts } from "ts-morph";
@@ -31,7 +32,7 @@ export function generateResponseTypes({
         modelContext,
         dependencyManager,
         successResponse: {
-            typeReference: operation.response.type,
+            typeReference: operation.response.type ?? TypeReference.void(),
             docs: operation.response.docs,
         },
         responseErrors: operation.errors,

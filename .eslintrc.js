@@ -70,7 +70,7 @@ module.exports = {
         "@typescript-eslint/no-empty-function": [
             "error",
             {
-                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
+                allow: ["private-constructors", "protected-constructors", "decoratedFunctions", "overrideMethods"],
             },
         ],
         "jest/unbound-method": ["error"],

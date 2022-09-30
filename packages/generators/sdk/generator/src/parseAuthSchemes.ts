@@ -2,7 +2,7 @@ import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
-import { ExternalDependencies, ParsedAuthSchemes } from "@fern-typescript/sdk-declaration-handler";
+import { CoreUtilities, ParsedAuthSchemes } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 
 const AUTHORIZATION_HEADER_NAME = "Authorization";
@@ -16,11 +16,11 @@ interface ParsedAuthSchemeProperty {
 
 export function parseAuthSchemes({
     apiAuth,
-    externalDependencies,
+    coreUtilities,
     getReferenceToType,
 }: {
     apiAuth: ApiAuth;
-    externalDependencies: ExternalDependencies;
+    coreUtilities: CoreUtilities;
     getReferenceToType: (typeReference: TypeReference) => ts.TypeNode;
 }): ParsedAuthSchemes {
     const headerNameToAuthSchemes = apiAuth.schemes.reduce<Record<HeaderName, AuthScheme[]>>((acc, scheme) => {
@@ -41,13 +41,13 @@ export function parseAuthSchemes({
             bearer: () => {
                 return {
                     propertyName: "_token",
-                    getType: () => externalDependencies.serviceUtils.BearerToken._getReferenceToType(),
+                    getType: () => coreUtilities.auth.BearerToken._getReferenceToType(),
                 };
             },
             basic: () => {
                 return {
                     propertyName: "_credentials",
-                    getType: () => externalDependencies.serviceUtils.BasicAuth._getReferenceToType(),
+                    getType: () => coreUtilities.auth.BasicAuth._getReferenceToType(),
                 };
             },
             header: (header) => {
@@ -87,9 +87,8 @@ export function parseAuthSchemes({
             return createNullCheckConditional(
                 referenceToProperty,
                 AuthScheme._visit(scheme, {
-                    bearer: () =>
-                        externalDependencies.serviceUtils.BearerToken.toAuthorizationHeader(referenceToProperty),
-                    basic: () => externalDependencies.serviceUtils.BasicAuth.toAuthorizationHeader(referenceToProperty),
+                    bearer: () => coreUtilities.auth.BearerToken.toAuthorizationHeader(referenceToProperty),
+                    basic: () => coreUtilities.auth.BasicAuth.toAuthorizationHeader(referenceToProperty),
                     header: () => referenceToProperty,
                     _unknown: () => {
                         throw new Error("Unknown auth scheme: " + scheme._type);

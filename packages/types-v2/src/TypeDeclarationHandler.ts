@@ -1,59 +1,63 @@
 import { EnumTypeDeclaration, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
-import { SdkDeclarationHandler, SdkFile } from "@fern-typescript/sdk-declaration-handler";
-import { generateEnumType } from "./enum/generateEnumType";
-import { generateAliasType } from "./generateAliasType";
-import { generateObjectType } from "./generateObjectType";
-import { generateUnionType } from "./union/generateUnionType";
+import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { AliasTypeGenerator } from "./alias/AliasTypeGenerator";
+import { EnumTypeGenerator } from "./enum/EnumTypeGenerator";
+import { ObjectTypeGenerator } from "./object/ObjectTypeGenerator";
+import { UnionTypeGenerator } from "./union/UnionTypeGenerator";
 
 export declare namespace TypeDeclarationHandler {
-    export interface Args extends Omit<SdkDeclarationHandler.Args, "file"> {
+    export interface Args {
         typeFile: SdkFile;
         schemaFile: SdkFile;
+        typeName: string;
+        context: GeneratorContext;
     }
 }
 
-export const TypeDeclarationHandler: SdkDeclarationHandler<TypeDeclaration, TypeDeclarationHandler.Args> = {
-    run: async (typeDeclaration, { typeFile, schemaFile, exportedName: typeName }) => {
-        Type._visit(typeDeclaration.shape, {
-            object: (objectTypeDeclaration) => {
-                generateObjectType({
-                    typeName,
-                    typeDeclaration,
-                    typeFile,
-                    schemaFile,
-                    shape: objectTypeDeclaration,
-                });
-            },
-            union: (unionTypeDeclaration) => {
-                generateUnionType({
-                    typeFile,
-                    schemaFile,
-                    typeName,
-                    typeDeclaration,
-                    union: unionTypeDeclaration,
-                });
-            },
-            alias: (aliasTypeDeclaration) => {
-                generateAliasType({
-                    typeName,
-                    typeDeclaration,
-                    typeFile,
-                    schemaFile,
-                    shape: aliasTypeDeclaration,
-                });
-            },
-            enum: (enumTypeDeclaration: EnumTypeDeclaration) => {
-                generateEnumType({
-                    typeName,
-                    typeDeclaration,
-                    typeFile,
-                    schemaFile,
-                    shape: enumTypeDeclaration,
-                });
-            },
-            _unknown: () => {
-                throw new Error("Unknown declaration type: " + typeDeclaration.shape._type);
-            },
-        });
-    },
-};
+export function TypeDeclarationHandler(
+    typeDeclaration: TypeDeclaration,
+    { typeFile, schemaFile, typeName }: TypeDeclarationHandler.Args
+): void {
+    Type._visit(typeDeclaration.shape, {
+        object: (objectTypeDeclaration) => {
+            new ObjectTypeGenerator({
+                typeName,
+                typeDeclaration,
+                shape: objectTypeDeclaration,
+            }).generate({
+                typeFile,
+                schemaFile,
+            });
+        },
+        union: (union) => {
+            new UnionTypeGenerator({
+                typeName,
+                typeDeclaration,
+                union,
+            }).generate({ typeFile, schemaFile });
+        },
+        alias: (aliasTypeDeclaration) => {
+            new AliasTypeGenerator({
+                typeName,
+                typeDeclaration,
+                shape: aliasTypeDeclaration,
+            }).generate({
+                typeFile,
+                schemaFile,
+            });
+        },
+        enum: (enumTypeDeclaration: EnumTypeDeclaration) => {
+            new EnumTypeGenerator({
+                typeName,
+                typeDeclaration,
+                shape: enumTypeDeclaration,
+            }).generate({
+                typeFile,
+                schemaFile,
+            });
+        },
+        _unknown: () => {
+            throw new Error("Unknown declaration type: " + typeDeclaration.shape._type);
+        },
+    });
+}

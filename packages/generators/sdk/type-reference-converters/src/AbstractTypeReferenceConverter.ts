@@ -7,7 +7,6 @@ import {
     ShapeType,
     TypeReference,
 } from "@fern-fern/ir-model/types";
-import { ts } from "ts-morph";
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
@@ -50,7 +49,10 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 
     protected abstract named(typeName: DeclaredTypeName): T;
-    protected abstract primitive(primitive: PrimitiveType): T;
+    protected abstract string(): T;
+    protected abstract number(): T;
+    protected abstract boolean(): T;
+    protected abstract dateTime(): T;
     protected abstract map(map: MapType): T;
     protected abstract list(itemType: TypeReference): T;
     protected abstract set(itemType: TypeReference): T;
@@ -95,22 +97,18 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected enumAsString(_enumTypeName: DeclaredTypeName): T {
         // by default, treat enums as strings in maps. otherwise, typescript assumes
         // that there won't be unknown values
-        return this.primitive(PrimitiveType.String);
+        return this.string();
     }
 
-    protected getSyntaxKindForPrimitive(
-        primitive: PrimitiveType
-    ): ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.NumberKeyword {
-        return PrimitiveType._visit<
-            ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.NumberKeyword
-        >(primitive, {
-            boolean: () => ts.SyntaxKind.BooleanKeyword,
-            double: () => ts.SyntaxKind.NumberKeyword,
-            integer: () => ts.SyntaxKind.NumberKeyword,
-            long: () => ts.SyntaxKind.NumberKeyword,
-            string: () => ts.SyntaxKind.StringKeyword,
-            uuid: () => ts.SyntaxKind.StringKeyword,
-            dateTime: () => ts.SyntaxKind.StringKeyword,
+    protected primitive(primitive: PrimitiveType): T {
+        return PrimitiveType._visit<T>(primitive, {
+            boolean: this.boolean.bind(this),
+            double: this.number.bind(this),
+            integer: this.number.bind(this),
+            long: this.number.bind(this),
+            string: this.string.bind(this),
+            uuid: this.string.bind(this),
+            dateTime: this.dateTime.bind(this),
             _unknown: () => {
                 throw new Error("Unexpected primitive type: " + primitive);
             },

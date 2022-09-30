@@ -4,11 +4,11 @@ import { ts } from "ts-morph";
 import { ExternalDependency } from "../ExternalDependency";
 
 export class FernServiceUtilsImpl extends ExternalDependency implements FernServiceUtils {
-    protected PACKAGE = {
+    protected override PACKAGE = {
         name: "@fern-typescript/service-utils",
         version: getGeneratorVersion(),
     };
-    protected TYPES_PACKAGE = undefined;
+    protected override TYPES_PACKAGE = undefined;
 
     public readonly Supplier = this.withNamedImport(
         "Supplier",

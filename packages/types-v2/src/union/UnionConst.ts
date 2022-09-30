@@ -1,11 +1,15 @@
 import { FernWriters, getTextOfTsNode, ObjectWriter } from "@fern-typescript/commons";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { VariableDeclarationKind } from "ts-morph";
-import { AbstractUnionFileDeclaration } from "./AbstractUnionFileDeclaration";
+import { AbstractUnionDeclaration } from "./AbstractUnionDeclaration";
 import { UnionModule } from "./UnionModule";
 
-export class UnionConst extends AbstractUnionFileDeclaration {
+export class UnionConst extends AbstractUnionDeclaration {
     public writeToFile(file: SdkFile, unionModule: UnionModule): void {
+        if (this.parsedSingleUnionTypes.length === 0) {
+            return;
+        }
+
         const writer = FernWriters.object.writer({ asConst: true });
 
         this.addBuilderProperties(file, unionModule, writer);
@@ -30,7 +34,11 @@ export class UnionConst extends AbstractUnionFileDeclaration {
         for (const singleUnionType of this.parsedSingleUnionTypes) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
-                value: getTextOfTsNode(singleUnionType.getBuilder(file, unionModule)),
+                value: getTextOfTsNode(
+                    singleUnionType.getBuilder(file, {
+                        referenceToBuiltType: unionModule.getReferenceToSingleUnionType(singleUnionType),
+                    })
+                ),
             });
             writer.addNewLine();
         }

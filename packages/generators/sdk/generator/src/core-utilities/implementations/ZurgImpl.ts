@@ -8,7 +8,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     public readonly MANIFEST = {
         name: "zurg",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/zurg/src"),
+            path: RelativeFilePath.of("packages/core-utilities/zurg/src"),
             ignoreGlob: "**/__test__",
         },
         originalPathOnDocker: "/assets/zurg" as const,
@@ -315,6 +315,17 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         };
     });
 
+    public date = this.withExportedName("date", (date: Reference) => () => {
+        const baseSchema: Zurg.BaseSchema = {
+            toExpression: () => ts.factory.createCallExpression(date.expression, undefined, undefined),
+        };
+
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema),
+        };
+    });
+
     public any = this.withExportedName("any", (any: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             toExpression: () => ts.factory.createCallExpression(any.expression, undefined, undefined),
@@ -340,6 +351,18 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     private getSchemaUtils(baseSchema: Zurg.BaseSchema): Zurg.SchemaUtils {
         return {
             optional: () => this.optional(baseSchema),
+            parse: (raw) =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
+                    undefined,
+                    [raw]
+                ),
+            json: (parsed) =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
+                    undefined,
+                    [parsed]
+                ),
             transform: ({
                 newShape,
                 parse,

@@ -1,6 +1,8 @@
 import { WrapperName } from "@fern-typescript/commons-v2";
+import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { DeclarationReferencer } from "./DeclarationReferencer";
 import { createExportForFernFilepathDirectory } from "./utils/getExportedDirectoriesForFernFilepath";
 
 export class WrapperDeclarationReferencer extends AbstractDeclarationReferencer<WrapperName> {
@@ -23,5 +25,9 @@ export class WrapperDeclarationReferencer extends AbstractDeclarationReferencer<
 
     public getExportedName(wrapperName: WrapperName): string {
         return wrapperName.name;
+    }
+
+    public getReferenceToWrapper(args: DeclarationReferencer.getReferenceTo.Options<WrapperName>): Reference {
+        return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 }

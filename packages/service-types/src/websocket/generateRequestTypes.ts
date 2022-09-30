@@ -1,5 +1,6 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { WebSocketOperation } from "@fern-fern/ir-model/services/websocket";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext, WebSocketChannelTypeMetadata } from "@fern-typescript/model-context";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -40,7 +41,7 @@ export function generateRequestTypes({
                 referencedIn,
             }),
         body: {
-            typeReference: operation.request.type,
+            typeReference: operation.request.type ?? TypeReference.void(),
             docs: operation.request.docs,
         },
         additionalProperties,

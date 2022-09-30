@@ -1,111 +1,69 @@
-import { SingleUnionType, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
+import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { UnionModule } from "../UnionModule";
 import { UnionVisitHelper } from "../UnionVisitHelper";
-
-export interface ParsedSingleUnionType {
-    getDocs(): string | null | undefined;
-    getDiscriminantValue(): string;
-    getInterfaceName(): string;
-    getRawInterfaceDeclaration(file: SdkFile): AbstractParsedSingleUnionType.InterfaceDeclaration;
-    getInterfaceDeclaration(file: SdkFile): AbstractParsedSingleUnionType.InterfaceDeclaration;
-    getSchema(file: SdkFile): Zurg.union.SingleUnionType;
-    getBuilder(file: SdkFile, unionModule: UnionModule): ts.ArrowFunction;
-    getBuilderName(): string;
-    getVisitMethod(args: { referenceToUnionValue: ts.Expression }): ts.ArrowFunction;
-    getVisitMethodSignature(file: SdkFile): ts.FunctionTypeNode;
-    getVisitorKey(): string;
-}
-
-export declare namespace AbstractParsedSingleUnionType {
-    export interface Init {
-        singleUnionType: SingleUnionType;
-        union: UnionTypeDeclaration;
-    }
-
-    export interface InterfaceDeclaration {
-        name: string;
-        extends: ts.TypeNode[];
-        jsonProperties: OptionalKind<PropertySignatureStructure>[];
-    }
-}
+import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
 
 export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnionType {
-    protected singleUnionType: SingleUnionType;
-    protected union: UnionTypeDeclaration;
+    constructor(private readonly singleUnionType: SingleUnionTypeGenerator) {}
 
-    constructor(init: AbstractParsedSingleUnionType.Init) {
-        this.singleUnionType = init.singleUnionType;
-        this.union = init.union;
-    }
-
-    public getDocs(): string | null | undefined {
-        return this.singleUnionType.docs;
-    }
-
-    public getInterfaceName(): string {
-        return this.singleUnionType.discriminantValue.pascalCase;
-    }
-
-    public getInterfaceDeclaration(file: SdkFile): AbstractParsedSingleUnionType.InterfaceDeclaration {
+    public getInterfaceDeclaration(file: SdkFile): ParsedSingleUnionType.InterfaceDeclaration {
         return AbstractParsedSingleUnionType.createDiscriminatedInterface({
             typeName: this.getInterfaceName(),
             discriminantValue: ts.factory.createLiteralTypeNode(
                 ts.factory.createStringLiteral(this.getDiscriminantValue())
             ),
-            nonDiscriminantProperties: this.getNonDiscriminantPropertiesForInterface(file, { isRaw: false }),
-            extends: this.getExtendsForInterface(file, { isRaw: false }),
-            union: this.union,
+            nonDiscriminantProperties: this.singleUnionType.getNonDiscriminantPropertiesForInterface(file, {
+                isRaw: false,
+            }),
+            extends: this.singleUnionType.getExtendsForInterface(file, { isRaw: false }),
+            discriminant: this.getDiscriminant(),
             isRaw: false,
         });
     }
 
-    public getRawInterfaceDeclaration(file: SdkFile): AbstractParsedSingleUnionType.InterfaceDeclaration {
+    public getRawInterfaceDeclaration(file: SdkFile): ParsedSingleUnionType.InterfaceDeclaration {
         return AbstractParsedSingleUnionType.createDiscriminatedInterface({
             typeName: this.getInterfaceName(),
             discriminantValue: ts.factory.createLiteralTypeNode(
-                ts.factory.createStringLiteral(this.singleUnionType.discriminantValue.wireValue)
+                ts.factory.createStringLiteral(this.getDiscriminantValue())
             ),
-            nonDiscriminantProperties: this.getNonDiscriminantPropertiesForInterface(file, { isRaw: true }),
-            extends: this.getExtendsForInterface(file, { isRaw: true }),
-            union: this.union,
+            nonDiscriminantProperties: this.singleUnionType.getNonDiscriminantPropertiesForInterface(file, {
+                isRaw: true,
+            }),
+            extends: this.singleUnionType.getExtendsForInterface(file, { isRaw: true }),
+            discriminant: this.getDiscriminant(),
             isRaw: true,
         });
     }
 
-    protected abstract getExtendsForInterface(file: SdkFile, opts: { isRaw: boolean }): ts.TypeNode[];
-
-    protected abstract getNonDiscriminantPropertiesForInterface(
-        file: SdkFile,
-        opts: { isRaw: boolean }
-    ): OptionalKind<PropertySignatureStructure>[];
-
     public static createDiscriminatedInterface({
         typeName,
+        discriminant,
         discriminantValue,
         nonDiscriminantProperties = [],
         extends: extends_ = [],
-        union,
         isRaw,
     }: {
         typeName: string;
+        discriminant: WireStringWithAllCasings;
         discriminantValue: ts.TypeNode;
         nonDiscriminantProperties?: OptionalKind<PropertySignatureStructure>[];
         extends?: ts.TypeNode[];
-        union: UnionTypeDeclaration;
         isRaw: boolean;
-    }): AbstractParsedSingleUnionType.InterfaceDeclaration {
+    }): ParsedSingleUnionType.InterfaceDeclaration {
         return {
             name: typeName,
             extends: extends_,
             jsonProperties: [
                 {
                     name: isRaw
-                        ? union.discriminantV2.wireValue
-                        : AbstractParsedSingleUnionType.getDiscriminantKey(union),
+                        ? discriminant.wireValue
+                        : AbstractParsedSingleUnionType.getDiscriminantKey(discriminant),
                     type: getTextOfTsNode(discriminantValue),
                 },
                 ...nonDiscriminantProperties,
@@ -113,32 +71,30 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
         };
     }
 
-    public static getDiscriminantKey(union: UnionTypeDeclaration): string {
-        return union.discriminantV2.camelCase;
-    }
-
-    public getDiscriminantValue(): string {
-        return this.singleUnionType.discriminantValue.wireValue;
-    }
-
-    public getBuilder(file: SdkFile, unionModule: UnionModule): ts.ArrowFunction {
+    public getBuilder(
+        file: SdkFile,
+        { referenceToBuiltType }: { referenceToBuiltType: ts.TypeNode }
+    ): ts.ArrowFunction {
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
-            this.getParametersForBuilder(file),
-            unionModule.getReferenceToSingleUnionType(this),
+            this.singleUnionType.getParametersForBuilder(file),
+            referenceToBuiltType,
             undefined,
             ts.factory.createParenthesizedExpression(
                 ts.factory.createObjectLiteralExpression(
                     [
-                        ...this.getNonDiscriminantPropertiesForBuilder(file),
+                        ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(file),
                         ts.factory.createPropertyAssignment(
-                            AbstractParsedSingleUnionType.getDiscriminantKey(this.union),
+                            this.getDiscriminantKey(),
                             ts.factory.createStringLiteral(this.getDiscriminantValue())
                         ),
                         ts.factory.createPropertyAssignment(
                             UnionModule.VISIT_UTIL_PROPERTY_NAME,
-                            this.getVisitorCallForBuilder()
+                            UnionVisitHelper.getVisitMethod({
+                                visitorKey: this.getVisitorKey(),
+                                visitorArguments: this.singleUnionType.getVisitorArgumentsForBuilder(),
+                            })
                         ),
                     ],
                     true
@@ -147,42 +103,38 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
         );
     }
 
-    public getBuilderName(): string {
-        return this.singleUnionType.discriminantValue.pascalCase;
+    private getDiscriminantKey(): string {
+        return AbstractParsedSingleUnionType.getDiscriminantKey(this.getDiscriminant());
     }
 
-    protected abstract getParametersForBuilder(file: SdkFile): ts.ParameterDeclaration[];
-
-    protected abstract getNonDiscriminantPropertiesForBuilder(file: SdkFile): ts.ObjectLiteralElementLike[];
-
-    protected abstract getVisitorCallForBuilder(): ts.ArrowFunction;
-
-    public abstract getVisitMethod({
-        referenceToUnionValue,
-    }: {
-        referenceToUnionValue: ts.Expression;
-    }): ts.ArrowFunction;
-
-    public getVisitMethodSignature(file: SdkFile): ts.FunctionTypeNode {
-        return UnionVisitHelper.getVisitorPropertySignature({
-            parameterType: this.getVisitMethodParameterType(file),
-        });
-    }
-
-    protected abstract getVisitMethodParameterType(file: SdkFile): ts.TypeNode | undefined;
-
-    public getVisitorKey(): string {
-        return this.singleUnionType.discriminantValue.camelCase;
+    public static getDiscriminantKey(discriminant: WireStringWithAllCasings): string {
+        return discriminant.camelCase;
     }
 
     public getSchema(file: SdkFile): Zurg.union.SingleUnionType {
         return {
             discriminantValue: this.getDiscriminantValue(),
-            nonDiscriminantProperties: this.getNonDiscriminantPropertiesForSchema(file),
+            nonDiscriminantProperties: this.singleUnionType.getNonDiscriminantPropertiesForSchema(file),
         };
     }
 
-    protected abstract getNonDiscriminantPropertiesForSchema(
-        file: SdkFile
-    ): Zurg.union.SingleUnionType["nonDiscriminantProperties"];
+    public getVisitMethod({ referenceToUnionValue }: { referenceToUnionValue: ts.Expression }): ts.ArrowFunction {
+        return UnionVisitHelper.getVisitMethod({
+            visitorKey: this.getVisitorKey(),
+            visitorArguments: this.singleUnionType.getVisitorArguments({ referenceToUnionValue }),
+        });
+    }
+
+    public getVisitMethodSignature(file: SdkFile): ts.FunctionTypeNode {
+        return UnionVisitHelper.getVisitorPropertySignature({
+            parameterType: this.singleUnionType.getVisitMethodParameterType(file),
+        });
+    }
+
+    public abstract getDocs(): string | null | undefined;
+    public abstract getDiscriminantValue(): string;
+    public abstract getInterfaceName(): string;
+    public abstract getBuilderName(): string;
+    public abstract getVisitorKey(): string;
+    protected abstract getDiscriminant(): WireStringWithAllCasings;
 }

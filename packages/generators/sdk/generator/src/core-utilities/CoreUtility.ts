@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/core-utils";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
+import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 
 export type CoreUtilityName = string;
@@ -17,6 +18,7 @@ export declare namespace CoreUtility {
         };
         originalPathOnDocker: AbsoluteFilePath;
         pathInCoreUtilities: ExportedDirectory[];
+        addDependencies?: (dependencyManager: DependencyManager) => void;
     }
 }
 

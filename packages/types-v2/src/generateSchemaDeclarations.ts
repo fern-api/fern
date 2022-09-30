@@ -1,21 +1,20 @@
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 
-export const RAW_TYPE_NAME = "Raw";
+const RAW_TYPE_NAME = "Raw";
 
 export function generateSchemaDeclarations({
     schemaFile,
-    typeDeclaration,
+    getReferenceToParsedShape,
     typeName,
     schema,
     generateRawTypeDeclaration,
     isObject = false,
 }: {
     schemaFile: SdkFile;
-    typeDeclaration: TypeDeclaration;
+    getReferenceToParsedShape: (file: SdkFile) => ts.TypeNode;
     typeName: string;
     schema: Zurg.Schema;
     generateRawTypeDeclaration: (module: ModuleDeclaration, rawTypeName: string) => void;
@@ -23,10 +22,8 @@ export function generateSchemaDeclarations({
 }): void {
     const MODULE_NAME = typeName;
 
-    const rawShape = ts.factory.createTypeReferenceNode(
-        ts.factory.createQualifiedName(ts.factory.createIdentifier(MODULE_NAME), RAW_TYPE_NAME)
-    );
-    const parsedShape = schemaFile.getReferenceToNamedType(typeDeclaration.name).typeNode;
+    const rawShape = getReferenceToRawSchema({ referenceToSchemaModule: ts.factory.createIdentifier(MODULE_NAME) });
+    const parsedShape = getReferenceToParsedShape(schemaFile);
     const schemaType = isObject
         ? schemaFile.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape })
         : schemaFile.coreUtilities.zurg.Schema._getReferenceToType({
@@ -53,4 +50,12 @@ export function generateSchemaDeclarations({
     });
 
     generateRawTypeDeclaration(module, RAW_TYPE_NAME);
+}
+
+function getReferenceToRawSchema({ referenceToSchemaModule }: { referenceToSchemaModule: ts.EntityName }): ts.TypeNode {
+    return ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(referenceToSchemaModule, RAW_TYPE_NAME));
+}
+
+export function getSubImportPathToRawSchema(): string[] {
+    return [RAW_TYPE_NAME];
 }

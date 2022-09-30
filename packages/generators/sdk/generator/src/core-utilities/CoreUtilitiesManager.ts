@@ -5,11 +5,14 @@ import glob from "glob-promise";
 import path from "path";
 import { SourceFile } from "ts-morph";
 import { getReferenceToExportViaNamespaceImport } from "../declaration-referencers/utils/getReferenceToExportViaNamespaceImport";
+import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 import { ExportsManager } from "../exports-manager/ExportsManager";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
+import { AuthImpl } from "./implementations/AuthImpl";
+import { FetcherImpl } from "./implementations/FetcherImpl";
 import { ZurgImpl } from "./implementations/ZurgImpl";
 
 const CORE_UTILITIES_FILEPATH: ExportedDirectory[] = [{ nameOnDisk: "core" }];
@@ -30,12 +33,15 @@ export class CoreUtilitiesManager {
         const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, addImport });
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
+            fetcher: new FetcherImpl({ getReferenceToExport }),
+            auth: new AuthImpl({ getReferenceToExport }),
         };
     }
 
-    public addExports(exportsManager: ExportsManager): void {
+    public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
         for (const utility of Object.values(this.referencedCoreUtilities)) {
             exportsManager.addExportsForDirectories(getPathToUtility(utility));
+            utility.addDependencies?.(dependencyManager);
         }
     }
 

@@ -16,7 +16,6 @@ export async function installAndCompileGeneratedProject(pathToDirectory: string)
 
     await runYarnCommand(["set", "version", "berry"]);
     await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
-    await runYarnCommand(["link", path.join(__dirname, "../../service-utils")]);
     await runYarnCommand(["install"], {
         // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
         YARN_ENABLE_IMMUTABLE_INSTALLS: "false",

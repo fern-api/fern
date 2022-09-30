@@ -1,33 +1,54 @@
+import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
-import { AbstractUnionFileDeclaration } from "./AbstractUnionFileDeclaration";
 import { AbstractParsedSingleUnionType } from "./parsed-single-union-type/AbstractParsedSingleUnionType";
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 import { UnionModule } from "./UnionModule";
 import { UnionVisitHelper } from "./UnionVisitHelper";
 
-export class UnionSchema extends AbstractUnionFileDeclaration {
-    public toSchema(file: SdkFile): Zurg.Schema {
+export declare namespace UnionSchema {
+    export interface Init {
+        parsedSingleUnionTypes: ParsedSingleUnionType[];
+        discriminant: WireStringWithAllCasings;
+    }
+}
+
+export class UnionSchema {
+    private parsedSingleUnionTypes: ParsedSingleUnionType[];
+    private discriminant: WireStringWithAllCasings;
+
+    constructor({ parsedSingleUnionTypes, discriminant }: UnionSchema.Init) {
+        this.parsedSingleUnionTypes = parsedSingleUnionTypes;
+        this.discriminant = discriminant;
+    }
+
+    public toSchema(
+        file: SdkFile,
+        {
+            referenceToParsedShape,
+            shouldIncludeDefaultCaseInTransform,
+        }: { referenceToParsedShape: ts.TypeNode; shouldIncludeDefaultCaseInTransform: boolean }
+    ): Zurg.Schema {
         const rawValueParameterName = "value";
         const parsedValueParameterName = "value";
 
-        const transformCaseStatements = [
-            ...this.parsedSingleUnionTypes.map(
-                (singleUnionType) =>
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(singleUnionType.getDiscriminantValue()),
-                        [
-                            ts.factory.createBlock([
-                                this.getTransformReturnStatement({
-                                    rawValueParameterName,
-                                    shouldCastRawAsAny: false,
-                                    visitMethod: singleUnionType.getVisitMethod({
-                                        referenceToUnionValue: ts.factory.createIdentifier(rawValueParameterName),
-                                    }),
-                                }),
-                            ]),
-                        ]
-                    ),
+        const transformCaseStatements: ts.CaseOrDefaultClause[] = this.parsedSingleUnionTypes.map((singleUnionType) =>
+            ts.factory.createCaseClause(ts.factory.createStringLiteral(singleUnionType.getDiscriminantValue()), [
+                ts.factory.createBlock([
+                    this.getTransformReturnStatement({
+                        rawValueParameterName,
+                        shouldCastRawAsAny: false,
+                        visitMethod: singleUnionType.getVisitMethod({
+                            referenceToUnionValue: ts.factory.createIdentifier(rawValueParameterName),
+                        }),
+                    }),
+                ]),
+            ])
+        );
+
+        if (shouldIncludeDefaultCaseInTransform) {
+            transformCaseStatements.push(
                 ts.factory.createDefaultClause([
                     ts.factory.createBlock([
                         this.getTransformReturnStatement({
@@ -40,17 +61,17 @@ export class UnionSchema extends AbstractUnionFileDeclaration {
                         }),
                     ]),
                 ])
-            ),
-        ];
+            );
+        }
 
         return file.coreUtilities.zurg
             .union({
-                rawDiscriminant: this.union.discriminantV2.wireValue,
-                parsedDiscriminant: AbstractParsedSingleUnionType.getDiscriminantKey(this.union),
+                rawDiscriminant: this.discriminant.wireValue,
+                parsedDiscriminant: AbstractParsedSingleUnionType.getDiscriminantKey(this.discriminant),
                 singleUnionTypes: this.parsedSingleUnionTypes.map((singleUnionType) => singleUnionType.getSchema(file)),
             })
             .transform({
-                newShape: file.getReferenceToNamedType(this.typeDeclaration.name).typeNode,
+                newShape: referenceToParsedShape,
                 parse: ts.factory.createArrowFunction(
                     undefined,
                     undefined,
@@ -62,7 +83,7 @@ export class UnionSchema extends AbstractUnionFileDeclaration {
                             ts.factory.createSwitchStatement(
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createIdentifier(rawValueParameterName),
-                                    AbstractParsedSingleUnionType.getDiscriminantKey(this.union)
+                                    AbstractParsedSingleUnionType.getDiscriminantKey(this.discriminant)
                                 ),
                                 ts.factory.createCaseBlock(transformCaseStatements)
                             ),
@@ -78,31 +99,14 @@ export class UnionSchema extends AbstractUnionFileDeclaration {
                             undefined,
                             undefined,
                             undefined,
-                            ts.factory.createIdentifier(parsedValueParameterName),
-                            undefined,
-                            undefined
+                            ts.factory.createIdentifier(parsedValueParameterName)
                         ),
                     ],
                     undefined,
                     undefined,
                     ts.factory.createAsExpression(
                         ts.factory.createIdentifier(parsedValueParameterName),
-                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Exclude"), [
-                            ts.factory.createTypeQueryNode(
-                                ts.factory.createIdentifier(parsedValueParameterName),
-                                undefined
-                            ),
-                            ts.factory.createTypeLiteralNode([
-                                ts.factory.createPropertySignature(
-                                    undefined,
-                                    ts.factory.createIdentifier(
-                                        AbstractParsedSingleUnionType.getDiscriminantKey(this.union)
-                                    ),
-                                    undefined,
-                                    UnionModule.UNKNOWN_DISCRIMINANT_TYPE
-                                ),
-                            ]),
-                        ])
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                     )
                 ),
             });

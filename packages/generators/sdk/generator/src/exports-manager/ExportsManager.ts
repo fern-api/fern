@@ -38,7 +38,7 @@ export class ExportsManager {
 
     public addExportsForFilepath(filepath: ExportedFilePath): void {
         this.addExportsForDirectories(filepath.directories);
-        if (filepath.file.exportDeclaration != null) {
+        if (filepath.file?.exportDeclaration != null) {
             this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file.exportDeclaration);
         }
     }

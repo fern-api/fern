@@ -1,3 +1,11 @@
-export { generateObjectType } from "./generateObjectType";
-export { RAW_TYPE_NAME } from "./generateSchemaDeclarations";
+export { AbstractSchemaGenerator } from "./AbstractSchemaGenerator";
+export { EnumTypeGenerator } from "./enum/EnumTypeGenerator";
+export { getSubImportPathToRawSchema } from "./generateSchemaDeclarations";
 export { TypeDeclarationHandler } from "./TypeDeclarationHandler";
+export { AbstractUnionGenerator } from "./union/AbstractUnionGenerator";
+export { AbstractParsedSingleUnionType } from "./union/parsed-single-union-type/AbstractParsedSingleUnionType";
+export { type ParsedSingleUnionType } from "./union/parsed-single-union-type/ParsedSingleUnionType";
+export { NoPropertiesSingleUnionTypeGenerator } from "./union/single-union-type-generator/NoPropertiesSingleUnionTypeGenerator";
+export { type SingleUnionTypeGenerator } from "./union/single-union-type-generator/SingleUnionTypeGenerator";
+export { UnionModule } from "./union/UnionModule";
+export { UnionVisitHelper } from "./union/UnionVisitHelper";

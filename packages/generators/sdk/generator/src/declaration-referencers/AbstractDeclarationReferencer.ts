@@ -20,17 +20,20 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;
     public abstract getFilename(name: Name): string;
-    public abstract getExportedName(name: Name): string;
 
-    public getReferenceTo(
-        name: Name,
-        { importStrategy, addImport, referencedIn, subImport }: DeclarationReferencer.getReferenceTo.Options
+    protected getExportedFilepathForReferences(name: Name): ExportedFilePath {
+        return this.getExportedFilepath(name);
+    }
+
+    protected getReferenceTo(
+        exportedName: string,
+        { name, addImport, referencedIn, subImport, importStrategy }: DeclarationReferencer.getReferenceTo.Options<Name>
     ): Reference {
         switch (importStrategy.type) {
             case "direct":
                 return getDirectReferenceToExport({
-                    exportedName: this.getExportedName(name),
-                    exportedFromPath: this.getExportedFilepath(name),
+                    exportedName,
+                    exportedFromPath: this.getExportedFilepathForReferences(name),
                     importAlias: importStrategy.alias,
                     addImport,
                     referencedIn,
@@ -38,8 +41,8 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({
-                    exportedName: this.getExportedName(name),
-                    exportedFromPath: this.getExportedFilepath(name),
+                    exportedName,
+                    exportedFromPath: this.getExportedFilepathForReferences(name),
                     referencedIn,
                     addImport,
                     namespaceImport: importStrategy.namespaceImport,

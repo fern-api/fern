@@ -25,7 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.205",
+    "@fern-fern/ir-model": "0.0.220",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

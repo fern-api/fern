@@ -25,10 +25,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.0.199",
-    "@fern-api/ir-generator": "0.0.199",
-    "@fern-api/workspace-loader": "0.0.199",
-    "@fern-fern/ir-model": "0.0.205",
+    "@fern-api/core-utils": "0.0.196-7-g43c51f07",
+    "@fern-api/ir-generator": "0.0.196-7-g43c51f07",
+    "@fern-api/workspace-loader": "0.0.196-7-g43c51f07",
+    "@fern-fern/ir-model": "0.0.220",
     "@fern-typescript/commons": "workspace:*",
     "execa": "^5.1.1",
     "memfs": "^3.4.1",

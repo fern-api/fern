@@ -76,7 +76,7 @@ errors:
     http:
       statusCode: 404
     type:
-      properties:
+      union:
         playlistId: PlaylistId
   UnauthorizedError:
     http:

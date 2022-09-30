@@ -4,7 +4,7 @@ import { ExportDeclaration } from "./ExportsManager";
 
 export interface ExportedFilePath {
     directories: ExportedDirectory[];
-    file: ExportedFilePathPart;
+    file: ExportedFilePathPart | undefined;
 }
 
 export interface ExportedDirectory extends ExportedFilePathPart {
@@ -19,10 +19,12 @@ export interface ExportedFilePathPart {
 }
 
 export function convertExportedFilePathToFilePath(exportedFilePath: ExportedFilePath): string {
-    return path.join(
-        convertExportedDirectoryPathToFilePath(exportedFilePath.directories),
-        exportedFilePath.file.nameOnDisk
-    );
+    const directoryPath = convertExportedDirectoryPathToFilePath(exportedFilePath.directories);
+    if (exportedFilePath.file == null) {
+        return directoryPath;
+    } else {
+        return path.join(directoryPath, exportedFilePath.file.nameOnDisk);
+    }
 }
 
 export function convertExportedDirectoryPathToFilePath(exportedDirectoryPath: ExportedDirectory[]): string {
