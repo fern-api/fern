@@ -1,7 +1,7 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../type-resolver/TypeResolver";
+import { TypeResolver } from "../../resolvers/TypeResolver";
 import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 

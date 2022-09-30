@@ -1,4 +1,4 @@
-import { TypeResolver } from "../../type-resolver/TypeResolver";
+import { TypeResolver } from "../../resolvers/TypeResolver";
 
 export const MockTypeResolver: TypeResolver = {
     getDeclarationOfNamedType: () => {
