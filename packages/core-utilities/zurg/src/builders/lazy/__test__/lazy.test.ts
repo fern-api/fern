@@ -15,6 +15,17 @@ describe("lazy", () => {
         expect(wasRun).toBe(false);
     });
 
+    it("only runs first time", () => {
+        let count = 0;
+        const schema = lazy(() => {
+            count++;
+            return string();
+        });
+        schema.parse("hello");
+        schema.json("world");
+        expect(count).toBe(1);
+    });
+
     itSchemaIdentity(
         lazy(() => object({ foo: string() })),
         { foo: "hello" }

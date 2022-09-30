@@ -169,6 +169,7 @@ export class SdkGenerator {
                 run: (typeFile) => {
                     this.withFile({
                         filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                        isGeneratingSchemaFile: true,
                         run: (schemaFile) => {
                             TypeDeclarationHandler(typeDeclaration, {
                                 typeFile,
@@ -177,7 +178,6 @@ export class SdkGenerator {
                                 context: this.context,
                             });
                         },
-                        typeNameBeingGenerated: typeDeclaration.name,
                     });
                 },
             });
@@ -191,6 +191,7 @@ export class SdkGenerator {
                 run: (errorFile) => {
                     this.withFile({
                         filepath: this.errorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                        isGeneratingSchemaFile: true,
                         run: (schemaFile) => {
                             ErrorDeclarationHandler(errorDeclaration, {
                                 errorFile,
@@ -231,6 +232,7 @@ export class SdkGenerator {
                 run: (endpointFile) => {
                     this.withFile({
                         filepath: this.endpointSchemaDeclarationReferencer.getExportedFilepath(endpointName),
+                        isGeneratingSchemaFile: true,
                         run: (schemaFile) => {
                             run({ endpointFile, schemaFile });
                         },
@@ -259,11 +261,12 @@ export class SdkGenerator {
     private withFile({
         run,
         filepath,
-        typeNameBeingGenerated,
+        isGeneratingSchemaFile = false,
     }: {
         run: (file: SdkFile) => void;
         filepath: ExportedFilePath;
-        typeNameBeingGenerated?: DeclaredTypeName;
+        // TODO switch to classes so we can override via subclass
+        isGeneratingSchemaFile?: boolean;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
@@ -312,20 +315,11 @@ export class SdkGenerator {
                 referencedIn: sourceFile,
             });
 
-        const stringifiedTypeNameBeingGenerated =
-            typeNameBeingGenerated != null ? stringifyTypeName(typeNameBeingGenerated) : undefined;
         const getSchemaOfNamedType = (typeName: DeclaredTypeName) => {
             let schema = coreUtilities.zurg.Schema._fromExpression(getReferenceToNamedTypeSchema(typeName).expression);
 
-            // if this type eventually references the type we're generating, then use lazy()
-            if (
-                stringifiedTypeNameBeingGenerated != null &&
-                this.typeResolver
-                    .getTypeDeclarationFromName(typeName)
-                    .referencedTypes.some(
-                        (referencedType) => stringifyTypeName(referencedType) === stringifiedTypeNameBeingGenerated
-                    )
-            ) {
+            // when generating schemas, wrapped named types with lazy to prevent issues with circular imports
+            if (isGeneratingSchemaFile) {
                 const resolvedType = this.typeResolver.resolveTypeName(typeName);
                 schema =
                     resolvedType._type === "named" && resolvedType.shape === ShapeType.Object
@@ -448,9 +442,4 @@ export class SdkGenerator {
             this.context.logger.debug(`Generated ${filepathStr}`);
         }
     }
-}
-
-type StringifiedTypeName = string;
-function stringifyTypeName(typeName: DeclaredTypeName): StringifiedTypeName {
-    return typeName.fernFilepath.map((part) => part.originalValue).join("/") + ":" + typeName.name;
 }

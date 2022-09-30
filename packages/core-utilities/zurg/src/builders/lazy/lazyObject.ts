@@ -1,13 +1,13 @@
 import { getObjectUtils } from "../object";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from "../object-like";
-import { BaseObjectSchema, ObjectSchema } from "../object/types";
+import { ObjectSchema } from "../object/types";
 import { getSchemaUtils } from "../schema-utils";
+import { constructLazyBaseSchema } from "./lazy";
 
 export function lazyObject<Raw, Parsed>(getter: () => ObjectSchema<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
-    const baseSchema: BaseObjectSchema<Raw, Parsed> = {
+    const baseSchema = {
         ...OBJECT_LIKE_BRAND,
-        parse: (raw, opts) => getter().parse(raw, opts),
-        json: (parsed, opts) => getter().json(parsed, opts),
+        ...constructLazyBaseSchema(getter),
     };
 
     return {

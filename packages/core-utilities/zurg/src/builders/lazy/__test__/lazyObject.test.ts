@@ -4,15 +4,6 @@ import { number, string } from "../../primitives";
 import { lazyObject } from "../lazyObject";
 
 describe("lazy", () => {
-    it("doesn't run immediately", () => {
-        let wasRun = false;
-        lazyObject(() => {
-            wasRun = true;
-            return object({ foo: string() });
-        });
-        expect(wasRun).toBe(false);
-    });
-
     itSchemaIdentity(
         lazyObject(() => object({ foo: string() })),
         { foo: "hello" }
