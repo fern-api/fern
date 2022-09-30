@@ -1,7 +1,7 @@
 import { RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
-import { TypeResolver } from "../type-resolver/TypeResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
 import { generateWireStringWithAllCasings } from "../utils/generateCasings";
 import { convertType } from "./type-declarations/convertTypeDeclaration";
 

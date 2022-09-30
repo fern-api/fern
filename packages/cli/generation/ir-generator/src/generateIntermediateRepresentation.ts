@@ -8,8 +8,10 @@ import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
+import { FERN_CONSTANTS } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
-import { TypeResolverImpl } from "./type-resolver/TypeResolver";
+import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
+import { TypeResolverImpl } from "./resolvers/TypeResolver";
 
 export async function generateIntermediateRepresentation(workspace: Workspace): Promise<IntermediateRepresentation> {
     const rootApiFile = constructFernFileContext({
@@ -29,14 +31,11 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
             http: [],
             websocket: [],
         },
-        constants: {
-            errorDiscriminant: "_error",
-            errorInstanceIdKey: "_errorInstanceId",
-            unknownErrorDiscriminantValue: "_unknown",
-        },
+        constants: FERN_CONSTANTS,
     };
 
     const typeResolver = new TypeResolverImpl(workspace);
+    const errorResolver = new ErrorResolverImpl(workspace);
 
     const visitServiceFile = async ({ file, schema }: { file: FernFileContext; schema: ServiceFileSchema }) => {
         await visitObject(schema, {
@@ -94,7 +93,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
                 if (services.http != null) {
                     for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
                         intermediateRepresentation.services.http.push(
-                            convertHttpService({ serviceDefinition, serviceId, file })
+                            convertHttpService({ serviceDefinition, serviceId, file, errorResolver })
                         );
                     }
                 }

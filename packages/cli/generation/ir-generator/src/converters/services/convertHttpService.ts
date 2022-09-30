@@ -2,21 +2,25 @@ import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
 import { FernFileContext } from "../../FernFileContext";
+import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertHttpRequest } from "./convertHttpRequest";
 import { convertHttpResponse } from "./convertHttpResponse";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertResponseErrorsV2 } from "./convertResponseErrorsV2";
 
 export function convertHttpService({
     serviceDefinition,
     serviceId,
     file,
+    errorResolver,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     file: FernFileContext;
+    errorResolver: ErrorResolver;
 }): HttpService {
     return {
         docs: serviceDefinition.docs,
@@ -86,6 +90,7 @@ export function convertHttpService({
                 request: convertHttpRequest({ request: endpoint.request, file }),
                 response: convertHttpResponse({ response: endpoint.response, file }),
                 errors: convertResponseErrors({ errors: endpoint.errors, file }),
+                errorsV2: convertResponseErrorsV2({ errors: endpoint.errors, file, errorResolver }),
             })
         ),
     };
