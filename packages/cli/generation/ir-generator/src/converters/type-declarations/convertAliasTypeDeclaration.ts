@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { ResolvedTypeReference, ShapeType, Type } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../type-resolver/TypeResolver";
+import { TypeResolver } from "../../resolvers/TypeResolver";
 
 export function convertAliasTypeDeclaration({
     alias,

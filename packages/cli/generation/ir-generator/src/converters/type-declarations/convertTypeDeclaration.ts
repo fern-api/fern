@@ -1,7 +1,7 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../type-resolver/TypeResolver";
+import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getDocs } from "../../utils/getDocs";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";

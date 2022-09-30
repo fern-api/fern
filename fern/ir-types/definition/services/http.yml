@@ -29,7 +29,10 @@ types:
       queryParameters: list<QueryParameter>
       request: HttpRequest
       response: HttpResponse
-      errors: serviceCommons.ResponseErrors
+      errors:
+        docs: this is deprecated. Use errorsV2 instead.
+        type: serviceCommons.ResponseErrors
+      errorsV2: serviceCommons.ResponseErrorsV2
       auth: boolean
   HttpPath:
     properties:

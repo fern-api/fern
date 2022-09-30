@@ -8,8 +8,28 @@ types:
     properties:
       fernFilepath: commons.FernFilepath
       name: string
+
   ResponseErrors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs
     properties:
+      error: errors.DeclaredErrorName
+
+  ResponseErrorsV2:
+    properties:
+      discriminant: commons.WireStringWithAllCasings
+      types: list<ResponseErrorV2>
+  ResponseErrorV2:
+    extends: commons.WithDocs
+    properties:
+      discriminantValue: commons.WireStringWithAllCasings
+      shape: ResponseErrorShape
+  ResponseErrorShape:
+    union:
+      singleProperty: SingleResponseErrorProperty
+      noProperties: {}
+
+  SingleResponseErrorProperty:
+    properties:
+      name: commons.WireStringWithAllCasings
       error: errors.DeclaredErrorName

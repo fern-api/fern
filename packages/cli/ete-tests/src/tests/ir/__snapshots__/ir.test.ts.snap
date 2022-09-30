@@ -684,7 +684,18 @@ exports[`ir simple 1`] = `
                                 "_type": "named"
                             }
                         },
-                        "errors": []
+                        "errors": [],
+                        "errorsV2": {
+                            "discriminant": {
+                                "originalValue": "errorName",
+                                "camelCase": "errorName",
+                                "snakeCase": "error_name",
+                                "pascalCase": "ErrorName",
+                                "screamingSnakeCase": "ERROR_NAME",
+                                "wireValue": "errorName"
+                            },
+                            "types": []
+                        }
                     },
                     {
                         "id": "getMovie",
@@ -780,7 +791,32 @@ exports[`ir simple 1`] = `
                                     ]
                                 }
                             }
-                        ]
+                        ],
+                        "errorsV2": {
+                            "discriminant": {
+                                "originalValue": "errorName",
+                                "camelCase": "errorName",
+                                "snakeCase": "error_name",
+                                "pascalCase": "ErrorName",
+                                "screamingSnakeCase": "ERROR_NAME",
+                                "wireValue": "errorName"
+                            },
+                            "types": [
+                                {
+                                    "discriminantValue": {
+                                        "originalValue": "NotFoundError",
+                                        "camelCase": "notFoundError",
+                                        "snakeCase": "not_found_error",
+                                        "pascalCase": "NotFoundError",
+                                        "screamingSnakeCase": "NOT_FOUND_ERROR",
+                                        "wireValue": "NotFoundError"
+                                    },
+                                    "shape": {
+                                        "type": "noProperties"
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
             }

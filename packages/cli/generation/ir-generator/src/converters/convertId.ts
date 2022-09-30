@@ -1,7 +1,7 @@
 import { RawSchemas, RAW_DEFAULT_ID_TYPE } from "@fern-api/yaml-schema";
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../FernFileContext";
-import { TypeResolver } from "../type-resolver/TypeResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
 import { getDocs } from "../utils/getDocs";
 import { convertTypeDeclaration } from "./type-declarations/convertTypeDeclaration";
 

@@ -1,7 +1,7 @@
 import { RawSchemas, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../type-resolver/TypeResolver";
+import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
 
 interface SeenTypeNames {
