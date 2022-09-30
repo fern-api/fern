@@ -8,6 +8,9 @@ types:
       title: string
       author: Author
       content: string
+  Author: 
+    properties:
+      name: string
 services:
   http:
     PostsService:

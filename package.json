@@ -23,9 +23,9 @@
     "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
-    "@fern-api/core-utils": "0.0.188-13-g68e2f408",
-    "@fern-api/ir-generator": "0.0.188-13-g68e2f408",
-    "@fern-api/workspace-loader": "0.0.188-13-g68e2f408",
+    "@fern-api/core-utils": "0.0.200",
+    "@fern-api/ir-generator": "0.0.200",
+    "@fern-api/workspace-loader": "0.0.200",
     "@types/jest": "^27.5.0",
     "@types/js-yaml": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",
-    "@fern-fern/ir-model": "^0.0.184",
+    "@fern-fern/ir-model": "^0.0.200",
     "js-yaml": "^4.1.0",
     "openapi-types": "^12.0.0"
   },

@@ -79,7 +79,10 @@ function convertHttpEndpoint({
     const endpointPath = getEndpointPath(httpEndpoint.path);
     const fullPath = path.join(httpService.basePath ?? "", endpointPath);
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
-    const convertedPathParameters = httpEndpoint.pathParameters.map((pathParameter) =>
+    const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
+        convertPathParameter(pathParameter)
+    );
+    const convertedEndpointPathParameters = httpEndpoint.pathParameters.map((pathParameter) =>
         convertPathParameter(pathParameter)
     );
     const convertedQueryParameters = httpEndpoint.queryParameters.map((queryParameter) =>
@@ -87,7 +90,8 @@ function convertHttpEndpoint({
     );
     const convertedHeaders = httpEndpoint.headers.map((header) => convertHeader({ httpHeader: header, typesByName }));
     const parameters: OpenAPIV3.ParameterObject[] = [
-        ...convertedPathParameters,
+        ...convertedServicePathParameters,
+        ...convertedEndpointPathParameters,
         ...convertedQueryParameters,
         ...convertedHeaders,
     ];

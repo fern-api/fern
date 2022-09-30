@@ -4,6 +4,19 @@ exports[`convertToOpenApi all-auth 1`] = `
 Object {
   "components": Object {
     "schemas": Object {
+      "BlogAuthor": Object {
+        "description": undefined,
+        "properties": Object {
+          "name": Object {
+            "description": undefined,
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "name",
+        ],
+        "type": "object",
+      },
       "BlogBlogPost": Object {
         "description": "A blog post",
         "properties": Object {
@@ -139,6 +152,19 @@ exports[`convertToOpenApi any-auth 1`] = `
 Object {
   "components": Object {
     "schemas": Object {
+      "BlogAuthor": Object {
+        "description": undefined,
+        "properties": Object {
+          "name": Object {
+            "description": undefined,
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "name",
+        ],
+        "type": "object",
+      },
       "BlogBlogPost": Object {
         "description": "A blog post",
         "properties": Object {
@@ -283,13 +309,13 @@ Object {
         "oneOf": Array [
           Object {
             "properties": Object {
-              "_type": Object {},
+              "type": Object {},
             },
             "type": "object",
           },
           Object {
             "properties": Object {
-              "_type": Object {
+              "type": Object {
                 "type": "string",
               },
             },
@@ -302,7 +328,7 @@ Object {
               },
               Object {
                 "properties": Object {
-                  "_type": Object {
+                  "type": Object {
                     "enum": Array [
                       "type",
                     ],
