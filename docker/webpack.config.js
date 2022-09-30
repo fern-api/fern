@@ -14,5 +14,15 @@ module.exports = (_env, { mode = "production" }) => {
         optimization: {
             minimize: false,
         },
+        module: {
+            rules: [
+                {
+                    test: /\.m?js/,
+                    resolve: {
+                        fullySpecified: false
+                    }
+                },
+            ]
+        }
     };
 };
