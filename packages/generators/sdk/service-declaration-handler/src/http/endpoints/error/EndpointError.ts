@@ -22,7 +22,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
     constructor({ file, ...init }: EndpointError.Init) {
         super(init);
         this.unionGenerator = new EndpointErrorUnionGenerator({
-            serviceName: this.serviceName,
+            serviceName: this.service.name,
             endpoint: this.endpoint,
             file,
         });
@@ -53,7 +53,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
     public getReferenceToSchema(file: SdkFile): Zurg.Schema {
         return file.coreUtilities.zurg.Schema._fromExpression(
             ts.factory.createPropertyAccessExpression(
-                file.getReferenceToEndpointSchemaFile(this.serviceName, this.endpoint.id).expression,
+                file.getReferenceToEndpointSchemaFile(this.service.name, this.endpoint.id).expression,
                 EndpointError.TYPE_NAME
             )
         );
@@ -62,7 +62,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
     public getReferenceToType(file: SdkFile): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
-                file.getReferenceToEndpointFile(this.serviceName, this.endpoint.id).entityName,
+                file.getReferenceToEndpointFile(this.service.name, this.endpoint.id).entityName,
                 EndpointError.TYPE_NAME
             )
         );
@@ -72,7 +72,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 ts.factory.createQualifiedName(
-                    file.getReferenceToEndpointSchemaFile(this.serviceName, this.endpoint.id).entityName,
+                    file.getReferenceToEndpointSchemaFile(this.service.name, this.endpoint.id).entityName,
                     EndpointError.TYPE_NAME
                 ),
                 AbstractSchemaGenerator.RAW_TYPE_NAME

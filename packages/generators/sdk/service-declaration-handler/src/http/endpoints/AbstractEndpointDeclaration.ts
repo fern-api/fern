@@ -1,21 +1,21 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpEndpointId } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpEndpointId, HttpService } from "@fern-fern/ir-model/services/http";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractEndpointDeclaration {
     export interface Init {
-        serviceName: DeclaredServiceName;
+        service: HttpService;
         endpoint: HttpEndpoint;
     }
 }
 
 export abstract class AbstractEndpointDeclaration {
-    protected serviceName: DeclaredServiceName;
+    protected service: HttpService;
     protected endpoint: HttpEndpoint;
 
-    constructor({ serviceName, endpoint }: AbstractEndpointDeclaration.Init) {
-        this.serviceName = serviceName;
+    constructor({ service, endpoint }: AbstractEndpointDeclaration.Init) {
+        this.service = service;
         this.endpoint = endpoint;
     }
 
@@ -23,7 +23,7 @@ export abstract class AbstractEndpointDeclaration {
         return AbstractEndpointDeclaration.getReferenceToEndpointFileType({
             typeName,
             file,
-            serviceName: this.serviceName,
+            serviceName: this.service.name,
             endpointId: this.endpoint.id,
         });
     }

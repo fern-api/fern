@@ -26,7 +26,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
         this.schema = WireBodySchema.of({
             typeName: EndpointResponse.SCHEMA_TYPE_NAME,
             type: superInit.endpoint.response.type,
-            serviceName: superInit.serviceName,
+            serviceName: superInit.service.name,
             endpoint: superInit.endpoint,
         });
         this.endpointError = endpointError;
@@ -53,7 +53,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
         return ts.factory.createTypeReferenceNode("Promise", [
             ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(
-                    file.getReferenceToEndpointFile(this.serviceName, this.endpoint.id).entityName,
+                    file.getReferenceToEndpointFile(this.service.name, this.endpoint.id).entityName,
                     EndpointResponse.TYPE_NAME
                 )
             ),

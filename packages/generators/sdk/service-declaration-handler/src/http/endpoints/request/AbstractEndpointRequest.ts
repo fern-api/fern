@@ -25,7 +25,7 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
         this.schema = WireBodySchema.of({
             typeName: AbstractEndpointRequest.SCHEMA_TYPE_NAME,
             type: init.endpoint.request.type,
-            serviceName: init.serviceName,
+            serviceName: init.service.name,
             endpoint: init.endpoint,
         });
     }
@@ -68,7 +68,7 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
         return {
             statements,
             fetcherArgs: {
-                url: file.externalDependencies.urlJoin.invoke([Client.getReferenceToBasePath(), this.getUrlPath(file)]),
+                url: file.externalDependencies.urlJoin.invoke([Client.getReferenceToOrigin(), this.getUrlPath(file)]),
                 method: ts.factory.createStringLiteral(this.endpoint.method),
                 headers: [...Client.getAuthHeaders(file), ...this.getHeaders()],
                 queryParameters: queryParameters?.referenceToUrlParams,

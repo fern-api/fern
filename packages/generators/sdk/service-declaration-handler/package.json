@@ -30,7 +30,8 @@
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
     "@fern-typescript/types-v2": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^15.1.0",
+    "url-join": "4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -38,6 +39,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
     "@types/node": "^18.7.18",
+    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.23.1",
     "jest": "^28.1.3",

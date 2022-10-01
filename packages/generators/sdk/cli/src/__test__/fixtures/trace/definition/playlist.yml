@@ -24,7 +24,9 @@ services:
   http:
     PlaylistCrudService:
       auth: true
-      base-path: /v2/playlist
+      base-path: /v2/playlist/{serviceParam}
+      path-parameters:
+        serviceParam: integer
       endpoints:
         createPlaylist:
           docs: Create a new playlist

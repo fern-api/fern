@@ -14,7 +14,7 @@ export declare namespace Client {
 export class Client {
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "options";
-    public static BASE_PATH_OPTIONS_PROPERTY_NAME = "_basePath";
+    public static ORIGIN_OPTIONS_PROPERTY_NAME = "_origin";
 
     private service: HttpService;
     private serviceClassName: string;
@@ -40,7 +40,7 @@ export class Client {
             name: Client.OPTIONS_INTERFACE_NAME,
             properties: [
                 {
-                    name: Client.BASE_PATH_OPTIONS_PROPERTY_NAME,
+                    name: Client.ORIGIN_OPTIONS_PROPERTY_NAME,
                     type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
                 },
             ],
@@ -83,8 +83,8 @@ export class Client {
         return file.authSchemes.getHeaders(this.getReferenceToOptions());
     }
 
-    public static getReferenceToBasePath(): ts.Expression {
-        return this.getReferenceToOption(Client.BASE_PATH_OPTIONS_PROPERTY_NAME);
+    public static getReferenceToOrigin(): ts.Expression {
+        return this.getReferenceToOption(Client.ORIGIN_OPTIONS_PROPERTY_NAME);
     }
 
     private static getReferenceToOptions(): ts.Expression {

@@ -55,8 +55,6 @@ export function WrapperDeclarationHandler(
     });
 
     for (const serviceName of wrapper.wrappedServices) {
-        const service = file.getServiceDeclaration(serviceName);
-
         const referenceToServiceClient = file.getReferenceToService(serviceName, {
             importAlias: `${serviceName.name}Client`,
         });
@@ -84,13 +82,6 @@ export function WrapperDeclarationHandler(
             ),
             originProperty.getName()
         );
-        const basePath =
-            service.basePath != null
-                ? file.externalDependencies.urlJoin.invoke([
-                      referenceToOrigin,
-                      ts.factory.createStringLiteral(service.basePath),
-                  ])
-                : referenceToOrigin;
 
         apiClass.addGetAccessor({
             name: publicPropertyName,
@@ -110,8 +101,8 @@ export function WrapperDeclarationHandler(
                                     ts.factory.createObjectLiteralExpression(
                                         [
                                             createPropertyAssignment(
-                                                ts.factory.createIdentifier(Client.BASE_PATH_OPTIONS_PROPERTY_NAME),
-                                                basePath
+                                                ts.factory.createIdentifier(Client.ORIGIN_OPTIONS_PROPERTY_NAME),
+                                                referenceToOrigin
                                             ),
                                             ...authSchemeProperties.map(({ name: propertyName }) =>
                                                 createPropertyAssignment(

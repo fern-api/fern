@@ -1,5 +1,4 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import {
@@ -21,7 +20,7 @@ import { EndpointResponse } from "./response/EndpointResponse";
 export declare namespace Endpoint {
     export interface Init {
         file: SdkFile;
-        serviceName: DeclaredServiceName;
+        service: HttpService;
         endpoint: HttpEndpoint;
     }
 }
@@ -32,19 +31,19 @@ export class Endpoint {
     private error: EndpointError;
     private endpoint: HttpEndpoint;
 
-    constructor({ serviceName, endpoint, file }: Endpoint.Init) {
-        this.request = Endpoint.isRequestWrapped(endpoint)
-            ? new WrappedEndpointRequest({ serviceName, endpoint })
-            : new NotWrappedEndpointRequest({ serviceName, endpoint });
+    constructor({ service, endpoint, file }: Endpoint.Init) {
+        this.request = Endpoint.isRequestWrapped(service, endpoint)
+            ? new WrappedEndpointRequest({ service, endpoint })
+            : new NotWrappedEndpointRequest({ service, endpoint });
 
         this.error = new EndpointError({
-            serviceName,
+            service,
             endpoint,
             file,
         });
 
         this.response = new EndpointResponse({
-            serviceName,
+            service,
             endpoint,
             endpointError: this.error,
         });
@@ -52,8 +51,13 @@ export class Endpoint {
         this.endpoint = endpoint;
     }
 
-    private static isRequestWrapped(endpoint: HttpEndpoint): boolean {
-        return endpoint.pathParameters.length > 0 || endpoint.queryParameters.length > 0 || endpoint.headers.length > 0;
+    private static isRequestWrapped(service: HttpService, endpoint: HttpEndpoint): boolean {
+        return (
+            service.pathParameters.length > 0 ||
+            endpoint.pathParameters.length > 0 ||
+            endpoint.queryParameters.length > 0 ||
+            endpoint.headers.length > 0
+        );
     }
 
     public generate({ endpointFile, schemaFile }: { endpointFile: SdkFile; schemaFile: SdkFile }): void {

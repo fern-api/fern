@@ -1,8 +1,9 @@
-import { HttpHeader, PathParameter, QueryParameter } from "@fern-fern/ir-model/services/http";
+import { HttpHeader, HttpPath, PathParameter, QueryParameter } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import urlJoin from "url-join";
 import { AbstractEndpointDeclaration } from "../AbstractEndpointDeclaration";
 import { AbstractEndpointRequest } from "./AbstractEndpointRequest";
 
@@ -37,10 +38,12 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
             keyInWrapper: queryParameter.name.camelCase,
             queryParameter,
         }));
-        this.parsedPathParameters = this.endpoint.pathParameters.map((pathParameter) => ({
-            keyInWrapper: pathParameter.name.camelCase,
-            pathParameter,
-        }));
+        this.parsedPathParameters = [...this.service.pathParameters, ...this.endpoint.pathParameters].map(
+            (pathParameter) => ({
+                keyInWrapper: pathParameter.name.camelCase,
+                pathParameter,
+            })
+        );
         this.parsedHeaders = this.endpoint.headers.map((header) => ({
             keyInWrapper: header.name.camelCase,
             header,
@@ -70,9 +73,11 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
             return this.getUrlPathForNoPathParameters();
         }
 
+        const httpPath = this.getHttpPath();
+
         return ts.factory.createTemplateExpression(
-            ts.factory.createTemplateHead(this.endpoint.path.head),
-            this.endpoint.path.parts.map((part, index) => {
+            ts.factory.createTemplateHead(httpPath.head),
+            httpPath.parts.map((part, index) => {
                 const parsedPathParameter = this.parsedPathParameters.find(
                     ({ pathParameter }) => pathParameter.name.originalValue === part.pathParameter
                 );
@@ -81,12 +86,40 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
                 }
                 return ts.factory.createTemplateSpan(
                     this.getReferenceToWrapperProperty(parsedPathParameter.keyInWrapper),
-                    index === this.endpoint.path.parts.length - 1
+                    index === httpPath.parts.length - 1
                         ? ts.factory.createTemplateTail(part.tail)
                         : ts.factory.createTemplateMiddle(part.tail)
                 );
             })
         );
+    }
+
+    private getHttpPath(): HttpPath {
+        if (this.service.basePathV2 == null) {
+            return this.endpoint.path;
+        }
+
+        const serviceBasePathPartsExceptLast = [...this.service.basePathV2.parts];
+        const lastServiceBasePathPart = serviceBasePathPartsExceptLast.pop();
+
+        if (lastServiceBasePathPart == null) {
+            return {
+                head: urlJoin(this.service.basePathV2.head, "/", this.endpoint.path.head),
+                parts: this.endpoint.path.parts,
+            };
+        }
+
+        return {
+            head: this.service.basePathV2.head,
+            parts: [
+                ...serviceBasePathPartsExceptLast,
+                {
+                    pathParameter: lastServiceBasePathPart.pathParameter,
+                    tail: urlJoin(lastServiceBasePathPart.tail, "/", this.endpoint.path.head),
+                },
+                ...this.endpoint.path.parts,
+            ],
+        };
     }
 
     protected override buildQueryParameters(

@@ -21,7 +21,7 @@ export function generateHttpService({
     for (const irEndpoint of service.endpoints) {
         withEndpoint(irEndpoint.id, ({ endpointFile, schemaFile }) => {
             const endpoint = new Endpoint({
-                serviceName: service.name,
+                service,
                 endpoint: irEndpoint,
                 file: endpointFile,
             });
