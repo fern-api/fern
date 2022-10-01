@@ -8308,7 +8308,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client-v2", "npm:0.0.18"],\
+            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.28"],\
             ["@fern-fern/ir-model", "npm:0.0.220"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
@@ -8477,14 +8477,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-fern/fiddle-client-v2", [\
-        ["npm:0.0.18", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-v2-npm-0.0.18-26234ca4d4-3a2b0cdb9c.zip/node_modules/@fern-fern/fiddle-client-v2/",\
+      ["@fern-fern/fiddle-client", [\
+        ["npm:0.0.28", {\
+          "packageLocation": "./.yarn/unplugged/@fern-fern-fiddle-client-virtual-8b65a5c0cc/node_modules/@fern-fern/fiddle-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-client-v2", "npm:0.0.18"],\
-            ["@fern-typescript/service-utils", "npm:0.0.196"],\
+            ["@fern-fern/fiddle-client", "npm:0.0.28"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.28", {\
+          "packageLocation": "./.yarn/unplugged/@fern-fern-fiddle-client-virtual-8b65a5c0cc/node_modules/@fern-fern/fiddle-client/",\
+          "packageDependencies": [\
+            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.28"],\
+            ["@types/axios", null],\
             ["@types/url-join", "npm:4.0.1"],\
+            ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/axios",\
+            "axios"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8515,16 +8527,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.184-ed1d3cdf6e-173877b5eb.zip/node_modules/@fern-typescript/service-utils/",\
           "packageDependencies": [\
             ["@fern-typescript/service-utils", "npm:0.0.184"],\
-            ["axios", "npm:0.27.2"],\
-            ["basic-auth", "npm:2.0.1"],\
-            ["js-base64", "npm:3.7.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:0.0.196", {\
-          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.196-0853c1aefe-8fa0919888.zip/node_modules/@fern-typescript/service-utils/",\
-          "packageDependencies": [\
-            ["@fern-typescript/service-utils", "npm:0.0.196"],\
             ["axios", "npm:0.27.2"],\
             ["basic-auth", "npm:2.0.1"],\
             ["js-base64", "npm:3.7.2"]\

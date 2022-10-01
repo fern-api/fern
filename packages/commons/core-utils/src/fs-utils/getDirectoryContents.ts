@@ -18,21 +18,45 @@ export interface Directory {
     contents: FileOrDirectory[];
 }
 
-export async function getDirectoryContents(absolutePath: AbsoluteFilePath): Promise<FileOrDirectory[]> {
+export declare namespace getDirectoryContents {
+    export interface Options {
+        fileExtensions?: string[];
+    }
+}
+
+export async function getDirectoryContents(
+    absolutePath: AbsoluteFilePath,
+    { fileExtensions }: getDirectoryContents.Options = {}
+): Promise<FileOrDirectory[]> {
+    const fileExtensionsWithPeriods =
+        fileExtensions != null
+            ? new Set(
+                  fileExtensions.map((fileExtension) =>
+                      fileExtension.startsWith(".") ? fileExtension : `.${fileExtension}`
+                  )
+              )
+            : undefined;
+
+    const contents: FileOrDirectory[] = [];
+
     const items = await readdir(absolutePath, { withFileTypes: true });
-    return Promise.all(
-        items.map(async (item) =>
-            item.isDirectory()
-                ? {
-                      type: "directory",
-                      name: item.name,
-                      contents: await getDirectoryContents(join(absolutePath, item.name as RelativeFilePath)),
-                  }
-                : {
-                      type: "file",
-                      name: item.name,
-                      contents: (await readFile(path.join(absolutePath, item.name))).toString(),
-                  }
-        )
+    await Promise.all(
+        items.map(async (item) => {
+            if (item.isDirectory()) {
+                contents.push({
+                    type: "directory",
+                    name: item.name,
+                    contents: await getDirectoryContents(join(absolutePath, RelativeFilePath.of(item.name))),
+                });
+            } else if (fileExtensionsWithPeriods == null || fileExtensionsWithPeriods.has(path.extname(item.name))) {
+                contents.push({
+                    type: "file",
+                    name: item.name,
+                    contents: (await readFile(path.join(absolutePath, item.name))).toString(),
+                });
+            }
+        })
     );
+
+    return contents;
 }
