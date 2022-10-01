@@ -23,7 +23,7 @@ export declare namespace EndpointErrorUnionGenerator {
 }
 
 export class EndpointErrorUnionGenerator extends AbstractUnionGenerator {
-    public static UNKNOWN_ERROR_PROPERTY_NAME = "error";
+    public static UNKNOWN_ERROR_PROPERTY_NAME = "content";
 
     private parsedErrors: ParsedSingleUnionType[];
     private serviceName: DeclaredServiceName;
