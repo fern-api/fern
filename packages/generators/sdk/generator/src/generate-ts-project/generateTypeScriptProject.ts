@@ -1,8 +1,9 @@
 import { Volume } from "memfs/lib/volume";
 import { Project } from "ts-morph";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { generateNpmIgnore } from "./generateNpmIgnore";
+import { generateGitIgnore } from "./generateGitIgnore";
 import { generatePackageJson } from "./generatePackageJson";
+import { generatePrettierIgnore } from "./generatePrettierIgnore";
 import { generateTsConfig } from "./generateTsConfig";
 import { writeProjectToVolume } from "./writeProjectToVolume";
 
@@ -31,5 +32,6 @@ export async function generateTypeScriptProject({
         dependencies,
     });
     await generateTsConfig(volume);
-    await generateNpmIgnore(volume);
+    await generatePrettierIgnore(volume);
+    await generateGitIgnore(volume);
 }

@@ -148,12 +148,6 @@ export class SdkGenerator {
         this.generateServiceDeclarations();
         this.generateWrappers();
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
-        for (const sourceFile of this.rootDirectory.getDescendantSourceFiles()) {
-            if (sourceFile.getStatements().length === 0) {
-                sourceFile.addExportDeclaration({});
-            }
-            sourceFile.formatText();
-        }
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         await this.generatePackage();
     }

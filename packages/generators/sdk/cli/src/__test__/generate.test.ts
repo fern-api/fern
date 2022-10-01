@@ -4,7 +4,9 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
-import { installAndCompileGeneratedProject } from "@fern-typescript/testing-utils";
+import { PACKAGE_JSON_SCRIPTS } from "@fern-typescript/sdk-generator";
+import decompress from "decompress";
+import execa from "execa";
 import { rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -67,12 +69,28 @@ describe("runGenerator", () => {
 
                 await runGenerator(configJsonPath);
 
-                const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(outputPath));
-                expect(directoryContents).toMatchSnapshot();
+                const runCommandInOutputDirectory = async (command: string, args: string[]) => {
+                    await execa(command, args, {
+                        cwd: outputPath,
+                    });
+                };
 
-                // compile after snapshotting, so directoryContents doesn't
-                // include compiled files, node_modules
-                await installAndCompileGeneratedProject(outputPath);
+                // make sure it compiles
+                await runCommandInOutputDirectory("yarn", [PACKAGE_JSON_SCRIPTS.BUILD]);
+
+                // check that the non-git-ignored files match snapshot
+                const pathToGitArchive = path.join(outputPath, "archive.zip");
+                await runCommandInOutputDirectory("git", ["init", "--initial-branch=main"]);
+                await runCommandInOutputDirectory("git", ["add", "."]);
+                await runCommandInOutputDirectory("git", ["commit", "-m", '"Initial commit"']);
+                await runCommandInOutputDirectory("git", ["archive", "--output", pathToGitArchive, "main"]);
+
+                const unzippedGitArchive = (await tmp.dir()).path;
+                await decompress(pathToGitArchive, unzippedGitArchive);
+                await rm(path.join(unzippedGitArchive, ".yarn"), { recursive: true });
+                await rm(path.join(unzippedGitArchive, "yarn.lock"), { recursive: true });
+                const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(unzippedGitArchive));
+                expect(directoryContents).toMatchSnapshot();
             },
             90_000
         );

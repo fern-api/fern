@@ -5,7 +5,10 @@ import { IPackageJson } from "package-json-type";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
 import { getPathToProjectFile } from "./utils";
 
-export const BUILD_PROJECT_SCRIPT_NAME = "build";
+export const PACKAGE_JSON_SCRIPTS = {
+    BUILD: "build",
+    FORMAT: "format",
+} as const;
 
 export async function generatePackageJson({
     volume,
@@ -23,9 +26,10 @@ export async function generatePackageJson({
     };
 
     if (packageVersion != null) {
-        packageJson = produce(packageJson, (draft) => {
-            draft.version = packageVersion;
-        });
+        packageJson = {
+            ...packageJson,
+            version: packageVersion,
+        };
     }
 
     packageJson = {
@@ -33,8 +37,10 @@ export async function generatePackageJson({
         version: packageVersion,
         main: "./index.js",
         types: "./index.d.ts",
+        files: ["/api", "/schemas", "/core", "!*.ts", "*.d.ts"],
         scripts: {
-            [BUILD_PROJECT_SCRIPT_NAME]: [
+            [PACKAGE_JSON_SCRIPTS.FORMAT]: "prettier --write '**/*.ts'",
+            [PACKAGE_JSON_SCRIPTS.BUILD]: [
                 // esbuild first so we don't transpile the .d.ts files
                 "esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=.",
                 "tsc",
@@ -55,13 +61,10 @@ export async function generatePackageJson({
             ...dependencies?.[DependencyType.DEV],
             "@types/node": "17.0.33",
             esbuild: "0.14.47",
+            prettier: "2.7.1",
             typescript: "4.6.4",
         };
     });
 
-    await volume.promises.writeFile(
-        getPathToProjectFile("package.json"),
-
-        JSON.stringify(packageJson, undefined, 4)
-    );
+    await volume.promises.writeFile(getPathToProjectFile("package.json"), JSON.stringify(packageJson, undefined, 4));
 }
