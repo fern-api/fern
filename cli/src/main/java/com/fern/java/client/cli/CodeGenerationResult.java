@@ -209,6 +209,32 @@ public abstract class CodeGenerationResult {
                 + "\n";
     }
 
+    public static String getGitignore() {
+        return "*.class\n"
+                + ".project\n"
+                + ".gradle\n"
+                + ".classpath\n"
+                + ".checkstyle\n"
+                + ".settings\n"
+                + ".node\n"
+                + "build\n"
+                + "\n"
+                + "# IntelliJ\n"
+                + "*.iml\n"
+                + "*.ipr\n"
+                + "*.iws\n"
+                + ".idea/\n"
+                + "out/\n"
+                + "\n"
+                + "# Eclipse/IntelliJ APT\n"
+                + "generated_src/\n"
+                + "generated_testSrc/\n"
+                + "generated/\n"
+                + "\n"
+                + "bin\n"
+                + "build";
+    }
+
     static ImmutableCodeGenerationResult.Builder builder() {
         return ImmutableCodeGenerationResult.builder();
     }
