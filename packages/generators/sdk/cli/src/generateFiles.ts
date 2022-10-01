@@ -5,7 +5,7 @@ import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging"
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, Logger, LogLevel } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
-import { PACKAGE_JSON_SCRIPTS, SdkGenerator } from "@fern-typescript/sdk-generator";
+import { PackageJsonScript, SdkGenerator } from "@fern-typescript/sdk-generator";
 import execa from "execa";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
@@ -76,7 +76,7 @@ export async function generateFiles({
         // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
         YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
     });
-    await runYarnCommand(["run", PACKAGE_JSON_SCRIPTS.FORMAT]);
+    await runYarnCommand(["run", PackageJsonScript.FORMAT]);
 
     return { writtenTo: directoyOnDiskToWriteTo };
 }

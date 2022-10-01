@@ -4,7 +4,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
-import { PACKAGE_JSON_SCRIPTS } from "@fern-typescript/sdk-generator";
+import { PackageJsonScript } from "@fern-typescript/sdk-generator";
 import decompress from "decompress";
 import execa from "execa";
 import { rm, symlink, writeFile } from "fs/promises";
@@ -76,7 +76,7 @@ describe("runGenerator", () => {
                 };
 
                 // make sure it compiles
-                await runCommandInOutputDirectory("yarn", [PACKAGE_JSON_SCRIPTS.BUILD]);
+                await runCommandInOutputDirectory("yarn", [PackageJsonScript.BUILD]);
 
                 // check that the non-git-ignored files match snapshot
                 const pathToGitArchive = path.join(outputPath, "archive.zip");

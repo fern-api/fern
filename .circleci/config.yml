@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@5.0.1
+  node: circleci/node@5.0.3
 jobs:
   lint:
     docker:
@@ -45,12 +45,13 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
+      # needed for snapshotted yarn packages to be generated correctly
       - run:
-          name: Compile
-          command: yarn compile
+          name: Install latest yarn
+          command: yarn set version stable
       - run:
-          name: Build docker
-          command: yarn workspace fern-typescript dockerTagLocal
+          name: corepack enable
+          command: corepack enable
       - run:
           name: Run tests
           command: yarn test --ci

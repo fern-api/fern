@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
-import { PACKAGE_JSON_SCRIPTS } from "@fern-typescript/sdk-generator";
+import { PackageJsonScript } from "@fern-typescript/sdk-generator";
 import execa from "execa";
 import path from "path";
 import { NpmPackage } from "./npm-package/NpmPackage";
@@ -50,7 +50,8 @@ export async function publishPackageIfNecessary({
         token
         // intentionally not writing this to the project config, so the token isn't persisted
     );
-    await runNpmCommandInOutputDirectory("run", PACKAGE_JSON_SCRIPTS.BUILD);
+    await runNpmCommandInOutputDirectory("install");
+    await runNpmCommandInOutputDirectory("run", PackageJsonScript.BUILD);
     await runNpmCommandInOutputDirectory("publish");
 
     await generatorNotificationService.sendUpdate(GeneratorUpdate.published(npmPackage.publishInfo.packageCoordinate));

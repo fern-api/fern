@@ -3,9 +3,10 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
+import { TSCONFIG_OUT_DIR } from "./generateTsConfig";
 import { getPathToProjectFile } from "./utils";
 
-export const PACKAGE_JSON_SCRIPTS = {
+export const PackageJsonScript = {
     BUILD: "build",
     FORMAT: "format",
 } as const;
@@ -36,11 +37,11 @@ export async function generatePackageJson({
         ...packageJson,
         version: packageVersion,
         main: "./index.js",
-        types: "./index.d.ts",
-        files: ["/api", "/schemas", "/core", "!*.ts", "*.d.ts"],
+        types: `./${TSCONFIG_OUT_DIR}/index.d.ts`,
+        files: ["/api", "/schemas", "/core", "!*.ts", "/types"],
         scripts: {
-            [PACKAGE_JSON_SCRIPTS.FORMAT]: "prettier --write '**/*.ts'",
-            [PACKAGE_JSON_SCRIPTS.BUILD]: [
+            [PackageJsonScript.FORMAT]: "prettier --write '**/*.ts'",
+            [PackageJsonScript.BUILD]: [
                 // esbuild first so we don't transpile the .d.ts files
                 "esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=.",
                 "tsc",
