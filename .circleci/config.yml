@@ -45,13 +45,6 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
-      # needed for snapshotted yarn packages to be generated correctly
-      - run:
-          name: Install latest yarn
-          command: yarn set version stable
-      - run:
-          name: corepack enable
-          command: corepack enable
       - run:
           name: Run tests
           command: yarn test --ci
