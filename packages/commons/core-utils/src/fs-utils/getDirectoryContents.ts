@@ -26,12 +26,12 @@ export declare namespace getDirectoryContents {
 
 export async function getDirectoryContents(
     absolutePath: AbsoluteFilePath,
-    { fileExtensions }: getDirectoryContents.Options = {}
+    options: getDirectoryContents.Options = {}
 ): Promise<FileOrDirectory[]> {
     const fileExtensionsWithPeriods =
-        fileExtensions != null
+        options.fileExtensions != null
             ? new Set(
-                  fileExtensions.map((fileExtension) =>
+                  options.fileExtensions.map((fileExtension) =>
                       fileExtension.startsWith(".") ? fileExtension : `.${fileExtension}`
                   )
               )
@@ -46,7 +46,7 @@ export async function getDirectoryContents(
                 contents.push({
                     type: "directory",
                     name: item.name,
-                    contents: await getDirectoryContents(join(absolutePath, RelativeFilePath.of(item.name))),
+                    contents: await getDirectoryContents(join(absolutePath, RelativeFilePath.of(item.name)), options),
                 });
             } else if (fileExtensionsWithPeriods == null || fileExtensionsWithPeriods.has(path.extname(item.name))) {
                 contents.push({
@@ -58,5 +58,5 @@ export async function getDirectoryContents(
         })
     );
 
-    return contents;
+    return contents.sort((a, b) => (a.name < b.name ? -1 : 1));
 }

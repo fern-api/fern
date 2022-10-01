@@ -3675,7 +3675,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-client": ^0.0.30
+    "@fern-fern/fiddle-client": ^0.0.31
     "@fern-fern/ir-model": 0.0.220
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
@@ -3833,16 +3833,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/fiddle-client@npm:^0.0.30":
-  version: 0.0.30
-  resolution: "@fern-fern/fiddle-client@npm:0.0.30"
+"@fern-fern/fiddle-client@npm:^0.0.31":
+  version: 0.0.31
+  resolution: "@fern-fern/fiddle-client@npm:0.0.31"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
   peerDependencies:
     axios: "*"
-  checksum: a10adcc29f945c216383755dc7f408c3c8b54306cacb068e7a88a1d958bb7006933c135d4175cbff80dd245787bd2bc608beb19702fca6dbc570a0435bff4c83
+  checksum: f73cef30b5b2bf0ac092d2019fdf654d80c8966eb7e4870feeb607b397cac72a277db5775fbcaee104c81c912824851162a28c31d5c896a9987491637a726cfd
   languageName: node
   linkType: hard
 
