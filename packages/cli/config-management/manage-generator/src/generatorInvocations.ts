@@ -22,8 +22,8 @@ export const POSTMAN_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
 
 export const OPENAPI_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
-    version: "0.0.6",
-    "local-output": RelativeFilePath.of("./generated-openapi.json"),
+    version: "0.0.8",
+    "local-output": RelativeFilePath.of("./generated-openapi.yaml"),
     config: {
         format: "yaml",
     },
