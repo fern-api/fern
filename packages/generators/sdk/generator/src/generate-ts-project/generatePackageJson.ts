@@ -38,7 +38,7 @@ export async function generatePackageJson({
         version: packageVersion,
         main: "./index.js",
         types: `./${TSCONFIG_OUT_DIR}/index.d.ts`,
-        files: ["/api", "/schemas", "/core", "!*.ts", "/types"],
+        files: ["/api", "/schemas", "/core", "/index.*", "!*.ts", "/types"],
         scripts: {
             [PackageJsonScript.FORMAT]: "prettier --write '**/*.ts'",
             [PackageJsonScript.BUILD]: [

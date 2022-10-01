@@ -54,12 +54,14 @@ export async function generateFiles({
         packageVersion: npmPackage.publishInfo?.packageCoordinate.version,
     });
 
+    generatorContext.logger.debug("Generating project...");
     await sdkGenerator.generate();
 
     if (!generatorContext.didSucceed()) {
         throw new Error("Failed to generate TypeScript project.");
     }
 
+    generatorContext.logger.debug("Writing volume to disk");
     await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
     await sdkGenerator.copyCoreUtilities({ pathToPackage: directoyOnDiskToWriteTo });
 
@@ -70,12 +72,15 @@ export async function generateFiles({
         });
     };
 
+    generatorContext.logger.debug("Upgrading yarn");
     await runYarnCommand(["set", "version", "berry"]);
     await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
+    generatorContext.logger.debug("Installing packages");
     await runYarnCommand(["install"], {
         // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
         YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
     });
+    generatorContext.logger.debug("Running prettier");
     await runYarnCommand(["run", PackageJsonScript.FORMAT]);
 
     return { writtenTo: directoyOnDiskToWriteTo };
