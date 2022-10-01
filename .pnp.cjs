@@ -8479,14 +8479,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],\
       ["@fern-fern/fiddle-client", [\
         ["npm:0.0.28", {\
-          "packageLocation": "./.yarn/unplugged/@fern-fern-fiddle-client-virtual-8b65a5c0cc/node_modules/@fern-fern/fiddle-client/",\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-npm-0.0.28-1fd68fb24f-9490da94e9.zip/node_modules/@fern-fern/fiddle-client/",\
           "packageDependencies": [\
             ["@fern-fern/fiddle-client", "npm:0.0.28"]\
           ],\
           "linkType": "SOFT"\
         }],\
         ["virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.28", {\
-          "packageLocation": "./.yarn/unplugged/@fern-fern-fiddle-client-virtual-8b65a5c0cc/node_modules/@fern-fern/fiddle-client/",\
+          "packageLocation": "./.yarn/__virtual__/@fern-fern-fiddle-client-virtual-8b65a5c0cc/0/cache/@fern-fern-fiddle-client-npm-0.0.28-1fd68fb24f-9490da94e9.zip/node_modules/@fern-fern/fiddle-client/",\
           "packageDependencies": [\
             ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.28"],\
             ["@types/axios", null],\

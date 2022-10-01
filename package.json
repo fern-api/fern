@@ -76,9 +76,6 @@
   },
   "packageManager": "yarn@3.2.2",
   "dependenciesMeta": {
-    "@fern-fern/fiddle-client": {
-      "unplugged": true
-    },
     "vite": {
       "unplugged": true
     }
