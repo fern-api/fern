@@ -317,7 +317,7 @@ export class SdkGenerator {
         const getSchemaOfNamedType = (typeName: DeclaredTypeName) => {
             let schema = coreUtilities.zurg.Schema._fromExpression(getReferenceToNamedTypeSchema(typeName).expression);
 
-            // when generating schemas, wrapped named types with lazy to prevent issues with circular imports
+            // when generating schemas, wrapped named types with lazy() to prevent issues with circular imports
             if (isGeneratingSchemaFile) {
                 const resolvedType = this.typeResolver.resolveTypeName(typeName);
                 schema =
@@ -344,13 +344,23 @@ export class SdkGenerator {
             addImport,
         });
 
-        const getReferenceToErrorSchema = (errorName: DeclaredErrorName) =>
-            this.errorSchemaDeclarationReferencer.getReferenceToError({
-                name: errorName,
-                importStrategy: SCHEMA_IMPORT_STRATEGY,
-                addImport,
-                referencedIn: sourceFile,
-            });
+        const getErrorSchema = (errorName: DeclaredErrorName) => {
+            let schema = coreUtilities.zurg.Schema._fromExpression(
+                this.errorSchemaDeclarationReferencer.getReferenceToError({
+                    name: errorName,
+                    importStrategy: SCHEMA_IMPORT_STRATEGY,
+                    addImport,
+                    referencedIn: sourceFile,
+                }).expression
+            );
+
+            // when generating schemas, wrapped errors with lazy() to prevent issues with circular imports
+            if (isGeneratingSchemaFile) {
+                schema = coreUtilities.zurg.lazy(schema);
+            }
+
+            return schema;
+        };
 
         const typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             resolveType: this.typeResolver.resolveTypeName.bind(this.typeResolver),
@@ -404,8 +414,7 @@ export class SdkGenerator {
             externalDependencies,
             coreUtilities,
             getSchemaOfNamedType,
-            getErrorSchema: (errorName) =>
-                coreUtilities.zurg.Schema._fromExpression(getReferenceToErrorSchema(errorName).expression),
+            getErrorSchema,
             authSchemes: parseAuthSchemes({
                 apiAuth: this.intermediateRepresentation.auth,
                 coreUtilities,

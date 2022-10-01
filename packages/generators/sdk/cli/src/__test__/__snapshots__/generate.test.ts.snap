@@ -5228,7 +5228,9 @@ export const Error: core.schemas.Schema<
 > = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: schemas.playlist.PlaylistIdNotFoundError,
+      content: core.schemas.lazy(
+        () => schemas.playlist.PlaylistIdNotFoundError
+      ),
     }),
     UnauthorizedError: core.schemas.object({}),
   })
@@ -5318,7 +5320,9 @@ export const Error: core.schemas.Schema<
 > = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: schemas.playlist.PlaylistIdNotFoundError,
+      content: core.schemas.lazy(
+        () => schemas.playlist.PlaylistIdNotFoundError
+      ),
     }),
   })
   .transform<MyApi.playlist.updatePlaylist.Error>({
