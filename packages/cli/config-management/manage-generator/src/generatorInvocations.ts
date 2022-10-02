@@ -6,11 +6,8 @@ export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
 };
 
 export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
-    name: "fernapi/fern-typescript",
-    version: "0.0.197",
-    config: {
-        mode: "client-v2",
-    },
+    name: "fernapi/fern-typescript-sdk",
+    version: "0.0.198",
 };
 
 export const POSTMAN_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {

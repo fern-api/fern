@@ -26,11 +26,8 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
             version: "0.0.81",
         },
         {
-            name: "fernapi/fern-typescript",
+            name: "fernapi/fern-typescript-sdk",
             version: "0.0.14",
-            config: {
-                mode: "client_and_server",
-            },
         },
     ],
 };
