@@ -37,6 +37,7 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
     }
 
     if (!shouldFix) {
+        // eslint-disable-next-line no-console
         console.log(
             chalk.red(
                 `${COMPILE_ROOT_PACKAGE} dependencies are not correct. Run ${chalk.bold(
@@ -59,5 +60,6 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
     );
     await execa("yarn", ["lint:monorepo:fix"]);
     await execa("yarn", ["install"]);
+    // eslint-disable-next-line no-console
     console.log(chalk.green(`Updated ${COMPILE_ROOT_PACKAGE}`));
 }

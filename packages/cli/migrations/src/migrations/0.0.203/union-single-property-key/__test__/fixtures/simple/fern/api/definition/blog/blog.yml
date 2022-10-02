@@ -5,10 +5,11 @@ types:
     properties:
       a: integer
   d:
+    # here's a comment
     union:
       a: string
       b: boolean
-      d: d
+      d: d # there's a comment
   e:
     union:
       a:

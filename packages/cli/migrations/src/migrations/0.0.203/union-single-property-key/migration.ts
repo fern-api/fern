@@ -38,7 +38,6 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
     for (const typeDeclaration of types.items) {
         if (YAML.isMap(typeDeclaration.value)) {
             const union = typeDeclaration.value.get("union");
-            console.log(typeDeclaration, union);
             if (union == null) {
                 continue;
             }
