@@ -1,6 +1,6 @@
 import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { Fiddle } from "@fern-fern/fiddle-client-v2";
+import { Fiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
@@ -79,11 +79,8 @@ async function createJob({
                             .join(", ")
                 );
             },
-            _network: () => {
-                return context.fail("Network Error: " + JSON.stringify(createResponse.error.body));
-            },
-            _unknown: () => {
-                return context.fail("Unknown Error: " + JSON.stringify(createResponse.error.body));
+            _other: (content) => {
+                return context.fail("Failed to create job", content);
             },
         });
     }
