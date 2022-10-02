@@ -15,7 +15,7 @@ import { Log } from "./Log";
 
 export declare namespace TaskContextImpl {
     export interface Init {
-        log: (logs: Log[]) => void;
+        logImmediately: (logs: Log[]) => void;
         takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
         logPrefix?: string;
         /**
@@ -36,8 +36,14 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
 
-    public constructor({ log, logPrefix, takeOverTerminal, onResult, shouldBufferLogs }: TaskContextImpl.Init) {
-        this.logImmediately = log;
+    public constructor({
+        logImmediately,
+        logPrefix,
+        takeOverTerminal,
+        onResult,
+        shouldBufferLogs,
+    }: TaskContextImpl.Init) {
+        this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
         this.takeOverTerminal = takeOverTerminal;
         this.onResult = onResult;
@@ -78,6 +84,19 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.result;
     }
 
+    protected logAtLevel(level: LogLevel, ...parts: unknown[]): void {
+        this.logAtLevelWithOverrides(level, parts);
+    }
+
+    protected logAtLevelWithOverrides(level: LogLevel, parts: unknown[], overrides: Pick<Log, "omitOnTTY"> = {}): void {
+        this.log({
+            parts,
+            level,
+            time: new Date(),
+            ...overrides,
+        });
+    }
+
     protected log(log: Log): void {
         this.bufferedLogs.push({
             ...log,
@@ -95,21 +114,19 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public get logger(): Logger {
         return {
-            debug: (...args) => {
-                this.log({ args, level: LogLevel.Debug });
+            debug: (...parts) => {
+                this.logAtLevel(LogLevel.Debug, ...parts);
             },
-            info: (...args) => {
-                this.log({ args, level: LogLevel.Info });
+            info: (...parts) => {
+                this.logAtLevel(LogLevel.Info, ...parts);
             },
-            warn: (...args) => {
-                this.log({ args, level: LogLevel.Warn });
+            warn: (...parts) => {
+                this.logAtLevel(LogLevel.Warn, ...parts);
             },
-            error: (...args) => {
-                this.log({ args, level: LogLevel.Error });
+            error: (...parts) => {
+                this.logAtLevel(LogLevel.Error, ...parts);
             },
-            log: (level, ...args) => {
-                this.log({ args, level });
-            },
+            log: this.logAtLevel.bind(this),
         };
     }
 
@@ -117,7 +134,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         const subtask = new InteractiveTaskContextImpl({
             name,
             subtitle,
-            log: (content) => this.logImmediately(content),
+            logImmediately: (content) => this.logImmediately(content),
             logPrefix: `${this.logPrefix}${chalk.blackBright(name)} `,
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
@@ -168,9 +185,7 @@ export class InteractiveTaskContextImpl
 
     public start(): Finishable & InteractiveTaskContext {
         super.start();
-        this.log({
-            args: ["Started."],
-            level: LogLevel.Info,
+        this.logAtLevelWithOverrides(LogLevel.Info, ["Started."], {
             omitOnTTY: true,
         });
         this.flushLogs();
@@ -183,15 +198,11 @@ export class InteractiveTaskContextImpl
 
     public finish(): void {
         if (this.result === TaskResult.Success) {
-            this.log({
-                args: ["Finished."],
-                level: LogLevel.Info,
+            this.logAtLevelWithOverrides(LogLevel.Info, ["Finished."], {
                 omitOnTTY: true,
             });
         } else {
-            this.log({
-                args: ["Failed."],
-                level: LogLevel.Error,
+            this.logAtLevelWithOverrides(LogLevel.Error, ["Failed."], {
                 omitOnTTY: true,
             });
         }
