@@ -1,13 +1,8 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import { writeFile } from "fs/promises";
-import path from "path";
+import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
-
-const DOCKER_FERN_DIRECTORY = "/fern";
-const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
-const DOCKER_GENERATOR_CONFIG_PATH = path.join(DOCKER_FERN_DIRECTORY, "config.json");
-const DOCKER_PATH_TO_IR = path.join(DOCKER_FERN_DIRECTORY, "ir.json");
 
 export declare namespace runGenerator {
     export interface Args {
