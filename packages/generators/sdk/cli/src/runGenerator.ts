@@ -21,6 +21,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
 
     const generatorNotificationService = new GeneratorNotificationService(config);
     const logger = createLogger((message, level) => {
+        console.log(message);
         // kick off log, but don't wait for it
         void generatorNotificationService.sendUpdate(
             GeneratorUpdate.log({

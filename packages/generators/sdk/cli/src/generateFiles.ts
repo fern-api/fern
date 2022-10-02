@@ -43,10 +43,13 @@ export async function generateFiles({
 
     const runYarnCommand = async (args: string[], env?: Record<string, string>) => {
         logger.debug(`+ ${["yarn", ...args].join(" ")}`);
-        await execa("yarn", args, {
+        const command = execa("yarn", args, {
             cwd: directoyOnDiskToWriteTo,
             env,
         });
+        command.stdout?.pipe(process.stdout);
+        command.stderr?.pipe(process.stderr);
+        await command;
     };
 
     await runYarnCommand(["set", "version", "berry"]);
@@ -56,6 +59,7 @@ export async function generateFiles({
         YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
     });
     await runYarnCommand(["run", PackageJsonScript.FORMAT]);
+    await runYarnCommand(["run", PackageJsonScript.BUILD]);
 
     return { writtenTo: directoyOnDiskToWriteTo };
 }
