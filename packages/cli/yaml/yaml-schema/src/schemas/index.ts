@@ -24,6 +24,7 @@ export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 export { ServicesSchema } from "./ServicesSchema";
+export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema } from "./TypeReferenceSchema";

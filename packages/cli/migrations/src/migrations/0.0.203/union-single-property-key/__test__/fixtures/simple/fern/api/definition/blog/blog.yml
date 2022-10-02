@@ -1,0 +1,19 @@
+types:
+  a: string
+  b: boolean
+  c:
+    properties:
+      a: integer
+  d:
+    union:
+      a: string
+      b: boolean
+      d: d
+  e:
+    union:
+      a:
+        type: string
+      b: boolean
+      d:
+        type: d
+        docs: hello
