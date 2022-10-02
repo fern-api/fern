@@ -17,9 +17,11 @@ export async function convertOpenApiToFernApiDefinition(
             })
         );
     } else {
+        // eslint-disable-next-line no-console
         console.error("Failed to convert Open API to Fern");
         switch (conversionResult.failure) {
             case OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI:
+                // eslint-disable-next-line no-console
                 console.error("Couldn't parse Open API");
         }
     }

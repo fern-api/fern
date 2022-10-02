@@ -69,6 +69,7 @@ export function FormDialogContents<P, R>({
             onSuccessfulCreate?.(result);
             closeDialog();
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.error("Failed to create", e);
             failedToast.current = errorToast(errorToastText, {
                 toastKey: failedToast.current?.toastKey,
