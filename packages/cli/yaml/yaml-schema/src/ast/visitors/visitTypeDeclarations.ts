@@ -93,6 +93,7 @@ export async function visitTypeDeclaration({
                             await visitObject(unionType, {
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
                                 name: noop,
+                                key: noop,
                                 type: async (type) => {
                                     if (type != null) {
                                         await visitor.typeReference?.(type, [...nodePathForType, "type"]);

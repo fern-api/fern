@@ -8212,6 +8212,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["yaml", "npm:2.1.1"],\
             ["zod", "npm:3.16.0"]\
           ],\
           "linkType": "SOFT"\
