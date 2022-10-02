@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 
@@ -13,7 +12,7 @@ describe("convertToFernFilepath", () => {
                 screamingSnakeCase: "POSTS",
             },
         ];
-        expect(convertToFernFilepath(RelativeFilePath.of("posts.yml"))).toEqual(expected);
+        expect(convertToFernFilepath("posts.yml")).toEqual(expected);
     });
 
     it("a/b.yml", () => {
@@ -33,7 +32,7 @@ describe("convertToFernFilepath", () => {
                 screamingSnakeCase: "B",
             },
         ];
-        expect(convertToFernFilepath(RelativeFilePath.of("a/b.yml"))).toEqual(expected);
+        expect(convertToFernFilepath("a/b.yml")).toEqual(expected);
     });
 
     it("a/b/c.yml", () => {
@@ -60,6 +59,6 @@ describe("convertToFernFilepath", () => {
                 screamingSnakeCase: "C",
             },
         ];
-        expect(convertToFernFilepath(RelativeFilePath.of("a/b/c.yml"))).toEqual(expected);
+        expect(convertToFernFilepath("a/b/c.yml")).toEqual(expected);
     });
 });

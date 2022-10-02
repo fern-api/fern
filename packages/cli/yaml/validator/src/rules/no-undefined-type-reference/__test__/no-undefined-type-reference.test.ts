@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoUndefinedTypeReferenceRule } from "../no-undefined-type-reference";
 
@@ -6,11 +6,7 @@ describe("no-undefined-type-reference", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedTypeReferenceRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("simple")
-            ),
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
         });
 
         expect(violations).toEqual([

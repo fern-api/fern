@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
     DEFINITION_DIRECTORY,
@@ -17,10 +17,10 @@ export async function createWorkspace({
 }): Promise<void> {
     await mkdir(directoryOfWorkspace);
     await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        filepath: join(directoryOfWorkspace, GENERATORS_CONFIGURATION_FILENAME),
     });
     await writeSampleApiDefinition({
-        directoryOfDefinition: join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)),
+        directoryOfDefinition: join(directoryOfWorkspace, DEFINITION_DIRECTORY),
     });
 }
 
@@ -43,6 +43,6 @@ async function writeSampleApiDefinition({
     directoryOfDefinition: AbsoluteFilePath;
 }): Promise<void> {
     await mkdir(directoryOfDefinition);
-    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API));
-    await writeFile(join(directoryOfDefinition, RelativeFilePath.of("imdb.yml")), SAMPLE_IMDB_API);
+    await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(ROOT_API));
+    await writeFile(join(directoryOfDefinition, "imdb.yml"), SAMPLE_IMDB_API);
 }

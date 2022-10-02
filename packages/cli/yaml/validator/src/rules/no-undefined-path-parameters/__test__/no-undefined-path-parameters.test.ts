@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoUndefinedPathParametersRule } from "../no-undefined-path-parameters";
 
@@ -6,11 +6,7 @@ describe("no-undefined-path-parameters", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedPathParametersRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("simple")
-            ),
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
         });
 
         expect(violations).toEqual([

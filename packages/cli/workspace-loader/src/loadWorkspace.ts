@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
@@ -17,7 +17,7 @@ export async function loadWorkspace({
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace });
-    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
+    const absolutePathToDefinition = join(absolutePathToWorkspace, DEFINITION_DIRECTORY);
     const serviceFiles = await listServiceFilesForWorkspace(absolutePathToDefinition);
 
     const parseResult = await parseYamlFiles(serviceFiles);
