@@ -74,7 +74,7 @@ errors:
   - name: fernapi/java-client
     version: 0.0.109
   - name: fernapi/fern-typescript-sdk
-    version: 0.0.198
+    version: 0.0.199
   - name: fernapi/fern-postman
     version: 0.0.23
     local-output: ./generated-postman.json

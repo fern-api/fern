@@ -22,7 +22,7 @@ View an example using multiple generators [on Github](https://github.com/fern-ap
 ````yml title="/fern/api/generators.yml"
 draft: # Publishes the generated code to a private registry managed by Fern.
   - name: fernapi/fern-typescript-sdk
-    version: 0.0.198
+    version: 0.0.199
 
 release: # Publishes the generated code to a public registry (e.g. maven, npm, pypi).
   - name: fernapi/java-client
@@ -44,7 +44,7 @@ Generators in the `draft` list will publish to a private registry managed by Fer
 ```diff title="/fern/api/generators.yml"
 draft:
 + - name: fernapi/fern-typescript-sdk
-+   version: 0.0.198
++   version: 0.0.199
 release: []
 ````
 
