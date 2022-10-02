@@ -10,8 +10,8 @@ exports[`fern upgrade upgrades generators 1`] = `
     config:
       format: yaml
     local-output: ./generated-openapi.yml
-  - name: fernapi/java-client
-    version: 0.0.109
+  - name: fernapi/fern-java-sdk
+    version: 0.0.115
   - name: fernapi/fern-typescript-sdk
     version: 0.0.199
 "

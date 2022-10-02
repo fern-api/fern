@@ -22,7 +22,7 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
             },
         },
         {
-            name: "fernapi/java-client",
+            name: "fernapi/fern-java-sdk",
             version: "0.0.81",
         },
         {

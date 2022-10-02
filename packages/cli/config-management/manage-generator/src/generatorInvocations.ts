@@ -1,8 +1,8 @@
 import { DraftGeneratorInvocationSchema } from "@fern-api/generators-configuration";
 
 export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
-    name: "fernapi/java-client",
-    version: "0.0.109",
+    name: "fernapi/fern-java-sdk",
+    version: "0.0.115",
 };
 
 export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {

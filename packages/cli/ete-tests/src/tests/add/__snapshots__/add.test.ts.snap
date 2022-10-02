@@ -71,8 +71,8 @@ errors:
           },
           {
             "contents": "draft:
-  - name: fernapi/java-client
-    version: 0.0.109
+  - name: fernapi/fern-java-sdk
+    version: 0.0.115
   - name: fernapi/fern-typescript-sdk
     version: 0.0.199
   - name: fernapi/fern-postman
