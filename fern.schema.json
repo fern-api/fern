@@ -93,7 +93,18 @@
                           "properties": {
                             "docs": { "$ref": "#/properties/ids/items/anyOf/1/properties/docs" },
                             "name": { "type": "string" },
-                            "type": { "type": "string" }
+                            "type": { "type": "string" },
+                            "key": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "object",
+                                  "properties": { "name": { "type": "string" }, "value": { "type": "string" } },
+                                  "required": ["value"],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            }
                           },
                           "additionalProperties": false
                         }
