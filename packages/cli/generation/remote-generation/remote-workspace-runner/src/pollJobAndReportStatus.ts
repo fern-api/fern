@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { Fiddle } from "@fern-fern/fiddle-client-v2";
+import { Fiddle } from "@fern-fern/fiddle-client";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { REMOTE_GENERATION_SERVICE } from "./service";
 
@@ -75,7 +75,7 @@ async function fetchTaskStatuses(job: Fiddle.remoteGen.CreateJobResponse, contex
     if (response.ok) {
         return response.body;
     } else {
-        context.logger.warn("Failed to get job status.", response.error.body);
+        context.logger.warn("Failed to get job status.", response.error.content);
         return undefined;
     }
 }

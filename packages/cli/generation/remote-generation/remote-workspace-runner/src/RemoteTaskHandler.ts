@@ -2,7 +2,7 @@ import { AbsoluteFilePath, noop } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
-import { Fiddle } from "@fern-fern/fiddle-client-v2";
+import { Fiddle } from "@fern-fern/fiddle-client";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
@@ -47,11 +47,11 @@ export class RemoteTaskHandler {
             remoteTask.packages.length > 0
                 ? remoteTask.packages
                       .map((p) => {
-                          const coordinateStr = Fiddle.remoteGen.PackageCoordinate._visit(p.coordinate, {
+                          const coordinateStr = p.coordinate._visit({
                               npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
                               maven: (mavenPackage) =>
                                   `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
-                              _unknown: () => "<unknown package>",
+                              _other: () => "<unknown package>",
                           });
                           return `◦ ${coordinateStr}`;
                       })
@@ -60,18 +60,18 @@ export class RemoteTaskHandler {
         );
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
-            const level = Fiddle.remoteGen.LogLevel._visit(newLog.level, {
+            const level = newLog.level.visit({
                 debug: () => LogLevel.Debug,
                 info: () => LogLevel.Info,
                 warn: () => LogLevel.Warn,
                 error: () => LogLevel.Error,
-                _unknown: () => LogLevel.Info,
+                _other: () => LogLevel.Info,
             });
             this.context.logger.log(level, newLog.message);
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
-        Fiddle.remoteGen.TaskStatus._visit(remoteTask.status, {
+        remoteTask.status._visit({
             notStarted: noop,
             running: noop,
             failed: ({ message }) => {
@@ -82,8 +82,8 @@ export class RemoteTaskHandler {
                 await this.maybeDownloadFiles(finishedStatus);
                 this.context.finish();
             },
-            _unknown: () => {
-                this.context.logger.warn("Received unknown update type: " + remoteTask.status._type);
+            _other: () => {
+                this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
                 this.context.finish();
             },
         });
