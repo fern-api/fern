@@ -17,12 +17,16 @@ function log(level: LogLevel, ...args: unknown[]): void {
 function getConsoleLoggerForLevel(level: LogLevel): (...args: unknown[]) => void {
     switch (level) {
         case LogLevel.Debug:
+            // eslint-disable-next-line no-console
             return console.debug;
         case LogLevel.Info:
+            // eslint-disable-next-line no-console
             return console.info;
         case LogLevel.Warn:
+            // eslint-disable-next-line no-console
             return console.warn;
         case LogLevel.Error:
+            // eslint-disable-next-line no-console
             return console.error;
     }
 }

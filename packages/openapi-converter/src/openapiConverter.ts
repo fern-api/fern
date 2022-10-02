@@ -61,6 +61,7 @@ export async function convertOpenApi(openapiFilepath: AbsoluteFilePath): Promise
             fernConfiguration: convertedFernConfiguration,
         };
     } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e);
         return {
             didSucceed: false,

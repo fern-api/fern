@@ -225,6 +225,7 @@ export class CliContext {
                     this.didSucceed = false;
                 }
             },
+            shouldBufferLogs: this.logLevel !== LogLevel.Debug,
         };
     }
 

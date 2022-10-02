@@ -22,23 +22,26 @@ export declare namespace TaskContextImpl {
          * called when this task or any subtask finishes
          */
         onResult?: (result: TaskResult) => void;
+        shouldBufferLogs: boolean;
     }
 }
 
 export class TaskContextImpl implements Startable<TaskContext>, Finishable, TaskContext {
     protected result = TaskResult.Success;
-    protected log: (logs: Log[]) => void;
+    protected logImmediately: (logs: Log[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
-    private logs: Log[] = [];
+    private shouldBufferLogs: boolean;
+    private bufferedLogs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
 
-    public constructor({ log, logPrefix, takeOverTerminal, onResult }: TaskContextImpl.Init) {
-        this.log = log;
+    public constructor({ log, logPrefix, takeOverTerminal, onResult, shouldBufferLogs }: TaskContextImpl.Init) {
+        this.logImmediately = log;
         this.logPrefix = logPrefix ?? "";
         this.takeOverTerminal = takeOverTerminal;
         this.onResult = onResult;
+        this.shouldBufferLogs = shouldBufferLogs;
     }
 
     public start(): Finishable & TaskContext {
@@ -75,33 +78,37 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.result;
     }
 
-    protected bufferLog(log: Log): void {
-        this.logs.push({
+    protected log(log: Log): void {
+        this.bufferedLogs.push({
             ...log,
             prefix: this.logPrefix,
         });
+        if (!this.shouldBufferLogs) {
+            this.flushLogs();
+        }
     }
 
     protected flushLogs(): void {
-        this.log(this.logs);
+        this.logImmediately(this.bufferedLogs);
+        this.bufferedLogs = [];
     }
 
     public get logger(): Logger {
         return {
             debug: (...args) => {
-                this.bufferLog({ args, level: LogLevel.Debug });
+                this.log({ args, level: LogLevel.Debug });
             },
             info: (...args) => {
-                this.bufferLog({ args, level: LogLevel.Info });
+                this.log({ args, level: LogLevel.Info });
             },
             warn: (...args) => {
-                this.bufferLog({ args, level: LogLevel.Warn });
+                this.log({ args, level: LogLevel.Warn });
             },
             error: (...args) => {
-                this.bufferLog({ args, level: LogLevel.Error });
+                this.log({ args, level: LogLevel.Error });
             },
             log: (level, ...args) => {
-                this.bufferLog({ args, level });
+                this.log({ args, level });
             },
         };
     }
@@ -110,10 +117,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         const subtask = new InteractiveTaskContextImpl({
             name,
             subtitle,
-            log: (content) => this.log(content),
+            log: (content) => this.logImmediately(content),
             logPrefix: `${this.logPrefix}${chalk.blackBright(name)} `,
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
+            shouldBufferLogs: this.shouldBufferLogs,
         });
         this.subtasks.push(subtask);
         return subtask;
@@ -160,7 +168,7 @@ export class InteractiveTaskContextImpl
 
     public start(): Finishable & InteractiveTaskContext {
         super.start();
-        this.bufferLog({
+        this.log({
             args: ["Started."],
             level: LogLevel.Info,
             omitOnTTY: true,
@@ -175,13 +183,13 @@ export class InteractiveTaskContextImpl
 
     public finish(): void {
         if (this.result === TaskResult.Success) {
-            this.bufferLog({
+            this.log({
                 args: ["Finished."],
                 level: LogLevel.Info,
                 omitOnTTY: true,
             });
         } else {
-            this.bufferLog({
+            this.log({
                 args: ["Failed."],
                 level: LogLevel.Error,
                 omitOnTTY: true,
