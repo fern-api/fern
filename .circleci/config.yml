@@ -139,7 +139,7 @@ jobs:
             ./gradlew :client-generator:dockerTag"$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag java-client:"$projectVersion" fernapi/java-client:"$projectVersion"
-            docker push fernapi/java-client:"$projectVersion"
+            docker push fernapi/fern-java-sdk:"$projectVersion"
           name: Publish java-client docker
       - run:
           command: |
