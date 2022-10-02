@@ -96,5 +96,6 @@ module.exports = {
                 null: "never",
             },
         ],
+        "no-console": "error",
     },
 };

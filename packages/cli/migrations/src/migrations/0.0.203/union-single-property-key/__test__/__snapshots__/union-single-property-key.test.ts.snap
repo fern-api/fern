@@ -8,6 +8,7 @@ exports[`union-single-property-key simple 1`] = `
     properties:
       a: integer
   d:
+    # here's a comment
     union:
       a:
         type: string
@@ -16,7 +17,7 @@ exports[`union-single-property-key simple 1`] = `
         type: boolean
         key: b
       d:
-        type: d
+        type: d # there's a comment
         key: d
   e:
     union:
