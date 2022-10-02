@@ -229,6 +229,8 @@ workflows:
             - test
             - ete-tests
             - live-test
+            # sequence after publish-dev to avoid 422's from npm
+            - publish-dev
           context:
             - npm
             - auth0-dev
