@@ -4107,6 +4107,7 @@ import {
   inferObjectSchemaFromPropertySchemas,
   inferParsedObjectFromPropertySchemas,
   inferRawObjectFromPropertySchemas,
+  ObjectSchema,
   ObjectUtils,
   PropertySchemas,
 } from \\"./types\\";
@@ -4204,19 +4205,21 @@ export function getObjectUtils<Raw, Parsed>(
   schema: BaseObjectSchema<Raw, Parsed>
 ): ObjectUtils<Raw, Parsed> {
   return {
-    extend: <U extends PropertySchemas<keyof U>>(extension: U) => {
+    extend: <RawExtension, ParsedExtension>(
+      extension: ObjectSchema<RawExtension, ParsedExtension>
+    ) => {
       const baseSchema: BaseObjectSchema<
-        Raw & inferRawObjectFromPropertySchemas<U>,
-        Parsed & inferParsedObjectFromPropertySchemas<U>
+        Raw & RawExtension,
+        Parsed & ParsedExtension
       > = {
         ...OBJECT_LIKE_BRAND,
         parse: (raw, opts) => ({
           ...schema.parse(raw, opts),
-          ...object(extension).parse(raw, opts),
+          ...extension.parse(raw, opts),
         }),
         json: (parsed, opts) => ({
           ...schema.json(parsed, opts),
-          ...object(extension).json(parsed, opts),
+          ...extension.json(parsed, opts),
         }),
       };
 
@@ -4276,12 +4279,9 @@ export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
 export type BaseObjectSchema<Raw, Parsed> = BaseObjectLikeSchema<Raw, Parsed>;
 
 export interface ObjectUtils<Raw, Parsed> {
-  extend: <U extends PropertySchemas<keyof U>>(
-    schemas: U
-  ) => ObjectSchema<
-    Raw & inferRawObjectFromPropertySchemas<U>,
-    Parsed & inferParsedObjectFromPropertySchemas<U>
-  >;
+  extend: <RawExtension, ParsedExtension>(
+    schemas: ObjectSchema<RawExtension, ParsedExtension>
+  ) => ObjectSchema<Raw & RawExtension, Parsed & ParsedExtension>;
 }
 
 export type inferRawObject<O extends ObjectSchema<any, any>> =

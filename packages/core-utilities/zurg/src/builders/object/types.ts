@@ -10,9 +10,9 @@ export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
 export type BaseObjectSchema<Raw, Parsed> = BaseObjectLikeSchema<Raw, Parsed>;
 
 export interface ObjectUtils<Raw, Parsed> {
-    extend: <U extends PropertySchemas<keyof U>>(
-        schemas: U
-    ) => ObjectSchema<Raw & inferRawObjectFromPropertySchemas<U>, Parsed & inferParsedObjectFromPropertySchemas<U>>;
+    extend: <RawExtension, ParsedExtension>(
+        schemas: ObjectSchema<RawExtension, ParsedExtension>
+    ) => ObjectSchema<Raw & RawExtension, Parsed & ParsedExtension>;
 }
 
 export type inferRawObject<O extends ObjectSchema<any, any>> = O extends ObjectSchema<infer Raw, any> ? Raw : never;

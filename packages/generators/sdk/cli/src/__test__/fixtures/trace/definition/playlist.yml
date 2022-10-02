@@ -4,10 +4,9 @@ ids:
   - PlaylistId
 types:
   Playlist:
+    extends: PlaylistCreateRequest
     properties:
       playlist_id: PlaylistId
-      name: string
-      problems: list<commons.ProblemId>
       owner-id: commons.UserId
 
   PlaylistCreateRequest:

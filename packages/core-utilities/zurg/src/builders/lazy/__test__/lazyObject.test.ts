@@ -10,7 +10,7 @@ describe("lazy", () => {
     );
 
     itSchemaIdentity(
-        lazyObject(() => object({ foo: string() })).extend({ bar: number() }),
+        lazyObject(() => object({ foo: string() })).extend(object({ bar: number() })),
         {
             foo: "hello",
             bar: 42,

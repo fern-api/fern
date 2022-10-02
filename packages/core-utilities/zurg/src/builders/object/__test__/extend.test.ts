@@ -7,9 +7,11 @@ describe("extend", () => {
     itSchemaIdentity(
         object({
             foo: string(),
-        }).extend({
-            bar: stringLiteral("bar"),
-        }),
+        }).extend(
+            object({
+                bar: stringLiteral("bar"),
+            })
+        ),
         {
             foo: "",
             bar: "bar",
@@ -23,12 +25,16 @@ describe("extend", () => {
         object({
             foo: string(),
         })
-            .extend({
-                bar: stringLiteral("bar"),
-            })
-            .extend({
-                baz: boolean(),
-            }),
+            .extend(
+                object({
+                    bar: stringLiteral("bar"),
+                })
+            )
+            .extend(
+                object({
+                    baz: boolean(),
+                })
+            ),
         {
             foo: "",
             bar: "bar",
