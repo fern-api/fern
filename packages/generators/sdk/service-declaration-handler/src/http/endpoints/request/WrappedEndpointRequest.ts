@@ -104,7 +104,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
 
         if (lastServiceBasePathPart == null) {
             return {
-                head: urlJoin(this.service.basePathV2.head, "/", this.endpoint.path.head),
+                head: urlJoin(this.service.basePathV2.head, this.endpoint.path.head),
                 parts: this.endpoint.path.parts,
             };
         }
@@ -115,7 +115,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
                 ...serviceBasePathPartsExceptLast,
                 {
                     pathParameter: lastServiceBasePathPart.pathParameter,
-                    tail: urlJoin(lastServiceBasePathPart.tail, "/", this.endpoint.path.head),
+                    tail: urlJoin(lastServiceBasePathPart.tail, this.endpoint.path.head),
                 },
                 ...this.endpoint.path.parts,
             ],

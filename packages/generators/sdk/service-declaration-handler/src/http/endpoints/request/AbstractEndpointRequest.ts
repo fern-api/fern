@@ -1,6 +1,7 @@
 import { TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
 import { Fetcher, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
+import urlJoin from "url-join";
 import { Client } from "../../Client";
 import { AbstractEndpointDeclaration } from "../AbstractEndpointDeclaration";
 import { WireBodySchema } from "../WireBodySchema";
@@ -98,10 +99,16 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
     }
 
     protected getUrlPathForNoPathParameters(): ts.Expression {
+        if (this.service.basePathV2 != null && this.service.basePathV2.parts.length > 0) {
+            throw new Error("Service base path contains parameters, but no path-parameters were specified");
+        }
         if (this.endpoint.path.parts.length > 0) {
             throw new Error("Endpoint path contains parameters, but no path-parameters were specified");
         }
-        return ts.factory.createStringLiteral(this.endpoint.path.head);
+        if (this.service.basePathV2 == null) {
+            return ts.factory.createStringLiteral(this.endpoint.path.head);
+        }
+        return ts.factory.createStringLiteral(urlJoin(this.service.basePathV2.head, this.endpoint.path.head));
     }
 
     protected abstract getHeaders(): ts.PropertyAssignment[];

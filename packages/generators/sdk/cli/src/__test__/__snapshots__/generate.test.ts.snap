@@ -210,7 +210,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-test-submission-status/\${request.submissionId}\`
+        \`/admin/store-test-submission-status/\${request.submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -247,7 +247,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-test-submission-status-v2/\${request.submissionId}\`
+        \`/admin/store-test-submission-status-v2/\${request.submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -284,7 +284,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-workspace-submission-status/\${request.submissionId}\`
+        \`/admin/store-workspace-submission-status/\${request.submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -321,7 +321,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-workspace-submission-status-v2/\${request.submissionId}\`
+        \`/admin/store-workspace-submission-status-v2/\${request.submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -358,7 +358,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`
+        \`/admin/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -395,7 +395,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`
+        \`/admin/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -432,7 +432,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-workspace-trace/submission/\${request.submissionId}\`
+        \`/admin/store-workspace-trace/submission/\${request.submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -469,7 +469,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/admin//store-workspace-trace-v2/submission/\${request.submissionId}\`
+        \`/admin/store-workspace-trace-v2/submission/\${request.submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -901,7 +901,7 @@ export class Client implements Client {
 
   public async getHomepageProblems(): Promise<MyApi.homepage.getHomepageProblems.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/\\"),
+      url: urlJoin(this.options._origin, \\"/homepage-problems/\\"),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -936,7 +936,7 @@ export class Client implements Client {
     request: MyApi.commons.ProblemId[]
   ): Promise<MyApi.homepage.setHomepageProblems.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/\\"),
+      url: urlJoin(this.options._origin, \\"/homepage-problems/\\"),
       method: \\"POST\\",
       headers: {
         Authorization:
@@ -1123,7 +1123,7 @@ export class Client implements Client {
 
   public async getAttemptedMigrations(): Promise<MyApi.migration.getAttemptedMigrations.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/all\\"),
+      url: urlJoin(this.options._origin, \\"/migration-info/all\\"),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -1261,7 +1261,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/v2/playlist/\${request.serviceParam}/create\`
+        \`/v2/playlist/\${request.serviceParam}create\`
       ),
       method: \\"POST\\",
       headers: {
@@ -1305,7 +1305,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/v2/playlist/\${request.serviceParam}/all\`
+        \`/v2/playlist/\${request.serviceParam}all\`
       ),
       method: \\"GET\\",
       headers: {
@@ -1344,7 +1344,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
+        \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`
       ),
       method: \\"GET\\",
       headers: {
@@ -1398,7 +1398,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
+        \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`
       ),
       method: \\"PUT\\",
       headers: {
@@ -1452,7 +1452,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
+        \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`
       ),
       method: \\"DELETE\\",
       headers: {
@@ -1865,7 +1865,7 @@ export class Client implements Client {
     request: MyApi.problem.CreateProblemRequest
   ): Promise<MyApi.problem.createProblem.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/create\\"),
+      url: urlJoin(this.options._origin, \\"/problem-crud/create\\"),
       method: \\"POST\\",
       headers: {
         Authorization:
@@ -1903,7 +1903,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/problem-crud//update/\${request.problemId}\`
+        \`/problem-crud/update/\${request.problemId}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -1942,7 +1942,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/problem-crud//delete/\${request.problemId}\`
+        \`/problem-crud/delete/\${request.problemId}\`
       ),
       method: \\"DELETE\\",
       headers: {
@@ -1976,7 +1976,7 @@ export class Client implements Client {
     request: MyApi.problem.GetDefaultStarterFilesRequest
   ): Promise<MyApi.problem.getDefaultStarterFiles.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/default-starter-files\\"),
+      url: urlJoin(this.options._origin, \\"/problem-crud/default-starter-files\\"),
       method: \\"POST\\",
       headers: {
         Authorization:
@@ -2227,7 +2227,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/sessions//create-session/\${request.language}\`
+        \`/sessions/create-session/\${request.language}\`
       ),
       method: \\"POST\\",
       headers: {
@@ -2263,7 +2263,7 @@ export class Client implements Client {
     request: MyApi.submission.getExecutionSession.Request
   ): Promise<MyApi.submission.getExecutionSession.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \`/sessions//\${request.sessionId}\`),
+      url: urlJoin(this.options._origin, \`/sessions/\${request.sessionId}\`),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -2301,10 +2301,7 @@ export class Client implements Client {
     request: MyApi.submission.stopExecutionSession.Request
   ): Promise<MyApi.submission.stopExecutionSession.Response> {
     const response = await core.fetcher({
-      url: urlJoin(
-        this.options._origin,
-        \`/sessions//stop/\${request.sessionId}\`
-      ),
+      url: urlJoin(this.options._origin, \`/sessions/stop/\${request.sessionId}\`),
       method: \\"DELETE\\",
       headers: {
         Authorization:
@@ -2335,7 +2332,7 @@ export class Client implements Client {
 
   public async getExecutionSessionsState(): Promise<MyApi.submission.getExecutionSessionsState.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/execution-sessions-state\\"),
+      url: urlJoin(this.options._origin, \\"/sessions/execution-sessions-state\\"),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -2582,7 +2579,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/sysprop//num-warm-instances/\${request.language}/\${request.numWarmInstances}\`
+        \`/sysprop/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`
       ),
       method: \\"PUT\\",
       headers: {
@@ -2614,7 +2611,7 @@ export class Client implements Client {
 
   public async getNumWarmInstances(): Promise<MyApi.sysprop.getNumWarmInstances.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/num-warm-instances\\"),
+      url: urlJoin(this.options._origin, \\"/sysprop/num-warm-instances\\"),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -2833,7 +2830,10 @@ export class Client implements Client {
 
   public async getLightweightProblems(): Promise<MyApi.v2.problem.getLightweightProblems.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/lightweight-problem-info\\"),
+      url: urlJoin(
+        this.options._origin,
+        \\"/problems-v2/lightweight-problem-info\\"
+      ),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -2866,7 +2866,7 @@ export class Client implements Client {
 
   public async getProblems(): Promise<MyApi.v2.problem.getProblems.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/problem-info\\"),
+      url: urlJoin(this.options._origin, \\"/problems-v2/problem-info\\"),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -2903,7 +2903,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/problems-v2//problem-info/\${request.problemId}\`
+        \`/problems-v2/problem-info/\${request.problemId}\`
       ),
       method: \\"GET\\",
       headers: {
@@ -2941,7 +2941,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/problems-v2//problem-info/\${request.problemId}/version/\${request.problemVersion}\`
+        \`/problems-v2/problem-info/\${request.problemId}/version/\${request.problemVersion}\`
       ),
       method: \\"GET\\",
       headers: {
@@ -3227,7 +3227,10 @@ export class Client implements Client {
 
   public async getLightweightProblems(): Promise<MyApi.v2.v3.problem.getLightweightProblems.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/lightweight-problem-info\\"),
+      url: urlJoin(
+        this.options._origin,
+        \\"/problems-v2/lightweight-problem-info\\"
+      ),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -3260,7 +3263,7 @@ export class Client implements Client {
 
   public async getProblems(): Promise<MyApi.v2.v3.problem.getProblems.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, \\"/problem-info\\"),
+      url: urlJoin(this.options._origin, \\"/problems-v2/problem-info\\"),
       method: \\"GET\\",
       headers: {
         Authorization:
@@ -3297,7 +3300,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/problems-v2//problem-info/\${request.problemId}\`
+        \`/problems-v2/problem-info/\${request.problemId}\`
       ),
       method: \\"GET\\",
       headers: {
@@ -3335,7 +3338,7 @@ export class Client implements Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options._origin,
-        \`/problems-v2//problem-info/\${request.problemId}/version/\${request.problemVersion}\`
+        \`/problems-v2/problem-info/\${request.problemId}/version/\${request.problemVersion}\`
       ),
       method: \\"GET\\",
       headers: {
