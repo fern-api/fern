@@ -163,6 +163,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@fern-ui/toaster",\
         "reference": "workspace:packages/ui/toaster"\
+      },\
+      {\
+        "name": "@fern-api/yaml-ast",\
+        "reference": "workspace:packages/yaml-ast"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -194,6 +198,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/task-context", ["workspace:packages/cli/task-context"]],\
       ["@fern-api/validator", ["workspace:packages/cli/yaml/validator"]],\
       ["@fern-api/workspace-loader", ["workspace:packages/cli/workspace-loader"]],\
+      ["@fern-api/yaml-ast", ["workspace:packages/yaml-ast"]],\
       ["@fern-api/yaml-schema", ["workspace:packages/cli/yaml/yaml-schema"]],\
       ["@fern-ui/app", ["workspace:packages/ui/app"]],\
       ["@fern-ui/common-components", ["workspace:packages/ui/common-components"]],\
@@ -8451,6 +8456,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["zod", "npm:3.16.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/yaml-ast", [\
+        ["workspace:packages/yaml-ast", {\
+          "packageLocation": "./packages/yaml-ast/",\
+          "packageDependencies": [\
+            ["@fern-api/yaml-ast", "workspace:packages/yaml-ast"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.23.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["yaml", "npm:2.1.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
