@@ -3,7 +3,6 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { TSCONFIG_OUT_DIR } from "./generateTsConfig";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
@@ -37,7 +36,7 @@ export async function generatePackageJson({
         ...packageJson,
         version: packageVersion,
         main: "./index.js",
-        types: `./${TSCONFIG_OUT_DIR}/index.d.ts`,
+        types: "./index.d.ts",
         files: ["/api", "/schemas", "/core", "/index.*", "!*.ts", "/types"],
         scripts: {
             [PackageJsonScript.FORMAT]: "prettier --write '**/*.ts'",

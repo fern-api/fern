@@ -23,8 +23,9 @@ export async function generateFiles({
     const generatorContext = new GeneratorContextImpl(logger);
     const volume = new Volume();
 
+    const apiName = `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
     const sdkGenerator = new SdkGenerator({
-        apiName: upperFirst(camelCase(config.workspaceName)),
+        apiName,
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         context: generatorContext,
         volume,
