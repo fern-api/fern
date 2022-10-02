@@ -155,47 +155,19 @@ export class CliContext {
 
     get logger(): Logger {
         return {
-            debug: (...args) => {
-                this.log([
-                    {
-                        args,
-                        level: LogLevel.Debug,
-                        prefix: chalk.dim("[debug] "),
-                    },
-                ]);
+            debug: (...parts) => {
+                this.log(LogLevel.Debug, ...parts);
             },
-            info: (...args) => {
-                this.log([
-                    {
-                        args,
-                        level: LogLevel.Info,
-                    },
-                ]);
+            info: (...parts) => {
+                this.log(LogLevel.Info, ...parts);
             },
-            warn: (...args) => {
-                this.log([
-                    {
-                        args,
-                        level: LogLevel.Warn,
-                    },
-                ]);
+            warn: (...parts) => {
+                this.log(LogLevel.Warn, ...parts);
             },
-            error: (...args) => {
-                this.log([
-                    {
-                        args,
-                        level: LogLevel.Error,
-                    },
-                ]);
+            error: (...parts) => {
+                this.log(LogLevel.Error, ...parts);
             },
-            log: (level, ...args) => {
-                this.log([
-                    {
-                        args,
-                        level,
-                    },
-                ]);
-            },
+            log: this.log.bind(this),
         };
     }
 
@@ -218,7 +190,7 @@ export class CliContext {
 
     private constructTaskInit(): TaskContextImpl.Init {
         return {
-            log: (content) => this.log(content),
+            logImmediately: (content) => this.logImmediately(content),
             takeOverTerminal: (run) => this.ttyAwareLogger.takeOverTerminal(run),
             onResult: (result) => {
                 if (result === TaskResult.Failure) {
@@ -229,9 +201,21 @@ export class CliContext {
         };
     }
 
-    private log(logs: Log[]): void {
+    private log(level: LogLevel, ...parts: unknown[]) {
+        this.logImmediately([
+            {
+                parts,
+                level,
+                time: new Date(),
+            },
+        ]);
+    }
+
+    private logImmediately(logs: Log[]): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
-        this.ttyAwareLogger.log(filtered);
+        this.ttyAwareLogger.log(filtered, {
+            includeDebugInfo: this.logLevel === LogLevel.Debug,
+        });
     }
 
     private _suppressUpgradeMessage = false;
