@@ -1,5 +1,5 @@
-import { addPrefixToString, noop } from "@fern-api/core-utils";
-import { LogLevel } from "@fern-api/logger";
+import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils";
+import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import ansiEscapes from "ansi-escapes";
 import chalk from "chalk";
 import IS_CI from "is-ci";
@@ -75,9 +75,9 @@ export class TtyAwareLogger {
         this.flushAndStopBuffering();
     }
 
-    public log(logs: Log[]): void {
+    public log(logs: Log[], { includeDebugInfo = false }: { includeDebugInfo?: boolean } = {}): void {
         for (const log of logs) {
-            const content = formatLog(log);
+            const content = formatLog(log, { includeDebugInfo });
             const omitOnTTY = log.omitOnTTY ?? false;
             if (!this.isTTY) {
                 this.write(content);
@@ -139,10 +139,19 @@ function countLines(str: string): number {
     return [...str].filter((char) => char === "\n").length + 1;
 }
 
-function formatLog(log: Log): string {
-    let content = log.args.map(stringify).join(" ").trim();
+function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }): string {
+    let content = log.parts.map(stringify).join(" ").trim();
     if (log.prefix != null) {
-        content = addPrefixToString({ prefix: log.prefix, content });
+        content = addPrefixToString({
+            prefix: log.prefix,
+            content,
+        });
+    }
+    if (includeDebugInfo) {
+        content = addPrefixToString({
+            prefix: chalk.dim(getDebugPrefix(log)),
+            content,
+        });
     }
     content += "\n";
 
@@ -165,4 +174,24 @@ function stringify(value: unknown): string {
         return value.stack ?? value.message;
     }
     return JSON.stringify(value);
+}
+
+const LONGEST_LOG_LEVEL_STRING_LENGTH = Math.max(...LOG_LEVELS.map((level) => getLogLevelAsString(level).length));
+function getDebugPrefix(log: Log) {
+    return `${getLogLevelAsString(log.level).padEnd(LONGEST_LOG_LEVEL_STRING_LENGTH)} ${log.time.toISOString()} `;
+}
+
+function getLogLevelAsString(logLevel: LogLevel) {
+    switch (logLevel) {
+        case LogLevel.Debug:
+            return "DEBUG";
+        case LogLevel.Info:
+            return "INFO";
+        case LogLevel.Warn:
+            return "WARN";
+        case LogLevel.Error:
+            return "ERROR";
+        default:
+            assertNever(logLevel);
+    }
 }
