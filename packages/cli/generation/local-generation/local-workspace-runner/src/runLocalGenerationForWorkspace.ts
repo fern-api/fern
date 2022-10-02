@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -30,7 +30,7 @@ export async function runLocalGenerationForWorkspace({
         prefix: "fern",
     });
 
-    const absolutePathToIr = join(AbsoluteFilePath.of(workspaceTempDir.path), RelativeFilePath.of("ir.json"));
+    const absolutePathToIr = join(AbsoluteFilePath.of(workspaceTempDir.path), "ir.json");
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(

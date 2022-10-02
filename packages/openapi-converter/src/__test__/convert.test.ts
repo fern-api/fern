@@ -6,23 +6,23 @@ import { convertOpenApi } from "../openapiConverter";
 
 const OPEN_API_DEFINITION_FILENAME = "openapi.json";
 const FERN_API_DEFINITION_FILENAME = "fern.yml";
-const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
 
 describe("fern convert", () => {
     itFixture("direct-sales");
     itFixture("medplum");
 });
 
-function itFixture(fixtureName: string) {
+function itFixture(fixtureName: RelativeFilePath) {
     it(
         // eslint-disable-next-line jest/valid-title
         fixtureName,
         async () => {
-            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixtureName));
-            const outputPath = join(fixturePath, RelativeFilePath.of("generated"));
+            const fixturePath = join(FIXTURES_DIR, fixtureName);
+            const outputPath = join(fixturePath, "generated");
             await rm(outputPath, { force: true, recursive: true });
 
-            const openApiPath = join(fixturePath, RelativeFilePath.of(OPEN_API_DEFINITION_FILENAME));
+            const openApiPath = join(fixturePath, OPEN_API_DEFINITION_FILENAME);
             const conversionResult = await convertOpenApi(openApiPath);
             if (!conversionResult.didSucceed) {
                 throw new Error("Conversion failed");

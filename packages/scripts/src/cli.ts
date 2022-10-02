@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { writeFernJsonSchema } from "@fern-api/json-schema";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -14,9 +14,7 @@ void yargs(hideBin(process.argv))
             /* no-op */
         },
         async () => {
-            await writeFernJsonSchema(
-                join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../../fern.schema.json"))
-            );
+            await writeFernJsonSchema(join(AbsoluteFilePath.of(__dirname), "../../../fern.schema.json"));
         }
     )
     .command(

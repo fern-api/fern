@@ -1,4 +1,4 @@
-import { cwd, FilePath, noop, resolve } from "@fern-api/core-utils";
+import { cwd, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
@@ -270,7 +270,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
-                irFilepath: resolve(cwd(), FilePath.of(argv.output)),
+                irFilepath: resolve(cwd(), argv.output),
                 cliContext,
             });
         }

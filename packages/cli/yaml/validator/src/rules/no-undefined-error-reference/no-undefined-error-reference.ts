@@ -2,6 +2,7 @@ import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
+import { mapValues } from "lodash-es";
 import { Rule } from "../../Rule";
 
 type ErrorName = string;
@@ -24,7 +25,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
                 const parsedReference = parseReferenceToTypeName({
                     reference: errorReference,
                     referencedIn: relativeFilepath,
-                    imports: contents.imports ?? {},
+                    imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
                 });
 
                 if (

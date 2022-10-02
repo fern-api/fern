@@ -3,7 +3,7 @@ import { readdir } from "fs/promises";
 import { getAllRules } from "../getAllRules";
 import { Rule } from "../Rule";
 
-const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"));
+const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), "../rules");
 
 describe("getAllRules", () => {
     it("ensure all rules are registered", async () => {
