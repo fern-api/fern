@@ -25,7 +25,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
