@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { Type, TypeReference } from "@fern-fern/ir-model/types";
 import { convertErrorDeclaration } from "../converters/convertErrorDeclaration";
@@ -18,10 +17,10 @@ describe("convertErrorDeclaration", () => {
                 },
             },
             file: constructFernFileContext({
-                relativeFilepath: RelativeFilePath.of("path/to/other"),
+                relativeFilepath: "path/to/other",
                 serviceFile: {
                     imports: {
-                        commons: RelativeFilePath.of("./commons"),
+                        commons: "./commons",
                     },
                 },
             }),
@@ -32,7 +31,7 @@ describe("convertErrorDeclaration", () => {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",
-                fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/other")),
+                fernFilepath: convertToFernFilepath("path/to/other"),
             },
             discriminantValue: {
                 wireValue: "UnauthorizedError",
@@ -57,7 +56,7 @@ describe("convertErrorDeclaration", () => {
                             screamingSnakeCase: "POST_ID",
                         },
                         valueType: TypeReference.named({
-                            fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/commons")),
+                            fernFilepath: convertToFernFilepath("path/to/commons"),
                             name: "PostId",
                         }),
                     },
@@ -77,7 +76,7 @@ describe("convertErrorDeclaration", () => {
                             screamingSnakeCase: "POST_ID",
                         },
                         valueType: TypeReference.named({
-                            fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/commons")),
+                            fernFilepath: convertToFernFilepath("path/to/commons"),
                             name: "PostId",
                         }),
                     },

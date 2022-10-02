@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 import { constructFernFileContext } from "../FernFileContext";
@@ -9,10 +8,10 @@ describe("convertResponseErrors", () => {
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],
             file: constructFernFileContext({
-                relativeFilepath: RelativeFilePath.of("path/to/other"),
+                relativeFilepath: "path/to/other",
                 serviceFile: {
                     imports: {
-                        commons: RelativeFilePath.of("./commons"),
+                        commons: "./commons",
                     },
                 },
             }),
@@ -22,7 +21,7 @@ describe("convertResponseErrors", () => {
             {
                 docs: undefined,
                 error: {
-                    fernFilepath: convertToFernFilepath(RelativeFilePath.of("path/to/commons")),
+                    fernFilepath: convertToFernFilepath("path/to/commons"),
                     name: "UnauthorizedError",
                 },
             },

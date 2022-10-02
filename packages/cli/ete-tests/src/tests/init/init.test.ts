@@ -1,4 +1,4 @@
-import { getDirectoryContents, join, RelativeFilePath } from "@fern-api/core-utils";
+import { getDirectoryContents, join } from "@fern-api/core-utils";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
@@ -8,5 +8,5 @@ it("fern init", async () => {
     await runFernCli(["check"], {
         cwd: pathOfDirectory,
     });
-    expect(await getDirectoryContents(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))).toMatchSnapshot();
+    expect(await getDirectoryContents(join(pathOfDirectory, FERN_DIRECTORY))).toMatchSnapshot();
 }, 60_000);

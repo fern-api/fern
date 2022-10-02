@@ -24,7 +24,7 @@ export const NoCircularImportsRule: Rule = {
 
                 const resolvedImportPath = getResolvedPathOfImportedFile({
                     referencedIn: relativeFilepath,
-                    importPath,
+                    importPath: RelativeFilePath.of(importPath),
                 });
                 const circularImportsToReport = circularImportsForFile.filter(
                     ({ chainWithoutStartingFilepath: chain }) => chain.length === 0 || chain[0] === resolvedImportPath
@@ -74,7 +74,7 @@ function findCircularImportsRecursive(
         for (const importPath of Object.values(file.imports)) {
             const resolvedImportPath = getResolvedPathOfImportedFile({
                 referencedIn: filepath,
-                importPath,
+                importPath: RelativeFilePath.of(importPath),
             });
             if (path.includes(resolvedImportPath)) {
                 // to reduce duplicates, only keep track of paths that:

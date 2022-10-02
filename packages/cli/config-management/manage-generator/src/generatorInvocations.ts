@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import { DraftGeneratorInvocationSchema } from "@fern-api/generators-configuration";
 
 export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
@@ -17,13 +16,13 @@ export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
 export const POSTMAN_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-postman",
     version: "0.0.23",
-    "local-output": RelativeFilePath.of("./generated-postman.json"),
+    "local-output": "./generated-postman.json",
 };
 
 export const OPENAPI_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
     version: "0.0.8",
-    "local-output": RelativeFilePath.of("./generated-openapi.yaml"),
+    "local-output": "./generated-openapi.yaml",
     config: {
         format: "yaml",
     },

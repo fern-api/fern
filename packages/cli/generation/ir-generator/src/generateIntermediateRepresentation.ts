@@ -1,4 +1,4 @@
-import { entries, noop, RelativeFilePath, visitObject } from "@fern-api/core-utils";
+import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -15,7 +15,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 
 export async function generateIntermediateRepresentation(workspace: Workspace): Promise<IntermediateRepresentation> {
     const rootApiFile = constructFernFileContext({
-        relativeFilepath: RelativeFilePath.of(""),
+        relativeFilepath: undefined,
         serviceFile: workspace.rootApiFile,
     });
 

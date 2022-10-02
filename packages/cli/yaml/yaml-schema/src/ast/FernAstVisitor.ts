@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
 import {
     ErrorDeclarationSchema,
     HttpEndpointSchema,
@@ -15,7 +14,7 @@ export type FernAstVisitor<R = void | Promise<void>> = {
 
 export interface FernAstNodeTypes {
     docs: string;
-    import: { importPath: RelativeFilePath; importedAs: string };
+    import: { importPath: string; importedAs: string };
     id: IdSchema;
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
     typeReference: TypeReferenceSchema;

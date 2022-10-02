@@ -3,6 +3,7 @@ import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
 import chalk from "chalk";
+import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 
 type TypeName = string;
@@ -26,7 +27,11 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         return {
             typeReference: (typeReference, { relativeFilepath, contents }) => {
                 const type = typeof typeReference === "string" ? typeReference : typeReference.type;
-                const namedTypes = getAllNamedTypes({ type, relativeFilepath, imports: contents.imports ?? {} });
+                const namedTypes = getAllNamedTypes({
+                    type,
+                    relativeFilepath,
+                    imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
+                });
 
                 return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
                     if (!doesTypeExist(namedType)) {

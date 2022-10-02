@@ -1,4 +1,4 @@
-import { dirname, doesPathExist, join } from "@fern-api/core-utils";
+import { dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/core-utils";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -11,7 +11,7 @@ export const ImportFileExistsRule: Rule = {
                 const importedFilePath = join(
                     workspace.absolutePathToDefinition,
                     dirname(relativeFilepath),
-                    importPath
+                    RelativeFilePath.of(importPath)
                 );
                 const fileExists = await doesPathExist(importedFilePath);
                 if (!fileExists) {

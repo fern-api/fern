@@ -1,4 +1,4 @@
-import { join, RelativeFilePath } from "@fern-api/core-utils";
+import { join } from "@fern-api/core-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { readFile, writeFile } from "fs/promises";
@@ -11,12 +11,12 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
         {
             name: "fernapi/fern-postman",
             version: "0.0.20",
-            "local-output": RelativeFilePath.of("./generated-postman.json"),
+            "local-output": "./generated-postman.json",
         },
         {
             name: "fernapi/fern-openapi",
             version: "0.0.2",
-            "local-output": RelativeFilePath.of("./generated-openapi.yml"),
+            "local-output": "./generated-openapi.yml",
             config: {
                 format: "yaml",
             },
@@ -40,9 +40,9 @@ describe("fern upgrade", () => {
         const directory = await init();
         const generatorsConfigurationFilepath = join(
             directory,
-            RelativeFilePath.of(FERN_DIRECTORY),
-            RelativeFilePath.of("api"),
-            RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
+            FERN_DIRECTORY,
+            "api",
+            GENERATORS_CONFIGURATION_FILENAME
         );
         // make sure the file exists
         await readFile(generatorsConfigurationFilepath);
