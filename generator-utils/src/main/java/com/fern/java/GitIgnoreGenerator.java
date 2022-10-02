@@ -18,8 +18,7 @@ package com.fern.java;
 
 public final class GitIgnoreGenerator {
 
-    private GitIgnoreGenerator() {
-    }
+    private GitIgnoreGenerator() {}
 
     public static String getGitignore() {
         return "*.class\n"
