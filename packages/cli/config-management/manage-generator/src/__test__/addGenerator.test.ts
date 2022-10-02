@@ -25,7 +25,7 @@ describe("addGenerator", () => {
         const generatorsConfiguration: GeneratorsConfigurationSchema = {
             draft: [
                 {
-                    name: "fernapi/fern-typescript",
+                    name: "fernapi/fern-typescript-sdk",
                     version: "0.0.23",
                 },
             ],

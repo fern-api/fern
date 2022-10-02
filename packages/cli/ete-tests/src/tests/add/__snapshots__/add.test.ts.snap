@@ -73,10 +73,8 @@ errors:
             "contents": "draft:
   - name: fernapi/java-client
     version: 0.0.109
-  - name: fernapi/fern-typescript
-    version: 0.0.197
-    config:
-      mode: client-v2
+  - name: fernapi/fern-typescript-sdk
+    version: 0.0.198
   - name: fernapi/fern-postman
     version: 0.0.23
     local-output: ./generated-postman.json

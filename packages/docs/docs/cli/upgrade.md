@@ -24,10 +24,8 @@ fern upgrade
 
 ```diff title="/fern/api/generators.yml"
 draft:
-   - name: fernapi/fern-typescript
+   - name: fernapi/fern-typescript-sdk
 -    version: 0.0.189
 +    version: 0.0.191
-     config:
-       mode: client
 release: []
 ```

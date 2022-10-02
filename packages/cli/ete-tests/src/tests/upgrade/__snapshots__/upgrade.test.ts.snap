@@ -12,9 +12,7 @@ exports[`fern upgrade upgrades generators 1`] = `
     local-output: ./generated-openapi.yml
   - name: fernapi/java-client
     version: 0.0.109
-  - name: fernapi/fern-typescript
-    version: 0.0.197
-    config:
-      mode: client_and_server
+  - name: fernapi/fern-typescript-sdk
+    version: 0.0.198
 "
 `;
