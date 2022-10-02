@@ -3731,10 +3731,7 @@ export const fetcher: FetchFunction = async (args) => {
     if (response.status >= 200 && response.status < 300) {
       return {
         ok: true,
-        body: {
-          statusCode: response.status,
-          body,
-        },
+        body,
       };
     } else {
       return {

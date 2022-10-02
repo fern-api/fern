@@ -94,7 +94,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
             this.schema != null
                 ? this.schema.getReferenceToSchema(file)
                 : file.getSchemaOfTypeReference(this.endpoint.response.type);
-        const rawResponseBody =
+        const rawResponseBodyType =
             this.schema != null
                 ? this.schema.getReferenceToRawShape(file)
                 : file.getReferenceToRawType(this.endpoint.response.type).typeNode;
@@ -105,7 +105,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
                     ts.factory.createIdentifier(EndpointResponse.RESPONSE_VARIABLE),
                     file.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
                 ),
-                rawResponseBody
+                rawResponseBodyType
             )
         );
     }
