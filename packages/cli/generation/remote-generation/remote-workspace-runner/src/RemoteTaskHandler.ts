@@ -118,6 +118,7 @@ async function downloadFilesForTask({
 }) {
     const tmpDir = await tmp.dir({
         prefix: "fern",
+        unsafeCleanup: true,
     });
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     const writer = createWriteStream(outputZipPath);

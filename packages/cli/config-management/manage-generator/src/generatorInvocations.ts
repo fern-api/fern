@@ -26,7 +26,7 @@ export const OPENAPI_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
         format: "yaml",
     },
     mode: "download-files",
-    "output-path": "./generated-openapi.yaml",
+    "output-path": "./generated-openapi",
 };
 
 export const GENERATOR_INVOCATIONS: Record<string, DraftGeneratorInvocationSchema> = {

@@ -86,7 +86,7 @@ errors:
     config:
       format: yaml
     mode: download-files
-    output-path: ./generated-openapi.yaml
+    output-path: ./generated-openapi
 release: []
 ",
             "name": "generators.yml",
