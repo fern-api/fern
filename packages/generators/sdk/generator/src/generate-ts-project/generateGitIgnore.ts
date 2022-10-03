@@ -14,7 +14,7 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
             "!.yarn/versions",
             "node_modules",
             ".DS_Store",
-            "types",
+            "*.d.ts",
             "*.js",
             "*.js.map",
         ].join("\n")
