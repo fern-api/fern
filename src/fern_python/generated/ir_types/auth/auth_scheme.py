@@ -45,22 +45,26 @@ class AuthScheme(pydantic.BaseModel):
         typing.Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header], pydantic.Field(discriminator="type")
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 class _AuthScheme:
     class Bearer(WithDocs):
-        type: typing.Literal["bearer"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["bearer"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Basic(WithDocs):
-        type: typing.Literal["basic"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["basic"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Header(HttpHeader):
-        type: typing.Literal["header"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["header"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True

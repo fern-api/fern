@@ -64,22 +64,26 @@ class SingleUnionTypeProperties(pydantic.BaseModel):
         pydantic.Field(discriminator="properties_type"),
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 class _SingleUnionTypeProperties:
     class SamePropertiesAsObject(DeclaredTypeName):
-        properties_type: typing.Literal["samePropertiesAsObject"] = pydantic.Field(alias="_type")
+        properties_type: typing_extensions.Literal["samePropertiesAsObject"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class SingleProperty(SingleUnionTypeProperty):
-        properties_type: typing.Literal["singleProperty"] = pydantic.Field(alias="_type")
+        properties_type: typing_extensions.Literal["singleProperty"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class NoProperties(pydantic.BaseModel):
-        properties_type: typing.Literal["noProperties"] = pydantic.Field(alias="_type")
+        properties_type: typing_extensions.Literal["noProperties"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True

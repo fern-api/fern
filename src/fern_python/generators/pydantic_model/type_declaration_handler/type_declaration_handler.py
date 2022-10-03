@@ -1,3 +1,4 @@
+from fern_python.codegen import AST
 from fern_python.declaration_handler import DeclarationHandler
 from fern_python.generated import ir_types
 
@@ -20,7 +21,13 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
             type_name=self._declaration.name,
             context=self._context,
         ) as pydantic_model:
-            pydantic_model.set_root_type(self._context.get_type_hint_for_type_reference(alias.alias_of))
+            pydantic_model.set_root_type(alias.alias_of)
+            pydantic_model.add_method(
+                name="get_value",
+                parameters=[],
+                return_type=alias.alias_of,
+                body=AST.CodeWriter("return self.__root__"),
+            )
 
     def _generate_enum(self, enum: ir_types.EnumTypeDeclaration) -> None:
         generate_enum(

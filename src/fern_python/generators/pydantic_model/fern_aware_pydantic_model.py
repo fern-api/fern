@@ -95,7 +95,7 @@ class FernAwarePydanticModel:
         body: AST.CodeWriter,
         decorator: AST.ClassMethodDecorator = None,
     ) -> AST.FunctionDeclaration:
-        return self._pydantic_model.add_method(
+        return self.add_method_unsafe(
             declaration=AST.FunctionDeclaration(
                 name=name,
                 parameters=[
@@ -114,15 +114,37 @@ class FernAwarePydanticModel:
         self,
         declaration: AST.FunctionDeclaration,
         decorator: AST.ClassMethodDecorator = None,
-    ) -> None:
-        self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
+    ) -> AST.FunctionDeclaration:
+        return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
-    def set_root_type(self, root_type: AST.TypeHint, is_forward_ref: bool = False) -> None:
+    def set_root_type(self, root_type: ir_types.TypeReference, is_forward_ref: bool = False) -> None:
+        self.set_root_type_unsafe(
+            root_type=self.get_type_hint_for_type_reference(root_type),
+            is_forward_ref=is_forward_ref,
+        )
+
+    def set_root_type_unsafe(self, root_type: AST.TypeHint, is_forward_ref: bool = False) -> None:
         self._pydantic_model.set_root_type(root_type=root_type)
         if is_forward_ref:
             self._model_contains_forward_refs = True
 
     def finish(self) -> None:
+        def write_json_body(writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+            writer.write("kwargs_with_defaults: ")
+            writer.write_node(AST.TypeHint.any())
+            writer.write(' = { "by_alias": True, **kwargs }')
+            writer.write_line()
+            writer.write_line("return super().json(**kwargs_with_defaults)")
+
+        self._pydantic_model.add_method(
+            AST.FunctionDeclaration(
+                name="json",
+                parameters=[],
+                return_type=AST.TypeHint.str_(),
+                body=AST.CodeWriter(write_json_body),
+                include_kwargs=True,
+            )
+        )
         self._pydantic_model.finish()
         if self._model_contains_forward_refs:
             self._context.source_file.add_footer_expression(

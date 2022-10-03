@@ -73,36 +73,40 @@ class ResolvedTypeReference(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 class _ResolvedTypeReference:
     class Container(pydantic.BaseModel):
-        type: typing.Literal["container"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["container"] = pydantic.Field(alias="_type")
         container: ContainerType
 
         class Config:
             allow_population_by_field_name = True
 
     class Named(ResolvedNamedType):
-        type: typing.Literal["named"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["named"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Primitive(pydantic.BaseModel):
-        type: typing.Literal["primitive"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["primitive"] = pydantic.Field(alias="_type")
         primitive: PrimitiveType
 
         class Config:
             allow_population_by_field_name = True
 
     class Unknown(pydantic.BaseModel):
-        type: typing.Literal["unknown"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["unknown"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Void(pydantic.BaseModel):
-        type: typing.Literal["void"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["void"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True

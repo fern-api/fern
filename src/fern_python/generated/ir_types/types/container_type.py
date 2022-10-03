@@ -49,6 +49,10 @@ class ContainerType(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 from .map_type import MapType  # noqa: E402
 from .type_reference import TypeReference  # noqa: E402
@@ -56,27 +60,27 @@ from .type_reference import TypeReference  # noqa: E402
 
 class _ContainerType:
     class List(pydantic.BaseModel):
-        type: typing.Literal["list"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["list"] = pydantic.Field(alias="_type")
         list: TypeReference
 
         class Config:
             allow_population_by_field_name = True
 
     class Map(MapType):
-        type: typing.Literal["map"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["map"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Optional(pydantic.BaseModel):
-        type: typing.Literal["optional"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["optional"] = pydantic.Field(alias="_type")
         optional: TypeReference
 
         class Config:
             allow_population_by_field_name = True
 
     class Set(pydantic.BaseModel):
-        type: typing.Literal["set"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["set"] = pydantic.Field(alias="_type")
         set: TypeReference
 
         class Config:

@@ -53,28 +53,32 @@ class Type(pydantic.BaseModel):
         typing.Union[_Type.Alias, _Type.Enum, _Type.Object, _Type.Union], pydantic.Field(discriminator="type")
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 class _Type:
     class Alias(AliasTypeDeclaration):
-        type: typing.Literal["alias"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["alias"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Enum(EnumTypeDeclaration):
-        type: typing.Literal["enum"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["enum"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Object(ObjectTypeDeclaration):
-        type: typing.Literal["object"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["object"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True
 
     class Union(UnionTypeDeclaration):
-        type: typing.Literal["union"] = pydantic.Field(alias="_type")
+        type: typing_extensions.Literal["union"] = pydantic.Field(alias="_type")
 
         class Config:
             allow_population_by_field_name = True

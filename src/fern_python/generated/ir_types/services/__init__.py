@@ -1,4 +1,12 @@
-from .commons import DeclaredServiceName, ResponseError, ResponseErrors
+from .commons import (
+    DeclaredServiceName,
+    ResponseError,
+    ResponseErrors,
+    ResponseErrorShape,
+    ResponseErrorsV2,
+    ResponseErrorV2,
+    SingleResponseErrorProperty,
+)
 from .http import (
     HttpEndpoint,
     HttpEndpointId,
@@ -35,7 +43,11 @@ __all__ = [
     "PathParameter",
     "QueryParameter",
     "ResponseError",
+    "ResponseErrorShape",
+    "ResponseErrorV2",
     "ResponseErrors",
+    "ResponseErrorsV2",
+    "SingleResponseErrorProperty",
     "WebSocketChannel",
     "WebSocketMessenger",
     "WebSocketOperation",

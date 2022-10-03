@@ -154,7 +154,7 @@ def generate_union(
                 are_checks_exhaustive=True,
             )
         )
-        external_pydantic_model.set_root_type(
+        external_pydantic_model.set_root_type_unsafe(
             is_forward_ref=True,
             root_type=AST.TypeHint.annotated(
                 type=root_type,

@@ -74,7 +74,7 @@ class TypeHint(AstNode):
 
     @staticmethod
     def any() -> TypeHint:
-        return TypeHint(type=get_reference_to_typing_import("Optional"))
+        return TypeHint(type=get_reference_to_typing_import("Any"))
 
     @staticmethod
     def generic(generic: GenericTypeVar) -> TypeHint:
@@ -142,10 +142,12 @@ class TypeHint(AstNode):
         )
         if len(self._type_parameters) > 0:
             writer.write("[")
+            just_wrote_parameter = False
             for i, type_parameter in enumerate(self._type_parameters):
-                type_parameter.write(writer=writer, reference_resolver=reference_resolver)
-                if i < len(self._type_parameters) - 1:
+                if just_wrote_parameter:
                     writer.write(", ")
+                type_parameter.write(writer=writer, reference_resolver=reference_resolver)
+                just_wrote_parameter = True
             writer.write("]")
 
 

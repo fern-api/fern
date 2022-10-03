@@ -45,6 +45,6 @@ class HashableDeclaredTypeName:
     @staticmethod
     def of(type_name: ir_types.DeclaredTypeName) -> HashableDeclaredTypeName:
         return HashableDeclaredTypeName(
-            fern_filepath=tuple(part.original_value for part in type_name.fern_filepath),
+            fern_filepath=tuple(part.original_value for part in type_name.fern_filepath.get_value()),
             name=type_name.name,
         )

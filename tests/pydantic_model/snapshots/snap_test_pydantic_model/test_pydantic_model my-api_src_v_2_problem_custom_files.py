@@ -40,6 +40,10 @@ class CustomFiles(pydantic.BaseModel):
         typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 class _CustomFiles:
     class Basic(BasicCustomFiles):

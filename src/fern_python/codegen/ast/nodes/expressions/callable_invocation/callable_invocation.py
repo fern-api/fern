@@ -36,15 +36,18 @@ class CallableInvocation(AstNode):
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write(f"{reference_resolver.resolve_reference(self.callable)}(")
+        just_wrote_argument = False
         for i, arg in enumerate(self.args):
-            arg.write(writer=writer, reference_resolver=reference_resolver)
-            if i < len(self.args) - 1 or len(self.kwargs) > 0:
+            if just_wrote_argument:
                 writer.write(", ")
+            arg.write(writer=writer, reference_resolver=reference_resolver)
+            just_wrote_argument = True
         for i, (name, value) in enumerate(self.kwargs):
+            if just_wrote_argument:
+                writer.write(", ")
             writer.write(f"{name}=")
             value.write(writer=writer, reference_resolver=reference_resolver)
-            if i < len(self.kwargs) - 1:
-                writer.write(", ")
+            just_wrote_argument = True
         writer.write(")")
 
 

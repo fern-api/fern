@@ -50,6 +50,8 @@ class ClassDeclaration(AstNode):
             return_type=declaration.return_type,
             body=declaration.body,
             decorators=decorators,
+            include_args=declaration.include_args,
+            include_kwargs=declaration.include_kwargs,
         )
 
         self.statements.append(declaration)

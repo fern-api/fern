@@ -10,8 +10,11 @@ from .function_parameter import FunctionParameter
 class FunctionDeclaration(AstNode):
     def __init__(
         self,
+        *,
         name: str,
         parameters: Sequence[FunctionParameter],
+        include_args: bool = False,
+        include_kwargs: bool = False,
         return_type: TypeHint,
         body: CodeWriter,
         decorators: Sequence[Reference] = None,
@@ -21,6 +24,8 @@ class FunctionDeclaration(AstNode):
         self.return_type = return_type
         self.body = body
         self.decorators = decorators or []
+        self.include_args = include_args
+        self.include_kwargs = include_kwargs
 
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set()
@@ -46,10 +51,23 @@ class FunctionDeclaration(AstNode):
             writer.write_line(f"@{reference_resolver.resolve_reference(decorator)}")
 
         writer.write(f"def {self.name}(")
+        just_wrote_parameter = False
         for i, parameter in enumerate(self.parameters):
-            writer.write_node(parameter)
-            if i < len(self.parameters) - 1:
+            if just_wrote_parameter:
                 writer.write(", ")
+            writer.write_node(parameter)
+            just_wrote_parameter = True
+        if self.include_args:
+            if just_wrote_parameter:
+                writer.write(", ")
+            writer.write("*args")
+            just_wrote_parameter = True
+        if self.include_kwargs:
+            if just_wrote_parameter:
+                writer.write(", ")
+            writer.write("**kwargs: ")
+            writer.write_node(TypeHint.any())
+            just_wrote_parameter = True
         writer.write(") -> ")
         writer.write_node(self.return_type)
         writer.write(":")

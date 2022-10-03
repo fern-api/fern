@@ -40,8 +40,10 @@ class TypeParameter(AstNode):
             writer.write(self._type_parameter.name)
         elif isinstance(self._type_parameter, list):
             writer.write("[")
+            just_wrote_parameter = False
             for i, type_parameter in enumerate(self._type_parameter):
-                type_parameter.write(writer=writer, reference_resolver=reference_resolver)
-                if i < len(self._type_parameter) - 1:
+                if just_wrote_parameter:
                     writer.write(", ")
+                type_parameter.write(writer=writer, reference_resolver=reference_resolver)
+                just_wrote_parameter = True
             writer.write("]")

@@ -109,6 +109,10 @@ class VariableType(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
 
 from .list_type import ListType  # noqa: E402
 from .map_type import MapType  # noqa: E402

@@ -27,9 +27,12 @@ class ClassConstructor(AstNode):
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         writer.write("def __init__(self, ")
-        for parameter in self.parameters:
+        just_wrote_parameter = False
+        for i, parameter in enumerate(self.parameters):
+            if just_wrote_parameter:
+                writer.write(", ")
             writer.write_node(parameter)
-            writer.write(", ")
+            just_wrote_parameter = True
         writer.write("):")
 
         with writer.indent():
