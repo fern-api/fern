@@ -1,9 +1,9 @@
 import { VersionMigrations } from "../../types/VersionMigrations";
-import UnionSinglePropertyKeyMigration from "./add-mode-to-draft-generators";
+import AddModeToDraftGeneratorsMigration from "./add-mode-to-draft-generators";
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.207",
-    migrations: [UnionSinglePropertyKeyMigration],
+    migrations: [AddModeToDraftGeneratorsMigration],
 };
 
 export default versionMigrations;
