@@ -19,7 +19,7 @@ export async function runRemoteGenerationForWorkspace({
     workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
-    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfigV2[];
     generatorInvocations: GeneratorInvocation[];
     version: string | undefined;
 }): Promise<void> {

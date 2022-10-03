@@ -11,23 +11,27 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
         {
             name: "fernapi/fern-postman",
             version: "0.0.20",
-            "local-output": "./generated-postman.json",
+            mode: "download-files",
+            "output-path": "./generated-postman",
         },
         {
             name: "fernapi/fern-openapi",
             version: "0.0.2",
-            "local-output": "./generated-openapi.yml",
             config: {
                 format: "yaml",
             },
+            mode: "download-files",
+            "output-path": "./generated-openapi",
         },
         {
             name: "fernapi/fern-java-sdk",
             version: "0.0.81",
+            mode: "publish",
         },
         {
             name: "fernapi/fern-typescript-sdk",
             version: "0.0.14",
+            mode: "publish",
         },
     ],
 };

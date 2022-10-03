@@ -3,7 +3,7 @@ import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema";
 
 export const DraftGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({
     mode: z.literal("publish").or(z.literal("download-files")),
-    "output-path": z.string(),
+    "output-path": z.optional(z.string()),
 });
 
 export type DraftGeneratorInvocationSchema = z.infer<typeof DraftGeneratorInvocationSchema>;

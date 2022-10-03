@@ -12,6 +12,7 @@ export type GeneratorInvocation = DraftGeneratorInvocation | ReleaseGeneratorInv
 
 export interface DraftGeneratorInvocation extends BaseGeneratorInvocation {
     type: "draft";
+    mode: "publish" | "download-files";
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
 }
 

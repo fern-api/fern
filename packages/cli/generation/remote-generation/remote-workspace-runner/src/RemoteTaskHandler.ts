@@ -6,8 +6,6 @@ import { Fiddle } from "@fern-fern/fiddle-client";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
-import urlJoin from "url-join";
-import { FIDDLE_ORIGIN } from "./service";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -95,13 +93,8 @@ export class RemoteTaskHandler {
 
     private async maybeDownloadFiles(status: Fiddle.remoteGen.FinishedTaskStatus): Promise<void> {
         if (this.generatorInvocation.type === "draft" && this.generatorInvocation.absolutePathToLocalOutput != null) {
-            if (!status.hasFilesToDownload) {
-                this.context.fail("No files available to download");
-                return;
-            }
             await downloadFilesForTask({
-                jobId: this.job.jobId,
-                taskId: this.taskId,
+                s3PreSignedReadUrl: status.s3PreSignedReadUrl,
                 absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
                 context: this.context,
             });
@@ -110,21 +103,17 @@ export class RemoteTaskHandler {
 }
 
 async function downloadFilesForTask({
-    jobId,
-    taskId,
+    s3PreSignedReadUrl,
     absolutePathToLocalOutput,
     context,
 }: {
-    jobId: Fiddle.remoteGen.RemoteGenJobId;
-    taskId: Fiddle.remoteGen.RemoteGenTaskId;
+    s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: Finishable & InteractiveTaskContext;
 }) {
     const writer = createWriteStream(absolutePathToLocalOutput);
     await axios
-        .get(urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/tasks/${taskId}/jobs/${jobId}/downloadFiles`), {
-            responseType: "stream",
-        })
+        .get(s3PreSignedReadUrl, { responseType: "arraybuffer" })
         .then((response) => {
             response.data.pipe(writer);
             context.logger.info(chalk.green("Downloaded: " + absolutePathToLocalOutput));

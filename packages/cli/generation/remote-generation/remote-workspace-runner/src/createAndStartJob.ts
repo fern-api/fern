@@ -20,7 +20,7 @@ export async function createAndStartJob({
     workspace: Workspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
-    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfigV2[];
     version: string | undefined;
     context: TaskContext;
 }): Promise<Fiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
@@ -46,7 +46,7 @@ async function createJob({
 }: {
     workspace: Workspace;
     organization: string;
-    generatorConfigs: Fiddle.remoteGen.GeneratorConfig[];
+    generatorConfigs: Fiddle.remoteGen.GeneratorConfigV2[];
     version: string | undefined;
     context: TaskContext;
 }): Promise<Fiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
@@ -59,7 +59,7 @@ async function createJob({
         return TASK_FAILURE;
     }
 
-    const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJob({
+    const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
         apiName: workspace.name,
         version,
         organizationName: organization,
