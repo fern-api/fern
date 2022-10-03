@@ -79,11 +79,9 @@ export class RemoteTaskHandler {
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
-                const s3DownloadLink = terminalLink(
-                    "Click here to download generated files!",
-                    finishedStatus.s3PreSignedReadUrl
+                this.context.logger.debug(
+                    `Generated files. ${terminalLink("View here", finishedStatus.s3PreSignedReadUrl)}`
                 );
-                this.context.logger.debug(s3DownloadLink);
                 this.context.finish();
             },
             _other: () => {
@@ -128,7 +126,7 @@ async function downloadFilesForTask({
         });
         await pipeline(request.data, createWriteStream(outputZipPath));
         await decompress(outputZipPath, absolutePathToLocalOutput);
-        context.logger.info(chalk.green("Files were downloaded to directory " + absolutePathToLocalOutput));
+        context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
         context.fail("Failed to download files", e);
     }
