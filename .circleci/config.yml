@@ -192,10 +192,8 @@ workflows:
 
       - live-test-dev:
           filters:
-            # branches:
-            #   only: main
-            tags:
-              only: /.*/
+            branches:
+              only: main
           context:
             - auth0-dev
 
