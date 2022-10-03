@@ -17,6 +17,17 @@ jobs:
           name: pre-commit
           command: poetry run pre-commit run --all-files
 
+  test:
+    docker:
+      - image: cimg/python:3.10.7-node
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run tests
+          command: poetry run pytest
+
   publish-docker:
     machine:
       image: ubuntu-2004:current
@@ -39,9 +50,10 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - python/test:
-          pkg-manager: poetry
-          test-tool: pytest
+      - test:
+          filters:
+            tags:
+              only: /.*/
       - publish-docker:
           filters:
             branches:
