@@ -5,7 +5,11 @@ import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
 import { Fiddle } from "@fern-fern/fiddle-client";
 import axios from "axios";
 import chalk from "chalk";
+import decompress from "decompress";
 import { createWriteStream } from "fs";
+import path from "path";
+import terminalLink from "terminal-link";
+import tmp from "tmp-promise";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -17,15 +21,11 @@ export declare namespace RemoteTaskHandler {
 }
 
 export class RemoteTaskHandler {
-    private job: Fiddle.remoteGen.CreateJobResponse;
-    private taskId: Fiddle.remoteGen.RemoteGenTaskId;
     private context: Finishable & InteractiveTaskContext;
     private generatorInvocation: GeneratorInvocation;
     private lengthOfLastLogs = 0;
 
-    constructor({ job, taskId, interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {
-        this.job = job;
-        this.taskId = taskId;
+    constructor({ interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {
         this.context = interactiveTaskContext;
         this.generatorInvocation = generatorInvocation;
     }
@@ -78,6 +78,11 @@ export class RemoteTaskHandler {
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
+                const s3DownloadLink = terminalLink(
+                    "Click here to download generated files: ",
+                    "https://sindresorhus.com"
+                );
+                this.context.logger.debug(s3DownloadLink);
                 this.context.finish();
             },
             _other: () => {
@@ -111,14 +116,20 @@ async function downloadFilesForTask({
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: Finishable & InteractiveTaskContext;
 }) {
-    const writer = createWriteStream(absolutePathToLocalOutput);
+    const tmpDir = await tmp.dir({
+        prefix: "fern",
+    });
+    const outputZipPath = path.join(tmpDir.path, "output.zip");
+    const writer = createWriteStream(outputZipPath);
     await axios
-        .get(s3PreSignedReadUrl, { responseType: "arraybuffer" })
-        .then((response) => {
+        .get(s3PreSignedReadUrl, { responseType: "stream" })
+        .then(async (response) => {
             response.data.pipe(writer);
-            context.logger.info(chalk.green("Downloaded: " + absolutePathToLocalOutput));
+            await decompress(outputZipPath, absolutePathToLocalOutput);
+            context.logger.info(chalk.green("Files were downloaded to directory " + absolutePathToLocalOutput));
         })
         .catch((e) => {
-            context.fail("Failed to download: " + absolutePathToLocalOutput, e);
+            context.fail("Failed to download files", e);
         });
+    await tmpDir.cleanup();
 }
