@@ -41,7 +41,7 @@ export async function generatePackageJson({
             "/api/**/*.{js,js.map,d.ts}",
             "/schemas/**/*.{js,js.map,d.ts}",
             "/core/**/*.{js,js.map,d.ts}",
-            "/index.{js,js.map,d.ts",
+            "/index.{js,js.map,d.ts}",
         ],
         scripts: {
             [PackageJsonScript.FORMAT]: "prettier --write '**/*.ts'",

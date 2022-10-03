@@ -11026,7 +11026,7 @@ export type RequiredKeys<T> = {
         \\"/api/**/*.{js,js.map,d.ts}\\",
         \\"/schemas/**/*.{js,js.map,d.ts}\\",
         \\"/core/**/*.{js,js.map,d.ts}\\",
-        \\"/index.{js,js.map,d.ts\\"
+        \\"/index.{js,js.map,d.ts}\\"
     ],
     \\"scripts\\": {
         \\"format\\": \\"prettier --write '**/*.ts'\\",
