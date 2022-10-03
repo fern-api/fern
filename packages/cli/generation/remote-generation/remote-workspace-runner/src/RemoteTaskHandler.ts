@@ -8,6 +8,7 @@ import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
 import path from "path";
+import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
 
@@ -121,16 +122,15 @@ async function downloadFilesForTask({
         unsafeCleanup: true,
     });
     const outputZipPath = path.join(tmpDir.path, "output.zip");
-    const writer = createWriteStream(outputZipPath);
-    await axios
-        .get(s3PreSignedReadUrl, { responseType: "stream" })
-        .then(async (response) => {
-            response.data.pipe(writer);
-            await decompress(outputZipPath, absolutePathToLocalOutput);
-            context.logger.info(chalk.green("Files were downloaded to directory " + absolutePathToLocalOutput));
-        })
-        .catch((e) => {
-            context.fail("Failed to download files", e);
+    try {
+        const request = await axios.get(s3PreSignedReadUrl, {
+            responseType: "stream",
         });
+        await pipeline(request.data, createWriteStream(outputZipPath));
+        await decompress(outputZipPath, absolutePathToLocalOutput);
+        context.logger.info(chalk.green("Files were downloaded to directory " + absolutePathToLocalOutput));
+    } catch (e) {
+        context.fail("Failed to download files", e);
+    }
     await tmpDir.cleanup();
 }
