@@ -79,8 +79,8 @@ export class RemoteTaskHandler {
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
                 const s3DownloadLink = terminalLink(
-                    "Click here to download generated files: ",
-                    "https://sindresorhus.com"
+                    "Click here to download generated files!",
+                    finishedStatus.s3PreSignedReadUrl
                 );
                 this.context.logger.debug(s3DownloadLink);
                 this.context.finish();
