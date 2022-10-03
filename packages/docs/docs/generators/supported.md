@@ -8,37 +8,37 @@ Fern makes it easy to code generate SDKs, server interfaces, a Postman collectio
 
 #### JavaScript/TypeScript
 
-`fern-typescript`: A JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
+`fernapi/fern-typescript-sdk`: A JavaScript SDK, fully typed with TypeScript declarations. Build Node.js, web, and mobile web applications.
 
 #### Java
 
-`java-client`: A Java SDK.
+`fernapi/fern-java-sdk`: A Java SDK.
 
 #### Python
 
-`fern-python`: A Python SDK.
+`fernapi/fern-python-sdk`: A Python SDK.
 
 ### Generate server interfaces
 
 #### TypeScript Express
 
-`fern-typescript`: Validation that your JavaScript or TypeScript Express server correctly implements your API. _(Requires private beta login!)_
+`fernapi/fern-typescript-express`: Validation that your JavaScript or TypeScript Express server correctly implements your API. _(Requires private beta login!)_
 
 #### Java Spring
 
-`java-server`: Validation that your Java Spring server correctly implements your API. _(Requires private beta login!)_
+`fernapi/fern-java-spring`: Validation that your Java Spring server correctly implements your API. _(Requires private beta login!)_
 
 #### Python FastAPI
 
-`fern-python`: Validation that your Python FastAPI server correctly implements your API. _(Requires private beta login!)_
+`fernapi/fern-python-fastapi`: Validation that your Python FastAPI server correctly implements your API. _(Requires private beta login!)_
 
 ### Generate a Postman Collection
 
-`postman`: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
+`fernapi/fern-postman`: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
 
 ### Generate an OpenAPI spec
 
-`openapi`: generates an [OpenAPI spec](https://swagger.io/resources/open-api/) (also known as an OpenAPI spec).
+`fernapi/fern-openapi`: generates an [OpenAPI spec](https://swagger.io/resources/open-api/) (also known as an OpenAPI spec).
 
 ## Contributing
 
