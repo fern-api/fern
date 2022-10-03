@@ -26,7 +26,7 @@ export const migration: Migration = {
 async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
     const contents = await readFile(filepath);
     const parsedDocument = YAML.parseDocument(contents.toString());
-    const draftGenerators = parsedDocument.get("drafts");
+    const draftGenerators = parsedDocument.get("draft");
     if (draftGenerators == null) {
         return;
     }
