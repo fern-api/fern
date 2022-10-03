@@ -19,11 +19,12 @@ export function convertGeneratorsConfiguration({
                           type: "draft",
                           name: draftInvocation.name,
                           version: draftInvocation.version,
+                          mode: draftInvocation.mode,
                           absolutePathToLocalOutput:
-                              draftInvocation["local-output"] != null
+                              draftInvocation["output-path"] != null
                                   ? resolve(
                                         dirname(absolutePathToGeneratorsConfiguration),
-                                        draftInvocation["local-output"]
+                                        draftInvocation["output-path"]
                                     )
                                   : undefined,
                           config: draftInvocation.config,

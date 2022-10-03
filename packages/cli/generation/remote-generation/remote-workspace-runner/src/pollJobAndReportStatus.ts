@@ -17,6 +17,7 @@ export function pollJobAndReportStatus({
     context: TaskContext;
 }): Promise<void> {
     let numConsecutiveFailed = 0;
+    context.logger.debug(`Job ID: ${job.jobId}`);
     const taskHandlers = job.taskIds.reduce<Record<Fiddle.remoteGen.RemoteGenTaskId, RemoteTaskHandler>>(
         (acc, taskId, index) => {
             const generatorInvocation = generatorInvocations[index];

@@ -27,6 +27,7 @@ describe("addGenerator", () => {
                 {
                     name: "fernapi/fern-typescript-sdk",
                     version: "0.0.23",
+                    mode: "publish",
                 },
             ],
         };
