@@ -119,6 +119,22 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
     };
 
+    public Supplier = {
+        _getReferenceToType: this.withExportedName("Supplier", (Supplier) => (suppliedType: ts.TypeNode) => {
+            return ts.factory.createTypeReferenceNode(Supplier.entityName, [suppliedType]);
+        }),
+
+        get: this.withExportedName("Supplier", (Supplier) => (supplier: ts.Expression) => {
+            return ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(Supplier.expression, "get"),
+                    undefined,
+                    [supplier]
+                )
+            );
+        }),
+    };
+
     private getReferenceToTypeInFetcherModule(typeName: string) {
         return this.withExportedName(
             "Fetcher",

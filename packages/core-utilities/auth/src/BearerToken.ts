@@ -3,7 +3,10 @@ export type BearerToken = string;
 const BEARER_AUTH_HEADER_PREFIX = /^Bearer /i;
 
 export const BearerToken = {
-    toAuthorizationHeader: (token: BearerToken): string => {
+    toAuthorizationHeader: (token: BearerToken | undefined): string | undefined => {
+        if (token == null) {
+            return undefined;
+        }
         return `Bearer ${token}`;
     },
     fromAuthorizationHeader: (header: string): BearerToken => {

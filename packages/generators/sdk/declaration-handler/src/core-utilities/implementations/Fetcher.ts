@@ -47,6 +47,11 @@ export interface Fetcher {
             error: string;
         };
     };
+
+    readonly Supplier: {
+        _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
+        get: (supplier: ts.Expression) => ts.Expression;
+    };
 }
 
 export declare namespace Fetcher {

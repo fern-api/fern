@@ -44,7 +44,7 @@ export async function generatePackageJson({
             "/index.{js,js.map,d.ts}",
         ],
         scripts: {
-            [PackageJsonScript.FORMAT]: "prettier --write '**/*.ts'",
+            [PackageJsonScript.FORMAT]: "prettier --write --print-width 120 '**/*.ts'",
             [PackageJsonScript.BUILD]: [
                 // esbuild first so we don't transpile the .d.ts files
                 "esbuild $(find . -name '*.ts' -not -path './node_modules/*') --format=cjs --sourcemap --outdir=.",

@@ -62,6 +62,21 @@ export function parseAuthSchemes({
             },
         });
 
+    const getReferenceToProperty = ({
+        nodeWithAuthProperties,
+        scheme,
+    }: {
+        nodeWithAuthProperties: ts.Expression;
+        scheme: AuthScheme;
+    }): ts.Expression => {
+        return coreUtilities.fetcher.Supplier.get(
+            ts.factory.createPropertyAccessExpression(
+                nodeWithAuthProperties,
+                getPropertyForAuthScheme(scheme).propertyName
+            )
+        );
+    };
+
     const getValueForHeader = ({
         nodeWithAuthProperties,
         authSchemesForHeader,
@@ -69,34 +84,32 @@ export function parseAuthSchemes({
         nodeWithAuthProperties: ts.Expression;
         authSchemesForHeader: AuthScheme[];
     }) => {
-        // special case for single simple header
-        const [firstScheme, ...rest] = authSchemesForHeader;
-        if (firstScheme != null && firstScheme._type === "header" && rest.length === 0) {
-            return ts.factory.createPropertyAccessExpression(
+        const [firstHeaderValue, ...remainingHeaderValues] = authSchemesForHeader.map((scheme) => {
+            const referenceToProperty = getReferenceToProperty({
                 nodeWithAuthProperties,
-                getPropertyForAuthScheme(firstScheme).propertyName
-            );
+                scheme,
+            });
+            return AuthScheme._visit(scheme, {
+                bearer: () => coreUtilities.auth.BearerToken.toAuthorizationHeader(referenceToProperty),
+                basic: () => coreUtilities.auth.BasicAuth.toAuthorizationHeader(referenceToProperty),
+                header: () => referenceToProperty,
+                _unknown: () => {
+                    throw new Error("Unknown auth scheme: " + scheme._type);
+                },
+            });
+        });
+
+        if (firstHeaderValue == null) {
+            return ts.factory.createIdentifier("undefined");
         }
 
-        return authSchemesForHeader.reduceRight<ts.Expression>((conditional, scheme) => {
-            const referenceToProperty = ts.factory.createPropertyAccessExpression(
-                nodeWithAuthProperties,
-                getPropertyForAuthScheme(scheme).propertyName
+        return remainingHeaderValues.reduce((left, headerValue) => {
+            return ts.factory.createBinaryExpression(
+                left,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                headerValue
             );
-
-            return createNullCheckConditional(
-                referenceToProperty,
-                AuthScheme._visit(scheme, {
-                    bearer: () => coreUtilities.auth.BearerToken.toAuthorizationHeader(referenceToProperty),
-                    basic: () => coreUtilities.auth.BasicAuth.toAuthorizationHeader(referenceToProperty),
-                    header: () => referenceToProperty,
-                    _unknown: () => {
-                        throw new Error("Unknown auth scheme: " + scheme._type);
-                    },
-                }),
-                conditional
-            );
-        }, ts.factory.createIdentifier("undefined"));
+        }, firstHeaderValue);
     };
 
     return {
@@ -106,7 +119,7 @@ export function parseAuthSchemes({
                 return {
                     name: property.propertyName,
                     hasQuestionToken: true,
-                    type: getTextOfTsNode(property.getType()),
+                    type: getTextOfTsNode(coreUtilities.fetcher.Supplier._getReferenceToType(property.getType())),
                 };
             }),
 
@@ -119,22 +132,4 @@ export function parseAuthSchemes({
             });
         },
     };
-}
-
-function createNullCheckConditional(
-    maybeNull: ts.Expression,
-    ifNotNull: ts.Expression,
-    ifNull: ts.Expression
-): ts.Expression {
-    return ts.factory.createConditionalExpression(
-        ts.factory.createBinaryExpression(
-            maybeNull,
-            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-            ts.factory.createNull()
-        ),
-        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-        ifNotNull,
-        ts.factory.createToken(ts.SyntaxKind.ColonToken),
-        ifNull
-    );
 }

@@ -7,7 +7,10 @@ export interface BasicAuth {
 }
 
 export const BasicAuth = {
-    toAuthorizationHeader: (basicAuth: BasicAuth): string => {
+    toAuthorizationHeader: (basicAuth: BasicAuth | undefined): string | undefined => {
+        if (basicAuth == null) {
+            return undefined;
+        }
         const token = Base64.encode(`${basicAuth.username}:${basicAuth.password}`);
         return `Basic ${token}`;
     },
