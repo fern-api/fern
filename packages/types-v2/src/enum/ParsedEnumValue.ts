@@ -1,5 +1,6 @@
 import { EnumValue } from "@fern-fern/ir-model/types";
-import { ts } from "ts-morph";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { OptionalKind, ts, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import { EnumInterface } from "./EnumInterface";
 import { EnumVisitHelper } from "./EnumVisitHelper";
 
@@ -32,24 +33,34 @@ export class ParsedEnumValue {
         return this.enumValue.name.pascalCase;
     }
 
-    public getBuild(enumInterface: EnumInterface): ts.ArrowFunction {
-        return ts.factory.createArrowFunction(
-            undefined,
-            undefined,
-            [],
-            enumInterface.getReferenceToEnumValue(this),
-            undefined,
-            ts.factory.createParenthesizedExpression(
-                ParsedEnumValue.getBuiltObject({
-                    enumValue: this.getRawValue().expression,
-                    visitorKey: this.getVisitorKey(),
-                    visitorArguments: [],
-                })
-            )
-        );
+    public getBuiltObjectDeclaration(enumInterface: EnumInterface): OptionalKind<VariableStatementStructure> {
+        return {
+            declarations: [
+                {
+                    name: this.getBuiltObjectName(),
+                    type: getTextOfTsNode(enumInterface.getReferenceToEnumValue(this)),
+                    initializer: getTextOfTsNode(
+                        ParsedEnumValue.getBuiltObjectDeclaration({
+                            enumValue: this.getRawValue().expression,
+                            visitorKey: this.getVisitorKey(),
+                            visitorArguments: [],
+                        })
+                    ),
+                },
+            ],
+            declarationKind: VariableDeclarationKind.Const,
+        };
     }
 
-    public static getBuiltObject({
+    private getBuiltObjectName(): string {
+        return `_${this.getBuilderKey()}`;
+    }
+
+    public getReferenceToBuiltObject(): ts.Expression {
+        return ts.factory.createIdentifier(this.getBuiltObjectName());
+    }
+
+    public static getBuiltObjectDeclaration({
         enumValue,
         visitorKey,
         visitorArguments,

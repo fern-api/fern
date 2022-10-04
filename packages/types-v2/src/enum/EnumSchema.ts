@@ -3,6 +3,7 @@ import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { AbstractEnumFileDeclaration } from "./AbstractEnumFileDeclaration";
 import { EnumInterface } from "./EnumInterface";
+import { EnumModule } from "./EnumModule";
 import { EnumVisitHelper } from "./EnumVisitHelper";
 import { ParsedEnumValue } from "./ParsedEnumValue";
 
@@ -16,14 +17,10 @@ export class EnumSchema extends AbstractEnumFileDeclaration {
                 ts.factory.createCaseClause(enumValue.getRawValue().expression, [
                     ts.factory.createBlock([
                         ts.factory.createReturnStatement(
-                            ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    file.getReferenceToNamedType(this.typeDeclaration.name).expression,
-                                    enumValue.getBuilderKey()
-                                ),
-                                undefined,
-                                undefined
-                            )
+                            EnumModule.getReferenceToBuilder({
+                                referenceToModule: file.getReferenceToNamedType(this.typeDeclaration.name).expression,
+                                enumValue,
+                            })
                         ),
                     ]),
                 ])
@@ -31,7 +28,7 @@ export class EnumSchema extends AbstractEnumFileDeclaration {
             ts.factory.createDefaultClause([
                 ts.factory.createBlock([
                     ts.factory.createReturnStatement(
-                        ParsedEnumValue.getBuiltObject({
+                        ParsedEnumValue.getBuiltObjectDeclaration({
                             enumValue: ts.factory.createIdentifier(rawValueParameterName),
                             visitorKey: EnumVisitHelper.UNKNOWN_VISITOR_KEY,
                             visitorArguments: [ts.factory.createIdentifier(rawValueParameterName)],

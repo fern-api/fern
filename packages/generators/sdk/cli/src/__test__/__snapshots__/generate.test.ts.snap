@@ -1296,19 +1296,22 @@ export interface Language<
   visit: <Result>(visitor: Language._Visitor<Result>) => Result;
 }
 
+const _Java: Language<\\"JAVA\\"> = {
+  get: () => \\"JAVA\\",
+  visit: (visitor) => visitor.java(),
+};
+const _Javascript: Language<\\"JAVASCRIPT\\"> = {
+  get: () => \\"JAVASCRIPT\\",
+  visit: (visitor) => visitor.javascript(),
+};
+const _Python: Language<\\"PYTHON\\"> = {
+  get: () => \\"PYTHON\\",
+  visit: (visitor) => visitor.python(),
+};
 export const Language = {
-  Java: (): Language<\\"JAVA\\"> => ({
-    get: () => \\"JAVA\\",
-    visit: (visitor) => visitor.java(),
-  }),
-  Javascript: (): Language<\\"JAVASCRIPT\\"> => ({
-    get: () => \\"JAVASCRIPT\\",
-    visit: (visitor) => visitor.javascript(),
-  }),
-  Python: (): Language<\\"PYTHON\\"> => ({
-    get: () => \\"PYTHON\\",
-    visit: (visitor) => visitor.python(),
-  }),
+  Java: _Java,
+  Javascript: _Javascript,
+  Python: _Python,
 } as const;
 
 export declare namespace Language {
@@ -2245,19 +2248,22 @@ export interface MigrationStatus<
   visit: <Result>(visitor: MigrationStatus._Visitor<Result>) => Result;
 }
 
+const _Running: MigrationStatus<\\"RUNNING\\"> = {
+  get: () => \\"RUNNING\\",
+  visit: (visitor) => visitor.running(),
+};
+const _Failed: MigrationStatus<\\"FAILED\\"> = {
+  get: () => \\"FAILED\\",
+  visit: (visitor) => visitor.failed(),
+};
+const _Finished: MigrationStatus<\\"FINISHED\\"> = {
+  get: () => \\"FINISHED\\",
+  visit: (visitor) => visitor.finished(),
+};
 export const MigrationStatus = {
-  Running: (): MigrationStatus<\\"RUNNING\\"> => ({
-    get: () => \\"RUNNING\\",
-    visit: (visitor) => visitor.running(),
-  }),
-  Failed: (): MigrationStatus<\\"FAILED\\"> => ({
-    get: () => \\"FAILED\\",
-    visit: (visitor) => visitor.failed(),
-  }),
-  Finished: (): MigrationStatus<\\"FINISHED\\"> => ({
-    get: () => \\"FINISHED\\",
-    visit: (visitor) => visitor.finished(),
-  }),
+  Running: _Running,
+  Failed: _Failed,
+  Finished: _Finished,
 } as const;
 
 export declare namespace MigrationStatus {
@@ -4577,32 +4583,38 @@ export interface ExecutionSessionStatus<
   visit: <Result>(visitor: ExecutionSessionStatus._Visitor<Result>) => Result;
 }
 
+const _CreatingContainer: ExecutionSessionStatus<\\"CREATING_CONTAINER\\"> = {
+  get: () => \\"CREATING_CONTAINER\\",
+  visit: (visitor) => visitor.creatingContainer(),
+};
+const _ProvisioningContainer: ExecutionSessionStatus<\\"PROVISIONING_CONTAINER\\"> =
+  {
+    get: () => \\"PROVISIONING_CONTAINER\\",
+    visit: (visitor) => visitor.provisioningContainer(),
+  };
+const _PendingContainer: ExecutionSessionStatus<\\"PENDING_CONTAINER\\"> = {
+  get: () => \\"PENDING_CONTAINER\\",
+  visit: (visitor) => visitor.pendingContainer(),
+};
+const _RunningContainer: ExecutionSessionStatus<\\"RUNNING_CONTAINER\\"> = {
+  get: () => \\"RUNNING_CONTAINER\\",
+  visit: (visitor) => visitor.runningContainer(),
+};
+const _LiveContainer: ExecutionSessionStatus<\\"LIVE_CONTAINER\\"> = {
+  get: () => \\"LIVE_CONTAINER\\",
+  visit: (visitor) => visitor.liveContainer(),
+};
+const _FailedToLaunch: ExecutionSessionStatus<\\"FAILED_TO_LAUNCH\\"> = {
+  get: () => \\"FAILED_TO_LAUNCH\\",
+  visit: (visitor) => visitor.failedToLaunch(),
+};
 export const ExecutionSessionStatus = {
-  CreatingContainer: (): ExecutionSessionStatus<\\"CREATING_CONTAINER\\"> => ({
-    get: () => \\"CREATING_CONTAINER\\",
-    visit: (visitor) => visitor.creatingContainer(),
-  }),
-  ProvisioningContainer:
-    (): ExecutionSessionStatus<\\"PROVISIONING_CONTAINER\\"> => ({
-      get: () => \\"PROVISIONING_CONTAINER\\",
-      visit: (visitor) => visitor.provisioningContainer(),
-    }),
-  PendingContainer: (): ExecutionSessionStatus<\\"PENDING_CONTAINER\\"> => ({
-    get: () => \\"PENDING_CONTAINER\\",
-    visit: (visitor) => visitor.pendingContainer(),
-  }),
-  RunningContainer: (): ExecutionSessionStatus<\\"RUNNING_CONTAINER\\"> => ({
-    get: () => \\"RUNNING_CONTAINER\\",
-    visit: (visitor) => visitor.runningContainer(),
-  }),
-  LiveContainer: (): ExecutionSessionStatus<\\"LIVE_CONTAINER\\"> => ({
-    get: () => \\"LIVE_CONTAINER\\",
-    visit: (visitor) => visitor.liveContainer(),
-  }),
-  FailedToLaunch: (): ExecutionSessionStatus<\\"FAILED_TO_LAUNCH\\"> => ({
-    get: () => \\"FAILED_TO_LAUNCH\\",
-    visit: (visitor) => visitor.failedToLaunch(),
-  }),
+  CreatingContainer: _CreatingContainer,
+  ProvisioningContainer: _ProvisioningContainer,
+  PendingContainer: _PendingContainer,
+  RunningContainer: _RunningContainer,
+  LiveContainer: _LiveContainer,
+  FailedToLaunch: _FailedToLaunch,
 } as const;
 
 export declare namespace ExecutionSessionStatus {
@@ -4980,29 +4992,34 @@ export interface RunningSubmissionState<
   visit: <Result>(visitor: RunningSubmissionState._Visitor<Result>) => Result;
 }
 
+const _QueueingSubmission: RunningSubmissionState<\\"QUEUEING_SUBMISSION\\"> = {
+  get: () => \\"QUEUEING_SUBMISSION\\",
+  visit: (visitor) => visitor.queueingSubmission(),
+};
+const _KillingHistoricalSubmissions: RunningSubmissionState<\\"KILLING_HISTORICAL_SUBMISSIONS\\"> =
+  {
+    get: () => \\"KILLING_HISTORICAL_SUBMISSIONS\\",
+    visit: (visitor) => visitor.killingHistoricalSubmissions(),
+  };
+const _WritingSubmissionToFile: RunningSubmissionState<\\"WRITING_SUBMISSION_TO_FILE\\"> =
+  {
+    get: () => \\"WRITING_SUBMISSION_TO_FILE\\",
+    visit: (visitor) => visitor.writingSubmissionToFile(),
+  };
+const _CompilingSubmission: RunningSubmissionState<\\"COMPILING_SUBMISSION\\"> = {
+  get: () => \\"COMPILING_SUBMISSION\\",
+  visit: (visitor) => visitor.compilingSubmission(),
+};
+const _RunningSubmission: RunningSubmissionState<\\"RUNNING_SUBMISSION\\"> = {
+  get: () => \\"RUNNING_SUBMISSION\\",
+  visit: (visitor) => visitor.runningSubmission(),
+};
 export const RunningSubmissionState = {
-  QueueingSubmission: (): RunningSubmissionState<\\"QUEUEING_SUBMISSION\\"> => ({
-    get: () => \\"QUEUEING_SUBMISSION\\",
-    visit: (visitor) => visitor.queueingSubmission(),
-  }),
-  KillingHistoricalSubmissions:
-    (): RunningSubmissionState<\\"KILLING_HISTORICAL_SUBMISSIONS\\"> => ({
-      get: () => \\"KILLING_HISTORICAL_SUBMISSIONS\\",
-      visit: (visitor) => visitor.killingHistoricalSubmissions(),
-    }),
-  WritingSubmissionToFile:
-    (): RunningSubmissionState<\\"WRITING_SUBMISSION_TO_FILE\\"> => ({
-      get: () => \\"WRITING_SUBMISSION_TO_FILE\\",
-      visit: (visitor) => visitor.writingSubmissionToFile(),
-    }),
-  CompilingSubmission: (): RunningSubmissionState<\\"COMPILING_SUBMISSION\\"> => ({
-    get: () => \\"COMPILING_SUBMISSION\\",
-    visit: (visitor) => visitor.compilingSubmission(),
-  }),
-  RunningSubmission: (): RunningSubmissionState<\\"RUNNING_SUBMISSION\\"> => ({
-    get: () => \\"RUNNING_SUBMISSION\\",
-    visit: (visitor) => visitor.runningSubmission(),
-  }),
+  QueueingSubmission: _QueueingSubmission,
+  KillingHistoricalSubmissions: _KillingHistoricalSubmissions,
+  WritingSubmissionToFile: _WritingSubmissionToFile,
+  CompilingSubmission: _CompilingSubmission,
+  RunningSubmission: _RunningSubmission,
 } as const;
 
 export declare namespace RunningSubmissionState {
@@ -5556,11 +5573,12 @@ export interface SubmissionTypeEnum<
   visit: <Result>(visitor: SubmissionTypeEnum._Visitor<Result>) => Result;
 }
 
+const _Test: SubmissionTypeEnum<\\"TEST\\"> = {
+  get: () => \\"TEST\\",
+  visit: (visitor) => visitor.test(),
+};
 export const SubmissionTypeEnum = {
-  Test: (): SubmissionTypeEnum<\\"TEST\\"> => ({
-    get: () => \\"TEST\\",
-    visit: (visitor) => visitor.test(),
-  }),
+  Test: _Test,
 } as const;
 
 export declare namespace SubmissionTypeEnum {
@@ -11759,13 +11777,13 @@ export const Language: core.schemas.Schema<
   parse: (value) => {
     switch (value) {
       case \\"JAVA\\": {
-        return TraceApi.commons.Language.Java();
+        return TraceApi.commons.Language.Java;
       }
       case \\"JAVASCRIPT\\": {
-        return TraceApi.commons.Language.Javascript();
+        return TraceApi.commons.Language.Javascript;
       }
       case \\"PYTHON\\": {
-        return TraceApi.commons.Language.Python();
+        return TraceApi.commons.Language.Python;
       }
       default: {
         return {
@@ -12699,13 +12717,13 @@ export const MigrationStatus: core.schemas.Schema<
   parse: (value) => {
     switch (value) {
       case \\"RUNNING\\": {
-        return TraceApi.migration.MigrationStatus.Running();
+        return TraceApi.migration.MigrationStatus.Running;
       }
       case \\"FAILED\\": {
-        return TraceApi.migration.MigrationStatus.Failed();
+        return TraceApi.migration.MigrationStatus.Failed;
       }
       case \\"FINISHED\\": {
-        return TraceApi.migration.MigrationStatus.Finished();
+        return TraceApi.migration.MigrationStatus.Finished;
       }
       default: {
         return {
@@ -14278,22 +14296,23 @@ export const ExecutionSessionStatus: core.schemas.Schema<
     parse: (value) => {
       switch (value) {
         case \\"CREATING_CONTAINER\\": {
-          return TraceApi.submission.ExecutionSessionStatus.CreatingContainer();
+          return TraceApi.submission.ExecutionSessionStatus.CreatingContainer;
         }
         case \\"PROVISIONING_CONTAINER\\": {
-          return TraceApi.submission.ExecutionSessionStatus.ProvisioningContainer();
+          return TraceApi.submission.ExecutionSessionStatus
+            .ProvisioningContainer;
         }
         case \\"PENDING_CONTAINER\\": {
-          return TraceApi.submission.ExecutionSessionStatus.PendingContainer();
+          return TraceApi.submission.ExecutionSessionStatus.PendingContainer;
         }
         case \\"RUNNING_CONTAINER\\": {
-          return TraceApi.submission.ExecutionSessionStatus.RunningContainer();
+          return TraceApi.submission.ExecutionSessionStatus.RunningContainer;
         }
         case \\"LIVE_CONTAINER\\": {
-          return TraceApi.submission.ExecutionSessionStatus.LiveContainer();
+          return TraceApi.submission.ExecutionSessionStatus.LiveContainer;
         }
         case \\"FAILED_TO_LAUNCH\\": {
-          return TraceApi.submission.ExecutionSessionStatus.FailedToLaunch();
+          return TraceApi.submission.ExecutionSessionStatus.FailedToLaunch;
         }
         default: {
           return {
@@ -14893,19 +14912,21 @@ export const RunningSubmissionState: core.schemas.Schema<
     parse: (value) => {
       switch (value) {
         case \\"QUEUEING_SUBMISSION\\": {
-          return TraceApi.submission.RunningSubmissionState.QueueingSubmission();
+          return TraceApi.submission.RunningSubmissionState.QueueingSubmission;
         }
         case \\"KILLING_HISTORICAL_SUBMISSIONS\\": {
-          return TraceApi.submission.RunningSubmissionState.KillingHistoricalSubmissions();
+          return TraceApi.submission.RunningSubmissionState
+            .KillingHistoricalSubmissions;
         }
         case \\"WRITING_SUBMISSION_TO_FILE\\": {
-          return TraceApi.submission.RunningSubmissionState.WritingSubmissionToFile();
+          return TraceApi.submission.RunningSubmissionState
+            .WritingSubmissionToFile;
         }
         case \\"COMPILING_SUBMISSION\\": {
-          return TraceApi.submission.RunningSubmissionState.CompilingSubmission();
+          return TraceApi.submission.RunningSubmissionState.CompilingSubmission;
         }
         case \\"RUNNING_SUBMISSION\\": {
-          return TraceApi.submission.RunningSubmissionState.RunningSubmission();
+          return TraceApi.submission.RunningSubmissionState.RunningSubmission;
         }
         default: {
           return {
@@ -15609,7 +15630,7 @@ export const SubmissionTypeEnum: core.schemas.Schema<
   parse: (value) => {
     switch (value) {
       case \\"TEST\\": {
-        return TraceApi.submission.SubmissionTypeEnum.Test();
+        return TraceApi.submission.SubmissionTypeEnum.Test;
       }
       default: {
         return {

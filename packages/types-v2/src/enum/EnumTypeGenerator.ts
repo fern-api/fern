@@ -22,6 +22,7 @@ export declare namespace EnumTypeGenerator {
 }
 
 export class EnumTypeGenerator extends AbstractTypeSchemaGenerator {
+    private parsedEnumValues: ParsedEnumValue[];
     private enumInterface: EnumInterface;
     private enumConst: EnumConst;
     private enumModule: EnumModule;
@@ -42,6 +43,7 @@ export class EnumTypeGenerator extends AbstractTypeSchemaGenerator {
             parsedEnumValues,
         };
 
+        this.parsedEnumValues = parsedEnumValues;
         this.enumInterface = new EnumInterface(enumFileDeclarationInit);
         this.enumConst = new EnumConst(enumFileDeclarationInit);
         this.enumModule = new EnumModule(enumFileDeclarationInit);
@@ -51,7 +53,10 @@ export class EnumTypeGenerator extends AbstractTypeSchemaGenerator {
 
     public generate({ typeFile, schemaFile }: { typeFile: SdkFile; schemaFile: SdkFile }): void {
         this.enumInterface.writeToFile(typeFile, this.enumModule);
-        this.enumConst.writeToFile(typeFile, this.enumInterface);
+        for (const parsedEnumValue of this.parsedEnumValues) {
+            typeFile.sourceFile.addVariableStatement(parsedEnumValue.getBuiltObjectDeclaration(this.enumInterface));
+        }
+        this.enumConst.writeToFile(typeFile);
         this.enumModule.writeToFile(typeFile, this.visitHelper);
         this.writeSchemaToFile(schemaFile);
     }

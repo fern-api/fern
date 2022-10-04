@@ -3,6 +3,7 @@ import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { AbstractEnumFileDeclaration } from "./AbstractEnumFileDeclaration";
 import { EnumVisitHelper } from "./EnumVisitHelper";
+import { ParsedEnumValue } from "./ParsedEnumValue";
 
 export class EnumModule extends AbstractEnumFileDeclaration {
     public static RAW_VALUE_TYPE_ALIAS_NAME = "RawValue";
@@ -39,7 +40,7 @@ export class EnumModule extends AbstractEnumFileDeclaration {
 
     public static getReferenceToRawValue({ referenceToModule }: { referenceToModule: ts.EntityName }): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(
-            EnumModule.getReferenceTo({
+            EnumModule.getReferenceToType({
                 name: EnumModule.RAW_VALUE_TYPE_ALIAS_NAME,
                 referenceToModule,
             })
@@ -47,17 +48,30 @@ export class EnumModule extends AbstractEnumFileDeclaration {
     }
 
     public getReferenceToVisitorInterface(): ts.EntityName {
-        return this.getReferenceTo(EnumVisitHelper.VISITOR_INTERFACE_NAME);
+        return this.getReferenceToType(EnumVisitHelper.VISITOR_INTERFACE_NAME);
     }
 
-    private getReferenceTo(name: string): ts.EntityName {
-        return EnumModule.getReferenceTo({
+    public static getReferenceToBuilder({
+        referenceToModule,
+        enumValue,
+    }: {
+        referenceToModule: ts.Expression;
+        enumValue: ParsedEnumValue;
+    }): ts.Expression {
+        return EnumModule.getReferenceToExpression({
+            referenceToModule,
+            member: enumValue.getBuilderKey(),
+        });
+    }
+
+    private getReferenceToType(name: string): ts.EntityName {
+        return EnumModule.getReferenceToType({
             name,
             referenceToModule: ts.factory.createIdentifier(this.getModuleName()),
         });
     }
 
-    private static getReferenceTo({
+    private static getReferenceToType({
         name,
         referenceToModule,
     }: {
@@ -65,5 +79,15 @@ export class EnumModule extends AbstractEnumFileDeclaration {
         referenceToModule: ts.EntityName;
     }): ts.EntityName {
         return ts.factory.createQualifiedName(referenceToModule, ts.factory.createIdentifier(name));
+    }
+
+    private static getReferenceToExpression({
+        member,
+        referenceToModule,
+    }: {
+        member: string;
+        referenceToModule: ts.Expression;
+    }): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(referenceToModule, member);
     }
 }
