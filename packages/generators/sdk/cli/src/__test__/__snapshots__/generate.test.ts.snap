@@ -1026,87 +1026,189 @@ export declare namespace DebugVariableValue {
 }
 
 export const DebugVariableValue = {
-  integerValue: (value: number): DebugVariableValue.IntegerValue => ({
-    value: value,
-    type: \\"integerValue\\",
-    _visit: (visitor) => visitor.integerValue(value),
-  }),
+  integerValue: (value: number): DebugVariableValue.IntegerValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.IntegerValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"integerValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.IntegerValue;
+    castedValue._visit = (visitor) => visitor.integerValue(value);
+    return castedValue;
+  },
 
-  booleanValue: (value: boolean): DebugVariableValue.BooleanValue => ({
-    value: value,
-    type: \\"booleanValue\\",
-    _visit: (visitor) => visitor.booleanValue(value),
-  }),
+  booleanValue: (value: boolean): DebugVariableValue.BooleanValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.BooleanValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"booleanValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.BooleanValue;
+    castedValue._visit = (visitor) => visitor.booleanValue(value);
+    return castedValue;
+  },
 
-  doubleValue: (value: number): DebugVariableValue.DoubleValue => ({
-    value: value,
-    type: \\"doubleValue\\",
-    _visit: (visitor) => visitor.doubleValue(value),
-  }),
+  doubleValue: (value: number): DebugVariableValue.DoubleValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.DoubleValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"doubleValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.DoubleValue;
+    castedValue._visit = (visitor) => visitor.doubleValue(value);
+    return castedValue;
+  },
 
-  stringValue: (value: string): DebugVariableValue.StringValue => ({
-    value: value,
-    type: \\"stringValue\\",
-    _visit: (visitor) => visitor.stringValue(value),
-  }),
+  stringValue: (value: string): DebugVariableValue.StringValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.StringValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"stringValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.StringValue;
+    castedValue._visit = (visitor) => visitor.stringValue(value);
+    return castedValue;
+  },
 
-  charValue: (value: string): DebugVariableValue.CharValue => ({
-    value: value,
-    type: \\"charValue\\",
-    _visit: (visitor) => visitor.charValue(value),
-  }),
+  charValue: (value: string): DebugVariableValue.CharValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.CharValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"charValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.CharValue;
+    castedValue._visit = (visitor) => visitor.charValue(value);
+    return castedValue;
+  },
 
-  mapValue: (value: TraceApi.commons.DebugMapValue): DebugVariableValue.MapValue => ({
-    ...value,
-    type: \\"mapValue\\",
-    _visit: (visitor) => visitor.mapValue(value),
-  }),
+  mapValue: (value: TraceApi.commons.DebugMapValue): DebugVariableValue.MapValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.MapValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"mapValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.MapValue;
+    castedValue._visit = (visitor) => visitor.mapValue(value);
+    return castedValue;
+  },
 
-  listValue: (value: TraceApi.commons.DebugVariableValue[]): DebugVariableValue.ListValue => ({
-    value: value,
-    type: \\"listValue\\",
-    _visit: (visitor) => visitor.listValue(value),
-  }),
+  listValue: (value: TraceApi.commons.DebugVariableValue[]): DebugVariableValue.ListValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.ListValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"listValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.ListValue;
+    castedValue._visit = (visitor) => visitor.listValue(value);
+    return castedValue;
+  },
 
-  binaryTreeNodeValue: (
-    value: TraceApi.commons.BinaryTreeNodeAndTreeValue
-  ): DebugVariableValue.BinaryTreeNodeValue => ({
-    ...value,
-    type: \\"binaryTreeNodeValue\\",
-    _visit: (visitor) => visitor.binaryTreeNodeValue(value),
-  }),
+  binaryTreeNodeValue: (value: TraceApi.commons.BinaryTreeNodeAndTreeValue): DebugVariableValue.BinaryTreeNodeValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.BinaryTreeNodeValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"binaryTreeNodeValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.BinaryTreeNodeValue;
+    castedValue._visit = (visitor) => visitor.binaryTreeNodeValue(value);
+    return castedValue;
+  },
 
   singlyLinkedListNodeValue: (
     value: TraceApi.commons.SinglyLinkedListNodeAndListValue
-  ): DebugVariableValue.SinglyLinkedListNodeValue => ({
-    ...value,
-    type: \\"singlyLinkedListNodeValue\\",
-    _visit: (visitor) => visitor.singlyLinkedListNodeValue(value),
-  }),
+  ): DebugVariableValue.SinglyLinkedListNodeValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.SinglyLinkedListNodeValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"singlyLinkedListNodeValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.SinglyLinkedListNodeValue;
+    castedValue._visit = (visitor) => visitor.singlyLinkedListNodeValue(value);
+    return castedValue;
+  },
 
   doublyLinkedListNodeValue: (
     value: TraceApi.commons.DoublyLinkedListNodeAndListValue
-  ): DebugVariableValue.DoublyLinkedListNodeValue => ({
-    ...value,
-    type: \\"doublyLinkedListNodeValue\\",
-    _visit: (visitor) => visitor.doublyLinkedListNodeValue(value),
-  }),
+  ): DebugVariableValue.DoublyLinkedListNodeValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.DoublyLinkedListNodeValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"doublyLinkedListNodeValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.DoublyLinkedListNodeValue;
+    castedValue._visit = (visitor) => visitor.doublyLinkedListNodeValue(value);
+    return castedValue;
+  },
 
-  undefinedValue: (): DebugVariableValue.UndefinedValue => ({
-    type: \\"undefinedValue\\",
-    _visit: (visitor) => visitor.undefinedValue(),
-  }),
+  undefinedValue: (): DebugVariableValue.UndefinedValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.UndefinedValue, \\"_visit\\"> = {
+      type: \\"undefinedValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.UndefinedValue;
+    castedValue._visit = (visitor) => visitor.undefinedValue();
+    return castedValue;
+  },
 
-  nullValue: (): DebugVariableValue.NullValue => ({
-    type: \\"nullValue\\",
-    _visit: (visitor) => visitor.nullValue(),
-  }),
+  nullValue: (): DebugVariableValue.NullValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.NullValue, \\"_visit\\"> = {
+      type: \\"nullValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.NullValue;
+    castedValue._visit = (visitor) => visitor.nullValue();
+    return castedValue;
+  },
 
-  genericValue: (value: TraceApi.commons.GenericValue): DebugVariableValue.GenericValue => ({
-    ...value,
-    type: \\"genericValue\\",
-    _visit: (visitor) => visitor.genericValue(value),
-  }),
+  genericValue: (value: TraceApi.commons.GenericValue): DebugVariableValue.GenericValue => {
+    const valueWithoutVisit: Omit<DebugVariableValue.GenericValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"genericValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as DebugVariableValue.GenericValue;
+    castedValue._visit = (visitor) => visitor.genericValue(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "DebugVariableValue.ts",
@@ -1206,20 +1308,20 @@ export interface KeyValuePair {
  */
 
 export interface Language<RawValue extends Language.RawValue = Language.RawValue> {
-  get: () => RawValue;
+  toString: () => RawValue;
   visit: <Result>(visitor: Language._Visitor<Result>) => Result;
 }
 
 const _Java: Language<\\"JAVA\\"> = {
-  get: () => \\"JAVA\\",
+  toString: () => \\"JAVA\\",
   visit: (visitor) => visitor.java(),
 };
 const _Javascript: Language<\\"JAVASCRIPT\\"> = {
-  get: () => \\"JAVASCRIPT\\",
+  toString: () => \\"JAVASCRIPT\\",
   visit: (visitor) => visitor.javascript(),
 };
 const _Python: Language<\\"PYTHON\\"> = {
-  get: () => \\"PYTHON\\",
+  toString: () => \\"PYTHON\\",
   visit: (visitor) => visitor.python(),
 };
 export const Language = {
@@ -1478,57 +1580,137 @@ export declare namespace VariableType {
 }
 
 export const VariableType = {
-  integerType: (): VariableType.IntegerType => ({
-    type: \\"integerType\\",
-    _visit: (visitor) => visitor.integerType(),
-  }),
+  integerType: (): VariableType.IntegerType => {
+    const valueWithoutVisit: Omit<VariableType.IntegerType, \\"_visit\\"> = {
+      type: \\"integerType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.IntegerType;
+    castedValue._visit = (visitor) => visitor.integerType();
+    return castedValue;
+  },
 
-  doubleType: (): VariableType.DoubleType => ({
-    type: \\"doubleType\\",
-    _visit: (visitor) => visitor.doubleType(),
-  }),
+  doubleType: (): VariableType.DoubleType => {
+    const valueWithoutVisit: Omit<VariableType.DoubleType, \\"_visit\\"> = {
+      type: \\"doubleType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.DoubleType;
+    castedValue._visit = (visitor) => visitor.doubleType();
+    return castedValue;
+  },
 
-  booleanType: (): VariableType.BooleanType => ({
-    type: \\"booleanType\\",
-    _visit: (visitor) => visitor.booleanType(),
-  }),
+  booleanType: (): VariableType.BooleanType => {
+    const valueWithoutVisit: Omit<VariableType.BooleanType, \\"_visit\\"> = {
+      type: \\"booleanType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.BooleanType;
+    castedValue._visit = (visitor) => visitor.booleanType();
+    return castedValue;
+  },
 
-  stringType: (): VariableType.StringType => ({
-    type: \\"stringType\\",
-    _visit: (visitor) => visitor.stringType(),
-  }),
+  stringType: (): VariableType.StringType => {
+    const valueWithoutVisit: Omit<VariableType.StringType, \\"_visit\\"> = {
+      type: \\"stringType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.StringType;
+    castedValue._visit = (visitor) => visitor.stringType();
+    return castedValue;
+  },
 
-  charType: (): VariableType.CharType => ({
-    type: \\"charType\\",
-    _visit: (visitor) => visitor.charType(),
-  }),
+  charType: (): VariableType.CharType => {
+    const valueWithoutVisit: Omit<VariableType.CharType, \\"_visit\\"> = {
+      type: \\"charType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.CharType;
+    castedValue._visit = (visitor) => visitor.charType();
+    return castedValue;
+  },
 
-  listType: (value: TraceApi.commons.ListType): VariableType.ListType => ({
-    ...value,
-    type: \\"listType\\",
-    _visit: (visitor) => visitor.listType(value),
-  }),
+  listType: (value: TraceApi.commons.ListType): VariableType.ListType => {
+    const valueWithoutVisit: Omit<VariableType.ListType, \\"_visit\\"> = {
+      ...value,
+      type: \\"listType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.ListType;
+    castedValue._visit = (visitor) => visitor.listType(value);
+    return castedValue;
+  },
 
-  mapType: (value: TraceApi.commons.MapType): VariableType.MapType => ({
-    ...value,
-    type: \\"mapType\\",
-    _visit: (visitor) => visitor.mapType(value),
-  }),
+  mapType: (value: TraceApi.commons.MapType): VariableType.MapType => {
+    const valueWithoutVisit: Omit<VariableType.MapType, \\"_visit\\"> = {
+      ...value,
+      type: \\"mapType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.MapType;
+    castedValue._visit = (visitor) => visitor.mapType(value);
+    return castedValue;
+  },
 
-  binaryTreeType: (): VariableType.BinaryTreeType => ({
-    type: \\"binaryTreeType\\",
-    _visit: (visitor) => visitor.binaryTreeType(),
-  }),
+  binaryTreeType: (): VariableType.BinaryTreeType => {
+    const valueWithoutVisit: Omit<VariableType.BinaryTreeType, \\"_visit\\"> = {
+      type: \\"binaryTreeType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.BinaryTreeType;
+    castedValue._visit = (visitor) => visitor.binaryTreeType();
+    return castedValue;
+  },
 
-  singlyLinkedListType: (): VariableType.SinglyLinkedListType => ({
-    type: \\"singlyLinkedListType\\",
-    _visit: (visitor) => visitor.singlyLinkedListType(),
-  }),
+  singlyLinkedListType: (): VariableType.SinglyLinkedListType => {
+    const valueWithoutVisit: Omit<VariableType.SinglyLinkedListType, \\"_visit\\"> = {
+      type: \\"singlyLinkedListType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.SinglyLinkedListType;
+    castedValue._visit = (visitor) => visitor.singlyLinkedListType();
+    return castedValue;
+  },
 
-  doublyLinkedListType: (): VariableType.DoublyLinkedListType => ({
-    type: \\"doublyLinkedListType\\",
-    _visit: (visitor) => visitor.doublyLinkedListType(),
-  }),
+  doublyLinkedListType: (): VariableType.DoublyLinkedListType => {
+    const valueWithoutVisit: Omit<VariableType.DoublyLinkedListType, \\"_visit\\"> = {
+      type: \\"doublyLinkedListType\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableType.DoublyLinkedListType;
+    castedValue._visit = (visitor) => visitor.doublyLinkedListType();
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "VariableType.ts",
@@ -1631,70 +1813,158 @@ export declare namespace VariableValue {
 }
 
 export const VariableValue = {
-  integerValue: (value: number): VariableValue.IntegerValue => ({
-    value: value,
-    type: \\"integerValue\\",
-    _visit: (visitor) => visitor.integerValue(value),
-  }),
+  integerValue: (value: number): VariableValue.IntegerValue => {
+    const valueWithoutVisit: Omit<VariableValue.IntegerValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"integerValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.IntegerValue;
+    castedValue._visit = (visitor) => visitor.integerValue(value);
+    return castedValue;
+  },
 
-  booleanValue: (value: boolean): VariableValue.BooleanValue => ({
-    value: value,
-    type: \\"booleanValue\\",
-    _visit: (visitor) => visitor.booleanValue(value),
-  }),
+  booleanValue: (value: boolean): VariableValue.BooleanValue => {
+    const valueWithoutVisit: Omit<VariableValue.BooleanValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"booleanValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.BooleanValue;
+    castedValue._visit = (visitor) => visitor.booleanValue(value);
+    return castedValue;
+  },
 
-  doubleValue: (value: number): VariableValue.DoubleValue => ({
-    value: value,
-    type: \\"doubleValue\\",
-    _visit: (visitor) => visitor.doubleValue(value),
-  }),
+  doubleValue: (value: number): VariableValue.DoubleValue => {
+    const valueWithoutVisit: Omit<VariableValue.DoubleValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"doubleValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.DoubleValue;
+    castedValue._visit = (visitor) => visitor.doubleValue(value);
+    return castedValue;
+  },
 
-  stringValue: (value: string): VariableValue.StringValue => ({
-    value: value,
-    type: \\"stringValue\\",
-    _visit: (visitor) => visitor.stringValue(value),
-  }),
+  stringValue: (value: string): VariableValue.StringValue => {
+    const valueWithoutVisit: Omit<VariableValue.StringValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"stringValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.StringValue;
+    castedValue._visit = (visitor) => visitor.stringValue(value);
+    return castedValue;
+  },
 
-  charValue: (value: string): VariableValue.CharValue => ({
-    value: value,
-    type: \\"charValue\\",
-    _visit: (visitor) => visitor.charValue(value),
-  }),
+  charValue: (value: string): VariableValue.CharValue => {
+    const valueWithoutVisit: Omit<VariableValue.CharValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"charValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.CharValue;
+    castedValue._visit = (visitor) => visitor.charValue(value);
+    return castedValue;
+  },
 
-  mapValue: (value: TraceApi.commons.MapValue): VariableValue.MapValue => ({
-    ...value,
-    type: \\"mapValue\\",
-    _visit: (visitor) => visitor.mapValue(value),
-  }),
+  mapValue: (value: TraceApi.commons.MapValue): VariableValue.MapValue => {
+    const valueWithoutVisit: Omit<VariableValue.MapValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"mapValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.MapValue;
+    castedValue._visit = (visitor) => visitor.mapValue(value);
+    return castedValue;
+  },
 
-  listValue: (value: TraceApi.commons.VariableValue[]): VariableValue.ListValue => ({
-    value: value,
-    type: \\"listValue\\",
-    _visit: (visitor) => visitor.listValue(value),
-  }),
+  listValue: (value: TraceApi.commons.VariableValue[]): VariableValue.ListValue => {
+    const valueWithoutVisit: Omit<VariableValue.ListValue, \\"_visit\\"> = {
+      value: value,
+      type: \\"listValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.ListValue;
+    castedValue._visit = (visitor) => visitor.listValue(value);
+    return castedValue;
+  },
 
-  binaryTreeValue: (value: TraceApi.commons.BinaryTreeValue): VariableValue.BinaryTreeValue => ({
-    ...value,
-    type: \\"binaryTreeValue\\",
-    _visit: (visitor) => visitor.binaryTreeValue(value),
-  }),
+  binaryTreeValue: (value: TraceApi.commons.BinaryTreeValue): VariableValue.BinaryTreeValue => {
+    const valueWithoutVisit: Omit<VariableValue.BinaryTreeValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"binaryTreeValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.BinaryTreeValue;
+    castedValue._visit = (visitor) => visitor.binaryTreeValue(value);
+    return castedValue;
+  },
 
-  singlyLinkedListValue: (value: TraceApi.commons.SinglyLinkedListValue): VariableValue.SinglyLinkedListValue => ({
-    ...value,
-    type: \\"singlyLinkedListValue\\",
-    _visit: (visitor) => visitor.singlyLinkedListValue(value),
-  }),
+  singlyLinkedListValue: (value: TraceApi.commons.SinglyLinkedListValue): VariableValue.SinglyLinkedListValue => {
+    const valueWithoutVisit: Omit<VariableValue.SinglyLinkedListValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"singlyLinkedListValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.SinglyLinkedListValue;
+    castedValue._visit = (visitor) => visitor.singlyLinkedListValue(value);
+    return castedValue;
+  },
 
-  doublyLinkedListValue: (value: TraceApi.commons.DoublyLinkedListValue): VariableValue.DoublyLinkedListValue => ({
-    ...value,
-    type: \\"doublyLinkedListValue\\",
-    _visit: (visitor) => visitor.doublyLinkedListValue(value),
-  }),
+  doublyLinkedListValue: (value: TraceApi.commons.DoublyLinkedListValue): VariableValue.DoublyLinkedListValue => {
+    const valueWithoutVisit: Omit<VariableValue.DoublyLinkedListValue, \\"_visit\\"> = {
+      ...value,
+      type: \\"doublyLinkedListValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.DoublyLinkedListValue;
+    castedValue._visit = (visitor) => visitor.doublyLinkedListValue(value);
+    return castedValue;
+  },
 
-  nullValue: (): VariableValue.NullValue => ({
-    type: \\"nullValue\\",
-    _visit: (visitor) => visitor.nullValue(),
-  }),
+  nullValue: (): VariableValue.NullValue => {
+    const valueWithoutVisit: Omit<VariableValue.NullValue, \\"_visit\\"> = {
+      type: \\"nullValue\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as VariableValue.NullValue;
+    castedValue._visit = (visitor) => visitor.nullValue();
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "VariableValue.ts",
@@ -2121,20 +2391,20 @@ export interface Migration {
  */
 
 export interface MigrationStatus<RawValue extends MigrationStatus.RawValue = MigrationStatus.RawValue> {
-  get: () => RawValue;
+  toString: () => RawValue;
   visit: <Result>(visitor: MigrationStatus._Visitor<Result>) => Result;
 }
 
 const _Running: MigrationStatus<\\"RUNNING\\"> = {
-  get: () => \\"RUNNING\\",
+  toString: () => \\"RUNNING\\",
   visit: (visitor) => visitor.running(),
 };
 const _Failed: MigrationStatus<\\"FAILED\\"> = {
-  get: () => \\"FAILED\\",
+  toString: () => \\"FAILED\\",
   visit: (visitor) => visitor.failed(),
 };
 const _Finished: MigrationStatus<\\"FINISHED\\"> = {
-  get: () => \\"FINISHED\\",
+  toString: () => \\"FINISHED\\",
   visit: (visitor) => visitor.finished(),
 };
 export const MigrationStatus = {
@@ -2515,16 +2785,32 @@ export declare namespace Error {
 }
 
 export const Error = {
-  playlistIdNotFoundError: (value: TraceApi.playlist.PlaylistIdNotFoundError): Error.PlaylistIdNotFoundError => ({
-    content: value,
-    errorName: \\"PlaylistIdNotFoundError\\",
-    _visit: (visitor) => visitor.playlistIdNotFoundError(value),
-  }),
+  playlistIdNotFoundError: (value: TraceApi.playlist.PlaylistIdNotFoundError): Error.PlaylistIdNotFoundError => {
+    const valueWithoutVisit: Omit<Error.PlaylistIdNotFoundError, \\"_visit\\"> = {
+      content: value,
+      errorName: \\"PlaylistIdNotFoundError\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as Error.PlaylistIdNotFoundError;
+    castedValue._visit = (visitor) => visitor.playlistIdNotFoundError(value);
+    return castedValue;
+  },
 
-  unauthorizedError: (): Error.UnauthorizedError => ({
-    errorName: \\"UnauthorizedError\\",
-    _visit: (visitor) => visitor.unauthorizedError(),
-  }),
+  unauthorizedError: (): Error.UnauthorizedError => {
+    const valueWithoutVisit: Omit<Error.UnauthorizedError, \\"_visit\\"> = {
+      errorName: \\"UnauthorizedError\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as Error.UnauthorizedError;
+    castedValue._visit = (visitor) => visitor.unauthorizedError();
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "getPlaylist.ts",
@@ -2619,11 +2905,19 @@ export declare namespace Error {
 }
 
 export const Error = {
-  playlistIdNotFoundError: (value: TraceApi.playlist.PlaylistIdNotFoundError): Error.PlaylistIdNotFoundError => ({
-    content: value,
-    errorName: \\"PlaylistIdNotFoundError\\",
-    _visit: (visitor) => visitor.playlistIdNotFoundError(value),
-  }),
+  playlistIdNotFoundError: (value: TraceApi.playlist.PlaylistIdNotFoundError): Error.PlaylistIdNotFoundError => {
+    const valueWithoutVisit: Omit<Error.PlaylistIdNotFoundError, \\"_visit\\"> = {
+      content: value,
+      errorName: \\"PlaylistIdNotFoundError\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as Error.PlaylistIdNotFoundError;
+    castedValue._visit = (visitor) => visitor.playlistIdNotFoundError(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "updatePlaylist.ts",
@@ -2665,11 +2959,19 @@ export declare namespace PlaylistIdNotFoundError {
 }
 
 export const PlaylistIdNotFoundError = {
-  playlistId: (value: TraceApi.playlist.PlaylistId): PlaylistIdNotFoundError.PlaylistId => ({
-    value: value,
-    type: \\"playlistId\\",
-    _visit: (visitor) => visitor.playlistId(value),
-  }),
+  playlistId: (value: TraceApi.playlist.PlaylistId): PlaylistIdNotFoundError.PlaylistId => {
+    const valueWithoutVisit: Omit<PlaylistIdNotFoundError.PlaylistId, \\"_visit\\"> = {
+      value: value,
+      type: \\"playlistId\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as PlaylistIdNotFoundError.PlaylistId;
+    castedValue._visit = (visitor) => visitor.playlistId(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "PlaylistIdNotFoundError.ts",
@@ -3116,11 +3418,19 @@ export declare namespace CreateProblemError {
 }
 
 export const CreateProblemError = {
-  generic: (value: TraceApi.problem.GenericCreateProblemError): CreateProblemError.Generic => ({
-    ...value,
-    errorType: \\"generic\\",
-    _visit: (visitor) => visitor.generic(value),
-  }),
+  generic: (value: TraceApi.problem.GenericCreateProblemError): CreateProblemError.Generic => {
+    const valueWithoutVisit: Omit<CreateProblemError.Generic, \\"_visit\\"> = {
+      ...value,
+      errorType: \\"generic\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CreateProblemError.Generic;
+    castedValue._visit = (visitor) => visitor.generic(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "CreateProblemError.ts",
@@ -3185,17 +3495,33 @@ export declare namespace CreateProblemResponse {
 }
 
 export const CreateProblemResponse = {
-  success: (value: TraceApi.commons.ProblemId): CreateProblemResponse.Success => ({
-    value: value,
-    type: \\"success\\",
-    _visit: (visitor) => visitor.success(value),
-  }),
+  success: (value: TraceApi.commons.ProblemId): CreateProblemResponse.Success => {
+    const valueWithoutVisit: Omit<CreateProblemResponse.Success, \\"_visit\\"> = {
+      value: value,
+      type: \\"success\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CreateProblemResponse.Success;
+    castedValue._visit = (visitor) => visitor.success(value);
+    return castedValue;
+  },
 
-  error: (value: TraceApi.problem.CreateProblemError): CreateProblemResponse.Error => ({
-    value: value,
-    type: \\"error\\",
-    _visit: (visitor) => visitor.error(value),
-  }),
+  error: (value: TraceApi.problem.CreateProblemError): CreateProblemResponse.Error => {
+    const valueWithoutVisit: Omit<CreateProblemResponse.Error, \\"_visit\\"> = {
+      value: value,
+      type: \\"error\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CreateProblemResponse.Error;
+    castedValue._visit = (visitor) => visitor.error(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "CreateProblemResponse.ts",
@@ -3305,23 +3631,47 @@ export declare namespace ProblemDescriptionBoard {
 }
 
 export const ProblemDescriptionBoard = {
-  html: (value: string): ProblemDescriptionBoard.Html => ({
-    value: value,
-    type: \\"html\\",
-    _visit: (visitor) => visitor.html(value),
-  }),
+  html: (value: string): ProblemDescriptionBoard.Html => {
+    const valueWithoutVisit: Omit<ProblemDescriptionBoard.Html, \\"_visit\\"> = {
+      value: value,
+      type: \\"html\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ProblemDescriptionBoard.Html;
+    castedValue._visit = (visitor) => visitor.html(value);
+    return castedValue;
+  },
 
-  variable: (value: TraceApi.commons.VariableValue): ProblemDescriptionBoard.Variable => ({
-    value: value,
-    type: \\"variable\\",
-    _visit: (visitor) => visitor.variable(value),
-  }),
+  variable: (value: TraceApi.commons.VariableValue): ProblemDescriptionBoard.Variable => {
+    const valueWithoutVisit: Omit<ProblemDescriptionBoard.Variable, \\"_visit\\"> = {
+      value: value,
+      type: \\"variable\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ProblemDescriptionBoard.Variable;
+    castedValue._visit = (visitor) => visitor.variable(value);
+    return castedValue;
+  },
 
-  testCaseId: (value: string): ProblemDescriptionBoard.TestCaseId => ({
-    value: value,
-    type: \\"testCaseId\\",
-    _visit: (visitor) => visitor.testCaseId(value),
-  }),
+  testCaseId: (value: string): ProblemDescriptionBoard.TestCaseId => {
+    const valueWithoutVisit: Omit<ProblemDescriptionBoard.TestCaseId, \\"_visit\\"> = {
+      value: value,
+      type: \\"testCaseId\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ProblemDescriptionBoard.TestCaseId;
+    castedValue._visit = (visitor) => visitor.testCaseId(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "ProblemDescriptionBoard.ts",
@@ -3800,23 +4150,47 @@ export declare namespace ActualResult {
 }
 
 export const ActualResult = {
-  value: (value: TraceApi.commons.VariableValue): ActualResult.Value => ({
-    value: value,
-    type: \\"value\\",
-    _visit: (visitor) => visitor.value(value),
-  }),
+  value: (value: TraceApi.commons.VariableValue): ActualResult.Value => {
+    const valueWithoutVisit: Omit<ActualResult.Value, \\"_visit\\"> = {
+      value: value,
+      type: \\"value\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ActualResult.Value;
+    castedValue._visit = (visitor) => visitor.value(value);
+    return castedValue;
+  },
 
-  exception: (value: TraceApi.submission.ExceptionInfo): ActualResult.Exception => ({
-    ...value,
-    type: \\"exception\\",
-    _visit: (visitor) => visitor.exception(value),
-  }),
+  exception: (value: TraceApi.submission.ExceptionInfo): ActualResult.Exception => {
+    const valueWithoutVisit: Omit<ActualResult.Exception, \\"_visit\\"> = {
+      ...value,
+      type: \\"exception\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ActualResult.Exception;
+    castedValue._visit = (visitor) => visitor.exception(value);
+    return castedValue;
+  },
 
-  exceptionV2: (value: TraceApi.submission.ExceptionV2): ActualResult.ExceptionV2 => ({
-    value: value,
-    type: \\"exceptionV2\\",
-    _visit: (visitor) => visitor.exceptionV2(value),
-  }),
+  exceptionV2: (value: TraceApi.submission.ExceptionV2): ActualResult.ExceptionV2 => {
+    const valueWithoutVisit: Omit<ActualResult.ExceptionV2, \\"_visit\\"> = {
+      value: value,
+      type: \\"exceptionV2\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ActualResult.ExceptionV2;
+    castedValue._visit = (visitor) => visitor.exceptionV2(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "ActualResult.ts",
@@ -3950,71 +4324,159 @@ export declare namespace CodeExecutionUpdate {
 }
 
 export const CodeExecutionUpdate = {
-  buildingExecutor: (value: TraceApi.submission.BuildingExecutorResponse): CodeExecutionUpdate.BuildingExecutor => ({
-    ...value,
-    type: \\"buildingExecutor\\",
-    _visit: (visitor) => visitor.buildingExecutor(value),
-  }),
+  buildingExecutor: (value: TraceApi.submission.BuildingExecutorResponse): CodeExecutionUpdate.BuildingExecutor => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.BuildingExecutor, \\"_visit\\"> = {
+      ...value,
+      type: \\"buildingExecutor\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.BuildingExecutor;
+    castedValue._visit = (visitor) => visitor.buildingExecutor(value);
+    return castedValue;
+  },
 
-  running: (value: TraceApi.submission.RunningResponse): CodeExecutionUpdate.Running => ({
-    ...value,
-    type: \\"running\\",
-    _visit: (visitor) => visitor.running(value),
-  }),
+  running: (value: TraceApi.submission.RunningResponse): CodeExecutionUpdate.Running => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Running, \\"_visit\\"> = {
+      ...value,
+      type: \\"running\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Running;
+    castedValue._visit = (visitor) => visitor.running(value);
+    return castedValue;
+  },
 
-  errored: (value: TraceApi.submission.ErroredResponse): CodeExecutionUpdate.Errored => ({
-    ...value,
-    type: \\"errored\\",
-    _visit: (visitor) => visitor.errored(value),
-  }),
+  errored: (value: TraceApi.submission.ErroredResponse): CodeExecutionUpdate.Errored => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Errored, \\"_visit\\"> = {
+      ...value,
+      type: \\"errored\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Errored;
+    castedValue._visit = (visitor) => visitor.errored(value);
+    return castedValue;
+  },
 
-  stopped: (value: TraceApi.submission.StoppedResponse): CodeExecutionUpdate.Stopped => ({
-    ...value,
-    type: \\"stopped\\",
-    _visit: (visitor) => visitor.stopped(value),
-  }),
+  stopped: (value: TraceApi.submission.StoppedResponse): CodeExecutionUpdate.Stopped => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Stopped, \\"_visit\\"> = {
+      ...value,
+      type: \\"stopped\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Stopped;
+    castedValue._visit = (visitor) => visitor.stopped(value);
+    return castedValue;
+  },
 
-  graded: (value: TraceApi.submission.GradedResponse): CodeExecutionUpdate.Graded => ({
-    ...value,
-    type: \\"graded\\",
-    _visit: (visitor) => visitor.graded(value),
-  }),
+  graded: (value: TraceApi.submission.GradedResponse): CodeExecutionUpdate.Graded => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Graded, \\"_visit\\"> = {
+      ...value,
+      type: \\"graded\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Graded;
+    castedValue._visit = (visitor) => visitor.graded(value);
+    return castedValue;
+  },
 
-  gradedV2: (value: TraceApi.submission.GradedResponseV2): CodeExecutionUpdate.GradedV2 => ({
-    ...value,
-    type: \\"gradedV2\\",
-    _visit: (visitor) => visitor.gradedV2(value),
-  }),
+  gradedV2: (value: TraceApi.submission.GradedResponseV2): CodeExecutionUpdate.GradedV2 => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.GradedV2, \\"_visit\\"> = {
+      ...value,
+      type: \\"gradedV2\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.GradedV2;
+    castedValue._visit = (visitor) => visitor.gradedV2(value);
+    return castedValue;
+  },
 
-  workspaceRan: (value: TraceApi.submission.WorkspaceRanResponse): CodeExecutionUpdate.WorkspaceRan => ({
-    ...value,
-    type: \\"workspaceRan\\",
-    _visit: (visitor) => visitor.workspaceRan(value),
-  }),
+  workspaceRan: (value: TraceApi.submission.WorkspaceRanResponse): CodeExecutionUpdate.WorkspaceRan => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.WorkspaceRan, \\"_visit\\"> = {
+      ...value,
+      type: \\"workspaceRan\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.WorkspaceRan;
+    castedValue._visit = (visitor) => visitor.workspaceRan(value);
+    return castedValue;
+  },
 
-  recording: (value: TraceApi.submission.RecordingResponseNotification): CodeExecutionUpdate.Recording => ({
-    ...value,
-    type: \\"recording\\",
-    _visit: (visitor) => visitor.recording(value),
-  }),
+  recording: (value: TraceApi.submission.RecordingResponseNotification): CodeExecutionUpdate.Recording => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Recording, \\"_visit\\"> = {
+      ...value,
+      type: \\"recording\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Recording;
+    castedValue._visit = (visitor) => visitor.recording(value);
+    return castedValue;
+  },
 
-  recorded: (value: TraceApi.submission.RecordedResponseNotification): CodeExecutionUpdate.Recorded => ({
-    ...value,
-    type: \\"recorded\\",
-    _visit: (visitor) => visitor.recorded(value),
-  }),
+  recorded: (value: TraceApi.submission.RecordedResponseNotification): CodeExecutionUpdate.Recorded => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Recorded, \\"_visit\\"> = {
+      ...value,
+      type: \\"recorded\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Recorded;
+    castedValue._visit = (visitor) => visitor.recorded(value);
+    return castedValue;
+  },
 
-  invalidRequest: (value: TraceApi.submission.InvalidRequestResponse): CodeExecutionUpdate.InvalidRequest => ({
-    ...value,
-    type: \\"invalidRequest\\",
-    _visit: (visitor) => visitor.invalidRequest(value),
-  }),
+  invalidRequest: (value: TraceApi.submission.InvalidRequestResponse): CodeExecutionUpdate.InvalidRequest => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.InvalidRequest, \\"_visit\\"> = {
+      ...value,
+      type: \\"invalidRequest\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.InvalidRequest;
+    castedValue._visit = (visitor) => visitor.invalidRequest(value);
+    return castedValue;
+  },
 
-  finished: (value: TraceApi.submission.FinishedResponse): CodeExecutionUpdate.Finished => ({
-    ...value,
-    type: \\"finished\\",
-    _visit: (visitor) => visitor.finished(value),
-  }),
+  finished: (value: TraceApi.submission.FinishedResponse): CodeExecutionUpdate.Finished => {
+    const valueWithoutVisit: Omit<CodeExecutionUpdate.Finished, \\"_visit\\"> = {
+      ...value,
+      type: \\"finished\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CodeExecutionUpdate.Finished;
+    castedValue._visit = (visitor) => visitor.finished(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "CodeExecutionUpdate.ts",
@@ -4096,23 +4558,47 @@ export declare namespace ErrorInfo {
 }
 
 export const ErrorInfo = {
-  compileError: (value: TraceApi.submission.CompileError): ErrorInfo.CompileError => ({
-    ...value,
-    type: \\"compileError\\",
-    _visit: (visitor) => visitor.compileError(value),
-  }),
+  compileError: (value: TraceApi.submission.CompileError): ErrorInfo.CompileError => {
+    const valueWithoutVisit: Omit<ErrorInfo.CompileError, \\"_visit\\"> = {
+      ...value,
+      type: \\"compileError\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ErrorInfo.CompileError;
+    castedValue._visit = (visitor) => visitor.compileError(value);
+    return castedValue;
+  },
 
-  runtimeError: (value: TraceApi.submission.RuntimeError): ErrorInfo.RuntimeError => ({
-    ...value,
-    type: \\"runtimeError\\",
-    _visit: (visitor) => visitor.runtimeError(value),
-  }),
+  runtimeError: (value: TraceApi.submission.RuntimeError): ErrorInfo.RuntimeError => {
+    const valueWithoutVisit: Omit<ErrorInfo.RuntimeError, \\"_visit\\"> = {
+      ...value,
+      type: \\"runtimeError\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ErrorInfo.RuntimeError;
+    castedValue._visit = (visitor) => visitor.runtimeError(value);
+    return castedValue;
+  },
 
-  internalError: (value: TraceApi.submission.InternalError): ErrorInfo.InternalError => ({
-    ...value,
-    type: \\"internalError\\",
-    _visit: (visitor) => visitor.internalError(value),
-  }),
+  internalError: (value: TraceApi.submission.InternalError): ErrorInfo.InternalError => {
+    const valueWithoutVisit: Omit<ErrorInfo.InternalError, \\"_visit\\"> = {
+      ...value,
+      type: \\"internalError\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ErrorInfo.InternalError;
+    castedValue._visit = (visitor) => visitor.internalError(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "ErrorInfo.ts",
@@ -4181,16 +4667,32 @@ export declare namespace ExceptionV2 {
 }
 
 export const ExceptionV2 = {
-  generic: (value: TraceApi.submission.ExceptionInfo): ExceptionV2.Generic => ({
-    ...value,
-    type: \\"generic\\",
-    _visit: (visitor) => visitor.generic(value),
-  }),
+  generic: (value: TraceApi.submission.ExceptionInfo): ExceptionV2.Generic => {
+    const valueWithoutVisit: Omit<ExceptionV2.Generic, \\"_visit\\"> = {
+      ...value,
+      type: \\"generic\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ExceptionV2.Generic;
+    castedValue._visit = (visitor) => visitor.generic(value);
+    return castedValue;
+  },
 
-  timeout: (): ExceptionV2.Timeout => ({
-    type: \\"timeout\\",
-    _visit: (visitor) => visitor.timeout(),
-  }),
+  timeout: (): ExceptionV2.Timeout => {
+    const valueWithoutVisit: Omit<ExceptionV2.Timeout, \\"_visit\\"> = {
+      type: \\"timeout\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as ExceptionV2.Timeout;
+    castedValue._visit = (visitor) => visitor.timeout();
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "ExceptionV2.ts",
@@ -4240,32 +4742,32 @@ export interface ExecutionSessionState {
 export interface ExecutionSessionStatus<
   RawValue extends ExecutionSessionStatus.RawValue = ExecutionSessionStatus.RawValue
 > {
-  get: () => RawValue;
+  toString: () => RawValue;
   visit: <Result>(visitor: ExecutionSessionStatus._Visitor<Result>) => Result;
 }
 
 const _CreatingContainer: ExecutionSessionStatus<\\"CREATING_CONTAINER\\"> = {
-  get: () => \\"CREATING_CONTAINER\\",
+  toString: () => \\"CREATING_CONTAINER\\",
   visit: (visitor) => visitor.creatingContainer(),
 };
 const _ProvisioningContainer: ExecutionSessionStatus<\\"PROVISIONING_CONTAINER\\"> = {
-  get: () => \\"PROVISIONING_CONTAINER\\",
+  toString: () => \\"PROVISIONING_CONTAINER\\",
   visit: (visitor) => visitor.provisioningContainer(),
 };
 const _PendingContainer: ExecutionSessionStatus<\\"PENDING_CONTAINER\\"> = {
-  get: () => \\"PENDING_CONTAINER\\",
+  toString: () => \\"PENDING_CONTAINER\\",
   visit: (visitor) => visitor.pendingContainer(),
 };
 const _RunningContainer: ExecutionSessionStatus<\\"RUNNING_CONTAINER\\"> = {
-  get: () => \\"RUNNING_CONTAINER\\",
+  toString: () => \\"RUNNING_CONTAINER\\",
   visit: (visitor) => visitor.runningContainer(),
 };
 const _LiveContainer: ExecutionSessionStatus<\\"LIVE_CONTAINER\\"> = {
-  get: () => \\"LIVE_CONTAINER\\",
+  toString: () => \\"LIVE_CONTAINER\\",
   visit: (visitor) => visitor.liveContainer(),
 };
 const _FailedToLaunch: ExecutionSessionStatus<\\"FAILED_TO_LAUNCH\\"> = {
-  get: () => \\"FAILED_TO_LAUNCH\\",
+  toString: () => \\"FAILED_TO_LAUNCH\\",
   visit: (visitor) => visitor.failedToLaunch(),
 };
 export const ExecutionSessionStatus = {
@@ -4508,27 +5010,49 @@ export declare namespace InvalidRequestCause {
 }
 
 export const InvalidRequestCause = {
-  submissionIdNotFound: (
-    value: TraceApi.submission.SubmissionIdNotFound
-  ): InvalidRequestCause.SubmissionIdNotFound => ({
-    ...value,
-    type: \\"submissionIdNotFound\\",
-    _visit: (visitor) => visitor.submissionIdNotFound(value),
-  }),
+  submissionIdNotFound: (value: TraceApi.submission.SubmissionIdNotFound): InvalidRequestCause.SubmissionIdNotFound => {
+    const valueWithoutVisit: Omit<InvalidRequestCause.SubmissionIdNotFound, \\"_visit\\"> = {
+      ...value,
+      type: \\"submissionIdNotFound\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as InvalidRequestCause.SubmissionIdNotFound;
+    castedValue._visit = (visitor) => visitor.submissionIdNotFound(value);
+    return castedValue;
+  },
 
   customTestCasesUnsupported: (
     value: TraceApi.submission.CustomTestCasesUnsupported
-  ): InvalidRequestCause.CustomTestCasesUnsupported => ({
-    ...value,
-    type: \\"customTestCasesUnsupported\\",
-    _visit: (visitor) => visitor.customTestCasesUnsupported(value),
-  }),
+  ): InvalidRequestCause.CustomTestCasesUnsupported => {
+    const valueWithoutVisit: Omit<InvalidRequestCause.CustomTestCasesUnsupported, \\"_visit\\"> = {
+      ...value,
+      type: \\"customTestCasesUnsupported\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as InvalidRequestCause.CustomTestCasesUnsupported;
+    castedValue._visit = (visitor) => visitor.customTestCasesUnsupported(value);
+    return castedValue;
+  },
 
-  unexpectedLanguage: (value: TraceApi.submission.UnexpectedLanguageError): InvalidRequestCause.UnexpectedLanguage => ({
-    ...value,
-    type: \\"unexpectedLanguage\\",
-    _visit: (visitor) => visitor.unexpectedLanguage(value),
-  }),
+  unexpectedLanguage: (value: TraceApi.submission.UnexpectedLanguageError): InvalidRequestCause.UnexpectedLanguage => {
+    const valueWithoutVisit: Omit<InvalidRequestCause.UnexpectedLanguage, \\"_visit\\"> = {
+      ...value,
+      type: \\"unexpectedLanguage\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as InvalidRequestCause.UnexpectedLanguage;
+    castedValue._visit = (visitor) => visitor.unexpectedLanguage(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "InvalidRequestCause.ts",
@@ -4634,28 +5158,28 @@ export interface RunningResponse {
 export interface RunningSubmissionState<
   RawValue extends RunningSubmissionState.RawValue = RunningSubmissionState.RawValue
 > {
-  get: () => RawValue;
+  toString: () => RawValue;
   visit: <Result>(visitor: RunningSubmissionState._Visitor<Result>) => Result;
 }
 
 const _QueueingSubmission: RunningSubmissionState<\\"QUEUEING_SUBMISSION\\"> = {
-  get: () => \\"QUEUEING_SUBMISSION\\",
+  toString: () => \\"QUEUEING_SUBMISSION\\",
   visit: (visitor) => visitor.queueingSubmission(),
 };
 const _KillingHistoricalSubmissions: RunningSubmissionState<\\"KILLING_HISTORICAL_SUBMISSIONS\\"> = {
-  get: () => \\"KILLING_HISTORICAL_SUBMISSIONS\\",
+  toString: () => \\"KILLING_HISTORICAL_SUBMISSIONS\\",
   visit: (visitor) => visitor.killingHistoricalSubmissions(),
 };
 const _WritingSubmissionToFile: RunningSubmissionState<\\"WRITING_SUBMISSION_TO_FILE\\"> = {
-  get: () => \\"WRITING_SUBMISSION_TO_FILE\\",
+  toString: () => \\"WRITING_SUBMISSION_TO_FILE\\",
   visit: (visitor) => visitor.writingSubmissionToFile(),
 };
 const _CompilingSubmission: RunningSubmissionState<\\"COMPILING_SUBMISSION\\"> = {
-  get: () => \\"COMPILING_SUBMISSION\\",
+  toString: () => \\"COMPILING_SUBMISSION\\",
   visit: (visitor) => visitor.compilingSubmission(),
 };
 const _RunningSubmission: RunningSubmissionState<\\"RUNNING_SUBMISSION\\"> = {
-  get: () => \\"RUNNING_SUBMISSION\\",
+  toString: () => \\"RUNNING_SUBMISSION\\",
   visit: (visitor) => visitor.runningSubmission(),
 };
 export const RunningSubmissionState = {
@@ -4908,34 +5432,74 @@ export declare namespace SubmissionRequest {
 export const SubmissionRequest = {
   initializeProblemRequest: (
     value: TraceApi.submission.InitializeProblemRequest
-  ): SubmissionRequest.InitializeProblemRequest => ({
-    ...value,
-    type: \\"initializeProblemRequest\\",
-    _visit: (visitor) => visitor.initializeProblemRequest(value),
-  }),
+  ): SubmissionRequest.InitializeProblemRequest => {
+    const valueWithoutVisit: Omit<SubmissionRequest.InitializeProblemRequest, \\"_visit\\"> = {
+      ...value,
+      type: \\"initializeProblemRequest\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionRequest.InitializeProblemRequest;
+    castedValue._visit = (visitor) => visitor.initializeProblemRequest(value);
+    return castedValue;
+  },
 
-  initializeWorkspaceRequest: (): SubmissionRequest.InitializeWorkspaceRequest => ({
-    type: \\"initializeWorkspaceRequest\\",
-    _visit: (visitor) => visitor.initializeWorkspaceRequest(),
-  }),
+  initializeWorkspaceRequest: (): SubmissionRequest.InitializeWorkspaceRequest => {
+    const valueWithoutVisit: Omit<SubmissionRequest.InitializeWorkspaceRequest, \\"_visit\\"> = {
+      type: \\"initializeWorkspaceRequest\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionRequest.InitializeWorkspaceRequest;
+    castedValue._visit = (visitor) => visitor.initializeWorkspaceRequest();
+    return castedValue;
+  },
 
-  submitV2: (value: TraceApi.submission.SubmitRequestV2): SubmissionRequest.SubmitV2 => ({
-    ...value,
-    type: \\"submitV2\\",
-    _visit: (visitor) => visitor.submitV2(value),
-  }),
+  submitV2: (value: TraceApi.submission.SubmitRequestV2): SubmissionRequest.SubmitV2 => {
+    const valueWithoutVisit: Omit<SubmissionRequest.SubmitV2, \\"_visit\\"> = {
+      ...value,
+      type: \\"submitV2\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionRequest.SubmitV2;
+    castedValue._visit = (visitor) => visitor.submitV2(value);
+    return castedValue;
+  },
 
-  workspaceSubmit: (value: TraceApi.submission.WorkspaceSubmitRequest): SubmissionRequest.WorkspaceSubmit => ({
-    ...value,
-    type: \\"workspaceSubmit\\",
-    _visit: (visitor) => visitor.workspaceSubmit(value),
-  }),
+  workspaceSubmit: (value: TraceApi.submission.WorkspaceSubmitRequest): SubmissionRequest.WorkspaceSubmit => {
+    const valueWithoutVisit: Omit<SubmissionRequest.WorkspaceSubmit, \\"_visit\\"> = {
+      ...value,
+      type: \\"workspaceSubmit\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionRequest.WorkspaceSubmit;
+    castedValue._visit = (visitor) => visitor.workspaceSubmit(value);
+    return castedValue;
+  },
 
-  stop: (value: TraceApi.submission.StopRequest): SubmissionRequest.Stop => ({
-    ...value,
-    type: \\"stop\\",
-    _visit: (visitor) => visitor.stop(value),
-  }),
+  stop: (value: TraceApi.submission.StopRequest): SubmissionRequest.Stop => {
+    const valueWithoutVisit: Omit<SubmissionRequest.Stop, \\"_visit\\"> = {
+      ...value,
+      type: \\"stop\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionRequest.Stop;
+    castedValue._visit = (visitor) => visitor.stop(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "SubmissionRequest.ts",
@@ -5004,39 +5568,87 @@ export declare namespace SubmissionResponse {
 }
 
 export const SubmissionResponse = {
-  serverInitialized: (): SubmissionResponse.ServerInitialized => ({
-    type: \\"serverInitialized\\",
-    _visit: (visitor) => visitor.serverInitialized(),
-  }),
+  serverInitialized: (): SubmissionResponse.ServerInitialized => {
+    const valueWithoutVisit: Omit<SubmissionResponse.ServerInitialized, \\"_visit\\"> = {
+      type: \\"serverInitialized\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionResponse.ServerInitialized;
+    castedValue._visit = (visitor) => visitor.serverInitialized();
+    return castedValue;
+  },
 
-  problemInitialized: (value: TraceApi.commons.ProblemId): SubmissionResponse.ProblemInitialized => ({
-    value: value,
-    type: \\"problemInitialized\\",
-    _visit: (visitor) => visitor.problemInitialized(value),
-  }),
+  problemInitialized: (value: TraceApi.commons.ProblemId): SubmissionResponse.ProblemInitialized => {
+    const valueWithoutVisit: Omit<SubmissionResponse.ProblemInitialized, \\"_visit\\"> = {
+      value: value,
+      type: \\"problemInitialized\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionResponse.ProblemInitialized;
+    castedValue._visit = (visitor) => visitor.problemInitialized(value);
+    return castedValue;
+  },
 
-  workspaceInitialized: (): SubmissionResponse.WorkspaceInitialized => ({
-    type: \\"workspaceInitialized\\",
-    _visit: (visitor) => visitor.workspaceInitialized(),
-  }),
+  workspaceInitialized: (): SubmissionResponse.WorkspaceInitialized => {
+    const valueWithoutVisit: Omit<SubmissionResponse.WorkspaceInitialized, \\"_visit\\"> = {
+      type: \\"workspaceInitialized\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionResponse.WorkspaceInitialized;
+    castedValue._visit = (visitor) => visitor.workspaceInitialized();
+    return castedValue;
+  },
 
-  serverErrored: (value: TraceApi.submission.ExceptionInfo): SubmissionResponse.ServerErrored => ({
-    ...value,
-    type: \\"serverErrored\\",
-    _visit: (visitor) => visitor.serverErrored(value),
-  }),
+  serverErrored: (value: TraceApi.submission.ExceptionInfo): SubmissionResponse.ServerErrored => {
+    const valueWithoutVisit: Omit<SubmissionResponse.ServerErrored, \\"_visit\\"> = {
+      ...value,
+      type: \\"serverErrored\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionResponse.ServerErrored;
+    castedValue._visit = (visitor) => visitor.serverErrored(value);
+    return castedValue;
+  },
 
-  codeExecutionUpdate: (value: TraceApi.submission.CodeExecutionUpdate): SubmissionResponse.CodeExecutionUpdate => ({
-    value: value,
-    type: \\"codeExecutionUpdate\\",
-    _visit: (visitor) => visitor.codeExecutionUpdate(value),
-  }),
+  codeExecutionUpdate: (value: TraceApi.submission.CodeExecutionUpdate): SubmissionResponse.CodeExecutionUpdate => {
+    const valueWithoutVisit: Omit<SubmissionResponse.CodeExecutionUpdate, \\"_visit\\"> = {
+      value: value,
+      type: \\"codeExecutionUpdate\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionResponse.CodeExecutionUpdate;
+    castedValue._visit = (visitor) => visitor.codeExecutionUpdate(value);
+    return castedValue;
+  },
 
-  terminated: (value: TraceApi.submission.TerminatedResponse): SubmissionResponse.Terminated => ({
-    ...value,
-    type: \\"terminated\\",
-    _visit: (visitor) => visitor.terminated(value),
-  }),
+  terminated: (value: TraceApi.submission.TerminatedResponse): SubmissionResponse.Terminated => {
+    const valueWithoutVisit: Omit<SubmissionResponse.Terminated, \\"_visit\\"> = {
+      ...value,
+      type: \\"terminated\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionResponse.Terminated;
+    castedValue._visit = (visitor) => visitor.terminated(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "SubmissionResponse.ts",
@@ -5086,23 +5698,47 @@ export declare namespace SubmissionStatusForTestCase {
 }
 
 export const SubmissionStatusForTestCase = {
-  graded: (value: TraceApi.submission.TestCaseResultWithStdout): SubmissionStatusForTestCase.Graded => ({
-    ...value,
-    type: \\"graded\\",
-    _visit: (visitor) => visitor.graded(value),
-  }),
+  graded: (value: TraceApi.submission.TestCaseResultWithStdout): SubmissionStatusForTestCase.Graded => {
+    const valueWithoutVisit: Omit<SubmissionStatusForTestCase.Graded, \\"_visit\\"> = {
+      ...value,
+      type: \\"graded\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionStatusForTestCase.Graded;
+    castedValue._visit = (visitor) => visitor.graded(value);
+    return castedValue;
+  },
 
-  gradedV2: (value: TraceApi.submission.TestCaseGrade): SubmissionStatusForTestCase.GradedV2 => ({
-    value: value,
-    type: \\"gradedV2\\",
-    _visit: (visitor) => visitor.gradedV2(value),
-  }),
+  gradedV2: (value: TraceApi.submission.TestCaseGrade): SubmissionStatusForTestCase.GradedV2 => {
+    const valueWithoutVisit: Omit<SubmissionStatusForTestCase.GradedV2, \\"_visit\\"> = {
+      value: value,
+      type: \\"gradedV2\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionStatusForTestCase.GradedV2;
+    castedValue._visit = (visitor) => visitor.gradedV2(value);
+    return castedValue;
+  },
 
-  traced: (value: TraceApi.submission.TracedTestCase): SubmissionStatusForTestCase.Traced => ({
-    ...value,
-    type: \\"traced\\",
-    _visit: (visitor) => visitor.traced(value),
-  }),
+  traced: (value: TraceApi.submission.TracedTestCase): SubmissionStatusForTestCase.Traced => {
+    const valueWithoutVisit: Omit<SubmissionStatusForTestCase.Traced, \\"_visit\\"> = {
+      ...value,
+      type: \\"traced\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionStatusForTestCase.Traced;
+    castedValue._visit = (visitor) => visitor.traced(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "SubmissionStatusForTestCase.ts",
@@ -5142,17 +5778,33 @@ export declare namespace SubmissionStatusV2 {
 }
 
 export const SubmissionStatusV2 = {
-  test: (value: TraceApi.submission.TestSubmissionStatusV2): SubmissionStatusV2.Test => ({
-    ...value,
-    type: \\"test\\",
-    _visit: (visitor) => visitor.test(value),
-  }),
+  test: (value: TraceApi.submission.TestSubmissionStatusV2): SubmissionStatusV2.Test => {
+    const valueWithoutVisit: Omit<SubmissionStatusV2.Test, \\"_visit\\"> = {
+      ...value,
+      type: \\"test\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionStatusV2.Test;
+    castedValue._visit = (visitor) => visitor.test(value);
+    return castedValue;
+  },
 
-  workspace: (value: TraceApi.submission.WorkspaceSubmissionStatusV2): SubmissionStatusV2.Workspace => ({
-    ...value,
-    type: \\"workspace\\",
-    _visit: (visitor) => visitor.workspace(value),
-  }),
+  workspace: (value: TraceApi.submission.WorkspaceSubmissionStatusV2): SubmissionStatusV2.Workspace => {
+    const valueWithoutVisit: Omit<SubmissionStatusV2.Workspace, \\"_visit\\"> = {
+      ...value,
+      type: \\"workspace\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionStatusV2.Workspace;
+    castedValue._visit = (visitor) => visitor.workspace(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "SubmissionStatusV2.ts",
@@ -5167,12 +5819,12 @@ export const SubmissionStatusV2 = {
  * Keep in sync with SubmissionType.
  */
 export interface SubmissionTypeEnum<RawValue extends SubmissionTypeEnum.RawValue = SubmissionTypeEnum.RawValue> {
-  get: () => RawValue;
+  toString: () => RawValue;
   visit: <Result>(visitor: SubmissionTypeEnum._Visitor<Result>) => Result;
 }
 
 const _Test: SubmissionTypeEnum<\\"TEST\\"> = {
-  get: () => \\"TEST\\",
+  toString: () => \\"TEST\\",
   visit: (visitor) => visitor.test(),
 };
 export const SubmissionTypeEnum = {
@@ -5228,17 +5880,33 @@ export declare namespace SubmissionTypeState {
 }
 
 export const SubmissionTypeState = {
-  test: (value: TraceApi.submission.TestSubmissionState): SubmissionTypeState.Test => ({
-    ...value,
-    type: \\"test\\",
-    _visit: (visitor) => visitor.test(value),
-  }),
+  test: (value: TraceApi.submission.TestSubmissionState): SubmissionTypeState.Test => {
+    const valueWithoutVisit: Omit<SubmissionTypeState.Test, \\"_visit\\"> = {
+      ...value,
+      type: \\"test\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionTypeState.Test;
+    castedValue._visit = (visitor) => visitor.test(value);
+    return castedValue;
+  },
 
-  workspace: (value: TraceApi.submission.WorkspaceSubmissionState): SubmissionTypeState.Workspace => ({
-    ...value,
-    type: \\"workspace\\",
-    _visit: (visitor) => visitor.workspace(value),
-  }),
+  workspace: (value: TraceApi.submission.WorkspaceSubmissionState): SubmissionTypeState.Workspace => {
+    const valueWithoutVisit: Omit<SubmissionTypeState.Workspace, \\"_visit\\"> = {
+      ...value,
+      type: \\"workspace\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as SubmissionTypeState.Workspace;
+    castedValue._visit = (visitor) => visitor.workspace(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "SubmissionTypeState.ts",
@@ -5307,17 +5975,33 @@ export declare namespace TestCaseGrade {
 }
 
 export const TestCaseGrade = {
-  hidden: (value: TraceApi.submission.TestCaseHiddenGrade): TestCaseGrade.Hidden => ({
-    ...value,
-    type: \\"hidden\\",
-    _visit: (visitor) => visitor.hidden(value),
-  }),
+  hidden: (value: TraceApi.submission.TestCaseHiddenGrade): TestCaseGrade.Hidden => {
+    const valueWithoutVisit: Omit<TestCaseGrade.Hidden, \\"_visit\\"> = {
+      ...value,
+      type: \\"hidden\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseGrade.Hidden;
+    castedValue._visit = (visitor) => visitor.hidden(value);
+    return castedValue;
+  },
 
-  nonHidden: (value: TraceApi.submission.TestCaseNonHiddenGrade): TestCaseGrade.NonHidden => ({
-    ...value,
-    type: \\"nonHidden\\",
-    _visit: (visitor) => visitor.nonHidden(value),
-  }),
+  nonHidden: (value: TraceApi.submission.TestCaseNonHiddenGrade): TestCaseGrade.NonHidden => {
+    const valueWithoutVisit: Omit<TestCaseGrade.NonHidden, \\"_visit\\"> = {
+      ...value,
+      type: \\"nonHidden\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseGrade.NonHidden;
+    castedValue._visit = (visitor) => visitor.nonHidden(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "TestCaseGrade.ts",
@@ -5452,30 +6136,62 @@ export declare namespace TestSubmissionStatus {
 }
 
 export const TestSubmissionStatus = {
-  stopped: (): TestSubmissionStatus.Stopped => ({
-    type: \\"stopped\\",
-    _visit: (visitor) => visitor.stopped(),
-  }),
+  stopped: (): TestSubmissionStatus.Stopped => {
+    const valueWithoutVisit: Omit<TestSubmissionStatus.Stopped, \\"_visit\\"> = {
+      type: \\"stopped\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionStatus.Stopped;
+    castedValue._visit = (visitor) => visitor.stopped();
+    return castedValue;
+  },
 
-  errored: (value: TraceApi.submission.ErrorInfo): TestSubmissionStatus.Errored => ({
-    value: value,
-    type: \\"errored\\",
-    _visit: (visitor) => visitor.errored(value),
-  }),
+  errored: (value: TraceApi.submission.ErrorInfo): TestSubmissionStatus.Errored => {
+    const valueWithoutVisit: Omit<TestSubmissionStatus.Errored, \\"_visit\\"> = {
+      value: value,
+      type: \\"errored\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionStatus.Errored;
+    castedValue._visit = (visitor) => visitor.errored(value);
+    return castedValue;
+  },
 
-  running: (value: TraceApi.submission.RunningSubmissionState): TestSubmissionStatus.Running => ({
-    value: value,
-    type: \\"running\\",
-    _visit: (visitor) => visitor.running(value),
-  }),
+  running: (value: TraceApi.submission.RunningSubmissionState): TestSubmissionStatus.Running => {
+    const valueWithoutVisit: Omit<TestSubmissionStatus.Running, \\"_visit\\"> = {
+      value: value,
+      type: \\"running\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionStatus.Running;
+    castedValue._visit = (visitor) => visitor.running(value);
+    return castedValue;
+  },
 
   testCaseIdToState: (
     value: Record<string, TraceApi.submission.SubmissionStatusForTestCase>
-  ): TestSubmissionStatus.TestCaseIdToState => ({
-    value: value,
-    type: \\"testCaseIdToState\\",
-    _visit: (visitor) => visitor.testCaseIdToState(value),
-  }),
+  ): TestSubmissionStatus.TestCaseIdToState => {
+    const valueWithoutVisit: Omit<TestSubmissionStatus.TestCaseIdToState, \\"_visit\\"> = {
+      value: value,
+      type: \\"testCaseIdToState\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionStatus.TestCaseIdToState;
+    castedValue._visit = (visitor) => visitor.testCaseIdToState(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "TestSubmissionStatus.ts",
@@ -5576,39 +6292,87 @@ export declare namespace TestSubmissionUpdateInfo {
 }
 
 export const TestSubmissionUpdateInfo = {
-  running: (value: TraceApi.submission.RunningSubmissionState): TestSubmissionUpdateInfo.Running => ({
-    value: value,
-    type: \\"running\\",
-    _visit: (visitor) => visitor.running(value),
-  }),
+  running: (value: TraceApi.submission.RunningSubmissionState): TestSubmissionUpdateInfo.Running => {
+    const valueWithoutVisit: Omit<TestSubmissionUpdateInfo.Running, \\"_visit\\"> = {
+      value: value,
+      type: \\"running\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionUpdateInfo.Running;
+    castedValue._visit = (visitor) => visitor.running(value);
+    return castedValue;
+  },
 
-  stopped: (): TestSubmissionUpdateInfo.Stopped => ({
-    type: \\"stopped\\",
-    _visit: (visitor) => visitor.stopped(),
-  }),
+  stopped: (): TestSubmissionUpdateInfo.Stopped => {
+    const valueWithoutVisit: Omit<TestSubmissionUpdateInfo.Stopped, \\"_visit\\"> = {
+      type: \\"stopped\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionUpdateInfo.Stopped;
+    castedValue._visit = (visitor) => visitor.stopped();
+    return castedValue;
+  },
 
-  errored: (value: TraceApi.submission.ErrorInfo): TestSubmissionUpdateInfo.Errored => ({
-    value: value,
-    type: \\"errored\\",
-    _visit: (visitor) => visitor.errored(value),
-  }),
+  errored: (value: TraceApi.submission.ErrorInfo): TestSubmissionUpdateInfo.Errored => {
+    const valueWithoutVisit: Omit<TestSubmissionUpdateInfo.Errored, \\"_visit\\"> = {
+      value: value,
+      type: \\"errored\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionUpdateInfo.Errored;
+    castedValue._visit = (visitor) => visitor.errored(value);
+    return castedValue;
+  },
 
-  gradedTestCase: (value: TraceApi.submission.GradedTestCaseUpdate): TestSubmissionUpdateInfo.GradedTestCase => ({
-    ...value,
-    type: \\"gradedTestCase\\",
-    _visit: (visitor) => visitor.gradedTestCase(value),
-  }),
+  gradedTestCase: (value: TraceApi.submission.GradedTestCaseUpdate): TestSubmissionUpdateInfo.GradedTestCase => {
+    const valueWithoutVisit: Omit<TestSubmissionUpdateInfo.GradedTestCase, \\"_visit\\"> = {
+      ...value,
+      type: \\"gradedTestCase\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionUpdateInfo.GradedTestCase;
+    castedValue._visit = (visitor) => visitor.gradedTestCase(value);
+    return castedValue;
+  },
 
-  recordedTestCase: (value: TraceApi.submission.RecordedTestCaseUpdate): TestSubmissionUpdateInfo.RecordedTestCase => ({
-    ...value,
-    type: \\"recordedTestCase\\",
-    _visit: (visitor) => visitor.recordedTestCase(value),
-  }),
+  recordedTestCase: (value: TraceApi.submission.RecordedTestCaseUpdate): TestSubmissionUpdateInfo.RecordedTestCase => {
+    const valueWithoutVisit: Omit<TestSubmissionUpdateInfo.RecordedTestCase, \\"_visit\\"> = {
+      ...value,
+      type: \\"recordedTestCase\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionUpdateInfo.RecordedTestCase;
+    castedValue._visit = (visitor) => visitor.recordedTestCase(value);
+    return castedValue;
+  },
 
-  finished: (): TestSubmissionUpdateInfo.Finished => ({
-    type: \\"finished\\",
-    _visit: (visitor) => visitor.finished(),
-  }),
+  finished: (): TestSubmissionUpdateInfo.Finished => {
+    const valueWithoutVisit: Omit<TestSubmissionUpdateInfo.Finished, \\"_visit\\"> = {
+      type: \\"finished\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestSubmissionUpdateInfo.Finished;
+    castedValue._visit = (visitor) => visitor.finished();
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "TestSubmissionUpdateInfo.ts",
@@ -5881,34 +6645,74 @@ export declare namespace WorkspaceSubmissionStatus {
 }
 
 export const WorkspaceSubmissionStatus = {
-  stopped: (): WorkspaceSubmissionStatus.Stopped => ({
-    type: \\"stopped\\",
-    _visit: (visitor) => visitor.stopped(),
-  }),
+  stopped: (): WorkspaceSubmissionStatus.Stopped => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionStatus.Stopped, \\"_visit\\"> = {
+      type: \\"stopped\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionStatus.Stopped;
+    castedValue._visit = (visitor) => visitor.stopped();
+    return castedValue;
+  },
 
-  errored: (value: TraceApi.submission.ErrorInfo): WorkspaceSubmissionStatus.Errored => ({
-    value: value,
-    type: \\"errored\\",
-    _visit: (visitor) => visitor.errored(value),
-  }),
+  errored: (value: TraceApi.submission.ErrorInfo): WorkspaceSubmissionStatus.Errored => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionStatus.Errored, \\"_visit\\"> = {
+      value: value,
+      type: \\"errored\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionStatus.Errored;
+    castedValue._visit = (visitor) => visitor.errored(value);
+    return castedValue;
+  },
 
-  running: (value: TraceApi.submission.RunningSubmissionState): WorkspaceSubmissionStatus.Running => ({
-    value: value,
-    type: \\"running\\",
-    _visit: (visitor) => visitor.running(value),
-  }),
+  running: (value: TraceApi.submission.RunningSubmissionState): WorkspaceSubmissionStatus.Running => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionStatus.Running, \\"_visit\\"> = {
+      value: value,
+      type: \\"running\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionStatus.Running;
+    castedValue._visit = (visitor) => visitor.running(value);
+    return castedValue;
+  },
 
-  ran: (value: TraceApi.submission.WorkspaceRunDetails): WorkspaceSubmissionStatus.Ran => ({
-    ...value,
-    type: \\"ran\\",
-    _visit: (visitor) => visitor.ran(value),
-  }),
+  ran: (value: TraceApi.submission.WorkspaceRunDetails): WorkspaceSubmissionStatus.Ran => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionStatus.Ran, \\"_visit\\"> = {
+      ...value,
+      type: \\"ran\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionStatus.Ran;
+    castedValue._visit = (visitor) => visitor.ran(value);
+    return castedValue;
+  },
 
-  traced: (value: TraceApi.submission.WorkspaceRunDetails): WorkspaceSubmissionStatus.Traced => ({
-    ...value,
-    type: \\"traced\\",
-    _visit: (visitor) => visitor.traced(value),
-  }),
+  traced: (value: TraceApi.submission.WorkspaceRunDetails): WorkspaceSubmissionStatus.Traced => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionStatus.Traced, \\"_visit\\"> = {
+      ...value,
+      type: \\"traced\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionStatus.Traced;
+    castedValue._visit = (visitor) => visitor.traced(value);
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "WorkspaceSubmissionStatus.ts",
@@ -6012,44 +6816,100 @@ export declare namespace WorkspaceSubmissionUpdateInfo {
 }
 
 export const WorkspaceSubmissionUpdateInfo = {
-  running: (value: TraceApi.submission.RunningSubmissionState): WorkspaceSubmissionUpdateInfo.Running => ({
-    value: value,
-    type: \\"running\\",
-    _visit: (visitor) => visitor.running(value),
-  }),
+  running: (value: TraceApi.submission.RunningSubmissionState): WorkspaceSubmissionUpdateInfo.Running => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.Running, \\"_visit\\"> = {
+      value: value,
+      type: \\"running\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.Running;
+    castedValue._visit = (visitor) => visitor.running(value);
+    return castedValue;
+  },
 
-  ran: (value: TraceApi.submission.WorkspaceRunDetails): WorkspaceSubmissionUpdateInfo.Ran => ({
-    ...value,
-    type: \\"ran\\",
-    _visit: (visitor) => visitor.ran(value),
-  }),
+  ran: (value: TraceApi.submission.WorkspaceRunDetails): WorkspaceSubmissionUpdateInfo.Ran => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.Ran, \\"_visit\\"> = {
+      ...value,
+      type: \\"ran\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.Ran;
+    castedValue._visit = (visitor) => visitor.ran(value);
+    return castedValue;
+  },
 
-  stopped: (): WorkspaceSubmissionUpdateInfo.Stopped => ({
-    type: \\"stopped\\",
-    _visit: (visitor) => visitor.stopped(),
-  }),
+  stopped: (): WorkspaceSubmissionUpdateInfo.Stopped => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.Stopped, \\"_visit\\"> = {
+      type: \\"stopped\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.Stopped;
+    castedValue._visit = (visitor) => visitor.stopped();
+    return castedValue;
+  },
 
-  traced: (): WorkspaceSubmissionUpdateInfo.Traced => ({
-    type: \\"traced\\",
-    _visit: (visitor) => visitor.traced(),
-  }),
+  traced: (): WorkspaceSubmissionUpdateInfo.Traced => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.Traced, \\"_visit\\"> = {
+      type: \\"traced\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.Traced;
+    castedValue._visit = (visitor) => visitor.traced();
+    return castedValue;
+  },
 
-  tracedV2: (value: TraceApi.submission.WorkspaceTracedUpdate): WorkspaceSubmissionUpdateInfo.TracedV2 => ({
-    ...value,
-    type: \\"tracedV2\\",
-    _visit: (visitor) => visitor.tracedV2(value),
-  }),
+  tracedV2: (value: TraceApi.submission.WorkspaceTracedUpdate): WorkspaceSubmissionUpdateInfo.TracedV2 => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.TracedV2, \\"_visit\\"> = {
+      ...value,
+      type: \\"tracedV2\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.TracedV2;
+    castedValue._visit = (visitor) => visitor.tracedV2(value);
+    return castedValue;
+  },
 
-  errored: (value: TraceApi.submission.ErrorInfo): WorkspaceSubmissionUpdateInfo.Errored => ({
-    value: value,
-    type: \\"errored\\",
-    _visit: (visitor) => visitor.errored(value),
-  }),
+  errored: (value: TraceApi.submission.ErrorInfo): WorkspaceSubmissionUpdateInfo.Errored => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.Errored, \\"_visit\\"> = {
+      value: value,
+      type: \\"errored\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.Errored;
+    castedValue._visit = (visitor) => visitor.errored(value);
+    return castedValue;
+  },
 
-  finished: (): WorkspaceSubmissionUpdateInfo.Finished => ({
-    type: \\"finished\\",
-    _visit: (visitor) => visitor.finished(),
-  }),
+  finished: (): WorkspaceSubmissionUpdateInfo.Finished => {
+    const valueWithoutVisit: Omit<WorkspaceSubmissionUpdateInfo.Finished, \\"_visit\\"> = {
+      type: \\"finished\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as WorkspaceSubmissionUpdateInfo.Finished;
+    castedValue._visit = (visitor) => visitor.finished();
+    return castedValue;
+  },
 } as const;
 ",
                 "name": "WorkspaceSubmissionUpdateInfo.ts",
@@ -6771,17 +7631,33 @@ export declare namespace AssertCorrectnessCheck {
 }
 
 export const AssertCorrectnessCheck = {
-  deepEquality: (value: TraceApi.v2.problem.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => ({
-    ...value,
-    type: \\"deepEquality\\",
-    _visit: (visitor) => visitor.deepEquality(value),
-  }),
+  deepEquality: (value: TraceApi.v2.problem.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => {
+    const valueWithoutVisit: Omit<AssertCorrectnessCheck.DeepEquality, \\"_visit\\"> = {
+      ...value,
+      type: \\"deepEquality\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as AssertCorrectnessCheck.DeepEquality;
+    castedValue._visit = (visitor) => visitor.deepEquality(value);
+    return castedValue;
+  },
 
-  custom: (value: TraceApi.v2.problem.VoidFunctionDefinitionThatTakesActualResult): AssertCorrectnessCheck.Custom => ({
-    ...value,
-    type: \\"custom\\",
-    _visit: (visitor) => visitor.custom(value),
-  }),
+  custom: (value: TraceApi.v2.problem.VoidFunctionDefinitionThatTakesActualResult): AssertCorrectnessCheck.Custom => {
+    const valueWithoutVisit: Omit<AssertCorrectnessCheck.Custom, \\"_visit\\"> = {
+      ...value,
+      type: \\"custom\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as AssertCorrectnessCheck.Custom;
+    castedValue._visit = (visitor) => visitor.custom(value);
+    return castedValue;
+  },
 } as const;
 ",
                     "name": "AssertCorrectnessCheck.ts",
@@ -6876,17 +7752,33 @@ export declare namespace CustomFiles {
 }
 
 export const CustomFiles = {
-  basic: (value: TraceApi.v2.problem.BasicCustomFiles): CustomFiles.Basic => ({
-    ...value,
-    type: \\"basic\\",
-    _visit: (visitor) => visitor.basic(value),
-  }),
+  basic: (value: TraceApi.v2.problem.BasicCustomFiles): CustomFiles.Basic => {
+    const valueWithoutVisit: Omit<CustomFiles.Basic, \\"_visit\\"> = {
+      ...value,
+      type: \\"basic\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CustomFiles.Basic;
+    castedValue._visit = (visitor) => visitor.basic(value);
+    return castedValue;
+  },
 
-  custom: (value: Record<TraceApi.commons.Language.RawValue, TraceApi.v2.problem.Files>): CustomFiles.Custom => ({
-    value: value,
-    type: \\"custom\\",
-    _visit: (visitor) => visitor.custom(value),
-  }),
+  custom: (value: Record<TraceApi.commons.Language.RawValue, TraceApi.v2.problem.Files>): CustomFiles.Custom => {
+    const valueWithoutVisit: Omit<CustomFiles.Custom, \\"_visit\\"> = {
+      value: value,
+      type: \\"custom\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CustomFiles.Custom;
+    castedValue._visit = (visitor) => visitor.custom(value);
+    return castedValue;
+  },
 } as const;
 ",
                     "name": "CustomFiles.ts",
@@ -7022,25 +7914,49 @@ export declare namespace FunctionSignature {
 }
 
 export const FunctionSignature = {
-  void: (value: TraceApi.v2.problem.VoidFunctionSignature): FunctionSignature.Void => ({
-    ...value,
-    type: \\"void\\",
-    _visit: (visitor) => visitor.void(value),
-  }),
+  void: (value: TraceApi.v2.problem.VoidFunctionSignature): FunctionSignature.Void => {
+    const valueWithoutVisit: Omit<FunctionSignature.Void, \\"_visit\\"> = {
+      ...value,
+      type: \\"void\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as FunctionSignature.Void;
+    castedValue._visit = (visitor) => visitor.void(value);
+    return castedValue;
+  },
 
-  nonVoid: (value: TraceApi.v2.problem.NonVoidFunctionSignature): FunctionSignature.NonVoid => ({
-    ...value,
-    type: \\"nonVoid\\",
-    _visit: (visitor) => visitor.nonVoid(value),
-  }),
+  nonVoid: (value: TraceApi.v2.problem.NonVoidFunctionSignature): FunctionSignature.NonVoid => {
+    const valueWithoutVisit: Omit<FunctionSignature.NonVoid, \\"_visit\\"> = {
+      ...value,
+      type: \\"nonVoid\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as FunctionSignature.NonVoid;
+    castedValue._visit = (visitor) => visitor.nonVoid(value);
+    return castedValue;
+  },
 
   voidThatTakesActualResult: (
     value: TraceApi.v2.problem.VoidFunctionSignatureThatTakesActualResult
-  ): FunctionSignature.VoidThatTakesActualResult => ({
-    ...value,
-    type: \\"voidThatTakesActualResult\\",
-    _visit: (visitor) => visitor.voidThatTakesActualResult(value),
-  }),
+  ): FunctionSignature.VoidThatTakesActualResult => {
+    const valueWithoutVisit: Omit<FunctionSignature.VoidThatTakesActualResult, \\"_visit\\"> = {
+      ...value,
+      type: \\"voidThatTakesActualResult\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as FunctionSignature.VoidThatTakesActualResult;
+    castedValue._visit = (visitor) => visitor.voidThatTakesActualResult(value);
+    return castedValue;
+  },
 } as const;
 ",
                     "name": "FunctionSignature.ts",
@@ -7292,17 +8208,33 @@ export declare namespace TestCaseFunction {
 export const TestCaseFunction = {
   withActualResult: (
     value: TraceApi.v2.problem.TestCaseWithActualResultImplementation
-  ): TestCaseFunction.WithActualResult => ({
-    ...value,
-    type: \\"withActualResult\\",
-    _visit: (visitor) => visitor.withActualResult(value),
-  }),
+  ): TestCaseFunction.WithActualResult => {
+    const valueWithoutVisit: Omit<TestCaseFunction.WithActualResult, \\"_visit\\"> = {
+      ...value,
+      type: \\"withActualResult\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseFunction.WithActualResult;
+    castedValue._visit = (visitor) => visitor.withActualResult(value);
+    return castedValue;
+  },
 
-  custom: (value: TraceApi.v2.problem.VoidFunctionDefinition): TestCaseFunction.Custom => ({
-    ...value,
-    type: \\"custom\\",
-    _visit: (visitor) => visitor.custom(value),
-  }),
+  custom: (value: TraceApi.v2.problem.VoidFunctionDefinition): TestCaseFunction.Custom => {
+    const valueWithoutVisit: Omit<TestCaseFunction.Custom, \\"_visit\\"> = {
+      ...value,
+      type: \\"custom\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseFunction.Custom;
+    castedValue._visit = (visitor) => visitor.custom(value);
+    return castedValue;
+  },
 } as const;
 ",
                     "name": "TestCaseFunction.ts",
@@ -7386,17 +8318,33 @@ export declare namespace TestCaseImplementationDescriptionBoard {
 }
 
 export const TestCaseImplementationDescriptionBoard = {
-  html: (value: string): TestCaseImplementationDescriptionBoard.Html => ({
-    value: value,
-    type: \\"html\\",
-    _visit: (visitor) => visitor.html(value),
-  }),
+  html: (value: string): TestCaseImplementationDescriptionBoard.Html => {
+    const valueWithoutVisit: Omit<TestCaseImplementationDescriptionBoard.Html, \\"_visit\\"> = {
+      value: value,
+      type: \\"html\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationDescriptionBoard.Html;
+    castedValue._visit = (visitor) => visitor.html(value);
+    return castedValue;
+  },
 
-  paramId: (value: TraceApi.v2.problem.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => ({
-    value: value,
-    type: \\"paramId\\",
-    _visit: (visitor) => visitor.paramId(value),
-  }),
+  paramId: (value: TraceApi.v2.problem.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => {
+    const valueWithoutVisit: Omit<TestCaseImplementationDescriptionBoard.ParamId, \\"_visit\\"> = {
+      value: value,
+      type: \\"paramId\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationDescriptionBoard.ParamId;
+    castedValue._visit = (visitor) => visitor.paramId(value);
+    return castedValue;
+  },
 } as const;
 ",
                     "name": "TestCaseImplementationDescriptionBoard.ts",
@@ -7440,19 +8388,35 @@ export declare namespace TestCaseImplementationReference {
 }
 
 export const TestCaseImplementationReference = {
-  templateId: (value: TraceApi.v2.problem.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => ({
-    value: value,
-    type: \\"templateId\\",
-    _visit: (visitor) => visitor.templateId(value),
-  }),
+  templateId: (value: TraceApi.v2.problem.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => {
+    const valueWithoutVisit: Omit<TestCaseImplementationReference.TemplateId, \\"_visit\\"> = {
+      value: value,
+      type: \\"templateId\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationReference.TemplateId;
+    castedValue._visit = (visitor) => visitor.templateId(value);
+    return castedValue;
+  },
 
   implementation: (
     value: TraceApi.v2.problem.TestCaseImplementation
-  ): TestCaseImplementationReference.Implementation => ({
-    ...value,
-    type: \\"implementation\\",
-    _visit: (visitor) => visitor.implementation(value),
-  }),
+  ): TestCaseImplementationReference.Implementation => {
+    const valueWithoutVisit: Omit<TestCaseImplementationReference.Implementation, \\"_visit\\"> = {
+      ...value,
+      type: \\"implementation\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationReference.Implementation;
+    castedValue._visit = (visitor) => visitor.implementation(value);
+    return castedValue;
+  },
 } as const;
 ",
                     "name": "TestCaseImplementationReference.ts",
@@ -8058,19 +9022,35 @@ export declare namespace AssertCorrectnessCheck {
 }
 
 export const AssertCorrectnessCheck = {
-  deepEquality: (value: TraceApi.v2.v3.problem.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => ({
-    ...value,
-    type: \\"deepEquality\\",
-    _visit: (visitor) => visitor.deepEquality(value),
-  }),
+  deepEquality: (value: TraceApi.v2.v3.problem.DeepEqualityCorrectnessCheck): AssertCorrectnessCheck.DeepEquality => {
+    const valueWithoutVisit: Omit<AssertCorrectnessCheck.DeepEquality, \\"_visit\\"> = {
+      ...value,
+      type: \\"deepEquality\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as AssertCorrectnessCheck.DeepEquality;
+    castedValue._visit = (visitor) => visitor.deepEquality(value);
+    return castedValue;
+  },
 
   custom: (
     value: TraceApi.v2.v3.problem.VoidFunctionDefinitionThatTakesActualResult
-  ): AssertCorrectnessCheck.Custom => ({
-    ...value,
-    type: \\"custom\\",
-    _visit: (visitor) => visitor.custom(value),
-  }),
+  ): AssertCorrectnessCheck.Custom => {
+    const valueWithoutVisit: Omit<AssertCorrectnessCheck.Custom, \\"_visit\\"> = {
+      ...value,
+      type: \\"custom\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as AssertCorrectnessCheck.Custom;
+    castedValue._visit = (visitor) => visitor.custom(value);
+    return castedValue;
+  },
 } as const;
 ",
                         "name": "AssertCorrectnessCheck.ts",
@@ -8165,17 +9145,33 @@ export declare namespace CustomFiles {
 }
 
 export const CustomFiles = {
-  basic: (value: TraceApi.v2.v3.problem.BasicCustomFiles): CustomFiles.Basic => ({
-    ...value,
-    type: \\"basic\\",
-    _visit: (visitor) => visitor.basic(value),
-  }),
+  basic: (value: TraceApi.v2.v3.problem.BasicCustomFiles): CustomFiles.Basic => {
+    const valueWithoutVisit: Omit<CustomFiles.Basic, \\"_visit\\"> = {
+      ...value,
+      type: \\"basic\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CustomFiles.Basic;
+    castedValue._visit = (visitor) => visitor.basic(value);
+    return castedValue;
+  },
 
-  custom: (value: Record<TraceApi.commons.Language.RawValue, TraceApi.v2.v3.problem.Files>): CustomFiles.Custom => ({
-    value: value,
-    type: \\"custom\\",
-    _visit: (visitor) => visitor.custom(value),
-  }),
+  custom: (value: Record<TraceApi.commons.Language.RawValue, TraceApi.v2.v3.problem.Files>): CustomFiles.Custom => {
+    const valueWithoutVisit: Omit<CustomFiles.Custom, \\"_visit\\"> = {
+      value: value,
+      type: \\"custom\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as CustomFiles.Custom;
+    castedValue._visit = (visitor) => visitor.custom(value);
+    return castedValue;
+  },
 } as const;
 ",
                         "name": "CustomFiles.ts",
@@ -8313,25 +9309,49 @@ export declare namespace FunctionSignature {
 }
 
 export const FunctionSignature = {
-  void: (value: TraceApi.v2.v3.problem.VoidFunctionSignature): FunctionSignature.Void => ({
-    ...value,
-    type: \\"void\\",
-    _visit: (visitor) => visitor.void(value),
-  }),
+  void: (value: TraceApi.v2.v3.problem.VoidFunctionSignature): FunctionSignature.Void => {
+    const valueWithoutVisit: Omit<FunctionSignature.Void, \\"_visit\\"> = {
+      ...value,
+      type: \\"void\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as FunctionSignature.Void;
+    castedValue._visit = (visitor) => visitor.void(value);
+    return castedValue;
+  },
 
-  nonVoid: (value: TraceApi.v2.v3.problem.NonVoidFunctionSignature): FunctionSignature.NonVoid => ({
-    ...value,
-    type: \\"nonVoid\\",
-    _visit: (visitor) => visitor.nonVoid(value),
-  }),
+  nonVoid: (value: TraceApi.v2.v3.problem.NonVoidFunctionSignature): FunctionSignature.NonVoid => {
+    const valueWithoutVisit: Omit<FunctionSignature.NonVoid, \\"_visit\\"> = {
+      ...value,
+      type: \\"nonVoid\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as FunctionSignature.NonVoid;
+    castedValue._visit = (visitor) => visitor.nonVoid(value);
+    return castedValue;
+  },
 
   voidThatTakesActualResult: (
     value: TraceApi.v2.v3.problem.VoidFunctionSignatureThatTakesActualResult
-  ): FunctionSignature.VoidThatTakesActualResult => ({
-    ...value,
-    type: \\"voidThatTakesActualResult\\",
-    _visit: (visitor) => visitor.voidThatTakesActualResult(value),
-  }),
+  ): FunctionSignature.VoidThatTakesActualResult => {
+    const valueWithoutVisit: Omit<FunctionSignature.VoidThatTakesActualResult, \\"_visit\\"> = {
+      ...value,
+      type: \\"voidThatTakesActualResult\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as FunctionSignature.VoidThatTakesActualResult;
+    castedValue._visit = (visitor) => visitor.voidThatTakesActualResult(value);
+    return castedValue;
+  },
 } as const;
 ",
                         "name": "FunctionSignature.ts",
@@ -8583,17 +9603,33 @@ export declare namespace TestCaseFunction {
 export const TestCaseFunction = {
   withActualResult: (
     value: TraceApi.v2.v3.problem.TestCaseWithActualResultImplementation
-  ): TestCaseFunction.WithActualResult => ({
-    ...value,
-    type: \\"withActualResult\\",
-    _visit: (visitor) => visitor.withActualResult(value),
-  }),
+  ): TestCaseFunction.WithActualResult => {
+    const valueWithoutVisit: Omit<TestCaseFunction.WithActualResult, \\"_visit\\"> = {
+      ...value,
+      type: \\"withActualResult\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseFunction.WithActualResult;
+    castedValue._visit = (visitor) => visitor.withActualResult(value);
+    return castedValue;
+  },
 
-  custom: (value: TraceApi.v2.v3.problem.VoidFunctionDefinition): TestCaseFunction.Custom => ({
-    ...value,
-    type: \\"custom\\",
-    _visit: (visitor) => visitor.custom(value),
-  }),
+  custom: (value: TraceApi.v2.v3.problem.VoidFunctionDefinition): TestCaseFunction.Custom => {
+    const valueWithoutVisit: Omit<TestCaseFunction.Custom, \\"_visit\\"> = {
+      ...value,
+      type: \\"custom\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseFunction.Custom;
+    castedValue._visit = (visitor) => visitor.custom(value);
+    return castedValue;
+  },
 } as const;
 ",
                         "name": "TestCaseFunction.ts",
@@ -8677,17 +9713,33 @@ export declare namespace TestCaseImplementationDescriptionBoard {
 }
 
 export const TestCaseImplementationDescriptionBoard = {
-  html: (value: string): TestCaseImplementationDescriptionBoard.Html => ({
-    value: value,
-    type: \\"html\\",
-    _visit: (visitor) => visitor.html(value),
-  }),
+  html: (value: string): TestCaseImplementationDescriptionBoard.Html => {
+    const valueWithoutVisit: Omit<TestCaseImplementationDescriptionBoard.Html, \\"_visit\\"> = {
+      value: value,
+      type: \\"html\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationDescriptionBoard.Html;
+    castedValue._visit = (visitor) => visitor.html(value);
+    return castedValue;
+  },
 
-  paramId: (value: TraceApi.v2.v3.problem.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => ({
-    value: value,
-    type: \\"paramId\\",
-    _visit: (visitor) => visitor.paramId(value),
-  }),
+  paramId: (value: TraceApi.v2.v3.problem.ParameterId): TestCaseImplementationDescriptionBoard.ParamId => {
+    const valueWithoutVisit: Omit<TestCaseImplementationDescriptionBoard.ParamId, \\"_visit\\"> = {
+      value: value,
+      type: \\"paramId\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationDescriptionBoard.ParamId;
+    castedValue._visit = (visitor) => visitor.paramId(value);
+    return castedValue;
+  },
 } as const;
 ",
                         "name": "TestCaseImplementationDescriptionBoard.ts",
@@ -8731,19 +9783,35 @@ export declare namespace TestCaseImplementationReference {
 }
 
 export const TestCaseImplementationReference = {
-  templateId: (value: TraceApi.v2.v3.problem.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => ({
-    value: value,
-    type: \\"templateId\\",
-    _visit: (visitor) => visitor.templateId(value),
-  }),
+  templateId: (value: TraceApi.v2.v3.problem.TestCaseTemplateId): TestCaseImplementationReference.TemplateId => {
+    const valueWithoutVisit: Omit<TestCaseImplementationReference.TemplateId, \\"_visit\\"> = {
+      value: value,
+      type: \\"templateId\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationReference.TemplateId;
+    castedValue._visit = (visitor) => visitor.templateId(value);
+    return castedValue;
+  },
 
   implementation: (
     value: TraceApi.v2.v3.problem.TestCaseImplementation
-  ): TestCaseImplementationReference.Implementation => ({
-    ...value,
-    type: \\"implementation\\",
-    _visit: (visitor) => visitor.implementation(value),
-  }),
+  ): TestCaseImplementationReference.Implementation => {
+    const valueWithoutVisit: Omit<TestCaseImplementationReference.Implementation, \\"_visit\\"> = {
+      ...value,
+      type: \\"implementation\\",
+    };
+    Object.defineProperty(valueWithoutVisit, \\"_visit\\", {
+      enumerable: false,
+      writable: true,
+    });
+    const castedValue = valueWithoutVisit as TestCaseImplementationReference.Implementation;
+    castedValue._visit = (visitor) => visitor.implementation(value);
+    return castedValue;
+  },
 } as const;
 ",
                         "name": "TestCaseImplementationReference.ts",
@@ -10948,13 +12016,13 @@ export const Language: core.schemas.Schema<Language.Raw, TraceApi.commons.Langua
         }
         default: {
           return {
-            get: () => value,
+            toString: () => value,
             visit: (visitor) => visitor._other(value),
           };
         }
       }
     },
-    json: (value) => value.get(),
+    json: (value) => value.toString(),
   });
 
 export declare namespace Language {
@@ -11833,13 +12901,13 @@ export const MigrationStatus: core.schemas.Schema<MigrationStatus.Raw, TraceApi.
         }
         default: {
           return {
-            get: () => value,
+            toString: () => value,
             visit: (visitor) => visitor._other(value),
           };
         }
       }
     },
-    json: (value) => value.get(),
+    json: (value) => value.toString(),
   });
 
 export declare namespace MigrationStatus {
@@ -13308,13 +14376,13 @@ export const ExecutionSessionStatus: core.schemas.Schema<
       }
       default: {
         return {
-          get: () => value,
+          toString: () => value,
           visit: (visitor) => visitor._other(value),
         };
       }
     }
   },
-  json: (value) => value.get(),
+  json: (value) => value.toString(),
 });
 
 export declare namespace ExecutionSessionStatus {
@@ -13888,13 +14956,13 @@ export const RunningSubmissionState: core.schemas.Schema<
       }
       default: {
         return {
-          get: () => value,
+          toString: () => value,
           visit: (visitor) => visitor._other(value),
         };
       }
     }
   },
-  json: (value) => value.get(),
+  json: (value) => value.toString(),
 });
 
 export declare namespace RunningSubmissionState {
@@ -14541,13 +15609,13 @@ export const SubmissionTypeEnum: core.schemas.Schema<SubmissionTypeEnum.Raw, Tra
         }
         default: {
           return {
-            get: () => value,
+            toString: () => value,
             visit: (visitor) => visitor._other(value),
           };
         }
       }
     },
-    json: (value) => value.get(),
+    json: (value) => value.toString(),
   });
 
 export declare namespace SubmissionTypeEnum {

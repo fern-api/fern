@@ -75,30 +75,101 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
         file: SdkFile,
         { referenceToBuiltType }: { referenceToBuiltType: ts.TypeNode }
     ): ts.ArrowFunction {
+        const VALUE_WITHOUT_VISIT_VARIABLE_NAME = "valueWithoutVisit";
+        const CASTED_VALUE_VARIABLE_NAME = "castedValue";
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
             this.singleUnionType.getParametersForBuilder(file),
             referenceToBuiltType,
             undefined,
-            ts.factory.createParenthesizedExpression(
-                ts.factory.createObjectLiteralExpression(
-                    [
-                        ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(file),
-                        ts.factory.createPropertyAssignment(
-                            this.getDiscriminantKey(),
-                            ts.factory.createStringLiteral(this.getDiscriminantValue())
-                        ),
-                        ts.factory.createPropertyAssignment(
-                            UnionModule.VISIT_UTIL_PROPERTY_NAME,
+            ts.factory.createBlock(
+                [
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
+                                    undefined,
+                                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
+                                        referenceToBuiltType,
+                                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("_visit")),
+                                    ]),
+                                    ts.factory.createObjectLiteralExpression(
+                                        [
+                                            ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(file),
+                                            ts.factory.createPropertyAssignment(
+                                                this.getDiscriminantKey(),
+                                                ts.factory.createStringLiteral(this.getDiscriminantValue())
+                                            ),
+                                        ],
+                                        true
+                                    )
+                                ),
+                            ],
+                            ts.NodeFlags.Const
+                        )
+                    ),
+                    ts.factory.createExpressionStatement(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("Object"),
+                                ts.factory.createIdentifier("defineProperty")
+                            ),
+                            undefined,
+                            [
+                                ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
+                                ts.factory.createStringLiteral(UnionModule.VISIT_UTIL_PROPERTY_NAME),
+                                ts.factory.createObjectLiteralExpression(
+                                    [
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createIdentifier("enumerable"),
+                                            ts.factory.createFalse()
+                                        ),
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createIdentifier("writable"),
+                                            ts.factory.createTrue()
+                                        ),
+                                    ],
+                                    true
+                                ),
+                            ]
+                        )
+                    ),
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    CASTED_VALUE_VARIABLE_NAME,
+                                    undefined,
+                                    undefined,
+                                    ts.factory.createAsExpression(
+                                        ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
+                                        referenceToBuiltType
+                                    )
+                                ),
+                            ],
+                            ts.NodeFlags.Const
+                        )
+                    ),
+                    ts.factory.createExpressionStatement(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(CASTED_VALUE_VARIABLE_NAME),
+                                UnionModule.VISIT_UTIL_PROPERTY_NAME
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
                             UnionVisitHelper.getVisitMethod({
                                 visitorKey: this.getVisitorKey(),
                                 visitorArguments: this.singleUnionType.getVisitorArgumentsForBuilder(),
                             })
-                        ),
-                    ],
-                    true
-                )
+                        )
+                    ),
+                    ts.factory.createReturnStatement(ts.factory.createIdentifier(CASTED_VALUE_VARIABLE_NAME)),
+                ],
+                true
             )
         );
     }

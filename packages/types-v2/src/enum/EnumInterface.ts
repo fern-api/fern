@@ -7,7 +7,7 @@ import { EnumVisitHelper } from "./EnumVisitHelper";
 import { ParsedEnumValue } from "./ParsedEnumValue";
 
 export class EnumInterface extends AbstractEnumFileDeclaration {
-    public static GET_METHOD_NAME = "get";
+    public static GET_METHOD_NAME = "toString";
     public static VISIT_METHOD_NAME = "visit";
     private static RAW_VALUE_TYPE_PARAMETER_NAME = EnumModule.RAW_VALUE_TYPE_ALIAS_NAME;
 
