@@ -12,7 +12,7 @@ describe("no-duplicate-declarations", () => {
         expect(violations).toEqual([
             {
                 message: "C is already declared in this file",
-                nodePath: ["ids", "C"],
+                nodePath: ["types", "C"],
                 relativeFilepath: "1.yml",
                 severity: "error",
             },

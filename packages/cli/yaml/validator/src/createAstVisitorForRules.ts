@@ -44,7 +44,6 @@ export function createAstVisitorForRules({
     const astVisitor: FernAstVisitor = {
         ...createAstNodeVisitor("docs"),
         ...createAstNodeVisitor("import"),
-        ...createAstNodeVisitor("id"),
         ...createAstNodeVisitor("typeReference"),
         ...createAstNodeVisitor("typeDeclaration"),
         ...createAstNodeVisitor("typeName"),

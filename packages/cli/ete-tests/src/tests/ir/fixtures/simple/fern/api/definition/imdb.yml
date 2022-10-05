@@ -1,9 +1,8 @@
 imports:
   director: director.yml
-ids:
-  - MovieId
-  - ActorId
 types:
+  MovieId: string
+  ActorId: string
   Movie:
     properties:
       id: MovieId

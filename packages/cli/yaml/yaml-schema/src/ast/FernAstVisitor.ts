@@ -2,7 +2,6 @@ import {
     ErrorDeclarationSchema,
     HttpEndpointSchema,
     HttpServiceSchema,
-    IdSchema,
     TypeDeclarationSchema,
     TypeReferenceSchema,
 } from "../schemas";
@@ -15,7 +14,6 @@ export type FernAstVisitor<R = void | Promise<void>> = {
 export interface FernAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
-    id: IdSchema;
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
     typeReference: TypeReferenceSchema;
     typeName: string;

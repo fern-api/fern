@@ -35,7 +35,6 @@ export async function convertOpenApi(openapiFilepath: AbsoluteFilePath): Promise
     const convertedFernConfiguration: Required<RawSchemas.ServiceFileSchema> = {
         errors: {},
         imports: {},
-        ids: [],
         types: {},
         services: {},
     };

@@ -1,6 +1,5 @@
-ids:
-  - MovieId
 types:
+  MovieId: string
   Movie:
     properties:
       id: MovieId

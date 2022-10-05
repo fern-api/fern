@@ -1,5 +1,5 @@
 import { Workspace } from "@fern-api/workspace-loader";
-import { isRawAliasDefinition, RawSchemas, RAW_DEFAULT_ID_TYPE, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { isRawAliasDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
@@ -42,7 +42,7 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
-        const declaration = getDeclarationInFile(serviceFile, parsedReference.typeName);
+        const declaration = serviceFile.types?.[parsedReference.typeName];
         if (declaration == null) {
             return undefined;
         }
@@ -127,26 +127,4 @@ export class TypeResolverImpl implements TypeResolver {
             objectPath,
         };
     }
-}
-
-function getDeclarationInFile(
-    serviceFile: ServiceFileSchema,
-    typeName: string
-): RawSchemas.TypeDeclarationSchema | undefined {
-    const declaration = serviceFile.types?.[typeName];
-    if (declaration != null) {
-        return declaration;
-    }
-
-    const idDeclaration = serviceFile.ids?.find((id) =>
-        typeof id === "string" ? id === typeName : id.name === typeName
-    );
-    if (idDeclaration != null) {
-        if (typeof idDeclaration !== "string" && idDeclaration.type != null) {
-            return idDeclaration.type;
-        }
-        return RAW_DEFAULT_ID_TYPE;
-    }
-
-    return undefined;
 }
