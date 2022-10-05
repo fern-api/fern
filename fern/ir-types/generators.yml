@@ -3,8 +3,10 @@ draft:
     version: 0.0.197
     config:
       mode: model
+    mode: publish
   - name: fernapi/java-model
     version: 0.0.108
+    mode: publish
 release:
   - name: fernapi/java-model
     version: 0.0.108
