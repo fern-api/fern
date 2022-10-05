@@ -58,9 +58,6 @@ async function getTypesByFilepath(workspace: Workspace) {
         typesByFilepath[relativeFilepath] = typesForFile;
 
         await visitFernYamlAst(file, {
-            id: (id) => {
-                typesForFile.add(typeof id === "string" ? id : id.name);
-            },
             typeDeclaration: ({ typeName }) => {
                 typesForFile.add(typeName);
             },

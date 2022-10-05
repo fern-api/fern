@@ -4,7 +4,6 @@ import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
-import { convertId } from "./converters/convertId";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
@@ -40,16 +39,6 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
     const visitServiceFile = async ({ file, schema }: { file: FernFileContext; schema: ServiceFileSchema }) => {
         await visitObject(schema, {
             imports: noop,
-
-            ids: (ids) => {
-                if (ids == null) {
-                    return;
-                }
-
-                for (const id of ids) {
-                    intermediateRepresentation.types.push(convertId({ id, file, typeResolver }));
-                }
-            },
 
             types: (types) => {
                 if (types == null) {
