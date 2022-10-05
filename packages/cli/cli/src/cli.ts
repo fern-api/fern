@@ -69,13 +69,13 @@ async function runCli(cliContext: CliContext) {
             false,
             (yargs) =>
                 yargs
-                    .option("--version", {
+                    .option("version", {
                         describe: "Print current version",
                         alias: "v",
                     })
                     .version(false),
             (argv) => {
-                if (argv["--version"] != null) {
+                if (argv.version != null) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
                     cliContext.fail();
@@ -261,7 +261,7 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "ir",
-        "Compiles your Fern Definition",
+        false, // hide from help message
         (yargs) =>
             yargs
                 .option("output", {
