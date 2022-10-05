@@ -17,7 +17,10 @@ types:
   DeclaredErrorName:
     properties:
       fernFilepath: commons.FernFilepath
-      name: string
+      name:
+        docs: this is deprecated. use nameV2 instead
+        type: string
+      nameV2: commons.StringWithAllCasings
   HttpErrorConfiguration:
     properties:
       statusCode: integer

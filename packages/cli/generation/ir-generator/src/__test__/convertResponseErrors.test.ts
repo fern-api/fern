@@ -23,6 +23,13 @@ describe("convertResponseErrors", () => {
                 error: {
                     fernFilepath: convertToFernFilepath("path/to/commons"),
                     name: "UnauthorizedError",
+                    nameV2: {
+                        originalValue: "UnauthorizedError",
+                        camelCase: "unauthorizedError",
+                        pascalCase: "UnauthorizedError",
+                        snakeCase: "unauthorized_error",
+                        screamingSnakeCase: "UNAUTHORIZED_ERROR",
+                    },
                 },
             },
         ];

@@ -16,7 +16,11 @@ types:
   DeclaredTypeName:
     properties:
       fernFilepath: commons.FernFilepath
-      name: string
+      name:
+        docs: this is deprecated. use nameV2 instead
+        type: string
+      nameV2: commons.StringWithAllCasings
+
   Type:
     discriminant:
       value: _type

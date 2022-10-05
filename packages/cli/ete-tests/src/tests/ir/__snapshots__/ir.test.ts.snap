@@ -19,7 +19,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "DIRECTOR"
                     }
                 ],
-                "name": "Director"
+                "name": "Director",
+                "nameV2": {
+                    "originalValue": "Director",
+                    "camelCase": "director",
+                    "snakeCase": "director",
+                    "pascalCase": "Director",
+                    "screamingSnakeCase": "DIRECTOR"
+                }
             },
             "shape": {
                 "extends": [],
@@ -49,6 +56,13 @@ exports[`ir simple 1`] = `
                         },
                         "valueType": {
                             "name": "Age",
+                            "nameV2": {
+                                "originalValue": "Age",
+                                "camelCase": "age",
+                                "snakeCase": "age",
+                                "pascalCase": "Age",
+                                "screamingSnakeCase": "AGE"
+                            },
                             "fernFilepath": [
                                 {
                                     "originalValue": "director",
@@ -67,6 +81,13 @@ exports[`ir simple 1`] = `
             "referencedTypes": [
                 {
                     "name": "Age",
+                    "nameV2": {
+                        "originalValue": "Age",
+                        "camelCase": "age",
+                        "snakeCase": "age",
+                        "pascalCase": "Age",
+                        "screamingSnakeCase": "AGE"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "director",
@@ -90,7 +111,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "DIRECTOR"
                     }
                 ],
-                "name": "Age"
+                "name": "Age",
+                "nameV2": {
+                    "originalValue": "Age",
+                    "camelCase": "age",
+                    "snakeCase": "age",
+                    "pascalCase": "Age",
+                    "screamingSnakeCase": "AGE"
+                }
             },
             "shape": {
                 "aliasOf": {
@@ -116,7 +144,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "IMDB"
                     }
                 ],
-                "name": "MovieId"
+                "name": "MovieId",
+                "nameV2": {
+                    "originalValue": "MovieId",
+                    "camelCase": "movieId",
+                    "snakeCase": "movie_id",
+                    "pascalCase": "MovieId",
+                    "screamingSnakeCase": "MOVIE_ID"
+                }
             },
             "shape": {
                 "aliasOf": {
@@ -142,7 +177,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "IMDB"
                     }
                 ],
-                "name": "ActorId"
+                "name": "ActorId",
+                "nameV2": {
+                    "originalValue": "ActorId",
+                    "camelCase": "actorId",
+                    "snakeCase": "actor_id",
+                    "pascalCase": "ActorId",
+                    "screamingSnakeCase": "ACTOR_ID"
+                }
             },
             "shape": {
                 "aliasOf": {
@@ -168,7 +210,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "IMDB"
                     }
                 ],
-                "name": "Movie"
+                "name": "Movie",
+                "nameV2": {
+                    "originalValue": "Movie",
+                    "camelCase": "movie",
+                    "snakeCase": "movie",
+                    "pascalCase": "Movie",
+                    "screamingSnakeCase": "MOVIE"
+                }
             },
             "shape": {
                 "extends": [],
@@ -184,6 +233,13 @@ exports[`ir simple 1`] = `
                         },
                         "valueType": {
                             "name": "MovieId",
+                            "nameV2": {
+                                "originalValue": "MovieId",
+                                "camelCase": "movieId",
+                                "snakeCase": "movie_id",
+                                "pascalCase": "MovieId",
+                                "screamingSnakeCase": "MOVIE_ID"
+                            },
                             "fernFilepath": [
                                 {
                                     "originalValue": "imdb",
@@ -230,6 +286,13 @@ exports[`ir simple 1`] = `
             "referencedTypes": [
                 {
                     "name": "MovieId",
+                    "nameV2": {
+                        "originalValue": "MovieId",
+                        "camelCase": "movieId",
+                        "snakeCase": "movie_id",
+                        "pascalCase": "MovieId",
+                        "screamingSnakeCase": "MOVIE_ID"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "imdb",
@@ -253,7 +316,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "IMDB"
                     }
                 ],
-                "name": "CreateMovieRequest"
+                "name": "CreateMovieRequest",
+                "nameV2": {
+                    "originalValue": "CreateMovieRequest",
+                    "camelCase": "createMovieRequest",
+                    "snakeCase": "create_movie_request",
+                    "pascalCase": "CreateMovieRequest",
+                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                }
             },
             "shape": {
                 "extends": [],
@@ -308,7 +378,14 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "IMDB"
                     }
                 ],
-                "name": "Person"
+                "name": "Person",
+                "nameV2": {
+                    "originalValue": "Person",
+                    "camelCase": "person",
+                    "snakeCase": "person",
+                    "pascalCase": "Person",
+                    "screamingSnakeCase": "PERSON"
+                }
             },
             "shape": {
                 "discriminant": "type",
@@ -332,6 +409,13 @@ exports[`ir simple 1`] = `
                         },
                         "valueType": {
                             "name": "ActorId",
+                            "nameV2": {
+                                "originalValue": "ActorId",
+                                "camelCase": "actorId",
+                                "snakeCase": "actor_id",
+                                "pascalCase": "ActorId",
+                                "screamingSnakeCase": "ACTOR_ID"
+                            },
                             "fernFilepath": [
                                 {
                                     "originalValue": "imdb",
@@ -354,6 +438,13 @@ exports[`ir simple 1`] = `
                             },
                             "type": {
                                 "name": "ActorId",
+                                "nameV2": {
+                                    "originalValue": "ActorId",
+                                    "camelCase": "actorId",
+                                    "snakeCase": "actor_id",
+                                    "pascalCase": "ActorId",
+                                    "screamingSnakeCase": "ACTOR_ID"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -379,6 +470,13 @@ exports[`ir simple 1`] = `
                         },
                         "valueType": {
                             "name": "Director",
+                            "nameV2": {
+                                "originalValue": "Director",
+                                "camelCase": "director",
+                                "snakeCase": "director",
+                                "pascalCase": "Director",
+                                "screamingSnakeCase": "DIRECTOR"
+                            },
                             "fernFilepath": [
                                 {
                                     "originalValue": "director",
@@ -392,6 +490,13 @@ exports[`ir simple 1`] = `
                         },
                         "shape": {
                             "name": "Director",
+                            "nameV2": {
+                                "originalValue": "Director",
+                                "camelCase": "director",
+                                "snakeCase": "director",
+                                "pascalCase": "Director",
+                                "screamingSnakeCase": "DIRECTOR"
+                            },
                             "fernFilepath": [
                                 {
                                     "originalValue": "director",
@@ -426,6 +531,13 @@ exports[`ir simple 1`] = `
             "referencedTypes": [
                 {
                     "name": "ActorId",
+                    "nameV2": {
+                        "originalValue": "ActorId",
+                        "camelCase": "actorId",
+                        "snakeCase": "actor_id",
+                        "pascalCase": "ActorId",
+                        "screamingSnakeCase": "ACTOR_ID"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "imdb",
@@ -438,6 +550,13 @@ exports[`ir simple 1`] = `
                 },
                 {
                     "name": "Director",
+                    "nameV2": {
+                        "originalValue": "Director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "director",
@@ -450,6 +569,13 @@ exports[`ir simple 1`] = `
                 },
                 {
                     "name": "Age",
+                    "nameV2": {
+                        "originalValue": "Age",
+                        "camelCase": "age",
+                        "snakeCase": "age",
+                        "pascalCase": "Age",
+                        "screamingSnakeCase": "AGE"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "director",
@@ -473,12 +599,26 @@ exports[`ir simple 1`] = `
                         "screamingSnakeCase": "IMDB"
                     }
                 ],
-                "name": "RecursiveType"
+                "name": "RecursiveType",
+                "nameV2": {
+                    "originalValue": "RecursiveType",
+                    "camelCase": "recursiveType",
+                    "snakeCase": "recursive_type",
+                    "pascalCase": "RecursiveType",
+                    "screamingSnakeCase": "RECURSIVE_TYPE"
+                }
             },
             "shape": {
                 "extends": [
                     {
                         "name": "CreateMovieRequest",
+                        "nameV2": {
+                            "originalValue": "CreateMovieRequest",
+                            "camelCase": "createMovieRequest",
+                            "snakeCase": "create_movie_request",
+                            "pascalCase": "CreateMovieRequest",
+                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                        },
                         "fernFilepath": [
                             {
                                 "originalValue": "imdb",
@@ -504,6 +644,13 @@ exports[`ir simple 1`] = `
                             "container": {
                                 "list": {
                                     "name": "RecursiveType",
+                                    "nameV2": {
+                                        "originalValue": "RecursiveType",
+                                        "camelCase": "recursiveType",
+                                        "snakeCase": "recursive_type",
+                                        "pascalCase": "RecursiveType",
+                                        "screamingSnakeCase": "RECURSIVE_TYPE"
+                                    },
                                     "fernFilepath": [
                                         {
                                             "originalValue": "imdb",
@@ -526,6 +673,13 @@ exports[`ir simple 1`] = `
             "referencedTypes": [
                 {
                     "name": "CreateMovieRequest",
+                    "nameV2": {
+                        "originalValue": "CreateMovieRequest",
+                        "camelCase": "createMovieRequest",
+                        "snakeCase": "create_movie_request",
+                        "pascalCase": "CreateMovieRequest",
+                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "imdb",
@@ -538,6 +692,13 @@ exports[`ir simple 1`] = `
                 },
                 {
                     "name": "RecursiveType",
+                    "nameV2": {
+                        "originalValue": "RecursiveType",
+                        "camelCase": "recursiveType",
+                        "snakeCase": "recursive_type",
+                        "pascalCase": "RecursiveType",
+                        "screamingSnakeCase": "RECURSIVE_TYPE"
+                    },
                     "fernFilepath": [
                         {
                             "originalValue": "imdb",
@@ -555,6 +716,13 @@ exports[`ir simple 1`] = `
         {
             "name": {
                 "name": "NotFoundError",
+                "nameV2": {
+                    "originalValue": "NotFoundError",
+                    "camelCase": "notFoundError",
+                    "snakeCase": "not_found_error",
+                    "pascalCase": "NotFoundError",
+                    "screamingSnakeCase": "NOT_FOUND_ERROR"
+                },
                 "fernFilepath": [
                     {
                         "originalValue": "imdb",
@@ -631,6 +799,13 @@ exports[`ir simple 1`] = `
                         "request": {
                             "type": {
                                 "name": "CreateMovieRequest",
+                                "nameV2": {
+                                    "originalValue": "CreateMovieRequest",
+                                    "camelCase": "createMovieRequest",
+                                    "snakeCase": "create_movie_request",
+                                    "pascalCase": "CreateMovieRequest",
+                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -644,6 +819,13 @@ exports[`ir simple 1`] = `
                             },
                             "typeV2": {
                                 "name": "CreateMovieRequest",
+                                "nameV2": {
+                                    "originalValue": "CreateMovieRequest",
+                                    "camelCase": "createMovieRequest",
+                                    "snakeCase": "create_movie_request",
+                                    "pascalCase": "CreateMovieRequest",
+                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -659,6 +841,13 @@ exports[`ir simple 1`] = `
                         "response": {
                             "type": {
                                 "name": "MovieId",
+                                "nameV2": {
+                                    "originalValue": "MovieId",
+                                    "camelCase": "movieId",
+                                    "snakeCase": "movie_id",
+                                    "pascalCase": "MovieId",
+                                    "screamingSnakeCase": "MOVIE_ID"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -672,6 +861,13 @@ exports[`ir simple 1`] = `
                             },
                             "typeV2": {
                                 "name": "MovieId",
+                                "nameV2": {
+                                    "originalValue": "MovieId",
+                                    "camelCase": "movieId",
+                                    "snakeCase": "movie_id",
+                                    "pascalCase": "MovieId",
+                                    "screamingSnakeCase": "MOVIE_ID"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -728,6 +924,13 @@ exports[`ir simple 1`] = `
                                 },
                                 "valueType": {
                                     "name": "MovieId",
+                                    "nameV2": {
+                                        "originalValue": "MovieId",
+                                        "camelCase": "movieId",
+                                        "snakeCase": "movie_id",
+                                        "pascalCase": "MovieId",
+                                        "screamingSnakeCase": "MOVIE_ID"
+                                    },
                                     "fernFilepath": [
                                         {
                                             "originalValue": "imdb",
@@ -751,6 +954,13 @@ exports[`ir simple 1`] = `
                         "response": {
                             "type": {
                                 "name": "Movie",
+                                "nameV2": {
+                                    "originalValue": "Movie",
+                                    "camelCase": "movie",
+                                    "snakeCase": "movie",
+                                    "pascalCase": "Movie",
+                                    "screamingSnakeCase": "MOVIE"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -764,6 +974,13 @@ exports[`ir simple 1`] = `
                             },
                             "typeV2": {
                                 "name": "Movie",
+                                "nameV2": {
+                                    "originalValue": "Movie",
+                                    "camelCase": "movie",
+                                    "snakeCase": "movie",
+                                    "pascalCase": "Movie",
+                                    "screamingSnakeCase": "MOVIE"
+                                },
                                 "fernFilepath": [
                                     {
                                         "originalValue": "imdb",
@@ -780,6 +997,13 @@ exports[`ir simple 1`] = `
                             {
                                 "error": {
                                     "name": "NotFoundError",
+                                    "nameV2": {
+                                        "originalValue": "NotFoundError",
+                                        "camelCase": "notFoundError",
+                                        "snakeCase": "not_found_error",
+                                        "pascalCase": "NotFoundError",
+                                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                                    },
                                     "fernFilepath": [
                                         {
                                             "originalValue": "imdb",
