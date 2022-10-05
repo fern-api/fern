@@ -6,7 +6,7 @@ import pydantic
 class ProblemId(pydantic.BaseModel):
     __root__: str
 
-    def get_value(self) -> str:
+    def get_as_str(self) -> str:
         return self.__root__
 
     def json(self, **kwargs: typing.Any) -> str:

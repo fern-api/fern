@@ -1,8 +1,8 @@
-from fern_python.codegen import AST
 from fern_python.declaration_handler import DeclarationHandler
 from fern_python.generated import ir_types
 
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
+from .generate_alias import generate_alias
 from .generate_enum import generate_enum
 from .generate_union import generate_union
 
@@ -17,17 +17,7 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
         )
 
     def _generate_alias(self, alias: ir_types.AliasTypeDeclaration) -> None:
-        with FernAwarePydanticModel(
-            type_name=self._declaration.name,
-            context=self._context,
-        ) as pydantic_model:
-            pydantic_model.set_root_type(alias.alias_of)
-            pydantic_model.add_method(
-                name="get_value",
-                parameters=[],
-                return_type=alias.alias_of,
-                body=AST.CodeWriter("return self.__root__"),
-            )
+        generate_alias(name=self._declaration.name, alias=alias, context=self._context)
 
     def _generate_enum(self, enum: ir_types.EnumTypeDeclaration) -> None:
         generate_enum(

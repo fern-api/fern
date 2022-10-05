@@ -7,7 +7,7 @@ from fern_python.generated import ir_types
 def get_directories_for_fern_filepath(
     api_name: str, fern_filepath: ir_types.FernFilepath
 ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
-    fern_filepath_parts = fern_filepath.get_value()
+    fern_filepath_parts = fern_filepath.get_as_list()
     return tuple(
         Filepath.DirectoryFilepathPart(
             module_name=fern_filepath_part.snake_case,
