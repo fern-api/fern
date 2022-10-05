@@ -45,7 +45,13 @@ async function tryRunCli() {
         try {
             await runCli(cliContext);
         } catch (error) {
-            cliContext.fail("Failed to run", error);
+            // for yargs validation errors, don't show a log (yargs shows the help message by default)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            if ((error as any)?.name === "YError") {
+                cliContext.fail();
+            } else {
+                cliContext.fail("Failed to run", error);
+            }
         }
     }
 
@@ -57,6 +63,7 @@ async function runCli(cliContext: CliContext) {
         .scriptName(cliContext.environment.cliName)
         .version(false)
         .strict()
+        .exitProcess(false)
         .command(
             "$0",
             false,
@@ -185,12 +192,14 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("keepDocker", {
                     boolean: true,
                     default: false,
+                    hidden: true,
                     description:
                         "If true, Docker containers are not removed after generation. This is ignored for remote generation.",
                 })
                 .option("local", {
                     boolean: true,
                     default: false,
+                    hidden: true,
                     description: "If true, code is generated using Docker on this machine.",
                 })
                 .option("api", {
