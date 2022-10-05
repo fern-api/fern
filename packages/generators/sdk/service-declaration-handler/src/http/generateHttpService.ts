@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ServiceDeclarationHandler } from "../ServiceDeclarationHandler";
 import { Client } from "./Client";
@@ -13,13 +13,13 @@ export function generateHttpService({
     service: HttpService;
     serviceClassName: string;
     serviceFile: SdkFile;
-    withEndpoint: (endpointId: string, run: (args: ServiceDeclarationHandler.withEndpoint.Args) => void) => void;
+    withEndpoint: (endpoint: HttpEndpoint, run: (args: ServiceDeclarationHandler.withEndpoint.Args) => void) => void;
 }): void {
     const client = new Client({ service, serviceClassName });
     const endpoints: Endpoint[] = [];
 
     for (const irEndpoint of service.endpoints) {
-        withEndpoint(irEndpoint.id, ({ endpointFile, schemaFile }) => {
+        withEndpoint(irEndpoint, ({ endpointFile, schemaFile }) => {
             const endpoint = new Endpoint({
                 service,
                 endpoint: irEndpoint,

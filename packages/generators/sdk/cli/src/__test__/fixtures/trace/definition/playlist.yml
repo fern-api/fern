@@ -34,7 +34,7 @@ services:
           request: PlaylistCreateRequest
           response: Playlist
 
-        getPlaylists:
+        get_playlists:
           docs: Returns the user's playlists
           method: GET
           path: /all

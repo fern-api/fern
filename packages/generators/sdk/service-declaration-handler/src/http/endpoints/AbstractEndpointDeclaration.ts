@@ -1,5 +1,5 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpEndpointId, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 
@@ -24,7 +24,7 @@ export abstract class AbstractEndpointDeclaration {
             typeName,
             file,
             serviceName: this.service.name,
-            endpointId: this.endpoint.id,
+            endpoint: this.endpoint,
         });
     }
 
@@ -32,15 +32,15 @@ export abstract class AbstractEndpointDeclaration {
         typeName,
         file,
         serviceName,
-        endpointId,
+        endpoint,
     }: {
         typeName: string;
         file: SdkFile;
         serviceName: DeclaredServiceName;
-        endpointId: HttpEndpointId;
+        endpoint: HttpEndpoint;
     }): ts.EntityName {
         return ts.factory.createQualifiedName(
-            file.getReferenceToEndpointFile(serviceName, endpointId).entityName,
+            file.getReferenceToEndpointFile(serviceName, endpoint).entityName,
             typeName
         );
     }

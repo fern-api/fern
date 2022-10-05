@@ -59,7 +59,7 @@ export class EndpointErrorUnionGenerator extends AbstractUnionGenerator {
     protected override getReferenceToUnionType(file: SdkFile): ts.TypeNode {
         return EndpointError.getReferenceToType(file, {
             serviceName: this.serviceName,
-            endpointId: this.endpoint.id,
+            endpoint: this.endpoint,
         });
     }
 

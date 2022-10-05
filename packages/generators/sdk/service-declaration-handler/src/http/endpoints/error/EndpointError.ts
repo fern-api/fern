@@ -1,5 +1,5 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpointId } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ParsedSingleUnionType } from "@fern-typescript/types-v2";
@@ -34,14 +34,14 @@ export class EndpointError extends AbstractEndpointDeclaration {
 
     public static getReferenceToType(
         file: SdkFile,
-        { serviceName, endpointId }: { serviceName: DeclaredServiceName; endpointId: HttpEndpointId }
+        { serviceName, endpoint }: { serviceName: DeclaredServiceName; endpoint: HttpEndpoint }
     ): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(
             AbstractEndpointDeclaration.getReferenceToEndpointFileType({
                 typeName: EndpointError.TYPE_NAME,
                 file,
                 serviceName,
-                endpointId,
+                endpoint,
             })
         );
     }
@@ -53,7 +53,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
     public getReferenceToSchema(file: SdkFile): Zurg.Schema {
         return file.coreUtilities.zurg.Schema._fromExpression(
             ts.factory.createPropertyAccessExpression(
-                file.getReferenceToEndpointSchemaFile(this.service.name, this.endpoint.id).expression,
+                file.getReferenceToEndpointSchemaFile(this.service.name, this.endpoint).expression,
                 EndpointError.TYPE_NAME
             )
         );
@@ -62,7 +62,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
     public getReferenceToType(file: SdkFile): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
-                file.getReferenceToEndpointFile(this.service.name, this.endpoint.id).entityName,
+                file.getReferenceToEndpointFile(this.service.name, this.endpoint).entityName,
                 EndpointError.TYPE_NAME
             )
         );
@@ -72,7 +72,7 @@ export class EndpointError extends AbstractEndpointDeclaration {
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 ts.factory.createQualifiedName(
-                    file.getReferenceToEndpointSchemaFile(this.service.name, this.endpoint.id).entityName,
+                    file.getReferenceToEndpointSchemaFile(this.service.name, this.endpoint).entityName,
                     EndpointError.TYPE_NAME
                 ),
                 AbstractSchemaGenerator.RAW_TYPE_NAME

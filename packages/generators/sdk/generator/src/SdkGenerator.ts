@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { DeclaredTypeName, ShapeType } from "@fern-fern/ir-model/types";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
@@ -223,9 +224,9 @@ export class SdkGenerator {
 
     private createWithEndpoint(
         serviceName: DeclaredServiceName
-    ): (endpointId: string, run: (args: ServiceDeclarationHandler.withEndpoint.Args) => void) => void {
-        return (endpointId, run) => {
-            const endpointName: EndpointDeclarationReferencer.Name = { serviceName, endpointId };
+    ): (endpoint: HttpEndpoint, run: (args: ServiceDeclarationHandler.withEndpoint.Args) => void) => void {
+        return (endpoint, run) => {
+            const endpointName: EndpointDeclarationReferencer.Name = { serviceName, endpoint };
             this.withFile({
                 filepath: this.endpointDeclarationReferencer.getExportedFilepath(endpointName),
                 run: (endpointFile) => {
@@ -381,16 +382,16 @@ export class SdkGenerator {
                     addImport,
                     importStrategy: { type: "direct", alias: importAlias },
                 }),
-            getReferenceToEndpointFile: (serviceName, endpointId) =>
+            getReferenceToEndpointFile: (serviceName, endpoint) =>
                 this.endpointDeclarationReferencer.getReferenceToEndpoint({
-                    name: { serviceName, endpointId },
+                    name: { serviceName, endpoint },
                     referencedIn: sourceFile,
                     addImport,
                     importStrategy: { type: "fromRoot" },
                 }),
-            getReferenceToEndpointSchemaFile: (serviceName, endpointId) =>
+            getReferenceToEndpointSchemaFile: (serviceName, endpoint) =>
                 this.endpointSchemaDeclarationReferencer.getReferenceToEndpoint({
-                    name: { serviceName, endpointId },
+                    name: { serviceName, endpoint },
                     referencedIn: sourceFile,
                     addImport,
                     importStrategy: SCHEMA_IMPORT_STRATEGY,

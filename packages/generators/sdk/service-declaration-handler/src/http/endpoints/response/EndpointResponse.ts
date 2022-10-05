@@ -53,7 +53,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
         return ts.factory.createTypeReferenceNode("Promise", [
             ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(
-                    file.getReferenceToEndpointFile(this.service.name, this.endpoint.id).entityName,
+                    file.getReferenceToEndpointFile(this.service.name, this.endpoint).entityName,
                     EndpointResponse.TYPE_NAME
                 )
             ),

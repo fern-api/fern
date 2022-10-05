@@ -1,4 +1,5 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -13,7 +14,7 @@ export declare namespace EndpointDeclarationReferencer {
 
     export interface Name {
         serviceName: DeclaredServiceName;
-        endpointId: string;
+        endpoint: HttpEndpoint;
     }
 }
 export class EndpointDeclarationReferencer extends AbstractServiceDeclarationReferencer<EndpointDeclarationReferencer.Name> {
@@ -29,12 +30,12 @@ export class EndpointDeclarationReferencer extends AbstractServiceDeclarationRef
         };
     }
 
-    public getFilename({ endpointId }: EndpointDeclarationReferencer.Name): string {
-        return `${endpointId}.ts`;
+    public getFilename(name: EndpointDeclarationReferencer.Name): string {
+        return `${this.getNamespaceExport(name)}.ts`;
     }
 
-    private getNamespaceExport({ endpointId }: EndpointDeclarationReferencer.Name) {
-        return endpointId;
+    private getNamespaceExport({ endpoint }: EndpointDeclarationReferencer.Name) {
+        return endpoint.name.camelCase;
     }
 
     public getReferenceToEndpoint(
