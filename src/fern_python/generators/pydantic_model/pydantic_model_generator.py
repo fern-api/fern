@@ -1,5 +1,8 @@
+from generator_exec.resources.logging import GeneratorUpdate, LogLevel, LogUpdate
+
 from ...codegen import Project
 from ...generated import ir_types
+from ...generator_exec_wrapper import GeneratorExecWrapper
 from ...logger import Logger
 from .context import DeclarationHandlerContextImpl
 from .filepaths import get_filepath_for_type
@@ -12,9 +15,15 @@ class LoggerImpl(Logger):
 
 
 class PydanticModelGenerator:
-    def __init__(self, intermediate_representation: ir_types.IntermediateRepresentation, output_filepath: str):
+    def __init__(
+        self,
+        intermediate_representation: ir_types.IntermediateRepresentation,
+        output_filepath: str,
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ):
         self._intermediate_representation = intermediate_representation
         self._output_filepath = output_filepath
+        self._generator_exec_wrapper = generator_exec_wrapper
         self._logger = LoggerImpl()
 
     def run(self) -> None:
@@ -25,12 +34,11 @@ class PydanticModelGenerator:
                 self._generate_type(project, type=type_to_generate)
 
     def _generate_type(self, project: Project, type: ir_types.TypeDeclaration) -> None:
-        with project.source_file(
-            filepath=get_filepath_for_type(
-                type_name=type.name,
-                api_name=self._intermediate_representation.api_name,
-            )
-        ) as source_file:
+        filepath = filepath = get_filepath_for_type(
+            type_name=type.name,
+            api_name=self._intermediate_representation.api_name,
+        )
+        with project.source_file(filepath=filepath) as source_file:
             context = DeclarationHandlerContextImpl(
                 source_file=source_file,
                 intermediate_representation=self._intermediate_representation,
@@ -41,3 +49,6 @@ class PydanticModelGenerator:
                 logger=self._logger,
             )
             type_declaration_handler.run()
+            self._generator_exec_wrapper.send_update(
+                GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generated file {filepath}"))
+            )

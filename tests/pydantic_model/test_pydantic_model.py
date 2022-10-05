@@ -5,11 +5,11 @@ from glob import glob
 from pathlib import Path
 from typing import Set
 
+from generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
 from snapshottest.module import SnapshotTest  # type: ignore
 
 from fern_python.cli import main as cli
-from fern_python.generated import generator_exec
 
 
 def test_pydantic_model(snapshot: SnapshotTest, tmpdir: Path) -> None:
@@ -19,17 +19,17 @@ def test_pydantic_model(snapshot: SnapshotTest, tmpdir: Path) -> None:
     path_to_output = os.path.join(tmpdir, "output/")
     path_to_ir = os.path.join(path_to_fixture, "ir.json")
 
-    config = generator_exec.config.GeneratorConfig(
+    generator_config = config.GeneratorConfig(
         ir_filepath=path_to_ir,
-        output=generator_exec.config.GeneratorOutputConfig(path=path_to_output),
+        output=config.GeneratorOutputConfig(path=path_to_output, mode=config.OutputMode.factory.download_files()),
         workspace_name="ir",
         organization="fern",
         custom_config=None,
-        environment=generator_exec.config.GeneratorEnvironment.local(),
+        environment=config.GeneratorEnvironment.factory.local(),
     )
 
     with open(path_to_config_json, "w") as f:
-        f.write(config.json(by_alias=True))
+        f.write(generator_config.json(by_alias=True))
 
     symlink = Path(os.path.join(path_to_fixture, "generated"))
     if symlink.exists():
