@@ -31,6 +31,13 @@ describe("convertErrorDeclaration", () => {
             docs: undefined,
             name: {
                 name: "UnauthorizedError",
+                nameV2: {
+                    originalValue: "UnauthorizedError",
+                    camelCase: "unauthorizedError",
+                    pascalCase: "UnauthorizedError",
+                    snakeCase: "unauthorized_error",
+                    screamingSnakeCase: "UNAUTHORIZED_ERROR",
+                },
                 fernFilepath: convertToFernFilepath("path/to/other"),
             },
             discriminantValue: {
@@ -58,6 +65,13 @@ describe("convertErrorDeclaration", () => {
                         valueType: TypeReference.named({
                             fernFilepath: convertToFernFilepath("path/to/commons"),
                             name: "PostId",
+                            nameV2: {
+                                originalValue: "PostId",
+                                camelCase: "postId",
+                                pascalCase: "PostId",
+                                snakeCase: "post_id",
+                                screamingSnakeCase: "POST_ID",
+                            },
                         }),
                     },
                 ],
@@ -78,6 +92,13 @@ describe("convertErrorDeclaration", () => {
                         valueType: TypeReference.named({
                             fernFilepath: convertToFernFilepath("path/to/commons"),
                             name: "PostId",
+                            nameV2: {
+                                originalValue: "PostId",
+                                camelCase: "postId",
+                                pascalCase: "PostId",
+                                snakeCase: "post_id",
+                                screamingSnakeCase: "POST_ID",
+                            },
                         }),
                     },
                 ],

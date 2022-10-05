@@ -1,6 +1,7 @@
 import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext } from "../FernFileContext";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
+import { generateStringWithAllCasings } from "../utils/generateCasings";
 import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {
@@ -21,6 +22,7 @@ describe("parse inline types", () => {
                         TypeReference.named({
                             fernFilepath: convertToFernFilepath(dummyFilepath),
                             name: dummyTypeName,
+                            nameV2: generateStringWithAllCasings(dummyTypeName),
                         })
                     )
                 )
