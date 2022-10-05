@@ -40,9 +40,13 @@ types:
       value: _type
       name: type
     union:
-      container: ContainerType
+      container:
+        type: ContainerType
+        key: container
       named: ResolvedNamedType
-      primitive: PrimitiveType
+      primitive:
+        type: PrimitiveType
+        key: primitive
       unknown: {}
       void: {}
   ResolvedNamedType:
@@ -107,9 +111,13 @@ types:
       value: _type
       name: type
     union:
-      container: ContainerType
+      container:
+        type: ContainerType
+        key: container
       named: DeclaredTypeName
-      primitive: PrimitiveType
+      primitive:
+        type: PrimitiveType
+        key: primitive
       unknown: {}
       void: {}
   ContainerType:
@@ -117,10 +125,16 @@ types:
       value: _type
       name: type
     union:
-      list: TypeReference
+      list:
+        type: TypeReference
+        key: list
       map: MapType
-      optional: TypeReference
-      set: TypeReference
+      optional:
+        type: TypeReference
+        key: optional
+      set:
+        type: TypeReference
+        key: set
   MapType:
     properties:
       keyType: TypeReference
