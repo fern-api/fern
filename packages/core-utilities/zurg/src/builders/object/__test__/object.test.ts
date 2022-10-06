@@ -174,26 +174,19 @@ describe("object", () => {
     });
 
     describe("nullish properties", () => {
-        itSchema("optional properties are allowed to be omitted", object({ foo: string().optional() }), {
+        itSchema("missing properties are not added", object({ foo: string().optional() }), {
             raw: {},
             parsed: {},
         });
 
-        describe("parse()", () => {
-            itParse("undefined properties are dropped", object({ foo: string().optional() }), {
-                raw: { foo: undefined },
-                parsed: {},
-            });
-
-            itParse("null properties are dropped", object({ foo: string().optional() }), {
-                raw: { foo: null },
-                parsed: {},
-            });
+        itParse("undefined properties are not dropped", object({ foo: string().optional() }), {
+            raw: { foo: undefined },
+            parsed: { foo: undefined },
         });
 
-        describe("json()", () => {
-            itJson("undefined properties are dropped", object({ foo: string().optional() }), {
-                raw: {},
+        describe("parse()", () => {
+            itParse("null properties are not dropped", object({ foo: string().optional() }), {
+                raw: { foo: null },
                 parsed: { foo: undefined },
             });
         });

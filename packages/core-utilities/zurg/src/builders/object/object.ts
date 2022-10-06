@@ -52,9 +52,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 
                 if (property != null) {
                     const value = property.valueSchema.parse(rawPropertyValue);
-                    if (value != null) {
-                        parsed[property.parsedKey] = value;
-                    }
+                    parsed[property.parsedKey] = value;
                 } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
                     parsed[rawKey] = rawPropertyValue;
                 }
@@ -72,14 +70,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (schemaOrObjectProperty != null) {
                     if (isProperty(schemaOrObjectProperty)) {
                         const value = schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
-                        if (value != null) {
-                            raw[schemaOrObjectProperty.rawKey] = value;
-                        }
+                        raw[schemaOrObjectProperty.rawKey] = value;
                     } else {
                         const value = schemaOrObjectProperty.json(parsedPropertyValue);
-                        if (value != null) {
-                            raw[parsedKey] = value;
-                        }
+                        raw[parsedKey] = value;
                     }
                 } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
                     raw[parsedKey] = parsedPropertyValue;
