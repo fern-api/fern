@@ -9,7 +9,7 @@ from generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
 from snapshottest.module import SnapshotTest  # type: ignore
 
-from fern_python.cli import main as cli
+from fern_python.generators.pydantic_model.cli import main as cli
 
 
 def test_pydantic_model(snapshot: SnapshotTest, tmpdir: Path) -> None:

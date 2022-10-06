@@ -10,4 +10,4 @@ RUN pip3 install poetry &&\
   poetry config virtualenvs.create false &&\
   poetry install
 
-ENTRYPOINT ["python", "-m", "src.fern_python.cli"]
+ENTRYPOINT ["python", "-m", "src.fern_python.generators.pydantic_model.cli"]
