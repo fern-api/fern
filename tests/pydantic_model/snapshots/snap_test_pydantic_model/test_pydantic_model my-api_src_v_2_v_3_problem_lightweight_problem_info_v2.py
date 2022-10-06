@@ -1,6 +1,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 
 from ....commons.problem_id import ProblemId
 from ....commons.variable_type import VariableType
@@ -11,6 +12,74 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
     problem_name: str = pydantic.Field(alias="problemName")
     problem_version: int = pydantic.Field(alias="problemVersion")
     variable_types: typing.List[VariableType] = pydantic.Field(alias="variableTypes")
+
+    @pydantic.validator("problem_id")
+    def _validate_problem_id(cls, problem_id: ProblemId) -> ProblemId:
+        for validator in LightweightProblemInfoV2.Validators._problem_id:
+            problem_id = validator(problem_id)
+        return problem_id
+
+    @pydantic.validator("problem_name")
+    def _validate_problem_name(cls, problem_name: str) -> str:
+        for validator in LightweightProblemInfoV2.Validators._problem_name:
+            problem_name = validator(problem_name)
+        return problem_name
+
+    @pydantic.validator("problem_version")
+    def _validate_problem_version(cls, problem_version: int) -> int:
+        for validator in LightweightProblemInfoV2.Validators._problem_version:
+            problem_version = validator(problem_version)
+        return problem_version
+
+    @pydantic.validator("variable_types")
+    def _validate_variable_types(cls, variable_types: typing.List[VariableType]) -> typing.List[VariableType]:
+        for validator in LightweightProblemInfoV2.Validators._variable_types:
+            variable_types = validator(variable_types)
+        return variable_types
+
+    class Validators:
+        _problem_id: typing.ClassVar[ProblemId] = []
+        _problem_name: typing.ClassVar[str] = []
+        _problem_version: typing.ClassVar[int] = []
+        _variable_types: typing.ClassVar[typing.List[VariableType]] = []
+
+        @typing.overload
+        @classmethod
+        def field(problem_id: typing_extensions.Literal["problem_id"]) -> ProblemId:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(problem_name: typing_extensions.Literal["problem_name"]) -> str:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(problem_version: typing_extensions.Literal["problem_version"]) -> int:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(variable_types: typing_extensions.Literal["variable_types"]) -> typing.List[VariableType]:
+            ...
+
+        @classmethod
+        def field(cls, field_name: str) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if field_name == "problem_id":
+                    cls._problem_id.append(validator)  # type: ignore
+                elif field_name == "problem_name":
+                    cls._problem_name.append(validator)  # type: ignore
+                elif field_name == "problem_version":
+                    cls._problem_version.append(validator)  # type: ignore
+                elif field_name == "variable_types":
+                    cls._variable_types.append(validator)  # type: ignore
+                else:
+                    raise RuntimeError("Field does not exist on LightweightProblemInfoV2: " + field_name)
+
+                return validator
+
+            return validator  # type: ignore
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

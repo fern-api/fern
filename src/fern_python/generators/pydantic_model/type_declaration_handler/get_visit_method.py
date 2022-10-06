@@ -44,16 +44,18 @@ def get_visit_method(
 
     return AST.FunctionDeclaration(
         name="visit",
-        parameters=[
-            AST.FunctionParameter(
-                name=item.parameter_name,
-                type_hint=AST.TypeHint.callable(
-                    parameters=[item.visitor_argument.type] if item.visitor_argument is not None else [],
-                    return_type=AST.TypeHint(type=VISITOR_RETURN_TYPE),
-                ),
-            )
-            for item in items
-        ],
-        return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
+        signature=AST.FunctionSignature(
+            parameters=[
+                AST.FunctionParameter(
+                    name=item.parameter_name,
+                    type_hint=AST.TypeHint.callable(
+                        parameters=[item.visitor_argument.type] if item.visitor_argument is not None else [],
+                        return_type=AST.TypeHint(type=VISITOR_RETURN_TYPE),
+                    ),
+                )
+                for item in items
+            ],
+            return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
+        ),
         body=AST.CodeWriter(writevisitor_body),
     )

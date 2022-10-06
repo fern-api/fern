@@ -11,6 +11,7 @@ from fern_python.pydantic_codegen import (
     PydanticModel,
 )
 
+from ..custom_config import CustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
@@ -25,15 +26,20 @@ class UnionGenerator(AbstractTypeGenerator):
         name: ir_types.DeclaredTypeName,
         union: ir_types.UnionTypeDeclaration,
         context: DeclarationHandlerContext,
+        custom_config: CustomConfig,
     ):
-        super().__init__(name=name, context=context)
+        super().__init__(name=name, context=context, custom_config=custom_config)
         self._union = union
 
     def generate(self) -> None:
         factory_declaration = AST.ClassDeclaration(name="_Factory")
         factory = self._context.source_file.add_class_declaration(factory_declaration)
 
-        with FernAwarePydanticModel(type_name=self._name, context=self._context) as external_pydantic_model:
+        with FernAwarePydanticModel(
+            type_name=self._name,
+            context=self._context,
+            custom_config=self._custom_config,
+        ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
                 type_hint=AST.TypeHint(type=factory),
@@ -92,25 +98,27 @@ class UnionGenerator(AbstractTypeGenerator):
                     factory_declaration.add_method(
                         AST.FunctionDeclaration(
                             name=single_union_type.discriminant_value.snake_case,
-                            parameters=single_union_type.shape.visit(
-                                same_properties_as_object=lambda type_name: [
-                                    AST.FunctionParameter(
-                                        name=BUILDER_ARGUMENT_NAME,
-                                        type_hint=self._context.get_type_hint_for_type_reference(
-                                            ir_types.TypeReference.factory.named(type_name)
-                                        ),
-                                    )
-                                ],
-                                single_property=lambda property: [
-                                    AST.FunctionParameter(
-                                        name=BUILDER_ARGUMENT_NAME,
-                                        type_hint=self._context.get_type_hint_for_type_reference(property.type),
-                                    )
-                                ],
-                                no_properties=lambda: [],
-                            ),
-                            return_type=self._context.get_type_hint_for_type_reference(
-                                ir_types.TypeReference.factory.named(self._name)
+                            signature=AST.FunctionSignature(
+                                parameters=single_union_type.shape.visit(
+                                    same_properties_as_object=lambda type_name: [
+                                        AST.FunctionParameter(
+                                            name=BUILDER_ARGUMENT_NAME,
+                                            type_hint=self._context.get_type_hint_for_type_reference(
+                                                ir_types.TypeReference.factory.named(type_name)
+                                            ),
+                                        )
+                                    ],
+                                    single_property=lambda property: [
+                                        AST.FunctionParameter(
+                                            name=BUILDER_ARGUMENT_NAME,
+                                            type_hint=self._context.get_type_hint_for_type_reference(property.type),
+                                        )
+                                    ],
+                                    no_properties=lambda: None,
+                                ),
+                                return_type=self._context.get_type_hint_for_type_reference(
+                                    ir_types.TypeReference.factory.named(self._name)
+                                ),
                             ),
                             body=AST.CodeWriter(
                                 self._create_body_writer(
@@ -133,8 +141,9 @@ class UnionGenerator(AbstractTypeGenerator):
             external_pydantic_model.add_method_unsafe(
                 AST.FunctionDeclaration(
                     name="get_as_union",
-                    parameters=[],
-                    return_type=root_type,
+                    signature=AST.FunctionSignature(
+                        return_type=root_type,
+                    ),
                     body=AST.CodeWriter("return self.__root__"),
                 )
             )
@@ -170,21 +179,19 @@ class UnionGenerator(AbstractTypeGenerator):
 
             external_pydantic_model.set_root_type_unsafe(
                 is_forward_ref=True,
-                root_type=AST.TypeHint.annotated(
-                    type=root_type,
-                    annotation=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=PYDANTIC_FIELD_REFERENCE,
-                            kwargs=[
-                                (
-                                    "discriminator",
-                                    AST.Expression(
-                                        f'"{self._get_discriminant_attr_name()}"',
-                                    ),
-                                )
-                            ],
-                        )
-                    ),
+                root_type=root_type,
+                annotation=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=PYDANTIC_FIELD_REFERENCE,
+                        kwargs=[
+                            (
+                                "discriminator",
+                                AST.Expression(
+                                    f'"{self._get_discriminant_attr_name()}"',
+                                ),
+                            )
+                        ],
+                    )
                 ),
             )
 

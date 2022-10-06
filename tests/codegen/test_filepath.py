@@ -9,4 +9,4 @@ def test_filepath_to_str() -> None:
         ),
         file=Filepath.FilepathPart(module_name="file"),
     )
-    assert filepath.to_str() == "dir1/dir2/file.py"
+    assert str(filepath) == "dir1/dir2/file.py"

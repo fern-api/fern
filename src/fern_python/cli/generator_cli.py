@@ -36,3 +36,4 @@ class GeneratorCli:
                     ExitStatusUpdate.factory.error(ErrorExitStatusUpdate(message=str(e)))
                 )
             )
+            raise e

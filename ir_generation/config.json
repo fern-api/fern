@@ -1,7 +1,10 @@
 {
   "irFilepath": "/Users/zachkirsch/Dropbox/Mac/Documents/fern-python/ir_generation/ir.json",
   "output": {
-    "path": "/Users/zachkirsch/Dropbox/Mac/Documents/fern-python/ir_generation/output"
+    "path": "/Users/zachkirsch/Dropbox/Mac/Documents/fern-python/ir_generation/output",
+    "mode": {
+      "type": "downloadFiles"
+    }
   },
   "publish": null,
   "workspaceName": "ir",

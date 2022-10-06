@@ -55,6 +55,60 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[
+                _SubmissionStatusForTestCase.Graded,
+                _SubmissionStatusForTestCase.GradedV2,
+                _SubmissionStatusForTestCase.Traced,
+            ],
+            values.get("__root__"),
+        )
+        for validator in SubmissionStatusForTestCase.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [
+                        typing.Union[
+                            _SubmissionStatusForTestCase.Graded,
+                            _SubmissionStatusForTestCase.GradedV2,
+                            _SubmissionStatusForTestCase.Traced,
+                        ]
+                    ],
+                    typing.Union[
+                        _SubmissionStatusForTestCase.Graded,
+                        _SubmissionStatusForTestCase.GradedV2,
+                        _SubmissionStatusForTestCase.Traced,
+                    ],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def validate(
+            cls,
+            validator: typing.Callable[
+                [
+                    typing.Union[
+                        _SubmissionStatusForTestCase.Graded,
+                        _SubmissionStatusForTestCase.GradedV2,
+                        _SubmissionStatusForTestCase.Traced,
+                    ]
+                ],
+                typing.Union[
+                    _SubmissionStatusForTestCase.Graded,
+                    _SubmissionStatusForTestCase.GradedV2,
+                    _SubmissionStatusForTestCase.Traced,
+                ],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)

@@ -19,6 +19,8 @@ from .nodes import (
     FunctionDeclaration,
     FunctionInvocation,
     FunctionParameter,
+    FunctionSignature,
+    ReferenceNode,
     ReferencingCodeWriter,
     TypeAliasDeclaration,
     TypeHint,
@@ -64,4 +66,6 @@ __all__ = [
     "QualifiedName",
     "ClassInstantiation",
     "ClassMethodDecorator",
+    "ReferenceNode",
+    "FunctionSignature",
 ]

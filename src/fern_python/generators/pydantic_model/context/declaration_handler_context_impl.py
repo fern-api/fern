@@ -12,7 +12,11 @@ from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConver
 
 
 class DeclarationHandlerContextImpl(DeclarationHandlerContext):
-    def __init__(self, source_file: SourceFile, intermediate_representation: ir_types.IntermediateRepresentation):
+    def __init__(
+        self,
+        source_file: SourceFile,
+        intermediate_representation: ir_types.IntermediateRepresentation,
+    ):
         super().__init__(source_file=source_file)
 
         type_name_to_class_reference_converter = TypeNameToClassReferenceConverter(

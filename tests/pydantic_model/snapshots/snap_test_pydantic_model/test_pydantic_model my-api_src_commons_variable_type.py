@@ -109,6 +109,95 @@ class VariableType(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[
+                _VariableType.IntegerType,
+                _VariableType.DoubleType,
+                _VariableType.BooleanType,
+                _VariableType.StringType,
+                _VariableType.CharType,
+                _VariableType.ListType,
+                _VariableType.MapType,
+                _VariableType.BinaryTreeType,
+                _VariableType.SinglyLinkedListType,
+                _VariableType.DoublyLinkedListType,
+            ],
+            values.get("__root__"),
+        )
+        for validator in VariableType.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [
+                        typing.Union[
+                            _VariableType.IntegerType,
+                            _VariableType.DoubleType,
+                            _VariableType.BooleanType,
+                            _VariableType.StringType,
+                            _VariableType.CharType,
+                            _VariableType.ListType,
+                            _VariableType.MapType,
+                            _VariableType.BinaryTreeType,
+                            _VariableType.SinglyLinkedListType,
+                            _VariableType.DoublyLinkedListType,
+                        ]
+                    ],
+                    typing.Union[
+                        _VariableType.IntegerType,
+                        _VariableType.DoubleType,
+                        _VariableType.BooleanType,
+                        _VariableType.StringType,
+                        _VariableType.CharType,
+                        _VariableType.ListType,
+                        _VariableType.MapType,
+                        _VariableType.BinaryTreeType,
+                        _VariableType.SinglyLinkedListType,
+                        _VariableType.DoublyLinkedListType,
+                    ],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def validate(
+            cls,
+            validator: typing.Callable[
+                [
+                    typing.Union[
+                        _VariableType.IntegerType,
+                        _VariableType.DoubleType,
+                        _VariableType.BooleanType,
+                        _VariableType.StringType,
+                        _VariableType.CharType,
+                        _VariableType.ListType,
+                        _VariableType.MapType,
+                        _VariableType.BinaryTreeType,
+                        _VariableType.SinglyLinkedListType,
+                        _VariableType.DoublyLinkedListType,
+                    ]
+                ],
+                typing.Union[
+                    _VariableType.IntegerType,
+                    _VariableType.DoubleType,
+                    _VariableType.BooleanType,
+                    _VariableType.StringType,
+                    _VariableType.CharType,
+                    _VariableType.ListType,
+                    _VariableType.MapType,
+                    _VariableType.BinaryTreeType,
+                    _VariableType.SinglyLinkedListType,
+                    _VariableType.DoublyLinkedListType,
+                ],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)

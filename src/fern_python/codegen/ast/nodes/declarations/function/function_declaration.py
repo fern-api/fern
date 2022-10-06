@@ -1,10 +1,16 @@
-from typing import Sequence, Set
+from typing import Optional, Sequence, Set
 
 from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
-from ....references import Reference
+from ....references import Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
-from ...type_hint import TypeHint
-from .function_parameter import FunctionParameter
+from .function_signature import FunctionSignature
+
+OVERLOAD_DECORATOR = Reference(
+    qualified_name_excluding_import=("overload",),
+    import_=ReferenceImport(
+        module=Module.built_in("typing"),
+    ),
+)
 
 
 class FunctionDeclaration(AstNode):
@@ -12,66 +18,65 @@ class FunctionDeclaration(AstNode):
         self,
         *,
         name: str,
-        parameters: Sequence[FunctionParameter],
-        include_args: bool = False,
-        include_kwargs: bool = False,
-        return_type: TypeHint,
+        signature: FunctionSignature,
         body: CodeWriter,
-        decorators: Sequence[Reference] = None,
+        overloads: Sequence[FunctionSignature] = None,
+        decorators: Sequence[AstNode] = None,
     ):
         self.name = name
-        self.parameters = parameters
-        self.return_type = return_type
+        self.signature = signature
+        self.overloads = overloads or []
         self.body = body
         self.decorators = decorators or []
-        self.include_args = include_args
-        self.include_kwargs = include_kwargs
 
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set()
-        for parameter in self.parameters:
-            references.update(parameter.get_references())
-        references.update(self.return_type.get_references())
+        references.add(OVERLOAD_DECORATOR)
+        references.update(self.signature.get_references())
+        for overload in self.overloads:
+            references.update(overload.get_references())
         references.update(self.body.get_references())
-        references.update(self.decorators)
+        for decorator in self.decorators:
+            references.update(decorator.get_references())
         return references
 
     def get_generics(self) -> Set[GenericTypeVar]:
         generics: Set[GenericTypeVar] = set()
-        for parameter in self.parameters:
-            generics.update(parameter.get_generics())
-        generics.update(self.return_type.get_generics())
+        generics.update(self.signature.get_generics())
+        for overload in self.overloads:
+            generics.update(overload.get_generics())
         generics.update(self.body.get_generics())
+        for decorator in self.decorators:
+            generics.update(decorator.get_generics())
         return generics
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+        for overload in self.overloads:
+            self._write(writer, reference_resolver, signature=overload, body=None)
+        self._write(writer, reference_resolver, signature=self.signature, body=self.body)
+
+    def _write(
+        self,
+        writer: NodeWriter,
+        reference_resolver: ReferenceResolver,
+        signature: FunctionSignature,
+        body: Optional[CodeWriter],
+    ) -> None:
+        if body is None:
+            writer.write_line("@" + reference_resolver.resolve_reference(OVERLOAD_DECORATOR))
+
         # apply decorators in reverse order, since they are executed by Python
         # from bottom to top
         for decorator in reversed(self.decorators):
-            writer.write_line(f"@{reference_resolver.resolve_reference(decorator)}")
+            writer.write("@")
+            writer.write_node(decorator)
+            writer.write_line()
 
-        writer.write(f"def {self.name}(")
-        just_wrote_parameter = False
-        for i, parameter in enumerate(self.parameters):
-            if just_wrote_parameter:
-                writer.write(", ")
-            writer.write_node(parameter)
-            just_wrote_parameter = True
-        if self.include_args:
-            if just_wrote_parameter:
-                writer.write(", ")
-            writer.write("*args")
-            just_wrote_parameter = True
-        if self.include_kwargs:
-            if just_wrote_parameter:
-                writer.write(", ")
-            writer.write("**kwargs: ")
-            writer.write_node(TypeHint.any())
-            just_wrote_parameter = True
-        writer.write(") -> ")
-        writer.write_node(self.return_type)
-        writer.write(":")
-
+        writer.write(f"def {self.name}")
+        writer.write_node(signature)
         with writer.indent():
-            self.body.write(writer=writer, reference_resolver=reference_resolver)
+            if body is None:
+                writer.write("...")
+            else:
+                body.write(writer=writer, reference_resolver=reference_resolver)
         writer.write_newline_if_last_line_not()

@@ -37,6 +37,35 @@ class CreateProblemResponse(pydantic.BaseModel):
         typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error], pydantic.Field(discriminator="type")
     ]
 
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error], values.get("__root__")
+        )
+        for validator in CreateProblemResponse.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]],
+                    typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def validate(
+            cls,
+            validator: typing.Callable[
+                [typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]],
+                typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)

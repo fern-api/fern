@@ -64,6 +64,60 @@ class SingleUnionTypeProperties(pydantic.BaseModel):
         pydantic.Field(discriminator="properties_type"),
     ]
 
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[
+                _SingleUnionTypeProperties.SamePropertiesAsObject,
+                _SingleUnionTypeProperties.SingleProperty,
+                _SingleUnionTypeProperties.NoProperties,
+            ],
+            values.get("__root__"),
+        )
+        for validator in SingleUnionTypeProperties.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [
+                        typing.Union[
+                            _SingleUnionTypeProperties.SamePropertiesAsObject,
+                            _SingleUnionTypeProperties.SingleProperty,
+                            _SingleUnionTypeProperties.NoProperties,
+                        ]
+                    ],
+                    typing.Union[
+                        _SingleUnionTypeProperties.SamePropertiesAsObject,
+                        _SingleUnionTypeProperties.SingleProperty,
+                        _SingleUnionTypeProperties.NoProperties,
+                    ],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def add_validator(
+            cls,
+            validator: typing.Callable[
+                [
+                    typing.Union[
+                        _SingleUnionTypeProperties.SamePropertiesAsObject,
+                        _SingleUnionTypeProperties.SingleProperty,
+                        _SingleUnionTypeProperties.NoProperties,
+                    ]
+                ],
+                typing.Union[
+                    _SingleUnionTypeProperties.SamePropertiesAsObject,
+                    _SingleUnionTypeProperties.SingleProperty,
+                    _SingleUnionTypeProperties.NoProperties,
+                ],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)

@@ -21,7 +21,7 @@ class Filepath:
     def to_module(self) -> AST.Module:
         return AST.Module.local(*(part.module_name for part in self.directories + (self.file,)))
 
-    def to_str(self) -> str:
+    def __str__(self) -> str:
         parts = [dir.module_name for dir in self.directories]
         parts.append(self.file.module_name + ".py")
         return os.path.join(*parts)

@@ -4,7 +4,8 @@ from typing import List, Sequence, Set
 
 from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
 from ....references import ClassReference, Reference
-from ..function import FunctionDeclaration, FunctionParameter
+from ...reference_node import ReferenceNode
+from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
 from ..variable import VariableDeclaration
 from .class_constructor import ClassConstructor
 from .class_method_decorator import ClassMethodDecorator
@@ -18,41 +19,42 @@ class ClassDeclaration(AstNode):
         self.statements: List[AstNode] = []
         self.ghost_references: Set[Reference] = set()
 
-    def add_attribute(self, variable_declaration: VariableDeclaration) -> None:
+    def add_class_var(self, variable_declaration: VariableDeclaration) -> None:
         self.statements.append(variable_declaration)
 
     def add_method(
         self,
         declaration: FunctionDeclaration,
         decorator: ClassMethodDecorator = None,
+        no_implicit_decorator: bool = False,
     ) -> FunctionDeclaration:
-        """
-            - adds 'self' parameter to signature if not static
-            - adds @staticmethod decorator if static
-        returns new declaration
-        """
         parameters = (
-            declaration.parameters
+            declaration.signature.parameters
             if decorator == ClassMethodDecorator.STATIC
-            else [FunctionParameter(name="cls")] + list(declaration.parameters)
+            else [FunctionParameter(name="cls")] + list(declaration.signature.parameters)
             if decorator == ClassMethodDecorator.CLASS_METHOD
-            else [FunctionParameter(name="self")] + list(declaration.parameters)
+            else [FunctionParameter(name="self")] + list(declaration.signature.parameters)
         )
 
         decorators = (
-            list(declaration.decorators) + [Reference(qualified_name_excluding_import=(decorator.value,))]
-            if decorator is not None
+            list(declaration.decorators)
+            + [ReferenceNode(Reference(qualified_name_excluding_import=(decorator.value,)))]
+            if decorator is not None and not no_implicit_decorator
             else declaration.decorators
         )
 
         declaration = FunctionDeclaration(
             name=declaration.name,
-            parameters=parameters,
-            return_type=declaration.return_type,
+            signature=FunctionSignature(
+                parameters=parameters,
+                named_parameters=declaration.signature.named_parameters,
+                return_type=declaration.signature.return_type,
+                include_args=declaration.signature.include_args,
+                include_kwargs=declaration.signature.include_kwargs,
+            ),
             body=declaration.body,
             decorators=decorators,
-            include_args=declaration.include_args,
-            include_kwargs=declaration.include_kwargs,
+            overloads=declaration.overloads,
         )
 
         self.statements.append(declaration)

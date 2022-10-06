@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import typing
 
 import pydantic
@@ -8,6 +10,23 @@ class ProblemId(pydantic.BaseModel):
 
     def get_as_str(self) -> str:
         return self.__root__
+
+    def from_str(self, value: str) -> ProblemId:
+        return ProblemId(__root__=value)
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(str, values.get("__root__"))
+        for validator in ProblemId.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+
+        @classmethod
+        def validate(cls, validator: typing.Callable[[str], str]) -> None:
+            cls._validators.append(validator)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

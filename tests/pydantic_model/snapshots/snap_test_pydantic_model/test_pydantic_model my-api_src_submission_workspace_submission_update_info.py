@@ -96,6 +96,80 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
         pydantic.Field(discriminator="type"),
     ]
 
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[
+                _WorkspaceSubmissionUpdateInfo.Running,
+                _WorkspaceSubmissionUpdateInfo.Ran,
+                _WorkspaceSubmissionUpdateInfo.Stopped,
+                _WorkspaceSubmissionUpdateInfo.Traced,
+                _WorkspaceSubmissionUpdateInfo.TracedV2,
+                _WorkspaceSubmissionUpdateInfo.Errored,
+                _WorkspaceSubmissionUpdateInfo.Finished,
+            ],
+            values.get("__root__"),
+        )
+        for validator in WorkspaceSubmissionUpdateInfo.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [
+                        typing.Union[
+                            _WorkspaceSubmissionUpdateInfo.Running,
+                            _WorkspaceSubmissionUpdateInfo.Ran,
+                            _WorkspaceSubmissionUpdateInfo.Stopped,
+                            _WorkspaceSubmissionUpdateInfo.Traced,
+                            _WorkspaceSubmissionUpdateInfo.TracedV2,
+                            _WorkspaceSubmissionUpdateInfo.Errored,
+                            _WorkspaceSubmissionUpdateInfo.Finished,
+                        ]
+                    ],
+                    typing.Union[
+                        _WorkspaceSubmissionUpdateInfo.Running,
+                        _WorkspaceSubmissionUpdateInfo.Ran,
+                        _WorkspaceSubmissionUpdateInfo.Stopped,
+                        _WorkspaceSubmissionUpdateInfo.Traced,
+                        _WorkspaceSubmissionUpdateInfo.TracedV2,
+                        _WorkspaceSubmissionUpdateInfo.Errored,
+                        _WorkspaceSubmissionUpdateInfo.Finished,
+                    ],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def validate(
+            cls,
+            validator: typing.Callable[
+                [
+                    typing.Union[
+                        _WorkspaceSubmissionUpdateInfo.Running,
+                        _WorkspaceSubmissionUpdateInfo.Ran,
+                        _WorkspaceSubmissionUpdateInfo.Stopped,
+                        _WorkspaceSubmissionUpdateInfo.Traced,
+                        _WorkspaceSubmissionUpdateInfo.TracedV2,
+                        _WorkspaceSubmissionUpdateInfo.Errored,
+                        _WorkspaceSubmissionUpdateInfo.Finished,
+                    ]
+                ],
+                typing.Union[
+                    _WorkspaceSubmissionUpdateInfo.Running,
+                    _WorkspaceSubmissionUpdateInfo.Ran,
+                    _WorkspaceSubmissionUpdateInfo.Stopped,
+                    _WorkspaceSubmissionUpdateInfo.Traced,
+                    _WorkspaceSubmissionUpdateInfo.TracedV2,
+                    _WorkspaceSubmissionUpdateInfo.Errored,
+                    _WorkspaceSubmissionUpdateInfo.Finished,
+                ],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)

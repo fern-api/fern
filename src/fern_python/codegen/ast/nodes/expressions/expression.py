@@ -6,28 +6,32 @@ from typing import Optional, Set, Union
 from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
 from ...references import Reference
 from ..code_writer import CodeWriter
-from .class_instantiation import ClassInstantiation
-from .function_invocation import FunctionInvocation
 
 
 class Expression(AstNode):
     def __init__(
         self,
-        expression: Union[FunctionInvocation, CodeWriter, ClassInstantiation, Reference, str],
+        expression: Union[AstNode, Reference, str],
         spread: Optional[ExpressionSpread] = None,
     ):
         self.expression = CodeWriter(expression) if isinstance(expression, str) else expression
         self.spread = spread
 
     def get_references(self) -> Set[Reference]:
+        if isinstance(self, str):
+            return set()
         if isinstance(self.expression, Reference):
             return set([self.expression])
-        return self.expression.get_references()
+        if isinstance(self.expression, AstNode):
+            return self.expression.get_references()
 
     def get_generics(self) -> Set[GenericTypeVar]:
+        if isinstance(self, str):
+            return set()
         if isinstance(self.expression, Reference):
             return set()
-        return self.expression.get_generics()
+        if isinstance(self.expression, AstNode):
+            return self.expression.get_generics()
 
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         if self.spread is not None:

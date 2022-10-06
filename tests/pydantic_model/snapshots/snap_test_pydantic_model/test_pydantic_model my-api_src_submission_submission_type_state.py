@@ -39,6 +39,35 @@ class SubmissionTypeState(pydantic.BaseModel):
         typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace], pydantic.Field(discriminator="type")
     ]
 
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace], values.get("__root__")
+        )
+        for validator in SubmissionTypeState.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace]],
+                    typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def validate(
+            cls,
+            validator: typing.Callable[
+                [typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace]],
+                typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
