@@ -25,7 +25,9 @@ def main(path_to_config_json: str) -> None:
             generator_exec_wrapper=generator_exec_wrapper,
         )
         generator.run()
-        GeneratorUpdate.factory.exit_status_update(ExitStatusUpdate.factory.successful())
+        generator_exec_wrapper.send_update(
+            GeneratorUpdate.factory.exit_status_update(ExitStatusUpdate.factory.successful())
+        )
     except Exception as e:
         generator_exec_wrapper.send_update(
             GeneratorUpdate.factory.exit_status_update(
