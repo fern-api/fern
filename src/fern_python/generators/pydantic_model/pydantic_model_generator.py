@@ -50,5 +50,7 @@ class PydanticModelGenerator:
             )
             type_declaration_handler.run()
             self._generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generated file {filepath}"))
+                GeneratorUpdate.factory.log(
+                    LogUpdate(level=LogLevel.DEBUG, message=f"Generated file {filepath.to_str()}")
+                )
             )
