@@ -79,6 +79,15 @@ class FernAwarePydanticModel:
             must_import_after_current_declaration=self._must_import_after_current_declaration,
         )
 
+    def get_class_reference_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> AST.ClassReference:
+        return self._context.get_class_reference_for_type_name(
+            type_name=type_name,
+            # if the given type references this pydantic model's type, then
+            # we have to import it after the current declaration to avoid
+            # circular import errors
+            must_import_after_current_declaration=self._must_import_after_current_declaration,
+        )
+
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
         is_circular_reference = HashableDeclaredTypeName.of(self._type_name) in self._context.get_referenced_types(
             type_name
@@ -127,6 +136,15 @@ class FernAwarePydanticModel:
         self._pydantic_model.set_root_type(root_type=root_type)
         if is_forward_ref:
             self._model_contains_forward_refs = True
+        # always surface __root__ as value
+
+    def add_ghost_reference(self, type_name: ir_types.DeclaredTypeName) -> None:
+        self._pydantic_model.add_ghost_reference(
+            self.get_class_reference_for_type_name(type_name),
+        )
+
+    def set_constructor_unsafe(self, constructor: AST.ClassConstructor) -> None:
+        self._pydantic_model.set_constructor(constructor)
 
     def finish(self) -> None:
         def write_json_body(writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:

@@ -19,7 +19,7 @@ class _Factory:
 
     def problem_initialized(self, value: ProblemId) -> SubmissionResponse:
         return SubmissionResponse(
-            __root__=_SubmissionResponse.ProblemInitialized(type="problemInitialized", problem_initialized=value)
+            __root__=_SubmissionResponse.ProblemInitialized(type="problemInitialized", value=value)
         )
 
     def workspace_initialized(self) -> SubmissionResponse:
@@ -30,7 +30,7 @@ class _Factory:
 
     def code_execution_update(self, value: CodeExecutionUpdate) -> SubmissionResponse:
         return SubmissionResponse(
-            __root__=_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", code_execution_update=value)
+            __root__=_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", value=value)
         )
 
     def terminated(self, value: TerminatedResponse) -> SubmissionResponse:
@@ -40,7 +40,7 @@ class _Factory:
 class SubmissionResponse(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _SubmissionResponse.ServerInitialized,
@@ -90,33 +90,48 @@ class SubmissionResponse(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _SubmissionResponse:
     class ServerInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["serverInitialized"]
 
+        class Config:
+            frozen = True
+
     class ProblemInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["problemInitialized"]
-        problem_initialized: ProblemId = pydantic.Field(alias="problemInitialized")
+        value: ProblemId
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class WorkspaceInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["workspaceInitialized"]
 
+        class Config:
+            frozen = True
+
     class ServerErrored(ExceptionInfo):
         type: typing_extensions.Literal["serverErrored"]
 
+        class Config:
+            frozen = True
+
     class CodeExecutionUpdate(pydantic.BaseModel):
         type: typing_extensions.Literal["codeExecutionUpdate"]
-        code_execution_update: CodeExecutionUpdate = pydantic.Field(alias="codeExecutionUpdate")
+        value: CodeExecutionUpdate
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class Terminated(TerminatedResponse):
         type: typing_extensions.Literal["terminated"]
+
+        class Config:
+            frozen = True
 
 
 SubmissionResponse.update_forward_refs()

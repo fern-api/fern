@@ -15,13 +15,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def running(self, value: RunningSubmissionState) -> TestSubmissionUpdateInfo:
-        return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Running(type="running", running=value))
+        return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Running(type="running", value=value))
 
     def stopped(self) -> TestSubmissionUpdateInfo:
         return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Stopped(type="stopped"))
 
     def errored(self, value: ErrorInfo) -> TestSubmissionUpdateInfo:
-        return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Errored(type="errored", errored=value))
+        return TestSubmissionUpdateInfo(__root__=_TestSubmissionUpdateInfo.Errored(type="errored", value=value))
 
     def graded_test_case(self, value: GradedTestCaseUpdate) -> TestSubmissionUpdateInfo:
         return TestSubmissionUpdateInfo(
@@ -40,7 +40,7 @@ class _Factory:
 class TestSubmissionUpdateInfo(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _TestSubmissionUpdateInfo.Running,
@@ -90,27 +90,48 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _TestSubmissionUpdateInfo:
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
-        running: RunningSubmissionState
+        value: RunningSubmissionState
+
+        class Config:
+            frozen = True
 
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
+        class Config:
+            frozen = True
+
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
-        errored: ErrorInfo
+        value: ErrorInfo
+
+        class Config:
+            frozen = True
 
     class GradedTestCase(GradedTestCaseUpdate):
         type: typing_extensions.Literal["gradedTestCase"]
 
+        class Config:
+            frozen = True
+
     class RecordedTestCase(RecordedTestCaseUpdate):
         type: typing_extensions.Literal["recordedTestCase"]
 
+        class Config:
+            frozen = True
+
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]
+
+        class Config:
+            frozen = True
 
 
 TestSubmissionUpdateInfo.update_forward_refs()

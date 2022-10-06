@@ -28,6 +28,10 @@ class PydanticModel:
         )
         self._local_class_reference = (parent or source_file).add_class_declaration(declaration=self._class_declaration)
         self._has_aliases = False
+        self.frozen = True
+
+    def set_constructor(self, constructor: AST.ClassConstructor) -> None:
+        self._class_declaration.constructor = constructor
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -88,15 +92,29 @@ class PydanticModel:
             decorator=decorator,
         )
 
+    def add_ghost_reference(self, reference: AST.Reference) -> None:
+        self._class_declaration.add_ghost_reference(reference)
+
     def finish(self) -> None:
+        config = AST.ClassDeclaration(name="Config")
+
+        if self.frozen:
+            config.add_attribute(
+                AST.VariableDeclaration(
+                    name="frozen",
+                    initializer=AST.Expression("True"),
+                )
+            )
+
         if self._has_aliases:
-            config = AST.ClassDeclaration(name="Config")
             config.add_attribute(
                 AST.VariableDeclaration(
                     name="allow_population_by_field_name",
                     initializer=AST.Expression("True"),
                 )
             )
+
+        if len(config.statements) > 0:
             self._class_declaration.add_class(declaration=config)
 
     def __enter__(self) -> PydanticModel:

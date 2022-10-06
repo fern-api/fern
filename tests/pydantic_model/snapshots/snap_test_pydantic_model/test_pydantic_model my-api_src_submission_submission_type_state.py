@@ -22,7 +22,7 @@ class _Factory:
 class SubmissionTypeState(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace]:
+    def get_as_union(self) -> typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace]:
         return self.__root__
 
     def visit(
@@ -43,13 +43,22 @@ class SubmissionTypeState(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _SubmissionTypeState:
     class Test(TestSubmissionState):
         type: typing_extensions.Literal["test"]
 
+        class Config:
+            frozen = True
+
     class Workspace(WorkspaceSubmissionState):
         type: typing_extensions.Literal["workspace"]
+
+        class Config:
+            frozen = True
 
 
 SubmissionTypeState.update_forward_refs()

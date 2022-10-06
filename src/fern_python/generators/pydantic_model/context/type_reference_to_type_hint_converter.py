@@ -3,12 +3,13 @@ from typing import Callable, Optional
 from fern_python.codegen import AST
 from fern_python.generated import ir_types
 
-from ..filepaths import get_filepath_for_type
+from .type_name_to_class_reference_converter import TypeNameToClassReferenceConverter
 
 
 class TypeReferenceToTypeHintConverter:
-    def __init__(self, api_name: str):
+    def __init__(self, api_name: str, type_name_to_class_reference_converter: TypeNameToClassReferenceConverter):
         self._api_name = api_name
+        self._type_name_to_class_reference_converter = type_name_to_class_reference_converter
 
     def get_type_hint_for_type_reference(
         self,
@@ -71,21 +72,12 @@ class TypeReferenceToTypeHintConverter:
         type_name: ir_types.DeclaredTypeName,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
     ) -> AST.TypeHint:
-        filepath = get_filepath_for_type(
-            type_name=type_name,
-            api_name=self._api_name,
+        return AST.TypeHint(
+            type=self._type_name_to_class_reference_converter.get_class_reference_for_type_name(
+                type_name=type_name,
+                must_import_after_current_declaration=must_import_after_current_declaration,
+            )
         )
-        reference = AST.ClassReference(
-            import_=AST.ReferenceImport(
-                module=filepath.to_module(),
-                named_import=type_name.name,
-            ),
-            qualified_name_excluding_import=(),
-            must_import_after_current_declaration=must_import_after_current_declaration(type_name)
-            if must_import_after_current_declaration is not None
-            else False,
-        )
-        return AST.TypeHint(type=reference)
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
         to_return = primitive.visit(

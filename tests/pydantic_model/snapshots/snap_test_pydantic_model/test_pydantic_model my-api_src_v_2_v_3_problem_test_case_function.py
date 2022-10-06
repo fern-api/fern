@@ -22,7 +22,7 @@ class _Factory:
 class TestCaseFunction(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom]:
+    def get_as_union(self) -> typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom]:
         return self.__root__
 
     def visit(
@@ -43,13 +43,22 @@ class TestCaseFunction(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _TestCaseFunction:
     class WithActualResult(TestCaseWithActualResultImplementation):
         type: typing_extensions.Literal["withActualResult"]
 
+        class Config:
+            frozen = True
+
     class Custom(VoidFunctionDefinition):
         type: typing_extensions.Literal["custom"]
+
+        class Config:
+            frozen = True
 
 
 TestCaseFunction.update_forward_refs()

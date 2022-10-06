@@ -32,7 +32,7 @@ class _Factory:
 class InvalidRequestCause(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _InvalidRequestCause.SubmissionIdNotFound,
@@ -67,16 +67,28 @@ class InvalidRequestCause(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _InvalidRequestCause:
     class SubmissionIdNotFound(SubmissionIdNotFound):
         type: typing_extensions.Literal["submissionIdNotFound"]
 
+        class Config:
+            frozen = True
+
     class CustomTestCasesUnsupported(CustomTestCasesUnsupported):
         type: typing_extensions.Literal["customTestCasesUnsupported"]
 
+        class Config:
+            frozen = True
+
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing_extensions.Literal["unexpectedLanguage"]
+
+        class Config:
+            frozen = True
 
 
 InvalidRequestCause.update_forward_refs()

@@ -17,10 +17,10 @@ class _Factory:
         return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Stopped(type="stopped"))
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Errored(type="errored", errored=value))
+        return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Errored(type="errored", value=value))
 
     def running(self, value: RunningSubmissionState) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Running(type="running", running=value))
+        return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Running(type="running", value=value))
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
         return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Ran(**dict(value), type="ran"))
@@ -32,7 +32,7 @@ class _Factory:
 class WorkspaceSubmissionStatus(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _WorkspaceSubmissionStatus.Stopped,
@@ -77,24 +77,42 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _WorkspaceSubmissionStatus:
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
+        class Config:
+            frozen = True
+
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
-        errored: ErrorInfo
+        value: ErrorInfo
+
+        class Config:
+            frozen = True
 
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
-        running: RunningSubmissionState
+        value: RunningSubmissionState
+
+        class Config:
+            frozen = True
 
     class Ran(WorkspaceRunDetails):
         type: typing_extensions.Literal["ran"]
 
+        class Config:
+            frozen = True
+
     class Traced(WorkspaceRunDetails):
         type: typing_extensions.Literal["traced"]
+
+        class Config:
+            frozen = True
 
 
 WorkspaceSubmissionStatus.update_forward_refs()

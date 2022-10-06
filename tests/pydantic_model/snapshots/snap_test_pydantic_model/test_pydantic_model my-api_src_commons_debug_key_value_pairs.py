@@ -13,6 +13,9 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 from .debug_variable_value import DebugVariableValue  # noqa: E402
 

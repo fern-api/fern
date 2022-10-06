@@ -18,7 +18,7 @@ class _Factory:
 class CreateProblemError(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_CreateProblemError.Generic]:
+    def get_as_union(self) -> typing.Union[_CreateProblemError.Generic]:
         return self.__root__
 
     def visit(self, generic: typing.Callable[[GenericCreateProblemError], T_Result]) -> T_Result:
@@ -33,12 +33,16 @@ class CreateProblemError(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
         error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
 

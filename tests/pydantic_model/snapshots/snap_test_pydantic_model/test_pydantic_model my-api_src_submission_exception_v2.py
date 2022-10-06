@@ -21,7 +21,7 @@ class _Factory:
 class ExceptionV2(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout]:
+    def get_as_union(self) -> typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout]:
         return self.__root__
 
     def visit(
@@ -40,13 +40,22 @@ class ExceptionV2(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _ExceptionV2:
     class Generic(ExceptionInfo):
         type: typing_extensions.Literal["generic"]
 
+        class Config:
+            frozen = True
+
     class Timeout(pydantic.BaseModel):
         type: typing_extensions.Literal["timeout"]
+
+        class Config:
+            frozen = True
 
 
 ExceptionV2.update_forward_refs()

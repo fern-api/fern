@@ -17,13 +17,13 @@ class _Factory:
         return CustomFiles(__root__=_CustomFiles.Basic(**dict(value), type="basic"))
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
-        return CustomFiles(__root__=_CustomFiles.Custom(type="custom", custom=value))
+        return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))
 
 
 class CustomFiles(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
+    def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
         return self.__root__
 
     def visit(
@@ -44,14 +44,23 @@ class CustomFiles(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _CustomFiles:
     class Basic(BasicCustomFiles):
         type: typing_extensions.Literal["basic"]
 
+        class Config:
+            frozen = True
+
     class Custom(pydantic.BaseModel):
         type: typing_extensions.Literal["custom"]
-        custom: typing.Dict[Language, Files]
+        value: typing.Dict[Language, Files]
+
+        class Config:
+            frozen = True
 
 
 CustomFiles.update_forward_refs()

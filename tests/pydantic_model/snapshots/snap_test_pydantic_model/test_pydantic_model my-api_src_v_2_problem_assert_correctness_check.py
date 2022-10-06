@@ -22,7 +22,7 @@ class _Factory:
 class AssertCorrectnessCheck(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_AssertCorrectnessCheck.DeepEquality, _AssertCorrectnessCheck.Custom]:
+    def get_as_union(self) -> typing.Union[_AssertCorrectnessCheck.DeepEquality, _AssertCorrectnessCheck.Custom]:
         return self.__root__
 
     def visit(
@@ -44,13 +44,22 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _AssertCorrectnessCheck:
     class DeepEquality(DeepEqualityCorrectnessCheck):
         type: typing_extensions.Literal["deepEquality"]
 
+        class Config:
+            frozen = True
+
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing_extensions.Literal["custom"]
+
+        class Config:
+            frozen = True
 
 
 AssertCorrectnessCheck.update_forward_refs()

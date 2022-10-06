@@ -1,47 +1,18 @@
 from fern_python.declaration_handler import DeclarationHandler
 from fern_python.generated import ir_types
 
-from ..fern_aware_pydantic_model import FernAwarePydanticModel
-from .generate_alias import generate_alias
-from .generate_enum import generate_enum
-from .generate_union import generate_union
+from .alias_generator import AliasGenerator
+from .enum_generator import EnumGenerator
+from .object_generator import ObjectGenerator
+from .union_generator import UnionGenerator
 
 
 class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
     def run(self) -> None:
-        self._declaration.shape.visit(
-            alias=self._generate_alias,
-            enum=self._generate_enum,
-            object=self._generate_object,
-            union=self._generate_union,
+        generator = self._declaration.shape.visit(
+            alias=lambda alias: AliasGenerator(name=self._declaration.name, alias=alias, context=self._context),
+            enum=lambda enum: EnumGenerator(name=self._declaration.name, enum=enum, context=self._context),
+            object=lambda object: ObjectGenerator(name=self._declaration.name, object=object, context=self._context),
+            union=lambda union: UnionGenerator(name=self._declaration.name, union=union, context=self._context),
         )
-
-    def _generate_alias(self, alias: ir_types.AliasTypeDeclaration) -> None:
-        generate_alias(name=self._declaration.name, alias=alias, context=self._context)
-
-    def _generate_enum(self, enum: ir_types.EnumTypeDeclaration) -> None:
-        generate_enum(
-            name=self._declaration.name,
-            enum=enum,
-            source_file=self._context.source_file,
-        )
-
-    def _generate_object(self, object: ir_types.ObjectTypeDeclaration) -> None:
-        with FernAwarePydanticModel(
-            type_name=self._declaration.name,
-            extends=object.extends,
-            context=self._context,
-        ) as pydantic_model:
-            for property in object.properties:
-                pydantic_model.add_field(
-                    name=property.name.snake_case,
-                    type_reference=property.value_type,
-                    json_field_name=property.name.wire_value,
-                )
-
-    def _generate_union(self, union: ir_types.UnionTypeDeclaration) -> None:
-        generate_union(
-            name=self._declaration.name,
-            union=union,
-            context=self._context,
-        )
+        generator.generate()

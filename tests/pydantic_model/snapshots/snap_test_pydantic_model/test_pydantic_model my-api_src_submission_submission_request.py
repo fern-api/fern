@@ -37,7 +37,7 @@ class _Factory:
 class SubmissionRequest(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _SubmissionRequest.InitializeProblemRequest,
@@ -82,22 +82,40 @@ class SubmissionRequest(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _SubmissionRequest:
     class InitializeProblemRequest(InitializeProblemRequest):
         type: typing_extensions.Literal["initializeProblemRequest"]
 
+        class Config:
+            frozen = True
+
     class InitializeWorkspaceRequest(pydantic.BaseModel):
         type: typing_extensions.Literal["initializeWorkspaceRequest"]
+
+        class Config:
+            frozen = True
 
     class SubmitV2(SubmitRequestV2):
         type: typing_extensions.Literal["submitV2"]
 
+        class Config:
+            frozen = True
+
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing_extensions.Literal["workspaceSubmit"]
 
+        class Config:
+            frozen = True
+
     class Stop(StopRequest):
         type: typing_extensions.Literal["stop"]
+
+        class Config:
+            frozen = True
 
 
 SubmissionRequest.update_forward_refs()

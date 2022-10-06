@@ -25,7 +25,9 @@ class _Factory:
 class ContainerType(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_ContainerType.List, _ContainerType.Map, _ContainerType.Optional, _ContainerType.Set]:
+    def get_as_union(
+        self,
+    ) -> typing.Union[_ContainerType.List, _ContainerType.Map, _ContainerType.Optional, _ContainerType.Set]:
         return self.__root__
 
     def visit(
@@ -53,6 +55,9 @@ class ContainerType(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 from .map_type import MapType  # noqa: E402
 from .type_reference import TypeReference  # noqa: E402
@@ -64,12 +69,14 @@ class _ContainerType:
         list: TypeReference
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Map(MapType):
         type: typing_extensions.Literal["map"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Optional(pydantic.BaseModel):
@@ -77,6 +84,7 @@ class _ContainerType:
         optional: TypeReference
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Set(pydantic.BaseModel):
@@ -84,6 +92,7 @@ class _ContainerType:
         set: TypeReference
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
 

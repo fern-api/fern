@@ -28,7 +28,7 @@ class _Factory:
 class FunctionSignature(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
@@ -57,16 +57,28 @@ class FunctionSignature(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _FunctionSignature:
     class Void(VoidFunctionSignature):
         type: typing_extensions.Literal["void"]
 
+        class Config:
+            frozen = True
+
     class NonVoid(NonVoidFunctionSignature):
         type: typing_extensions.Literal["nonVoid"]
 
+        class Config:
+            frozen = True
+
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing_extensions.Literal["voidThatTakesActualResult"]
+
+        class Config:
+            frozen = True
 
 
 FunctionSignature.update_forward_refs()

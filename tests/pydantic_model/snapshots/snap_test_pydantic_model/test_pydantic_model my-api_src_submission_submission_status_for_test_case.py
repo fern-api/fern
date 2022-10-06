@@ -17,9 +17,7 @@ class _Factory:
         return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.Graded(**dict(value), type="graded"))
 
     def graded_v_2(self, value: TestCaseGrade) -> SubmissionStatusForTestCase:
-        return SubmissionStatusForTestCase(
-            __root__=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", graded_v_2=value)
-        )
+        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value))
 
     def traced(self, value: TracedTestCase) -> SubmissionStatusForTestCase:
         return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.Traced(**dict(value), type="traced"))
@@ -28,7 +26,7 @@ class _Factory:
 class SubmissionStatusForTestCase(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _SubmissionStatusForTestCase.Graded, _SubmissionStatusForTestCase.GradedV2, _SubmissionStatusForTestCase.Traced
@@ -61,20 +59,29 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _SubmissionStatusForTestCase:
     class Graded(TestCaseResultWithStdout):
         type: typing_extensions.Literal["graded"]
 
+        class Config:
+            frozen = True
+
     class GradedV2(pydantic.BaseModel):
         type: typing_extensions.Literal["gradedV2"]
-        graded_v_2: TestCaseGrade = pydantic.Field(alias="gradedV2")
+        value: TestCaseGrade
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class Traced(TracedTestCase):
         type: typing_extensions.Literal["traced"]
+
+        class Config:
+            frozen = True
 
 
 SubmissionStatusForTestCase.update_forward_refs()

@@ -16,6 +16,7 @@ class ClassDeclaration(AstNode):
         self.extends = extends or []
         self.constructor = constructor
         self.statements: List[AstNode] = []
+        self.ghost_references: Set[Reference] = set()
 
     def add_attribute(self, variable_declaration: VariableDeclaration) -> None:
         self.statements.append(variable_declaration)
@@ -61,8 +62,11 @@ class ClassDeclaration(AstNode):
     def add_class(self, declaration: ClassDeclaration) -> None:
         self.statements.append(declaration)
 
+    def add_ghost_reference(self, reference: Reference) -> None:
+        self.ghost_references.add(reference)
+
     def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set(self.extends)
+        references: Set[Reference] = {*self.extends, *self.ghost_references}
         if self.constructor is not None:
             references.update(self.constructor.get_references())
         for statement in self.statements:

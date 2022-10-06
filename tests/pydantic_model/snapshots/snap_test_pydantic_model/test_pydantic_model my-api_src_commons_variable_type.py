@@ -43,7 +43,7 @@ class _Factory:
 class VariableType(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _VariableType.IntegerType,
@@ -113,6 +113,9 @@ class VariableType(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 from .list_type import ListType  # noqa: E402
 from .map_type import MapType  # noqa: E402
@@ -122,32 +125,62 @@ class _VariableType:
     class IntegerType(pydantic.BaseModel):
         type: typing_extensions.Literal["integerType"]
 
+        class Config:
+            frozen = True
+
     class DoubleType(pydantic.BaseModel):
         type: typing_extensions.Literal["doubleType"]
+
+        class Config:
+            frozen = True
 
     class BooleanType(pydantic.BaseModel):
         type: typing_extensions.Literal["booleanType"]
 
+        class Config:
+            frozen = True
+
     class StringType(pydantic.BaseModel):
         type: typing_extensions.Literal["stringType"]
+
+        class Config:
+            frozen = True
 
     class CharType(pydantic.BaseModel):
         type: typing_extensions.Literal["charType"]
 
+        class Config:
+            frozen = True
+
     class ListType(ListType):
         type: typing_extensions.Literal["listType"]
+
+        class Config:
+            frozen = True
 
     class MapType(MapType):
         type: typing_extensions.Literal["mapType"]
 
+        class Config:
+            frozen = True
+
     class BinaryTreeType(pydantic.BaseModel):
         type: typing_extensions.Literal["binaryTreeType"]
+
+        class Config:
+            frozen = True
 
     class SinglyLinkedListType(pydantic.BaseModel):
         type: typing_extensions.Literal["singlyLinkedListType"]
 
+        class Config:
+            frozen = True
+
     class DoublyLinkedListType(pydantic.BaseModel):
         type: typing_extensions.Literal["doublyLinkedListType"]
+
+        class Config:
+            frozen = True
 
 
 VariableType.update_forward_refs()

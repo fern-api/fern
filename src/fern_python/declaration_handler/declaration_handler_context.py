@@ -21,7 +21,11 @@ class DeclarationHandlerContext(ABC):
         ...
 
     @abstractmethod
-    def get_class_reference_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> AST.ClassReference:
+    def get_class_reference_for_type_name(
+        self,
+        type_name: ir_types.DeclaredTypeName,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+    ) -> AST.ClassReference:
         ...
 
     @abstractmethod

@@ -16,7 +16,7 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def running(self, value: RunningSubmissionState) -> WorkspaceSubmissionUpdateInfo:
         return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.Running(type="running", running=value)
+            __root__=_WorkspaceSubmissionUpdateInfo.Running(type="running", value=value)
         )
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionUpdateInfo:
@@ -35,7 +35,7 @@ class _Factory:
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionUpdateInfo:
         return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.Errored(type="errored", errored=value)
+            __root__=_WorkspaceSubmissionUpdateInfo.Errored(type="errored", value=value)
         )
 
     def finished(self) -> WorkspaceSubmissionUpdateInfo:
@@ -45,7 +45,7 @@ class _Factory:
 class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _WorkspaceSubmissionUpdateInfo.Running,
@@ -100,30 +100,54 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _WorkspaceSubmissionUpdateInfo:
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
-        running: RunningSubmissionState
+        value: RunningSubmissionState
+
+        class Config:
+            frozen = True
 
     class Ran(WorkspaceRunDetails):
         type: typing_extensions.Literal["ran"]
 
+        class Config:
+            frozen = True
+
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
+
+        class Config:
+            frozen = True
 
     class Traced(pydantic.BaseModel):
         type: typing_extensions.Literal["traced"]
 
+        class Config:
+            frozen = True
+
     class TracedV2(WorkspaceTracedUpdate):
         type: typing_extensions.Literal["tracedV2"]
 
+        class Config:
+            frozen = True
+
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
-        errored: ErrorInfo
+        value: ErrorInfo
+
+        class Config:
+            frozen = True
 
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]
+
+        class Config:
+            frozen = True
 
 
 WorkspaceSubmissionUpdateInfo.update_forward_refs()

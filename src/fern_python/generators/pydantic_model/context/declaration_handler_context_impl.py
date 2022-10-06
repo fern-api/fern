@@ -14,11 +14,15 @@ from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConver
 class DeclarationHandlerContextImpl(DeclarationHandlerContext):
     def __init__(self, source_file: SourceFile, intermediate_representation: ir_types.IntermediateRepresentation):
         super().__init__(source_file=source_file)
-        self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
+
+        type_name_to_class_reference_converter = TypeNameToClassReferenceConverter(
             api_name=intermediate_representation.api_name
         )
-        self._type_name_to_class_reference_converter = TypeNameToClassReferenceConverter(
-            api_name=intermediate_representation.api_name
+        self._type_name_to_class_reference_converter = type_name_to_class_reference_converter
+
+        self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
+            api_name=intermediate_representation.api_name,
+            type_name_to_class_reference_converter=type_name_to_class_reference_converter,
         )
 
         self._type_name_to_declaration = {
@@ -39,6 +43,7 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
     def get_class_reference_for_type_name(
         self,
         type_name: ir_types.DeclaredTypeName,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
     ) -> AST.ClassReference:
         return self._type_name_to_class_reference_converter.get_class_reference_for_type_name(type_name)
 

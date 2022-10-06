@@ -20,13 +20,13 @@ class _Factory:
         return ActualResult(__root__=_ActualResult.Exception(**dict(value), type="exception"))
 
     def exception_v_2(self, value: ExceptionV2) -> ActualResult:
-        return ActualResult(__root__=_ActualResult.ExceptionV2(type="exceptionV2", exception_v_2=value))
+        return ActualResult(__root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value))
 
 
 class ActualResult(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2]:
+    def get_as_union(self) -> typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2]:
         return self.__root__
 
     def visit(
@@ -51,21 +51,30 @@ class ActualResult(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _ActualResult:
     class Value(pydantic.BaseModel):
         type: typing_extensions.Literal["value"]
         value: VariableValue
 
+        class Config:
+            frozen = True
+
     class Exception(ExceptionInfo):
         type: typing_extensions.Literal["exception"]
 
+        class Config:
+            frozen = True
+
     class ExceptionV2(pydantic.BaseModel):
         type: typing_extensions.Literal["exceptionV2"]
-        exception_v_2: ExceptionV2 = pydantic.Field(alias="exceptionV2")
+        value: ExceptionV2
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
 
 ActualResult.update_forward_refs()

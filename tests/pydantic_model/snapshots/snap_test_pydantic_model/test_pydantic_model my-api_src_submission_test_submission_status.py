@@ -17,21 +17,21 @@ class _Factory:
         return TestSubmissionStatus(__root__=_TestSubmissionStatus.Stopped(type="stopped"))
 
     def errored(self, value: ErrorInfo) -> TestSubmissionStatus:
-        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Errored(type="errored", errored=value))
+        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Errored(type="errored", value=value))
 
     def running(self, value: RunningSubmissionState) -> TestSubmissionStatus:
-        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Running(type="running", running=value))
+        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Running(type="running", value=value))
 
     def test_case_id_to_state(self, value: typing.Dict[str, SubmissionStatusForTestCase]) -> TestSubmissionStatus:
         return TestSubmissionStatus(
-            __root__=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", test_case_id_to_state=value)
+            __root__=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value)
         )
 
 
 class TestSubmissionStatus(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _TestSubmissionStatus.Stopped,
@@ -71,25 +71,37 @@ class TestSubmissionStatus(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _TestSubmissionStatus:
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
+        class Config:
+            frozen = True
+
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
-        errored: ErrorInfo
+        value: ErrorInfo
+
+        class Config:
+            frozen = True
 
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
-        running: RunningSubmissionState
+        value: RunningSubmissionState
+
+        class Config:
+            frozen = True
 
     class TestCaseIdToState(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseIdToState"]
-        test_case_id_to_state: typing.Dict[str, SubmissionStatusForTestCase] = pydantic.Field(alias="testCaseIdToState")
+        value: typing.Dict[str, SubmissionStatusForTestCase]
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
 
 TestSubmissionStatus.update_forward_refs()

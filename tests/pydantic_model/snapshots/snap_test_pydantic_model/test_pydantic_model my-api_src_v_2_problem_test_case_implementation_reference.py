@@ -14,7 +14,7 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def template_id(self, value: TestCaseTemplateId) -> TestCaseImplementationReference:
         return TestCaseImplementationReference(
-            __root__=_TestCaseImplementationReference.TemplateId(type="templateId", template_id=value)
+            __root__=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
         )
 
     def implementation(self, value: TestCaseImplementation) -> TestCaseImplementationReference:
@@ -26,7 +26,7 @@ class _Factory:
 class TestCaseImplementationReference(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation]:
         return self.__root__
@@ -50,17 +50,23 @@ class TestCaseImplementationReference(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _TestCaseImplementationReference:
     class TemplateId(pydantic.BaseModel):
         type: typing_extensions.Literal["templateId"]
-        template_id: TestCaseTemplateId = pydantic.Field(alias="templateId")
+        value: TestCaseTemplateId
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class Implementation(TestCaseImplementation):
         type: typing_extensions.Literal["implementation"]
+
+        class Config:
+            frozen = True
 
 
 TestCaseImplementationReference.update_forward_refs()

@@ -26,7 +26,7 @@ class _Factory:
 class ErrorInfo(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_ErrorInfo.CompileError, _ErrorInfo.RuntimeError, _ErrorInfo.InternalError]:
+    def get_as_union(self) -> typing.Union[_ErrorInfo.CompileError, _ErrorInfo.RuntimeError, _ErrorInfo.InternalError]:
         return self.__root__
 
     def visit(
@@ -51,16 +51,28 @@ class ErrorInfo(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _ErrorInfo:
     class CompileError(CompileError):
         type: typing_extensions.Literal["compileError"]
 
+        class Config:
+            frozen = True
+
     class RuntimeError(RuntimeError):
         type: typing_extensions.Literal["runtimeError"]
 
+        class Config:
+            frozen = True
+
     class InternalError(InternalError):
         type: typing_extensions.Literal["internalError"]
+
+        class Config:
+            frozen = True
 
 
 ErrorInfo.update_forward_refs()

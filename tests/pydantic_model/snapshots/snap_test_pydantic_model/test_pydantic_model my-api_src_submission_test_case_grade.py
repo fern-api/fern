@@ -22,7 +22,7 @@ class _Factory:
 class TestCaseGrade(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
+    def get_as_union(self) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
         return self.__root__
 
     def visit(
@@ -43,13 +43,22 @@ class TestCaseGrade(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _TestCaseGrade:
     class Hidden(TestCaseHiddenGrade):
         type: typing_extensions.Literal["hidden"]
 
+        class Config:
+            frozen = True
+
     class NonHidden(TestCaseNonHiddenGrade):
         type: typing_extensions.Literal["nonHidden"]
+
+        class Config:
+            frozen = True
 
 
 TestCaseGrade.update_forward_refs()

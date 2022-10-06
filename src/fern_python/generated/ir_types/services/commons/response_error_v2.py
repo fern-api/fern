@@ -16,4 +16,5 @@ class ResponseErrorV2(WithDocs):
         return super().json(**kwargs_with_defaults)
 
     class Config:
+        frozen = True
         allow_population_by_field_name = True

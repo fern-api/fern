@@ -33,7 +33,7 @@ class _Factory:
 class SingleUnionTypeProperties(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _SingleUnionTypeProperties.SamePropertiesAsObject,
@@ -68,24 +68,30 @@ class SingleUnionTypeProperties(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _SingleUnionTypeProperties:
     class SamePropertiesAsObject(DeclaredTypeName):
         properties_type: typing_extensions.Literal["samePropertiesAsObject"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class SingleProperty(SingleUnionTypeProperty):
         properties_type: typing_extensions.Literal["singleProperty"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class NoProperties(pydantic.BaseModel):
         properties_type: typing_extensions.Literal["noProperties"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
 

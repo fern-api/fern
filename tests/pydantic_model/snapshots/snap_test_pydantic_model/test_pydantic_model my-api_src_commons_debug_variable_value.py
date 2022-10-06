@@ -15,25 +15,25 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_value(self, value: int) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.IntegerValue(type="integerValue", integer_value=value))
+        return DebugVariableValue(__root__=_DebugVariableValue.IntegerValue(type="integerValue", value=value))
 
     def boolean_value(self, value: bool) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.BooleanValue(type="booleanValue", boolean_value=value))
+        return DebugVariableValue(__root__=_DebugVariableValue.BooleanValue(type="booleanValue", value=value))
 
     def double_value(self, value: float) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.DoubleValue(type="doubleValue", double_value=value))
+        return DebugVariableValue(__root__=_DebugVariableValue.DoubleValue(type="doubleValue", value=value))
 
     def string_value(self, value: str) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.StringValue(type="stringValue", string_value=value))
+        return DebugVariableValue(__root__=_DebugVariableValue.StringValue(type="stringValue", value=value))
 
     def char_value(self, value: str) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.CharValue(type="charValue", char_value=value))
+        return DebugVariableValue(__root__=_DebugVariableValue.CharValue(type="charValue", value=value))
 
     def map_value(self, value: DebugMapValue) -> DebugVariableValue:
         return DebugVariableValue(__root__=_DebugVariableValue.MapValue(**dict(value), type="mapValue"))
 
     def list_value(self, value: typing.List[DebugVariableValue]) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.ListValue(type="listValue", list_value=value))
+        return DebugVariableValue(__root__=_DebugVariableValue.ListValue(type="listValue", value=value))
 
     def binary_tree_node_value(self, value: BinaryTreeNodeAndTreeValue) -> DebugVariableValue:
         return DebugVariableValue(
@@ -63,7 +63,7 @@ class _Factory:
 class DebugVariableValue(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _DebugVariableValue.IntegerValue,
@@ -148,6 +148,9 @@ class DebugVariableValue(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 from .debug_map_value import DebugMapValue  # noqa: E402
 
@@ -155,66 +158,87 @@ from .debug_map_value import DebugMapValue  # noqa: E402
 class _DebugVariableValue:
     class IntegerValue(pydantic.BaseModel):
         type: typing_extensions.Literal["integerValue"]
-        integer_value: int = pydantic.Field(alias="integerValue")
+        value: int
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class BooleanValue(pydantic.BaseModel):
         type: typing_extensions.Literal["booleanValue"]
-        boolean_value: bool = pydantic.Field(alias="booleanValue")
+        value: bool
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class DoubleValue(pydantic.BaseModel):
         type: typing_extensions.Literal["doubleValue"]
-        double_value: float = pydantic.Field(alias="doubleValue")
+        value: float
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class StringValue(pydantic.BaseModel):
         type: typing_extensions.Literal["stringValue"]
-        string_value: str = pydantic.Field(alias="stringValue")
+        value: str
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class CharValue(pydantic.BaseModel):
         type: typing_extensions.Literal["charValue"]
-        char_value: str = pydantic.Field(alias="charValue")
+        value: str
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class MapValue(DebugMapValue):
         type: typing_extensions.Literal["mapValue"]
 
+        class Config:
+            frozen = True
+
     class ListValue(pydantic.BaseModel):
         type: typing_extensions.Literal["listValue"]
-        list_value: typing.List[DebugVariableValue] = pydantic.Field(alias="listValue")
+        value: typing.List[DebugVariableValue]
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
     class BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
         type: typing_extensions.Literal["binaryTreeNodeValue"]
 
+        class Config:
+            frozen = True
+
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["singlyLinkedListNodeValue"]
+
+        class Config:
+            frozen = True
 
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["doublyLinkedListNodeValue"]
 
+        class Config:
+            frozen = True
+
     class UndefinedValue(pydantic.BaseModel):
         type: typing_extensions.Literal["undefinedValue"]
+
+        class Config:
+            frozen = True
 
     class NullValue(pydantic.BaseModel):
         type: typing_extensions.Literal["nullValue"]
 
+        class Config:
+            frozen = True
+
     class GenericValue(GenericValue):
         type: typing_extensions.Literal["genericValue"]
+
+        class Config:
+            frozen = True
 
 
 DebugVariableValue.update_forward_refs()

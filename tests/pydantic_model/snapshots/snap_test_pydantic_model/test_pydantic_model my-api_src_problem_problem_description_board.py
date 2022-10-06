@@ -12,21 +12,19 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def html(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(type="html", html=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(type="html", value=value))
 
     def variable(self, value: VariableValue) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(type="variable", variable=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(type="variable", value=value))
 
     def test_case_id(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(
-            __root__=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", test_case_id=value)
-        )
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
 
 
 class ProblemDescriptionBoard(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _ProblemDescriptionBoard.Html, _ProblemDescriptionBoard.Variable, _ProblemDescriptionBoard.TestCaseId
@@ -57,22 +55,31 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _ProblemDescriptionBoard:
     class Html(pydantic.BaseModel):
         type: typing_extensions.Literal["html"]
-        html: str
+        value: str
+
+        class Config:
+            frozen = True
 
     class Variable(pydantic.BaseModel):
         type: typing_extensions.Literal["variable"]
-        variable: VariableValue
+        value: VariableValue
+
+        class Config:
+            frozen = True
 
     class TestCaseId(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseId"]
-        test_case_id: str = pydantic.Field(alias="testCaseId")
+        value: str
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
 
 ProblemDescriptionBoard.update_forward_refs()

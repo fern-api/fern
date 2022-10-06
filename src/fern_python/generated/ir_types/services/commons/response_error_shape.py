@@ -21,7 +21,7 @@ class _Factory:
 class ResponseErrorShape(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(self) -> typing.Union[_ResponseErrorShape.SingleProperty, _ResponseErrorShape.NoProperties]:
+    def get_as_union(self) -> typing.Union[_ResponseErrorShape.SingleProperty, _ResponseErrorShape.NoProperties]:
         return self.__root__
 
     def visit(
@@ -43,13 +43,22 @@ class ResponseErrorShape(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _ResponseErrorShape:
     class SingleProperty(SingleResponseErrorProperty):
         type: typing_extensions.Literal["singleProperty"]
 
+        class Config:
+            frozen = True
+
     class NoProperties(pydantic.BaseModel):
         type: typing_extensions.Literal["noProperties"]
+
+        class Config:
+            frozen = True
 
 
 ResponseErrorShape.update_forward_refs()

@@ -31,7 +31,7 @@ class _Factory:
 class TypeReference(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[
         _TypeReference.Container,
@@ -76,6 +76,9 @@ class TypeReference(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 from .container_type import ContainerType  # noqa: E402
 
@@ -86,12 +89,14 @@ class _TypeReference:
         container: ContainerType
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Named(DeclaredTypeName):
         type: typing_extensions.Literal["named"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Primitive(pydantic.BaseModel):
@@ -99,18 +104,21 @@ class _TypeReference:
         primitive: PrimitiveType
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Unknown(pydantic.BaseModel):
         type: typing_extensions.Literal["unknown"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
     class Void(pydantic.BaseModel):
         type: typing_extensions.Literal["void"] = pydantic.Field(alias="_type")
 
         class Config:
+            frozen = True
             allow_population_by_field_name = True
 
 

@@ -13,19 +13,19 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def html(self, value: str) -> TestCaseImplementationDescriptionBoard:
         return TestCaseImplementationDescriptionBoard(
-            __root__=_TestCaseImplementationDescriptionBoard.Html(type="html", html=value)
+            __root__=_TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
         )
 
     def param_id(self, value: ParameterId) -> TestCaseImplementationDescriptionBoard:
         return TestCaseImplementationDescriptionBoard(
-            __root__=_TestCaseImplementationDescriptionBoard.ParamId(type="paramId", param_id=value)
+            __root__=_TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
         )
 
 
 class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get(
+    def get_as_union(
         self,
     ) -> typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId]:
         return self.__root__
@@ -47,18 +47,24 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
+    class Config:
+        frozen = True
+
 
 class _TestCaseImplementationDescriptionBoard:
     class Html(pydantic.BaseModel):
         type: typing_extensions.Literal["html"]
-        html: str
+        value: str
+
+        class Config:
+            frozen = True
 
     class ParamId(pydantic.BaseModel):
         type: typing_extensions.Literal["paramId"]
-        param_id: ParameterId = pydantic.Field(alias="paramId")
+        value: ParameterId
 
         class Config:
-            allow_population_by_field_name = True
+            frozen = True
 
 
 TestCaseImplementationDescriptionBoard.update_forward_refs()
