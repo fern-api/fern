@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import os
 import shutil
+from dataclasses import dataclass
 from types import TracebackType
 from typing import Optional, Type
+
+from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
 from . import AST
 from .dependency_manager import DependencyManager
@@ -13,15 +16,23 @@ from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 
 
+@dataclass(frozen=True)
+class PyProjectTomlConfig:
+    package_name: str
+    package_version: str
+
+
 class Project:
     """
     with Project("/path/to/project") as project:
         ...
     """
 
-    def __init__(self, filepath: str, project_name: str):
-        self._filepath = os.path.join(filepath, project_name)
+    def __init__(self, filepath: str, project_name: str, pyproject_toml_config: PyProjectTomlConfig = None):
+        self._root_filepath = filepath
+        self._project_filepath = os.path.join(filepath, project_name)
         self._project_name = project_name
+        self._pyproject_toml_config = pyproject_toml_config
         self._module_manager = ModuleManager()
         self._dependency_manager = DependencyManager()
 
@@ -50,6 +61,7 @@ class Project:
                 project_name=self._project_name,
                 module_path_of_source_file=module.path,
             ),
+            dependency_manager=self._dependency_manager,
         )
         return source_file
 
@@ -57,16 +69,24 @@ class Project:
         self._dependency_manager.add_dependency(dependency)
 
     def start(self) -> None:
-        if os.path.exists(self._filepath):
-            shutil.rmtree(self._filepath)
+        if os.path.exists(self._project_filepath):
+            shutil.rmtree(self._project_filepath)
 
     def finish(self) -> None:
         self._module_manager.write_modules(filepath=self._get_root_module_filepath())
-        # TODO write dependencies to pyproject.toml
+        if self._pyproject_toml_config is not None:
+            py_project_toml = PyProjectToml(
+                name=self._pyproject_toml_config.package_name,
+                version=self._pyproject_toml_config.package_version,
+                package=PyProjectTomlPackageConfig(include=self._project_name, _from="src"),
+                path=self._root_filepath,
+                dependency_manager=self._dependency_manager,
+            )
+            py_project_toml.write()
 
     def _get_root_module_filepath(self) -> str:
         return os.path.join(
-            self._filepath,
+            self._project_filepath,
             "src",
         )
 

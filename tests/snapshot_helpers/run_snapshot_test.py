@@ -65,5 +65,5 @@ def run_snapshot_test(
 
     snapshot.assert_match(
         name="filepaths",
-        value=relative_filepaths,
+        value=sorted(list(relative_filepaths)),
     )

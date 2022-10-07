@@ -13,4 +13,5 @@ __all__ = [
     "ExportStrategy",
     "LocalClassReference",
     "ClassParent",
+    "PyProjectToml" "PyProjectTomlPackageConfig",
 ]

@@ -15,9 +15,9 @@ colorama==0.4.5 ; python_version >= "3.8" and python_version < "4.0" \
 commonmark==0.9.1 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60 \
     --hash=sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9
-fern-fern-generator-exec==0.2.2 ; python_version >= "3.8" and python_version < "4.0" \
-    --hash=sha256:bc8efd032b05e14a0935c8d336ad15503bbfddd381b9841d08c932547c826272 \
-    --hash=sha256:d3b7bb0e08af4b85a9033c6cdab060356a2afac2d7c0ec06d3c89a9072f2cd9d
+fern-fern-generator-exec==0.2.3 ; python_version >= "3.8" and python_version < "4.0" \
+    --hash=sha256:382508ec9da67c0ef459a4209b1f93bc4a55a06ce41eb8bf388c7ed1356139a8 \
+    --hash=sha256:8fe570dd14562e64c5c4ea0cca1812343842fe805cbd0b628b27f1df689f981c
 idna==3.4 ; python_version >= "3.8" and python_version < "4" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
