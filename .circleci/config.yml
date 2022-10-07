@@ -57,7 +57,7 @@ workflows:
       - publish-docker:
           filters:
             branches:
-              ignore: /.*/
+              only: main
             tags:
               only:
                 - /.*/
