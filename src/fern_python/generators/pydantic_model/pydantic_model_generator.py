@@ -73,6 +73,3 @@ class PydanticModelGenerator(AbstractGenerator):
                 declaration=type, context=context, custom_config=custom_config
             )
             type_declaration_handler.run()
-            generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generated {filepath}"))
-            )
