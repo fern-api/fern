@@ -28,12 +28,19 @@ class Project:
         ...
     """
 
-    def __init__(self, filepath: str, project_name: str, pyproject_toml_config: PyProjectTomlConfig = None):
+    def __init__(
+        self,
+        filepath: str,
+        project_name: str,
+        python_version: str = "3.7",
+        pyproject_toml_config: PyProjectTomlConfig = None,
+    ) -> None:
         self._root_filepath = filepath
         self._project_filepath = os.path.join(filepath, "src")
         self._project_name = project_name
         self._pyproject_toml_config = pyproject_toml_config
         self._module_manager = ModuleManager()
+        self._python_version = python_version
         self._dependency_manager = DependencyManager()
 
     def source_file(self, filepath: Filepath) -> SourceFile:
@@ -81,6 +88,7 @@ class Project:
                 package=PyProjectTomlPackageConfig(include=self._project_name, _from="src"),
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
+                python_version=self._python_version,
             )
             py_project_toml.write()
 
