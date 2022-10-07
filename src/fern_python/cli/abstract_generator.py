@@ -26,7 +26,7 @@ class AbstractGenerator(ABC):
         )
         with Project(
             filepath=generator_config.output.path,
-            project_name=ir.api_name,
+            project_name=generator_config.organization,
             publish_config=project_publish_config,
         ) as project:
             self.run(

@@ -35,6 +35,7 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Publish Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
             docker build -f ./docker/pydantic-model/Dockerfile -t pydantic-model:${projectVersion}  .

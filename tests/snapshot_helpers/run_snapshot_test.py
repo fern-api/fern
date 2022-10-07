@@ -13,11 +13,12 @@ from snapshottest.module import SnapshotTest  # type: ignore
 def run_snapshot_test(
     *,
     filename_of_test: str,
+    fixture_name: str,
     snapshot: SnapshotTest,
     tmpdir: Path,
     cli: Callable[[str], None],
 ) -> None:
-    path_to_fixture = os.path.join(os.path.dirname(filename_of_test), "fixtures/fern-ir")
+    path_to_fixture = os.path.join(os.path.dirname(filename_of_test), f"fixtures/{fixture_name}")
 
     path_to_config_json = os.path.join(tmpdir, "config.json")
     path_to_output = os.path.join(tmpdir, "output/")

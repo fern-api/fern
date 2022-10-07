@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import shutil
 from dataclasses import dataclass
 from types import TracebackType
 from typing import Optional, Type
@@ -37,7 +36,7 @@ class Project:
         generate_py_typed: bool = False,
     ) -> None:
         self._root_filepath = filepath
-        self._project_filepath = os.path.join(filepath, "src")
+        self._project_filepath = filepath if publish_config is None else os.path.join(filepath, "src", project_name)
         self._project_name = project_name
         self._publish_config = publish_config
         self._module_manager = ModuleManager()
@@ -60,14 +59,13 @@ class Project:
         module = filepath.to_module()
         source_file = SourceFileImpl(
             filepath=os.path.join(
-                self._get_root_module_filepath(),
+                self._project_filepath,
                 *(directory.module_name for directory in filepath.directories),
                 f"{filepath.file.module_name}.py",
             ),
             module_path=module.path,
             completion_listener=on_finish,
             reference_resolver=ReferenceResolverImpl(
-                project_name=self._project_name,
                 module_path_of_source_file=module.path,
             ),
             dependency_manager=self._dependency_manager,
@@ -77,12 +75,8 @@ class Project:
     def add_dependency(self, dependency: AST.Dependency) -> None:
         self._dependency_manager.add_dependency(dependency)
 
-    def start(self) -> None:
-        if os.path.exists(self._project_filepath):
-            shutil.rmtree(self._project_filepath)
-
     def finish(self) -> None:
-        self._module_manager.write_modules(filepath=self._get_root_module_filepath())
+        self._module_manager.write_modules(filepath=self._project_filepath)
         if self._publish_config is not None:
             # generate pyproject.toml
             py_project_toml = PyProjectToml(
@@ -95,14 +89,10 @@ class Project:
             )
             py_project_toml.write()
             # generate py.typed
-            with open(os.path.join(self._get_root_module_filepath(), "py.typed"), "w") as f:
+            with open(os.path.join(self._project_filepath, "py.typed"), "w") as f:
                 f.write("")
 
-    def _get_root_module_filepath(self) -> str:
-        return os.path.join(self._project_filepath, self._project_name)
-
     def __enter__(self) -> Project:
-        self.start()
         return self
 
     def __exit__(

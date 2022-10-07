@@ -64,14 +64,11 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
             download_files=lambda: default_directories,
             publish=lambda x: (
                 Filepath.DirectoryFilepathPart(
+                    module_name=self._ir.api_name, export_strategy=ExportStrategy.EXPORT_ALL
+                ),
+                Filepath.DirectoryFilepathPart(
                     module_name=self._get_generator_name_for_containing_folder(),
                     export_strategy=ExportStrategy.EXPORT_ALL,
-                ),
-                Filepath.DirectoryFilepathPart(
-                    module_name=self._generator_config.organization, export_strategy=ExportStrategy.EXPORT_ALL
-                ),
-                Filepath.DirectoryFilepathPart(
-                    module_name=self._ir.api_name, export_strategy=ExportStrategy.EXPORT_ALL
                 ),
             )
             + default_directories,

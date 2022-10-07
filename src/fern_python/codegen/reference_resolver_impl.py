@@ -12,8 +12,7 @@ class ResolvedImport:
 
 
 class ReferenceResolverImpl(AST.ReferenceResolver):
-    def __init__(self, project_name: str, module_path_of_source_file: AST.ModulePath):
-        self._project_name = project_name
+    def __init__(self, module_path_of_source_file: AST.ModulePath):
         self._module_path_of_source_file = module_path_of_source_file
         self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(set)
         self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, ResolvedImport]] = None
