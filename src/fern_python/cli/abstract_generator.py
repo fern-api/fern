@@ -5,7 +5,7 @@ from typing import List
 from generator_exec.resources import logging
 from generator_exec.resources.config import GeneratorConfig, GeneratorPublishConfig
 
-from fern_python.codegen.project import Project, PyProjectTomlConfig
+from fern_python.codegen.project import Project, PublishConfig
 from fern_python.generated.ir_types import IntermediateRepresentation
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
@@ -18,16 +18,16 @@ class AbstractGenerator(ABC):
         ir: IntermediateRepresentation,
         generator_config: GeneratorConfig,
     ) -> None:
-        pyproject_toml_config = generator_config.output.mode.visit(
+        project_publish_config = generator_config.output.mode.visit(
             download_files=lambda: None,
-            publish=lambda publish: PyProjectTomlConfig(
+            publish=lambda publish: PublishConfig(
                 package_name=publish.registries_v_2.pypi.package_name, package_version=publish.version
             ),
         )
         with Project(
             filepath=generator_config.output.path,
             project_name=ir.api_name,
-            pyproject_toml_config=pyproject_toml_config,
+            publish_config=project_publish_config,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,

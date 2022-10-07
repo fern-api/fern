@@ -17,7 +17,7 @@ from .source_file import SourceFile, SourceFileImpl
 
 
 @dataclass(frozen=True)
-class PyProjectTomlConfig:
+class PublishConfig:
     package_name: str
     package_version: str
 
@@ -33,15 +33,17 @@ class Project:
         filepath: str,
         project_name: str,
         python_version: str = "3.7",
-        pyproject_toml_config: PyProjectTomlConfig = None,
+        publish_config: PublishConfig = None,
+        generate_py_typed: bool = False,
     ) -> None:
         self._root_filepath = filepath
         self._project_filepath = os.path.join(filepath, "src")
         self._project_name = project_name
-        self._pyproject_toml_config = pyproject_toml_config
+        self._publish_config = publish_config
         self._module_manager = ModuleManager()
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
+        self._generate_py_typed = generate_py_typed
 
     def source_file(self, filepath: Filepath) -> SourceFile:
         """
@@ -81,16 +83,20 @@ class Project:
 
     def finish(self) -> None:
         self._module_manager.write_modules(filepath=self._get_root_module_filepath())
-        if self._pyproject_toml_config is not None:
+        if self._publish_config is not None:
+            # generate pyproject.toml
             py_project_toml = PyProjectToml(
-                name=self._pyproject_toml_config.package_name,
-                version=self._pyproject_toml_config.package_version,
+                name=self._publish_config.package_name,
+                version=self._publish_config.package_version,
                 package=PyProjectTomlPackageConfig(include=self._project_name, _from="src"),
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
                 python_version=self._python_version,
             )
             py_project_toml.write()
+            # generate py.typed
+            with open(os.path.join(self._get_root_module_filepath(), "py.typed"), "w") as f:
+                f.write("")
 
     def _get_root_module_filepath(self) -> str:
         return os.path.join(self._project_filepath, self._project_name)
