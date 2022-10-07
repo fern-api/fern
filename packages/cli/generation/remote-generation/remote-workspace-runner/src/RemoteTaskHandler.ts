@@ -77,9 +77,7 @@ export class RemoteTaskHandler {
             failed: ({ message, s3PreSignedReadUrl }) => {
                 this.context.fail(message);
                 if (s3PreSignedReadUrl != null) {
-                    this.context.logger.debug(
-                        `Generated files. ${terminalLink("View here", s3PreSignedReadUrl)}`
-                    );
+                    this.context.logger.debug(`Generated files. ${terminalLink("View here", s3PreSignedReadUrl)}`);
                 }
                 this.context.finish();
             },
