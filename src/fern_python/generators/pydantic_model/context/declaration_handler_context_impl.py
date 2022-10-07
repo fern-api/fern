@@ -5,9 +5,9 @@ from fern_python.declaration_handler import (
     DeclarationHandlerContext,
     HashableDeclaredTypeName,
 )
+from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generated import ir_types
 
-from ..type_declaration_referencer import TypeDeclarationReferencer
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
 
 
@@ -16,7 +16,7 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
         self,
         source_file: SourceFile,
         intermediate_representation: ir_types.IntermediateRepresentation,
-        type_declaration_referencer: TypeDeclarationReferencer,
+        type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName],
     ):
         super().__init__(source_file=source_file)
 
@@ -62,7 +62,7 @@ class DeclarationHandlerContextImpl(DeclarationHandlerContext):
         return self._type_name_to_declaration[HashableDeclaredTypeName.of(type_name)]
 
     def get_class_name_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> str:
-        return self._type_declaration_referencer.get_class_name(type_name=type_name)
+        return self._type_declaration_referencer.get_class_name(name=type_name)
 
     def get_filepath_for_type(self, type_name: ir_types.DeclaredTypeName) -> Filepath:
-        return self._type_declaration_referencer.get_filepath(type_name)
+        return self._type_declaration_referencer.get_filepath(name=type_name)

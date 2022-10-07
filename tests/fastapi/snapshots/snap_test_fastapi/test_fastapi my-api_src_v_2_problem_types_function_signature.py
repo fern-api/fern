@@ -1,0 +1,134 @@
+from __future__ import annotations
+
+import typing
+
+import pydantic
+import typing_extensions
+
+from .non_void_function_signature import NonVoidFunctionSignature
+from .void_function_signature import VoidFunctionSignature
+from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
+
+T_Result = typing.TypeVar("T_Result")
+
+
+class _Factory:
+    def void(self, value: VoidFunctionSignature) -> FunctionSignature:
+        return FunctionSignature(__root__=_FunctionSignature.Void(**dict(value), type="void"))
+
+    def non_void(self, value: NonVoidFunctionSignature) -> FunctionSignature:
+        return FunctionSignature(__root__=_FunctionSignature.NonVoid(**dict(value), type="nonVoid"))
+
+    def void_that_takes_actual_result(self, value: VoidFunctionSignatureThatTakesActualResult) -> FunctionSignature:
+        return FunctionSignature(
+            __root__=_FunctionSignature.VoidThatTakesActualResult(**dict(value), type="voidThatTakesActualResult")
+        )
+
+
+class FunctionSignature(pydantic.BaseModel):
+    factory: typing.ClassVar[_Factory] = _Factory()
+
+    def get_as_union(
+        self,
+    ) -> typing.Union[
+        _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
+    ]:
+        return self.__root__
+
+    def visit(
+        self,
+        void: typing.Callable[[VoidFunctionSignature], T_Result],
+        non_void: typing.Callable[[NonVoidFunctionSignature], T_Result],
+        void_that_takes_actual_result: typing.Callable[[VoidFunctionSignatureThatTakesActualResult], T_Result],
+    ) -> T_Result:
+        if self.__root__.type == "void":
+            return void(self.__root__)
+        if self.__root__.type == "nonVoid":
+            return non_void(self.__root__)
+        if self.__root__.type == "voidThatTakesActualResult":
+            return void_that_takes_actual_result(self.__root__)
+
+    __root__: typing_extensions.Annotated[
+        typing.Union[_FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult],
+        pydantic.Field(discriminator="type"),
+    ]
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(
+            typing.Union[
+                _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
+            ],
+            values.get("__root__"),
+        )
+        for validator in FunctionSignature.Validators._validators:
+            value = validator(value)
+        return {**values, "__root__": value}
+
+    class Validators:
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [
+                        typing.Union[
+                            _FunctionSignature.Void,
+                            _FunctionSignature.NonVoid,
+                            _FunctionSignature.VoidThatTakesActualResult,
+                        ]
+                    ],
+                    typing.Union[
+                        _FunctionSignature.Void,
+                        _FunctionSignature.NonVoid,
+                        _FunctionSignature.VoidThatTakesActualResult,
+                    ],
+                ]
+            ]
+        ] = []
+
+        @classmethod
+        def validate(
+            cls,
+            validator: typing.Callable[
+                [
+                    typing.Union[
+                        _FunctionSignature.Void,
+                        _FunctionSignature.NonVoid,
+                        _FunctionSignature.VoidThatTakesActualResult,
+                    ]
+                ],
+                typing.Union[
+                    _FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult
+                ],
+            ],
+        ) -> None:
+            cls._validators.append(validator)
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    class Config:
+        frozen = True
+
+
+class _FunctionSignature:
+    class Void(VoidFunctionSignature):
+        type: typing_extensions.Literal["void"]
+
+        class Config:
+            frozen = True
+
+    class NonVoid(NonVoidFunctionSignature):
+        type: typing_extensions.Literal["nonVoid"]
+
+        class Config:
+            frozen = True
+
+    class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
+        type: typing_extensions.Literal["voidThatTakesActualResult"]
+
+        class Config:
+            frozen = True
+
+
+FunctionSignature.update_forward_refs()

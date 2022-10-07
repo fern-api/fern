@@ -3,7 +3,6 @@ from fern_python.declaration_handler import (
     DeclarationHandlerContext,
 )
 from fern_python.generated import ir_types
-from fern_python.logger import Logger
 
 from ..custom_config import CustomConfig
 from .alias_generator import AliasGenerator
@@ -17,10 +16,9 @@ class TypeDeclarationHandler(DeclarationHandler[ir_types.TypeDeclaration]):
         self,
         declaration: ir_types.TypeDeclaration,
         context: DeclarationHandlerContext,
-        logger: Logger,
         custom_config: CustomConfig,
     ):
-        super().__init__(declaration=declaration, context=context, logger=logger)
+        super().__init__(declaration=declaration, context=context)
         self._custom_config = custom_config
 
     def run(self) -> None:

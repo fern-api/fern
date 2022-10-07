@@ -1,0 +1,84 @@
+imports:
+  commons: commons.yml
+ids:
+  - PlaylistId
+types:
+  Playlist:
+    extends: PlaylistCreateRequest
+    properties:
+      playlist_id: PlaylistId
+      owner-id: commons.UserId
+
+  PlaylistCreateRequest:
+    properties:
+      name: string
+      problems: list<commons.ProblemId>
+
+  UpdatePlaylistRequest:
+    properties:
+      name: string
+      problems: list<commons.ProblemId>
+
+services:
+  http:
+    PlaylistCrudService:
+      auth: true
+      base-path: /v2/playlist/{serviceParam}
+      path-parameters:
+        serviceParam: integer
+      endpoints:
+        createPlaylist:
+          docs: Create a new playlist
+          method: POST
+          path: /create
+          request: PlaylistCreateRequest
+          response: Playlist
+
+        getPlaylists:
+          docs: Returns the user's playlists
+          method: GET
+          path: /all
+          query-parameters:
+            limit: optional<integer>
+          response: list<Playlist>
+
+        getPlaylist:
+          docs: Returns a playlist
+          method: GET
+          path: /{playlistId}
+          auth: false
+          path-parameters:
+            playlistId: PlaylistId
+          response: Playlist
+          errors:
+            - PlaylistIdNotFoundError
+            - UnauthorizedError
+
+        updatePlaylist:
+          docs: Updates a playlist
+          method: PUT
+          path: /{playlistId}
+          path-parameters:
+            playlistId: PlaylistId
+          request: optional<UpdatePlaylistRequest>
+          response: optional<Playlist>
+          errors:
+            - PlaylistIdNotFoundError
+
+        deletePlaylist:
+          docs: Deletes a playlist
+          method: DELETE
+          path: /{playlist_id}
+          path-parameters:
+            playlist_id: PlaylistId
+
+errors:
+  PlaylistIdNotFoundError:
+    http:
+      statusCode: 404
+    type:
+      union:
+        playlistId: PlaylistId
+  UnauthorizedError:
+    http:
+      statusCode: 401

@@ -8,7 +8,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class AbstractGenerator(ABC):
-    def generate(
+    def generate_project(
         self,
         *,
         generator_exec_wrapper: GeneratorExecWrapper,

@@ -1,13 +1,12 @@
 from typing import Callable, Optional
 
 from fern_python.codegen import AST
+from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generated import ir_types
-
-from ..type_declaration_referencer import TypeDeclarationReferencer
 
 
 class TypeReferenceToTypeHintConverter:
-    def __init__(self, type_declaration_referencer: TypeDeclarationReferencer):
+    def __init__(self, type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
         self._type_declaration_referencer = type_declaration_referencer
 
     def get_type_hint_for_type_reference(

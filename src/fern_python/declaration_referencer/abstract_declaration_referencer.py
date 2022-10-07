@@ -10,14 +10,15 @@ T = TypeVar("T")
 class AbstractDeclarationReferencer(ABC, Generic[T]):
     def get_class_reference(
         self,
+        *,
         name: T,
         must_import_after_current_declaration: Optional[Callable[[T], bool]] = None,
     ) -> AST.ClassReference:
-        filepath = self.get_filepath(name)
+        filepath = self.get_filepath(name=name)
         return AST.ClassReference(
             import_=AST.ReferenceImport(
                 module=filepath.to_module(),
-                named_import=self.get_class_name(name),
+                named_import=self.get_class_name(name=name),
             ),
             qualified_name_excluding_import=(),
             must_import_after_current_declaration=must_import_after_current_declaration(name)
@@ -26,16 +27,16 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         )
 
     @abstractmethod
-    def get_filepath(self, name: T) -> Filepath:
+    def get_filepath(self, *, name: T) -> Filepath:
         ...
 
     @abstractmethod
-    def get_class_name(self, name: T) -> str:
+    def get_class_name(self, *, name: T) -> str:
         ...
 
     def _get_directories_for_fern_filepath(
         self,
-        api_name: str,
+        *,
         fern_filepath: ir_types.FernFilepath,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         fern_filepath_parts = fern_filepath.get_as_list()
