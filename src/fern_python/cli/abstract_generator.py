@@ -131,7 +131,7 @@ class _Publisher:
     ) -> None:
         self._generator_exec_wrapper.send_update(
             logging.GeneratorUpdate.factory.log(
-                logging.LogUpdate(level=logging.LogLevel.DEBUG, message=" ".join(loggable_command))
+                logging.LogUpdate(level=logging.LogLevel.DEBUG, message=loggable_command)
             )
         )
         subprocess.run(
