@@ -28,40 +28,46 @@ class SubmissionFileInfo(pydantic.BaseModel):
         return contents
 
     class Validators:
-        _directory: typing.ClassVar[str] = []
-        _filename: typing.ClassVar[str] = []
-        _contents: typing.ClassVar[str] = []
+        _directory: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _filename: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _contents: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(directory: typing_extensions.Literal["directory"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["directory"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(filename: typing_extensions.Literal["filename"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["filename"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(contents: typing_extensions.Literal["contents"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["contents"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "directory":
-                    cls._directory.append(validator)  # type: ignore
+                    cls._directory.append(validator)
                 elif field_name == "filename":
-                    cls._filename.append(validator)  # type: ignore
+                    cls._filename.append(validator)
                 elif field_name == "contents":
-                    cls._contents.append(validator)  # type: ignore
+                    cls._contents.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on SubmissionFileInfo: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

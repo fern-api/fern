@@ -48,58 +48,81 @@ class RecordingResponseNotification(pydantic.BaseModel):
         return traced_file
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _test_case_id: typing.ClassVar[typing.Optional[str]] = []
-        _line_number: typing.ClassVar[int] = []
-        _lightweight_stack_info: typing.ClassVar[LightweightStackframeInformation] = []
-        _traced_file: typing.ClassVar[typing.Optional[TracedFile]] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _test_case_id: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]] = []
+        _line_number: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _lightweight_stack_info: typing.ClassVar[
+            typing.List[typing.Callable[[LightweightStackframeInformation], LightweightStackframeInformation]]
+        ] = []
+        _traced_file: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[TracedFile]], typing.Optional[TracedFile]]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
-            ...
-
-        @typing.overload
-        @classmethod
-        def field(test_case_id: typing_extensions.Literal["test_case_id"]) -> typing.Optional[str]:
-            ...
-
-        @typing.overload
-        @classmethod
-        def field(line_number: typing_extensions.Literal["line_number"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            lightweight_stack_info: typing_extensions.Literal["lightweight_stack_info"],
-        ) -> LightweightStackframeInformation:
+            cls, field_name: typing_extensions.Literal["test_case_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(traced_file: typing_extensions.Literal["traced_file"]) -> typing.Optional[TracedFile]:
+        def field(
+            cls, field_name: typing_extensions.Literal["line_number"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["lightweight_stack_info"]
+        ) -> typing.Callable[
+            [typing.Callable[[LightweightStackframeInformation], LightweightStackframeInformation]],
+            typing.Callable[[LightweightStackframeInformation], LightweightStackframeInformation],
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["traced_file"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[TracedFile]], typing.Optional[TracedFile]]],
+            typing.Callable[[typing.Optional[TracedFile]], typing.Optional[TracedFile]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "test_case_id":
-                    cls._test_case_id.append(validator)  # type: ignore
+                    cls._test_case_id.append(validator)
                 elif field_name == "line_number":
-                    cls._line_number.append(validator)  # type: ignore
+                    cls._line_number.append(validator)
                 elif field_name == "lightweight_stack_info":
-                    cls._lightweight_stack_info.append(validator)  # type: ignore
+                    cls._lightweight_stack_info.append(validator)
                 elif field_name == "traced_file":
-                    cls._traced_file.append(validator)  # type: ignore
+                    cls._traced_file.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on RecordingResponseNotification: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

@@ -23,32 +23,38 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         return stdout
 
     class Validators:
-        _result: typing.ClassVar[TestCaseResult] = []
-        _stdout: typing.ClassVar[str] = []
+        _result: typing.ClassVar[typing.List[typing.Callable[[TestCaseResult], TestCaseResult]]] = []
+        _stdout: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(result: typing_extensions.Literal["result"]) -> TestCaseResult:
+        def field(
+            cls, field_name: typing_extensions.Literal["result"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseResult], TestCaseResult]], typing.Callable[[TestCaseResult], TestCaseResult]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(stdout: typing_extensions.Literal["stdout"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "result":
-                    cls._result.append(validator)  # type: ignore
+                    cls._result.append(validator)
                 elif field_name == "stdout":
-                    cls._stdout.append(validator)  # type: ignore
+                    cls._stdout.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseResultWithStdout: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

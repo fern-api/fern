@@ -16,24 +16,29 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         return template
 
     class Validators:
-        _template: typing.ClassVar[TestCaseTemplate] = []
+        _template: typing.ClassVar[typing.List[typing.Callable[[TestCaseTemplate], TestCaseTemplate]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(template: typing_extensions.Literal["template"]) -> TestCaseTemplate:
+        def field(
+            cls, field_name: typing_extensions.Literal["template"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseTemplate], TestCaseTemplate]],
+            typing.Callable[[TestCaseTemplate], TestCaseTemplate],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template":
-                    cls._template.append(validator)  # type: ignore
+                    cls._template.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetGeneratedTestCaseTemplateFileRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

@@ -76,7 +76,7 @@ class ContainerType(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def add_validator(
+        def validate(
             cls,
             validator: typing.Callable[
                 [typing.Union[_ContainerType.List, _ContainerType.Map, _ContainerType.Optional, _ContainerType.Set]],

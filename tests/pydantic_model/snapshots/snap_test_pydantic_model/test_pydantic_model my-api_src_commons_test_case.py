@@ -23,32 +23,41 @@ class TestCase(pydantic.BaseModel):
         return params
 
     class Validators:
-        _id: typing.ClassVar[str] = []
-        _params: typing.ClassVar[typing.List[VariableValue]] = []
+        _id: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _params: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[VariableValue]], typing.List[VariableValue]]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(id: typing_extensions.Literal["id"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["id"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(params: typing_extensions.Literal["params"]) -> typing.List[VariableValue]:
+        def field(
+            cls, field_name: typing_extensions.Literal["params"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[VariableValue]], typing.List[VariableValue]]],
+            typing.Callable[[typing.List[VariableValue]], typing.List[VariableValue]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "id":
-                    cls._id.append(validator)  # type: ignore
+                    cls._id.append(validator)
                 elif field_name == "params":
-                    cls._params.append(validator)  # type: ignore
+                    cls._params.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCase: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

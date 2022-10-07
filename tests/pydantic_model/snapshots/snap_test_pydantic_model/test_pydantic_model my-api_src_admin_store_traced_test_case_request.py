@@ -24,32 +24,46 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         return trace_responses
 
     class Validators:
-        _result: typing.ClassVar[TestCaseResultWithStdout] = []
-        _trace_responses: typing.ClassVar[typing.List[TraceResponse]] = []
+        _result: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseResultWithStdout], TestCaseResultWithStdout]]
+        ] = []
+        _trace_responses: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[TraceResponse]], typing.List[TraceResponse]]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(result: typing_extensions.Literal["result"]) -> TestCaseResultWithStdout:
+        def field(
+            cls, field_name: typing_extensions.Literal["result"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseResultWithStdout], TestCaseResultWithStdout]],
+            typing.Callable[[TestCaseResultWithStdout], TestCaseResultWithStdout],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(trace_responses: typing_extensions.Literal["trace_responses"]) -> typing.List[TraceResponse]:
+        def field(
+            cls, field_name: typing_extensions.Literal["trace_responses"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[TraceResponse]], typing.List[TraceResponse]]],
+            typing.Callable[[typing.List[TraceResponse]], typing.List[TraceResponse]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "result":
-                    cls._result.append(validator)  # type: ignore
+                    cls._result.append(validator)
                 elif field_name == "trace_responses":
-                    cls._trace_responses.append(validator)  # type: ignore
+                    cls._trace_responses.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on StoreTracedTestCaseRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

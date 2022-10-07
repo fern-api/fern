@@ -24,32 +24,39 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         return full_list
 
     class Validators:
-        _node_id: typing.ClassVar[NodeId] = []
-        _full_list: typing.ClassVar[SinglyLinkedListValue] = []
+        _node_id: typing.ClassVar[typing.List[typing.Callable[[NodeId], NodeId]]] = []
+        _full_list: typing.ClassVar[typing.List[typing.Callable[[SinglyLinkedListValue], SinglyLinkedListValue]]] = []
 
         @typing.overload
         @classmethod
-        def field(node_id: typing_extensions.Literal["node_id"]) -> NodeId:
+        def field(
+            cls, field_name: typing_extensions.Literal["node_id"]
+        ) -> typing.Callable[[typing.Callable[[NodeId], NodeId]], typing.Callable[[NodeId], NodeId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(full_list: typing_extensions.Literal["full_list"]) -> SinglyLinkedListValue:
+        def field(
+            cls, field_name: typing_extensions.Literal["full_list"]
+        ) -> typing.Callable[
+            [typing.Callable[[SinglyLinkedListValue], SinglyLinkedListValue]],
+            typing.Callable[[SinglyLinkedListValue], SinglyLinkedListValue],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "node_id":
-                    cls._node_id.append(validator)  # type: ignore
+                    cls._node_id.append(validator)
                 elif field_name == "full_list":
-                    cls._full_list.append(validator)  # type: ignore
+                    cls._full_list.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on SinglyLinkedListNodeAndListValue: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

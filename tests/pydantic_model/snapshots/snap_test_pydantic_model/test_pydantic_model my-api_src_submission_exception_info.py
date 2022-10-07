@@ -28,40 +28,46 @@ class ExceptionInfo(pydantic.BaseModel):
         return exception_stacktrace
 
     class Validators:
-        _exception_type: typing.ClassVar[str] = []
-        _exception_message: typing.ClassVar[str] = []
-        _exception_stacktrace: typing.ClassVar[str] = []
+        _exception_type: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _exception_message: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _exception_stacktrace: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(exception_type: typing_extensions.Literal["exception_type"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception_type"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(exception_message: typing_extensions.Literal["exception_message"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception_message"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(exception_stacktrace: typing_extensions.Literal["exception_stacktrace"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception_stacktrace"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_type":
-                    cls._exception_type.append(validator)  # type: ignore
+                    cls._exception_type.append(validator)
                 elif field_name == "exception_message":
-                    cls._exception_message.append(validator)  # type: ignore
+                    cls._exception_message.append(validator)
                 elif field_name == "exception_stacktrace":
-                    cls._exception_stacktrace.append(validator)  # type: ignore
+                    cls._exception_stacktrace.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ExceptionInfo: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

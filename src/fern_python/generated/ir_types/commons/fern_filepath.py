@@ -29,7 +29,7 @@ class FernFilepath(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def add_validator(
+        def validate(
             cls, validator: typing.Callable[[typing.List[StringWithAllCasings]], typing.List[StringWithAllCasings]]
         ) -> None:
             cls._validators.append(validator)

@@ -16,24 +16,29 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         return function_signature
 
     class Validators:
-        _function_signature: typing.ClassVar[FunctionSignature] = []
+        _function_signature: typing.ClassVar[typing.List[typing.Callable[[FunctionSignature], FunctionSignature]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(function_signature: typing_extensions.Literal["function_signature"]) -> FunctionSignature:
+        def field(
+            cls, field_name: typing_extensions.Literal["function_signature"]
+        ) -> typing.Callable[
+            [typing.Callable[[FunctionSignature], FunctionSignature]],
+            typing.Callable[[FunctionSignature], FunctionSignature],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "function_signature":
-                    cls._function_signature.append(validator)  # type: ignore
+                    cls._function_signature.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetFunctionSignatureRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

@@ -18,24 +18,31 @@ class Scope(pydantic.BaseModel):
         return variables
 
     class Validators:
-        _variables: typing.ClassVar[typing.Dict[str, DebugVariableValue]] = []
+        _variables: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[str, DebugVariableValue]], typing.Dict[str, DebugVariableValue]]]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(variables: typing_extensions.Literal["variables"]) -> typing.Dict[str, DebugVariableValue]:
+        def field(
+            cls, field_name: typing_extensions.Literal["variables"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[str, DebugVariableValue]], typing.Dict[str, DebugVariableValue]]],
+            typing.Callable[[typing.Dict[str, DebugVariableValue]], typing.Dict[str, DebugVariableValue]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "variables":
-                    cls._variables.append(validator)  # type: ignore
+                    cls._variables.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on Scope: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

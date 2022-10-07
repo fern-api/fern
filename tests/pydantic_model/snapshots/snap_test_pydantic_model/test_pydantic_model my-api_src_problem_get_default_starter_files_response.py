@@ -17,24 +17,31 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
         return files
 
     class Validators:
-        _files: typing.ClassVar[typing.Dict[Language, ProblemFiles]] = []
+        _files: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[Language, ProblemFiles]], typing.Dict[Language, ProblemFiles]]]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(files: typing_extensions.Literal["files"]) -> typing.Dict[Language, ProblemFiles]:
+        def field(
+            cls, field_name: typing_extensions.Literal["files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[Language, ProblemFiles]], typing.Dict[Language, ProblemFiles]]],
+            typing.Callable[[typing.Dict[Language, ProblemFiles]], typing.Dict[Language, ProblemFiles]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
-                    cls._files.append(validator)  # type: ignore
+                    cls._files.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetDefaultStarterFilesResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

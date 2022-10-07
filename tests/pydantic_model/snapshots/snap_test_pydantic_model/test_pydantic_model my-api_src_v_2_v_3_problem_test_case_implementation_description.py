@@ -18,24 +18,44 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         return boards
 
     class Validators:
-        _boards: typing.ClassVar[typing.List[TestCaseImplementationDescriptionBoard]] = []
+        _boards: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [typing.List[TestCaseImplementationDescriptionBoard]],
+                    typing.List[TestCaseImplementationDescriptionBoard],
+                ]
+            ]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(boards: typing_extensions.Literal["boards"]) -> typing.List[TestCaseImplementationDescriptionBoard]:
+        def field(
+            cls, field_name: typing_extensions.Literal["boards"]
+        ) -> typing.Callable[
+            [
+                typing.Callable[
+                    [typing.List[TestCaseImplementationDescriptionBoard]],
+                    typing.List[TestCaseImplementationDescriptionBoard],
+                ]
+            ],
+            typing.Callable[
+                [typing.List[TestCaseImplementationDescriptionBoard]],
+                typing.List[TestCaseImplementationDescriptionBoard],
+            ],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "boards":
-                    cls._boards.append(validator)  # type: ignore
+                    cls._boards.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseImplementationDescription: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

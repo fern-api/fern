@@ -16,24 +16,28 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         return expected_value_parameter_id
 
     class Validators:
-        _expected_value_parameter_id: typing.ClassVar[ParameterId] = []
+        _expected_value_parameter_id: typing.ClassVar[typing.List[typing.Callable[[ParameterId], ParameterId]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(expected_value_parameter_id: typing_extensions.Literal["expected_value_parameter_id"]) -> ParameterId:
+        def field(
+            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[ParameterId], ParameterId]], typing.Callable[[ParameterId], ParameterId]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_value_parameter_id":
-                    cls._expected_value_parameter_id.append(validator)  # type: ignore
+                    cls._expected_value_parameter_id.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on DeepEqualityCorrectnessCheck: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

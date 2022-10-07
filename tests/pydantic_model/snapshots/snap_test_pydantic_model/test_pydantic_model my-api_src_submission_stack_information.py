@@ -23,32 +23,41 @@ class StackInformation(pydantic.BaseModel):
         return top_stack_frame
 
     class Validators:
-        _num_stack_frames: typing.ClassVar[int] = []
-        _top_stack_frame: typing.ClassVar[typing.Optional[StackFrame]] = []
+        _num_stack_frames: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _top_stack_frame: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[StackFrame]], typing.Optional[StackFrame]]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(num_stack_frames: typing_extensions.Literal["num_stack_frames"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["num_stack_frames"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(top_stack_frame: typing_extensions.Literal["top_stack_frame"]) -> typing.Optional[StackFrame]:
+        def field(
+            cls, field_name: typing_extensions.Literal["top_stack_frame"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[StackFrame]], typing.Optional[StackFrame]]],
+            typing.Callable[[typing.Optional[StackFrame]], typing.Optional[StackFrame]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "num_stack_frames":
-                    cls._num_stack_frames.append(validator)  # type: ignore
+                    cls._num_stack_frames.append(validator)
                 elif field_name == "top_stack_frame":
-                    cls._top_stack_frame.append(validator)  # type: ignore
+                    cls._top_stack_frame.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on StackInformation: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

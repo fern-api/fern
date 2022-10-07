@@ -7,7 +7,7 @@ import typing_extensions
 
 from ..commons.variable_value import VariableValue
 from .exception_info import ExceptionInfo
-from .exception_v2 import ExceptionV2
+from .exception_v_2 import ExceptionV2
 
 T_Result = typing.TypeVar("T_Result")
 

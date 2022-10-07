@@ -41,48 +41,66 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         return user_id
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _language: typing.ClassVar[Language] = []
-        _submission_files: typing.ClassVar[typing.List[SubmissionFileInfo]] = []
-        _user_id: typing.ClassVar[typing.Optional[str]] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _language: typing.ClassVar[typing.List[typing.Callable[[Language], Language]]] = []
+        _submission_files: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[SubmissionFileInfo]], typing.List[SubmissionFileInfo]]]
+        ] = []
+        _user_id: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(language: typing_extensions.Literal["language"]) -> Language:
+        def field(
+            cls, field_name: typing_extensions.Literal["language"]
+        ) -> typing.Callable[[typing.Callable[[Language], Language]], typing.Callable[[Language], Language]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(submission_files: typing_extensions.Literal["submission_files"]) -> typing.List[SubmissionFileInfo]:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[SubmissionFileInfo]], typing.List[SubmissionFileInfo]]],
+            typing.Callable[[typing.List[SubmissionFileInfo]], typing.List[SubmissionFileInfo]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(user_id: typing_extensions.Literal["user_id"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["user_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "language":
-                    cls._language.append(validator)  # type: ignore
+                    cls._language.append(validator)
                 elif field_name == "submission_files":
-                    cls._submission_files.append(validator)  # type: ignore
+                    cls._submission_files.append(validator)
                 elif field_name == "user_id":
-                    cls._user_id.append(validator)  # type: ignore
+                    cls._user_id.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on WorkspaceSubmitRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

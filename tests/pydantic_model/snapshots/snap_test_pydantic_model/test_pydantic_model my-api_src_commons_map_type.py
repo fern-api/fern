@@ -23,32 +23,40 @@ class MapType(pydantic.BaseModel):
         return value_type
 
     class Validators:
-        _key_type: typing.ClassVar[VariableType] = []
-        _value_type: typing.ClassVar[VariableType] = []
+        _key_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
+        _value_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
 
         @typing.overload
         @classmethod
-        def field(key_type: typing_extensions.Literal["key_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["key_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(value_type: typing_extensions.Literal["value_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["value_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key_type":
-                    cls._key_type.append(validator)  # type: ignore
+                    cls._key_type.append(validator)
                 elif field_name == "value_type":
-                    cls._value_type.append(validator)  # type: ignore
+                    cls._value_type.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on MapType: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

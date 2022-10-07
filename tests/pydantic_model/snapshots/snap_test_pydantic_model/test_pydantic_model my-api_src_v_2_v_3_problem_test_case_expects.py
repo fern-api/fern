@@ -14,24 +14,31 @@ class TestCaseExpects(pydantic.BaseModel):
         return expected_stdout
 
     class Validators:
-        _expected_stdout: typing.ClassVar[typing.Optional[str]] = []
+        _expected_stdout: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(expected_stdout: typing_extensions.Literal["expected_stdout"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["expected_stdout"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_stdout":
-                    cls._expected_stdout.append(validator)  # type: ignore
+                    cls._expected_stdout.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseExpects: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

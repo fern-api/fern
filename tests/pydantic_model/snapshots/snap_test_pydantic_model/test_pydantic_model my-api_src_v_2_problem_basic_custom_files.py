@@ -42,50 +42,71 @@ class BasicCustomFiles(pydantic.BaseModel):
         return basic_test_case_template
 
     class Validators:
-        _method_name: typing.ClassVar[str] = []
-        _signature: typing.ClassVar[NonVoidFunctionSignature] = []
-        _additional_files: typing.ClassVar[typing.Dict[Language, Files]] = []
-        _basic_test_case_template: typing.ClassVar[BasicTestCaseTemplate] = []
+        _method_name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _signature: typing.ClassVar[
+            typing.List[typing.Callable[[NonVoidFunctionSignature], NonVoidFunctionSignature]]
+        ] = []
+        _additional_files: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]]
+        ] = []
+        _basic_test_case_template: typing.ClassVar[
+            typing.List[typing.Callable[[BasicTestCaseTemplate], BasicTestCaseTemplate]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(method_name: typing_extensions.Literal["method_name"]) -> str:
-            ...
-
-        @typing.overload
-        @classmethod
-        def field(signature: typing_extensions.Literal["signature"]) -> NonVoidFunctionSignature:
-            ...
-
-        @typing.overload
-        @classmethod
-        def field(additional_files: typing_extensions.Literal["additional_files"]) -> typing.Dict[Language, Files]:
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            basic_test_case_template: typing_extensions.Literal["basic_test_case_template"],
-        ) -> BasicTestCaseTemplate:
+            cls, field_name: typing_extensions.Literal["signature"]
+        ) -> typing.Callable[
+            [typing.Callable[[NonVoidFunctionSignature], NonVoidFunctionSignature]],
+            typing.Callable[[NonVoidFunctionSignature], NonVoidFunctionSignature],
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["additional_files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]],
+            typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]],
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["basic_test_case_template"]
+        ) -> typing.Callable[
+            [typing.Callable[[BasicTestCaseTemplate], BasicTestCaseTemplate]],
+            typing.Callable[[BasicTestCaseTemplate], BasicTestCaseTemplate],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "method_name":
-                    cls._method_name.append(validator)  # type: ignore
+                    cls._method_name.append(validator)
                 elif field_name == "signature":
-                    cls._signature.append(validator)  # type: ignore
+                    cls._signature.append(validator)
                 elif field_name == "additional_files":
-                    cls._additional_files.append(validator)  # type: ignore
+                    cls._additional_files.append(validator)
                 elif field_name == "basic_test_case_template":
-                    cls._basic_test_case_template.append(validator)  # type: ignore
+                    cls._basic_test_case_template.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on BasicCustomFiles: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

@@ -24,32 +24,44 @@ class TestCaseImplementation(pydantic.BaseModel):
         return function
 
     class Validators:
-        _description: typing.ClassVar[TestCaseImplementationDescription] = []
-        _function: typing.ClassVar[TestCaseFunction] = []
+        _description: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseImplementationDescription], TestCaseImplementationDescription]]
+        ] = []
+        _function: typing.ClassVar[typing.List[typing.Callable[[TestCaseFunction], TestCaseFunction]]] = []
 
         @typing.overload
         @classmethod
-        def field(description: typing_extensions.Literal["description"]) -> TestCaseImplementationDescription:
+        def field(
+            cls, field_name: typing_extensions.Literal["description"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseImplementationDescription], TestCaseImplementationDescription]],
+            typing.Callable[[TestCaseImplementationDescription], TestCaseImplementationDescription],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(function: typing_extensions.Literal["function"]) -> TestCaseFunction:
+        def field(
+            cls, field_name: typing_extensions.Literal["function"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseFunction], TestCaseFunction]],
+            typing.Callable[[TestCaseFunction], TestCaseFunction],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "description":
-                    cls._description.append(validator)  # type: ignore
+                    cls._description.append(validator)
                 elif field_name == "function":
-                    cls._function.append(validator)  # type: ignore
+                    cls._function.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseImplementation: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

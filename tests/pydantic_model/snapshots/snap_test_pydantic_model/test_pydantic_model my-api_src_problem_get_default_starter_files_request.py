@@ -31,40 +31,53 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         return method_name
 
     class Validators:
-        _input_params: typing.ClassVar[typing.List[VariableTypeAndName]] = []
-        _output_type: typing.ClassVar[VariableType] = []
-        _method_name: typing.ClassVar[str] = []
+        _input_params: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[VariableTypeAndName]], typing.List[VariableTypeAndName]]]
+        ] = []
+        _output_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
+        _method_name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(input_params: typing_extensions.Literal["input_params"]) -> typing.List[VariableTypeAndName]:
+        def field(
+            cls, field_name: typing_extensions.Literal["input_params"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[VariableTypeAndName]], typing.List[VariableTypeAndName]]],
+            typing.Callable[[typing.List[VariableTypeAndName]], typing.List[VariableTypeAndName]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(output_type: typing_extensions.Literal["output_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["output_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(method_name: typing_extensions.Literal["method_name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "input_params":
-                    cls._input_params.append(validator)  # type: ignore
+                    cls._input_params.append(validator)
                 elif field_name == "output_type":
-                    cls._output_type.append(validator)  # type: ignore
+                    cls._output_type.append(validator)
                 elif field_name == "method_name":
-                    cls._method_name.append(validator)  # type: ignore
+                    cls._method_name.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetDefaultStarterFilesRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

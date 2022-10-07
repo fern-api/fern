@@ -35,44 +35,61 @@ class GeneratedFiles(pydantic.BaseModel):
         return other
 
     class Validators:
-        _generated_test_case_files: typing.ClassVar[typing.Dict[Language, Files]] = []
-        _generated_template_files: typing.ClassVar[typing.Dict[Language, Files]] = []
-        _other: typing.ClassVar[typing.Dict[Language, Files]] = []
+        _generated_test_case_files: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]]
+        ] = []
+        _generated_template_files: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]]
+        ] = []
+        _other: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]]
+        ] = []
 
         @typing.overload
         @classmethod
         def field(
-            generated_test_case_files: typing_extensions.Literal["generated_test_case_files"],
-        ) -> typing.Dict[Language, Files]:
+            cls, field_name: typing_extensions.Literal["generated_test_case_files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]],
+            typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            generated_template_files: typing_extensions.Literal["generated_template_files"],
-        ) -> typing.Dict[Language, Files]:
+            cls, field_name: typing_extensions.Literal["generated_template_files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]],
+            typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(other: typing_extensions.Literal["other"]) -> typing.Dict[Language, Files]:
+        def field(
+            cls, field_name: typing_extensions.Literal["other"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]]],
+            typing.Callable[[typing.Dict[Language, Files]], typing.Dict[Language, Files]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "generated_test_case_files":
-                    cls._generated_test_case_files.append(validator)  # type: ignore
+                    cls._generated_test_case_files.append(validator)
                 elif field_name == "generated_template_files":
-                    cls._generated_template_files.append(validator)  # type: ignore
+                    cls._generated_template_files.append(validator)
                 elif field_name == "other":
-                    cls._other.append(validator)  # type: ignore
+                    cls._other.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GeneratedFiles: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

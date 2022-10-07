@@ -59,7 +59,7 @@ class ResponseErrorShape(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def add_validator(
+        def validate(
             cls,
             validator: typing.Callable[
                 [typing.Union[_ResponseErrorShape.SingleProperty, _ResponseErrorShape.NoProperties]],

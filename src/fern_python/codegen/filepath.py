@@ -2,15 +2,15 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
-from enum import Enum, auto
+from enum import Enum
 from typing import Optional, Tuple
 
 from . import AST
 
 
-class ExportStrategy(Enum):
-    EXPORT_ALL = auto()
-    EXPORT_AS_NAMESPACE = auto()
+class ExportStrategy(str, Enum):
+    EXPORT_ALL = "export_all"
+    EXPORT_AS_NAMESPACE = "export_as_namespace"
 
 
 @dataclass(frozen=True)

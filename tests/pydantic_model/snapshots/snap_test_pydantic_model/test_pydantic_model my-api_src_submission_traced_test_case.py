@@ -23,32 +23,41 @@ class TracedTestCase(pydantic.BaseModel):
         return trace_responses_size
 
     class Validators:
-        _result: typing.ClassVar[TestCaseResultWithStdout] = []
-        _trace_responses_size: typing.ClassVar[int] = []
+        _result: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseResultWithStdout], TestCaseResultWithStdout]]
+        ] = []
+        _trace_responses_size: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
 
         @typing.overload
         @classmethod
-        def field(result: typing_extensions.Literal["result"]) -> TestCaseResultWithStdout:
+        def field(
+            cls, field_name: typing_extensions.Literal["result"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseResultWithStdout], TestCaseResultWithStdout]],
+            typing.Callable[[TestCaseResultWithStdout], TestCaseResultWithStdout],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(trace_responses_size: typing_extensions.Literal["trace_responses_size"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["trace_responses_size"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "result":
-                    cls._result.append(validator)  # type: ignore
+                    cls._result.append(validator)
                 elif field_name == "trace_responses_size":
-                    cls._trace_responses_size.append(validator)  # type: ignore
+                    cls._trace_responses_size.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TracedTestCase: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

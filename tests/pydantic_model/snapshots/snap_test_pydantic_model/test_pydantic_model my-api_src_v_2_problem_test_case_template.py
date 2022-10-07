@@ -31,40 +31,54 @@ class TestCaseTemplate(pydantic.BaseModel):
         return implementation
 
     class Validators:
-        _template_id: typing.ClassVar[TestCaseTemplateId] = []
-        _name: typing.ClassVar[str] = []
-        _implementation: typing.ClassVar[TestCaseImplementation] = []
+        _template_id: typing.ClassVar[typing.List[typing.Callable[[TestCaseTemplateId], TestCaseTemplateId]]] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _implementation: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseImplementation], TestCaseImplementation]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(template_id: typing_extensions.Literal["template_id"]) -> TestCaseTemplateId:
+        def field(
+            cls, field_name: typing_extensions.Literal["template_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseTemplateId], TestCaseTemplateId]],
+            typing.Callable[[TestCaseTemplateId], TestCaseTemplateId],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(implementation: typing_extensions.Literal["implementation"]) -> TestCaseImplementation:
+        def field(
+            cls, field_name: typing_extensions.Literal["implementation"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseImplementation], TestCaseImplementation]],
+            typing.Callable[[TestCaseImplementation], TestCaseImplementation],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template_id":
-                    cls._template_id.append(validator)  # type: ignore
+                    cls._template_id.append(validator)
                 elif field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 elif field_name == "implementation":
-                    cls._implementation.append(validator)  # type: ignore
+                    cls._implementation.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseTemplate: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

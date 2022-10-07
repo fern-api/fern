@@ -29,9 +29,7 @@ class ResponseErrors(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def add_validator(
-            cls, validator: typing.Callable[[typing.List[ResponseError]], typing.List[ResponseError]]
-        ) -> None:
+        def validate(cls, validator: typing.Callable[[typing.List[ResponseError]], typing.List[ResponseError]]) -> None:
             cls._validators.append(validator)
 
     def json(self, **kwargs: typing.Any) -> str:

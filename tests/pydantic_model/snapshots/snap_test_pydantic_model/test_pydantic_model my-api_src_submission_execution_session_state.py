@@ -52,64 +52,87 @@ class ExecutionSessionState(pydantic.BaseModel):
         return status
 
     class Validators:
-        _last_time_contacted: typing.ClassVar[typing.Optional[str]] = []
-        _session_id: typing.ClassVar[str] = []
-        _is_warm_instance: typing.ClassVar[bool] = []
-        _aws_task_id: typing.ClassVar[typing.Optional[str]] = []
-        _language: typing.ClassVar[Language] = []
-        _status: typing.ClassVar[ExecutionSessionStatus] = []
+        _last_time_contacted: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]
+        ] = []
+        _session_id: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _is_warm_instance: typing.ClassVar[typing.List[typing.Callable[[bool], bool]]] = []
+        _aws_task_id: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]] = []
+        _language: typing.ClassVar[typing.List[typing.Callable[[Language], Language]]] = []
+        _status: typing.ClassVar[typing.List[typing.Callable[[ExecutionSessionStatus], ExecutionSessionStatus]]] = []
 
         @typing.overload
         @classmethod
-        def field(last_time_contacted: typing_extensions.Literal["last_time_contacted"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["last_time_contacted"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(session_id: typing_extensions.Literal["session_id"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["session_id"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(is_warm_instance: typing_extensions.Literal["is_warm_instance"]) -> bool:
+        def field(
+            cls, field_name: typing_extensions.Literal["is_warm_instance"]
+        ) -> typing.Callable[[typing.Callable[[bool], bool]], typing.Callable[[bool], bool]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(aws_task_id: typing_extensions.Literal["aws_task_id"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["aws_task_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(language: typing_extensions.Literal["language"]) -> Language:
+        def field(
+            cls, field_name: typing_extensions.Literal["language"]
+        ) -> typing.Callable[[typing.Callable[[Language], Language]], typing.Callable[[Language], Language]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(status: typing_extensions.Literal["status"]) -> ExecutionSessionStatus:
+        def field(
+            cls, field_name: typing_extensions.Literal["status"]
+        ) -> typing.Callable[
+            [typing.Callable[[ExecutionSessionStatus], ExecutionSessionStatus]],
+            typing.Callable[[ExecutionSessionStatus], ExecutionSessionStatus],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "last_time_contacted":
-                    cls._last_time_contacted.append(validator)  # type: ignore
+                    cls._last_time_contacted.append(validator)
                 elif field_name == "session_id":
-                    cls._session_id.append(validator)  # type: ignore
+                    cls._session_id.append(validator)
                 elif field_name == "is_warm_instance":
-                    cls._is_warm_instance.append(validator)  # type: ignore
+                    cls._is_warm_instance.append(validator)
                 elif field_name == "aws_task_id":
-                    cls._aws_task_id.append(validator)  # type: ignore
+                    cls._aws_task_id.append(validator)
                 elif field_name == "language":
-                    cls._language.append(validator)  # type: ignore
+                    cls._language.append(validator)
                 elif field_name == "status":
-                    cls._status.append(validator)  # type: ignore
+                    cls._status.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ExecutionSessionState: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

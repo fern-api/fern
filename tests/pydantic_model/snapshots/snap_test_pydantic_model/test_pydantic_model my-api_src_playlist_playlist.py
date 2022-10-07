@@ -25,32 +25,36 @@ class Playlist(PlaylistCreateRequest):
         return owner_id
 
     class Validators:
-        _playlist_id: typing.ClassVar[PlaylistId] = []
-        _owner_id: typing.ClassVar[UserId] = []
+        _playlist_id: typing.ClassVar[typing.List[typing.Callable[[PlaylistId], PlaylistId]]] = []
+        _owner_id: typing.ClassVar[typing.List[typing.Callable[[UserId], UserId]]] = []
 
         @typing.overload
         @classmethod
-        def field(playlist_id: typing_extensions.Literal["playlist_id"]) -> PlaylistId:
+        def field(
+            cls, field_name: typing_extensions.Literal["playlist_id"]
+        ) -> typing.Callable[[typing.Callable[[PlaylistId], PlaylistId]], typing.Callable[[PlaylistId], PlaylistId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(owner_id: typing_extensions.Literal["owner_id"]) -> UserId:
+        def field(
+            cls, field_name: typing_extensions.Literal["owner_id"]
+        ) -> typing.Callable[[typing.Callable[[UserId], UserId]], typing.Callable[[UserId], UserId]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "playlist_id":
-                    cls._playlist_id.append(validator)  # type: ignore
+                    cls._playlist_id.append(validator)
                 elif field_name == "owner_id":
-                    cls._owner_id.append(validator)  # type: ignore
+                    cls._owner_id.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on Playlist: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

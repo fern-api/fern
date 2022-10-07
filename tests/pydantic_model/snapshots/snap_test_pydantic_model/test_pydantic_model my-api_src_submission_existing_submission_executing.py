@@ -16,24 +16,28 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         return submission_id
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ExistingSubmissionExecuting: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

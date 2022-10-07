@@ -14,24 +14,26 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         return passed
 
     class Validators:
-        _passed: typing.ClassVar[bool] = []
+        _passed: typing.ClassVar[typing.List[typing.Callable[[bool], bool]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(passed: typing_extensions.Literal["passed"]) -> bool:
+        def field(
+            cls, field_name: typing_extensions.Literal["passed"]
+        ) -> typing.Callable[[typing.Callable[[bool], bool]], typing.Callable[[bool], bool]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "passed":
-                    cls._passed.append(validator)  # type: ignore
+                    cls._passed.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseHiddenGrade: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

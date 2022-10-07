@@ -31,40 +31,50 @@ class Parameter(pydantic.BaseModel):
         return variable_type
 
     class Validators:
-        _parameter_id: typing.ClassVar[ParameterId] = []
-        _name: typing.ClassVar[str] = []
-        _variable_type: typing.ClassVar[VariableType] = []
+        _parameter_id: typing.ClassVar[typing.List[typing.Callable[[ParameterId], ParameterId]]] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _variable_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
 
         @typing.overload
         @classmethod
-        def field(parameter_id: typing_extensions.Literal["parameter_id"]) -> ParameterId:
+        def field(
+            cls, field_name: typing_extensions.Literal["parameter_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[ParameterId], ParameterId]], typing.Callable[[ParameterId], ParameterId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(variable_type: typing_extensions.Literal["variable_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["variable_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameter_id":
-                    cls._parameter_id.append(validator)  # type: ignore
+                    cls._parameter_id.append(validator)
                 elif field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 elif field_name == "variable_type":
-                    cls._variable_type.append(validator)  # type: ignore
+                    cls._variable_type.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on Parameter: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

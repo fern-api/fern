@@ -14,24 +14,26 @@ class UpdateProblemResponse(pydantic.BaseModel):
         return problem_version
 
     class Validators:
-        _problem_version: typing.ClassVar[int] = []
+        _problem_version: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(problem_version: typing_extensions.Literal["problem_version"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_version"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_version":
-                    cls._problem_version.append(validator)  # type: ignore
+                    cls._problem_version.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on UpdateProblemResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

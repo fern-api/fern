@@ -65,7 +65,7 @@ class AuthScheme(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def add_validator(
+        def validate(
             cls,
             validator: typing.Callable[
                 [typing.Union[_AuthScheme.Bearer, _AuthScheme.Basic, _AuthScheme.Header]],

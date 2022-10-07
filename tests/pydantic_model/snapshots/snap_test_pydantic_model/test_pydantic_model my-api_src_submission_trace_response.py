@@ -58,66 +58,94 @@ class TraceResponse(pydantic.BaseModel):
         return stdout
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _line_number: typing.ClassVar[int] = []
-        _return_value: typing.ClassVar[typing.Optional[DebugVariableValue]] = []
-        _expression_location: typing.ClassVar[typing.Optional[ExpressionLocation]] = []
-        _stack: typing.ClassVar[StackInformation] = []
-        _stdout: typing.ClassVar[typing.Optional[str]] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _line_number: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _return_value: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[DebugVariableValue]], typing.Optional[DebugVariableValue]]]
+        ] = []
+        _expression_location: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[ExpressionLocation]], typing.Optional[ExpressionLocation]]]
+        ] = []
+        _stack: typing.ClassVar[typing.List[typing.Callable[[StackInformation], StackInformation]]] = []
+        _stdout: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
-            ...
-
-        @typing.overload
-        @classmethod
-        def field(line_number: typing_extensions.Literal["line_number"]) -> int:
-            ...
-
-        @typing.overload
-        @classmethod
-        def field(return_value: typing_extensions.Literal["return_value"]) -> typing.Optional[DebugVariableValue]:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            expression_location: typing_extensions.Literal["expression_location"],
-        ) -> typing.Optional[ExpressionLocation]:
+            cls, field_name: typing_extensions.Literal["line_number"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(stack: typing_extensions.Literal["stack"]) -> StackInformation:
+        def field(
+            cls, field_name: typing_extensions.Literal["return_value"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[DebugVariableValue]], typing.Optional[DebugVariableValue]]],
+            typing.Callable[[typing.Optional[DebugVariableValue]], typing.Optional[DebugVariableValue]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(stdout: typing_extensions.Literal["stdout"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["expression_location"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[ExpressionLocation]], typing.Optional[ExpressionLocation]]],
+            typing.Callable[[typing.Optional[ExpressionLocation]], typing.Optional[ExpressionLocation]],
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stack"]
+        ) -> typing.Callable[
+            [typing.Callable[[StackInformation], StackInformation]],
+            typing.Callable[[StackInformation], StackInformation],
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "line_number":
-                    cls._line_number.append(validator)  # type: ignore
+                    cls._line_number.append(validator)
                 elif field_name == "return_value":
-                    cls._return_value.append(validator)  # type: ignore
+                    cls._return_value.append(validator)
                 elif field_name == "expression_location":
-                    cls._expression_location.append(validator)  # type: ignore
+                    cls._expression_location.append(validator)
                 elif field_name == "stack":
-                    cls._stack.append(validator)  # type: ignore
+                    cls._stack.append(validator)
                 elif field_name == "stdout":
-                    cls._stdout.append(validator)  # type: ignore
+                    cls._stdout.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TraceResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

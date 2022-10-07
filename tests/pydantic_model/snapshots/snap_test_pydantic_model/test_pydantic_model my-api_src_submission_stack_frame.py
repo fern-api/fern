@@ -30,40 +30,49 @@ class StackFrame(pydantic.BaseModel):
         return scopes
 
     class Validators:
-        _method_name: typing.ClassVar[str] = []
-        _line_number: typing.ClassVar[int] = []
-        _scopes: typing.ClassVar[typing.List[Scope]] = []
+        _method_name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _line_number: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _scopes: typing.ClassVar[typing.List[typing.Callable[[typing.List[Scope]], typing.List[Scope]]]] = []
 
         @typing.overload
         @classmethod
-        def field(method_name: typing_extensions.Literal["method_name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(line_number: typing_extensions.Literal["line_number"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["line_number"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(scopes: typing_extensions.Literal["scopes"]) -> typing.List[Scope]:
+        def field(
+            cls, field_name: typing_extensions.Literal["scopes"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[Scope]], typing.List[Scope]]],
+            typing.Callable[[typing.List[Scope]], typing.List[Scope]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "method_name":
-                    cls._method_name.append(validator)  # type: ignore
+                    cls._method_name.append(validator)
                 elif field_name == "line_number":
-                    cls._line_number.append(validator)  # type: ignore
+                    cls._line_number.append(validator)
                 elif field_name == "scopes":
-                    cls._scopes.append(validator)  # type: ignore
+                    cls._scopes.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on StackFrame: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

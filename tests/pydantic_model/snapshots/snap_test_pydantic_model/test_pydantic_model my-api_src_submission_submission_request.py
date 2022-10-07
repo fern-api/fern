@@ -7,7 +7,7 @@ import typing_extensions
 
 from .initialize_problem_request import InitializeProblemRequest
 from .stop_request import StopRequest
-from .submit_request_v2 import SubmitRequestV2
+from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
 
 T_Result = typing.TypeVar("T_Result")

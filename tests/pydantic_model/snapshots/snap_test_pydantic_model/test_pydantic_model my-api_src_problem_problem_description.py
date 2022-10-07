@@ -16,24 +16,31 @@ class ProblemDescription(pydantic.BaseModel):
         return boards
 
     class Validators:
-        _boards: typing.ClassVar[typing.List[ProblemDescriptionBoard]] = []
+        _boards: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[ProblemDescriptionBoard]], typing.List[ProblemDescriptionBoard]]]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(boards: typing_extensions.Literal["boards"]) -> typing.List[ProblemDescriptionBoard]:
+        def field(
+            cls, field_name: typing_extensions.Literal["boards"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[ProblemDescriptionBoard]], typing.List[ProblemDescriptionBoard]]],
+            typing.Callable[[typing.List[ProblemDescriptionBoard]], typing.List[ProblemDescriptionBoard]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "boards":
-                    cls._boards.append(validator)  # type: ignore
+                    cls._boards.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ProblemDescription: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

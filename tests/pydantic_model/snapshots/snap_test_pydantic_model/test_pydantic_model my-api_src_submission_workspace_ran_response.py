@@ -24,32 +24,41 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         return run_details
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _run_details: typing.ClassVar[WorkspaceRunDetails] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _run_details: typing.ClassVar[typing.List[typing.Callable[[WorkspaceRunDetails], WorkspaceRunDetails]]] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(run_details: typing_extensions.Literal["run_details"]) -> WorkspaceRunDetails:
+        def field(
+            cls, field_name: typing_extensions.Literal["run_details"]
+        ) -> typing.Callable[
+            [typing.Callable[[WorkspaceRunDetails], WorkspaceRunDetails]],
+            typing.Callable[[WorkspaceRunDetails], WorkspaceRunDetails],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "run_details":
-                    cls._run_details.append(validator)  # type: ignore
+                    cls._run_details.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on WorkspaceRanResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

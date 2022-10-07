@@ -9,7 +9,7 @@ from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
 from .graded_response import GradedResponse
-from .graded_response_v2 import GradedResponseV2
+from .graded_response_v_2 import GradedResponseV2
 from .invalid_request_response import InvalidRequestResponse
 from .recorded_response_notification import RecordedResponseNotification
 from .recording_response_notification import RecordingResponseNotification

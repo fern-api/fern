@@ -39,48 +39,66 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         return expected_value_parameter_id
 
     class Validators:
-        _template_id: typing.ClassVar[TestCaseTemplateId] = []
-        _name: typing.ClassVar[str] = []
-        _description: typing.ClassVar[TestCaseImplementationDescription] = []
-        _expected_value_parameter_id: typing.ClassVar[ParameterId] = []
+        _template_id: typing.ClassVar[typing.List[typing.Callable[[TestCaseTemplateId], TestCaseTemplateId]]] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _description: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseImplementationDescription], TestCaseImplementationDescription]]
+        ] = []
+        _expected_value_parameter_id: typing.ClassVar[typing.List[typing.Callable[[ParameterId], ParameterId]]] = []
 
         @typing.overload
         @classmethod
-        def field(template_id: typing_extensions.Literal["template_id"]) -> TestCaseTemplateId:
+        def field(
+            cls, field_name: typing_extensions.Literal["template_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseTemplateId], TestCaseTemplateId]],
+            typing.Callable[[TestCaseTemplateId], TestCaseTemplateId],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(description: typing_extensions.Literal["description"]) -> TestCaseImplementationDescription:
+        def field(
+            cls, field_name: typing_extensions.Literal["description"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseImplementationDescription], TestCaseImplementationDescription]],
+            typing.Callable[[TestCaseImplementationDescription], TestCaseImplementationDescription],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(expected_value_parameter_id: typing_extensions.Literal["expected_value_parameter_id"]) -> ParameterId:
+        def field(
+            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[ParameterId], ParameterId]], typing.Callable[[ParameterId], ParameterId]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template_id":
-                    cls._template_id.append(validator)  # type: ignore
+                    cls._template_id.append(validator)
                 elif field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 elif field_name == "description":
-                    cls._description.append(validator)  # type: ignore
+                    cls._description.append(validator)
                 elif field_name == "expected_value_parameter_id":
-                    cls._expected_value_parameter_id.append(validator)  # type: ignore
+                    cls._expected_value_parameter_id.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on BasicTestCaseTemplate: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

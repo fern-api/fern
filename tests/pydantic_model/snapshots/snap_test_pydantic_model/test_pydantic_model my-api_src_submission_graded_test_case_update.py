@@ -24,32 +24,38 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
         return grade
 
     class Validators:
-        _test_case_id: typing.ClassVar[TestCaseId] = []
-        _grade: typing.ClassVar[TestCaseGrade] = []
+        _test_case_id: typing.ClassVar[typing.List[typing.Callable[[TestCaseId], TestCaseId]]] = []
+        _grade: typing.ClassVar[typing.List[typing.Callable[[TestCaseGrade], TestCaseGrade]]] = []
 
         @typing.overload
         @classmethod
-        def field(test_case_id: typing_extensions.Literal["test_case_id"]) -> TestCaseId:
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case_id"]
+        ) -> typing.Callable[[typing.Callable[[TestCaseId], TestCaseId]], typing.Callable[[TestCaseId], TestCaseId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(grade: typing_extensions.Literal["grade"]) -> TestCaseGrade:
+        def field(
+            cls, field_name: typing_extensions.Literal["grade"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestCaseGrade], TestCaseGrade]], typing.Callable[[TestCaseGrade], TestCaseGrade]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "test_case_id":
-                    cls._test_case_id.append(validator)  # type: ignore
+                    cls._test_case_id.append(validator)
                 elif field_name == "grade":
-                    cls._grade.append(validator)  # type: ignore
+                    cls._grade.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GradedTestCaseUpdate: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

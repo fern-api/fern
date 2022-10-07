@@ -19,20 +19,35 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
         return code_by_language
 
     class Validators:
-        _code_by_language: typing.ClassVar[typing.Dict[Language, FunctionImplementation]] = []
+        _code_by_language: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [typing.Dict[Language, FunctionImplementation]], typing.Dict[Language, FunctionImplementation]
+                ]
+            ]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
         def field(
-            code_by_language: typing_extensions.Literal["code_by_language"],
-        ) -> typing.Dict[Language, FunctionImplementation]:
+            cls, field_name: typing_extensions.Literal["code_by_language"]
+        ) -> typing.Callable[
+            [
+                typing.Callable[
+                    [typing.Dict[Language, FunctionImplementation]], typing.Dict[Language, FunctionImplementation]
+                ]
+            ],
+            typing.Callable[
+                [typing.Dict[Language, FunctionImplementation]], typing.Dict[Language, FunctionImplementation]
+            ],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "code_by_language":
-                    cls._code_by_language.append(validator)  # type: ignore
+                    cls._code_by_language.append(validator)
                 else:
                     raise RuntimeError(
                         "Field does not exist on FunctionImplementationForMultipleLanguages: " + field_name
@@ -40,7 +55,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

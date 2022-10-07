@@ -87,96 +87,140 @@ class ProblemInfo(pydantic.BaseModel):
         return supports_custom_test_cases
 
     class Validators:
-        _problem_id: typing.ClassVar[ProblemId] = []
-        _problem_description: typing.ClassVar[ProblemDescription] = []
-        _problem_name: typing.ClassVar[str] = []
-        _problem_version: typing.ClassVar[int] = []
-        _files: typing.ClassVar[typing.Dict[Language, ProblemFiles]] = []
-        _input_params: typing.ClassVar[typing.List[VariableTypeAndName]] = []
-        _output_type: typing.ClassVar[VariableType] = []
-        _testcases: typing.ClassVar[typing.List[TestCaseWithExpectedResult]] = []
-        _method_name: typing.ClassVar[str] = []
-        _supports_custom_test_cases: typing.ClassVar[bool] = []
+        _problem_id: typing.ClassVar[typing.List[typing.Callable[[ProblemId], ProblemId]]] = []
+        _problem_description: typing.ClassVar[
+            typing.List[typing.Callable[[ProblemDescription], ProblemDescription]]
+        ] = []
+        _problem_name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _problem_version: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _files: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Dict[Language, ProblemFiles]], typing.Dict[Language, ProblemFiles]]]
+        ] = []
+        _input_params: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[VariableTypeAndName]], typing.List[VariableTypeAndName]]]
+        ] = []
+        _output_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
+        _testcases: typing.ClassVar[
+            typing.List[
+                typing.Callable[[typing.List[TestCaseWithExpectedResult]], typing.List[TestCaseWithExpectedResult]]
+            ]
+        ] = []
+        _method_name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _supports_custom_test_cases: typing.ClassVar[typing.List[typing.Callable[[bool], bool]]] = []
 
         @typing.overload
         @classmethod
-        def field(problem_id: typing_extensions.Literal["problem_id"]) -> ProblemId:
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"]
+        ) -> typing.Callable[[typing.Callable[[ProblemId], ProblemId]], typing.Callable[[ProblemId], ProblemId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(problem_description: typing_extensions.Literal["problem_description"]) -> ProblemDescription:
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_description"]
+        ) -> typing.Callable[
+            [typing.Callable[[ProblemDescription], ProblemDescription]],
+            typing.Callable[[ProblemDescription], ProblemDescription],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(problem_name: typing_extensions.Literal["problem_name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(problem_version: typing_extensions.Literal["problem_version"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_version"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(files: typing_extensions.Literal["files"]) -> typing.Dict[Language, ProblemFiles]:
+        def field(
+            cls, field_name: typing_extensions.Literal["files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[Language, ProblemFiles]], typing.Dict[Language, ProblemFiles]]],
+            typing.Callable[[typing.Dict[Language, ProblemFiles]], typing.Dict[Language, ProblemFiles]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(input_params: typing_extensions.Literal["input_params"]) -> typing.List[VariableTypeAndName]:
+        def field(
+            cls, field_name: typing_extensions.Literal["input_params"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[VariableTypeAndName]], typing.List[VariableTypeAndName]]],
+            typing.Callable[[typing.List[VariableTypeAndName]], typing.List[VariableTypeAndName]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(output_type: typing_extensions.Literal["output_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["output_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(testcases: typing_extensions.Literal["testcases"]) -> typing.List[TestCaseWithExpectedResult]:
+        def field(
+            cls, field_name: typing_extensions.Literal["testcases"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[TestCaseWithExpectedResult]], typing.List[TestCaseWithExpectedResult]]],
+            typing.Callable[[typing.List[TestCaseWithExpectedResult]], typing.List[TestCaseWithExpectedResult]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(method_name: typing_extensions.Literal["method_name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(supports_custom_test_cases: typing_extensions.Literal["supports_custom_test_cases"]) -> bool:
+        def field(
+            cls, field_name: typing_extensions.Literal["supports_custom_test_cases"]
+        ) -> typing.Callable[[typing.Callable[[bool], bool]], typing.Callable[[bool], bool]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
-                    cls._problem_id.append(validator)  # type: ignore
+                    cls._problem_id.append(validator)
                 elif field_name == "problem_description":
-                    cls._problem_description.append(validator)  # type: ignore
+                    cls._problem_description.append(validator)
                 elif field_name == "problem_name":
-                    cls._problem_name.append(validator)  # type: ignore
+                    cls._problem_name.append(validator)
                 elif field_name == "problem_version":
-                    cls._problem_version.append(validator)  # type: ignore
+                    cls._problem_version.append(validator)
                 elif field_name == "files":
-                    cls._files.append(validator)  # type: ignore
+                    cls._files.append(validator)
                 elif field_name == "input_params":
-                    cls._input_params.append(validator)  # type: ignore
+                    cls._input_params.append(validator)
                 elif field_name == "output_type":
-                    cls._output_type.append(validator)  # type: ignore
+                    cls._output_type.append(validator)
                 elif field_name == "testcases":
-                    cls._testcases.append(validator)  # type: ignore
+                    cls._testcases.append(validator)
                 elif field_name == "method_name":
-                    cls._method_name.append(validator)  # type: ignore
+                    cls._method_name.append(validator)
                 elif field_name == "supports_custom_test_cases":
-                    cls._supports_custom_test_cases.append(validator)  # type: ignore
+                    cls._supports_custom_test_cases.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ProblemInfo: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

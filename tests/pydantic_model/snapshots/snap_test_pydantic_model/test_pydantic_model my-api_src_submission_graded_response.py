@@ -26,32 +26,47 @@ class GradedResponse(pydantic.BaseModel):
         return test_cases
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _test_cases: typing.ClassVar[typing.Dict[str, TestCaseResultWithStdout]] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _test_cases: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [typing.Dict[str, TestCaseResultWithStdout]], typing.Dict[str, TestCaseResultWithStdout]
+                ]
+            ]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(test_cases: typing_extensions.Literal["test_cases"]) -> typing.Dict[str, TestCaseResultWithStdout]:
+        def field(
+            cls, field_name: typing_extensions.Literal["test_cases"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[str, TestCaseResultWithStdout]], typing.Dict[str, TestCaseResultWithStdout]]],
+            typing.Callable[[typing.Dict[str, TestCaseResultWithStdout]], typing.Dict[str, TestCaseResultWithStdout]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "test_cases":
-                    cls._test_cases.append(validator)  # type: ignore
+                    cls._test_cases.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GradedResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

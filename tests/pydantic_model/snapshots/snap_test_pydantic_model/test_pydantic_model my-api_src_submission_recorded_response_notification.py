@@ -30,40 +30,51 @@ class RecordedResponseNotification(pydantic.BaseModel):
         return test_case_id
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _trace_responses_size: typing.ClassVar[int] = []
-        _test_case_id: typing.ClassVar[typing.Optional[str]] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _trace_responses_size: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _test_case_id: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(trace_responses_size: typing_extensions.Literal["trace_responses_size"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["trace_responses_size"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(test_case_id: typing_extensions.Literal["test_case_id"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "trace_responses_size":
-                    cls._trace_responses_size.append(validator)  # type: ignore
+                    cls._trace_responses_size.append(validator)
                 elif field_name == "test_case_id":
-                    cls._test_case_id.append(validator)  # type: ignore
+                    cls._test_case_id.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on RecordedResponseNotification: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

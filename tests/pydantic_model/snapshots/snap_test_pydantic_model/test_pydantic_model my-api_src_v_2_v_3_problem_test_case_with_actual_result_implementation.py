@@ -26,34 +26,46 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         return assert_correctness_check
 
     class Validators:
-        _get_actual_result: typing.ClassVar[NonVoidFunctionDefinition] = []
-        _assert_correctness_check: typing.ClassVar[AssertCorrectnessCheck] = []
+        _get_actual_result: typing.ClassVar[
+            typing.List[typing.Callable[[NonVoidFunctionDefinition], NonVoidFunctionDefinition]]
+        ] = []
+        _assert_correctness_check: typing.ClassVar[
+            typing.List[typing.Callable[[AssertCorrectnessCheck], AssertCorrectnessCheck]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(get_actual_result: typing_extensions.Literal["get_actual_result"]) -> NonVoidFunctionDefinition:
+        def field(
+            cls, field_name: typing_extensions.Literal["get_actual_result"]
+        ) -> typing.Callable[
+            [typing.Callable[[NonVoidFunctionDefinition], NonVoidFunctionDefinition]],
+            typing.Callable[[NonVoidFunctionDefinition], NonVoidFunctionDefinition],
+        ]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            assert_correctness_check: typing_extensions.Literal["assert_correctness_check"],
-        ) -> AssertCorrectnessCheck:
+            cls, field_name: typing_extensions.Literal["assert_correctness_check"]
+        ) -> typing.Callable[
+            [typing.Callable[[AssertCorrectnessCheck], AssertCorrectnessCheck]],
+            typing.Callable[[AssertCorrectnessCheck], AssertCorrectnessCheck],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "get_actual_result":
-                    cls._get_actual_result.append(validator)  # type: ignore
+                    cls._get_actual_result.append(validator)
                 elif field_name == "assert_correctness_check":
-                    cls._assert_correctness_check.append(validator)  # type: ignore
+                    cls._assert_correctness_check.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseWithActualResultImplementation: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

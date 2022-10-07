@@ -4,7 +4,7 @@ import pydantic
 import typing_extensions
 
 from .test_case_template import TestCaseTemplate
-from .test_case_v2 import TestCaseV2
+from .test_case_v_2 import TestCaseV2
 
 
 class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
@@ -24,32 +24,41 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         return test_case
 
     class Validators:
-        _template: typing.ClassVar[typing.Optional[TestCaseTemplate]] = []
-        _test_case: typing.ClassVar[TestCaseV2] = []
+        _template: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[TestCaseTemplate]], typing.Optional[TestCaseTemplate]]]
+        ] = []
+        _test_case: typing.ClassVar[typing.List[typing.Callable[[TestCaseV2], TestCaseV2]]] = []
 
         @typing.overload
         @classmethod
-        def field(template: typing_extensions.Literal["template"]) -> typing.Optional[TestCaseTemplate]:
+        def field(
+            cls, field_name: typing_extensions.Literal["template"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[TestCaseTemplate]], typing.Optional[TestCaseTemplate]]],
+            typing.Callable[[typing.Optional[TestCaseTemplate]], typing.Optional[TestCaseTemplate]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(test_case: typing_extensions.Literal["test_case"]) -> TestCaseV2:
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case"]
+        ) -> typing.Callable[[typing.Callable[[TestCaseV2], TestCaseV2]], typing.Callable[[TestCaseV2], TestCaseV2]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template":
-                    cls._template.append(validator)  # type: ignore
+                    cls._template.append(validator)
                 elif field_name == "test_case":
-                    cls._test_case.append(validator)  # type: ignore
+                    cls._test_case.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetGeneratedTestCaseFileRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

@@ -24,32 +24,38 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
         return full_tree
 
     class Validators:
-        _node_id: typing.ClassVar[NodeId] = []
-        _full_tree: typing.ClassVar[BinaryTreeValue] = []
+        _node_id: typing.ClassVar[typing.List[typing.Callable[[NodeId], NodeId]]] = []
+        _full_tree: typing.ClassVar[typing.List[typing.Callable[[BinaryTreeValue], BinaryTreeValue]]] = []
 
         @typing.overload
         @classmethod
-        def field(node_id: typing_extensions.Literal["node_id"]) -> NodeId:
+        def field(
+            cls, field_name: typing_extensions.Literal["node_id"]
+        ) -> typing.Callable[[typing.Callable[[NodeId], NodeId]], typing.Callable[[NodeId], NodeId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(full_tree: typing_extensions.Literal["full_tree"]) -> BinaryTreeValue:
+        def field(
+            cls, field_name: typing_extensions.Literal["full_tree"]
+        ) -> typing.Callable[
+            [typing.Callable[[BinaryTreeValue], BinaryTreeValue]], typing.Callable[[BinaryTreeValue], BinaryTreeValue]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "node_id":
-                    cls._node_id.append(validator)  # type: ignore
+                    cls._node_id.append(validator)
                 elif field_name == "full_tree":
-                    cls._full_tree.append(validator)  # type: ignore
+                    cls._full_tree.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on BinaryTreeNodeAndTreeValue: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

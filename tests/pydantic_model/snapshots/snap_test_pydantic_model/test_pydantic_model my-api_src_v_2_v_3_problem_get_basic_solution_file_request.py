@@ -23,32 +23,41 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         return signature
 
     class Validators:
-        _method_name: typing.ClassVar[str] = []
-        _signature: typing.ClassVar[NonVoidFunctionSignature] = []
+        _method_name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _signature: typing.ClassVar[
+            typing.List[typing.Callable[[NonVoidFunctionSignature], NonVoidFunctionSignature]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(method_name: typing_extensions.Literal["method_name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(signature: typing_extensions.Literal["signature"]) -> NonVoidFunctionSignature:
+        def field(
+            cls, field_name: typing_extensions.Literal["signature"]
+        ) -> typing.Callable[
+            [typing.Callable[[NonVoidFunctionSignature], NonVoidFunctionSignature]],
+            typing.Callable[[NonVoidFunctionSignature], NonVoidFunctionSignature],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "method_name":
-                    cls._method_name.append(validator)  # type: ignore
+                    cls._method_name.append(validator)
                 elif field_name == "signature":
-                    cls._signature.append(validator)  # type: ignore
+                    cls._signature.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetBasicSolutionFileRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

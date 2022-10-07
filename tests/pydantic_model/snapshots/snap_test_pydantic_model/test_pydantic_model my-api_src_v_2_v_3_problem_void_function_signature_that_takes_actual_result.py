@@ -24,26 +24,37 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         return actual_result_type
 
     class Validators:
-        _parameters: typing.ClassVar[typing.List[Parameter]] = []
-        _actual_result_type: typing.ClassVar[VariableType] = []
+        _parameters: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[Parameter]], typing.List[Parameter]]]
+        ] = []
+        _actual_result_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
 
         @typing.overload
         @classmethod
-        def field(parameters: typing_extensions.Literal["parameters"]) -> typing.List[Parameter]:
+        def field(
+            cls, field_name: typing_extensions.Literal["parameters"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[Parameter]], typing.List[Parameter]]],
+            typing.Callable[[typing.List[Parameter]], typing.List[Parameter]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(actual_result_type: typing_extensions.Literal["actual_result_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["actual_result_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
-                    cls._parameters.append(validator)  # type: ignore
+                    cls._parameters.append(validator)
                 elif field_name == "actual_result_type":
-                    cls._actual_result_type.append(validator)  # type: ignore
+                    cls._actual_result_type.append(validator)
                 else:
                     raise RuntimeError(
                         "Field does not exist on VoidFunctionSignatureThatTakesActualResult: " + field_name
@@ -51,7 +62,7 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

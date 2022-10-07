@@ -24,32 +24,38 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         return expected_result
 
     class Validators:
-        _test_case: typing.ClassVar[TestCase] = []
-        _expected_result: typing.ClassVar[VariableValue] = []
+        _test_case: typing.ClassVar[typing.List[typing.Callable[[TestCase], TestCase]]] = []
+        _expected_result: typing.ClassVar[typing.List[typing.Callable[[VariableValue], VariableValue]]] = []
 
         @typing.overload
         @classmethod
-        def field(test_case: typing_extensions.Literal["test_case"]) -> TestCase:
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case"]
+        ) -> typing.Callable[[typing.Callable[[TestCase], TestCase]], typing.Callable[[TestCase], TestCase]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(expected_result: typing_extensions.Literal["expected_result"]) -> VariableValue:
+        def field(
+            cls, field_name: typing_extensions.Literal["expected_result"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableValue], VariableValue]], typing.Callable[[VariableValue], VariableValue]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "test_case":
-                    cls._test_case.append(validator)  # type: ignore
+                    cls._test_case.append(validator)
                 elif field_name == "expected_result":
-                    cls._expected_result.append(validator)  # type: ignore
+                    cls._expected_result.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseWithExpectedResult: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

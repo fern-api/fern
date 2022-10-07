@@ -24,32 +24,41 @@ class RunningResponse(pydantic.BaseModel):
         return state
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _state: typing.ClassVar[RunningSubmissionState] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _state: typing.ClassVar[typing.List[typing.Callable[[RunningSubmissionState], RunningSubmissionState]]] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(state: typing_extensions.Literal["state"]) -> RunningSubmissionState:
+        def field(
+            cls, field_name: typing_extensions.Literal["state"]
+        ) -> typing.Callable[
+            [typing.Callable[[RunningSubmissionState], RunningSubmissionState]],
+            typing.Callable[[RunningSubmissionState], RunningSubmissionState],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "state":
-                    cls._state.append(validator)  # type: ignore
+                    cls._state.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on RunningResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

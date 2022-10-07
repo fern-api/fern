@@ -26,32 +26,46 @@ class BinaryTreeValue(pydantic.BaseModel):
         return nodes
 
     class Validators:
-        _root: typing.ClassVar[typing.Optional[NodeId]] = []
-        _nodes: typing.ClassVar[typing.Dict[NodeId, BinaryTreeNodeValue]] = []
+        _root: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[NodeId]], typing.Optional[NodeId]]]] = []
+        _nodes: typing.ClassVar[
+            typing.List[
+                typing.Callable[[typing.Dict[NodeId, BinaryTreeNodeValue]], typing.Dict[NodeId, BinaryTreeNodeValue]]
+            ]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(root: typing_extensions.Literal["root"]) -> typing.Optional[NodeId]:
+        def field(
+            cls, field_name: typing_extensions.Literal["root"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[NodeId]], typing.Optional[NodeId]]],
+            typing.Callable[[typing.Optional[NodeId]], typing.Optional[NodeId]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(nodes: typing_extensions.Literal["nodes"]) -> typing.Dict[NodeId, BinaryTreeNodeValue]:
+        def field(
+            cls, field_name: typing_extensions.Literal["nodes"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[NodeId, BinaryTreeNodeValue]], typing.Dict[NodeId, BinaryTreeNodeValue]]],
+            typing.Callable[[typing.Dict[NodeId, BinaryTreeNodeValue]], typing.Dict[NodeId, BinaryTreeNodeValue]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "root":
-                    cls._root.append(validator)  # type: ignore
+                    cls._root.append(validator)
                 elif field_name == "nodes":
-                    cls._nodes.append(validator)  # type: ignore
+                    cls._nodes.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on BinaryTreeValue: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

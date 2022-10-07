@@ -16,24 +16,28 @@ class InternalError(pydantic.BaseModel):
         return exception_info
 
     class Validators:
-        _exception_info: typing.ClassVar[ExceptionInfo] = []
+        _exception_info: typing.ClassVar[typing.List[typing.Callable[[ExceptionInfo], ExceptionInfo]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(exception_info: typing_extensions.Literal["exception_info"]) -> ExceptionInfo:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception_info"]
+        ) -> typing.Callable[
+            [typing.Callable[[ExceptionInfo], ExceptionInfo]], typing.Callable[[ExceptionInfo], ExceptionInfo]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_info":
-                    cls._exception_info.append(validator)  # type: ignore
+                    cls._exception_info.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on InternalError: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

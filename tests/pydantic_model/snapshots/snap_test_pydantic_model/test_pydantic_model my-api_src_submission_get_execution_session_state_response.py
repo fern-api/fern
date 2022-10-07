@@ -32,40 +32,61 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         return warming_session_ids
 
     class Validators:
-        _states: typing.ClassVar[typing.Dict[str, ExecutionSessionState]] = []
-        _num_warming_instances: typing.ClassVar[typing.Optional[int]] = []
-        _warming_session_ids: typing.ClassVar[typing.List[str]] = []
+        _states: typing.ClassVar[
+            typing.List[
+                typing.Callable[[typing.Dict[str, ExecutionSessionState]], typing.Dict[str, ExecutionSessionState]]
+            ]
+        ] = []
+        _num_warming_instances: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[int]], typing.Optional[int]]]
+        ] = []
+        _warming_session_ids: typing.ClassVar[typing.List[typing.Callable[[typing.List[str]], typing.List[str]]]] = []
 
         @typing.overload
         @classmethod
-        def field(states: typing_extensions.Literal["states"]) -> typing.Dict[str, ExecutionSessionState]:
+        def field(
+            cls, field_name: typing_extensions.Literal["states"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Dict[str, ExecutionSessionState]], typing.Dict[str, ExecutionSessionState]]],
+            typing.Callable[[typing.Dict[str, ExecutionSessionState]], typing.Dict[str, ExecutionSessionState]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(num_warming_instances: typing_extensions.Literal["num_warming_instances"]) -> typing.Optional[int]:
+        def field(
+            cls, field_name: typing_extensions.Literal["num_warming_instances"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[int]], typing.Optional[int]]],
+            typing.Callable[[typing.Optional[int]], typing.Optional[int]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(warming_session_ids: typing_extensions.Literal["warming_session_ids"]) -> typing.List[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["warming_session_ids"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[str]], typing.List[str]]],
+            typing.Callable[[typing.List[str]], typing.List[str]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "states":
-                    cls._states.append(validator)  # type: ignore
+                    cls._states.append(validator)
                 elif field_name == "num_warming_instances":
-                    cls._num_warming_instances.append(validator)  # type: ignore
+                    cls._num_warming_instances.append(validator)
                 elif field_name == "warming_session_ids":
-                    cls._warming_session_ids.append(validator)  # type: ignore
+                    cls._warming_session_ids.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetExecutionSessionStateResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

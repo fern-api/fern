@@ -24,32 +24,38 @@ class ErroredResponse(pydantic.BaseModel):
         return error_info
 
     class Validators:
-        _submission_id: typing.ClassVar[SubmissionId] = []
-        _error_info: typing.ClassVar[ErrorInfo] = []
+        _submission_id: typing.ClassVar[typing.List[typing.Callable[[SubmissionId], SubmissionId]]] = []
+        _error_info: typing.ClassVar[typing.List[typing.Callable[[ErrorInfo], ErrorInfo]]] = []
 
         @typing.overload
         @classmethod
-        def field(submission_id: typing_extensions.Literal["submission_id"]) -> SubmissionId:
+        def field(
+            cls, field_name: typing_extensions.Literal["submission_id"]
+        ) -> typing.Callable[
+            [typing.Callable[[SubmissionId], SubmissionId]], typing.Callable[[SubmissionId], SubmissionId]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(error_info: typing_extensions.Literal["error_info"]) -> ErrorInfo:
+        def field(
+            cls, field_name: typing_extensions.Literal["error_info"]
+        ) -> typing.Callable[[typing.Callable[[ErrorInfo], ErrorInfo]], typing.Callable[[ErrorInfo], ErrorInfo]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id.append(validator)  # type: ignore
+                    cls._submission_id.append(validator)
                 elif field_name == "error_info":
-                    cls._error_info.append(validator)  # type: ignore
+                    cls._error_info.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ErroredResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

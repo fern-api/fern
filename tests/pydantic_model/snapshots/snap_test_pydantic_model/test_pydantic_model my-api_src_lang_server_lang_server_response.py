@@ -14,24 +14,26 @@ class LangServerResponse(pydantic.BaseModel):
         return response
 
     class Validators:
-        _response: typing.ClassVar[typing.Any] = []
+        _response: typing.ClassVar[typing.List[typing.Callable[[typing.Any], typing.Any]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(response: typing_extensions.Literal["response"]) -> typing.Any:
+        def field(
+            cls, field_name: typing_extensions.Literal["response"]
+        ) -> typing.Callable[[typing.Callable[[typing.Any], typing.Any]], typing.Callable[[typing.Any], typing.Any]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "response":
-                    cls._response.append(validator)  # type: ignore
+                    cls._response.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on LangServerResponse: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

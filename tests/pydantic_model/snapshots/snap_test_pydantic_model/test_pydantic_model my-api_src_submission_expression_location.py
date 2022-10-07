@@ -21,32 +21,36 @@ class ExpressionLocation(pydantic.BaseModel):
         return offset
 
     class Validators:
-        _start: typing.ClassVar[int] = []
-        _offset: typing.ClassVar[int] = []
+        _start: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
+        _offset: typing.ClassVar[typing.List[typing.Callable[[int], int]]] = []
 
         @typing.overload
         @classmethod
-        def field(start: typing_extensions.Literal["start"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["start"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(offset: typing_extensions.Literal["offset"]) -> int:
+        def field(
+            cls, field_name: typing_extensions.Literal["offset"]
+        ) -> typing.Callable[[typing.Callable[[int], int]], typing.Callable[[int], int]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "start":
-                    cls._start.append(validator)  # type: ignore
+                    cls._start.append(validator)
                 elif field_name == "offset":
-                    cls._offset.append(validator)  # type: ignore
+                    cls._offset.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ExpressionLocation: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

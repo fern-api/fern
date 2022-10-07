@@ -26,32 +26,54 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         return nodes
 
     class Validators:
-        _head: typing.ClassVar[typing.Optional[NodeId]] = []
-        _nodes: typing.ClassVar[typing.Dict[NodeId, SinglyLinkedListNodeValue]] = []
+        _head: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[NodeId]], typing.Optional[NodeId]]]] = []
+        _nodes: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [typing.Dict[NodeId, SinglyLinkedListNodeValue]], typing.Dict[NodeId, SinglyLinkedListNodeValue]
+                ]
+            ]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(head: typing_extensions.Literal["head"]) -> typing.Optional[NodeId]:
+        def field(
+            cls, field_name: typing_extensions.Literal["head"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[NodeId]], typing.Optional[NodeId]]],
+            typing.Callable[[typing.Optional[NodeId]], typing.Optional[NodeId]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(nodes: typing_extensions.Literal["nodes"]) -> typing.Dict[NodeId, SinglyLinkedListNodeValue]:
+        def field(
+            cls, field_name: typing_extensions.Literal["nodes"]
+        ) -> typing.Callable[
+            [
+                typing.Callable[
+                    [typing.Dict[NodeId, SinglyLinkedListNodeValue]], typing.Dict[NodeId, SinglyLinkedListNodeValue]
+                ]
+            ],
+            typing.Callable[
+                [typing.Dict[NodeId, SinglyLinkedListNodeValue]], typing.Dict[NodeId, SinglyLinkedListNodeValue]
+            ],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "head":
-                    cls._head.append(validator)  # type: ignore
+                    cls._head.append(validator)
                 elif field_name == "nodes":
-                    cls._nodes.append(validator)  # type: ignore
+                    cls._nodes.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on SinglyLinkedListValue: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

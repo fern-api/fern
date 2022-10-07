@@ -18,24 +18,31 @@ class DebugMapValue(pydantic.BaseModel):
         return key_value_pairs
 
     class Validators:
-        _key_value_pairs: typing.ClassVar[typing.List[DebugKeyValuePairs]] = []
+        _key_value_pairs: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[DebugKeyValuePairs]], typing.List[DebugKeyValuePairs]]]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(key_value_pairs: typing_extensions.Literal["key_value_pairs"]) -> typing.List[DebugKeyValuePairs]:
+        def field(
+            cls, field_name: typing_extensions.Literal["key_value_pairs"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[DebugKeyValuePairs]], typing.List[DebugKeyValuePairs]]],
+            typing.Callable[[typing.List[DebugKeyValuePairs]], typing.List[DebugKeyValuePairs]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key_value_pairs":
-                    cls._key_value_pairs.append(validator)  # type: ignore
+                    cls._key_value_pairs.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on DebugMapValue: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

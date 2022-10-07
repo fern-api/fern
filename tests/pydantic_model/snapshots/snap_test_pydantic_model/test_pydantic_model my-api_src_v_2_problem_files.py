@@ -3,7 +3,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .file_info_v2 import FileInfoV2
+from .file_info_v_2 import FileInfoV2
 
 
 class Files(pydantic.BaseModel):
@@ -16,24 +16,29 @@ class Files(pydantic.BaseModel):
         return files
 
     class Validators:
-        _files: typing.ClassVar[typing.List[FileInfoV2]] = []
+        _files: typing.ClassVar[typing.List[typing.Callable[[typing.List[FileInfoV2]], typing.List[FileInfoV2]]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(files: typing_extensions.Literal["files"]) -> typing.List[FileInfoV2]:
+        def field(
+            cls, field_name: typing_extensions.Literal["files"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[FileInfoV2]], typing.List[FileInfoV2]]],
+            typing.Callable[[typing.List[FileInfoV2]], typing.List[FileInfoV2]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
-                    cls._files.append(validator)  # type: ignore
+                    cls._files.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on Files: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

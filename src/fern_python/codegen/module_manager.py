@@ -35,6 +35,7 @@ class ModuleManager:
         module_being_exported_from: AST.ModulePath = tuple(
             directory.module_name for directory in filepath.directories
         ) + (filepath.file.module_name,)
+
         is_exporting_from_file = True
 
         while len(module_being_exported_from) > 0:

@@ -28,13 +28,22 @@ class ClassDeclaration(AstNode):
         decorator: ClassMethodDecorator = None,
         no_implicit_decorator: bool = False,
     ) -> FunctionDeclaration:
-        parameters = (
-            declaration.signature.parameters
-            if decorator == ClassMethodDecorator.STATIC
-            else [FunctionParameter(name="cls")] + list(declaration.signature.parameters)
-            if decorator == ClassMethodDecorator.CLASS_METHOD
-            else [FunctionParameter(name="self")] + list(declaration.signature.parameters)
-        )
+        def augment_signature(signature: FunctionSignature) -> FunctionSignature:
+            parameters = (
+                signature.parameters
+                if decorator == ClassMethodDecorator.STATIC
+                else [FunctionParameter(name="cls")] + list(signature.parameters)
+                if decorator == ClassMethodDecorator.CLASS_METHOD
+                else [FunctionParameter(name="self")] + list(signature.parameters)
+            )
+
+            return FunctionSignature(
+                parameters=parameters,
+                named_parameters=signature.named_parameters,
+                return_type=signature.return_type,
+                include_args=signature.include_args,
+                include_kwargs=signature.include_kwargs,
+            )
 
         decorators = (
             list(declaration.decorators)
@@ -45,16 +54,10 @@ class ClassDeclaration(AstNode):
 
         declaration = FunctionDeclaration(
             name=declaration.name,
-            signature=FunctionSignature(
-                parameters=parameters,
-                named_parameters=declaration.signature.named_parameters,
-                return_type=declaration.signature.return_type,
-                include_args=declaration.signature.include_args,
-                include_kwargs=declaration.signature.include_kwargs,
-            ),
+            signature=augment_signature(declaration.signature),
             body=declaration.body,
             decorators=decorators,
-            overloads=declaration.overloads,
+            overloads=[augment_signature(overload) for overload in declaration.overloads],
         )
 
         self.statements.append(declaration)

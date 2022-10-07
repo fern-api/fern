@@ -14,24 +14,26 @@ class RuntimeError(pydantic.BaseModel):
         return message
 
     class Validators:
-        _message: typing.ClassVar[str] = []
+        _message: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(message: typing_extensions.Literal["message"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["message"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "message":
-                    cls._message.append(validator)  # type: ignore
+                    cls._message.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on RuntimeError: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

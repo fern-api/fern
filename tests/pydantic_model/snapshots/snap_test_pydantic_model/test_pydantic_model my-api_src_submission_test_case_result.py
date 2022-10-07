@@ -31,40 +31,50 @@ class TestCaseResult(pydantic.BaseModel):
         return passed
 
     class Validators:
-        _expected_result: typing.ClassVar[VariableValue] = []
-        _actual_result: typing.ClassVar[ActualResult] = []
-        _passed: typing.ClassVar[bool] = []
+        _expected_result: typing.ClassVar[typing.List[typing.Callable[[VariableValue], VariableValue]]] = []
+        _actual_result: typing.ClassVar[typing.List[typing.Callable[[ActualResult], ActualResult]]] = []
+        _passed: typing.ClassVar[typing.List[typing.Callable[[bool], bool]]] = []
 
         @typing.overload
         @classmethod
-        def field(expected_result: typing_extensions.Literal["expected_result"]) -> VariableValue:
+        def field(
+            cls, field_name: typing_extensions.Literal["expected_result"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableValue], VariableValue]], typing.Callable[[VariableValue], VariableValue]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(actual_result: typing_extensions.Literal["actual_result"]) -> ActualResult:
+        def field(
+            cls, field_name: typing_extensions.Literal["actual_result"]
+        ) -> typing.Callable[
+            [typing.Callable[[ActualResult], ActualResult]], typing.Callable[[ActualResult], ActualResult]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(passed: typing_extensions.Literal["passed"]) -> bool:
+        def field(
+            cls, field_name: typing_extensions.Literal["passed"]
+        ) -> typing.Callable[[typing.Callable[[bool], bool]], typing.Callable[[bool], bool]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_result":
-                    cls._expected_result.append(validator)  # type: ignore
+                    cls._expected_result.append(validator)
                 elif field_name == "actual_result":
-                    cls._actual_result.append(validator)  # type: ignore
+                    cls._actual_result.append(validator)
                 elif field_name == "passed":
-                    cls._passed.append(validator)  # type: ignore
+                    cls._passed.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseResult: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

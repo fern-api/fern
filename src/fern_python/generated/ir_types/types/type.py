@@ -71,7 +71,7 @@ class Type(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def add_validator(
+        def validate(
             cls,
             validator: typing.Callable[
                 [typing.Union[_Type.Alias, _Type.Enum, _Type.Object, _Type.Union]],

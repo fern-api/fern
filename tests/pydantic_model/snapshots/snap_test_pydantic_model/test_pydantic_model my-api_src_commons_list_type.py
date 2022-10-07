@@ -23,32 +23,43 @@ class ListType(pydantic.BaseModel):
         return is_fixed_length
 
     class Validators:
-        _value_type: typing.ClassVar[VariableType] = []
-        _is_fixed_length: typing.ClassVar[typing.Optional[bool]] = []
+        _value_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
+        _is_fixed_length: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[bool]], typing.Optional[bool]]]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(value_type: typing_extensions.Literal["value_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["value_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(is_fixed_length: typing_extensions.Literal["is_fixed_length"]) -> typing.Optional[bool]:
+        def field(
+            cls, field_name: typing_extensions.Literal["is_fixed_length"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[bool]], typing.Optional[bool]]],
+            typing.Callable[[typing.Optional[bool]], typing.Optional[bool]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "value_type":
-                    cls._value_type.append(validator)  # type: ignore
+                    cls._value_type.append(validator)
                 elif field_name == "is_fixed_length":
-                    cls._is_fixed_length.append(validator)  # type: ignore
+                    cls._is_fixed_length.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on ListType: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

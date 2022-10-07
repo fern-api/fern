@@ -23,32 +23,38 @@ class VariableTypeAndName(pydantic.BaseModel):
         return name
 
     class Validators:
-        _variable_type: typing.ClassVar[VariableType] = []
-        _name: typing.ClassVar[str] = []
+        _variable_type: typing.ClassVar[typing.List[typing.Callable[[VariableType], VariableType]]] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(variable_type: typing_extensions.Literal["variable_type"]) -> VariableType:
+        def field(
+            cls, field_name: typing_extensions.Literal["variable_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[VariableType], VariableType]], typing.Callable[[VariableType], VariableType]
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "variable_type":
-                    cls._variable_type.append(validator)  # type: ignore
+                    cls._variable_type.append(validator)
                 elif field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on VariableTypeAndName: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

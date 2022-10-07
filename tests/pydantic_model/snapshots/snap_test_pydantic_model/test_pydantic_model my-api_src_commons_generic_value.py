@@ -21,32 +21,41 @@ class GenericValue(pydantic.BaseModel):
         return stringified_value
 
     class Validators:
-        _stringified_type: typing.ClassVar[typing.Optional[str]] = []
-        _stringified_value: typing.ClassVar[str] = []
+        _stringified_type: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]
+        ] = []
+        _stringified_value: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(stringified_type: typing_extensions.Literal["stringified_type"]) -> typing.Optional[str]:
+        def field(
+            cls, field_name: typing_extensions.Literal["stringified_type"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[str]], typing.Optional[str]]],
+            typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(stringified_value: typing_extensions.Literal["stringified_value"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["stringified_value"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "stringified_type":
-                    cls._stringified_type.append(validator)  # type: ignore
+                    cls._stringified_type.append(validator)
                 elif field_name == "stringified_value":
-                    cls._stringified_value.append(validator)  # type: ignore
+                    cls._stringified_value.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GenericValue: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

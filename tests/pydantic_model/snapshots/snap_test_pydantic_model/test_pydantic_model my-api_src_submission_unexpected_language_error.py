@@ -23,32 +23,36 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         return actual_language
 
     class Validators:
-        _expected_language: typing.ClassVar[Language] = []
-        _actual_language: typing.ClassVar[Language] = []
+        _expected_language: typing.ClassVar[typing.List[typing.Callable[[Language], Language]]] = []
+        _actual_language: typing.ClassVar[typing.List[typing.Callable[[Language], Language]]] = []
 
         @typing.overload
         @classmethod
-        def field(expected_language: typing_extensions.Literal["expected_language"]) -> Language:
+        def field(
+            cls, field_name: typing_extensions.Literal["expected_language"]
+        ) -> typing.Callable[[typing.Callable[[Language], Language]], typing.Callable[[Language], Language]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(actual_language: typing_extensions.Literal["actual_language"]) -> Language:
+        def field(
+            cls, field_name: typing_extensions.Literal["actual_language"]
+        ) -> typing.Callable[[typing.Callable[[Language], Language]], typing.Callable[[Language], Language]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_language":
-                    cls._expected_language.append(validator)  # type: ignore
+                    cls._expected_language.append(validator)
                 elif field_name == "actual_language":
-                    cls._actual_language.append(validator)  # type: ignore
+                    cls._actual_language.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on UnexpectedLanguageError: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

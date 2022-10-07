@@ -4,7 +4,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.variable_value import VariableValue
-from .exception_v2 import ExceptionV2
+from .exception_v_2 import ExceptionV2
 
 
 class TestCaseNonHiddenGrade(pydantic.BaseModel):
@@ -38,48 +38,66 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         return stdout
 
     class Validators:
-        _passed: typing.ClassVar[bool] = []
-        _actual_result: typing.ClassVar[typing.Optional[VariableValue]] = []
-        _exception: typing.ClassVar[typing.Optional[ExceptionV2]] = []
-        _stdout: typing.ClassVar[str] = []
+        _passed: typing.ClassVar[typing.List[typing.Callable[[bool], bool]]] = []
+        _actual_result: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[VariableValue]], typing.Optional[VariableValue]]]
+        ] = []
+        _exception: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[ExceptionV2]], typing.Optional[ExceptionV2]]]
+        ] = []
+        _stdout: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(passed: typing_extensions.Literal["passed"]) -> bool:
+        def field(
+            cls, field_name: typing_extensions.Literal["passed"]
+        ) -> typing.Callable[[typing.Callable[[bool], bool]], typing.Callable[[bool], bool]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(actual_result: typing_extensions.Literal["actual_result"]) -> typing.Optional[VariableValue]:
+        def field(
+            cls, field_name: typing_extensions.Literal["actual_result"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[VariableValue]], typing.Optional[VariableValue]]],
+            typing.Callable[[typing.Optional[VariableValue]], typing.Optional[VariableValue]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(exception: typing_extensions.Literal["exception"]) -> typing.Optional[ExceptionV2]:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[ExceptionV2]], typing.Optional[ExceptionV2]]],
+            typing.Callable[[typing.Optional[ExceptionV2]], typing.Optional[ExceptionV2]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(stdout: typing_extensions.Literal["stdout"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "passed":
-                    cls._passed.append(validator)  # type: ignore
+                    cls._passed.append(validator)
                 elif field_name == "actual_result":
-                    cls._actual_result.append(validator)  # type: ignore
+                    cls._actual_result.append(validator)
                 elif field_name == "exception":
-                    cls._exception.append(validator)  # type: ignore
+                    cls._exception.append(validator)
                 elif field_name == "stdout":
-                    cls._stdout.append(validator)  # type: ignore
+                    cls._stdout.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseNonHiddenGrade: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

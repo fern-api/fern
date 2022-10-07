@@ -14,24 +14,29 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         return offset
 
     class Validators:
-        _offset: typing.ClassVar[typing.Optional[int]] = []
+        _offset: typing.ClassVar[typing.List[typing.Callable[[typing.Optional[int]], typing.Optional[int]]]] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(offset: typing_extensions.Literal["offset"]) -> typing.Optional[int]:
+        def field(
+            cls, field_name: typing_extensions.Literal["offset"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[int]], typing.Optional[int]]],
+            typing.Callable[[typing.Optional[int]], typing.Optional[int]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "offset":
-                    cls._offset.append(validator)  # type: ignore
+                    cls._offset.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on GetTraceResponsesPageRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

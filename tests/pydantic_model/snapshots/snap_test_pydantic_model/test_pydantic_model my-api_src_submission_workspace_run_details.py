@@ -4,7 +4,7 @@ import pydantic
 import typing_extensions
 
 from .exception_info import ExceptionInfo
-from .exception_v2 import ExceptionV2
+from .exception_v_2 import ExceptionV2
 
 
 class WorkspaceRunDetails(pydantic.BaseModel):
@@ -31,40 +31,56 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         return stdout
 
     class Validators:
-        _exception_v_2: typing.ClassVar[typing.Optional[ExceptionV2]] = []
-        _exception: typing.ClassVar[typing.Optional[ExceptionInfo]] = []
-        _stdout: typing.ClassVar[str] = []
+        _exception_v_2: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[ExceptionV2]], typing.Optional[ExceptionV2]]]
+        ] = []
+        _exception: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[ExceptionInfo]], typing.Optional[ExceptionInfo]]]
+        ] = []
+        _stdout: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
 
         @typing.overload
         @classmethod
-        def field(exception_v_2: typing_extensions.Literal["exception_v_2"]) -> typing.Optional[ExceptionV2]:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception_v_2"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[ExceptionV2]], typing.Optional[ExceptionV2]]],
+            typing.Callable[[typing.Optional[ExceptionV2]], typing.Optional[ExceptionV2]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(exception: typing_extensions.Literal["exception"]) -> typing.Optional[ExceptionInfo]:
+        def field(
+            cls, field_name: typing_extensions.Literal["exception"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.Optional[ExceptionInfo]], typing.Optional[ExceptionInfo]]],
+            typing.Callable[[typing.Optional[ExceptionInfo]], typing.Optional[ExceptionInfo]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(stdout: typing_extensions.Literal["stdout"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_v_2":
-                    cls._exception_v_2.append(validator)  # type: ignore
+                    cls._exception_v_2.append(validator)
                 elif field_name == "exception":
-                    cls._exception.append(validator)  # type: ignore
+                    cls._exception.append(validator)
                 elif field_name == "stdout":
-                    cls._stdout.append(validator)  # type: ignore
+                    cls._stdout.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on WorkspaceRunDetails: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

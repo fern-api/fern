@@ -23,32 +23,38 @@ class Migration(pydantic.BaseModel):
         return status
 
     class Validators:
-        _name: typing.ClassVar[str] = []
-        _status: typing.ClassVar[MigrationStatus] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _status: typing.ClassVar[typing.List[typing.Callable[[MigrationStatus], MigrationStatus]]] = []
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(status: typing_extensions.Literal["status"]) -> MigrationStatus:
+        def field(
+            cls, field_name: typing_extensions.Literal["status"]
+        ) -> typing.Callable[
+            [typing.Callable[[MigrationStatus], MigrationStatus]], typing.Callable[[MigrationStatus], MigrationStatus]
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 elif field_name == "status":
-                    cls._status.append(validator)  # type: ignore
+                    cls._status.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on Migration: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

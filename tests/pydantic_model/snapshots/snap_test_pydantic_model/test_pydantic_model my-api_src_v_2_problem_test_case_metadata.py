@@ -30,40 +30,46 @@ class TestCaseMetadata(pydantic.BaseModel):
         return hidden
 
     class Validators:
-        _id: typing.ClassVar[TestCaseId] = []
-        _name: typing.ClassVar[str] = []
-        _hidden: typing.ClassVar[bool] = []
+        _id: typing.ClassVar[typing.List[typing.Callable[[TestCaseId], TestCaseId]]] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _hidden: typing.ClassVar[typing.List[typing.Callable[[bool], bool]]] = []
 
         @typing.overload
         @classmethod
-        def field(id: typing_extensions.Literal["id"]) -> TestCaseId:
+        def field(
+            cls, field_name: typing_extensions.Literal["id"]
+        ) -> typing.Callable[[typing.Callable[[TestCaseId], TestCaseId]], typing.Callable[[TestCaseId], TestCaseId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(hidden: typing_extensions.Literal["hidden"]) -> bool:
+        def field(
+            cls, field_name: typing_extensions.Literal["hidden"]
+        ) -> typing.Callable[[typing.Callable[[bool], bool]], typing.Callable[[bool], bool]]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "id":
-                    cls._id.append(validator)  # type: ignore
+                    cls._id.append(validator)
                 elif field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 elif field_name == "hidden":
-                    cls._hidden.append(validator)  # type: ignore
+                    cls._hidden.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestCaseMetadata: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

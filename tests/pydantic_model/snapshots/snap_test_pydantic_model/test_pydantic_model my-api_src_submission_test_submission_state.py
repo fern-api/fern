@@ -39,48 +39,69 @@ class TestSubmissionState(pydantic.BaseModel):
         return status
 
     class Validators:
-        _problem_id: typing.ClassVar[ProblemId] = []
-        _default_test_cases: typing.ClassVar[typing.List[TestCase]] = []
-        _custom_test_cases: typing.ClassVar[typing.List[TestCase]] = []
-        _status: typing.ClassVar[TestSubmissionStatus] = []
+        _problem_id: typing.ClassVar[typing.List[typing.Callable[[ProblemId], ProblemId]]] = []
+        _default_test_cases: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[TestCase]], typing.List[TestCase]]]
+        ] = []
+        _custom_test_cases: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[TestCase]], typing.List[TestCase]]]
+        ] = []
+        _status: typing.ClassVar[typing.List[typing.Callable[[TestSubmissionStatus], TestSubmissionStatus]]] = []
 
         @typing.overload
         @classmethod
-        def field(problem_id: typing_extensions.Literal["problem_id"]) -> ProblemId:
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"]
+        ) -> typing.Callable[[typing.Callable[[ProblemId], ProblemId]], typing.Callable[[ProblemId], ProblemId]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(default_test_cases: typing_extensions.Literal["default_test_cases"]) -> typing.List[TestCase]:
+        def field(
+            cls, field_name: typing_extensions.Literal["default_test_cases"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[TestCase]], typing.List[TestCase]]],
+            typing.Callable[[typing.List[TestCase]], typing.List[TestCase]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(custom_test_cases: typing_extensions.Literal["custom_test_cases"]) -> typing.List[TestCase]:
+        def field(
+            cls, field_name: typing_extensions.Literal["custom_test_cases"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[TestCase]], typing.List[TestCase]]],
+            typing.Callable[[typing.List[TestCase]], typing.List[TestCase]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(status: typing_extensions.Literal["status"]) -> TestSubmissionStatus:
+        def field(
+            cls, field_name: typing_extensions.Literal["status"]
+        ) -> typing.Callable[
+            [typing.Callable[[TestSubmissionStatus], TestSubmissionStatus]],
+            typing.Callable[[TestSubmissionStatus], TestSubmissionStatus],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
-                    cls._problem_id.append(validator)  # type: ignore
+                    cls._problem_id.append(validator)
                 elif field_name == "default_test_cases":
-                    cls._default_test_cases.append(validator)  # type: ignore
+                    cls._default_test_cases.append(validator)
                 elif field_name == "custom_test_cases":
-                    cls._custom_test_cases.append(validator)  # type: ignore
+                    cls._custom_test_cases.append(validator)
                 elif field_name == "status":
-                    cls._status.append(validator)  # type: ignore
+                    cls._status.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on TestSubmissionState: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

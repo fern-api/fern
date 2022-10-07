@@ -63,7 +63,10 @@ class FunctionDeclaration(AstNode):
         body: Optional[CodeWriter],
     ) -> None:
         if body is None:
-            writer.write_line("@" + reference_resolver.resolve_reference(OVERLOAD_DECORATOR))
+            writer.write("@" + reference_resolver.resolve_reference(OVERLOAD_DECORATOR))
+            if len(self.overloads) <= 1:
+                writer.write("  # type: ignore")
+            writer.write_line()
 
         # apply decorators in reverse order, since they are executed by Python
         # from bottom to top

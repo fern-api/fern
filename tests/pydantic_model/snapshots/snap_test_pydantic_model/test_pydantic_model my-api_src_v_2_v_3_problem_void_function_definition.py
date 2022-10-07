@@ -26,32 +26,50 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         return code
 
     class Validators:
-        _parameters: typing.ClassVar[typing.List[Parameter]] = []
-        _code: typing.ClassVar[FunctionImplementationForMultipleLanguages] = []
+        _parameters: typing.ClassVar[
+            typing.List[typing.Callable[[typing.List[Parameter]], typing.List[Parameter]]]
+        ] = []
+        _code: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [FunctionImplementationForMultipleLanguages], FunctionImplementationForMultipleLanguages
+                ]
+            ]
+        ] = []
 
         @typing.overload
         @classmethod
-        def field(parameters: typing_extensions.Literal["parameters"]) -> typing.List[Parameter]:
+        def field(
+            cls, field_name: typing_extensions.Literal["parameters"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[Parameter]], typing.List[Parameter]]],
+            typing.Callable[[typing.List[Parameter]], typing.List[Parameter]],
+        ]:
             ...
 
         @typing.overload
         @classmethod
-        def field(code: typing_extensions.Literal["code"]) -> FunctionImplementationForMultipleLanguages:
+        def field(
+            cls, field_name: typing_extensions.Literal["code"]
+        ) -> typing.Callable[
+            [typing.Callable[[FunctionImplementationForMultipleLanguages], FunctionImplementationForMultipleLanguages]],
+            typing.Callable[[FunctionImplementationForMultipleLanguages], FunctionImplementationForMultipleLanguages],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
-                    cls._parameters.append(validator)  # type: ignore
+                    cls._parameters.append(validator)
                 elif field_name == "code":
-                    cls._code.append(validator)  # type: ignore
+                    cls._code.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on VoidFunctionDefinition: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

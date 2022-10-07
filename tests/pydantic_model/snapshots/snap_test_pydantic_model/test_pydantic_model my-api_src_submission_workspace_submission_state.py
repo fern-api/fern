@@ -16,24 +16,31 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
         return status
 
     class Validators:
-        _status: typing.ClassVar[WorkspaceSubmissionStatus] = []
+        _status: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceSubmissionStatus], WorkspaceSubmissionStatus]]
+        ] = []
 
-        @typing.overload
+        @typing.overload  # type: ignore
         @classmethod
-        def field(status: typing_extensions.Literal["status"]) -> WorkspaceSubmissionStatus:
+        def field(
+            cls, field_name: typing_extensions.Literal["status"]
+        ) -> typing.Callable[
+            [typing.Callable[[WorkspaceSubmissionStatus], WorkspaceSubmissionStatus]],
+            typing.Callable[[WorkspaceSubmissionStatus], WorkspaceSubmissionStatus],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "status":
-                    cls._status.append(validator)  # type: ignore
+                    cls._status.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on WorkspaceSubmissionState: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}

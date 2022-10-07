@@ -23,32 +23,39 @@ class PlaylistCreateRequest(pydantic.BaseModel):
         return problems
 
     class Validators:
-        _name: typing.ClassVar[str] = []
-        _problems: typing.ClassVar[typing.List[ProblemId]] = []
+        _name: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _problems: typing.ClassVar[typing.List[typing.Callable[[typing.List[ProblemId]], typing.List[ProblemId]]]] = []
 
         @typing.overload
         @classmethod
-        def field(name: typing_extensions.Literal["name"]) -> str:
+        def field(
+            cls, field_name: typing_extensions.Literal["name"]
+        ) -> typing.Callable[[typing.Callable[[str], str]], typing.Callable[[str], str]]:
             ...
 
         @typing.overload
         @classmethod
-        def field(problems: typing_extensions.Literal["problems"]) -> typing.List[ProblemId]:
+        def field(
+            cls, field_name: typing_extensions.Literal["problems"]
+        ) -> typing.Callable[
+            [typing.Callable[[typing.List[ProblemId]], typing.List[ProblemId]]],
+            typing.Callable[[typing.List[ProblemId]], typing.List[ProblemId]],
+        ]:
             ...
 
         @classmethod
         def field(cls, field_name: str) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "name":
-                    cls._name.append(validator)  # type: ignore
+                    cls._name.append(validator)
                 elif field_name == "problems":
-                    cls._problems.append(validator)  # type: ignore
+                    cls._problems.append(validator)
                 else:
                     raise RuntimeError("Field does not exist on PlaylistCreateRequest: " + field_name)
 
                 return validator
 
-            return validator  # type: ignore
+            return decorator
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
