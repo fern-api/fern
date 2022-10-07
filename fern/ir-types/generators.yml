@@ -8,7 +8,7 @@ draft:
     version: 0.0.115
     mode: publish
   - name: fernapi/fern-pydantic-model
-    version: 0.0.13
+    version: 0.0.13-4-g4975e8c
     mode: publish
 release:
   - name: fernapi/java-model
