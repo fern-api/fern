@@ -30,7 +30,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-client": "^0.0.34",
+    "@fern-fern/fiddle-client": "^0.0.43",
     "@fern-fern/ir-model": "0.0.227",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
