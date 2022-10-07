@@ -1,6 +1,7 @@
+import ir as ir_types
+
 from fern_python.codegen import Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
-from fern_python.generated import ir_types
 
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):

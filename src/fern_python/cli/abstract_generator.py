@@ -4,9 +4,9 @@ from typing import List
 
 from generator_exec.resources import logging
 from generator_exec.resources.config import GeneratorConfig, GeneratorPublishConfig
+from ir import IntermediateRepresentation
 
 from fern_python.codegen.project import Project, PublishConfig
-from fern_python.generated.ir_types import IntermediateRepresentation
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
