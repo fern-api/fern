@@ -1,7 +1,6 @@
 import subprocess
 from abc import ABC, abstractmethod
 from typing import List
-from urllib.parse import urljoin
 
 from generator_exec.resources import logging
 from generator_exec.resources.config import GeneratorConfig, GeneratorPublishConfig
@@ -88,7 +87,6 @@ class _Publisher:
         self,
     ) -> None:
         pypi_registry_config = self._publish_config.registries_v_2.pypi
-        pypi_url = urljoin(pypi_registry_config.registry_url, "simple")
         self._run_command(
             command=["poetry", "install"],
             loggable_command="poetry install",
@@ -98,7 +96,7 @@ class _Publisher:
                 "poetry",
                 "config",
                 f"repositories.{self._poetry_repo_name}",
-                pypi_url,
+                pypi_registry_config.registry_url,
             ],
             loggable_command="poetry config repositories.fern <url>",
         )
@@ -129,15 +127,19 @@ class _Publisher:
         command: List[str],
         loggable_command: str,
     ) -> None:
-        self._generator_exec_wrapper.send_update(
-            logging.GeneratorUpdate.factory.log(
-                logging.LogUpdate(level=logging.LogLevel.DEBUG, message=loggable_command)
+        try:
+            self._generator_exec_wrapper.send_update(
+                logging.GeneratorUpdate.factory.log(
+                    logging.LogUpdate(level=logging.LogLevel.DEBUG, message=loggable_command)
+                )
             )
-        )
-        subprocess.run(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            cwd=self._generator_config.output.path,
-            check=True,
-        )
+            subprocess.run(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                cwd=self._generator_config.output.path,
+                check=True,
+            )
+        except Exception as e:
+            print(e)
+            raise Exception(f"Failed to run command: {loggable_command}")
