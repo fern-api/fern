@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Callable, Generic, Optional, Tuple, TypeVar
 
-import ir as ir_types
+import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, ExportStrategy, Filepath

@@ -2,9 +2,9 @@ import subprocess
 from abc import ABC, abstractmethod
 from typing import List
 
+import fern.ir.pydantic as ir_types
 from generator_exec.resources import logging
 from generator_exec.resources.config import GeneratorConfig, GeneratorPublishConfig
-from ir import IntermediateRepresentation
 
 from fern_python.codegen.project import Project, PublishConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -15,7 +15,7 @@ class AbstractGenerator(ABC):
         self,
         *,
         generator_exec_wrapper: GeneratorExecWrapper,
-        ir: IntermediateRepresentation,
+        ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
     ) -> None:
         project_publish_config = generator_config.output.mode.visit(
@@ -62,7 +62,7 @@ class AbstractGenerator(ABC):
         self,
         *,
         generator_exec_wrapper: GeneratorExecWrapper,
-        ir: IntermediateRepresentation,
+        ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project: Project,
     ) -> None:

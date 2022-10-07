@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, Optional, Set, Tuple
 
-import ir as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, SourceFile
 

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-import ir as ir_types
+import fern.ir.pydantic as ir_types
 
 from ..context import DeclarationHandlerContext
 from ..custom_config import CustomConfig
