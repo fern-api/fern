@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import errno
 import os
-from pathlib import Path
 from types import TracebackType
-from typing import IO, Any, Optional, Type
+from typing import Optional, Type
 
 import black
 import isort
@@ -16,9 +15,9 @@ class WriterImpl(AST.Writer):
     def __init__(self, filepath: str):
         self._filepath = filepath
         self._indent = 0
-        self._file: IO[Any]
         self._has_written_anything = False
         self._last_character_is_newline = False
+        self._content = ""
 
     def write(self, content: str) -> None:
         content_ends_in_newline = len(content) > 0 and content[-1] == "\n"
@@ -46,7 +45,7 @@ class WriterImpl(AST.Writer):
         if len(content) > 0:
             self._has_written_anything = True
             self._last_character_is_newline = content[-1] == "\n"
-        self._file.write(content)
+        self._content += content
 
     def write_line(self, content: str = "") -> None:
         self.write(content)
@@ -73,19 +72,20 @@ class WriterImpl(AST.Writer):
 
     def start(self) -> None:
         mkdir_p(os.path.dirname(self._filepath))
-        self._file = open(self._filepath, "w")
 
     def finish(self) -> None:
-        self._file.close()
-        path = Path(os.path.join(os.getcwd(), self._filepath))
-        isort.file(path, quiet=True)
-        black.format_file_in_place(
-            path,
-            fast=True,
-            # todo read their config?
-            mode=black.FileMode(magic_trailing_comma=False, line_length=120),
-            write_back=black.WriteBack.YES,
-        )
+        self._content = isort.code(self._content, quiet=True)
+        try:
+            self._content = black.format_file_contents(
+                self._content,
+                fast=True,
+                # todo read their config?
+                mode=black.FileMode(magic_trailing_comma=False, line_length=120),
+            )
+        except black.report.NothingChanged:
+            pass
+        with open(self._filepath, "w") as file:
+            file.write(self._content)
 
     def outdent(self) -> None:
         self._indent = max(0, self._indent - 1)

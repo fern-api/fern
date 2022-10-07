@@ -162,6 +162,7 @@ class FernAwarePydanticModel:
         if not self._custom_config.exclude_validators:
             self._add_validators()
         self._override_json()
+        self._override_dict()
         self._pydantic_model.finish()
         if self._model_contains_forward_refs:
             self._context.source_file.add_footer_expression(
