@@ -1,6 +1,7 @@
 import subprocess
 from abc import ABC, abstractmethod
 from typing import List
+from urllib.parse import urljoin
 
 from generator_exec.resources import logging
 from generator_exec.resources.config import GeneratorConfig, GeneratorPublishConfig
@@ -87,14 +88,19 @@ class _Publisher:
         self,
     ) -> None:
         pypi_registry_config = self._publish_config.registries_v_2.pypi
-        self._run_command(command=["poetry", "install"])
+        pypi_url = urljoin(pypi_registry_config.registry_url, "simple")
+        self._run_command(
+            command=["poetry", "install"],
+            loggable_command="poetry install",
+        )
         self._run_command(
             command=[
                 "poetry",
                 "config",
                 f"repositories.{self._poetry_repo_name}",
-                f"{pypi_registry_config.registry_url}/simple",
+                pypi_url,
             ],
+            loggable_command="poetry config repositories.fern <url>",
         )
         self._run_command(
             command=[
@@ -104,6 +110,7 @@ class _Publisher:
                 pypi_registry_config.username,
                 pypi_registry_config.password,
             ],
+            loggable_command="poetry config http-basic.fern <creds>",
         )
         self._run_command(
             command=[
@@ -113,15 +120,18 @@ class _Publisher:
                 "--repository",
                 self._poetry_repo_name,
             ],
+            loggable_command="poetry publish",
         )
 
     def _run_command(
         self,
+        *,
         command: List[str],
+        loggable_command: str,
     ) -> None:
         self._generator_exec_wrapper.send_update(
             logging.GeneratorUpdate.factory.log(
-                logging.LogUpdate(level=logging.LogLevel.DEBUG, message=" ".join(command))
+                logging.LogUpdate(level=logging.LogLevel.DEBUG, message=" ".join(loggable_command))
             )
         )
         subprocess.run(
