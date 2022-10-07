@@ -89,7 +89,7 @@ class _Publisher:
         pypi_registry_config = self._publish_config.registries_v_2.pypi
         self._run_command(
             command=["poetry", "install"],
-            loggable_command="poetry install",
+            safe_command="poetry install",
         )
         self._run_command(
             command=[
@@ -98,7 +98,7 @@ class _Publisher:
                 f"repositories.{self._poetry_repo_name}",
                 pypi_registry_config.registry_url,
             ],
-            loggable_command="poetry config repositories.fern <url>",
+            safe_command="poetry config repositories.fern <url>",
         )
         self._run_command(
             command=[
@@ -108,7 +108,7 @@ class _Publisher:
                 pypi_registry_config.username,
                 pypi_registry_config.password,
             ],
-            loggable_command="poetry config http-basic.fern <creds>",
+            safe_command="poetry config http-basic.fern <creds>",
         )
         self._run_command(
             command=[
@@ -118,30 +118,33 @@ class _Publisher:
                 "--repository",
                 self._poetry_repo_name,
             ],
-            loggable_command="poetry publish",
+            safe_command="poetry publish",
         )
 
     def _run_command(
         self,
         *,
         command: List[str],
-        loggable_command: str,
+        safe_command: str,
     ) -> None:
         try:
             self._generator_exec_wrapper.send_update(
                 logging.GeneratorUpdate.factory.log(
-                    logging.LogUpdate(level=logging.LogLevel.DEBUG, message=loggable_command)
+                    logging.LogUpdate(level=logging.LogLevel.DEBUG, message=safe_command)
                 )
             )
-            subprocess.run(
+            completed_command = subprocess.run(
                 command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 cwd=self._generator_config.output.path,
                 check=True,
             )
+            print(f"Ran command: {' '.join(command)}")
+            print(completed_command.stdout)
+            print(completed_command.stderr)
         except subprocess.CalledProcessError as e:
-            print(f"Failed to run command: {loggable_command}")
+            print(f"Failed to run command: {' '.join(command)}")
             print(e.stdout)
             print(e.stderr)
-            raise Exception("Failed to run command", loggable_command)
+            raise Exception("Failed to run command", safe_command)
