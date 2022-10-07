@@ -4,7 +4,8 @@ from generator_exec.resources.logging import (
     ErrorExitStatusUpdate,
     ExitStatusUpdate,
     GeneratorUpdate,
-    InitUpdate,
+    InitUpdateV2,
+    RegistryType,
 )
 
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -23,7 +24,9 @@ class GeneratorCli:
         try:
             ir = ir_types.IntermediateRepresentation.parse_file(config.ir_filepath)
 
-            generator_exec_wrapper.send_update(GeneratorUpdate.factory.init(InitUpdate(packages_to_publish=[])))
+            generator_exec_wrapper.send_update(
+                GeneratorUpdate.factory.init_v_2(InitUpdateV2(publishing_to_registry=(RegistryType.PYPI)))
+            )
 
             self.abstract_generator.generate_project(
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=config
