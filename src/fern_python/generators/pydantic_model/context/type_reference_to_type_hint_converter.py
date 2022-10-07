@@ -3,13 +3,12 @@ from typing import Callable, Optional
 from fern_python.codegen import AST
 from fern_python.generated import ir_types
 
-from .type_name_to_class_reference_converter import TypeNameToClassReferenceConverter
+from ..type_declaration_referencer import TypeDeclarationReferencer
 
 
 class TypeReferenceToTypeHintConverter:
-    def __init__(self, api_name: str, type_name_to_class_reference_converter: TypeNameToClassReferenceConverter):
-        self._api_name = api_name
-        self._type_name_to_class_reference_converter = type_name_to_class_reference_converter
+    def __init__(self, type_declaration_referencer: TypeDeclarationReferencer):
+        self._type_declaration_referencer = type_declaration_referencer
 
     def get_type_hint_for_type_reference(
         self,
@@ -73,8 +72,8 @@ class TypeReferenceToTypeHintConverter:
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
     ) -> AST.TypeHint:
         return AST.TypeHint(
-            type=self._type_name_to_class_reference_converter.get_class_reference_for_type_name(
-                type_name=type_name,
+            type=self._type_declaration_referencer.get_class_reference(
+                name=type_name,
                 must_import_after_current_declaration=must_import_after_current_declaration,
             )
         )
