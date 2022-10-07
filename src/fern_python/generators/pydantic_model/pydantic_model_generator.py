@@ -27,19 +27,19 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
+        project: Project,
     ) -> None:
         custom_config = CustomConfig.parse_obj(generator_config.custom_config or {})
-        with Project(filepath=generator_config.output.path, project_name=f"{ir.api_name}") as project:
-            type_declaration_referencer = TypeDeclarationReferencer(api_name=ir.api_name)
-            for type_to_generate in ir.types:
-                self._generate_type(
-                    project,
-                    ir=ir,
-                    type=type_to_generate,
-                    generator_exec_wrapper=generator_exec_wrapper,
-                    custom_config=custom_config,
-                    type_declaration_referencer=type_declaration_referencer,
-                )
+        type_declaration_referencer = TypeDeclarationReferencer(api_name=ir.api_name)
+        for type_to_generate in ir.types:
+            self._generate_type(
+                project,
+                ir=ir,
+                type=type_to_generate,
+                generator_exec_wrapper=generator_exec_wrapper,
+                custom_config=custom_config,
+                type_declaration_referencer=type_declaration_referencer,
+            )
 
     def _generate_type(
         self,

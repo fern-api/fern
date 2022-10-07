@@ -26,7 +26,9 @@ class GeneratorCli:
             # TODO: if in publish mode, need to send name of published package
             generator_exec_wrapper.send_update(GeneratorUpdate.factory.init(InitUpdate(packages_to_publish=[])))
 
-            self.abstract_generator.run(generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=config)
+            self.abstract_generator.generate(
+                generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=config
+            )
             generator_exec_wrapper.send_update(
                 GeneratorUpdate.factory.exit_status_update(ExitStatusUpdate.factory.successful())
             )
