@@ -140,6 +140,8 @@ class _Publisher:
                 cwd=self._generator_config.output.path,
                 check=True,
             )
-        except Exception as e:
-            print(e)
-            raise Exception(f"Failed to run command: {loggable_command}")
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to run command: {loggable_command}")
+            print(e.stdout)
+            print(e.stderr)
+            raise Exception("Failed to run command", loggable_command)
