@@ -50,6 +50,7 @@ export class RemoteTaskHandler {
                               npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
                               maven: (mavenPackage) =>
                                   `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
+                              pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
                               _other: () => "<unknown package>",
                           });
                           return `◦ ${coordinateStr}`;
@@ -73,8 +74,13 @@ export class RemoteTaskHandler {
         remoteTask.status._visit({
             notStarted: noop,
             running: noop,
-            failed: ({ message }) => {
+            failed: ({ message, s3PreSignedReadUrl }) => {
                 this.context.fail(message);
+                if (s3PreSignedReadUrl != null) {
+                    this.context.logger.debug(
+                        `Generated files. ${terminalLink("View here", s3PreSignedReadUrl)}`
+                    );
+                }
                 this.context.finish();
             },
             finished: async (finishedStatus) => {
