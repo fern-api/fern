@@ -3,12 +3,12 @@ from typing import Callable, Optional, Set
 import ir as ir_types
 
 from fern_python.codegen import AST, Filepath, SourceFile
-from fern_python.declaration_handler import (
+from fern_python.declaration_referencer import AbstractDeclarationReferencer
+
+from .declaration_handler_context import (
     DeclarationHandlerContext,
     HashableDeclaredTypeName,
 )
-from fern_python.declaration_referencer import AbstractDeclarationReferencer
-
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
 
 

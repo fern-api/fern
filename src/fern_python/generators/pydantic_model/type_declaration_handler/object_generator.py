@@ -1,7 +1,6 @@
 import ir as ir_types
 
-from fern_python.declaration_handler import DeclarationHandlerContext
-
+from ..context import DeclarationHandlerContext
 from ..custom_config import CustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator

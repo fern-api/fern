@@ -28,7 +28,10 @@ class PydanticModelGenerator(AbstractGenerator):
             ir=ir,
             custom_config=custom_config,
             project=project,
-            type_declaration_referencer=TypeDeclarationReferencer(api_name=ir.api_name),
+            type_declaration_referencer=TypeDeclarationReferencer(
+                generator_config=generator_config,
+                ir=ir,
+            ),
         )
 
     def generate_types(

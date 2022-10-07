@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, Generic, Optional, Tuple, TypeVar
 
 import ir as ir_types
+from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, ExportStrategy, Filepath
 
@@ -9,6 +10,11 @@ T = TypeVar("T")
 
 
 class AbstractDeclarationReferencer(ABC, Generic[T]):
+    def __init__(self, generator_config: GeneratorConfig, ir: ir_types.IntermediateRepresentation):
+        super().__init__()
+        self._generator_config = generator_config
+        self._ir = ir
+
     def get_class_reference(
         self,
         *,
@@ -32,6 +38,10 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         ...
 
     @abstractmethod
+    def _get_generator_name_for_containing_folder(self) -> str:
+        ...
+
+    @abstractmethod
     def get_class_name(self, *, name: T) -> str:
         ...
 
@@ -41,7 +51,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         fern_filepath: ir_types.FernFilepath,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         fern_filepath_parts = fern_filepath.get_as_list()
-        return tuple(
+        default_directories = tuple(
             Filepath.DirectoryFilepathPart(
                 module_name=fern_filepath_part.snake_case,
                 export_strategy=ExportStrategy.EXPORT_AS_NAMESPACE
@@ -49,4 +59,20 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
                 else ExportStrategy.EXPORT_ALL,
             )
             for i, fern_filepath_part in enumerate(fern_filepath_parts)
+        )
+        return self._generator_config.output.mode.visit(
+            download_files=lambda: default_directories,
+            publish=lambda x: (
+                Filepath.DirectoryFilepathPart(
+                    module_name=self._get_generator_name_for_containing_folder(),
+                    export_strategy=ExportStrategy.EXPORT_ALL,
+                ),
+                Filepath.DirectoryFilepathPart(
+                    module_name=self._generator_config.organization, export_strategy=ExportStrategy.EXPORT_ALL
+                ),
+                Filepath.DirectoryFilepathPart(
+                    module_name=self._ir.api_name, export_strategy=ExportStrategy.EXPORT_ALL
+                ),
+            )
+            + default_directories,
         )

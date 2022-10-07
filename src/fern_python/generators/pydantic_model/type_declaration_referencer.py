@@ -5,10 +5,6 @@ from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
-    def __init__(self, *, api_name: str):
-        super().__init__()
-        self._api_name = api_name
-
     def get_filepath(self, *, name: ir_types.DeclaredTypeName) -> Filepath:
         return Filepath(
             directories=self._get_directories_for_fern_filepath(
@@ -19,3 +15,6 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
         return name.name
+
+    def _get_generator_name_for_containing_folder(self) -> str:
+        return "pydantic"
