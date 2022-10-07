@@ -135,8 +135,8 @@ class _Publisher:
             )
             subprocess.run(
                 command,
-                stdout=subprocess.STDOUT,
-                stderr=subprocess.STDOUT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
                 cwd=self._generator_config.output.path,
                 check=True,
             )
