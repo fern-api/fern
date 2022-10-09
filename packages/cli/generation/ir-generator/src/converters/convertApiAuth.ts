@@ -31,17 +31,6 @@ export function convertApiAuth({
                 }),
             ],
         }),
-        all: ({ all }) => ({
-            docs,
-            requirement: AuthSchemesRequirement.All,
-            schemes: all.map((schemeReference) =>
-                convertSchemeReference({
-                    reference: schemeReference,
-                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    file,
-                })
-            ),
-        }),
         any: ({ any }) => ({
             docs,
             requirement: AuthSchemesRequirement.Any,
