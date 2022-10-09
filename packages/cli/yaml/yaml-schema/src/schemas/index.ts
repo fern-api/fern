@@ -1,5 +1,4 @@
 export { AliasSchema } from "./AliasSchema";
-export { AllAuthSchemesSchema } from "./AllAuthSchemesSchema";
 export { AnyAuthSchemesSchema } from "./AnyAuthSchemesSchema";
 export { ApiAuthSchema } from "./ApiAuthSchema";
 export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
