@@ -30,7 +30,10 @@ public final class DefaultMethodGenerators {
 
     private DefaultMethodGenerators() {}
 
-    public static MethodSpec generateEqualToMethod(ClassName className, List<FieldSpec> fieldSpecs) {
+    public static Optional<MethodSpec> generateEqualToMethod(ClassName className, List<FieldSpec> fieldSpecs) {
+        if (fieldSpecs.isEmpty()) {
+            return Optional.empty();
+        }
         MethodSpec.Builder equalToMethodBuilder = MethodSpec.methodBuilder(EqualsConstants.EQUAL_TO_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE)
                 .returns(boolean.class)
@@ -53,24 +56,29 @@ public final class DefaultMethodGenerators {
                 })
                 .map(CodeBlock::toString)
                 .collect(Collectors.joining(" && "));
-        return equalToMethodBuilder.addStatement("return " + expression).build();
+        return Optional.of(
+                equalToMethodBuilder.addStatement("return " + expression).build());
     }
 
-    public static MethodSpec generateEqualsMethod(ClassName className, MethodSpec equalToMethod) {
-        return MethodSpec.methodBuilder(EqualsConstants.EQUALS_METHOD_NAME)
+    public static MethodSpec generateEqualsMethod(ClassName className, Optional<MethodSpec> equalToMethod) {
+        MethodSpec.Builder equalsMethodBuilder = MethodSpec.methodBuilder(EqualsConstants.EQUALS_METHOD_NAME)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(boolean.class)
                 .addParameter(Object.class, EqualsConstants.OTHER_PARAMETER)
-                .addStatement("if (this == $L) return true", EqualsConstants.OTHER_PARAMETER)
-                .addStatement(
-                        "return $L instanceof $T && $N(($T) $L)",
-                        EqualsConstants.OTHER_PARAMETER,
-                        className,
-                        equalToMethod,
-                        className,
-                        EqualsConstants.OTHER_PARAMETER)
-                .build();
+                .addStatement("if (this == $L) return true", EqualsConstants.OTHER_PARAMETER);
+        if (equalToMethod.isPresent()) {
+            equalsMethodBuilder.addStatement(
+                    "return $L instanceof $T && $N(($T) $L)",
+                    EqualsConstants.OTHER_PARAMETER,
+                    className,
+                    equalToMethod.get(),
+                    className,
+                    EqualsConstants.OTHER_PARAMETER);
+        } else {
+            equalsMethodBuilder.addStatement("return $L instanceof $T", EqualsConstants.OTHER_PARAMETER, className);
+        }
+        return equalsMethodBuilder.build();
     }
 
     public static MethodSpec generateHashCode(List<FieldSpec> fieldSpecs, boolean caching) {

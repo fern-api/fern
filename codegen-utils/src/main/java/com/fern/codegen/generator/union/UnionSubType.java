@@ -90,11 +90,11 @@ public abstract class UnionSubType {
                 .build();
     }
 
-    public final MethodSpec getEqualsMethod(MethodSpec equalToMethod) {
+    public final MethodSpec getEqualsMethod(Optional<MethodSpec> equalToMethod) {
         return DefaultMethodGenerators.generateEqualsMethod(getUnionSubTypeWrapperClass(), equalToMethod);
     }
 
-    public final MethodSpec getEqualToMethod() {
+    public final Optional<MethodSpec> getEqualToMethod() {
         return DefaultMethodGenerators.generateEqualToMethod(getUnionSubTypeWrapperClass(), getFieldSpecs());
     }
 
@@ -117,13 +117,14 @@ public abstract class UnionSubType {
                     .addMember("value", "$S", getDiscriminantValue())
                     .build());
         }
-        MethodSpec equalToMethod = getEqualToMethod();
-        return unionSubTypeBuilder
+        Optional<MethodSpec> equalToMethod = getEqualToMethod();
+        unionSubTypeBuilder
                 .addFields(getFieldSpecs())
                 .addMethods(getConstructors())
                 .addMethod(getVisitMethod())
-                .addMethod(getEqualsMethod(equalToMethod))
-                .addMethod(equalToMethod)
+                .addMethod(getEqualsMethod(equalToMethod));
+        equalToMethod.ifPresent(unionSubTypeBuilder::addMethod);
+        return unionSubTypeBuilder
                 .addMethod(getHashCodeMethod())
                 .addMethod(getToStringMethod())
                 .build();

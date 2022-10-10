@@ -63,7 +63,7 @@ public final class GenericObjectGenerator {
     }
 
     public TypeSpec generate() {
-        MethodSpec equalToMethod = generateEqualToMethod();
+        Optional<MethodSpec> equalToMethod = generateEqualToMethod();
         Optional<ObjectBuilder> maybeObjectBuilder = generateBuilder();
         TypeSpec.Builder typeSpecBuilder = TypeSpec.classBuilder(objectClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -78,10 +78,9 @@ public final class GenericObjectGenerator {
                 .addMethods(allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::getterProperty)
                         .collect(Collectors.toList()))
-                .addMethod(generateEqualsMethod(equalToMethod))
-                .addMethod(equalToMethod)
-                .addMethod(generateHashCode())
-                .addMethod(generateToString());
+                .addMethod(generateEqualsMethod(equalToMethod));
+        equalToMethod.ifPresent(typeSpecBuilder::addMethod);
+        typeSpecBuilder.addMethod(generateHashCode()).addMethod(generateToString());
         if (maybeObjectBuilder.isPresent()) {
             ObjectBuilder objectBuilder = maybeObjectBuilder.get();
             typeSpecBuilder.addMethod(objectBuilder.getBuilderStaticMethod());
@@ -111,7 +110,7 @@ public final class GenericObjectGenerator {
         return constructorBuilder.build();
     }
 
-    private MethodSpec generateEqualToMethod() {
+    private Optional<MethodSpec> generateEqualToMethod() {
         return DefaultMethodGenerators.generateEqualToMethod(
                 objectClassName,
                 allEnrichedProperties.stream()
@@ -119,7 +118,7 @@ public final class GenericObjectGenerator {
                         .collect(Collectors.toList()));
     }
 
-    private MethodSpec generateEqualsMethod(MethodSpec equalToMethod) {
+    private MethodSpec generateEqualsMethod(Optional<MethodSpec> equalToMethod) {
         return DefaultMethodGenerators.generateEqualsMethod(objectClassName, equalToMethod);
     }
 
