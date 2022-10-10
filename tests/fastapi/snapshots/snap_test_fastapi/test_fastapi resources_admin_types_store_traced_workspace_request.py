@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
-from .trace_response import TraceResponse
-from .workspace_run_details import WorkspaceRunDetails
+from ...submission.types.trace_response import TraceResponse
+from ...submission.types.workspace_run_details import WorkspaceRunDetails
 
 
 class StoreTracedWorkspaceRequest(pydantic.BaseModel):

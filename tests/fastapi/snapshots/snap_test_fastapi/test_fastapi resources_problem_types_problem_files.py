@@ -3,7 +3,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .file_info import FileInfo
+from ...commons.types.file_info import FileInfo
 
 
 class ProblemFiles(pydantic.BaseModel):

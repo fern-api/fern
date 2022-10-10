@@ -3,12 +3,12 @@ import typing
 import pydantic
 import typing_extensions
 
-from .language import Language
+from ...commons.types.language import Language
+from ...commons.types.problem_id import ProblemId
+from ...commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
+from ...commons.types.variable_type import VariableType
 from .problem_description import ProblemDescription
 from .problem_files import ProblemFiles
-from .problem_id import ProblemId
-from .test_case_with_expected_result import TestCaseWithExpectedResult
-from .variable_type import VariableType
 from .variable_type_and_name import VariableTypeAndName
 
 

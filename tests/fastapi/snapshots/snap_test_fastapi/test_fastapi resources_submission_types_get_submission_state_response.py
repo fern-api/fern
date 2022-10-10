@@ -3,7 +3,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .language import Language
+from ...commons.types.language import Language
 from .submission_type_state import SubmissionTypeState
 
 

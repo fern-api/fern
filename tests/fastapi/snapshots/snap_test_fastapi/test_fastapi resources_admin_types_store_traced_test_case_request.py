@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
-from .test_case_result_with_stdout import TestCaseResultWithStdout
-from .trace_response import TraceResponse
+from ...submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
+from ...submission.types.trace_response import TraceResponse
 
 
 class StoreTracedTestCaseRequest(pydantic.BaseModel):

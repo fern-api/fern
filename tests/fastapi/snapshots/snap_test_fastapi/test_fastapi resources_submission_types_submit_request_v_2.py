@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
-from .language import Language
-from .problem_id import ProblemId
+from ...commons.types.language import Language
+from ...commons.types.problem_id import ProblemId
 from .submission_file_info import SubmissionFileInfo
 from .submission_id import SubmissionId
 

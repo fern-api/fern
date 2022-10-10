@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
-from .language import Language
 
 
 class ExecutionSessionState(pydantic.BaseModel):

@@ -3,7 +3,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .problem_id import ProblemId
+from ...commons.types.problem_id import ProblemId
 
 
 class UpdatePlaylistRequest(pydantic.BaseModel):

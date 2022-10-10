@@ -5,9 +5,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.variable_value import VariableValue
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
-from .variable_value import VariableValue
 
 T_Result = typing.TypeVar("T_Result")
 

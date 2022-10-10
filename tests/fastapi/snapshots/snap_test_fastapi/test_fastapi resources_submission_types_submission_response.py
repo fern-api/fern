@@ -5,9 +5,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 from .exception_info import ExceptionInfo
-from .problem_id import ProblemId
 from .terminated_response import TerminatedResponse
 
 T_Result = typing.TypeVar("T_Result")

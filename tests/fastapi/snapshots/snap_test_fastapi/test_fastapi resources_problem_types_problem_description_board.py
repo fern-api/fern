@@ -5,7 +5,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .variable_value import VariableValue
+from ...commons.types.variable_value import VariableValue
 
 T_Result = typing.TypeVar("T_Result")
 

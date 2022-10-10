@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.variable_value import VariableValue
 from .actual_result import ActualResult
-from .variable_value import VariableValue
 
 
 class TestCaseResult(pydantic.BaseModel):

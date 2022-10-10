@@ -5,8 +5,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
-from .problem_id import ProblemId
 
 T_Result = typing.TypeVar("T_Result")
 

@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.problem_id import ProblemId
 from ...v_2.problem.types.problem_info_v_2 import ProblemInfoV2
-from .problem_id import ProblemId
 from .test_submission_update import TestSubmissionUpdate
 
 

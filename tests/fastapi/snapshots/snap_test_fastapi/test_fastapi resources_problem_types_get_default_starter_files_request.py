@@ -3,7 +3,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .variable_type import VariableType
+from ...commons.types.variable_type import VariableType
 from .variable_type_and_name import VariableTypeAndName
 
 

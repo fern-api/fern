@@ -102,7 +102,7 @@ def get_relative_module_path_str(from_module: AST.ModulePath, to_module: AST.Mod
     # walk back from the from_module until we get to a common ancestor
     index = len(from_module) - 2
     while index >= 0:
-        if index >= len(to_module) or to_module[index] != from_module[index]:
+        if index >= len(to_module) or to_module[: index + 1] != from_module[: index + 1]:
             s += "."
         else:
             break

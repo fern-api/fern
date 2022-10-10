@@ -3,9 +3,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.user_id import UserId
 from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
-from .user_id import UserId
 
 
 class Playlist(PlaylistCreateRequest):

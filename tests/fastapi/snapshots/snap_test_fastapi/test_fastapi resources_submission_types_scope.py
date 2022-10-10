@@ -3,7 +3,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from .debug_variable_value import DebugVariableValue
+from ...commons.types.debug_variable_value import DebugVariableValue
 
 
 class Scope(pydantic.BaseModel):

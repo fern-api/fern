@@ -3,8 +3,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.language import Language
 from ...v_2.problem.types.files import Files
-from .language import Language
 
 
 class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
