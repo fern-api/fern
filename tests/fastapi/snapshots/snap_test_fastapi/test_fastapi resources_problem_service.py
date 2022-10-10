@@ -54,7 +54,7 @@ class AbstractProblemCrudService(AbstractFernService):
 
     @classmethod
     def __init_createProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.createProblem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -71,7 +71,7 @@ class AbstractProblemCrudService(AbstractFernService):
 
     @classmethod
     def __init_updateProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.updateProblem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -92,7 +92,7 @@ class AbstractProblemCrudService(AbstractFernService):
 
     @classmethod
     def __init_deleteProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.deleteProblem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -109,7 +109,7 @@ class AbstractProblemCrudService(AbstractFernService):
 
     @classmethod
     def __init_getDefaultStarterFiles(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getDefaultStarterFiles)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

@@ -67,7 +67,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
 
     @classmethod
     def __init_createPlaylist(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.createPlaylist)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -88,7 +88,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
 
     @classmethod
     def __init_getPlaylists(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getPlaylists)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -113,7 +113,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
 
     @classmethod
     def __init_getPlaylist(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getPlaylist)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -134,7 +134,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
 
     @classmethod
     def __init_updatePlaylist(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.updatePlaylist)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -159,7 +159,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
 
     @classmethod
     def __init_deletePlaylist(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.deletePlaylist)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

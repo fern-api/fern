@@ -51,7 +51,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
 
     @classmethod
     def __init_createExecutionSession(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.createExecutionSession)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -70,7 +70,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
 
     @classmethod
     def __init_getExecutionSession(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getExecutionSession)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -89,7 +89,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
 
     @classmethod
     def __init_stopExecutionSession(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.stopExecutionSession)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -106,7 +106,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
 
     @classmethod
     def __init_getExecutionSessionsState(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getExecutionSessionsState)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

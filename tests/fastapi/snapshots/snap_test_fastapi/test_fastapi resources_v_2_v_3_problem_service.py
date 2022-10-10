@@ -51,7 +51,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
 
     @classmethod
     def __init_getLightweightProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getLightweightProblems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -68,7 +68,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
 
     @classmethod
     def __init_getProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getProblems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -85,7 +85,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
 
     @classmethod
     def __init_getLatestProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getLatestProblem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -104,7 +104,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
 
     @classmethod
     def __init_getProblemVersion(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getProblemVersion)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

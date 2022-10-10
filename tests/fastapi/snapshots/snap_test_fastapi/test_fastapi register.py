@@ -41,7 +41,7 @@ def register(
     app.include_router(__register_service(v_2_v_3_problem))
 
     @app.exception_handler(FernHTTPException)
-    def _exception_handler(request: fastapi.requests.Request, exc: FernHTTPException) -> fastapi.requests.JSONResponse:
+    def _exception_handler(request: fastapi.requests.Request, exc: FernHTTPException) -> fastapi.responses.JSONResponse:
         return exc.to_json_response()
 
 

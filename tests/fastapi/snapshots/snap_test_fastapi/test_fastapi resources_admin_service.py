@@ -83,7 +83,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_updateTestSubmissionStatus(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.updateTestSubmissionStatus)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -102,7 +102,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_sendTestSubmissionUpdate(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.sendTestSubmissionUpdate)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -122,7 +122,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_updateWorkspaceSubmissionStatus(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.updateWorkspaceSubmissionStatus)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -142,7 +142,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_sendWorkspaceSubmissionUpdate(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.sendWorkspaceSubmissionUpdate)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -162,7 +162,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_storeTracedTestCase(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.storeTracedTestCase)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -184,7 +184,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_storeTracedTestCaseV2(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.storeTracedTestCaseV2)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -206,7 +206,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_storeTracedWorkspace(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.storeTracedWorkspace)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -225,7 +225,7 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def __init_storeTracedWorkspaceV2(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.storeTracedWorkspaceV2)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

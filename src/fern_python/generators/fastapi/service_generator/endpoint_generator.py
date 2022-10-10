@@ -139,7 +139,8 @@ class EndpointGenerator:
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=("signature",),
                     import_=AST.ReferenceImport(module=AST.Module.built_in("inspect")),
-                )
+                ),
+                args=[AST.Expression(f"cls.{self._get_method_name()}")],
             )
         )
         writer.write_line()

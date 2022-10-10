@@ -39,7 +39,7 @@ class AbstractSysPropCrudService(AbstractFernService):
 
     @classmethod
     def __init_setNumWarmInstances(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.setNumWarmInstances)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -59,7 +59,7 @@ class AbstractSysPropCrudService(AbstractFernService):
 
     @classmethod
     def __init_getNumWarmInstances(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getNumWarmInstances)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

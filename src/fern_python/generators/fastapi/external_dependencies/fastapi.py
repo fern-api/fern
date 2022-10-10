@@ -52,7 +52,7 @@ class FastAPI:
 
     Request = AST.TypeHint(type=_export("requests", "Request"))
 
-    JSONResponse = AST.TypeHint(type=_export("requests", "JSONResponse"))
+    JSONResponse = AST.TypeHint(type=_export("responses", "JSONResponse"))
 
     HTTPBasic = _export("security", "HTTPBasic")
 

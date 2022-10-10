@@ -39,7 +39,7 @@ class AbstractHomepageProblemService(AbstractFernService):
 
     @classmethod
     def __init_getHomepageProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getHomepageProblems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -54,7 +54,7 @@ class AbstractHomepageProblemService(AbstractFernService):
 
     @classmethod
     def __init_setHomepageProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.setHomepageProblems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:

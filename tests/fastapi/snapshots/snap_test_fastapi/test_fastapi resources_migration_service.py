@@ -34,7 +34,7 @@ class AbstractMigrationInfoService(AbstractFernService):
 
     @classmethod
     def __init_getAttemptedMigrations(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature()
+        endpoint_function = inspect.signature(cls.getAttemptedMigrations)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
