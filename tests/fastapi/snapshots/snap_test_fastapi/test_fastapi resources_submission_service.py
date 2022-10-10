@@ -22,19 +22,19 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def createExecutionSession(self, *, language: Language) -> ExecutionSessionResponse:
+    def create_execution_session(self, *, language: Language) -> ExecutionSessionResponse:
         ...
 
     @abc.abstractmethod
-    def getExecutionSession(self, *, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
+    def get_execution_session(self, *, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
         ...
 
     @abc.abstractmethod
-    def stopExecutionSession(self, *, session_id: str) -> None:
+    def stop_execution_session(self, *, session_id: str) -> None:
         ...
 
     @abc.abstractmethod
-    def getExecutionSessionsState(self) -> GetExecutionSessionStateResponse:
+    def get_execution_sessions_state(self) -> GetExecutionSessionStateResponse:
         ...
 
     """
@@ -44,14 +44,14 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_createExecutionSession(router=router)
-        cls.__init_getExecutionSession(router=router)
-        cls.__init_stopExecutionSession(router=router)
-        cls.__init_getExecutionSessionsState(router=router)
+        cls.__init_create_execution_session(router=router)
+        cls.__init_get_execution_session(router=router)
+        cls.__init_stop_execution_session(router=router)
+        cls.__init_get_execution_sessions_state(router=router)
 
     @classmethod
-    def __init_createExecutionSession(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.createExecutionSession)
+    def __init_create_execution_session(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.create_execution_session)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -62,15 +62,15 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.createExecutionSession = router.post(  # type: ignore
+        cls.create_execution_session = router.post(  # type: ignore
             path="/sessions/create-session/{language}",
             response_model=ExecutionSessionResponse,
-            **get_route_args(cls.createExecutionSession),
-        )(cls.createExecutionSession)
+            **get_route_args(cls.create_execution_session),
+        )(cls.create_execution_session)
 
     @classmethod
-    def __init_getExecutionSession(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getExecutionSession)
+    def __init_get_execution_session(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_execution_session)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -81,15 +81,15 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getExecutionSession = router.get(  # type: ignore
+        cls.get_execution_session = router.get(  # type: ignore
             path="/sessions/{session_id}",
             response_model=typing.Optional[ExecutionSessionResponse],
-            **get_route_args(cls.getExecutionSession),
-        )(cls.getExecutionSession)
+            **get_route_args(cls.get_execution_session),
+        )(cls.get_execution_session)
 
     @classmethod
-    def __init_stopExecutionSession(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.stopExecutionSession)
+    def __init_stop_execution_session(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.stop_execution_session)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -100,13 +100,13 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.stopExecutionSession = router.delete(  # type: ignore
-            path="/sessions/stop/{session_id}", **get_route_args(cls.stopExecutionSession)
-        )(cls.stopExecutionSession)
+        cls.stop_execution_session = router.delete(  # type: ignore
+            path="/sessions/stop/{session_id}", **get_route_args(cls.stop_execution_session)
+        )(cls.stop_execution_session)
 
     @classmethod
-    def __init_getExecutionSessionsState(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getExecutionSessionsState)
+    def __init_get_execution_sessions_state(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_execution_sessions_state)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -115,8 +115,8 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getExecutionSessionsState = router.get(  # type: ignore
+        cls.get_execution_sessions_state = router.get(  # type: ignore
             path="/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
-            **get_route_args(cls.getExecutionSessionsState),
-        )(cls.getExecutionSessionsState)
+            **get_route_args(cls.get_execution_sessions_state),
+        )(cls.get_execution_sessions_state)

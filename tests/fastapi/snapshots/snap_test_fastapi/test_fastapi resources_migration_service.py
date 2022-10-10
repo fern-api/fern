@@ -20,7 +20,7 @@ class AbstractMigrationInfoService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def getAttemptedMigrations(self) -> typing.List[Migration]:
+    def get_attempted_migrations(self) -> typing.List[Migration]:
         ...
 
     """
@@ -30,11 +30,11 @@ class AbstractMigrationInfoService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_getAttemptedMigrations(router=router)
+        cls.__init_get_attempted_migrations(router=router)
 
     @classmethod
-    def __init_getAttemptedMigrations(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getAttemptedMigrations)
+    def __init_get_attempted_migrations(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_attempted_migrations)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -43,8 +43,8 @@ class AbstractMigrationInfoService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getAttemptedMigrations = router.get(  # type: ignore
+        cls.get_attempted_migrations = router.get(  # type: ignore
             path="/migration-info/all",
             response_model=typing.List[Migration],
-            **get_route_args(cls.getAttemptedMigrations),
-        )(cls.getAttemptedMigrations)
+            **get_route_args(cls.get_attempted_migrations),
+        )(cls.get_attempted_migrations)

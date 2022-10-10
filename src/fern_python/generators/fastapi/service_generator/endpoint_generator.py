@@ -201,7 +201,7 @@ class EndpointGenerator:
         )
 
     def _get_method_name(self) -> str:
-        return self._endpoint.name.camel_case
+        return self._endpoint.name.snake_case
 
     def _get_init_method_name(self) -> str:
         return f"__init_{self._get_method_name()}"

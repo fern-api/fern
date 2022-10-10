@@ -39,15 +39,14 @@ def run_snapshot_test(
     os.mkdir(path_to_output)
 
     symlink = Path(os.path.join(path_to_fixture, "generated"))
-    if symlink.exists():
-        if symlink.is_symlink():
-            os.unlink(symlink)
-        elif symlink.is_file():
-            os.remove(symlink)
-        elif symlink.is_dir():
-            shutil.rmtree(symlink)
-        else:
-            raise RuntimeError(f"Cannot delete {symlink}")
+    if symlink.is_symlink():
+        os.unlink(symlink)
+    elif symlink.is_file():
+        os.remove(symlink)
+    elif symlink.is_dir():
+        shutil.rmtree(symlink)
+    elif symlink.exists():
+        raise RuntimeError(f"Cannot delete {symlink}")
     os.symlink(path_to_output, symlink)
 
     subprocess.run(

@@ -20,11 +20,11 @@ class AbstractHomepageProblemService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def getHomepageProblems(self) -> typing.List[ProblemId]:
+    def get_homepage_problems(self) -> typing.List[ProblemId]:
         ...
 
     @abc.abstractmethod
-    def setHomepageProblems(self, *, request: typing.List[ProblemId]) -> None:
+    def set_homepage_problems(self, *, request: typing.List[ProblemId]) -> None:
         ...
 
     """
@@ -34,12 +34,12 @@ class AbstractHomepageProblemService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_getHomepageProblems(router=router)
-        cls.__init_setHomepageProblems(router=router)
+        cls.__init_get_homepage_problems(router=router)
+        cls.__init_set_homepage_problems(router=router)
 
     @classmethod
-    def __init_getHomepageProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getHomepageProblems)
+    def __init_get_homepage_problems(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_homepage_problems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -48,13 +48,15 @@ class AbstractHomepageProblemService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getHomepageProblems = router.get(  # type: ignore
-            path="/homepage-problems/", response_model=typing.List[ProblemId], **get_route_args(cls.getHomepageProblems)
-        )(cls.getHomepageProblems)
+        cls.get_homepage_problems = router.get(  # type: ignore
+            path="/homepage-problems/",
+            response_model=typing.List[ProblemId],
+            **get_route_args(cls.get_homepage_problems),
+        )(cls.get_homepage_problems)
 
     @classmethod
-    def __init_setHomepageProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.setHomepageProblems)
+    def __init_set_homepage_problems(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.set_homepage_problems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -65,6 +67,6 @@ class AbstractHomepageProblemService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.setHomepageProblems = router.post(  # type: ignore
-            path="/homepage-problems/", **get_route_args(cls.setHomepageProblems)
-        )(cls.setHomepageProblems)
+        cls.set_homepage_problems = router.post(  # type: ignore
+            path="/homepage-problems/", **get_route_args(cls.set_homepage_problems)
+        )(cls.set_homepage_problems)

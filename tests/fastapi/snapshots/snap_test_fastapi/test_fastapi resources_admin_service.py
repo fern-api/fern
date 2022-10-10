@@ -28,41 +28,43 @@ class AbstractAdminService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def updateTestSubmissionStatus(self, *, request: TestSubmissionStatus, submission_id: SubmissionId) -> None:
+    def update_test_submission_status(self, *, request: TestSubmissionStatus, submission_id: SubmissionId) -> None:
         ...
 
     @abc.abstractmethod
-    def sendTestSubmissionUpdate(self, *, request: TestSubmissionUpdate, submission_id: SubmissionId) -> None:
+    def send_test_submission_update(self, *, request: TestSubmissionUpdate, submission_id: SubmissionId) -> None:
         ...
 
     @abc.abstractmethod
-    def updateWorkspaceSubmissionStatus(
+    def update_workspace_submission_status(
         self, *, request: WorkspaceSubmissionStatus, submission_id: SubmissionId
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def sendWorkspaceSubmissionUpdate(self, *, request: WorkspaceSubmissionUpdate, submission_id: SubmissionId) -> None:
+    def send_workspace_submission_update(
+        self, *, request: WorkspaceSubmissionUpdate, submission_id: SubmissionId
+    ) -> None:
         ...
 
     @abc.abstractmethod
-    def storeTracedTestCase(
+    def store_traced_test_case(
         self, *, request: StoreTracedTestCaseRequest, submission_id: SubmissionId, test_case_id: str
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def storeTracedTestCaseV2(
+    def store_traced_test_case_v_2(
         self, *, request: typing.List[TraceResponseV2], submission_id: SubmissionId, test_case_id: TestCaseId
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def storeTracedWorkspace(self, *, request: StoreTracedWorkspaceRequest, submission_id: SubmissionId) -> None:
+    def store_traced_workspace(self, *, request: StoreTracedWorkspaceRequest, submission_id: SubmissionId) -> None:
         ...
 
     @abc.abstractmethod
-    def storeTracedWorkspaceV2(self, *, request: typing.List[TraceResponseV2], submission_id: SubmissionId) -> None:
+    def store_traced_workspace_v_2(self, *, request: typing.List[TraceResponseV2], submission_id: SubmissionId) -> None:
         ...
 
     """
@@ -72,18 +74,18 @@ class AbstractAdminService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_updateTestSubmissionStatus(router=router)
-        cls.__init_sendTestSubmissionUpdate(router=router)
-        cls.__init_updateWorkspaceSubmissionStatus(router=router)
-        cls.__init_sendWorkspaceSubmissionUpdate(router=router)
-        cls.__init_storeTracedTestCase(router=router)
-        cls.__init_storeTracedTestCaseV2(router=router)
-        cls.__init_storeTracedWorkspace(router=router)
-        cls.__init_storeTracedWorkspaceV2(router=router)
+        cls.__init_update_test_submission_status(router=router)
+        cls.__init_send_test_submission_update(router=router)
+        cls.__init_update_workspace_submission_status(router=router)
+        cls.__init_send_workspace_submission_update(router=router)
+        cls.__init_store_traced_test_case(router=router)
+        cls.__init_store_traced_test_case_v_2(router=router)
+        cls.__init_store_traced_workspace(router=router)
+        cls.__init_store_traced_workspace_v_2(router=router)
 
     @classmethod
-    def __init_updateTestSubmissionStatus(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.updateTestSubmissionStatus)
+    def __init_update_test_submission_status(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.update_test_submission_status)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -96,13 +98,14 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.updateTestSubmissionStatus = router.post(  # type: ignore
-            path="/admin/store-test-submission-status/{submission_id}", **get_route_args(cls.updateTestSubmissionStatus)
-        )(cls.updateTestSubmissionStatus)
+        cls.update_test_submission_status = router.post(  # type: ignore
+            path="/admin/store-test-submission-status/{submission_id}",
+            **get_route_args(cls.update_test_submission_status),
+        )(cls.update_test_submission_status)
 
     @classmethod
-    def __init_sendTestSubmissionUpdate(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.sendTestSubmissionUpdate)
+    def __init_send_test_submission_update(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.send_test_submission_update)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -115,14 +118,14 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.sendTestSubmissionUpdate = router.post(  # type: ignore
+        cls.send_test_submission_update = router.post(  # type: ignore
             path="/admin/store-test-submission-status-v2/{submission_id}",
-            **get_route_args(cls.sendTestSubmissionUpdate),
-        )(cls.sendTestSubmissionUpdate)
+            **get_route_args(cls.send_test_submission_update),
+        )(cls.send_test_submission_update)
 
     @classmethod
-    def __init_updateWorkspaceSubmissionStatus(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.updateWorkspaceSubmissionStatus)
+    def __init_update_workspace_submission_status(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.update_workspace_submission_status)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -135,14 +138,14 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.updateWorkspaceSubmissionStatus = router.post(  # type: ignore
+        cls.update_workspace_submission_status = router.post(  # type: ignore
             path="/admin/store-workspace-submission-status/{submission_id}",
-            **get_route_args(cls.updateWorkspaceSubmissionStatus),
-        )(cls.updateWorkspaceSubmissionStatus)
+            **get_route_args(cls.update_workspace_submission_status),
+        )(cls.update_workspace_submission_status)
 
     @classmethod
-    def __init_sendWorkspaceSubmissionUpdate(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.sendWorkspaceSubmissionUpdate)
+    def __init_send_workspace_submission_update(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.send_workspace_submission_update)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -155,14 +158,14 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.sendWorkspaceSubmissionUpdate = router.post(  # type: ignore
+        cls.send_workspace_submission_update = router.post(  # type: ignore
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
-            **get_route_args(cls.sendWorkspaceSubmissionUpdate),
-        )(cls.sendWorkspaceSubmissionUpdate)
+            **get_route_args(cls.send_workspace_submission_update),
+        )(cls.send_workspace_submission_update)
 
     @classmethod
-    def __init_storeTracedTestCase(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.storeTracedTestCase)
+    def __init_store_traced_test_case(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.store_traced_test_case)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -177,14 +180,14 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.storeTracedTestCase = router.post(  # type: ignore
+        cls.store_traced_test_case = router.post(  # type: ignore
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
-            **get_route_args(cls.storeTracedTestCase),
-        )(cls.storeTracedTestCase)
+            **get_route_args(cls.store_traced_test_case),
+        )(cls.store_traced_test_case)
 
     @classmethod
-    def __init_storeTracedTestCaseV2(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.storeTracedTestCaseV2)
+    def __init_store_traced_test_case_v_2(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.store_traced_test_case_v_2)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -199,14 +202,14 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.storeTracedTestCaseV2 = router.post(  # type: ignore
+        cls.store_traced_test_case_v_2 = router.post(  # type: ignore
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
-            **get_route_args(cls.storeTracedTestCaseV2),
-        )(cls.storeTracedTestCaseV2)
+            **get_route_args(cls.store_traced_test_case_v_2),
+        )(cls.store_traced_test_case_v_2)
 
     @classmethod
-    def __init_storeTracedWorkspace(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.storeTracedWorkspace)
+    def __init_store_traced_workspace(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.store_traced_workspace)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -219,13 +222,13 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.storeTracedWorkspace = router.post(  # type: ignore
-            path="/admin/store-workspace-trace/submission/{submission_id}", **get_route_args(cls.storeTracedWorkspace)
-        )(cls.storeTracedWorkspace)
+        cls.store_traced_workspace = router.post(  # type: ignore
+            path="/admin/store-workspace-trace/submission/{submission_id}", **get_route_args(cls.store_traced_workspace)
+        )(cls.store_traced_workspace)
 
     @classmethod
-    def __init_storeTracedWorkspaceV2(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.storeTracedWorkspaceV2)
+    def __init_store_traced_workspace_v_2(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.store_traced_workspace_v_2)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -238,7 +241,7 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.storeTracedWorkspaceV2 = router.post(  # type: ignore
+        cls.store_traced_workspace_v_2 = router.post(  # type: ignore
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",
-            **get_route_args(cls.storeTracedWorkspaceV2),
-        )(cls.storeTracedWorkspaceV2)
+            **get_route_args(cls.store_traced_workspace_v_2),
+        )(cls.store_traced_workspace_v_2)

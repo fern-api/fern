@@ -22,19 +22,19 @@ class AbstractProblemInfoServicV2(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def getLightweightProblems(self) -> typing.List[LightweightProblemInfoV2]:
+    def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
         ...
 
     @abc.abstractmethod
-    def getProblems(self) -> typing.List[ProblemInfoV2]:
+    def get_problems(self) -> typing.List[ProblemInfoV2]:
         ...
 
     @abc.abstractmethod
-    def getLatestProblem(self, *, problem_id: ProblemId) -> ProblemInfoV2:
+    def get_latest_problem(self, *, problem_id: ProblemId) -> ProblemInfoV2:
         ...
 
     @abc.abstractmethod
-    def getProblemVersion(self, *, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
+    def get_problem_version(self, *, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
         ...
 
     """
@@ -44,14 +44,14 @@ class AbstractProblemInfoServicV2(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_getLightweightProblems(router=router)
-        cls.__init_getProblems(router=router)
-        cls.__init_getLatestProblem(router=router)
-        cls.__init_getProblemVersion(router=router)
+        cls.__init_get_lightweight_problems(router=router)
+        cls.__init_get_problems(router=router)
+        cls.__init_get_latest_problem(router=router)
+        cls.__init_get_problem_version(router=router)
 
     @classmethod
-    def __init_getLightweightProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getLightweightProblems)
+    def __init_get_lightweight_problems(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_lightweight_problems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -60,15 +60,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getLightweightProblems = router.get(  # type: ignore
+        cls.get_lightweight_problems = router.get(  # type: ignore
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
-            **get_route_args(cls.getLightweightProblems),
-        )(cls.getLightweightProblems)
+            **get_route_args(cls.get_lightweight_problems),
+        )(cls.get_lightweight_problems)
 
     @classmethod
-    def __init_getProblems(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getProblems)
+    def __init_get_problems(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_problems)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -77,15 +77,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getProblems = router.get(  # type: ignore
+        cls.get_problems = router.get(  # type: ignore
             path="/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
-            **get_route_args(cls.getProblems),
-        )(cls.getProblems)
+            **get_route_args(cls.get_problems),
+        )(cls.get_problems)
 
     @classmethod
-    def __init_getLatestProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getLatestProblem)
+    def __init_get_latest_problem(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_latest_problem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -96,15 +96,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getLatestProblem = router.get(  # type: ignore
+        cls.get_latest_problem = router.get(  # type: ignore
             path="/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
-            **get_route_args(cls.getLatestProblem),
-        )(cls.getLatestProblem)
+            **get_route_args(cls.get_latest_problem),
+        )(cls.get_latest_problem)
 
     @classmethod
-    def __init_getProblemVersion(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getProblemVersion)
+    def __init_get_problem_version(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_problem_version)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -117,8 +117,8 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getProblemVersion = router.get(  # type: ignore
+        cls.get_problem_version = router.get(  # type: ignore
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
-            **get_route_args(cls.getProblemVersion),
-        )(cls.getProblemVersion)
+            **get_route_args(cls.get_problem_version),
+        )(cls.get_problem_version)

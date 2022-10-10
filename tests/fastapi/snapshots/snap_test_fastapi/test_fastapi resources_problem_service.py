@@ -25,19 +25,19 @@ class AbstractProblemCrudService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def createProblem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
+    def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
         ...
 
     @abc.abstractmethod
-    def updateProblem(self, *, request: CreateProblemRequest, problem_id: ProblemId) -> UpdateProblemResponse:
+    def update_problem(self, *, request: CreateProblemRequest, problem_id: ProblemId) -> UpdateProblemResponse:
         ...
 
     @abc.abstractmethod
-    def deleteProblem(self, *, problem_id: ProblemId) -> None:
+    def delete_problem(self, *, problem_id: ProblemId) -> None:
         ...
 
     @abc.abstractmethod
-    def getDefaultStarterFiles(self, *, request: GetDefaultStarterFilesRequest) -> GetDefaultStarterFilesResponse:
+    def get_default_starter_files(self, *, request: GetDefaultStarterFilesRequest) -> GetDefaultStarterFilesResponse:
         ...
 
     """
@@ -47,14 +47,14 @@ class AbstractProblemCrudService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_createProblem(router=router)
-        cls.__init_updateProblem(router=router)
-        cls.__init_deleteProblem(router=router)
-        cls.__init_getDefaultStarterFiles(router=router)
+        cls.__init_create_problem(router=router)
+        cls.__init_update_problem(router=router)
+        cls.__init_delete_problem(router=router)
+        cls.__init_get_default_starter_files(router=router)
 
     @classmethod
-    def __init_createProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.createProblem)
+    def __init_create_problem(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.create_problem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -65,13 +65,13 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.createProblem = router.post(  # type: ignore
-            path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.createProblem)
-        )(cls.createProblem)
+        cls.create_problem = router.post(  # type: ignore
+            path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.create_problem)
+        )(cls.create_problem)
 
     @classmethod
-    def __init_updateProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.updateProblem)
+    def __init_update_problem(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.update_problem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -84,15 +84,15 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.updateProblem = router.post(  # type: ignore
+        cls.update_problem = router.post(  # type: ignore
             path="/problem-crud/update/{problem_id}",
             response_model=UpdateProblemResponse,
-            **get_route_args(cls.updateProblem),
-        )(cls.updateProblem)
+            **get_route_args(cls.update_problem),
+        )(cls.update_problem)
 
     @classmethod
-    def __init_deleteProblem(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.deleteProblem)
+    def __init_delete_problem(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.delete_problem)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -103,13 +103,13 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.deleteProblem = router.delete(  # type: ignore
-            path="/problem-crud/delete/{problem_id}", **get_route_args(cls.deleteProblem)
-        )(cls.deleteProblem)
+        cls.delete_problem = router.delete(  # type: ignore
+            path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem)
+        )(cls.delete_problem)
 
     @classmethod
-    def __init_getDefaultStarterFiles(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getDefaultStarterFiles)
+    def __init_get_default_starter_files(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_default_starter_files)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -120,8 +120,8 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getDefaultStarterFiles = router.post(  # type: ignore
+        cls.get_default_starter_files = router.post(  # type: ignore
             path="/problem-crud/default-starter-files",
             response_model=GetDefaultStarterFilesResponse,
-            **get_route_args(cls.getDefaultStarterFiles),
-        )(cls.getDefaultStarterFiles)
+            **get_route_args(cls.get_default_starter_files),
+        )(cls.get_default_starter_files)

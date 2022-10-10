@@ -56,7 +56,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 set=lambda x: "from_set",
                 optional=self._get_getter_name,
             ),
-            named=lambda type_name: "from_" + type_name.name_v_2.camel_case,
+            named=lambda type_name: "from_" + type_name.name_v_2.snake_case,
             primitive=lambda primitive: primitive.visit(
                 integer=lambda: "from_int",
                 double=lambda: "from_float",
@@ -78,7 +78,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 set=lambda x: "get_as_set",
                 optional=self._get_getter_name,
             ),
-            named=lambda type_name: "get_as_" + type_name.name_v_2.camel_case,
+            named=lambda type_name: "get_as_" + type_name.name_v_2.snake_case,
             primitive=lambda primitive: primitive.visit(
                 integer=lambda: "get_as_int",
                 double=lambda: "get_as_float",

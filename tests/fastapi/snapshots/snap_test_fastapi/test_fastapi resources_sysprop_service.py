@@ -20,11 +20,11 @@ class AbstractSysPropCrudService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def setNumWarmInstances(self, *, language: Language, num_warm_instances: int) -> None:
+    def set_num_warm_instances(self, *, language: Language, num_warm_instances: int) -> None:
         ...
 
     @abc.abstractmethod
-    def getNumWarmInstances(self) -> typing.Dict[Language, int]:
+    def get_num_warm_instances(self) -> typing.Dict[Language, int]:
         ...
 
     """
@@ -34,12 +34,12 @@ class AbstractSysPropCrudService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
-        cls.__init_setNumWarmInstances(router=router)
-        cls.__init_getNumWarmInstances(router=router)
+        cls.__init_set_num_warm_instances(router=router)
+        cls.__init_get_num_warm_instances(router=router)
 
     @classmethod
-    def __init_setNumWarmInstances(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.setNumWarmInstances)
+    def __init_set_num_warm_instances(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.set_num_warm_instances)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -52,14 +52,14 @@ class AbstractSysPropCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.setNumWarmInstances = router.put(  # type: ignore
+        cls.set_num_warm_instances = router.put(  # type: ignore
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
-            **get_route_args(cls.setNumWarmInstances),
-        )(cls.setNumWarmInstances)
+            **get_route_args(cls.set_num_warm_instances),
+        )(cls.set_num_warm_instances)
 
     @classmethod
-    def __init_getNumWarmInstances(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.getNumWarmInstances)
+    def __init_get_num_warm_instances(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_num_warm_instances)
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
@@ -68,8 +68,8 @@ class AbstractSysPropCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.getNumWarmInstances = router.get(  # type: ignore
+        cls.get_num_warm_instances = router.get(  # type: ignore
             path="/sysprop/num-warm-instances",
             response_model=typing.Dict[Language, int],
-            **get_route_args(cls.getNumWarmInstances),
-        )(cls.getNumWarmInstances)
+            **get_route_args(cls.get_num_warm_instances),
+        )(cls.get_num_warm_instances)
