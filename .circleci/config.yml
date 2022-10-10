@@ -46,10 +46,10 @@ jobs:
           name: Publish FastAPI Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
-            docker build -f ./docker/fastapi/Dockerfile -t fastapi:${projectVersion}  .
+            docker build -f ./docker/fastapi/Dockerfile -t fastapi-server:${projectVersion}  .
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker tag fastapi:"$projectVersion" fernapi/fern-fastapi:"$projectVersion"
-            docker push fernapi/fern-fastapi:"$projectVersion"
+            docker tag fastapi-server:"$projectVersion" fernapi/fern-fastapi-server:"$projectVersion"
+            docker push fernapi/fern-fastapi-server:"$projectVersion"
 
 
 workflows:

@@ -215,7 +215,7 @@ class FernAwarePydanticModel:
             writer.write_node(AST.TypeHint.any())
             writer.write(' = { "by_alias": True, **kwargs }')
             writer.write_line()
-            writer.write_line("return super().json(**kwargs_with_defaults)")
+            writer.write_line("return super().dict(**kwargs_with_defaults)")
 
         self._pydantic_model.add_method(
             AST.FunctionDeclaration(

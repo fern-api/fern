@@ -25,7 +25,14 @@ class GeneratorCli:
             ir = ir_types.IntermediateRepresentation.parse_file(config.ir_filepath)
 
             generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.init_v_2(InitUpdateV2(publishing_to_registry=(RegistryType.PYPI)))
+                GeneratorUpdate.factory.init_v_2(
+                    InitUpdateV2(
+                        publishing_to_registry=config.output.mode.visit(
+                            publish=lambda x: RegistryType.PYPI,
+                            download_files=lambda: None,
+                        )
+                    )
+                )
             )
 
             self.abstract_generator.generate_project(

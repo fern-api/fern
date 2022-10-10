@@ -36,17 +36,22 @@ def run_snapshot_test(
     with open(path_to_config_json, "w") as f:
         f.write(generator_config.json(by_alias=True))
 
+    os.mkdir(path_to_output)
+
     symlink = Path(os.path.join(path_to_fixture, "generated"))
     if symlink.exists():
         if symlink.is_symlink():
             os.unlink(symlink)
-        else:
+        elif symlink.is_file():
+            os.remove(symlink)
+        elif symlink.is_dir():
             shutil.rmtree(symlink)
-    os.mkdir(path_to_output)
+        else:
+            raise RuntimeError(f"Cannot delete {symlink}")
     os.symlink(path_to_output, symlink)
 
     subprocess.run(
-        ["npx", "fern-api@0.0.207", "ir", "--output", path_to_ir],
+        ["npx", "fern-api", "ir", "--output", path_to_ir],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=path_to_fixture,
