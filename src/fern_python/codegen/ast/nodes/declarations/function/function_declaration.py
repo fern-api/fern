@@ -31,7 +31,8 @@ class FunctionDeclaration(AstNode):
 
     def get_references(self) -> Set[Reference]:
         references: Set[Reference] = set()
-        references.add(OVERLOAD_DECORATOR)
+        if len(self.overloads) > 0:
+            references.add(OVERLOAD_DECORATOR)
         references.update(self.signature.get_references())
         for overload in self.overloads:
             references.update(overload.get_references())

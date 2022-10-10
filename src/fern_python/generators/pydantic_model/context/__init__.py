@@ -1,7 +1,11 @@
-from .declaration_handler_context import (
-    DeclarationHandlerContext,
+from .pydantic_generator_context import (
     HashableDeclaredTypeName,
+    PydanticGeneratorContext,
 )
-from .declaration_handler_context_impl import DeclarationHandlerContextImpl
+from .pydantic_generator_context_impl import PydanticGeneratorContextImpl
 
-__all__ = ["DeclarationHandlerContext", "DeclarationHandlerContextImpl", "HashableDeclaredTypeName"]
+__all__ = [
+    "PydanticGeneratorContext",
+    "PydanticGeneratorContextImpl",
+    "HashableDeclaredTypeName",
+]

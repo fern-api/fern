@@ -1,8 +1,8 @@
 import fern.ir.pydantic as ir_types
 
-from fern_python.codegen import AST
+from fern_python.codegen import AST, SourceFile
 
-from ..context import DeclarationHandlerContext
+from ..context import PydanticGeneratorContext
 from ..custom_config import CustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
@@ -13,10 +13,16 @@ class AliasGenerator(AbstractTypeGenerator):
         self,
         name: ir_types.DeclaredTypeName,
         alias: ir_types.AliasTypeDeclaration,
-        context: DeclarationHandlerContext,
+        context: PydanticGeneratorContext,
+        source_file: SourceFile,
         custom_config: CustomConfig,
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config)
+        super().__init__(
+            name=name,
+            context=context,
+            custom_config=custom_config,
+            source_file=source_file,
+        )
         self._alias = alias
 
     def generate(
@@ -26,6 +32,7 @@ class AliasGenerator(AbstractTypeGenerator):
             type_name=self._name,
             context=self._context,
             custom_config=self._custom_config,
+            source_file=self._source_file,
         ) as pydantic_model:
             pydantic_model.set_root_type(self._alias.alias_of)
             pydantic_model.add_method(

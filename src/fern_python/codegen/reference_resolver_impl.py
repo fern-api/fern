@@ -26,11 +26,10 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
         self._original_import_to_resolved_import = {}
 
         for default_name, original_references in self._default_name_to_original_references.items():
-            # get the set of all import-prefixes that result in this default name.
+            # get the set of all imports that result in this default name.
             # if len(set) > 1, then there's a collision, so we need to alias the imports.
-            original_import_prefixes = set(
-                self._construct_qualified_import_prefix_for_reference(reference.import_)
-                for reference in original_references
+            original_imports = set(
+                reference.import_ for reference in original_references if reference.import_ is not None
             )
 
             for original_reference in original_references:
@@ -55,7 +54,7 @@ class ReferenceResolverImpl(AST.ReferenceResolver):
                             f"Intra-file reference in {self._module_path_of_source_file} is using an alias import"
                             + ".".join(self._construct_qualified_name_for_reference(original_reference))
                         )
-                elif len(original_import_prefixes) > 1:
+                elif len(original_imports) > 1:
                     import_ = dataclasses.replace(
                         import_,
                         alias=construct_import_alias_for_collision(original_reference.import_),

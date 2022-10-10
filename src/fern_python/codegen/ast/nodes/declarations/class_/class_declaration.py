@@ -3,7 +3,9 @@ from __future__ import annotations
 from typing import List, Sequence, Set
 
 from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
-from ....references import ClassReference, Reference
+from ....references import ClassReference, Module, Reference, ReferenceImport
+from ...code_writer import CodeWriter
+from ...expressions import Expression
 from ...reference_node import ReferenceNode
 from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
 from ..variable import VariableDeclaration
@@ -12,10 +14,26 @@ from .class_method_decorator import ClassMethodDecorator
 
 
 class ClassDeclaration(AstNode):
-    def __init__(self, name: str, extends: Sequence[ClassReference] = None, constructor: ClassConstructor = None):
+    def __init__(
+        self,
+        name: str,
+        is_abstract: bool = False,
+        extends: Sequence[ClassReference] = None,
+        constructor: ClassConstructor = None,
+        docstring: str = None,
+    ):
         self.name = name
-        self.extends = extends or []
+        self.extends = list(extends or [])
+        if is_abstract:
+            self.extends.insert(
+                0,
+                ClassReference(
+                    qualified_name_excluding_import=("ABC",),
+                    import_=ReferenceImport(module=Module.built_in("abc")),
+                ),
+            )
         self.constructor = constructor
+        self.docstring = docstring
         self.statements: List[AstNode] = []
         self.ghost_references: Set[Reference] = set()
 
@@ -64,6 +82,27 @@ class ClassDeclaration(AstNode):
 
         return declaration
 
+    def add_abstract_method(
+        self,
+        name: str,
+        signature: FunctionSignature,
+    ) -> FunctionDeclaration:
+        return self.add_method(
+            declaration=FunctionDeclaration(
+                name=name,
+                signature=signature,
+                body=CodeWriter("..."),
+                decorators=[
+                    ReferenceNode(
+                        Reference(
+                            qualified_name_excluding_import=("abstractmethod",),
+                            import_=ReferenceImport(module=Module.built_in("abc")),
+                        )
+                    )
+                ],
+            )
+        )
+
     def add_class(self, declaration: ClassDeclaration) -> None:
         self.statements.append(declaration)
 
@@ -86,6 +125,9 @@ class ClassDeclaration(AstNode):
             generics.update(statement.get_generics())
         return generics
 
+    def add_expression(self, expression: Expression) -> None:
+        self.statements.append(expression)
+
     def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
         top_line = f"class {self.name}"
         if len(self.extends) > 0:
@@ -94,8 +136,13 @@ class ClassDeclaration(AstNode):
         writer.write_line(top_line)
 
         with writer.indent():
+            if self.docstring is not None:
+                trimmed_docstring = self.docstring.strip()
+                if len(trimmed_docstring) > 0:
+                    writer.write_line(f'"""\n{trimmed_docstring}\n"""')
             for statement in self.statements:
                 writer.write_node(statement)
+                writer.write_newline_if_last_line_not()
             if len(self.statements) == 0:
                 writer.write("pass")
             writer.write_line()

@@ -28,20 +28,28 @@ jobs:
           name: Run tests
           command: poetry run pytest
 
-  publish-docker:
+  publish-dockers:
     machine:
       image: ubuntu-2004:current
       docker_layer_caching: true
     steps:
       - checkout
       - run:
-          name: Publish Docker
+          name: Publish Pydantic Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
             docker build -f ./docker/pydantic-model/Dockerfile -t pydantic-model:${projectVersion}  .
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag pydantic-model:"$projectVersion" fernapi/fern-pydantic-model:"$projectVersion"
             docker push fernapi/fern-pydantic-model:"$projectVersion"
+      - run:
+          name: Publish FastAPI Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            docker build -f ./docker/fastapi/Dockerfile -t fastapi:${projectVersion}  .
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag fastapi:"$projectVersion" fernapi/fern-fastapi:"$projectVersion"
+            docker push fernapi/fern-fastapi:"$projectVersion"
 
 
 workflows:
@@ -55,7 +63,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - publish-docker:
+      - publish-dockers:
           filters:
             branches:
               only: main

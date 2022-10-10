@@ -1,8 +1,8 @@
 import fern.ir.pydantic as ir_types
 
-from fern_python.codegen import AST
+from fern_python.codegen import AST, SourceFile
 
-from ..context import DeclarationHandlerContext
+from ..context import PydanticGeneratorContext
 from ..custom_config import CustomConfig
 from .abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, get_visit_method
@@ -13,10 +13,11 @@ class EnumGenerator(AbstractTypeGenerator):
         self,
         name: ir_types.DeclaredTypeName,
         enum: ir_types.EnumTypeDeclaration,
-        context: DeclarationHandlerContext,
+        context: PydanticGeneratorContext,
+        source_file: SourceFile,
         custom_config: CustomConfig,
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config)
+        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file)
         self._enum = enum
 
     def generate(self) -> None:
@@ -33,7 +34,7 @@ class EnumGenerator(AbstractTypeGenerator):
             ],
         )
 
-        self._context.source_file.add_class_declaration(enum_class)
+        self._source_file.add_class_declaration(enum_class)
 
         for value in self._enum.values:
             enum_class.add_class_var(

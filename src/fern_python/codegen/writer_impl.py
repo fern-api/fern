@@ -10,6 +10,8 @@ import isort
 
 from . import AST
 
+TAB_LENGTH = 4
+
 
 class WriterImpl(AST.Writer):
     def __init__(self, filepath: str):
@@ -39,7 +41,7 @@ class WriterImpl(AST.Writer):
         return self._last_character_is_newline or not self._has_written_anything
 
     def _get_indent_str(self) -> str:
-        return "\t" * self._indent
+        return " " * TAB_LENGTH * self._indent
 
     def _write(self, content: str) -> None:
         if len(content) > 0:
@@ -74,8 +76,8 @@ class WriterImpl(AST.Writer):
         mkdir_p(os.path.dirname(self._filepath))
 
     def finish(self) -> None:
-        self._content = isort.code(self._content, quiet=True)
         try:
+            self._content = isort.code(self._content, quiet=True)
             self._content = black.format_file_contents(
                 self._content,
                 fast=True,
@@ -84,8 +86,9 @@ class WriterImpl(AST.Writer):
             )
         except black.report.NothingChanged:
             pass
-        with open(self._filepath, "w") as file:
-            file.write(self._content)
+        finally:  # write to disk even if the the formatting failed
+            with open(self._filepath, "w") as file:
+                file.write(self._content)
 
     def outdent(self) -> None:
         self._indent = max(0, self._indent - 1)

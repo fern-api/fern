@@ -1,11 +1,3 @@
 name: my-api
 
-auth:
-  all:
-    - bearer
-    - basic
-    - CustomAuthHeader
-
-auth-schemes:
-  CustomAuthHeader:
-    header: X-API-Key
+auth: bearer

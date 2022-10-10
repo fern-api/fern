@@ -3,14 +3,14 @@ from typing import List
 import fern.ir.pydantic as ir_types
 from typing_extensions import Never
 
-from fern_python.codegen import AST, LocalClassReference
+from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.pydantic_codegen import (
     PYDANTIC_FIELD_REFERENCE,
     PydanticField,
     PydanticModel,
 )
 
-from ..context import DeclarationHandlerContext
+from ..context import PydanticGeneratorContext
 from ..custom_config import CustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
@@ -25,20 +25,22 @@ class UnionGenerator(AbstractTypeGenerator):
         self,
         name: ir_types.DeclaredTypeName,
         union: ir_types.UnionTypeDeclaration,
-        context: DeclarationHandlerContext,
+        context: PydanticGeneratorContext,
+        source_file: SourceFile,
         custom_config: CustomConfig,
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config)
+        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file)
         self._union = union
 
     def generate(self) -> None:
         factory_declaration = AST.ClassDeclaration(name="_Factory")
-        factory = self._context.source_file.add_class_declaration(factory_declaration)
+        factory = self._source_file.add_class_declaration(factory_declaration)
 
         with FernAwarePydanticModel(
             type_name=self._name,
             context=self._context,
             custom_config=self._custom_config,
+            source_file=self._source_file,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -48,7 +50,7 @@ class UnionGenerator(AbstractTypeGenerator):
 
             internal_single_union_types: List[LocalClassReference] = []
 
-            internal_union = self._context.source_file.add_class_declaration(
+            internal_union = self._source_file.add_class_declaration(
                 declaration=AST.ClassDeclaration(name="_" + external_pydantic_model.get_class_name()),
             )
 
@@ -66,7 +68,7 @@ class UnionGenerator(AbstractTypeGenerator):
 
                 with PydanticModel(
                     name=single_union_type.discriminant_value.pascal_case,
-                    source_file=self._context.source_file,
+                    source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
                             self._context.get_class_reference_for_type_name(type_name)

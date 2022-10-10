@@ -5,10 +5,10 @@ from typing import Optional, Sequence, Tuple, Type
 
 import fern.ir.pydantic as ir_types
 
-from fern_python.codegen import AST, LocalClassReference
+from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-from .context import DeclarationHandlerContext, HashableDeclaredTypeName
+from .context import HashableDeclaredTypeName, PydanticGeneratorContext
 from .custom_config import CustomConfig
 from .validators import FieldValidatorsGenerator, RootValidatorGenerator
 
@@ -31,7 +31,8 @@ class FernAwarePydanticModel:
 
     def __init__(
         self,
-        context: DeclarationHandlerContext,
+        context: PydanticGeneratorContext,
+        source_file: SourceFile,
         custom_config: CustomConfig,
         type_name: ir_types.DeclaredTypeName,
         extends: Sequence[ir_types.DeclaredTypeName] = None,
@@ -39,9 +40,10 @@ class FernAwarePydanticModel:
         self._type_name = type_name
         self._context = context
         self._custom_config = custom_config
+        self._source_file = source_file
         self._pydantic_model = PydanticModel(
             name=self.get_class_name(),
-            source_file=context.source_file,
+            source_file=source_file,
             base_models=[context.get_class_reference_for_type_name(extended) for extended in extends]
             if extends is not None
             else None,
@@ -165,7 +167,7 @@ class FernAwarePydanticModel:
         self._override_dict()
         self._pydantic_model.finish()
         if self._model_contains_forward_refs:
-            self._context.source_file.add_footer_expression(
+            self._source_file.add_footer_expression(
                 AST.Expression(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
