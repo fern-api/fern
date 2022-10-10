@@ -11,7 +11,8 @@ class NodeId(pydantic.BaseModel):
     def get_as_str(self) -> str:
         return self.__root__
 
-    def from_str(self, value: str) -> NodeId:
+    @staticmethod
+    def from_str(value: str) -> NodeId:
         return NodeId(__root__=value)
 
     @pydantic.root_validator

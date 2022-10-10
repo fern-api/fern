@@ -11,7 +11,8 @@ class PlaylistId(pydantic.BaseModel):
     def get_as_str(self) -> str:
         return self.__root__
 
-    def from_str(self, value: str) -> PlaylistId:
+    @staticmethod
+    def from_str(value: str) -> PlaylistId:
         return PlaylistId(__root__=value)
 
     @pydantic.root_validator

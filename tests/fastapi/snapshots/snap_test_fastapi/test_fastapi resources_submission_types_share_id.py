@@ -11,7 +11,8 @@ class ShareId(pydantic.BaseModel):
     def get_as_str(self) -> str:
         return self.__root__
 
-    def from_str(self, value: str) -> ShareId:
+    @staticmethod
+    def from_str(value: str) -> ShareId:
         return ShareId(__root__=value)
 
     @pydantic.root_validator

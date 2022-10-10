@@ -6,13 +6,11 @@ import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.route_args import get_route_args
-from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..submission.types.test_submission_update import TestSubmissionUpdate
 from ..submission.types.trace_response_v_2 import TraceResponseV2
 from ..submission.types.workspace_submission_status import WorkspaceSubmissionStatus
 from ..submission.types.workspace_submission_update import WorkspaceSubmissionUpdate
-from ..v_2.problem.types.test_case_id import TestCaseId
 from .types.store_traced_test_case_request import StoreTracedTestCaseRequest
 from .types.store_traced_workspace_request import StoreTracedWorkspaceRequest
 
@@ -28,43 +26,39 @@ class AbstractAdminService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def update_test_submission_status(self, *, request: TestSubmissionStatus, submission_id: SubmissionId) -> None:
+    def update_test_submission_status(self, *, request: TestSubmissionStatus, submission_id: str) -> None:
         ...
 
     @abc.abstractmethod
-    def send_test_submission_update(self, *, request: TestSubmissionUpdate, submission_id: SubmissionId) -> None:
+    def send_test_submission_update(self, *, request: TestSubmissionUpdate, submission_id: str) -> None:
         ...
 
     @abc.abstractmethod
-    def update_workspace_submission_status(
-        self, *, request: WorkspaceSubmissionStatus, submission_id: SubmissionId
-    ) -> None:
+    def update_workspace_submission_status(self, *, request: WorkspaceSubmissionStatus, submission_id: str) -> None:
         ...
 
     @abc.abstractmethod
-    def send_workspace_submission_update(
-        self, *, request: WorkspaceSubmissionUpdate, submission_id: SubmissionId
-    ) -> None:
+    def send_workspace_submission_update(self, *, request: WorkspaceSubmissionUpdate, submission_id: str) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_test_case(
-        self, *, request: StoreTracedTestCaseRequest, submission_id: SubmissionId, test_case_id: str
+        self, *, request: StoreTracedTestCaseRequest, submission_id: str, test_case_id: str
     ) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_test_case_v_2(
-        self, *, request: typing.List[TraceResponseV2], submission_id: SubmissionId, test_case_id: TestCaseId
+        self, *, request: typing.List[TraceResponseV2], submission_id: str, test_case_id: str
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def store_traced_workspace(self, *, request: StoreTracedWorkspaceRequest, submission_id: SubmissionId) -> None:
+    def store_traced_workspace(self, *, request: StoreTracedWorkspaceRequest, submission_id: str) -> None:
         ...
 
     @abc.abstractmethod
-    def store_traced_workspace_v_2(self, *, request: typing.List[TraceResponseV2], submission_id: SubmissionId) -> None:
+    def store_traced_workspace_v_2(self, *, request: typing.List[TraceResponseV2], submission_id: str) -> None:
         ...
 
     """

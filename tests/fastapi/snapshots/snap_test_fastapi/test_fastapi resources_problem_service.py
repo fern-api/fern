@@ -6,7 +6,6 @@ import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.route_args import get_route_args
-from ..commons.types.problem_id import ProblemId
 from .types.create_problem_request import CreateProblemRequest
 from .types.create_problem_response import CreateProblemResponse
 from .types.get_default_starter_files_request import GetDefaultStarterFilesRequest
@@ -29,11 +28,11 @@ class AbstractProblemCrudService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def update_problem(self, *, request: CreateProblemRequest, problem_id: ProblemId) -> UpdateProblemResponse:
+    def update_problem(self, *, request: CreateProblemRequest, problem_id: str) -> UpdateProblemResponse:
         ...
 
     @abc.abstractmethod
-    def delete_problem(self, *, problem_id: ProblemId) -> None:
+    def delete_problem(self, *, problem_id: str) -> None:
         ...
 
     @abc.abstractmethod

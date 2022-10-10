@@ -9,7 +9,6 @@ from ...core.route_args import get_route_args
 from ...security import ApiAuth, FernAuth
 from .types.playlist import Playlist
 from .types.playlist_create_request import PlaylistCreateRequest
-from .types.playlist_id import PlaylistId
 from .types.update_playlist_request import UpdatePlaylistRequest
 
 
@@ -34,22 +33,17 @@ class AbstractPlaylistCrudService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_playlist(self, *, service_param: int, playlist_id: PlaylistId) -> Playlist:
+    def get_playlist(self, *, service_param: int, playlist_id: str) -> Playlist:
         ...
 
     @abc.abstractmethod
     def update_playlist(
-        self,
-        *,
-        request: typing.Optional[UpdatePlaylistRequest],
-        service_param: int,
-        playlist_id: PlaylistId,
-        auth: ApiAuth
+        self, *, request: typing.Optional[UpdatePlaylistRequest], service_param: int, playlist_id: str, auth: ApiAuth
     ) -> typing.Optional[Playlist]:
         ...
 
     @abc.abstractmethod
-    def delete_playlist(self, *, service_param: int, playlist_id: PlaylistId, auth: ApiAuth) -> None:
+    def delete_playlist(self, *, service_param: int, playlist_id: str, auth: ApiAuth) -> None:
         ...
 
     """

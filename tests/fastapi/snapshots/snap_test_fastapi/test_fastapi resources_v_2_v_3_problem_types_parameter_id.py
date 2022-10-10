@@ -11,7 +11,8 @@ class ParameterId(pydantic.BaseModel):
     def get_as_str(self) -> str:
         return self.__root__
 
-    def from_str(self, value: str) -> ParameterId:
+    @staticmethod
+    def from_str(value: str) -> ParameterId:
         return ParameterId(__root__=value)
 
     @pydantic.root_validator

@@ -11,7 +11,8 @@ class ProblemId(pydantic.BaseModel):
     def get_as_str(self) -> str:
         return self.__root__
 
-    def from_str(self, value: str) -> ProblemId:
+    @staticmethod
+    def from_str(value: str) -> ProblemId:
         return ProblemId(__root__=value)
 
     @pydantic.root_validator

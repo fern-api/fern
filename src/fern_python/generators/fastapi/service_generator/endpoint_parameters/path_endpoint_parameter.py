@@ -4,6 +4,7 @@ from fern_python.codegen import AST
 
 from ...context import FastApiGeneratorContext
 from ...external_dependencies import FastAPI
+from .convert_to_singular_type import convert_to_singular_type
 from .endpoint_parameter import EndpointParameter
 
 
@@ -16,9 +17,7 @@ class PathEndpointParameter(EndpointParameter):
         return PathEndpointParameter.get_variable_name_of_path_parameter(self._path_parameter)
 
     def get_type(self) -> AST.TypeHint:
-        return self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-            self._path_parameter.value_type
-        )
+        return convert_to_singular_type(self._context, self._path_parameter.value_type)
 
     def get_default(self) -> AST.Expression:
         return FastAPI.Path

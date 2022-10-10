@@ -6,7 +6,6 @@ import fastapi
 
 from .....core.abstract_fern_service import AbstractFernService
 from .....core.route_args import get_route_args
-from ....commons.types.problem_id import ProblemId
 from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from .types.problem_info_v_2 import ProblemInfoV2
 
@@ -30,11 +29,11 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_latest_problem(self, *, problem_id: ProblemId) -> ProblemInfoV2:
+    def get_latest_problem(self, *, problem_id: str) -> ProblemInfoV2:
         ...
 
     @abc.abstractmethod
-    def get_problem_version(self, *, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
+    def get_problem_version(self, *, problem_id: str, problem_version: int) -> ProblemInfoV2:
         ...
 
     """

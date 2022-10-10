@@ -11,7 +11,8 @@ class TestCaseId(pydantic.BaseModel):
     def get_as_str(self) -> str:
         return self.__root__
 
-    def from_str(self, value: str) -> TestCaseId:
+    @staticmethod
+    def from_str(value: str) -> TestCaseId:
         return TestCaseId(__root__=value)
 
     @pydantic.root_validator

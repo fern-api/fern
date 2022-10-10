@@ -28,6 +28,7 @@ class AliasGenerator(AbstractTypeGenerator):
     def generate(
         self,
     ) -> None:
+        BUILDER_PARAMETER_NAME = "value"
         with FernAwarePydanticModel(
             type_name=self._name,
             context=self._context,
@@ -43,9 +44,10 @@ class AliasGenerator(AbstractTypeGenerator):
             )
             pydantic_model.add_method(
                 name=self._get_builder_name(self._alias.alias_of),
-                parameters=[("value", self._alias.alias_of)],
+                parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
                 return_type=ir_types.TypeReference.factory.named(self._name),
-                body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}(__root__=value)"),
+                body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}(__root__={BUILDER_PARAMETER_NAME})"),
+                decorator=AST.ClassMethodDecorator.STATIC,
             )
 
     def _get_builder_name(self, alias_of: ir_types.TypeReference) -> str:
