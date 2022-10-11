@@ -71,21 +71,27 @@ export class RemoteTaskHandler {
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
+        const log_s3_url = (s3Url: string) => {
+            this.context.logger.debug(
+                `Generated files. ${terminalLink("View here", s3Url, {
+                    fallback: (text, url) => `${text}: ${url}`,
+                })}`
+            );
+        };
+
         remoteTask.status._visit({
             notStarted: noop,
             running: noop,
             failed: ({ message, s3PreSignedReadUrl }) => {
                 this.context.fail(message);
                 if (s3PreSignedReadUrl != null) {
-                    this.context.logger.debug(`Generated files. ${terminalLink("View here", s3PreSignedReadUrl)}`);
+                    log_s3_url(s3PreSignedReadUrl);
                 }
                 this.context.finish();
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
-                this.context.logger.debug(
-                    `Generated files. ${terminalLink("View here", finishedStatus.s3PreSignedReadUrl)}`
-                );
+                log_s3_url(finishedStatus.s3PreSignedReadUrl);
                 this.context.finish();
             },
             _other: () => {
