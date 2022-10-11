@@ -60,7 +60,6 @@ export function convertGeneratorsConfiguration({
                                   draftInvocation.outputs.github != null
                                       ? {
                                             repository: draftInvocation.outputs.github.repository,
-                                            token: draftInvocation.outputs.github.token,
                                         }
                                       : undefined,
                           },

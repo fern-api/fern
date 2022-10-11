@@ -7770,7 +7770,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.43"],\
+            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.49"],\
             ["@fern-fern/ir-model", "npm:0.0.227"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/inquirer", "npm:9.0.1"],\
@@ -8309,7 +8309,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.43"],\
+            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.49"],\
             ["@fern-fern/ir-model", "npm:0.0.227"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8484,17 +8484,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-client", [\
-        ["npm:0.0.43", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-npm-0.0.43-bf89e8e3ad-3b5e2cccd7.zip/node_modules/@fern-fern/fiddle-client/",\
+        ["npm:0.0.49", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-client-npm-0.0.49-ccdbbcd7bd-dba5f63292.zip/node_modules/@fern-fern/fiddle-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-client", "npm:0.0.43"]\
+            ["@fern-fern/fiddle-client", "npm:0.0.49"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.43", {\
-          "packageLocation": "./.yarn/__virtual__/@fern-fern-fiddle-client-virtual-40d2e78c6c/0/cache/@fern-fern-fiddle-client-npm-0.0.43-bf89e8e3ad-3b5e2cccd7.zip/node_modules/@fern-fern/fiddle-client/",\
+        ["virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.49", {\
+          "packageLocation": "./.yarn/__virtual__/@fern-fern-fiddle-client-virtual-1164b95cb4/0/cache/@fern-fern-fiddle-client-npm-0.0.49-ccdbbcd7bd-dba5f63292.zip/node_modules/@fern-fern/fiddle-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.43"],\
+            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.49"],\
             ["@types/axios", null],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\

@@ -26,34 +26,47 @@ export async function releaseWorkspace({
         organization,
         context,
         version,
-        generatorConfigs: workspace.generatorsConfiguration.release.map((generator) => ({
-            id: generator.name,
-            version: generator.version,
-            outputMode: Fiddle.OutputMode.publish({
-                registryOverrides: {
-                    npm:
-                        generator.outputs.npm != null
-                            ? {
-                                  registryUrl: generator.outputs.npm.url ?? "https://registry.npmjs.org",
-                                  packageName: generator.outputs.npm.packageName,
-                                  token: generator.outputs.npm.token,
-                              }
-                            : undefined,
-                    maven:
-                        generator.outputs.maven != null
-                            ? {
-                                  registryUrl:
-                                      generator.outputs.maven.url ??
-                                      "https://s01.oss.sonatype.org/content/repositories/releases/",
-                                  username: generator.outputs.maven.username,
-                                  password: generator.outputs.maven.password,
-                                  coordinate: generator.outputs.maven.coordinate,
-                              }
-                            : undefined,
-                },
-            }),
-            customConfig: generator.config,
-        })),
+        generatorConfigs: workspace.generatorsConfiguration.release.map((generator) => {
+            let outputMode;
+            if (generator.outputs.github != null) {
+                const repository = generator.outputs.github.repository;
+                const separatorIndex = repository.indexOf("/");
+                outputMode = Fiddle.OutputMode.github({
+                    owner: repository.substring(0, separatorIndex),
+                    repo: repository.substring(separatorIndex + 1),
+                });
+            } else {
+                outputMode = Fiddle.OutputMode.publish({
+                    registryOverrides: {
+                        npm:
+                            generator.outputs.npm != null
+                                ? {
+                                      registryUrl: generator.outputs.npm.url ?? "https://registry.npmjs.org",
+                                      packageName: generator.outputs.npm.packageName,
+                                      token: generator.outputs.npm.token,
+                                  }
+                                : undefined,
+                        maven:
+                            generator.outputs.maven != null
+                                ? {
+                                      registryUrl:
+                                          generator.outputs.maven.url ??
+                                          "https://s01.oss.sonatype.org/content/repositories/releases/",
+                                      username: generator.outputs.maven.username,
+                                      password: generator.outputs.maven.password,
+                                      coordinate: generator.outputs.maven.coordinate,
+                                  }
+                                : undefined,
+                    },
+                });
+            }
+            return {
+                id: generator.name,
+                version: generator.version,
+                outputMode,
+                customConfig: generator.config,
+            };
+        }),
         generatorInvocations: workspace.generatorsConfiguration.release,
     });
 }

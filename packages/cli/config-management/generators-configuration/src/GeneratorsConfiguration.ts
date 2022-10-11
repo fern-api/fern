@@ -48,5 +48,4 @@ export interface MavenGeneratorOutput {
 
 export interface GithubGeneratorOutput {
     repository: string;
-    token: string;
 }
