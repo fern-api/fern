@@ -57,7 +57,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_lightweight_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_lightweight_problems = router.get(  # type: ignore
             path="/problems-v2/lightweight-problem-info",
@@ -74,7 +74,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_problems = router.get(  # type: ignore
             path="/problems-v2/problem-info",
@@ -93,7 +93,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_latest_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_latest_problem = router.get(  # type: ignore
             path="/problems-v2/problem-info/{problem_id}",
@@ -114,7 +114,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_problem_version, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_problem_version = router.get(  # type: ignore
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",

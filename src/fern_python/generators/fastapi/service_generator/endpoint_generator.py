@@ -113,8 +113,8 @@ class EndpointGenerator:
         self._write_update_endpoint_signature(writer=writer, reference_resolver=reference_resolver)
         writer.write_line()
 
-        method_name = f"cls.{self._get_method_name()}"
-        writer.write(f"{method_name} = ")
+        method_on_cls = self._get_reference_to_method_on_cls()
+        writer.write(f"{method_on_cls} = ")
         writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
         writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
         writer.write_line("(  # type: ignore")
@@ -125,13 +125,15 @@ class EndpointGenerator:
                 writer.write_node(self._return_type)
                 writer.write_line(",")
             writer.write("**")
-            writer.write_node(self._context.core_utilities.get_route_args(AST.Expression(method_name)))
+            writer.write_node(self._context.core_utilities.get_route_args(AST.Expression(method_on_cls)))
             writer.write_line(",")
-        writer.write(f")({method_name})")
+        writer.write(f")({method_on_cls})")
 
     def _write_update_endpoint_signature(
         self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver
     ) -> None:
+        method_on_cls = self._get_reference_to_method_on_cls()
+
         ENDPOINT_FUNCTION_VARIABLE_NAME = "endpoint_function"
         writer.write(f"{ENDPOINT_FUNCTION_VARIABLE_NAME} = ")
         writer.write_node(
@@ -140,7 +142,7 @@ class EndpointGenerator:
                     qualified_name_excluding_import=("signature",),
                     import_=AST.ReferenceImport(module=AST.Module.built_in("inspect")),
                 ),
-                args=[AST.Expression(f"cls.{self._get_method_name()}")],
+                args=[AST.Expression(method_on_cls)],
             )
         )
         writer.write_line()
@@ -188,14 +190,14 @@ class EndpointGenerator:
                 writer.write_line(f"{NEW_PARAMETERS_VARIABLE_NAME}.append({PARAMETER_VALUE_VARIABLE_NAME})")
 
         writer.write_line(
-            'setattr(cls, "__signature__", '
+            f'setattr({method_on_cls}, "__signature__", '
             + f"{ENDPOINT_FUNCTION_VARIABLE_NAME}.replace(parameters={NEW_PARAMETERS_VARIABLE_NAME}))"
         )
 
     def invoke_init_method(self, *, reference_to_fastapi_router: AST.Expression) -> AST.FunctionInvocation:
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
-                qualified_name_excluding_import=("cls", self._get_init_method_name()),
+                qualified_name_excluding_import=(self._get_reference_to_init_method_on_cls(),),
             ),
             kwargs=[(EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG, reference_to_fastapi_router)],
         )
@@ -203,8 +205,14 @@ class EndpointGenerator:
     def _get_method_name(self) -> str:
         return self._endpoint.name.snake_case
 
+    def _get_reference_to_method_on_cls(self) -> str:
+        return f"cls.{self._get_method_name()}"
+
     def _get_init_method_name(self) -> str:
         return f"__init_{self._get_method_name()}"
+
+    def _get_reference_to_init_method_on_cls(self) -> str:
+        return f"cls.{self._get_init_method_name()}"
 
 
 def convert_http_method_to_fastapi_method_name(http_method: ir_types.services.HttpMethod) -> str:

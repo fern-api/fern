@@ -46,7 +46,7 @@ class AbstractHomepageProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_homepage_problems = router.get(  # type: ignore
             path="/homepage-problems/",
@@ -65,7 +65,7 @@ class AbstractHomepageProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.set_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.set_homepage_problems = router.post(  # type: ignore
             path="/homepage-problems/", **get_route_args(cls.set_homepage_problems)

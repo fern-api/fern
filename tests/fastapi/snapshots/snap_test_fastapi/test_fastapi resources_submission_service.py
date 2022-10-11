@@ -60,7 +60,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.create_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.create_execution_session = router.post(  # type: ignore
             path="/sessions/create-session/{language}",
@@ -79,7 +79,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_execution_session = router.get(  # type: ignore
             path="/sessions/{session_id}",
@@ -98,7 +98,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.stop_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.stop_execution_session = router.delete(  # type: ignore
             path="/sessions/stop/{session_id}", **get_route_args(cls.stop_execution_session)
@@ -113,7 +113,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_execution_sessions_state, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_execution_sessions_state = router.get(  # type: ignore
             path="/sessions/execution-sessions-state",

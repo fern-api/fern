@@ -41,7 +41,7 @@ class AbstractMigrationInfoService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_attempted_migrations, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_attempted_migrations = router.get(  # type: ignore
             path="/migration-info/all",

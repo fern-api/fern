@@ -90,7 +90,9 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.update_test_submission_status, "__signature__", endpoint_function.replace(parameters=new_parameters)
+        )
 
         cls.update_test_submission_status = router.post(  # type: ignore
             path="/admin/store-test-submission-status/{submission_id}",
@@ -110,7 +112,7 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.send_test_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.send_test_submission_update = router.post(  # type: ignore
             path="/admin/store-test-submission-status-v2/{submission_id}",
@@ -130,7 +132,11 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.update_workspace_submission_status,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         cls.update_workspace_submission_status = router.post(  # type: ignore
             path="/admin/store-workspace-submission-status/{submission_id}",
@@ -150,7 +156,9 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.send_workspace_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters)
+        )
 
         cls.send_workspace_submission_update = router.post(  # type: ignore
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
@@ -172,7 +180,7 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.store_traced_test_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.store_traced_test_case = router.post(  # type: ignore
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
@@ -194,7 +202,7 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.store_traced_test_case_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.store_traced_test_case_v_2 = router.post(  # type: ignore
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
@@ -214,7 +222,7 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.store_traced_workspace, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.store_traced_workspace = router.post(  # type: ignore
             path="/admin/store-workspace-trace/submission/{submission_id}", **get_route_args(cls.store_traced_workspace)
@@ -233,7 +241,7 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.store_traced_workspace_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.store_traced_workspace_v_2 = router.post(  # type: ignore
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",

@@ -62,7 +62,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.create_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.create_problem = router.post(  # type: ignore
             path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.create_problem)
@@ -81,7 +81,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.update_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.update_problem = router.post(  # type: ignore
             path="/problem-crud/update/{problem_id}",
@@ -100,7 +100,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.delete_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.delete_problem = router.delete(  # type: ignore
             path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem)
@@ -117,7 +117,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_default_starter_files, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_default_starter_files = router.post(  # type: ignore
             path="/problem-crud/default-starter-files",

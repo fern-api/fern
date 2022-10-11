@@ -50,7 +50,7 @@ class AbstractSysPropCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.set_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.set_num_warm_instances = router.put(  # type: ignore
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
@@ -66,7 +66,7 @@ class AbstractSysPropCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_num_warm_instances = router.get(  # type: ignore
             path="/sysprop/num-warm-instances",

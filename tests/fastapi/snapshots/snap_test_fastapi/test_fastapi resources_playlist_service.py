@@ -74,7 +74,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.create_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.create_playlist = router.post(  # type: ignore
             path="/v2/playlist/{service_param}/create", response_model=Playlist, **get_route_args(cls.create_playlist)
@@ -97,7 +97,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_playlists, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_playlists = router.get(  # type: ignore
             path="/v2/playlist/{service_param}/all",
@@ -118,7 +118,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.get_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.get_playlist = router.get(  # type: ignore
             path="/v2/playlist/{service_param}/{playlist_id}",
@@ -143,7 +143,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.update_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.update_playlist = router.put(  # type: ignore
             path="/v2/playlist/{service_param}/{playlist_id}",
@@ -166,7 +166,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(cls, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(cls.delete_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         cls.delete_playlist = router.delete(  # type: ignore
             path="/v2/playlist/{service_param}/{playlist_id}", **get_route_args(cls.delete_playlist)
