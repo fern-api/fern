@@ -21,12 +21,9 @@ class Language(str, enum.Enum):
         javascript: typing.Callable[[], T_Result],
         python: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.value == "JAVA":
+        if self is Language.JAVA:
             return java()
-        if self.value == "JAVASCRIPT":
+        if self is Language.JAVASCRIPT:
             return javascript()
-        if self.value == "PYTHON":
+        if self is Language.PYTHON:
             return python()
-
-        # the above checks are exhaustive, but this is necessary to satisfy the type checker
-        raise RuntimeError()

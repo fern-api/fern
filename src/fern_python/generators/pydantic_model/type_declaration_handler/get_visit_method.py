@@ -22,25 +22,26 @@ class VisitorArgument:
 
 
 def get_visit_method(
+    *,
     items: Sequence[VisitableItem],
     reference_to_current_value: str,
-    are_checks_exhaustive: bool,
+    should_use_is_for_equality_check: bool = False,
 ) -> AST.FunctionDeclaration:
-    def writevisitor_body(
+    def write_visitor_body(
         writer: AST.NodeWriter,
         reference_resolver: AST.ReferenceResolver,
     ) -> None:
         for item in items:
-            writer.write_line(f'if {reference_to_current_value} == "{item.expected_value}":')
+            writer.write_line(
+                f"if {reference_to_current_value}"
+                + f' {"is" if should_use_is_for_equality_check else "=="} '
+                + f"{item.expected_value}:"
+            )
             with writer.indent():
                 writer.write_line(f"return {item.parameter_name}(")
                 if item.visitor_argument is not None:
                     writer.write_node(item.visitor_argument.expression)
                 writer.write(")\n")
-        if not are_checks_exhaustive:
-            writer.write_line()
-            writer.write_line("# the above checks are exhaustive, but this is necessary to satisfy the type checker")
-            writer.write_line("raise RuntimeError()")
 
     return AST.FunctionDeclaration(
         name="visit",
@@ -57,5 +58,5 @@ def get_visit_method(
             ],
             return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
         ),
-        body=AST.CodeWriter(writevisitor_body),
+        body=AST.CodeWriter(write_visitor_body),
     )

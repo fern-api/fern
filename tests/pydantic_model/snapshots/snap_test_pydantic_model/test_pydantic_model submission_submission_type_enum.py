@@ -14,8 +14,5 @@ class SubmissionTypeEnum(str, enum.Enum):
     TEST = "TEST"
 
     def visit(self, test: typing.Callable[[], T_Result]) -> T_Result:
-        if self.value == "TEST":
+        if self is SubmissionTypeEnum.TEST:
             return test()
-
-        # the above checks are exhaustive, but this is necessary to satisfy the type checker
-        raise RuntimeError()

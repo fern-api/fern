@@ -39,7 +39,7 @@ class EnumGenerator(AbstractTypeGenerator):
         for value in self._enum.values:
             enum_class.add_class_var(
                 AST.VariableDeclaration(
-                    name=value.name.screaming_snake_case,
+                    name=self._get_class_var_name(value),
                     initializer=AST.Expression(f'"{value.value}"'),
                 )
             )
@@ -48,16 +48,19 @@ class EnumGenerator(AbstractTypeGenerator):
             get_visit_method(
                 items=[
                     VisitableItem(
-                        parameter_name=self._get_parameter_name_for_enum_value(value),
-                        expected_value=value.value,
+                        parameter_name=self._get_visitor_parameter_name_for_enum_value(value),
+                        expected_value=f"{self._name.name}.{self._get_class_var_name(value)}",
                         visitor_argument=None,
                     )
                     for value in self._enum.values
                 ],
-                reference_to_current_value="self.value",
-                are_checks_exhaustive=False,
+                reference_to_current_value="self",
+                should_use_is_for_equality_check=True,
             )
         )
 
-    def _get_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
+    def _get_class_var_name(self, enum_value: ir_types.EnumValue) -> str:
+        return enum_value.name.screaming_snake_case
+
+    def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
         return enum_value.name.snake_case

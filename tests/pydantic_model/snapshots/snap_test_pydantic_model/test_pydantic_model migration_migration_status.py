@@ -21,12 +21,9 @@ class MigrationStatus(str, enum.Enum):
         failed: typing.Callable[[], T_Result],
         finished: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.value == "RUNNING":
+        if self is MigrationStatus.RUNNING:
             return running()
-        if self.value == "FAILED":
+        if self is MigrationStatus.FAILED:
             return failed()
-        if self.value == "FINISHED":
+        if self is MigrationStatus.FINISHED:
             return finished()
-
-        # the above checks are exhaustive, but this is necessary to satisfy the type checker
-        raise RuntimeError()

@@ -27,18 +27,15 @@ class ExecutionSessionStatus(str, enum.Enum):
         live_container: typing.Callable[[], T_Result],
         failed_to_launch: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self.value == "CREATING_CONTAINER":
+        if self is ExecutionSessionStatus.CREATING_CONTAINER:
             return creating_container()
-        if self.value == "PROVISIONING_CONTAINER":
+        if self is ExecutionSessionStatus.PROVISIONING_CONTAINER:
             return provisioning_container()
-        if self.value == "PENDING_CONTAINER":
+        if self is ExecutionSessionStatus.PENDING_CONTAINER:
             return pending_container()
-        if self.value == "RUNNING_CONTAINER":
+        if self is ExecutionSessionStatus.RUNNING_CONTAINER:
             return running_container()
-        if self.value == "LIVE_CONTAINER":
+        if self is ExecutionSessionStatus.LIVE_CONTAINER:
             return live_container()
-        if self.value == "FAILED_TO_LAUNCH":
+        if self is ExecutionSessionStatus.FAILED_TO_LAUNCH:
             return failed_to_launch()
-
-        # the above checks are exhaustive, but this is necessary to satisfy the type checker
-        raise RuntimeError()

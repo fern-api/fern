@@ -155,7 +155,7 @@ class UnionGenerator(AbstractTypeGenerator):
                     items=[
                         VisitableItem(
                             parameter_name=single_union_type.discriminant_value.snake_case,
-                            expected_value=single_union_type.discriminant_value.wire_value,
+                            expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
                             visitor_argument=single_union_type.shape.visit(
                                 same_properties_as_object=lambda type_name: VisitorArgument(
                                     expression=AST.Expression("self.__root__"),
@@ -175,7 +175,6 @@ class UnionGenerator(AbstractTypeGenerator):
                         for single_union_type in self._union.types
                     ],
                     reference_to_current_value=f"self.__root__.{self._get_discriminant_attr_name()}",
-                    are_checks_exhaustive=True,
                 )
             )
 
