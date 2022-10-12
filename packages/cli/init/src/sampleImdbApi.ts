@@ -43,5 +43,4 @@ services:
 
 errors:
   NotFoundError:
-    http:
-      statusCode: 404`;
+    status-code: 404`;

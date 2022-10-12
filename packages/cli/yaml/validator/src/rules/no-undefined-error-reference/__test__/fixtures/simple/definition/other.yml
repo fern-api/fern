@@ -2,5 +2,4 @@
 
 errors:
   OtherError:
-    http:
-      statusCode: 400
+    status-code: 400

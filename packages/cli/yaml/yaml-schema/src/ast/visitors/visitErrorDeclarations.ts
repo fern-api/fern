@@ -34,6 +34,7 @@ async function visitErrorDeclaration(
     } else {
         await visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
+            "status-code": noop,
             type: async (type) => {
                 if (type == null) {
                     return;
@@ -45,7 +46,6 @@ async function visitErrorDeclaration(
                     await visitTypeDeclaration({ declaration: type, visitor, nodePathForType: nodePathForErrorType });
                 }
             },
-            http: noop,
         });
     }
 }

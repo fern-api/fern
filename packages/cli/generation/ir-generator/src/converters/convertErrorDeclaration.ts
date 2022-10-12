@@ -16,8 +16,9 @@ export function convertErrorDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): ErrorDeclaration {
-    const rawType = typeof errorDeclaration === "string" ? errorDeclaration : errorDeclaration.type;
-    const type =
+    const rawType = errorDeclaration.type;
+    const convertedType = rawType != null ? file.parseTypeReference(rawType) : undefined;
+    const convertedTypeDeclaration =
         rawType != null
             ? convertType({
                   typeDeclaration: rawType,
@@ -37,14 +38,12 @@ export function convertErrorDeclaration({
             name: errorName,
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
-        http:
-            typeof errorDeclaration !== "string" && errorDeclaration.http != null
-                ? {
-                      statusCode: errorDeclaration.http.statusCode,
-                  }
-                : undefined,
+        http: {
+            statusCode: errorDeclaration["status-code"],
+        },
+        statusCode: errorDeclaration["status-code"],
         type:
-            type ??
+            convertedTypeDeclaration ??
             convertType({
                 typeDeclaration:
                     typeof errorDeclaration === "string"
@@ -53,6 +52,7 @@ export function convertErrorDeclaration({
                 file,
                 typeResolver,
             }),
-        typeV2: type,
+        typeV2: convertedTypeDeclaration,
+        typeV3: convertedType,
     };
 }
