@@ -1,0 +1,24 @@
+types:
+  A: string
+  B:
+    properties:
+      foo: integer
+
+errors:
+  Error1: {}
+  Error2:
+    http:
+      statusCode: 404
+  Error3:
+    type: string
+  Error4:
+    http:
+      statusCode: 404
+    type: string
+  Error5:
+    http:
+      statusCode: 404
+    type:
+      docs: I'm a type!
+      properties:
+        foo: string

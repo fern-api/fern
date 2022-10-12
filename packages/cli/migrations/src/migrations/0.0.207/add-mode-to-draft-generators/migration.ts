@@ -6,8 +6,8 @@ import { Migration } from "../../../types/Migration";
 import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles";
 
 export const migration: Migration = {
-    name: "add-mode-to-draft-generators-migration",
-    summary: "Adds mode to draft generators in generators.yml. Mode can either be download-files or artifact.",
+    name: "add-mode-to-draft-generators",
+    summary: "Adds 'mode' to draft generators in generators.yml, which can either be 'download-files' or 'publish'.",
     run: async ({ context }) => {
         const generatorYamlFiles = await getAllGeneratorYamlFiles(context);
         if (generatorYamlFiles === TASK_FAILURE) {
@@ -39,8 +39,8 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
             context.fail(`draft generator is not an object in ${filepath}`);
             return;
         }
-        const name = draftGenerator.get("name");
-        if (typeof name !== "string") {
+        const name = draftGenerator.get("name", true);
+        if (typeof name?.value !== "string") {
             context.fail(`draft generator didn't have name in ${filepath}`);
             return;
         }
@@ -50,9 +50,9 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         if (localOutput != null) {
             draftGenerator.set(
                 "output-path",
-                name.includes("openapi")
+                name.value.includes("openapi")
                     ? "./generated-openapi"
-                    : name.includes("postman")
+                    : name.value.includes("postman")
                     ? "./generated-postman"
                     : localOutput
             );
