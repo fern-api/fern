@@ -50,7 +50,7 @@ def run_snapshot_test(
     os.symlink(path_to_output, symlink)
 
     subprocess.run(
-        ["npx", "fern-api", "ir", "--output", path_to_ir],
+        ["npx", "--yes", "fern-api", "ir", "--output", path_to_ir],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=path_to_fixture,

@@ -44,15 +44,17 @@ class ServiceGenerator:
         return AST.ClassDeclaration(
             name=class_name,
             extends=[self._context.core_utilities.AbstractFernService()],
-            docstring="\n".join(
-                [
-                    f"{class_name} is an abstract class containing the methods that your",
-                    f"{service.name.name} implementation should implement.",
-                    "",
-                    "Each method is associated with an API route, which will be registered",
-                    "with FastAPI when you register your implementation using Fern's register()",
-                    "function.",
-                ]
+            docstring=AST.Docstring(
+                "\n".join(
+                    [
+                        f"{class_name} is an abstract class containing the methods that your",
+                        f"{service.name.name} implementation should implement.",
+                        "",
+                        "Each method is associated with an API route, which will be registered",
+                        "with FastAPI when you register your implementation using Fern's register()",
+                        "function.",
+                    ]
+                )
             ),
         )
 

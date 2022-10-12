@@ -22,6 +22,8 @@ class ImportsManager:
     def resolve_constraints(self, statements: Sequence[TopLevelStatement]) -> None:
         for statement in statements:
             for reference in statement.references:
+                if reference.is_forward_reference:
+                    self._postponed_annotations = True
                 if reference.import_ is not None:
                     if reference.must_import_after_current_declaration:
                         self._import_to_statements_that_must_precede_it[reference.import_].add(statement.id)

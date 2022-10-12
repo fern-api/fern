@@ -14,6 +14,7 @@ from .nodes import (
     ClassMethodDecorator,
     CodeWriter,
     Declaration,
+    Docstring,
     Expression,
     ExpressionSpread,
     FunctionDeclaration,
@@ -68,4 +69,5 @@ __all__ = [
     "ClassMethodDecorator",
     "ReferenceNode",
     "FunctionSignature",
+    "Docstring",
 ]

@@ -13,7 +13,7 @@ class QueryEndpointParameter(EndpointParameter):
         super().__init__(context=context)
         self._query_parameter = query_parameter
 
-    def get_name(self) -> str:
+    def _get_unsafe_name(self) -> str:
         return QueryEndpointParameter.get_variable_name_of_query_parameter(self._query_parameter)
 
     def get_type(self) -> AST.TypeHint:

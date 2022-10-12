@@ -5,6 +5,7 @@ from typing import List, Sequence, Set
 from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
 from ....references import ClassReference, Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
+from ...docstring import Docstring
 from ...expressions import Expression
 from ...reference_node import ReferenceNode
 from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
@@ -20,7 +21,7 @@ class ClassDeclaration(AstNode):
         is_abstract: bool = False,
         extends: Sequence[ClassReference] = None,
         constructor: ClassConstructor = None,
-        docstring: str = None,
+        docstring: Docstring = None,
     ):
         self.name = name
         self.extends = list(extends or [])
@@ -115,6 +116,8 @@ class ClassDeclaration(AstNode):
             references.update(self.constructor.get_references())
         for statement in self.statements:
             references.update(statement.get_references())
+        if self.docstring is not None:
+            references.update(self.docstring.get_references())
         return references
 
     def get_generics(self) -> Set[GenericTypeVar]:
@@ -123,6 +126,8 @@ class ClassDeclaration(AstNode):
             generics.update(self.constructor.get_generics())
         for statement in self.statements:
             generics.update(statement.get_generics())
+        if self.docstring is not None:
+            generics.update(self.docstring.get_generics())
         return generics
 
     def add_expression(self, expression: Expression) -> None:
@@ -137,9 +142,10 @@ class ClassDeclaration(AstNode):
 
         with writer.indent():
             if self.docstring is not None:
-                trimmed_docstring = self.docstring.strip()
-                if len(trimmed_docstring) > 0:
-                    writer.write_line(f'"""\n{trimmed_docstring}\n"""')
+                writer.write_line('"""')
+                writer.write_node(self.docstring)
+                writer.write_newline_if_last_line_not()
+                writer.write_line('"""')
             for statement in self.statements:
                 writer.write_node(statement)
                 writer.write_newline_if_last_line_not()

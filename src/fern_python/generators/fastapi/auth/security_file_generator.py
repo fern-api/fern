@@ -74,7 +74,7 @@ class SecurityFileGenerator:
             source_file.add_declaration(
                 declaration=AST.VariableDeclaration(
                     name=SecurityFileGenerator._API_AUTH_TYPE,
-                    type_hint=parsed_auth_type,
+                    initializer=AST.Expression(parsed_auth_type),
                 ),
                 should_export=True,
             )

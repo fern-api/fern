@@ -1,21 +1,22 @@
+from typing import Tuple
+
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
 
 from .validator_generator import ValidatorGenerator
 
 
-class RootValidatorGenerator(ValidatorGenerator):
-    _VALIDATOR_VALUE_ARGUMENT = "values"
+class CustomRootTypeValidatorGenerator(ValidatorGenerator):
+    _DECORATOR_FUNCTION_NAME = "validate"
     _VALIDATOR_CLASS_VALIDATORS_CLASS_VAR = "_validators"
 
-    def __init__(self, model: PydanticModel, root_type: AST.TypeHint):
-        super().__init__(model=model)
+    def __init__(self, root_type: AST.TypeHint, model: PydanticModel, reference_to_validators_class: Tuple[str, ...]):
+        super().__init__(model=model, reference_to_validators_class=reference_to_validators_class)
         self._root_type = root_type
 
-    def _add_validators_to_model(self) -> None:
+    def add_validator_to_model(self) -> None:
         self._model.add_root_validator(
             validator_name="_validate",
-            value_argument_name=RootValidatorGenerator._VALIDATOR_VALUE_ARGUMENT,
             body=AST.CodeWriter(self._write_validator_body),
         )
 
@@ -36,20 +37,23 @@ class RootValidatorGenerator(ValidatorGenerator):
                 ),
                 args=[
                     AST.Expression(self._root_type),
-                    AST.Expression(f'{RootValidatorGenerator._VALIDATOR_VALUE_ARGUMENT}.get("__root__")'),
+                    AST.Expression(f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("__root__")'),
                 ],
             ),
         )
         writer.write_line()
 
-        reference_to_registered_validators = ".".join(
-            [
-                self._model.name,
-                RootValidatorGenerator._VALIDATOR_CLASS_NAME,
-                RootValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
-            ]
+        writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
+        writer.write_line(
+            ".".join(
+                (
+                    *self._reference_to_validators_class,
+                    CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                )
+            )
+            + ":"
         )
-        writer.write_line(f"for {INDIVIDUAL_VALIDATOR_NAME} in {reference_to_registered_validators}:")
+
         with writer.indent():
             writer.write(f"{ROOT_VARIABLE_NAME} = ")
             writer.write_node(
@@ -62,35 +66,50 @@ class RootValidatorGenerator(ValidatorGenerator):
             )
             writer.write_line()
         writer.write_line(
-            f'return {{ **{RootValidatorGenerator._VALIDATOR_VALUE_ARGUMENT}, "__root__": {ROOT_VARIABLE_NAME} }}'
+            "return " + f'{{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, "__root__": {ROOT_VARIABLE_NAME} }}'
         )
 
-    def _add_validators_class_to_model(self) -> None:
+    def add_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
         VALIDATOR_PARAMETER = "validator"
 
         validator_type = AST.TypeHint.callable([self._root_type], self._root_type)
-        validators_class = AST.ClassDeclaration(
-            name=RootValidatorGenerator._VALIDATOR_CLASS_NAME,
-        )
         validators_class.add_class_var(
             AST.VariableDeclaration(
-                name=RootValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                name=CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
                 type_hint=AST.TypeHint.class_var(AST.TypeHint.list(validator_type)),
                 initializer=AST.Expression("[]"),
             )
         )
         validators_class.add_method(
             declaration=AST.FunctionDeclaration(
-                name="validate",
+                name=CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME,
                 signature=AST.FunctionSignature(
                     parameters=[AST.FunctionParameter(name=VALIDATOR_PARAMETER, type_hint=validator_type)],
                     return_type=AST.TypeHint.none(),
                 ),
                 body=AST.CodeWriter(
-                    f"cls.{RootValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR}"
+                    f"cls.{CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR}"
                     + f".append({VALIDATOR_PARAMETER})"
                 ),
             ),
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
         )
-        self._model.add_inner_class(validators_class)
+
+    def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
+
+        reference_to_decorator = ".".join(
+            (*self._reference_to_validators_class, CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME)
+        )
+
+        with writer.indent():
+            writer.write("@")
+            writer.write_line(reference_to_decorator)
+
+            writer.write("def validate(value: ")
+            writer.write_node(self._root_type)
+            writer.write(") -> ")
+            writer.write_node(self._root_type)
+            writer.write_line(":")
+
+            with writer.indent():
+                writer.write_line("...")

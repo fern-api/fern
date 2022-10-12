@@ -36,6 +36,11 @@ class Reference:
     not required for built-ins, like str
     """
 
+    is_forward_reference: bool = False
+    """
+    if True, "from __future__ import annotations" is added to the file
+    """
+
     must_import_after_current_declaration: bool = False
     """
     in Python 3.7+, annotations can be imported after they're used, with:

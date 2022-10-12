@@ -15,6 +15,9 @@ from .pydantic_field import PydanticField
 
 
 class PydanticModel:
+    VALIDATOR_FIELD_VALUE_PARAMETER_NAME = "v"
+    VALIDATOR_VALUES_PARAMETER_NAME = "values"
+
     def __init__(
         self,
         source_file: SourceFile,
@@ -126,7 +129,6 @@ class PydanticModel:
         self,
         validator_name: str,
         field_name: str,
-        field_parameter_name: str,
         field_type: AST.TypeHint,
         body: AST.CodeWriter,
     ) -> None:
@@ -136,7 +138,16 @@ class PydanticModel:
             declaration=AST.FunctionDeclaration(
                 name=validator_name,
                 signature=AST.FunctionSignature(
-                    parameters=[AST.FunctionParameter(name=field_parameter_name, type_hint=field_type)],
+                    parameters=[
+                        AST.FunctionParameter(
+                            name=PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
+                            type_hint=field_type,
+                        ),
+                        AST.FunctionParameter(
+                            name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
+                            type_hint=field_type,
+                        ),
+                    ],
                     return_type=field_type,
                 ),
                 body=body,
@@ -152,7 +163,6 @@ class PydanticModel:
     def add_root_validator(
         self,
         validator_name: str,
-        value_argument_name: str,
         body: AST.CodeWriter,
     ) -> None:
         value_type = AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())
@@ -162,7 +172,9 @@ class PydanticModel:
             declaration=AST.FunctionDeclaration(
                 name=validator_name,
                 signature=AST.FunctionSignature(
-                    parameters=[AST.FunctionParameter(name=value_argument_name, type_hint=value_type)],
+                    parameters=[
+                        AST.FunctionParameter(name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME, type_hint=value_type)
+                    ],
                     return_type=value_type,
                 ),
                 body=body,

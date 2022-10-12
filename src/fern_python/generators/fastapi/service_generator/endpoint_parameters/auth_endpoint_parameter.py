@@ -7,7 +7,7 @@ from .endpoint_parameter import EndpointParameter
 
 
 class AuthEndpointParameter(EndpointParameter):
-    def get_name(self) -> str:
+    def _get_unsafe_name(self) -> str:
         return "auth"
 
     def get_type(self) -> AST.TypeHint:

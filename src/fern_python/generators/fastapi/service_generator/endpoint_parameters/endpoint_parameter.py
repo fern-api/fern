@@ -13,8 +13,14 @@ class EndpointParameter(ABC):
     def to_function_parameter(self) -> AST.FunctionParameter:
         return AST.FunctionParameter(name=self.get_name(), type_hint=self.get_type())
 
-    @abstractmethod
     def get_name(self) -> str:
+        unsafe_name = self._get_unsafe_name()
+        if unsafe_name == self._get_request_param_name():
+            return f"{unsafe_name}_param"
+        return unsafe_name
+
+    @abstractmethod
+    def _get_unsafe_name(self) -> str:
         ...
 
     @abstractmethod
@@ -24,3 +30,6 @@ class EndpointParameter(ABC):
     @abstractmethod
     def get_default(self) -> AST.Expression:
         ...
+
+    def _get_request_param_name(self) -> str:
+        return "body"

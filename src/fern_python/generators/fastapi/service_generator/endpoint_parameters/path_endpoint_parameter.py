@@ -13,7 +13,7 @@ class PathEndpointParameter(EndpointParameter):
         super().__init__(context=context)
         self._path_parameter = path_parameter
 
-    def get_name(self) -> str:
+    def _get_unsafe_name(self) -> str:
         return PathEndpointParameter.get_variable_name_of_path_parameter(self._path_parameter)
 
     def get_type(self) -> AST.TypeHint:

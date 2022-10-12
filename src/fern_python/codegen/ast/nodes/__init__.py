@@ -10,6 +10,7 @@ from .declarations import (
     TypeAliasDeclaration,
     VariableDeclaration,
 )
+from .docstring import Docstring
 from .expressions import (
     ClassInstantiation,
     Expression,
@@ -38,4 +39,5 @@ __all__ = [
     "ClassMethodDecorator",
     "ReferenceNode",
     "FunctionSignature",
+    "Docstring",
 ]

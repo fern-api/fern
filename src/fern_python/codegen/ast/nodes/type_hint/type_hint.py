@@ -17,6 +17,17 @@ class TypeHint(AstNode):
         self._type = type
         self._type_parameters = type_parameters or []
 
+    def is_optional(self) -> bool:
+        return (
+            isinstance(self._type, ClassReference)
+            and self._type.import_ is not None
+            and self._type.import_.module == Module.built_in("typing")
+            and (
+                self._type.qualified_name_excluding_import == ("Optional",)
+                or self._type.import_.named_import == "Optional"
+            )
+        )
+
     @staticmethod
     def str_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("str"))
@@ -36,6 +47,13 @@ class TypeHint(AstNode):
     @staticmethod
     def none() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("None"))
+
+    @staticmethod
+    def not_required(wrapped_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_extensions_import("NotRequired"),
+            type_parameters=[TypeParameter(wrapped_type)],
+        )
 
     @staticmethod
     def optional(wrapped_type: TypeHint) -> TypeHint:
