@@ -74,6 +74,11 @@ class RegisterFileGenerator:
         )
 
     def _write_exception_handler_body(self, writer: AST.NodeWriter) -> None:
+        writer.write(f"{FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT}.state.logger.info(")
+        writer.write(f'f"{{{FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT}.__class__.__name__}} in ')
+        writer.write(f'{{{FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT}.url.path}}", ')
+        writer.write_line(f"exc_info={FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT})")
+
         writer.write_line(f"return {FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT}.to_json_response()")
 
     def _get_register_service_method(self) -> AST.FunctionDeclaration:

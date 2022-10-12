@@ -39,7 +39,7 @@ def register(
     submission: AbstractExecutionSesssionManagementService,
     sysprop: AbstractSysPropCrudService,
     v_2_problem: resources_v_2_problem_service_AbstractProblemInfoServicV2,
-    v_2_v_3_problem: resources_v_2_v_3_problem_service_AbstractProblemInfoServicV2
+    v_2_v_3_problem: resources_v_2_v_3_problem_service_AbstractProblemInfoServicV2,
 ) -> None:
     app.include_router(__register_service(admin))
     app.include_router(__register_service(homepage))
@@ -53,6 +53,7 @@ def register(
 
     @app.exception_handler(FernHTTPException)
     def _exception_handler(request: fastapi.requests.Request, exc: FernHTTPException) -> fastapi.responses.JSONResponse:
+        request.state.logger.info(f"{exc.__class__.__name__} in {request.url.path}", exc_info=exc)
         return exc.to_json_response()
 
 
