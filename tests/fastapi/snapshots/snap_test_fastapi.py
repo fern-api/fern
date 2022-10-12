@@ -18,6 +18,8 @@ snapshots['test_fastapi core_exceptions___init__'] = FileSnapshot('snap_test_fas
 
 snapshots['test_fastapi core_exceptions_fern_http_exception'] = FileSnapshot('snap_test_fastapi/test_fastapi core_exceptions_fern_http_exception.py')
 
+snapshots['test_fastapi core_exceptions_handlers'] = FileSnapshot('snap_test_fastapi/test_fastapi core_exceptions_handlers.py')
+
 snapshots['test_fastapi core_exceptions_unauthorized'] = FileSnapshot('snap_test_fastapi/test_fastapi core_exceptions_unauthorized.py')
 
 snapshots['test_fastapi core_route_args'] = FileSnapshot('snap_test_fastapi/test_fastapi core_route_args.py')
@@ -32,6 +34,7 @@ snapshots['test_fastapi filepaths'] = [
     'core/abstract_fern_service.py',
     'core/exceptions/__init__.py',
     'core/exceptions/fern_http_exception.py',
+    'core/exceptions/handlers.py',
     'core/exceptions/unauthorized.py',
     'core/route_args.py',
     'core/security/__init__.py',

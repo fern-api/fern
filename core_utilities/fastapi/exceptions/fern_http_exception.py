@@ -9,7 +9,7 @@ import fastapi
 import pydantic
 
 
-class FernHTTPException(Exception, abc.ABC):
+class FernHTTPException(fastapi.HTTPException, abc.ABC):
     def __init__(
         self,
         *,
@@ -17,6 +17,7 @@ class FernHTTPException(Exception, abc.ABC):
         name: typing.Optional[str] = None,
         content: typing.Optional[typing.Any] = None,
     ):
+        super().__init__(status_code=status_code)
         self.name = name
         self.status_code = status_code
         self.content = content

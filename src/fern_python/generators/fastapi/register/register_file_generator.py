@@ -3,7 +3,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.source_file_generator import SourceFileGenerator
 
 from ..context import FastApiGeneratorContext
-from ..external_dependencies import FastAPI
+from ..external_dependencies import FastAPI, Starlette
 from .service_initializer import ServiceInitializer
 
 
@@ -65,21 +65,33 @@ class RegisterFileGenerator:
             )
             writer.write_line()
         writer.write_line()
-        writer.write_node(
-            FastAPI.exception_handler(
-                app_variable=RegisterFileGenerator._APP_PARAMETER_NAME,
-                exception_type=self._context.core_utilities.FernHTTPException(),
-                body=AST.CodeWriter(self._write_exception_handler_body),
-            )
+        self._write_exception_handler(
+            writer=writer,
+            exception_type=self._context.core_utilities.exceptions.FernHTTPException.get_reference_to(),
+            handler=self._context.core_utilities.exceptions.fern_http_exception_handler(),
+        )
+        self._write_exception_handler(
+            writer=writer,
+            exception_type=Starlette.HTTPException,
+            handler=self._context.core_utilities.exceptions.http_exception_handler(),
+        )
+        self._write_exception_handler(
+            writer=writer,
+            exception_type=AST.ClassReference(qualified_name_excluding_import=("Exception",)),
+            handler=self._context.core_utilities.exceptions.default_exception_handler(),
         )
 
-    def _write_exception_handler_body(self, writer: AST.NodeWriter) -> None:
-        writer.write(f"{FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT}.state.logger.info(")
-        writer.write(f'f"{{{FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT}.__class__.__name__}} in ')
-        writer.write(f'{{{FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT}.url.path}}", ')
-        writer.write_line(f"exc_info={FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT})")
-
-        writer.write_line(f"return {FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT}.to_json_response()")
+    def _write_exception_handler(
+        self, *, writer: AST.NodeWriter, exception_type: AST.ClassReference, handler: AST.Reference
+    ) -> None:
+        writer.write_node(
+            FastAPI.add_exception_handler(
+                app_variable=RegisterFileGenerator._APP_PARAMETER_NAME,
+                exception_type=exception_type,
+                handler=handler,
+            )
+        )
+        writer.write_line()
 
     def _get_register_service_method(self) -> AST.FunctionDeclaration:
         return AST.FunctionDeclaration(

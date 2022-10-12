@@ -116,7 +116,11 @@ class FastAPI:
 
     @staticmethod
     def exception_handler(
-        *, app_variable: str, exception_type: AST.ClassReference, body: AST.CodeWriter
+        *,
+        exception_handler_name: str,
+        app_variable: str,
+        exception_type: AST.ClassReference,
+        body: AST.CodeWriter,
     ) -> AST.FunctionDeclaration:
         decorator = AST.Expression(
             AST.FunctionInvocation(
@@ -125,7 +129,7 @@ class FastAPI:
             )
         )
         return AST.FunctionDeclaration(
-            name="_exception_handler",
+            name=exception_handler_name,
             signature=AST.FunctionSignature(
                 parameters=[
                     AST.FunctionParameter(name=FastAPI.EXCEPTION_HANDLER_REQUEST_ARGUMENT, type_hint=FastAPI.Request),
@@ -137,4 +141,16 @@ class FastAPI:
             ),
             decorators=[decorator],
             body=body,
+        )
+
+    @staticmethod
+    def add_exception_handler(
+        *,
+        app_variable: str,
+        exception_type: AST.ClassReference,
+        handler: AST.Reference,
+    ) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(qualified_name_excluding_import=(app_variable, "add_exception_handler")),
+            args=[AST.Expression(exception_type), AST.Expression(handler)],
         )

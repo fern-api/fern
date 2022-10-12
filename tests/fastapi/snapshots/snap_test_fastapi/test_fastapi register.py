@@ -10,9 +10,15 @@ import os
 import types
 
 import fastapi
+import starlette
 
 from .core.abstract_fern_service import AbstractFernService
-from .core.exceptions import FernHTTPException
+from .core.exceptions import (
+    FernHTTPException,
+    default_exception_handler,
+    fern_http_exception_handler,
+    http_exception_handler,
+)
 from .resources.admin.service import AbstractAdminService
 from .resources.homepage.service import AbstractHomepageProblemService
 from .resources.migration.service import AbstractMigrationInfoService
@@ -39,7 +45,7 @@ def register(
     submission: AbstractExecutionSesssionManagementService,
     sysprop: AbstractSysPropCrudService,
     v_2_problem: resources_v_2_problem_service_AbstractProblemInfoServicV2,
-    v_2_v_3_problem: resources_v_2_v_3_problem_service_AbstractProblemInfoServicV2,
+    v_2_v_3_problem: resources_v_2_v_3_problem_service_AbstractProblemInfoServicV2
 ) -> None:
     app.include_router(__register_service(admin))
     app.include_router(__register_service(homepage))
@@ -51,10 +57,9 @@ def register(
     app.include_router(__register_service(v_2_problem))
     app.include_router(__register_service(v_2_v_3_problem))
 
-    @app.exception_handler(FernHTTPException)
-    def _exception_handler(request: fastapi.requests.Request, exc: FernHTTPException) -> fastapi.responses.JSONResponse:
-        request.state.logger.info(f"{exc.__class__.__name__} in {request.url.path}", exc_info=exc)
-        return exc.to_json_response()
+    app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
+    app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
+    app.add_exception_handler(Exception, default_exception_handler)
 
 
 def __register_service(service: AbstractFernService) -> fastapi.APIRouter:
