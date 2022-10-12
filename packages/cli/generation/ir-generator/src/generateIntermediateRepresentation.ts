@@ -109,7 +109,5 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
         });
     }
 
-    await visitServiceFile({ file: rootApiFile, schema: workspace.rootApiFile });
-
     return intermediateRepresentation;
 }
