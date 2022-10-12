@@ -125,8 +125,8 @@ Union types in Fern are always discriminated. For example, the JSON representati
 
 ```json
 {
-    "type": "square",
-    "sideLength": 42
+  "type": "square",
+  "sideLength": 42
 }
 ```
 

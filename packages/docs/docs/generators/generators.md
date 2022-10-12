@@ -53,7 +53,7 @@ Generators in the `draft` list will publish to a private registry managed by Fer
 draft:
 + - name: fernapi/fern-typescript-sdk
 +   version: 0.0.206
-+   mode: download-files 
++   mode: download-files
 release: []
 ````
 
