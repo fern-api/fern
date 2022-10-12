@@ -58,21 +58,6 @@ types:
       maybeASet: optional<set<string>>
 ```
 
-**Equivalent code**
-
-In TypeScript, this might look something like:
-
-```ts
-/**
- * Quite the kitchen sink!
- */
-interface KitchenSink {
-  someMap: Record<string, boolean>;
-  myList: number[];
-  maybeASet?: Set<string>;
-}
-```
-
 ## Create your own types
 
 ### Objects
@@ -87,19 +72,6 @@ types:
       title: string
       rating: double
       inTheaters: optional<boolean>
-```
-
-**Equivalent code**
-
-In TypeScript, this might look something like:
-
-```ts
-interface Movie {
-  id: MovieId;
-  title: string;
-  rating: double;
-  inTheaters?: boolean;
-}
 ```
 
 ### Extending objects
@@ -133,10 +105,12 @@ A union type represents a value that can have one of several different types.
 ```yaml
 types:
   Shape:
+    docs: |
+      A shape is either a square or a circle.
+      Don't ask about triangles.
     union:
       square: Square
       circle: Circle
-    docs: A shape is either a square or a circle. Don't ask about triangles.
   Square:
     properties:
       sideLength: double
@@ -145,25 +119,29 @@ types:
       radius: double
 ```
 
-**Equivalent code**
+#### Using Discriminant
 
-In TypeScript, this might look something like:
+Union types in Fern are always discriminated. For example, the JSON representation of a `Square` is:
 
-```ts
-/**
- * A shape is either a square or a circle. Don't ask about triangles.
- */
-type Shape = Square | Circle;
-
-interface Square {
-  _type: "square";
-  sideLength: number;
+```json
+{
+    "type": "square",
+    "sideLength": 42
 }
+```
 
-interface Circle {
-  _type: "circle";
-  radius: number;
-}
+By default, the `discriminant` in JSON will be `"type"`. You can change this by defining your own discriminant:
+
+```diff
+types:
+  Shape:
+    docs: |
+      A shape is either a square or a circle.
+      Don't ask about triangles.
+    union:
+      square: Square
+      circle: Circle
++   discriminant: shapeType
 ```
 
 #### Using `void`
@@ -181,23 +159,6 @@ types:
       reason: string
 ```
 
-**Equivalent code**
-
-In TypeScript, this might look something like:
-
-```ts
-type TaskResult = Success | Failure;
-
-interface Success {
-  _type: "success";
-}
-
-interface Failure {
-  _type: "failure";
-  reason: string;
-}
-```
-
 ### Enums
 
 An enum type represents a collection of allowed values.
@@ -210,19 +171,6 @@ types:
       - HEARTS
       - CLUBS
       - DIAMONDS
-```
-
-**Code**
-
-In TypeScript, this might look something like:
-
-```ts
-enum Suit {
-  SPADES,
-  HEARTS,
-  CLUBS,
-  DIAMONDS,
-}
 ```
 
 You can optionally assign a `name` of an enum. This is often used when the `value` has punctuation. The `value` is what goes over the wire as JSON.
@@ -274,18 +222,4 @@ types:
 +   id: EmployeeId
     name: string
 +   manager: EmployeeId
-```
-
-**Equivalent code**
-
-In TypeScript, this might look something like:
-
-```ts
-type EmployeeId = string;
-
-interface Employee {
-  id: EmployeeId;
-  name: string;
-  manager: EmployeeId;
-}
 ```

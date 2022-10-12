@@ -15,6 +15,10 @@ draft: []
 release: []
 ```
 
+Draft is ...
+
+Relese is ...
+
 ## An example of generators.md
 
 View an example using multiple generators [on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) or here:
@@ -22,11 +26,15 @@ View an example using multiple generators [on Github](https://github.com/fern-ap
 ````yml title="/fern/api/generators.yml"
 draft: # Publishes the generated code to a private registry managed by Fern.
   - name: fernapi/fern-typescript-sdk
-    version: 0.0.199
+    version: 0.0.206
+    # in download-files mode, generated files will download to your computer
+    mode: download-files
 
 release: # Publishes the generated code to a public registry (e.g. maven, npm, pypi).
-  - name: fernapi/java-client
+  - name: fernapi/fern-java-sdk
     version: 0.0.109
+    # in publish mode, generated files will publish to a registry
+    mode: publish
     outputs:
       maven:
         url: https://s01.oss.sonatype.org/content/repositories/releases/
@@ -44,7 +52,8 @@ Generators in the `draft` list will publish to a private registry managed by Fer
 ```diff title="/fern/api/generators.yml"
 draft:
 + - name: fernapi/fern-typescript-sdk
-+   version: 0.0.199
++   version: 0.0.206
++   mode: download-files 
 release: []
 ````
 
@@ -57,8 +66,9 @@ For example:
 ```diff title="/fern/api/generators.yml"
 draft: []
 release:
-  - name: fernapi/java-client
+  - name: fernapi/fern-java-sdk
     version: 0.0.xxx
+    mode: publish
 +   outputs:
 +     maven:
 +       url: https://s01.oss.sonatype.org/content/repositories/releases/
