@@ -15,9 +15,9 @@ draft: []
 release: []
 ```
 
-Draft is ...
+**Draft** is used when iterating on your API and SDKs.
 
-Relese is ...
+**Release** is used when you are ready to share your SDKs with the world.
 
 ## An example of generators.md
 
