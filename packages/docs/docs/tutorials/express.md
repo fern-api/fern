@@ -67,10 +67,9 @@ This will add:
 ```diff title="/fern/api/generators.yml"
 -draft: []
 +draft:
-+  - name: fernapi/fern-typescript
-+    version: 0.0.189
-+    config:
-+      mode: client-v2
++  - name: fernapi/fern-typescript-sdk
++    version: 0.0.206
++    mode: publish
  release:[]
 ```
 

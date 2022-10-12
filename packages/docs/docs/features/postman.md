@@ -22,9 +22,8 @@ Step 4: Add the
 draft:
   - name: fernapi/fern-postman
     version: 0.0.xx
-    generate:
-      enabled: true
-      output: ./generated-postman.json
+    mode: download-files
+    output-path: ./generated-postman
 +   config:
 +     publishing:
 +       apiKey: ${POSTMAN_API_KEY}

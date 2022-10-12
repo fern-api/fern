@@ -17,15 +17,16 @@ fern upgrade
 ```diff title="/fern/fern.config.json"
 {
    "organization": "imdb",
--  "version": "0.0.182"
-+  "version": "0.0.188"
+-  "version": "0.0.203"
++  "version": "0.0.210"
 }
 ```
 
 ```diff title="/fern/api/generators.yml"
 draft:
    - name: fernapi/fern-typescript-sdk
--    version: 0.0.189
-+    version: 0.0.191
+-    version: 0.0.197
++    version: 0.0.206
+     mode: download-files
 release: []
 ```
