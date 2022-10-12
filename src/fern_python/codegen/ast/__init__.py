@@ -1,11 +1,4 @@
-from .ast_node import (
-    AstNode,
-    GenericTypeVar,
-    IndentableWriter,
-    NodeWriter,
-    ReferenceResolver,
-    Writer,
-)
+from .ast_node import AstNode, GenericTypeVar, IndentableWriter, NodeWriter, Writer
 from .dependency import Dependency, DependencyName, DependencyVersion
 from .nodes import (
     ClassConstructor,
@@ -13,6 +6,7 @@ from .nodes import (
     ClassInstantiation,
     ClassMethodDecorator,
     CodeWriter,
+    CodeWriterFunction,
     Declaration,
     Docstring,
     Expression,
@@ -22,7 +16,6 @@ from .nodes import (
     FunctionParameter,
     FunctionSignature,
     ReferenceNode,
-    ReferencingCodeWriter,
     TypeAliasDeclaration,
     TypeHint,
     VariableDeclaration,
@@ -39,7 +32,6 @@ from .references import (
 __all__ = [
     "AstNode",
     "Declaration",
-    "ReferenceResolver",
     "Writer",
     "NodeWriter",
     "IndentableWriter",
@@ -56,7 +48,7 @@ __all__ = [
     "DependencyName",
     "DependencyVersion",
     "CodeWriter",
-    "ReferencingCodeWriter",
+    "CodeWriterFunction",
     "TypeAliasDeclaration",
     "ReferenceImport",
     "Expression",

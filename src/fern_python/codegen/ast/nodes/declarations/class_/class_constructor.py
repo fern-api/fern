@@ -1,6 +1,6 @@
 from typing import Sequence, Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 from ...code_writer import CodeWriter
 from ..function import FunctionParameter
@@ -25,7 +25,7 @@ class ClassConstructor(AstNode):
         generics.update(self.body.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         writer.write("def __init__(self, ")
         just_wrote_parameter = False
         for i, parameter in enumerate(self.parameters):
@@ -36,4 +36,4 @@ class ClassConstructor(AstNode):
         writer.write("):")
 
         with writer.indent():
-            self.body.write(writer=writer, reference_resolver=reference_resolver)
+            self.body.write(writer=writer)

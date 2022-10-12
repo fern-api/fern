@@ -1,6 +1,6 @@
 from typing import Set
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, GenericTypeVar, NodeWriter
 from ...references import Reference
 
 
@@ -14,5 +14,5 @@ class ReferenceNode(AstNode):
     def get_generics(self) -> Set[GenericTypeVar]:
         return set()
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
-        writer.write(reference_resolver.resolve_reference(self._reference))
+    def write(self, writer: NodeWriter) -> None:
+        writer.write_reference(self._reference)

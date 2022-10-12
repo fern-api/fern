@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Sequence, Set, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, GenericTypeVar, NodeWriter
 from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
 from .type_parameter import TypeParameter
@@ -152,19 +152,18 @@ class TypeHint(AstNode):
             generics.update(type_parameter.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
-        writer.write(
-            self._type.name
-            if isinstance(self._type, GenericTypeVar)
-            else reference_resolver.resolve_reference(self._type)
-        )
+    def write(self, writer: NodeWriter) -> None:
+        if isinstance(self._type, GenericTypeVar):
+            writer.write(self._type.name)
+        else:
+            writer.write_reference(self._type)
         if len(self._type_parameters) > 0:
             writer.write("[")
             just_wrote_parameter = False
             for i, type_parameter in enumerate(self._type_parameters):
                 if just_wrote_parameter:
                     writer.write(", ")
-                type_parameter.write(writer=writer, reference_resolver=reference_resolver)
+                type_parameter.write(writer=writer)
                 just_wrote_parameter = True
             writer.write("]")
 

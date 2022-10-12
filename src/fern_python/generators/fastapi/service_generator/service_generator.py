@@ -90,7 +90,7 @@ class ServiceGenerator:
             ),
         )
 
-    def _write_init_fern_body(self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+    def _write_init_fern_body(self, writer: AST.NodeWriter) -> None:
         for endpoint_generator in self._endpoint_generators:
             writer.write_node(
                 endpoint_generator.invoke_init_method(

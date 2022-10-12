@@ -3,7 +3,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Optional, Set, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, GenericTypeVar, NodeWriter
 from ...references import Reference
 from ..code_writer import CodeWriter
 
@@ -33,13 +33,13 @@ class Expression(AstNode):
         if isinstance(self.expression, AstNode):
             return self.expression.get_generics()
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         if self.spread is not None:
             writer.write(self.spread.value)
         if isinstance(self.expression, Reference):
-            writer.write(reference_resolver.resolve_reference(self.expression))
+            writer.write_reference(self.expression)
         else:
-            self.expression.write(writer=writer, reference_resolver=reference_resolver)
+            self.expression.write(writer=writer)
 
 
 class ExpressionSpread(Enum):

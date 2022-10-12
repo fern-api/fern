@@ -255,9 +255,9 @@ class PydanticModel:
         self.finish()
 
 
-def get_field_name_initializer(json_field_name: str) -> AST.ReferencingCodeWriter:
-    def write(writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
-        PydanticField = reference_resolver.resolve_reference(PYDANTIC_FIELD_REFERENCE)
-        return writer.write(f'{PydanticField}(alias="{json_field_name}")')
+def get_field_name_initializer(json_field_name: str) -> AST.CodeWriterFunction:
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_reference(PYDANTIC_FIELD_REFERENCE)
+        return writer.write(f'(alias="{json_field_name}")')
 
     return write

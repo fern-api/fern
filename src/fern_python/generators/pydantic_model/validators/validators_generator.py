@@ -29,9 +29,7 @@ class ValidatorsGenerator(ABC):
     def _get_reference_to_validators_class(self) -> Tuple[str, ...]:
         return (self._model.name, ValidatorsGenerator._VALIDATOR_CLASS_NAME)
 
-    def _write_validators_class_docstring(
-        self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver
-    ) -> None:
+    def _write_validators_class_docstring(self, writer: AST.NodeWriter) -> None:
         writer.write_line("Use this class to add validators to the Pydantic model.")
         self._write_examples_for_docstring(writer=writer)
 

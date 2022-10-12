@@ -29,7 +29,6 @@ def get_visit_method(
 ) -> AST.FunctionDeclaration:
     def write_visitor_body(
         writer: AST.NodeWriter,
-        reference_resolver: AST.ReferenceResolver,
     ) -> None:
         for item in items:
             writer.write_line(

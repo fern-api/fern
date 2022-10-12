@@ -47,11 +47,7 @@ class RegisterFileGenerator:
             body=AST.CodeWriter(self._write_register_method_body),
         )
 
-    def _write_register_method_body(
-        self,
-        writer: AST.NodeWriter,
-        reference_resolver: AST.ReferenceResolver,
-    ) -> None:
+    def _write_register_method_body(self, writer: AST.NodeWriter) -> None:
         for service_initializer in self._service_initializers:
             writer.write_node(
                 node=FastAPI.include_router(
@@ -76,7 +72,7 @@ class RegisterFileGenerator:
             )
         )
 
-    def _write_exception_handler_body(self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+    def _write_exception_handler_body(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"return {FastAPI.EXCEPTION_HANDLER_EXCEPTION_ARGUMENT}.to_json_response()")
 
     def _get_register_service_method(self, source_file: SourceFile) -> AST.FunctionDeclaration:
@@ -94,11 +90,7 @@ class RegisterFileGenerator:
             body=AST.CodeWriter(self._write_register_service_method_body),
         )
 
-    def _write_register_service_method_body(
-        self,
-        writer: AST.NodeWriter,
-        reference_resolver: AST.ReferenceResolver,
-    ) -> None:
+    def _write_register_service_method_body(self, writer: AST.NodeWriter) -> None:
         ROUTER_VARIABLE_NAME = "router"
         writer.write(f"{ROUTER_VARIABLE_NAME} = ")
         writer.write_node(FastAPI.APIRouter.invoke())

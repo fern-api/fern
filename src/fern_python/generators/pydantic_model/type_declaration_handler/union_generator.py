@@ -201,8 +201,8 @@ class UnionGenerator(AbstractTypeGenerator):
         single_union_type: ir_types.SingleUnionType,
         internal_single_union_type: AST.ClassReference,
         external_union: AST.ClassReference,
-    ) -> AST.ReferencingCodeWriter:
-        def write(writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+    ) -> AST.CodeWriterFunction:
+        def write(writer: AST.NodeWriter) -> None:
             # explicit typing needed to help mypy
             no_expressions: List[AST.Expression] = []
 

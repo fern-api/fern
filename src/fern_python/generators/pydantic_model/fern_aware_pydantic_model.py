@@ -203,7 +203,7 @@ class FernAwarePydanticModel:
             return PydanticValidatorsGenerator(model=self._pydantic_model)
 
     def _override_json(self) -> None:
-        def write_json_body(writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+        def write_json_body(writer: AST.NodeWriter) -> None:
             writer.write("kwargs_with_defaults: ")
             writer.write_node(AST.TypeHint.any())
             writer.write(' = { "by_alias": True, **kwargs }')
@@ -222,7 +222,7 @@ class FernAwarePydanticModel:
         )
 
     def _override_dict(self) -> None:
-        def write_dict_body(writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+        def write_dict_body(writer: AST.NodeWriter) -> None:
             writer.write("kwargs_with_defaults: ")
             writer.write_node(AST.TypeHint.any())
             writer.write(' = { "by_alias": True, **kwargs }')

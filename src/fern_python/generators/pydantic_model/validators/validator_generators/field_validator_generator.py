@@ -25,7 +25,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
     def get_validator_class_var(self) -> str:
         return f"_{self.field.name}_validators"
 
-    def _write_validator_body(self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+    def _write_validator_body(self, writer: AST.NodeWriter) -> None:
         field_value_parameter_name = PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME
 
         INDIVIDUAL_VALIDATOR_NAME = "validator"

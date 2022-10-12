@@ -1,6 +1,6 @@
 from typing import Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 from ...type_hint import TypeHint
 
@@ -16,6 +16,6 @@ class TypeAliasDeclaration(AstNode):
     def get_generics(self) -> Set[GenericTypeVar]:
         return self.type_hint.get_generics()
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name} = ")
-        self.type_hint.write(writer=writer, reference_resolver=reference_resolver)
+        self.type_hint.write(writer=writer)

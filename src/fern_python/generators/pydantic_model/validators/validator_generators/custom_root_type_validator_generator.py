@@ -20,11 +20,7 @@ class CustomRootTypeValidatorGenerator(ValidatorGenerator):
             body=AST.CodeWriter(self._write_validator_body),
         )
 
-    def _write_validator_body(
-        self,
-        writer: AST.NodeWriter,
-        reference_resolver: AST.ReferenceResolver,
-    ) -> None:
+    def _write_validator_body(self, writer: AST.NodeWriter) -> None:
         ROOT_VARIABLE_NAME = "value"
         INDIVIDUAL_VALIDATOR_NAME = "validator"
 

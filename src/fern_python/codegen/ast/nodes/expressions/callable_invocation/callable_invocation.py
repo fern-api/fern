@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Sequence, Set, Tuple
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 
 
@@ -34,19 +34,20 @@ class CallableInvocation(AstNode):
             generics.update(kwarg[1].get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
-        writer.write(f"{reference_resolver.resolve_reference(self.callable)}(")
+    def write(self, writer: NodeWriter) -> None:
+        writer.write_reference(self.callable)
+        writer.write("(")
         just_wrote_argument = False
         for i, arg in enumerate(self.args):
             if just_wrote_argument:
                 writer.write(", ")
-            arg.write(writer=writer, reference_resolver=reference_resolver)
+            arg.write(writer=writer)
             just_wrote_argument = True
         for i, (name, value) in enumerate(self.kwargs):
             if just_wrote_argument:
                 writer.write(", ")
             writer.write(f"{name}=")
-            value.write(writer=writer, reference_resolver=reference_resolver)
+            value.write(writer=writer)
             just_wrote_argument = True
         writer.write(")")
 

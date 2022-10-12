@@ -96,5 +96,5 @@ class SecurityFileGenerator:
                 ),
             )
 
-    def _write_fern_auth_body(self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
+    def _write_fern_auth_body(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"return {SecurityFileGenerator._AUTH_PARAMETER_NAME}")

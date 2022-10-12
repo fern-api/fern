@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Sequence, Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import ClassReference, Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
 from ...docstring import Docstring
@@ -133,12 +133,19 @@ class ClassDeclaration(AstNode):
     def add_expression(self, expression: Expression) -> None:
         self.statements.append(expression)
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
-        top_line = f"class {self.name}"
+    def write(self, writer: NodeWriter) -> None:
+        writer.write(f"class {self.name}")
+
+        just_wrote_extension = False
         if len(self.extends) > 0:
-            top_line += f"({', '.join(reference_resolver.resolve_reference(r) for r in self.extends)})"
-        top_line += ":"
-        writer.write_line(top_line)
+            writer.write("(")
+            for extension in self.extends:
+                if just_wrote_extension:
+                    writer.write(", ")
+                writer.write_reference(extension)
+                just_wrote_extension = True
+            writer.write(")")
+        writer.write_line(":")
 
         with writer.indent():
             if self.docstring is not None:

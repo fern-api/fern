@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Set, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ...ast_node import AstNode, GenericTypeVar, NodeWriter
 from ...references import Reference
 
 
@@ -33,9 +33,9 @@ class TypeParameter(AstNode):
                 generics.update(type_parameter.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         if isinstance(self._type_parameter, AstNode):
-            self._type_parameter.write(writer=writer, reference_resolver=reference_resolver)
+            self._type_parameter.write(writer=writer)
         elif isinstance(self._type_parameter, GenericTypeVar):
             writer.write(self._type_parameter.name)
         elif isinstance(self._type_parameter, list):
@@ -44,6 +44,6 @@ class TypeParameter(AstNode):
             for i, type_parameter in enumerate(self._type_parameter):
                 if just_wrote_parameter:
                     writer.write(", ")
-                type_parameter.write(writer=writer, reference_resolver=reference_resolver)
+                type_parameter.write(writer=writer)
                 just_wrote_parameter = True
             writer.write("]")

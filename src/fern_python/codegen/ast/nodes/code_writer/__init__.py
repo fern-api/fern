@@ -1,3 +1,3 @@
-from .code_writer import CodeWriter, ReferencingCodeWriter
+from .code_writer import CodeWriter, CodeWriterFunction
 
-__all__ = ["CodeWriter", "ReferencingCodeWriter"]
+__all__ = ["CodeWriter", "CodeWriterFunction"]

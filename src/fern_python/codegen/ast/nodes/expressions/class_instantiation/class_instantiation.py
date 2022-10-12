@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Sequence, Set, Tuple
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import ClassReference, Reference
 from ..callable_invocation import CallableInvocation
 
@@ -22,8 +22,8 @@ class ClassInstantiation(AstNode):
     def get_generics(self) -> Set[GenericTypeVar]:
         return self._callable_invocation.get_generics()
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
-        return self._callable_invocation.write(writer=writer, reference_resolver=reference_resolver)
+    def write(self, writer: NodeWriter) -> None:
+        return self._callable_invocation.write(writer=writer)
 
 
 if TYPE_CHECKING:

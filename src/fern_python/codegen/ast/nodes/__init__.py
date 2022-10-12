@@ -1,4 +1,4 @@
-from .code_writer import CodeWriter, ReferencingCodeWriter
+from .code_writer import CodeWriter, CodeWriterFunction
 from .declarations import (
     ClassConstructor,
     ClassDeclaration,
@@ -28,7 +28,7 @@ __all__ = [
     "TypeHint",
     "VariableDeclaration",
     "CodeWriter",
-    "ReferencingCodeWriter",
+    "CodeWriterFunction",
     "TypeHint",
     "TypeAliasDeclaration",
     "Expression",

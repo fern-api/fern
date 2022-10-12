@@ -1,6 +1,6 @@
 from typing import Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 from ...expressions import Expression
 from ...type_hint import TypeHint
@@ -28,7 +28,7 @@ class FunctionParameter(AstNode):
             generics.update(self.initializer.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name}")
         if self.type_hint is not None:
             writer.write(": ")

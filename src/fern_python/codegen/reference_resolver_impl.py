@@ -3,6 +3,7 @@ from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
 from . import AST
+from .reference_resolver import ReferenceResolver
 
 
 @dataclasses.dataclass
@@ -11,7 +12,7 @@ class ResolvedImport:
     prefix_for_qualfied_names: AST.QualifiedName
 
 
-class ReferenceResolverImpl(AST.ReferenceResolver):
+class ReferenceResolverImpl(ReferenceResolver):
     def __init__(self, module_path_of_source_file: AST.ModulePath):
         self._module_path_of_source_file = module_path_of_source_file
         self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(set)

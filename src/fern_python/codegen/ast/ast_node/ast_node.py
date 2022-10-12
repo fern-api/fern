@@ -5,7 +5,6 @@ from typing import Set
 
 from ..references import Reference
 from .generic_type_var import GenericTypeVar
-from .reference_resolver import ReferenceResolver
 
 
 class AstNode(ABC):
@@ -18,7 +17,7 @@ class AstNode(ABC):
         ...
 
     @abstractmethod
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         ...
 
 

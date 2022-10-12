@@ -82,17 +82,10 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
             )
             validators_class.add_class(declaration=validator_protocol)
 
-    def _write_add_field_validator_body(
-        self,
-        writer: AST.NodeWriter,
-        reference_resolver: AST.ReferenceResolver,
-    ) -> None:
+    def _write_add_field_validator_body(self, writer: AST.NodeWriter) -> None:
         DECORATOR_FUNCTION_NAME = "decorator"
 
-        def write_decorator_body(
-            writer: AST.NodeWriter,
-            reference_resolver: AST.ReferenceResolver,
-        ) -> None:
+        def write_decorator_body(writer: AST.NodeWriter) -> None:
             for generator in self._validator_generators:
                 writer.write(f"if {FieldValidatorGenerator._DECORATOR_FIELD_NAME_ARGUMENT} == ")
                 writer.write(f'"{generator.field.name}":')

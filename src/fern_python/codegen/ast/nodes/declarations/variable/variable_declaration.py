@@ -1,6 +1,6 @@
 from typing import Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 from ...expressions import Expression
 from ...type_hint import TypeHint
@@ -28,12 +28,12 @@ class VariableDeclaration(AstNode):
             generics.update(self.initializer.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name}")
         if self.type_hint is not None:
             writer.write(": ")
             writer.write_node(self.type_hint)
         if self.initializer is not None:
             writer.write(" = ")
-            self.initializer.write(writer=writer, reference_resolver=reference_resolver)
+            self.initializer.write(writer=writer)
         writer.write_line()

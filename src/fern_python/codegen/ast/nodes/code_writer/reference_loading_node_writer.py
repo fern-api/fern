@@ -23,6 +23,9 @@ class ReferenceLoadingNodeWriter(NodeWriter):
         self.references.update(node.get_references())
         self.generics.update(node.get_generics())
 
+    def write_reference(self, reference: Reference) -> None:
+        self.references.add(reference)
+
     def indent(self) -> IndentableWriter:
         return NoopIndentableWriter()
 

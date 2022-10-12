@@ -109,8 +109,8 @@ class EndpointGenerator:
             ),
         )
 
-    def _write_init_body(self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver) -> None:
-        self._write_update_endpoint_signature(writer=writer, reference_resolver=reference_resolver)
+    def _write_init_body(self, writer: AST.NodeWriter) -> None:
+        self._write_update_endpoint_signature(writer=writer)
         writer.write_line()
 
         method_on_cls = self._get_reference_to_method_on_cls()
@@ -129,9 +129,7 @@ class EndpointGenerator:
             writer.write_line(",")
         writer.write(f")({method_on_cls})")
 
-    def _write_update_endpoint_signature(
-        self, writer: AST.NodeWriter, reference_resolver: AST.ReferenceResolver
-    ) -> None:
+    def _write_update_endpoint_signature(self, writer: AST.NodeWriter) -> None:
         method_on_cls = self._get_reference_to_method_on_cls()
 
         ENDPOINT_FUNCTION_VARIABLE_NAME = "endpoint_function"

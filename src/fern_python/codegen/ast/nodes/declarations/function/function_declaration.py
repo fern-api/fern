@@ -1,6 +1,6 @@
 from typing import Optional, Sequence, Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
 from .function_signature import FunctionSignature
@@ -51,20 +51,20 @@ class FunctionDeclaration(AstNode):
             generics.update(decorator.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         for overload in self.overloads:
-            self._write(writer, reference_resolver, signature=overload, body=None)
-        self._write(writer, reference_resolver, signature=self.signature, body=self.body)
+            self._write(writer, signature=overload, body=None)
+        self._write(writer, signature=self.signature, body=self.body)
 
     def _write(
         self,
         writer: NodeWriter,
-        reference_resolver: ReferenceResolver,
         signature: FunctionSignature,
         body: Optional[CodeWriter],
     ) -> None:
         if body is None:
-            writer.write("@" + reference_resolver.resolve_reference(OVERLOAD_DECORATOR))
+            writer.write("@")
+            writer.write_reference(OVERLOAD_DECORATOR)
             if len(self.overloads) <= 1:
                 writer.write("  # type: ignore")
             writer.write_line()
@@ -82,5 +82,5 @@ class FunctionDeclaration(AstNode):
             if body is None:
                 writer.write("...")
             else:
-                body.write(writer=writer, reference_resolver=reference_resolver)
+                body.write(writer=writer)
         writer.write_newline_if_last_line_not()

@@ -1,6 +1,6 @@
 from typing import Sequence, Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter, ReferenceResolver
+from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 from ...type_hint import TypeHint
 from .function_parameter import FunctionParameter
@@ -40,7 +40,7 @@ class FunctionSignature(AstNode):
         generics.update(self.return_type.get_generics())
         return generics
 
-    def write(self, writer: NodeWriter, reference_resolver: ReferenceResolver) -> None:
+    def write(self, writer: NodeWriter) -> None:
         writer.write("(")
         just_wrote_parameter = False
 
