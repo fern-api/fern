@@ -164,6 +164,7 @@ export class Client {
 import * as core from \\"../../../core\\";
 import { TraceApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
+import * as schemas from \\"../../../schemas\\";
 
 export interface Client {
   updateTestSubmissionStatus(
@@ -216,7 +217,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.submission.TestSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -247,7 +248,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.submission.TestSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -278,7 +279,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.submission.WorkspaceSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -309,7 +310,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.submission.WorkspaceSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -343,7 +344,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.admin.StoreTracedTestCaseRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -377,7 +378,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.admin.storeTracedTestCaseV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -408,7 +409,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.admin.StoreTracedWorkspaceRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -439,7 +440,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.admin.storeTracedWorkspaceV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -2488,7 +2489,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.playlist.PlaylistCreateRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -2598,7 +2599,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.playlist.updatePlaylist.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -3147,7 +3148,7 @@ export class Client implements Client {
           core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options._credentials)),
         \\"X-API-Key\\": await core.Supplier.get(this.options.xApiKey),
       },
-      body: request._body,
+      body: schemas.problem.CreateProblemRequest.json(request._body),
     });
     if (response.ok) {
       return {

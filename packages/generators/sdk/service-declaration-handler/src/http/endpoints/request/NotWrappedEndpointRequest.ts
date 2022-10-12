@@ -12,8 +12,8 @@ export class NotWrappedEndpointRequest extends AbstractEndpointRequest {
         return undefined;
     }
 
-    protected override getReferenceToRequestBodyInsideEndpoint(file: SdkFile): ts.Expression | undefined {
-        return this.getReferenceToSchema(file).json(this.getReferenceToRequestArgumentToEndpoint());
+    protected override getReferenceToRequestBodyInsideEndpoint(): ts.Expression {
+        return this.getReferenceToRequestArgumentToEndpoint();
     }
 
     protected override getRequestParameterType(file: SdkFile): TypeReferenceNode | undefined {

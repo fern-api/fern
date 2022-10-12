@@ -73,7 +73,9 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
                 method: ts.factory.createStringLiteral(this.endpoint.method),
                 headers: [...Client.getAuthHeaders(file), ...this.getHeaders()],
                 queryParameters: queryParameters?.referenceToUrlParams,
-                body: this.hasRequestBody() ? this.getReferenceToRequestBodyInsideEndpoint(file) : undefined,
+                body: this.hasRequestBody()
+                    ? this.getReferenceToSchema(file).json(this.getReferenceToRequestBodyInsideEndpoint(file))
+                    : undefined,
                 timeoutMs: undefined,
             },
         };
@@ -85,7 +87,7 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
         file: SdkFile
     ): { statements: ts.Statement[]; referenceToUrlParams: ts.Expression } | undefined;
 
-    protected abstract getReferenceToRequestBodyInsideEndpoint(file: SdkFile): ts.Expression | undefined;
+    protected abstract getReferenceToRequestBodyInsideEndpoint(file: SdkFile): ts.Expression;
 
     protected getReferenceToSchema(file: SdkFile): Zurg.Schema {
         if (this.schema != null) {
