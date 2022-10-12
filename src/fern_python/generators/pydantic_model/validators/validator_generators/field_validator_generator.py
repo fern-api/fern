@@ -87,7 +87,6 @@ class FieldValidatorGenerator(ValidatorGenerator):
         writer: AST.NodeWriter,
         *,
         reference_to_decorator: Tuple[str, ...],
-        reference_to_partial: AST.ClassReference,
     ) -> None:
         field_name = self.field.name
         field_type = self.field.type_hint
@@ -100,7 +99,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
             writer.write(f"def validate_{field_name}({PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME}: ")
             writer.write_node(field_type)
             writer.write(f", {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}: ")
-            writer.write_node(AST.ReferenceNode(reference_to_partial))
+            writer.write_node(AST.ReferenceNode(self._model.get_reference_to_partial_class()))
 
             writer.write(") -> ")
             writer.write_node(field_type)

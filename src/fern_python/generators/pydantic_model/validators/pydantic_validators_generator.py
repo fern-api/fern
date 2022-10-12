@@ -9,7 +9,6 @@ from .validators_generator import ValidatorsGenerator
 
 class PydanticValidatorsGenerator(ValidatorsGenerator):
     _DECORATOR_FUNCTION_NAME = "field"
-    _PARTIAL_CLASS_NAME = "Partial"
 
     def __init__(self, model: PydanticModel):
         super().__init__(model=model)
@@ -73,7 +72,7 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                         named_parameters=[
                             AST.FunctionParameter(
                                 name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
-                                type_hint=AST.TypeHint(type=self._get_reference_to_partial()),
+                                type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
                             ),
                         ],
                         return_type=generator.field.type_hint,
@@ -128,33 +127,6 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
     def _get_validator_generators(self) -> Sequence[ValidatorGenerator]:
         return self._validator_generators
 
-    def _get_reference_to_partial(self) -> AST.ClassReference:
-        return AST.ClassReference(
-            qualified_name_excluding_import=(self._model.name, PydanticValidatorsGenerator._PARTIAL_CLASS_NAME),
-            is_forward_reference=True,
-        )
-
-    def _finish(self) -> None:
-        partial_class = AST.ClassDeclaration(
-            name=PydanticValidatorsGenerator._PARTIAL_CLASS_NAME,
-            extends=[
-                AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
-                    qualified_name_excluding_import=("TypedDict",),
-                )
-            ],
-        )
-
-        for generator in self._validator_generators:
-            partial_class.add_class_var(
-                variable_declaration=AST.VariableDeclaration(
-                    name=generator.field.name,
-                    type_hint=AST.TypeHint.not_required(generator.field.type_hint),
-                ),
-            )
-
-        self._model.add_inner_class(inner_class=partial_class)
-
     def _write_examples_for_docstring(self, writer: AST.NodeWriter) -> None:
         for generator in self._validator_generators:
             writer.write_line()
@@ -164,5 +136,4 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                     *self._get_reference_to_validators_class(),
                     PydanticValidatorsGenerator._DECORATOR_FUNCTION_NAME,
                 ),
-                reference_to_partial=self._get_reference_to_partial(),
             )

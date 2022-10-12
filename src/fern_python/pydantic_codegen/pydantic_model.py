@@ -18,6 +18,8 @@ class PydanticModel:
     VALIDATOR_FIELD_VALUE_PARAMETER_NAME = "v"
     VALIDATOR_VALUES_PARAMETER_NAME = "values"
 
+    _PARTIAL_CLASS_NAME = "Partial"
+
     def __init__(
         self,
         source_file: SourceFile,
@@ -34,6 +36,7 @@ class PydanticModel:
         self._has_aliases = False
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
+        self._should_generate_partial_class = False
         self.frozen = True
         self.name = name
 
@@ -145,7 +148,7 @@ class PydanticModel:
                         ),
                         AST.FunctionParameter(
                             name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
-                            type_hint=field_type,
+                            type_hint=AST.TypeHint(type=self.get_reference_to_partial_class()),
                         ),
                     ],
                     return_type=field_type,
@@ -186,6 +189,39 @@ class PydanticModel:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
+        if self._should_generate_partial_class:
+            self._add_partial_class()
+        self._add_config_class()
+
+    def _add_partial_class(self) -> None:
+        partial_class = AST.ClassDeclaration(
+            name=PydanticModel._PARTIAL_CLASS_NAME,
+            extends=[
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
+                    qualified_name_excluding_import=("TypedDict",),
+                )
+            ],
+        )
+
+        for field in self.get_public_fields():
+            partial_class.add_class_var(
+                variable_declaration=AST.VariableDeclaration(
+                    name=field.name,
+                    type_hint=AST.TypeHint.not_required(field.type_hint),
+                ),
+            )
+
+        self.add_inner_class(inner_class=partial_class)
+
+    def get_reference_to_partial_class(self) -> AST.ClassReference:
+        self._should_generate_partial_class = True
+        return AST.ClassReference(
+            qualified_name_excluding_import=(self.name, PydanticModel._PARTIAL_CLASS_NAME),
+            is_forward_reference=True,
+        )
+
+    def _add_config_class(self) -> None:
         config = AST.ClassDeclaration(name="Config")
 
         if self.frozen:
