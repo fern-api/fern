@@ -10,10 +10,14 @@ types:
       name: DeclaredErrorName
       discriminantValue: commons.WireStringWithAllCasings
       type:
-        docs: this is deprecated. use typeV2 instead.
+        docs: this is deprecated. use typeV3 instead.
         type: types.Type
-      typeV2: optional<types.Type>
+      typeV2:
+        docs: this is deprecated. use typeV3 instead.
+        type: optional<types.Type>
+      typeV3: optional<types.TypeReference>
       http: optional<HttpErrorConfiguration>
+      statusCode: integer
   DeclaredErrorName:
     properties:
       fernFilepath: commons.FernFilepath

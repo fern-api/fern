@@ -354,27 +354,14 @@
         "errors": {
           "type": "object",
           "additionalProperties": {
-            "anyOf": [
-              { "type": "string" },
-              {
-                "type": "object",
-                "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                  "http": {
-                    "type": "object",
-                    "properties": {
-                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                      "name": { "type": "string" },
-                      "statusCode": { "type": "number" }
-                    },
-                    "required": ["statusCode"],
-                    "additionalProperties": false
-                  },
-                  "type": { "$ref": "#/properties/types/additionalProperties" }
-                },
-                "additionalProperties": false
-              }
-            ]
+            "type": "object",
+            "properties": {
+              "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+              "status-code": { "type": "number" },
+              "type": { "type": "string" }
+            },
+            "required": ["status-code"],
+            "additionalProperties": false
           }
         }
       },

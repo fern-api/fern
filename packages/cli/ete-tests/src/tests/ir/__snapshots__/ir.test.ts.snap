@@ -744,14 +744,32 @@ exports[`ir simple 1`] = `
             "http": {
                 "statusCode": 404
             },
+            "statusCode": 404,
             "type": {
                 "aliasOf": {
-                    "_type": "void"
+                    "primitive": "STRING",
+                    "_type": "primitive"
                 },
                 "resolvedType": {
-                    "_type": "void"
+                    "primitive": "STRING",
+                    "_type": "primitive"
                 },
                 "_type": "alias"
+            },
+            "typeV2": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "typeV3": {
+                "primitive": "STRING",
+                "_type": "primitive"
             }
         }
     ],
@@ -1036,7 +1054,34 @@ exports[`ir simple 1`] = `
                                         "wireValue": "NotFoundError"
                                     },
                                     "shape": {
-                                        "type": "noProperties"
+                                        "name": {
+                                            "originalValue": "content",
+                                            "camelCase": "content",
+                                            "snakeCase": "content",
+                                            "pascalCase": "Content",
+                                            "screamingSnakeCase": "CONTENT",
+                                            "wireValue": "content"
+                                        },
+                                        "error": {
+                                            "name": "NotFoundError",
+                                            "nameV2": {
+                                                "originalValue": "NotFoundError",
+                                                "camelCase": "notFoundError",
+                                                "snakeCase": "not_found_error",
+                                                "pascalCase": "NotFoundError",
+                                                "screamingSnakeCase": "NOT_FOUND_ERROR"
+                                            },
+                                            "fernFilepath": [
+                                                {
+                                                    "originalValue": "imdb",
+                                                    "camelCase": "imdb",
+                                                    "snakeCase": "imdb",
+                                                    "pascalCase": "Imdb",
+                                                    "screamingSnakeCase": "IMDB"
+                                                }
+                                            ]
+                                        },
+                                        "type": "singleProperty"
                                     }
                                 }
                             ]
