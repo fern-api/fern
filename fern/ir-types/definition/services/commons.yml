@@ -16,6 +16,7 @@ types:
       error: errors.DeclaredErrorName
 
   ResponseErrorsV2:
+    docs: this is deprecated. use ResponseErrors. Yes, this is weird.
     properties:
       discriminant: commons.WireStringWithAllCasings
       types: list<ResponseErrorV2>
