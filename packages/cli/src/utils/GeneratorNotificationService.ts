@@ -7,7 +7,7 @@ export class GeneratorNotificationService {
     constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
         if (generatorConfig.environment.type === "remote") {
             const generatorExecClient = new FernGeneratorExec.Client({
-                _origin: generatorConfig.environment.coordinatorUrl,
+                _origin: generatorConfig.environment.coordinatorUrlV2,
             });
             const taskId = generatorConfig.environment.id;
             this.sendUpdate = async (update) => {
