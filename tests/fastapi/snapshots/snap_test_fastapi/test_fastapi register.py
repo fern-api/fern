@@ -13,12 +13,8 @@ import fastapi
 import starlette
 
 from .core.abstract_fern_service import AbstractFernService
-from .core.exceptions import (
-    FernHTTPException,
-    default_exception_handler,
-    fern_http_exception_handler,
-    http_exception_handler,
-)
+from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
+from .core.exceptions.fern_http_exception import FernHTTPException
 from .resources.admin.service import AbstractAdminService
 from .resources.homepage.service import AbstractHomepageProblemService
 from .resources.migration.service import AbstractMigrationInfoService

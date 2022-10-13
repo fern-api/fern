@@ -5,7 +5,6 @@ from typing import DefaultDict, Set, Tuple
 
 from . import AST
 from .filepath import ExportStrategy, Filepath
-from .source_file import SourceFileImpl
 from .writer_impl import WriterImpl
 
 RelativeModulePath = Tuple[str, ...]
@@ -30,8 +29,7 @@ class ModuleManager:
     def __init__(self) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
 
-    def register_source_file(self, filepath: Filepath, source_file: SourceFileImpl) -> None:
-        exports = source_file.get_exports()
+    def register_exports(self, filepath: Filepath, exports: Set[str]) -> None:
         module_being_exported_from: AST.ModulePath = tuple(
             directory.module_name for directory in filepath.directories
         ) + (filepath.file.module_name,)

@@ -1,39 +1,37 @@
-from typing import Sequence, Set
+from typing import Set
 
 from ....ast_node import AstNode, GenericTypeVar, NodeWriter
 from ....references import Reference
 from ...code_writer import CodeWriter
-from ..function import FunctionParameter
+from ...type_hint import TypeHint
+from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
 
 
 class ClassConstructor(AstNode):
-    def __init__(self, parameters: Sequence[FunctionParameter], body: CodeWriter):
-        self.parameters = parameters
-        self.body = body
+    def __init__(
+        self,
+        *,
+        signature: FunctionSignature,
+        body: CodeWriter,
+    ):
+        new_signature = FunctionSignature(
+            parameters=[FunctionParameter(name="self")] + list(signature.parameters),
+            include_args=signature.include_args,
+            named_parameters=signature.named_parameters,
+            include_kwargs=signature.include_kwargs,
+            return_type=None if signature.has_arguments() else TypeHint.none(),
+        )
+        self.function_declaration = FunctionDeclaration(
+            name="__init__",
+            signature=new_signature,
+            body=body,
+        )
 
     def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
-        for parameter in self.parameters:
-            references.update(parameter.get_references())
-        references.update(self.body.get_references())
-        return references
+        return self.function_declaration.get_references()
 
     def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        for parameter in self.parameters:
-            generics.update(parameter.get_generics())
-        generics.update(self.body.get_generics())
-        return generics
+        return self.function_declaration.get_generics()
 
     def write(self, writer: NodeWriter) -> None:
-        writer.write("def __init__(self")
-        for i, parameter in enumerate(self.parameters):
-            writer.write(", ")
-            writer.write_node(parameter)
-        writer.write(")")
-        if len(self.parameters) == 0:
-            writer.write(" -> None")
-        writer.write_line(":")
-
-        with writer.indent():
-            self.body.write(writer=writer)
+        writer.write_node(self.function_declaration)

@@ -4,7 +4,7 @@
 # fmt: off
 # isort: skip_file
 
-from ....core.exceptions import FernHTTPException
+from ....core.exceptions.fern_http_exception import FernHTTPException
 from ..types.playlist_id_not_found_error_body import PlaylistIdNotFoundErrorBody
 
 

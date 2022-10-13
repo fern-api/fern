@@ -21,16 +21,18 @@ class ErrorGenerator:
                 name=self._context.get_class_name_for_error(error_name=self._error.name),
                 extends=[self._context.core_utilities.exceptions.FernHTTPException.get_reference_to()],
                 constructor=AST.ClassConstructor(
-                    parameters=[
-                        AST.FunctionParameter(
-                            name=ErrorGenerator._BODY_PARAMETER_NAME,
-                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                self._error.type_v_3
-                            ),
-                        )
-                    ]
-                    if self._error.type_v_3 is not None
-                    else [],
+                    signature=AST.FunctionSignature(
+                        parameters=[
+                            AST.FunctionParameter(
+                                name=ErrorGenerator._BODY_PARAMETER_NAME,
+                                type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                    self._error.type_v_3
+                                ),
+                            )
+                        ]
+                        if self._error.type_v_3 is not None
+                        else [],
+                    ),
                     body=AST.CodeWriter(self._write_constructor_body),
                 ),
             )

@@ -40,15 +40,18 @@ class PydanticModel:
         self.frozen = True
         self.name = name
 
-    def set_constructor(self, constructor: AST.ClassConstructor) -> None:
-        self._class_declaration.constructor = constructor
-
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
 
     def add_field(self, field: PydanticField) -> None:
         initializer = (
-            AST.Expression(AST.CodeWriter(get_field_name_initializer(json_field_name=field.json_field_name)))
+            AST.Expression(
+                AST.CodeWriter(
+                    get_field_name_initializer(
+                        json_field_name=field.json_field_name, default_factory=field.default_factory
+                    )
+                )
+            )
             if field.json_field_name != field.name
             else None
         )
@@ -255,9 +258,15 @@ class PydanticModel:
         self.finish()
 
 
-def get_field_name_initializer(json_field_name: str) -> AST.CodeWriterFunction:
+def get_field_name_initializer(
+    json_field_name: str, default_factory: Optional[AST.Expression]
+) -> AST.CodeWriterFunction:
     def write(writer: AST.NodeWriter) -> None:
         writer.write_reference(PYDANTIC_FIELD_REFERENCE)
-        return writer.write(f'(alias="{json_field_name}")')
+        writer.write(f'(alias="{json_field_name}"')
+        if default_factory is not None:
+            writer.write(", default_factory=")
+            writer.write_node(default_factory)
+        writer.write(")")
 
     return write

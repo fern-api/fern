@@ -13,7 +13,8 @@ import typing
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
-from ...core.exceptions import FernHTTPException, UnauthorizedException
+from ...core.exceptions import UnauthorizedException
+from ...core.exceptions.fern_http_exception import FernHTTPException
 from ...core.route_args import get_route_args
 from ...security import ApiAuth, FernAuth
 from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError

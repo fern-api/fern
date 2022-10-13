@@ -169,9 +169,6 @@ class FernAwarePydanticModel:
             self.get_class_reference_for_type_name(type_name),
         )
 
-    def set_constructor_unsafe(self, constructor: AST.ClassConstructor) -> None:
-        self._pydantic_model.set_constructor(constructor)
-
     def finish(self) -> None:
         if not self._custom_config.exclude_validators:
             self._get_validators_generator().add_validators()

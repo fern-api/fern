@@ -13,7 +13,7 @@ import typing
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
-from ...core.exceptions import FernHTTPException
+from ...core.exceptions.fern_http_exception import FernHTTPException
 from ...core.route_args import get_route_args
 from ..commons.types.problem_id import ProblemId
 

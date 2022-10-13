@@ -13,6 +13,7 @@ from fern_python.source_file_generator import SourceFileGenerator
 from .auth import SecurityFileGenerator
 from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
 from .error_generator import ErrorGenerator
+from .fern_http_exception import FernHTTPExceptionGenerator
 from .register import RegisterFileGenerator
 from .service_generator import ServiceGenerator
 
@@ -27,6 +28,7 @@ class FastApiGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)
+
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
             custom_config=PydanticModelCustomConfig.parse_obj({}),
@@ -59,6 +61,11 @@ class FastApiGenerator(AbstractGenerator):
         )
 
         RegisterFileGenerator(context=context).generate_registry_file(
+            project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+        )
+
+        FernHTTPExceptionGenerator(context=context).generate(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
         )

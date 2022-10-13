@@ -32,4 +32,5 @@ class Filepath:
 
     @dataclass(frozen=True)
     class DirectoryFilepathPart(FilepathPart):
+        # how this directory should be exported in its parent's __init__.py
         export_strategy: Optional[ExportStrategy] = None

@@ -3,16 +3,16 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from types import TracebackType
-from typing import Optional, Type
+from typing import Optional, Set, Type
 
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
-from . import AST
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
 from .module_manager import ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
+from .writer_impl import WriterImpl
 
 
 @dataclass(frozen=True)
@@ -35,7 +35,7 @@ class Project:
         publish_config: PublishConfig = None,
         generate_py_typed: bool = False,
     ) -> None:
-        self.project_filepath = filepath if publish_config is None else os.path.join(filepath, "src", project_name)
+        self._project_filepath = filepath if publish_config is None else os.path.join(filepath, "src", project_name)
         self._root_filepath = filepath
         self._project_name = project_name
         self._publish_config = publish_config
@@ -51,18 +51,14 @@ class Project:
         """
 
         def on_finish(source_file: SourceFileImpl) -> None:
-            self._module_manager.register_source_file(
+            self._module_manager.register_exports(
                 filepath=filepath,
-                source_file=source_file,
+                exports=source_file.get_exports(),
             )
 
         module = filepath.to_module()
         source_file = SourceFileImpl(
-            filepath=os.path.join(
-                self.project_filepath,
-                *(directory.module_name for directory in filepath.directories),
-                f"{filepath.file.module_name}.py",
-            ),
+            filepath=self._get_source_file_filepath(filepath),
             module_path=module.path,
             completion_listener=on_finish,
             reference_resolver=ReferenceResolverImpl(
@@ -72,11 +68,20 @@ class Project:
         )
         return source_file
 
-    def add_dependency(self, dependency: AST.Dependency) -> None:
-        self._dependency_manager.add_dependency(dependency)
+    def _get_source_file_filepath(self, filepath: Filepath) -> str:
+        return os.path.join(self._project_filepath, str(filepath))
+
+    def add_source_file_from_disk(self, *, path_on_disk: str, filepath_in_project: Filepath, exports: Set[str]) -> None:
+        with open(path_on_disk, "r") as existing_file:
+            with WriterImpl(self._get_source_file_filepath(filepath_in_project)) as writer:
+                writer.write(existing_file.read())
+        self._module_manager.register_exports(
+            filepath=filepath_in_project,
+            exports=exports,
+        )
 
     def finish(self) -> None:
-        self._module_manager.write_modules(filepath=self.project_filepath)
+        self._module_manager.write_modules(filepath=self._project_filepath)
         if self._publish_config is not None:
             # generate pyproject.toml
             py_project_toml = PyProjectToml(
@@ -89,7 +94,7 @@ class Project:
             )
             py_project_toml.write()
             # generate py.typed
-            with open(os.path.join(self.project_filepath, "py.typed"), "w") as f:
+            with open(os.path.join(self._project_filepath, "py.typed"), "w") as f:
                 f.write("")
 
     def __enter__(self) -> Project:
