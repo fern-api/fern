@@ -1,6 +1,5 @@
 import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { Fiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
@@ -8,6 +7,7 @@ import produce from "immer";
 import urlJoin from "url-join";
 import { FIDDLE_ORIGIN, REMOTE_GENERATION_SERVICE } from "./service";
 import { substituteEnvVariables } from "./substituteEnvVariables";
+import { FernFiddle } from "@fern-fern/fiddle-client";
 
 export async function createAndStartJob({
     workspace,
@@ -20,10 +20,10 @@ export async function createAndStartJob({
     workspace: Workspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
-    generatorConfigs: Fiddle.remoteGen.GeneratorConfigV2[];
+    generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
     version: string | undefined;
     context: TaskContext;
-}): Promise<Fiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
+}): Promise<FernFiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
     const job = await createJob({ workspace, organization, generatorConfigs, version, context });
     if (job === TASK_FAILURE) {
         return job;
@@ -46,10 +46,10 @@ async function createJob({
 }: {
     workspace: Workspace;
     organization: string;
-    generatorConfigs: Fiddle.remoteGen.GeneratorConfigV2[];
+    generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
     version: string | undefined;
     context: TaskContext;
-}): Promise<Fiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
+}): Promise<FernFiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
     const generatorConfigsWithEnvVarSubstitutions = generatorConfigs.map((generatorConfig) =>
         produce(generatorConfig, (draft) => {
             draft.customConfig = substituteEnvVariables(draft.customConfig, context);
@@ -94,7 +94,7 @@ async function startJob({
     context,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    job: Fiddle.remoteGen.CreateJobResponse;
+    job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<TASK_FAILURE | void> {
     const formData = new FormData();

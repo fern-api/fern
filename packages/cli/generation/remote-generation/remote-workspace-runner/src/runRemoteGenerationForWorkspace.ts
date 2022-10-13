@@ -1,7 +1,7 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { Fiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
@@ -19,7 +19,7 @@ export async function runRemoteGenerationForWorkspace({
     workspace: Workspace;
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
-    generatorConfigs: Fiddle.remoteGen.GeneratorConfigV2[];
+    generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
     generatorInvocations: GeneratorInvocation[];
     version: string | undefined;
 }): Promise<void> {

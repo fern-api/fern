@@ -1,9 +1,11 @@
 import { z } from "zod";
 import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema";
-import { GeneratorOutputsSchema } from "./GeneratorOutputsSchema";
+import { GeneratorPublishingSchema } from "./GeneratorPublishingSchema";
+import { GithubRepositoryOutputSchema } from "./GithubRepositoryOutputSchema";
 
 export const ReleaseGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({
-    outputs: GeneratorOutputsSchema,
+    publishing: GeneratorPublishingSchema,
+    github: z.optional(GithubRepositoryOutputSchema),
 });
 
 export type ReleaseGeneratorInvocationSchema = z.infer<typeof ReleaseGeneratorInvocationSchema>;

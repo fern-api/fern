@@ -18,7 +18,8 @@ export interface DraftGeneratorInvocation extends BaseGeneratorInvocation {
 
 export interface ReleaseGeneratorInvocation extends BaseGeneratorInvocation {
     type: "release";
-    outputs: GeneratorOutputs;
+    publishing: NpmGeneratorPublishing | MavenGeneratorPublishing;
+    github: GithubGeneratorOutput | undefined;
 }
 
 export interface BaseGeneratorInvocation {
@@ -27,23 +28,19 @@ export interface BaseGeneratorInvocation {
     config: unknown;
 }
 
-export interface GeneratorOutputs {
-    npm: NpmGeneratorOutput | undefined;
-    maven: MavenGeneratorOutput | undefined;
-    github: GithubGeneratorOutput | undefined;
-}
-
-export interface NpmGeneratorOutput {
+export interface NpmGeneratorPublishing {
+    type: "npm";
     url: string | undefined;
     packageName: string;
-    token: string;
+    token: string | undefined;
 }
 
-export interface MavenGeneratorOutput {
+export interface MavenGeneratorPublishing {
+    type: "maven";
     url: string | undefined;
     coordinate: string;
-    username: string;
-    password: string;
+    username: string | undefined;
+    password: string | undefined;
 }
 
 export interface GithubGeneratorOutput {

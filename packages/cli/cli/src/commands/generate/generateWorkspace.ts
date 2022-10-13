@@ -2,7 +2,7 @@ import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { Fiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-client";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
 
 export async function generateWorkspace({
@@ -41,8 +41,8 @@ export async function generateWorkspace({
                 version: generator.version,
                 outputMode:
                     generator.mode === "download-files"
-                        ? Fiddle.remoteGen.OutputMode.downloadFiles()
-                        : Fiddle.remoteGen.OutputMode.publish({ registryOverrides: {} }),
+                        ? FernFiddle.remoteGen.OutputMode.downloadFiles()
+                        : FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} }),
                 customConfig: generator.config,
             })),
             generatorInvocations: workspace.generatorsConfiguration.draft,
