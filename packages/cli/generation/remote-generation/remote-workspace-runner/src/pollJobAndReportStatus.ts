@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { Fiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-client";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { REMOTE_GENERATION_SERVICE } from "./service";
 
@@ -12,13 +12,13 @@ export function pollJobAndReportStatus({
     generatorInvocations,
     context,
 }: {
-    job: Fiddle.remoteGen.CreateJobResponse;
+    job: FernFiddle.remoteGen.CreateJobResponse;
     generatorInvocations: GeneratorInvocation[];
     context: TaskContext;
 }): Promise<void> {
     let numConsecutiveFailed = 0;
     context.logger.debug(`Job ID: ${job.jobId}`);
-    const taskHandlers = job.taskIds.reduce<Record<Fiddle.remoteGen.RemoteGenTaskId, RemoteTaskHandler>>(
+    const taskHandlers = job.taskIds.reduce<Record<FernFiddle.remoteGen.RemoteGenTaskId, RemoteTaskHandler>>(
         (acc, taskId, index) => {
             const generatorInvocation = generatorInvocations[index];
             if (generatorInvocation == null) {
@@ -69,7 +69,7 @@ export function pollJobAndReportStatus({
     });
 }
 
-async function fetchTaskStatuses(job: Fiddle.remoteGen.CreateJobResponse, context: TaskContext) {
+async function fetchTaskStatuses(job: FernFiddle.remoteGen.CreateJobResponse, context: TaskContext) {
     const response = await REMOTE_GENERATION_SERVICE.remoteGen.getJobStatus({
         jobId: job.jobId,
     });

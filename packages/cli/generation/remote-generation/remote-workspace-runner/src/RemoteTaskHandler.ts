@@ -2,7 +2,7 @@ import { AbsoluteFilePath, noop } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
-import { Fiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-client";
 import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
@@ -14,8 +14,8 @@ import tmp from "tmp-promise";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
-        job: Fiddle.remoteGen.CreateJobResponse;
-        taskId: Fiddle.remoteGen.RemoteGenTaskId;
+        job: FernFiddle.remoteGen.CreateJobResponse;
+        taskId: FernFiddle.remoteGen.RemoteGenTaskId;
         interactiveTaskContext: Finishable & InteractiveTaskContext;
         generatorInvocation: GeneratorInvocation;
     }
@@ -31,7 +31,7 @@ export class RemoteTaskHandler {
         this.generatorInvocation = generatorInvocation;
     }
 
-    public processUpdate(remoteTask: Fiddle.remoteGen.Task | undefined): void {
+    public processUpdate(remoteTask: FernFiddle.remoteGen.Task | undefined): void {
         if (remoteTask == null) {
             this.context.fail("Task is missing on job status");
             this.context.finish();
@@ -105,7 +105,7 @@ export class RemoteTaskHandler {
         return this.context.isFinished();
     }
 
-    private async maybeDownloadFiles(status: Fiddle.remoteGen.FinishedTaskStatus): Promise<void> {
+    private async maybeDownloadFiles(status: FernFiddle.remoteGen.FinishedTaskStatus): Promise<void> {
         if (this.generatorInvocation.type === "draft" && this.generatorInvocation.absolutePathToLocalOutput != null) {
             await downloadFilesForTask({
                 s3PreSignedReadUrl: status.s3PreSignedReadUrl,

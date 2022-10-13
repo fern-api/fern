@@ -1,6 +1,9 @@
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/core-utils";
-import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
+import { AbsoluteFilePath, assertNever, dirname, resolve } from "@fern-api/core-utils";
+import { GeneratorsConfiguration, MavenGeneratorPublishing, NpmGeneratorPublishing } from "./GeneratorsConfiguration";
+import { GeneratorPublishingSchema } from "./schemas/GeneratorPublishingSchema";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
+import { MavenPublishingSchema } from "./schemas/MavenPublishingSchema";
+import { NpmPublishingSchema } from "./schemas/NpmPublishingSchema";
 
 export function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -33,39 +36,50 @@ export function convertGeneratorsConfiguration({
                 : [],
         release:
             rawGeneratorsConfiguration.release != null
-                ? rawGeneratorsConfiguration.release.map((draftInvocation) => {
+                ? rawGeneratorsConfiguration.release.map((releaseInvocation) => {
                       return {
                           type: "release",
-                          name: draftInvocation.name,
-                          version: draftInvocation.version,
-                          outputs: {
-                              npm:
-                                  draftInvocation.outputs.npm != null
-                                      ? {
-                                            url: draftInvocation.outputs.npm.url,
-                                            packageName: draftInvocation.outputs.npm["package-name"],
-                                            token: draftInvocation.outputs.npm.token,
-                                        }
-                                      : undefined,
-                              maven:
-                                  draftInvocation.outputs.maven != null
-                                      ? {
-                                            url: draftInvocation.outputs.maven.url,
-                                            coordinate: draftInvocation.outputs.maven.coordinate,
-                                            username: draftInvocation.outputs.maven.username,
-                                            password: draftInvocation.outputs.maven.password,
-                                        }
-                                      : undefined,
-                              github:
-                                  draftInvocation.outputs.github != null
-                                      ? {
-                                            repository: draftInvocation.outputs.github.repository,
-                                        }
-                                      : undefined,
-                          },
-                          config: draftInvocation.config,
+                          name: releaseInvocation.name,
+                          version: releaseInvocation.version,
+                          publishing: convertReleasePublishing(releaseInvocation.publishing),
+                          github: releaseInvocation.github,
+                          config: releaseInvocation.config,
                       };
                   })
                 : [],
     };
+}
+
+function convertReleasePublishing(
+    rawGeneratorPublishing: GeneratorPublishingSchema
+): NpmGeneratorPublishing | MavenGeneratorPublishing {
+    if (isNpmPublishing(rawGeneratorPublishing)) {
+        return {
+            type: "npm",
+            url: rawGeneratorPublishing.npm.url,
+            token: rawGeneratorPublishing.npm.token,
+            packageName: rawGeneratorPublishing.npm["package-name"],
+        };
+    } else if (isMavenPublishing(rawGeneratorPublishing)) {
+        return {
+            type: "maven",
+            url: rawGeneratorPublishing.maven.url,
+            username: rawGeneratorPublishing.maven.username,
+            password: rawGeneratorPublishing.maven.password,
+            coordinate: rawGeneratorPublishing.maven.coordinate,
+        };
+    }
+    assertNever(rawGeneratorPublishing);
+}
+
+function isNpmPublishing(rawPublishingSchema: GeneratorPublishingSchema): rawPublishingSchema is NpmPublishingSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (rawPublishingSchema as NpmPublishingSchema).npm != null;
+}
+
+function isMavenPublishing(
+    rawPublishingSchema: GeneratorPublishingSchema
+): rawPublishingSchema is MavenPublishingSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (rawPublishingSchema as MavenPublishingSchema).maven != null;
 }
