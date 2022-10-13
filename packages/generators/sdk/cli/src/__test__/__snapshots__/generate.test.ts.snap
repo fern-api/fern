@@ -11308,7 +11308,8 @@ export type RequiredKeys<T> = {
   },
   Object {
     "contents": "{
-    \\"name\\": \\"@trace/api-client\\",
+    \\"name\\": \\"@fern-trace/api-sdk\\",
+    \\"version\\": \\"\\",
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"files\\": [

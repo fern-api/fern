@@ -1,22 +1,28 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import { Logger } from "@fern-typescript/commons-v2";
+import { PackageJsonScript } from "@fern-typescript/sdk-generator";
 import execa from "execa";
 import path from "path";
 import { NpmPackage } from "./npm-package/NpmPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
+import { YarnRunner } from "./yarnRunner";
 
 export async function publishPackageIfNecessary({
+    config,
     generatorNotificationService,
     npmPackage,
     pathToPackageOnDisk,
+    runYarnCommand,
 }: {
+    config: FernGeneratorExec.GeneratorConfig;
     generatorNotificationService: GeneratorNotificationService;
     logger: Logger;
     npmPackage: NpmPackage;
     pathToPackageOnDisk: AbsoluteFilePath;
+    runYarnCommand: YarnRunner;
 }): Promise<void> {
-    if (npmPackage.publishInfo == null) {
+    if (npmPackage.publishInfo == null || config.dryRun) {
         return;
     }
     const runCommandInOutputDirectory = async (executable: string, ...args: string[]): Promise<void> => {
@@ -32,19 +38,14 @@ export async function publishPackageIfNecessary({
         await runCommandInOutputDirectory("npm", ...args);
     };
 
+    await runYarnCommand(["run", PackageJsonScript.BUILD]);
+
     await generatorNotificationService.sendUpdate(
         FernGeneratorExec.GeneratorUpdate.publishing(npmPackage.publishInfo.packageCoordinate)
     );
 
     const { registryUrl, token } = npmPackage.publishInfo.registry;
-    await runNpmCommandInOutputDirectory(
-        "config",
-        "set",
-        `${npmPackage.scopeWithAtSign}:registry`,
-        registryUrl,
-        "--location",
-        "project"
-    );
+    await runNpmCommandInOutputDirectory("config", "set", "registry", registryUrl, "--location", "project");
     const parsedRegistryUrl = new URL(registryUrl);
     await runNpmCommandInOutputDirectory(
         "config",

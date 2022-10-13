@@ -54,10 +54,11 @@ describe("runGenerator", () => {
                 await symlink(outputPath, generatedDir, "dir");
 
                 const config: FernGeneratorExec.GeneratorConfig = {
+                    dryRun: true,
                     irFilepath: irPath,
                     output: {
                         path: outputPath,
-                        mode: FernGeneratorExec.OutputMode.downloadFiles(),
+                        mode: generateOutputMode("trace", "api"),
                     },
                     publish: undefined,
                     customConfig: undefined,
@@ -93,3 +94,41 @@ describe("runGenerator", () => {
         );
     }
 });
+
+function generateOutputMode(org: string, apiName: string): FernGeneratorExec.OutputMode {
+    return FernGeneratorExec.OutputMode.publish({
+        registries: {
+            maven: {
+                username: "",
+                password: "",
+                registryUrl: "",
+                group: "",
+            },
+            npm: {
+                registryUrl: "https://registry.npmjs.org",
+                token: "token",
+                scope: `fern-${org}`,
+            },
+        },
+        registriesV2: {
+            maven: {
+                username: "",
+                password: "",
+                registryUrl: "",
+                coordinate: "",
+            },
+            npm: {
+                registryUrl: "https://registry.npmjs.org",
+                token: "token",
+                packageName: `@fern-${org}/${apiName}-sdk`,
+            },
+            pypi: {
+                registryUrl: "",
+                username: "",
+                password: "",
+                packageName: "",
+            },
+        },
+        version: "",
+    });
+}

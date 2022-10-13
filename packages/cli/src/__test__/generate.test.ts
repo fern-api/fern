@@ -65,6 +65,7 @@ describe("runGenerator", () => {
                         await symlink(outputPath, linkToOutputPath, "dir");
 
                         const config: FernGeneratorExec.GeneratorConfig = {
+                            dryRun: true,
                             irFilepath: irPath,
                             output: {
                                 path: outputPath,

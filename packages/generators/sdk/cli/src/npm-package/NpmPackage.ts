@@ -1,12 +1,11 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 
 export interface NpmPackage {
-    scopeWithAtSign: string;
     packageName: string;
     publishInfo: PublishInfo | undefined;
 }
 
 export interface PublishInfo {
-    registry: FernGeneratorExec.NpmRegistryConfig;
+    registry: FernGeneratorExec.NpmRegistryConfigV2;
     packageCoordinate: FernGeneratorExec.PackageCoordinate.Npm;
 }
