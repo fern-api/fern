@@ -1,5 +1,6 @@
 import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
@@ -7,7 +8,6 @@ import produce from "immer";
 import urlJoin from "url-join";
 import { FIDDLE_ORIGIN, REMOTE_GENERATION_SERVICE } from "./service";
 import { substituteEnvVariables } from "./substituteEnvVariables";
-import { FernFiddle } from "@fern-fern/fiddle-client";
 
 export async function createAndStartJob({
     workspace,
