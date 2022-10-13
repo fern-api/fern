@@ -138,9 +138,9 @@ class RegisterFileGenerator:
             )
             writer.write_line("  # type: ignore")
 
-            PATH_VARIABLE = "path"
+            ABSOLUTE_PATH_VARIABLE = "path"
 
-            writer.write(f"for {PATH_VARIABLE} in ")
+            writer.write(f"for {ABSOLUTE_PATH_VARIABLE} in ")
             writer.write_node(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
@@ -166,19 +166,6 @@ class RegisterFileGenerator:
             writer.write_line(":")
 
             with writer.indent():
-                ABSOLUTE_PATH_VARIABLE = "absolute_path"
-
-                writer.write(f"{ABSOLUTE_PATH_VARIABLE} = ")
-                writer.write_node(
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
-                            qualified_name_excluding_import=("path", "join"),
-                        ),
-                        args=[AST.Expression(VALIDATORS_DIRECTORY_VARIABLE), AST.Expression(PATH_VARIABLE)],
-                    )
-                )
-                writer.write_line()
 
                 writer.write("if ")
                 writer.write_node(
@@ -193,11 +180,25 @@ class RegisterFileGenerator:
                 writer.write_line(":")
 
                 with writer.indent():
+                    RELATIVE_PATH_VARIABLE = "relative_path"
                     MODULE_PATH_VARIABLE = "module_path"
+
+                    writer.write(f"{RELATIVE_PATH_VARIABLE} = ")
+                    writer.write_node(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
+                                qualified_name_excluding_import=("path", "relpath"),
+                            ),
+                            args=[AST.Expression(ABSOLUTE_PATH_VARIABLE)],
+                            kwargs=[("start", AST.Expression(VALIDATORS_DIRECTORY_VARIABLE))],
+                        )
+                    )
+                    writer.write_line()
 
                     writer.write(f'{MODULE_PATH_VARIABLE} = ".".join(')
                     writer.write(f"[{MODULE_PARAMETER}.__name__] + ")
-                    writer.write_line(f'{PATH_VARIABLE}[:-3].split("/"))')
+                    writer.write_line(f'{RELATIVE_PATH_VARIABLE}[:-3].split("/"))')
 
                     writer.write_node(
                         AST.FunctionInvocation(

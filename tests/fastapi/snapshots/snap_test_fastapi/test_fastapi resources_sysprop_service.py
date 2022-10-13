@@ -67,11 +67,15 @@ class AbstractSysPropCrudService(AbstractFernService):
                 return cls.set_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"set_num_warm_instances unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'set_num_warm_instances' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "set_num_warm_instances's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.set_num_warm_instances.__globals__)
 
         router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
@@ -95,11 +99,15 @@ class AbstractSysPropCrudService(AbstractFernService):
                 return cls.get_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_num_warm_instances unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_num_warm_instances' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_num_warm_instances's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_num_warm_instances.__globals__)
 
         router.get(
             path="/sysprop/num-warm-instances",

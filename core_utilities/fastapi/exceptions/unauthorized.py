@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import typing
 
 from .fern_http_exception import FernHTTPException

@@ -79,11 +79,15 @@ class AbstractProblemCrudService(AbstractFernService):
                 return cls.create_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"create_problem unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'create_problem' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "create_problem's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.create_problem.__globals__)
 
         router.post(
             path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.create_problem)
@@ -110,11 +114,15 @@ class AbstractProblemCrudService(AbstractFernService):
                 return cls.update_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"update_problem unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'update_problem' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "update_problem's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.update_problem.__globals__)
 
         router.post(
             path="/problem-crud/update/{problem_id}",
@@ -141,11 +149,15 @@ class AbstractProblemCrudService(AbstractFernService):
                 return cls.delete_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"delete_problem unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'delete_problem' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "delete_problem's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.delete_problem.__globals__)
 
         router.delete(path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem))(wrapper)
 
@@ -168,11 +180,15 @@ class AbstractProblemCrudService(AbstractFernService):
                 return cls.get_default_starter_files(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_default_starter_files unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_default_starter_files' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_default_starter_files's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_default_starter_files.__globals__)
 
         router.post(
             path="/problem-crud/default-starter-files",

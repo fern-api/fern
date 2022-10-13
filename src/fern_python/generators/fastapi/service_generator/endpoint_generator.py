@@ -134,6 +134,13 @@ class EndpointGenerator:
         )
         writer.write_line()
 
+        writer.write_line("# this is necessary for FastAPI to find forward-ref'ed type hints.")
+        writer.write_line("# https://github.com/tiangolo/fastapi/pull/5077")
+        writer.write_line(
+            f"{_TRY_EXCEPT_WRAPPER_NAME}.__globals__.update(" + self._get_reference_to_method_on_cls() + ".__globals__)"
+        )
+        writer.write_line()
+
         writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
         writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
         writer.write_line("(")
@@ -238,9 +245,7 @@ class EndpointGenerator:
         with writer.indent():
             writer.write_line(f"return {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
 
-        errors = [self._context.get_reference_to_error(error.error) for error in self._endpoint.errors.get_as_list()]
-        if self._endpoint.auth:
-            errors.insert(0, self._context.core_utilities.exceptions.UnauthorizedException())
+        errors = self._endpoint.errors.get_as_list()
         if len(errors) > 0:
             writer.write("except ")
             if len(errors) > 1:
@@ -248,7 +253,7 @@ class EndpointGenerator:
             for i, error in enumerate(errors):
                 if i > 0:
                     writer.write(", ")
-                writer.write_reference(error)
+                writer.write_reference(self._context.get_reference_to_error(error.error))
             if len(errors) > 1:
                 writer.write(")")
             writer.write_line(f" as {CAUGHT_ERROR_NAME}:")
@@ -268,12 +273,13 @@ class EndpointGenerator:
             writer.write_line("(__name__).warn(")
             with writer.indent():
                 writer.write_line(
-                    f'f"{self._get_method_name()} unexpectedly threw {{{CAUGHT_ERROR_NAME}.__class__.__name__}}. "'
+                    f"f\"Endpoint '{self._get_method_name()}' unexpectedly threw "
+                    + f'{{{CAUGHT_ERROR_NAME}.__class__.__name__}}. "'
                 )
                 writer.write_line(
                     f'+ f"If this was intentional, please add {{{CAUGHT_ERROR_NAME}.__class__.__name__}} to "'
                 )
-                writer.write_line(f'+ "{self._get_method_name()}\'s errors list in your Fern Definition."')
+                writer.write_line('+ "the endpoint\'s errors list in your Fern Definition."')
             writer.write_line(")")
             writer.write_line(f"raise {CAUGHT_ERROR_NAME}")
 

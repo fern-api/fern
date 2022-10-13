@@ -13,7 +13,6 @@ import typing
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
-from ...core.exceptions import UnauthorizedException
 from ...core.exceptions.fern_http_exception import FernHTTPException
 from ...core.route_args import get_route_args
 from ...security import ApiAuth, FernAuth
@@ -92,15 +91,17 @@ class AbstractPlaylistCrudService(AbstractFernService):
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Playlist:
             try:
                 return cls.create_playlist(*args, **kwargs)
-            except UnauthorizedException as e:
-                raise e
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"create_playlist unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'create_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "create_playlist's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.create_playlist.__globals__)
 
         router.post(
             path="/v2/playlist/{service_param}/create", response_model=Playlist, **get_route_args(cls.create_playlist)
@@ -129,15 +130,17 @@ class AbstractPlaylistCrudService(AbstractFernService):
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[Playlist]:
             try:
                 return cls.get_playlists(*args, **kwargs)
-            except UnauthorizedException as e:
-                raise e
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_playlists unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_playlists' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_playlists's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_playlists.__globals__)
 
         router.get(
             path="/v2/playlist/{service_param}/all",
@@ -168,11 +171,15 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 raise e
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_playlist unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_playlist's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_playlist.__globals__)
 
         router.get(
             path="/v2/playlist/{service_param}/{playlist_id}",
@@ -203,15 +210,19 @@ class AbstractPlaylistCrudService(AbstractFernService):
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Optional[Playlist]:
             try:
                 return cls.update_playlist(*args, **kwargs)
-            except (UnauthorizedException, PlaylistIdNotFoundError) as e:
+            except PlaylistIdNotFoundError as e:
                 raise e
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"update_playlist unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'update_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "update_playlist's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.update_playlist.__globals__)
 
         router.put(
             path="/v2/playlist/{service_param}/{playlist_id}",
@@ -240,14 +251,16 @@ class AbstractPlaylistCrudService(AbstractFernService):
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.delete_playlist(*args, **kwargs)
-            except UnauthorizedException as e:
-                raise e
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"delete_playlist unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'delete_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "delete_playlist's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.delete_playlist.__globals__)
 
         router.delete(path="/v2/playlist/{service_param}/{playlist_id}", **get_route_args(cls.delete_playlist))(wrapper)

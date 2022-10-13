@@ -77,11 +77,15 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 return cls.create_execution_session(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"create_execution_session unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'create_execution_session' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "create_execution_session's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.create_execution_session.__globals__)
 
         router.post(
             path="/sessions/create-session/{language}",
@@ -108,11 +112,15 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 return cls.get_execution_session(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_execution_session unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_execution_session' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_execution_session's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_execution_session.__globals__)
 
         router.get(
             path="/sessions/{session_id}",
@@ -139,11 +147,15 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 return cls.stop_execution_session(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"stop_execution_session unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'stop_execution_session' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "stop_execution_session's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.stop_execution_session.__globals__)
 
         router.delete(path="/sessions/stop/{session_id}", **get_route_args(cls.stop_execution_session))(wrapper)
 
@@ -164,11 +176,15 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 return cls.get_execution_sessions_state(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_execution_sessions_state unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_execution_sessions_state' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_execution_sessions_state's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_execution_sessions_state.__globals__)
 
         router.get(
             path="/sessions/execution-sessions-state",

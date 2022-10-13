@@ -63,11 +63,15 @@ class AbstractHomepageProblemService(AbstractFernService):
                 return cls.get_homepage_problems(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_homepage_problems unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_homepage_problems' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_homepage_problems's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_homepage_problems.__globals__)
 
         router.get(
             path="/homepage-problems/",
@@ -94,10 +98,14 @@ class AbstractHomepageProblemService(AbstractFernService):
                 return cls.set_homepage_problems(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"set_homepage_problems unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'set_homepage_problems' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "set_homepage_problems's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.set_homepage_problems.__globals__)
 
         router.post(path="/homepage-problems/", **get_route_args(cls.set_homepage_problems))(wrapper)

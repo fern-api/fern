@@ -74,11 +74,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 return cls.get_lightweight_problems(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_lightweight_problems unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_lightweight_problems' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_lightweight_problems's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_lightweight_problems.__globals__)
 
         router.get(
             path="/problems-v2/lightweight-problem-info",
@@ -103,11 +107,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 return cls.get_problems(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_problems unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_problems' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_problems's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_problems.__globals__)
 
         router.get(
             path="/problems-v2/problem-info",
@@ -134,11 +142,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 return cls.get_latest_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_latest_problem unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_latest_problem' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_latest_problem's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_latest_problem.__globals__)
 
         router.get(
             path="/problems-v2/problem-info/{problem_id}",
@@ -167,11 +179,15 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 return cls.get_problem_version(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
-                    f"get_problem_version unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'get_problem_version' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
-                    + "get_problem_version's errors list in your Fern Definition."
+                    + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_problem_version.__globals__)
 
         router.get(
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
