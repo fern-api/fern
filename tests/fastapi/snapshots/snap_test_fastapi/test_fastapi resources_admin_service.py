@@ -108,7 +108,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.update_test_submission_status(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'update_test_submission_status' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -144,7 +144,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.send_test_submission_update(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'send_test_submission_update' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -184,7 +184,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.update_workspace_submission_status(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'update_workspace_submission_status' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -222,7 +222,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.send_workspace_submission_update(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'send_workspace_submission_update' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -260,7 +260,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.store_traced_test_case(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'store_traced_test_case' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -298,7 +298,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.store_traced_test_case_v_2(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'store_traced_test_case_v_2' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -334,7 +334,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.store_traced_workspace(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'store_traced_workspace' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -369,7 +369,7 @@ class AbstractAdminService(AbstractFernService):
             try:
                 return cls.store_traced_workspace_v_2(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'store_traced_workspace_v_2' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."

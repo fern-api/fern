@@ -76,7 +76,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
             try:
                 return cls.create_execution_session(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'create_execution_session' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -111,7 +111,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
             try:
                 return cls.get_execution_session(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_execution_session' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -146,7 +146,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
             try:
                 return cls.stop_execution_session(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'stop_execution_session' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -175,7 +175,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
             try:
                 return cls.get_execution_sessions_state(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_execution_sessions_state' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."

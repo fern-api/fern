@@ -66,7 +66,7 @@ class AbstractSysPropCrudService(AbstractFernService):
             try:
                 return cls.set_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'set_num_warm_instances' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -98,7 +98,7 @@ class AbstractSysPropCrudService(AbstractFernService):
             try:
                 return cls.get_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_num_warm_instances' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."

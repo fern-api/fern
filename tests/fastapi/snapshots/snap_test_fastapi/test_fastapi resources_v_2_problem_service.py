@@ -73,7 +73,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             try:
                 return cls.get_lightweight_problems(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_lightweight_problems' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -106,7 +106,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             try:
                 return cls.get_problems(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_problems' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -141,7 +141,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             try:
                 return cls.get_latest_problem(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_latest_problem' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -178,7 +178,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             try:
                 return cls.get_problem_version(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_problem_version' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."

@@ -92,7 +92,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
             try:
                 return cls.create_playlist(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'create_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -131,7 +131,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
             try:
                 return cls.get_playlists(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_playlists' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -170,7 +170,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
             except (PlaylistIdNotFoundError, UnauthorizedError) as e:
                 raise e
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'get_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -213,7 +213,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
             except PlaylistIdNotFoundError as e:
                 raise e
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'update_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
@@ -252,7 +252,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
             try:
                 return cls.delete_playlist(*args, **kwargs)
             except FernHTTPException as e:
-                logging.getLogger(__name__).warn(
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'delete_playlist' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."

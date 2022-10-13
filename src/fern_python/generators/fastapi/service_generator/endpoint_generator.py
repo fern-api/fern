@@ -270,7 +270,7 @@ class EndpointGenerator:
                     import_=AST.ReferenceImport(module=AST.Module.built_in("logging")),
                 )
             )
-            writer.write_line("(__name__).warn(")
+            writer.write_line('(f"{cls.__module__}.{cls.__name__}").warn(')
             with writer.indent():
                 writer.write_line(
                     f"f\"Endpoint '{self._get_method_name()}' unexpectedly threw "
