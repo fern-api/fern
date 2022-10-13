@@ -1,11 +1,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
+imports:
+  commons: commons.yml
 types:
   Constants:
     properties:
       errors: ErrorConstants
   ErrorConstants:
     properties:
-      errorDiscriminant: string
-      errorInstanceIdKey: string
-      errorContentKey: string
+      errorDiscriminant: commons.WireStringWithAllCasings
+      errorInstanceIdKey: commons.WireStringWithAllCasings
+      errorContentKey: commons.WireStringWithAllCasings
