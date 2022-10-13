@@ -1,8 +1,7 @@
 imports:
   commons: commons.yml
-ids:
-  - PlaylistId
 types:
+  PlaylistId: string
   Playlist:
     extends: PlaylistCreateRequest
     properties:
@@ -18,6 +17,9 @@ types:
     properties:
       name: string
       problems: list<commons.ProblemId>
+  PlaylistIdNotFoundErrorBody:
+    union:
+      playlistId: PlaylistId
 
 services:
   http:
@@ -75,11 +77,7 @@ services:
 
 errors:
   PlaylistIdNotFoundError:
-    http:
-      statusCode: 404
-    type:
-      union:
-        playlistId: PlaylistId
+    type: PlaylistIdNotFoundErrorBody
+    status-code: 404
   UnauthorizedError:
-    http:
-      statusCode: 401
+    status-code: 401

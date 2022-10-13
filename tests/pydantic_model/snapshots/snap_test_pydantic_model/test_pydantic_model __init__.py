@@ -36,7 +36,7 @@ from .commons import (
 )
 from .lang_server import LangServerRequest, LangServerResponse
 from .migration import Migration, MigrationStatus
-from .playlist import Playlist, PlaylistCreateRequest, PlaylistId, UpdatePlaylistRequest
+from .playlist import Playlist, PlaylistCreateRequest, PlaylistId, PlaylistIdNotFoundErrorBody, UpdatePlaylistRequest
 from .problem import (
     CreateProblemError,
     CreateProblemRequest,
@@ -191,6 +191,7 @@ __all__ = [
     "Playlist",
     "PlaylistCreateRequest",
     "PlaylistId",
+    "PlaylistIdNotFoundErrorBody",
     "ProblemDescription",
     "ProblemDescriptionBoard",
     "ProblemFiles",

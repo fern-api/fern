@@ -4,7 +4,17 @@
 # fmt: off
 # isort: skip_file
 
+from .errors import PlaylistIdNotFoundError, UnauthorizedError
 from .service import AbstractPlaylistCrudService
-from .types import Playlist, PlaylistCreateRequest, PlaylistId, UpdatePlaylistRequest
+from .types import Playlist, PlaylistCreateRequest, PlaylistId, PlaylistIdNotFoundErrorBody, UpdatePlaylistRequest
 
-__all__ = ["AbstractPlaylistCrudService", "Playlist", "PlaylistCreateRequest", "PlaylistId", "UpdatePlaylistRequest"]
+__all__ = [
+    "AbstractPlaylistCrudService",
+    "Playlist",
+    "PlaylistCreateRequest",
+    "PlaylistId",
+    "PlaylistIdNotFoundError",
+    "PlaylistIdNotFoundErrorBody",
+    "UnauthorizedError",
+    "UpdatePlaylistRequest",
+]

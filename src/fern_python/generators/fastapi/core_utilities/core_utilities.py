@@ -26,6 +26,7 @@ class FernHTTPException:
         status_code: AST.Expression,
         name: Optional[AST.Expression],
         content: Optional[AST.Expression],
+        is_super_call: bool = False,
     ) -> AST.ClassInstantiation:
         kwargs: List[Tuple[str, AST.Expression]] = []
         kwargs.append(("status_code", status_code))
@@ -33,7 +34,12 @@ class FernHTTPException:
             kwargs.append(("name", name))
         if content is not None:
             kwargs.append(("content", content))
-        return AST.ClassInstantiation(class_=self.get_reference_to(), kwargs=kwargs)
+        return AST.ClassInstantiation(
+            class_=AST.ClassReference(qualified_name_excluding_import=("super().__init__",))
+            if is_super_call
+            else self.get_reference_to(),
+            kwargs=kwargs,
+        )
 
 
 class Exceptions:

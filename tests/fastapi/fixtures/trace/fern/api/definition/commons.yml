@@ -1,8 +1,7 @@
-ids:
-  - UserId
-  - ProblemId
-  - NodeId
 types:
+  UserId: string
+  ProblemId: string
+  NodeId: string
   VariableType:
     union:
       integerType: {}

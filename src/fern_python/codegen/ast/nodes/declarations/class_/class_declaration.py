@@ -153,9 +153,15 @@ class ClassDeclaration(AstNode):
                 writer.write_node(self.docstring)
                 writer.write_newline_if_last_line_not()
                 writer.write_line('"""')
+
+            did_write_statement = False
+            if self.constructor is not None:
+                writer.write_node(self.constructor)
+                writer.write_newline_if_last_line_not()
+                did_write_statement = True
             for statement in self.statements:
                 writer.write_node(statement)
                 writer.write_newline_if_last_line_not()
-            if len(self.statements) == 0:
+                did_write_statement = True
+            if not did_write_statement:
                 writer.write("pass")
-            writer.write_line()

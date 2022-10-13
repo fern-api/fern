@@ -37,7 +37,16 @@ from .commons import (
 from .homepage import AbstractHomepageProblemService
 from .lang_server import LangServerRequest, LangServerResponse
 from .migration import AbstractMigrationInfoService, Migration, MigrationStatus
-from .playlist import AbstractPlaylistCrudService, Playlist, PlaylistCreateRequest, PlaylistId, UpdatePlaylistRequest
+from .playlist import (
+    AbstractPlaylistCrudService,
+    Playlist,
+    PlaylistCreateRequest,
+    PlaylistId,
+    PlaylistIdNotFoundError,
+    PlaylistIdNotFoundErrorBody,
+    UnauthorizedError,
+    UpdatePlaylistRequest,
+)
 from .problem import (
     AbstractProblemCrudService,
     CreateProblemError,
@@ -202,6 +211,8 @@ __all__ = [
     "Playlist",
     "PlaylistCreateRequest",
     "PlaylistId",
+    "PlaylistIdNotFoundError",
+    "PlaylistIdNotFoundErrorBody",
     "ProblemDescription",
     "ProblemDescriptionBoard",
     "ProblemFiles",
@@ -255,6 +266,7 @@ __all__ = [
     "TraceResponsesPageV2",
     "TracedFile",
     "TracedTestCase",
+    "UnauthorizedError",
     "UnexpectedLanguageError",
     "UpdatePlaylistRequest",
     "UpdateProblemResponse",

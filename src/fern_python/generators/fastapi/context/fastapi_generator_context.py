@@ -37,3 +37,15 @@ class FastApiGeneratorContext(ABC):
     @abstractmethod
     def get_reference_to_service(self, service_name: ir_types.services.DeclaredServiceName) -> AST.ClassReference:
         ...
+
+    @abstractmethod
+    def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:
+        ...
+
+    @abstractmethod
+    def get_class_name_for_error(self, error_name: ir_types.DeclaredErrorName) -> str:
+        ...
+
+    @abstractmethod
+    def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
+        ...
