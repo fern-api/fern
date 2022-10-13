@@ -16,14 +16,19 @@ types:
       error: errors.DeclaredErrorName
 
   ResponseErrorsV2:
+    docs: this is deprecated. use ResponseErrors. Yes, this is weird.
     properties:
       discriminant: commons.WireStringWithAllCasings
       types: list<ResponseErrorV2>
   ResponseErrorV2:
     extends: commons.WithDocs
     properties:
-      discriminantValue: commons.WireStringWithAllCasings
-      shape: ResponseErrorShape
+      discriminantValue:
+        type: commons.WireStringWithAllCasings
+        docs: this is deprecated. use the discriminant value on the error declaration.
+      shape:
+        type: ResponseErrorShape
+        docs: this is deprecated. if the error has a type, then use the errorBody constant.
   ResponseErrorShape:
     union:
       singleProperty: SingleResponseErrorProperty

@@ -1096,6 +1096,34 @@ exports[`ir simple 1`] = `
         "errorDiscriminant": "_error",
         "errorInstanceIdKey": "_errorInstanceId",
         "unknownErrorDiscriminantValue": "_unknown"
+    },
+    "constantsV2": {
+        "errors": {
+            "errorDiscriminant": {
+                "originalValue": "error",
+                "camelCase": "error",
+                "snakeCase": "error",
+                "pascalCase": "Error",
+                "screamingSnakeCase": "ERROR",
+                "wireValue": "error"
+            },
+            "errorInstanceIdKey": {
+                "originalValue": "errorInstanceId",
+                "camelCase": "errorInstanceId",
+                "snakeCase": "error_instance_id",
+                "pascalCase": "ErrorInstanceId",
+                "screamingSnakeCase": "ERROR_INSTANCE_ID",
+                "wireValue": "errorInstanceId"
+            },
+            "errorContentKey": {
+                "originalValue": "content",
+                "camelCase": "content",
+                "snakeCase": "content",
+                "pascalCase": "Content",
+                "screamingSnakeCase": "CONTENT",
+                "wireValue": "content"
+            }
+        }
     }
 }"
 `;
