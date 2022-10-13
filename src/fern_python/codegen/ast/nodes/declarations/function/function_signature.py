@@ -53,7 +53,8 @@ class FunctionSignature(AstNode):
         if self.include_args:
             if just_wrote_parameter:
                 writer.write(", ")
-            writer.write("*args")
+            writer.write("*args: ")
+            writer.write_node(TypeHint.any())
             just_wrote_parameter = True
         elif len(self.named_parameters) > 0:
             if just_wrote_parameter:

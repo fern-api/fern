@@ -26,14 +26,14 @@ class ClassConstructor(AstNode):
         return generics
 
     def write(self, writer: NodeWriter) -> None:
-        writer.write("def __init__(self, ")
-        just_wrote_parameter = False
+        writer.write("def __init__(self")
         for i, parameter in enumerate(self.parameters):
-            if just_wrote_parameter:
-                writer.write(", ")
+            writer.write(", ")
             writer.write_node(parameter)
-            just_wrote_parameter = True
-        writer.write("):")
+        writer.write(")")
+        if len(self.parameters) == 0:
+            writer.write(" -> None")
+        writer.write_line(":")
 
         with writer.indent():
             self.body.write(writer=writer)

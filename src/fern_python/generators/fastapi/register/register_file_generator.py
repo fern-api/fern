@@ -126,7 +126,7 @@ class RegisterFileGenerator:
         def write_register_validators_method_body(writer: AST.NodeWriter) -> None:
             VALIDATORS_DIRECTORY_VARIABLE = "validators_directory"
 
-            writer.write(f"{VALIDATORS_DIRECTORY_VARIABLE} = ")
+            writer.write(f"{VALIDATORS_DIRECTORY_VARIABLE}: str = ")
             writer.write_node(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
@@ -136,7 +136,7 @@ class RegisterFileGenerator:
                     args=[AST.Expression(f"{MODULE_PARAMETER}.__file__")],
                 )
             )
-            writer.write_line()
+            writer.write_line("  # type: ignore")
 
             PATH_VARIABLE = "path"
 

@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -87,7 +88,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         setattr(cls.create_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_playlist)
-        def wrapper(*args, **kwargs: typing.Any) -> Playlist:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Playlist:
             try:
                 return cls.create_playlist(*args, **kwargs)
             except UnauthorizedException as e:
@@ -100,7 +101,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/v2/playlist/{service_param}/create", response_model=Playlist, **get_route_args(cls.create_playlist)
         )(wrapper)
 
@@ -124,7 +125,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         setattr(cls.get_playlists, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_playlists)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.List[Playlist]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[Playlist]:
             try:
                 return cls.get_playlists(*args, **kwargs)
             except UnauthorizedException as e:
@@ -137,7 +138,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/v2/playlist/{service_param}/all",
             response_model=typing.List[Playlist],
             **get_route_args(cls.get_playlists),
@@ -159,7 +160,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         setattr(cls.get_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_playlist)
-        def wrapper(*args, **kwargs: typing.Any) -> Playlist:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Playlist:
             try:
                 return cls.get_playlist(*args, **kwargs)
             except (PlaylistIdNotFoundError, UnauthorizedError) as e:
@@ -172,7 +173,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=Playlist,
             **get_route_args(cls.get_playlist),
@@ -198,7 +199,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         setattr(cls.update_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.update_playlist)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.Optional[Playlist]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Optional[Playlist]:
             try:
                 return cls.update_playlist(*args, **kwargs)
             except (UnauthorizedException, PlaylistIdNotFoundError) as e:
@@ -211,7 +212,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.put(  # type: ignore
+        router.put(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=typing.Optional[Playlist],
             **get_route_args(cls.update_playlist),
@@ -235,7 +236,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         setattr(cls.delete_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.delete_playlist)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.delete_playlist(*args, **kwargs)
             except UnauthorizedException as e:
@@ -248,6 +249,4 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.delete(  # type: ignore
-            path="/v2/playlist/{service_param}/{playlist_id}", **get_route_args(cls.delete_playlist)
-        )(wrapper)
+        router.delete(path="/v2/playlist/{service_param}/{playlist_id}", **get_route_args(cls.delete_playlist))(wrapper)

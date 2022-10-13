@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -103,7 +104,7 @@ class AbstractAdminService(AbstractFernService):
         )
 
         @functools.wraps(cls.update_test_submission_status)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.update_test_submission_status(*args, **kwargs)
             except FernHTTPException as e:
@@ -114,7 +115,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-test-submission-status/{submission_id}",
             **get_route_args(cls.update_test_submission_status),
         )(wrapper)
@@ -135,7 +136,7 @@ class AbstractAdminService(AbstractFernService):
         setattr(cls.send_test_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.send_test_submission_update)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.send_test_submission_update(*args, **kwargs)
             except FernHTTPException as e:
@@ -146,7 +147,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-test-submission-status-v2/{submission_id}",
             **get_route_args(cls.send_test_submission_update),
         )(wrapper)
@@ -171,7 +172,7 @@ class AbstractAdminService(AbstractFernService):
         )
 
         @functools.wraps(cls.update_workspace_submission_status)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.update_workspace_submission_status(*args, **kwargs)
             except FernHTTPException as e:
@@ -182,7 +183,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-workspace-submission-status/{submission_id}",
             **get_route_args(cls.update_workspace_submission_status),
         )(wrapper)
@@ -205,7 +206,7 @@ class AbstractAdminService(AbstractFernService):
         )
 
         @functools.wraps(cls.send_workspace_submission_update)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.send_workspace_submission_update(*args, **kwargs)
             except FernHTTPException as e:
@@ -216,7 +217,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
             **get_route_args(cls.send_workspace_submission_update),
         )(wrapper)
@@ -239,7 +240,7 @@ class AbstractAdminService(AbstractFernService):
         setattr(cls.store_traced_test_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_test_case)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.store_traced_test_case(*args, **kwargs)
             except FernHTTPException as e:
@@ -250,7 +251,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             **get_route_args(cls.store_traced_test_case),
         )(wrapper)
@@ -273,7 +274,7 @@ class AbstractAdminService(AbstractFernService):
         setattr(cls.store_traced_test_case_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_test_case_v_2)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.store_traced_test_case_v_2(*args, **kwargs)
             except FernHTTPException as e:
@@ -284,7 +285,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             **get_route_args(cls.store_traced_test_case_v_2),
         )(wrapper)
@@ -305,7 +306,7 @@ class AbstractAdminService(AbstractFernService):
         setattr(cls.store_traced_workspace, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_workspace)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.store_traced_workspace(*args, **kwargs)
             except FernHTTPException as e:
@@ -316,7 +317,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-workspace-trace/submission/{submission_id}", **get_route_args(cls.store_traced_workspace)
         )(wrapper)
 
@@ -336,7 +337,7 @@ class AbstractAdminService(AbstractFernService):
         setattr(cls.store_traced_workspace_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.store_traced_workspace_v_2)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.store_traced_workspace_v_2(*args, **kwargs)
             except FernHTTPException as e:
@@ -347,7 +348,7 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",
             **get_route_args(cls.store_traced_workspace_v_2),
         )(wrapper)

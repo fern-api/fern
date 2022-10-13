@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -68,7 +69,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         setattr(cls.get_lightweight_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_lightweight_problems)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.List[LightweightProblemInfoV2]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[LightweightProblemInfoV2]:
             try:
                 return cls.get_lightweight_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -79,7 +80,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
             **get_route_args(cls.get_lightweight_problems),
@@ -97,7 +98,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         setattr(cls.get_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_problems)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.List[ProblemInfoV2]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[ProblemInfoV2]:
             try:
                 return cls.get_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -108,7 +109,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
             **get_route_args(cls.get_problems),
@@ -128,7 +129,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         setattr(cls.get_latest_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_latest_problem)
-        def wrapper(*args, **kwargs: typing.Any) -> ProblemInfoV2:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ProblemInfoV2:
             try:
                 return cls.get_latest_problem(*args, **kwargs)
             except FernHTTPException as e:
@@ -139,7 +140,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
             **get_route_args(cls.get_latest_problem),
@@ -161,7 +162,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         setattr(cls.get_problem_version, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_problem_version)
-        def wrapper(*args, **kwargs: typing.Any) -> ProblemInfoV2:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ProblemInfoV2:
             try:
                 return cls.get_problem_version(*args, **kwargs)
             except FernHTTPException as e:
@@ -172,7 +173,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
             **get_route_args(cls.get_problem_version),

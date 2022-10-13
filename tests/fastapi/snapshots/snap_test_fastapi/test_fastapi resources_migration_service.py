@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -52,7 +53,7 @@ class AbstractMigrationInfoService(AbstractFernService):
         setattr(cls.get_attempted_migrations, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_attempted_migrations)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.List[Migration]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[Migration]:
             try:
                 return cls.get_attempted_migrations(*args, **kwargs)
             except FernHTTPException as e:
@@ -63,7 +64,7 @@ class AbstractMigrationInfoService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/migration-info/all",
             response_model=typing.List[Migration],
             **get_route_args(cls.get_attempted_migrations),

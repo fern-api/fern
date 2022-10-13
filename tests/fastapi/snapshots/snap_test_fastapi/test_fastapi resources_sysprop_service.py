@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -61,7 +62,7 @@ class AbstractSysPropCrudService(AbstractFernService):
         setattr(cls.set_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.set_num_warm_instances)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.set_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:
@@ -72,7 +73,7 @@ class AbstractSysPropCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.put(  # type: ignore
+        router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
             **get_route_args(cls.set_num_warm_instances),
         )(wrapper)
@@ -89,7 +90,7 @@ class AbstractSysPropCrudService(AbstractFernService):
         setattr(cls.get_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_num_warm_instances)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.Dict[Language, int]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Dict[Language, int]:
             try:
                 return cls.get_num_warm_instances(*args, **kwargs)
             except FernHTTPException as e:
@@ -100,7 +101,7 @@ class AbstractSysPropCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/sysprop/num-warm-instances",
             response_model=typing.Dict[Language, int],
             **get_route_args(cls.get_num_warm_instances),

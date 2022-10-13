@@ -8,5 +8,5 @@ from ....core.exceptions import FernHTTPException
 
 
 class UnauthorizedError(FernHTTPException):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(status_code=401, name="UnauthorizedError")

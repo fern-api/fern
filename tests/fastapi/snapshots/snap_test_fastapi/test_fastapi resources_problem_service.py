@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -73,7 +74,7 @@ class AbstractProblemCrudService(AbstractFernService):
         setattr(cls.create_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_problem)
-        def wrapper(*args, **kwargs: typing.Any) -> CreateProblemResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> CreateProblemResponse:
             try:
                 return cls.create_problem(*args, **kwargs)
             except FernHTTPException as e:
@@ -84,7 +85,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.create_problem)
         )(wrapper)
 
@@ -104,7 +105,7 @@ class AbstractProblemCrudService(AbstractFernService):
         setattr(cls.update_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.update_problem)
-        def wrapper(*args, **kwargs: typing.Any) -> UpdateProblemResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> UpdateProblemResponse:
             try:
                 return cls.update_problem(*args, **kwargs)
             except FernHTTPException as e:
@@ -115,7 +116,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/problem-crud/update/{problem_id}",
             response_model=UpdateProblemResponse,
             **get_route_args(cls.update_problem),
@@ -135,7 +136,7 @@ class AbstractProblemCrudService(AbstractFernService):
         setattr(cls.delete_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.delete_problem)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.delete_problem(*args, **kwargs)
             except FernHTTPException as e:
@@ -146,9 +147,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.delete(path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem))(  # type: ignore
-            wrapper
-        )
+        router.delete(path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem))(wrapper)
 
     @classmethod
     def __init_get_default_starter_files(cls, router: fastapi.APIRouter) -> None:
@@ -164,7 +163,7 @@ class AbstractProblemCrudService(AbstractFernService):
         setattr(cls.get_default_starter_files, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_default_starter_files)
-        def wrapper(*args, **kwargs: typing.Any) -> GetDefaultStarterFilesResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> GetDefaultStarterFilesResponse:
             try:
                 return cls.get_default_starter_files(*args, **kwargs)
             except FernHTTPException as e:
@@ -175,7 +174,7 @@ class AbstractProblemCrudService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/problem-crud/default-starter-files",
             response_model=GetDefaultStarterFilesResponse,
             **get_route_args(cls.get_default_starter_files),

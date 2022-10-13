@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -57,7 +58,7 @@ class AbstractHomepageProblemService(AbstractFernService):
         setattr(cls.get_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_homepage_problems)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.List[ProblemId]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[ProblemId]:
             try:
                 return cls.get_homepage_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -68,7 +69,7 @@ class AbstractHomepageProblemService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/homepage-problems/",
             response_model=typing.List[ProblemId],
             **get_route_args(cls.get_homepage_problems),
@@ -88,7 +89,7 @@ class AbstractHomepageProblemService(AbstractFernService):
         setattr(cls.set_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.set_homepage_problems)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.set_homepage_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -99,4 +100,4 @@ class AbstractHomepageProblemService(AbstractFernService):
                 )
                 raise e
 
-        router.post(path="/homepage-problems/", **get_route_args(cls.set_homepage_problems))(wrapper)  # type: ignore
+        router.post(path="/homepage-problems/", **get_route_args(cls.set_homepage_problems))(wrapper)

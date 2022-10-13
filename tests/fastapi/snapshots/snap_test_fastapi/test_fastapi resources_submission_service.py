@@ -7,6 +7,7 @@
 import abc
 import functools
 import inspect
+import logging
 import typing
 
 import fastapi
@@ -71,7 +72,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         setattr(cls.create_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_execution_session)
-        def wrapper(*args, **kwargs: typing.Any) -> ExecutionSessionResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ExecutionSessionResponse:
             try:
                 return cls.create_execution_session(*args, **kwargs)
             except FernHTTPException as e:
@@ -82,7 +83,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 )
                 raise e
 
-        router.post(  # type: ignore
+        router.post(
             path="/sessions/create-session/{language}",
             response_model=ExecutionSessionResponse,
             **get_route_args(cls.create_execution_session),
@@ -102,7 +103,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         setattr(cls.get_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_execution_session)
-        def wrapper(*args, **kwargs: typing.Any) -> typing.Optional[ExecutionSessionResponse]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Optional[ExecutionSessionResponse]:
             try:
                 return cls.get_execution_session(*args, **kwargs)
             except FernHTTPException as e:
@@ -113,7 +114,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/sessions/{session_id}",
             response_model=typing.Optional[ExecutionSessionResponse],
             **get_route_args(cls.get_execution_session),
@@ -133,7 +134,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         setattr(cls.stop_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.stop_execution_session)
-        def wrapper(*args, **kwargs: typing.Any) -> None:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
             try:
                 return cls.stop_execution_session(*args, **kwargs)
             except FernHTTPException as e:
@@ -144,9 +145,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 )
                 raise e
 
-        router.delete(path="/sessions/stop/{session_id}", **get_route_args(cls.stop_execution_session))(  # type: ignore
-            wrapper
-        )
+        router.delete(path="/sessions/stop/{session_id}", **get_route_args(cls.stop_execution_session))(wrapper)
 
     @classmethod
     def __init_get_execution_sessions_state(cls, router: fastapi.APIRouter) -> None:
@@ -160,7 +159,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         setattr(cls.get_execution_sessions_state, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_execution_sessions_state)
-        def wrapper(*args, **kwargs: typing.Any) -> GetExecutionSessionStateResponse:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> GetExecutionSessionStateResponse:
             try:
                 return cls.get_execution_sessions_state(*args, **kwargs)
             except FernHTTPException as e:
@@ -171,7 +170,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
                 )
                 raise e
 
-        router.get(  # type: ignore
+        router.get(
             path="/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
             **get_route_args(cls.get_execution_sessions_state),

@@ -136,7 +136,7 @@ class EndpointGenerator:
 
         writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
         writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
-        writer.write_line("(  # type: ignore")
+        writer.write_line("(")
         with writer.indent():
             writer.write_line(f'path="{self._endpoint_path}",')
             if self._endpoint.response.type_v_2 is not None:
@@ -259,7 +259,13 @@ class EndpointGenerator:
         writer.write_reference(self._context.core_utilities.exceptions.FernHTTPException.get_reference_to())
         writer.write_line(f" as {CAUGHT_ERROR_NAME}:")
         with writer.indent():
-            writer.write_line("logging.getLogger(__name__).warn(")
+            writer.write_reference(
+                AST.Reference(
+                    qualified_name_excluding_import=("getLogger",),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in("logging")),
+                )
+            )
+            writer.write_line("(__name__).warn(")
             with writer.indent():
                 writer.write_line(
                     f'f"{self._get_method_name()} unexpectedly threw {{{CAUGHT_ERROR_NAME}.__class__.__name__}}. "'
