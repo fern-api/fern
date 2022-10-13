@@ -65,7 +65,7 @@ class UpdateProblemResponse(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         problem_version: typing_extensions.NotRequired[int]
 
     class Config:

@@ -151,7 +151,7 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         node_id: typing_extensions.NotRequired[NodeId]
         val: typing_extensions.NotRequired[float]
         right: typing_extensions.NotRequired[typing.Optional[NodeId]]

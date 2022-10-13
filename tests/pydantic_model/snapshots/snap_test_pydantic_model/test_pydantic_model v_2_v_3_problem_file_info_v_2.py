@@ -135,7 +135,7 @@ class FileInfoV2(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         filename: typing_extensions.NotRequired[str]
         directory: typing_extensions.NotRequired[str]
         contents: typing_extensions.NotRequired[str]

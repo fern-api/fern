@@ -320,7 +320,7 @@ class ProblemInfo(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         problem_id: typing_extensions.NotRequired[ProblemId]
         problem_description: typing_extensions.NotRequired[ProblemDescription]
         problem_name: typing_extensions.NotRequired[str]

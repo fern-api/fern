@@ -85,7 +85,7 @@ class ListType(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         value_type: typing_extensions.NotRequired[VariableType]
         is_fixed_length: typing_extensions.NotRequired[typing.Optional[bool]]
 

@@ -119,7 +119,7 @@ class TestCaseResult(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         expected_result: typing_extensions.NotRequired[VariableValue]
         actual_result: typing_extensions.NotRequired[ActualResult]
         passed: typing_extensions.NotRequired[bool]

@@ -97,7 +97,7 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         expected_language: typing_extensions.NotRequired[Language]
         actual_language: typing_extensions.NotRequired[Language]
 

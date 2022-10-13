@@ -112,7 +112,7 @@ class StackFrame(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         method_name: typing_extensions.NotRequired[str]
         line_number: typing_extensions.NotRequired[int]
         scopes: typing_extensions.NotRequired[typing.List[Scope]]

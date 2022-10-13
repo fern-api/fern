@@ -164,7 +164,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         time_submitted: typing_extensions.NotRequired[typing.Optional[str]]
         submission: typing_extensions.NotRequired[str]
         language: typing_extensions.NotRequired[Language]

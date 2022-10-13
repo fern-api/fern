@@ -198,7 +198,7 @@ class PydanticModel:
             name=PydanticModel._PARTIAL_CLASS_NAME,
             extends=[
                 AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
                     qualified_name_excluding_import=("TypedDict",),
                 )
             ],

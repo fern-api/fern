@@ -3,12 +3,14 @@ from __future__ import annotations
 import inspect
 import typing
 
+import typing_extensions
+
 T = typing.TypeVar("T", bound=typing.Callable[..., typing.Any])
 
 FERN_CONFIG_KEY = "__fern"
 
 
-class RouteArgs(typing.TypedDict):
+class RouteArgs(typing_extensions.TypedDict):
     openapi_extra: typing.Optional[typing.Dict[str, typing.Any]]
 
 
@@ -17,7 +19,7 @@ DEFAULT_ROUTE_ARGS = RouteArgs(openapi_extra=None)
 
 def get_route_args(endpoint_function: typing.Callable[..., typing.Any]) -> RouteArgs:
     unwrapped = inspect.unwrap(endpoint_function, stop=(lambda f: hasattr(f, FERN_CONFIG_KEY)))
-    return getattr(unwrapped, FERN_CONFIG_KEY, DEFAULT_ROUTE_ARGS)
+    return typing.cast(RouteArgs, getattr(unwrapped, FERN_CONFIG_KEY, DEFAULT_ROUTE_ARGS))
 
 
 def route_args(openapi_extra: typing.Optional[typing.Dict[str, typing.Any]] = None) -> typing.Callable[[T], T]:

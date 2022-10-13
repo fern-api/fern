@@ -201,7 +201,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
-    class Partial(typing.TypedDict):
+    class Partial(typing_extensions.TypedDict):
         submission_id: typing_extensions.NotRequired[SubmissionId]
         test_case_id: typing_extensions.NotRequired[typing.Optional[str]]
         line_number: typing_extensions.NotRequired[int]

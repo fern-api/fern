@@ -70,8 +70,8 @@ def __register_service(service: AbstractFernService) -> fastapi.APIRouter:
 
 def register_validators(module: types.ModuleType) -> None:
     validators_directory: str = os.path.dirname(module.__file__)  # type: ignore
-    for path in glob.glob("**/*.py", root_dir=validators_directory, recursive=True):
+    for path in glob.glob(os.path.join(validators_directory, "**/*.py"), recursive=True):
         absolute_path = os.path.join(validators_directory, path)
         if os.path.isfile(absolute_path):
-            module_path = ".".join([module.__name__] + path.removesuffix(".py").split("/"))
+            module_path = ".".join([module.__name__] + path[:-3].split("/"))
             importlib.import_module(module_path)

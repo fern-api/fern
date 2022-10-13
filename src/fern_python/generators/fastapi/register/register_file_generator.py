@@ -147,9 +147,18 @@ class RegisterFileGenerator:
                         import_=AST.ReferenceImport(module=AST.Module.built_in("glob")),
                         qualified_name_excluding_import=("glob",),
                     ),
-                    args=[AST.Expression('"**/*.py"')],
+                    args=[
+                        AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
+                                    qualified_name_excluding_import=("path", "join"),
+                                ),
+                                args=[AST.Expression(VALIDATORS_DIRECTORY_VARIABLE), AST.Expression('"**/*.py"')],
+                            )
+                        )
+                    ],
                     kwargs=[
-                        ("root_dir", AST.Expression(VALIDATORS_DIRECTORY_VARIABLE)),
                         ("recursive", AST.Expression("True")),
                     ],
                 )
@@ -188,7 +197,7 @@ class RegisterFileGenerator:
 
                     writer.write(f'{MODULE_PATH_VARIABLE} = ".".join(')
                     writer.write(f"[{MODULE_PARAMETER}.__name__] + ")
-                    writer.write_line(f'{PATH_VARIABLE}.removesuffix(".py").split("/"))')
+                    writer.write_line(f'{PATH_VARIABLE}[:-3].split("/"))')
 
                     writer.write_node(
                         AST.FunctionInvocation(
