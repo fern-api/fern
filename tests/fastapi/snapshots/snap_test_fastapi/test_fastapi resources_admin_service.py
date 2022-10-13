@@ -105,7 +105,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.update_test_submission_status)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_update_test_submission_status(*args, **kwargs)
+                return cls.update_test_submission_status(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"update_test_submission_status unexpectedly threw {e.__class__.__name__}. "
@@ -137,7 +137,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.send_test_submission_update)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_send_test_submission_update(*args, **kwargs)
+                return cls.send_test_submission_update(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"send_test_submission_update unexpectedly threw {e.__class__.__name__}. "
@@ -173,7 +173,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.update_workspace_submission_status)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_update_workspace_submission_status(*args, **kwargs)
+                return cls.update_workspace_submission_status(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"update_workspace_submission_status unexpectedly threw {e.__class__.__name__}. "
@@ -207,7 +207,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.send_workspace_submission_update)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_send_workspace_submission_update(*args, **kwargs)
+                return cls.send_workspace_submission_update(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"send_workspace_submission_update unexpectedly threw {e.__class__.__name__}. "
@@ -241,7 +241,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.store_traced_test_case)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_store_traced_test_case(*args, **kwargs)
+                return cls.store_traced_test_case(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"store_traced_test_case unexpectedly threw {e.__class__.__name__}. "
@@ -275,7 +275,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.store_traced_test_case_v_2)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_store_traced_test_case_v_2(*args, **kwargs)
+                return cls.store_traced_test_case_v_2(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"store_traced_test_case_v_2 unexpectedly threw {e.__class__.__name__}. "
@@ -307,7 +307,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.store_traced_workspace)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_store_traced_workspace(*args, **kwargs)
+                return cls.store_traced_workspace(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"store_traced_workspace unexpectedly threw {e.__class__.__name__}. "
@@ -338,7 +338,7 @@ class AbstractAdminService(AbstractFernService):
         @functools.wraps(cls.store_traced_workspace_v_2)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_store_traced_workspace_v_2(*args, **kwargs)
+                return cls.store_traced_workspace_v_2(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"store_traced_workspace_v_2 unexpectedly threw {e.__class__.__name__}. "

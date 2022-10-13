@@ -54,7 +54,7 @@ class AbstractMigrationInfoService(AbstractFernService):
         @functools.wraps(cls.get_attempted_migrations)
         def wrapper(*args, **kwargs: typing.Any) -> typing.List[Migration]:
             try:
-                return cls.__init_get_attempted_migrations(*args, **kwargs)
+                return cls.get_attempted_migrations(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_attempted_migrations unexpectedly threw {e.__class__.__name__}. "

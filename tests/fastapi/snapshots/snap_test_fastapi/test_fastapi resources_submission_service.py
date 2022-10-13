@@ -73,7 +73,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         @functools.wraps(cls.create_execution_session)
         def wrapper(*args, **kwargs: typing.Any) -> ExecutionSessionResponse:
             try:
-                return cls.__init_create_execution_session(*args, **kwargs)
+                return cls.create_execution_session(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"create_execution_session unexpectedly threw {e.__class__.__name__}. "
@@ -104,7 +104,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         @functools.wraps(cls.get_execution_session)
         def wrapper(*args, **kwargs: typing.Any) -> typing.Optional[ExecutionSessionResponse]:
             try:
-                return cls.__init_get_execution_session(*args, **kwargs)
+                return cls.get_execution_session(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_execution_session unexpectedly threw {e.__class__.__name__}. "
@@ -135,7 +135,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         @functools.wraps(cls.stop_execution_session)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_stop_execution_session(*args, **kwargs)
+                return cls.stop_execution_session(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"stop_execution_session unexpectedly threw {e.__class__.__name__}. "
@@ -162,7 +162,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         @functools.wraps(cls.get_execution_sessions_state)
         def wrapper(*args, **kwargs: typing.Any) -> GetExecutionSessionStateResponse:
             try:
-                return cls.__init_get_execution_sessions_state(*args, **kwargs)
+                return cls.get_execution_sessions_state(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_execution_sessions_state unexpectedly threw {e.__class__.__name__}. "

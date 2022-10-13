@@ -75,7 +75,7 @@ class AbstractProblemCrudService(AbstractFernService):
         @functools.wraps(cls.create_problem)
         def wrapper(*args, **kwargs: typing.Any) -> CreateProblemResponse:
             try:
-                return cls.__init_create_problem(*args, **kwargs)
+                return cls.create_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"create_problem unexpectedly threw {e.__class__.__name__}. "
@@ -106,7 +106,7 @@ class AbstractProblemCrudService(AbstractFernService):
         @functools.wraps(cls.update_problem)
         def wrapper(*args, **kwargs: typing.Any) -> UpdateProblemResponse:
             try:
-                return cls.__init_update_problem(*args, **kwargs)
+                return cls.update_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"update_problem unexpectedly threw {e.__class__.__name__}. "
@@ -137,7 +137,7 @@ class AbstractProblemCrudService(AbstractFernService):
         @functools.wraps(cls.delete_problem)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_delete_problem(*args, **kwargs)
+                return cls.delete_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"delete_problem unexpectedly threw {e.__class__.__name__}. "
@@ -166,7 +166,7 @@ class AbstractProblemCrudService(AbstractFernService):
         @functools.wraps(cls.get_default_starter_files)
         def wrapper(*args, **kwargs: typing.Any) -> GetDefaultStarterFilesResponse:
             try:
-                return cls.__init_get_default_starter_files(*args, **kwargs)
+                return cls.get_default_starter_files(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_default_starter_files unexpectedly threw {e.__class__.__name__}. "

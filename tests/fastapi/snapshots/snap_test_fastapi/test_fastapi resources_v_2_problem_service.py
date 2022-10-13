@@ -70,7 +70,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         @functools.wraps(cls.get_lightweight_problems)
         def wrapper(*args, **kwargs: typing.Any) -> typing.List[LightweightProblemInfoV2]:
             try:
-                return cls.__init_get_lightweight_problems(*args, **kwargs)
+                return cls.get_lightweight_problems(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_lightweight_problems unexpectedly threw {e.__class__.__name__}. "
@@ -99,7 +99,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         @functools.wraps(cls.get_problems)
         def wrapper(*args, **kwargs: typing.Any) -> typing.List[ProblemInfoV2]:
             try:
-                return cls.__init_get_problems(*args, **kwargs)
+                return cls.get_problems(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_problems unexpectedly threw {e.__class__.__name__}. "
@@ -130,7 +130,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         @functools.wraps(cls.get_latest_problem)
         def wrapper(*args, **kwargs: typing.Any) -> ProblemInfoV2:
             try:
-                return cls.__init_get_latest_problem(*args, **kwargs)
+                return cls.get_latest_problem(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_latest_problem unexpectedly threw {e.__class__.__name__}. "
@@ -163,7 +163,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         @functools.wraps(cls.get_problem_version)
         def wrapper(*args, **kwargs: typing.Any) -> ProblemInfoV2:
             try:
-                return cls.__init_get_problem_version(*args, **kwargs)
+                return cls.get_problem_version(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(__name__).warn(
                     f"get_problem_version unexpectedly threw {e.__class__.__name__}. "

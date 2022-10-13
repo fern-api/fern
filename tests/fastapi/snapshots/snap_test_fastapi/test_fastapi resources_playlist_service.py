@@ -89,7 +89,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         @functools.wraps(cls.create_playlist)
         def wrapper(*args, **kwargs: typing.Any) -> Playlist:
             try:
-                return cls.__init_create_playlist(*args, **kwargs)
+                return cls.create_playlist(*args, **kwargs)
             except UnauthorizedException as e:
                 raise e
             except FernHTTPException as e:
@@ -126,7 +126,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         @functools.wraps(cls.get_playlists)
         def wrapper(*args, **kwargs: typing.Any) -> typing.List[Playlist]:
             try:
-                return cls.__init_get_playlists(*args, **kwargs)
+                return cls.get_playlists(*args, **kwargs)
             except UnauthorizedException as e:
                 raise e
             except FernHTTPException as e:
@@ -161,7 +161,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         @functools.wraps(cls.get_playlist)
         def wrapper(*args, **kwargs: typing.Any) -> Playlist:
             try:
-                return cls.__init_get_playlist(*args, **kwargs)
+                return cls.get_playlist(*args, **kwargs)
             except (PlaylistIdNotFoundError, UnauthorizedError) as e:
                 raise e
             except FernHTTPException as e:
@@ -200,7 +200,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         @functools.wraps(cls.update_playlist)
         def wrapper(*args, **kwargs: typing.Any) -> typing.Optional[Playlist]:
             try:
-                return cls.__init_update_playlist(*args, **kwargs)
+                return cls.update_playlist(*args, **kwargs)
             except (UnauthorizedException, PlaylistIdNotFoundError) as e:
                 raise e
             except FernHTTPException as e:
@@ -237,7 +237,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         @functools.wraps(cls.delete_playlist)
         def wrapper(*args, **kwargs: typing.Any) -> None:
             try:
-                return cls.__init_delete_playlist(*args, **kwargs)
+                return cls.delete_playlist(*args, **kwargs)
             except UnauthorizedException as e:
                 raise e
             except FernHTTPException as e:

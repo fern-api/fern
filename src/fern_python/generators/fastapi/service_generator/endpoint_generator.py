@@ -236,7 +236,7 @@ class EndpointGenerator:
 
         writer.write_line("try:")
         with writer.indent():
-            writer.write_line(f"return {self._get_reference_to_init_method_on_cls()}(*args, **kwargs)")
+            writer.write_line(f"return {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
 
         errors = [self._context.get_reference_to_error(error.error) for error in self._endpoint.errors.get_as_list()]
         if self._endpoint.auth:
