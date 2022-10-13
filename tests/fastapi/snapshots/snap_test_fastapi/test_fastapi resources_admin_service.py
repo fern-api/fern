@@ -5,12 +5,14 @@
 # isort: skip_file
 
 import abc
+import functools
 import inspect
 import typing
 
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
+from ...core.exceptions import FernHTTPException
 from ...core.route_args import get_route_args
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..submission.types.test_submission_update import TestSubmissionUpdate
@@ -100,10 +102,22 @@ class AbstractAdminService(AbstractFernService):
             cls.update_test_submission_status, "__signature__", endpoint_function.replace(parameters=new_parameters)
         )
 
-        cls.update_test_submission_status = router.post(  # type: ignore
+        @functools.wraps(cls.update_test_submission_status)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_update_test_submission_status(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"update_test_submission_status unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "update_test_submission_status's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-test-submission-status/{submission_id}",
             **get_route_args(cls.update_test_submission_status),
-        )(cls.update_test_submission_status)
+        )(wrapper)
 
     @classmethod
     def __init_send_test_submission_update(cls, router: fastapi.APIRouter) -> None:
@@ -120,10 +134,22 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.send_test_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.send_test_submission_update = router.post(  # type: ignore
+        @functools.wraps(cls.send_test_submission_update)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_send_test_submission_update(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"send_test_submission_update unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "send_test_submission_update's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-test-submission-status-v2/{submission_id}",
             **get_route_args(cls.send_test_submission_update),
-        )(cls.send_test_submission_update)
+        )(wrapper)
 
     @classmethod
     def __init_update_workspace_submission_status(cls, router: fastapi.APIRouter) -> None:
@@ -144,10 +170,22 @@ class AbstractAdminService(AbstractFernService):
             endpoint_function.replace(parameters=new_parameters),
         )
 
-        cls.update_workspace_submission_status = router.post(  # type: ignore
+        @functools.wraps(cls.update_workspace_submission_status)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_update_workspace_submission_status(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"update_workspace_submission_status unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "update_workspace_submission_status's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-workspace-submission-status/{submission_id}",
             **get_route_args(cls.update_workspace_submission_status),
-        )(cls.update_workspace_submission_status)
+        )(wrapper)
 
     @classmethod
     def __init_send_workspace_submission_update(cls, router: fastapi.APIRouter) -> None:
@@ -166,10 +204,22 @@ class AbstractAdminService(AbstractFernService):
             cls.send_workspace_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters)
         )
 
-        cls.send_workspace_submission_update = router.post(  # type: ignore
+        @functools.wraps(cls.send_workspace_submission_update)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_send_workspace_submission_update(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"send_workspace_submission_update unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "send_workspace_submission_update's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
             **get_route_args(cls.send_workspace_submission_update),
-        )(cls.send_workspace_submission_update)
+        )(wrapper)
 
     @classmethod
     def __init_store_traced_test_case(cls, router: fastapi.APIRouter) -> None:
@@ -188,10 +238,22 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.store_traced_test_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.store_traced_test_case = router.post(  # type: ignore
+        @functools.wraps(cls.store_traced_test_case)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_store_traced_test_case(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"store_traced_test_case unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "store_traced_test_case's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             **get_route_args(cls.store_traced_test_case),
-        )(cls.store_traced_test_case)
+        )(wrapper)
 
     @classmethod
     def __init_store_traced_test_case_v_2(cls, router: fastapi.APIRouter) -> None:
@@ -210,10 +272,22 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.store_traced_test_case_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.store_traced_test_case_v_2 = router.post(  # type: ignore
+        @functools.wraps(cls.store_traced_test_case_v_2)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_store_traced_test_case_v_2(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"store_traced_test_case_v_2 unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "store_traced_test_case_v_2's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             **get_route_args(cls.store_traced_test_case_v_2),
-        )(cls.store_traced_test_case_v_2)
+        )(wrapper)
 
     @classmethod
     def __init_store_traced_workspace(cls, router: fastapi.APIRouter) -> None:
@@ -230,9 +304,21 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.store_traced_workspace, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.store_traced_workspace = router.post(  # type: ignore
+        @functools.wraps(cls.store_traced_workspace)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_store_traced_workspace(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"store_traced_workspace unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "store_traced_workspace's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-workspace-trace/submission/{submission_id}", **get_route_args(cls.store_traced_workspace)
-        )(cls.store_traced_workspace)
+        )(wrapper)
 
     @classmethod
     def __init_store_traced_workspace_v_2(cls, router: fastapi.APIRouter) -> None:
@@ -249,7 +335,19 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.store_traced_workspace_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.store_traced_workspace_v_2 = router.post(  # type: ignore
+        @functools.wraps(cls.store_traced_workspace_v_2)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_store_traced_workspace_v_2(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"store_traced_workspace_v_2 unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "store_traced_workspace_v_2's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",
             **get_route_args(cls.store_traced_workspace_v_2),
-        )(cls.store_traced_workspace_v_2)
+        )(wrapper)

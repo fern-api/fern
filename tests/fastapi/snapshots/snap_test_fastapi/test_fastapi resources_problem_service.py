@@ -5,12 +5,14 @@
 # isort: skip_file
 
 import abc
+import functools
 import inspect
 import typing
 
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
+from ...core.exceptions import FernHTTPException
 from ...core.route_args import get_route_args
 from .types.create_problem_request import CreateProblemRequest
 from .types.create_problem_response import CreateProblemResponse
@@ -70,9 +72,21 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.create_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.create_problem = router.post(  # type: ignore
+        @functools.wraps(cls.create_problem)
+        def wrapper(*args, **kwargs: typing.Any) -> CreateProblemResponse:
+            try:
+                return cls.__init_create_problem(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"create_problem unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "create_problem's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.create_problem)
-        )(cls.create_problem)
+        )(wrapper)
 
     @classmethod
     def __init_update_problem(cls, router: fastapi.APIRouter) -> None:
@@ -89,11 +103,23 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.update_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.update_problem = router.post(  # type: ignore
+        @functools.wraps(cls.update_problem)
+        def wrapper(*args, **kwargs: typing.Any) -> UpdateProblemResponse:
+            try:
+                return cls.__init_update_problem(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"update_problem unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "update_problem's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/problem-crud/update/{problem_id}",
             response_model=UpdateProblemResponse,
             **get_route_args(cls.update_problem),
-        )(cls.update_problem)
+        )(wrapper)
 
     @classmethod
     def __init_delete_problem(cls, router: fastapi.APIRouter) -> None:
@@ -108,9 +134,21 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.delete_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.delete_problem = router.delete(  # type: ignore
-            path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem)
-        )(cls.delete_problem)
+        @functools.wraps(cls.delete_problem)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_delete_problem(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"delete_problem unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "delete_problem's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.delete(path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem))(  # type: ignore
+            wrapper
+        )
 
     @classmethod
     def __init_get_default_starter_files(cls, router: fastapi.APIRouter) -> None:
@@ -125,8 +163,20 @@ class AbstractProblemCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_default_starter_files, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_default_starter_files = router.post(  # type: ignore
+        @functools.wraps(cls.get_default_starter_files)
+        def wrapper(*args, **kwargs: typing.Any) -> GetDefaultStarterFilesResponse:
+            try:
+                return cls.__init_get_default_starter_files(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_default_starter_files unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_default_starter_files's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/problem-crud/default-starter-files",
             response_model=GetDefaultStarterFilesResponse,
             **get_route_args(cls.get_default_starter_files),
-        )(cls.get_default_starter_files)
+        )(wrapper)

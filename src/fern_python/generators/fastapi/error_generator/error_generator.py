@@ -40,7 +40,7 @@ class ErrorGenerator:
         writer.write_node(
             self._context.core_utilities.exceptions.FernHTTPException.create(
                 status_code=AST.Expression(f"{self._error.status_code}"),
-                name=AST.Expression(f'"{self._error.name.name_v_2.original_value}"'),
+                name=AST.Expression(f'"{self._error.discriminant_value.wire_value}"'),
                 content=AST.Expression(ErrorGenerator._BODY_PARAMETER_NAME)
                 if self._error.type_v_3 is not None
                 else None,

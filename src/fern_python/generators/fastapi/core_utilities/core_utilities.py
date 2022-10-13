@@ -74,6 +74,15 @@ class Exceptions:
             ),
         )
 
+    def UnauthorizedException(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import="UnauthorizedException",
+            ),
+        )
+
 
 class CoreUtilities:
     def __init__(self, filepath_creator: FastApiFilepathCreator):

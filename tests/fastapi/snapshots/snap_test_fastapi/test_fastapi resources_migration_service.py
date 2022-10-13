@@ -5,12 +5,14 @@
 # isort: skip_file
 
 import abc
+import functools
 import inspect
 import typing
 
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
+from ...core.exceptions import FernHTTPException
 from ...core.route_args import get_route_args
 from .types.migration import Migration
 
@@ -49,8 +51,20 @@ class AbstractMigrationInfoService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_attempted_migrations, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_attempted_migrations = router.get(  # type: ignore
+        @functools.wraps(cls.get_attempted_migrations)
+        def wrapper(*args, **kwargs: typing.Any) -> typing.List[Migration]:
+            try:
+                return cls.__init_get_attempted_migrations(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_attempted_migrations unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_attempted_migrations's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/migration-info/all",
             response_model=typing.List[Migration],
             **get_route_args(cls.get_attempted_migrations),
-        )(cls.get_attempted_migrations)
+        )(wrapper)

@@ -5,12 +5,14 @@
 # isort: skip_file
 
 import abc
+import functools
 import inspect
 import typing
 
 import fastapi
 
 from .....core.abstract_fern_service import AbstractFernService
+from .....core.exceptions import FernHTTPException
 from .....core.route_args import get_route_args
 from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from .types.problem_info_v_2 import ProblemInfoV2
@@ -65,11 +67,23 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_lightweight_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_lightweight_problems = router.get(  # type: ignore
+        @functools.wraps(cls.get_lightweight_problems)
+        def wrapper(*args, **kwargs: typing.Any) -> typing.List[LightweightProblemInfoV2]:
+            try:
+                return cls.__init_get_lightweight_problems(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_lightweight_problems unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_lightweight_problems's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
             **get_route_args(cls.get_lightweight_problems),
-        )(cls.get_lightweight_problems)
+        )(wrapper)
 
     @classmethod
     def __init_get_problems(cls, router: fastapi.APIRouter) -> None:
@@ -82,11 +96,23 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_problems = router.get(  # type: ignore
+        @functools.wraps(cls.get_problems)
+        def wrapper(*args, **kwargs: typing.Any) -> typing.List[ProblemInfoV2]:
+            try:
+                return cls.__init_get_problems(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_problems unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_problems's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
             **get_route_args(cls.get_problems),
-        )(cls.get_problems)
+        )(wrapper)
 
     @classmethod
     def __init_get_latest_problem(cls, router: fastapi.APIRouter) -> None:
@@ -101,11 +127,23 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_latest_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_latest_problem = router.get(  # type: ignore
+        @functools.wraps(cls.get_latest_problem)
+        def wrapper(*args, **kwargs: typing.Any) -> ProblemInfoV2:
+            try:
+                return cls.__init_get_latest_problem(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_latest_problem unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_latest_problem's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
             **get_route_args(cls.get_latest_problem),
-        )(cls.get_latest_problem)
+        )(wrapper)
 
     @classmethod
     def __init_get_problem_version(cls, router: fastapi.APIRouter) -> None:
@@ -122,8 +160,20 @@ class AbstractProblemInfoServicV2(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_problem_version, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_problem_version = router.get(  # type: ignore
+        @functools.wraps(cls.get_problem_version)
+        def wrapper(*args, **kwargs: typing.Any) -> ProblemInfoV2:
+            try:
+                return cls.__init_get_problem_version(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_problem_version unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_problem_version's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
             **get_route_args(cls.get_problem_version),
-        )(cls.get_problem_version)
+        )(wrapper)

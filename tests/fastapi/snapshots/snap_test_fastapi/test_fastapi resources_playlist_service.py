@@ -5,14 +5,18 @@
 # isort: skip_file
 
 import abc
+import functools
 import inspect
 import typing
 
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
+from ...core.exceptions import FernHTTPException, UnauthorizedException
 from ...core.route_args import get_route_args
 from ...security import ApiAuth, FernAuth
+from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
+from .errors.unauthorized_error import UnauthorizedError
 from .types.playlist import Playlist
 from .types.playlist_create_request import PlaylistCreateRequest
 from .types.update_playlist_request import UpdatePlaylistRequest
@@ -82,9 +86,23 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.create_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.create_playlist = router.post(  # type: ignore
+        @functools.wraps(cls.create_playlist)
+        def wrapper(*args, **kwargs: typing.Any) -> Playlist:
+            try:
+                return cls.__init_create_playlist(*args, **kwargs)
+            except UnauthorizedException as e:
+                raise e
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"create_playlist unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "create_playlist's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(  # type: ignore
             path="/v2/playlist/{service_param}/create", response_model=Playlist, **get_route_args(cls.create_playlist)
-        )(cls.create_playlist)
+        )(wrapper)
 
     @classmethod
     def __init_get_playlists(cls, router: fastapi.APIRouter) -> None:
@@ -105,11 +123,25 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_playlists, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_playlists = router.get(  # type: ignore
+        @functools.wraps(cls.get_playlists)
+        def wrapper(*args, **kwargs: typing.Any) -> typing.List[Playlist]:
+            try:
+                return cls.__init_get_playlists(*args, **kwargs)
+            except UnauthorizedException as e:
+                raise e
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_playlists unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_playlists's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/v2/playlist/{service_param}/all",
             response_model=typing.List[Playlist],
             **get_route_args(cls.get_playlists),
-        )(cls.get_playlists)
+        )(wrapper)
 
     @classmethod
     def __init_get_playlist(cls, router: fastapi.APIRouter) -> None:
@@ -126,11 +158,25 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_playlist = router.get(  # type: ignore
+        @functools.wraps(cls.get_playlist)
+        def wrapper(*args, **kwargs: typing.Any) -> Playlist:
+            try:
+                return cls.__init_get_playlist(*args, **kwargs)
+            except (PlaylistIdNotFoundError, UnauthorizedError) as e:
+                raise e
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_playlist unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_playlist's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=Playlist,
             **get_route_args(cls.get_playlist),
-        )(cls.get_playlist)
+        )(wrapper)
 
     @classmethod
     def __init_update_playlist(cls, router: fastapi.APIRouter) -> None:
@@ -151,11 +197,25 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.update_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.update_playlist = router.put(  # type: ignore
+        @functools.wraps(cls.update_playlist)
+        def wrapper(*args, **kwargs: typing.Any) -> typing.Optional[Playlist]:
+            try:
+                return cls.__init_update_playlist(*args, **kwargs)
+            except (UnauthorizedException, PlaylistIdNotFoundError) as e:
+                raise e
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"update_playlist unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "update_playlist's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.put(  # type: ignore
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=typing.Optional[Playlist],
             **get_route_args(cls.update_playlist),
-        )(cls.update_playlist)
+        )(wrapper)
 
     @classmethod
     def __init_delete_playlist(cls, router: fastapi.APIRouter) -> None:
@@ -174,6 +234,20 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.delete_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.delete_playlist = router.delete(  # type: ignore
+        @functools.wraps(cls.delete_playlist)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_delete_playlist(*args, **kwargs)
+            except UnauthorizedException as e:
+                raise e
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"delete_playlist unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "delete_playlist's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.delete(  # type: ignore
             path="/v2/playlist/{service_param}/{playlist_id}", **get_route_args(cls.delete_playlist)
-        )(cls.delete_playlist)
+        )(wrapper)

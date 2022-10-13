@@ -5,12 +5,14 @@
 # isort: skip_file
 
 import abc
+import functools
 import inspect
 import typing
 
 import fastapi
 
 from ...core.abstract_fern_service import AbstractFernService
+from ...core.exceptions import FernHTTPException
 from ...core.route_args import get_route_args
 from ..commons.types.problem_id import ProblemId
 
@@ -54,11 +56,23 @@ class AbstractHomepageProblemService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.get_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.get_homepage_problems = router.get(  # type: ignore
+        @functools.wraps(cls.get_homepage_problems)
+        def wrapper(*args, **kwargs: typing.Any) -> typing.List[ProblemId]:
+            try:
+                return cls.__init_get_homepage_problems(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"get_homepage_problems unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "get_homepage_problems's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(  # type: ignore
             path="/homepage-problems/",
             response_model=typing.List[ProblemId],
             **get_route_args(cls.get_homepage_problems),
-        )(cls.get_homepage_problems)
+        )(wrapper)
 
     @classmethod
     def __init_set_homepage_problems(cls, router: fastapi.APIRouter) -> None:
@@ -73,6 +87,16 @@ class AbstractHomepageProblemService(AbstractFernService):
                 new_parameters.append(parameter)
         setattr(cls.set_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        cls.set_homepage_problems = router.post(  # type: ignore
-            path="/homepage-problems/", **get_route_args(cls.set_homepage_problems)
-        )(cls.set_homepage_problems)
+        @functools.wraps(cls.set_homepage_problems)
+        def wrapper(*args, **kwargs: typing.Any) -> None:
+            try:
+                return cls.__init_set_homepage_problems(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(__name__).warn(
+                    f"set_homepage_problems unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "set_homepage_problems's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(path="/homepage-problems/", **get_route_args(cls.set_homepage_problems))(wrapper)  # type: ignore
