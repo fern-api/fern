@@ -7,7 +7,7 @@ import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { FERN_CONSTANTS } from "./FernConstants";
+import { FERN_CONSTANTS, FERN_CONSTANTS_V2 } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -31,6 +31,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
             websocket: [],
         },
         constants: FERN_CONSTANTS,
+        constantsV2: FERN_CONSTANTS_V2,
     };
 
     const typeResolver = new TypeResolverImpl(workspace);

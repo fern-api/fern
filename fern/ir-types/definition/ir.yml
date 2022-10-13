@@ -7,6 +7,7 @@ imports:
   serviceCommons: services/commons.yml
   http: services/http.yml
   websocket: services/websocket.yml
+  constants: constants.yml
 types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
@@ -20,7 +21,10 @@ types:
         docs: "The services exposed by this API"
         type: Services
       errors: list<errors.ErrorDeclaration>
-      constants: FernConstants
+      constants:
+        type: FernConstants
+        docs: this is deprecated. use constantsV2
+      constantsV2: constants.Constants
   Services:
     properties:
       http: list<http.HttpService>
