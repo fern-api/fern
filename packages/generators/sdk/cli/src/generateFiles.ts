@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { Logger } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
@@ -15,7 +15,7 @@ export async function generateFiles({
     logger,
     npmPackage,
 }: {
-    config: GeneratorConfig;
+    config: FernGeneratorExec.GeneratorConfig;
     logger: Logger;
     npmPackage: NpmPackage;
 }): Promise<{ writtenTo: AbsoluteFilePath }> {

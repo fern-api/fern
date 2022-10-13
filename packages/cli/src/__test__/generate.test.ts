@@ -3,7 +3,7 @@ import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { mkdir, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
@@ -64,18 +64,19 @@ describe("runGenerator", () => {
                         await rm(linkToOutputPath, { force: true });
                         await symlink(outputPath, linkToOutputPath, "dir");
 
-                        const config: GeneratorConfig = {
+                        const config: FernGeneratorExec.GeneratorConfig = {
                             irFilepath: irPath,
                             output: {
                                 path: outputPath,
+                                mode: FernGeneratorExec.OutputMode.downloadFiles(),
                             },
-                            publish: null,
+                            publish: undefined,
                             customConfig: {
                                 mode,
                             },
                             workspaceName: "my-api",
                             organization: "fern-api",
-                            environment: { _type: "local" },
+                            environment: FernGeneratorExec.GeneratorEnvironment.local(),
                         };
                         await writeFile(configJsonPath, JSON.stringify(config, undefined, 4));
 

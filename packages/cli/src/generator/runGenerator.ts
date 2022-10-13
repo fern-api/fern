@@ -1,5 +1,6 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-exec-client/model/logging";
+import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-exec-client/api";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-client/schemas";
 import {
     FernTypescriptGeneratorConfig,
     FernTypescriptGeneratorCustomConfig,
@@ -15,10 +16,11 @@ import { GeneratorNotificationService } from "../utils/GeneratorNotificationServ
 
 export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
-    const config = JSON.parse(configStr.toString()) as FernTypescriptGeneratorConfig;
+    const rawConfig = JSON.parse(configStr.toString());
+    const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig) as FernTypescriptGeneratorConfig;
     await validateSchema<FernTypescriptGeneratorCustomConfig>(
         FernTypescriptGeneratorCustomConfigSchema,
-        config.customConfig
+        config.customConfig as FernTypescriptGeneratorCustomConfig
     );
 
     const commands = getCommands(config);

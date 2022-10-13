@@ -1,5 +1,4 @@
-import { NpmRegistryConfig } from "@fern-fern/generator-exec-client/model/config";
-import { PackageCoordinate } from "@fern-fern/generator-exec-client/model/logging";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 
 export interface NpmPackage {
     scopeWithAtSign: string;
@@ -8,6 +7,6 @@ export interface NpmPackage {
 }
 
 export interface PublishInfo {
-    registry: NpmRegistryConfig;
-    packageCoordinate: PackageCoordinate.Npm;
+    registry: FernGeneratorExec.NpmRegistryConfig;
+    packageCoordinate: FernGeneratorExec.PackageCoordinate.Npm;
 }

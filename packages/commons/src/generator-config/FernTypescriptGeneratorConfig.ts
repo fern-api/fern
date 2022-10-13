@@ -1,6 +1,6 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import { FernTypescriptGeneratorCustomConfig } from "./FernTypescriptGeneratorCustomConfig";
 
-export type FernTypescriptGeneratorConfig = Omit<GeneratorConfig, "customConfig"> & {
+export type FernTypescriptGeneratorConfig = Omit<FernGeneratorExec.GeneratorConfig, "customConfig"> & {
     customConfig: FernTypescriptGeneratorCustomConfig;
 };

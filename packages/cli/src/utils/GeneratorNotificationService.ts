@@ -1,21 +1,19 @@
-import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
-import { GeneratorLoggingService } from "@fern-fern/generator-exec-client/services/logging";
-import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 
 export class GeneratorNotificationService {
     // implementation defined in constructor
-    public sendUpdate: (update: GeneratorUpdate) => Promise<void>;
+    public sendUpdate: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
 
-    constructor(generatorConfig: FernTypescriptGeneratorConfig) {
-        if (generatorConfig.environment._type === "remote") {
-            const generatorLoggingClient = new GeneratorLoggingService({
-                origin: generatorConfig.environment.coordinatorUrl,
+    constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
+        if (generatorConfig.environment.type === "remote") {
+            const generatorExecClient = new FernGeneratorExec.Client({
+                _origin: generatorConfig.environment.coordinatorUrl,
             });
             const taskId = generatorConfig.environment.id;
             this.sendUpdate = async (update) => {
-                await generatorLoggingClient.sendUpdate({
+                await generatorExecClient.logging.sendUpdate({
                     taskId,
-                    body: [update],
+                    _body: [update],
                 });
             };
         } else {

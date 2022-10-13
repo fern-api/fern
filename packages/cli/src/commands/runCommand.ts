@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { model as GeneratorLoggingApiModel } from "@fern-fern/generator-exec-client";
-import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { GeneratorUpdate } from "@fern-fern/generator-exec-client/api/logging";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, Logger, LogLevel } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
@@ -12,11 +12,11 @@ import { GeneratorNotificationService } from "../utils/GeneratorNotificationServ
 import { loadIntermediateRepresentation } from "../utils/loadIntermediateRepresentation";
 import { Command } from "./Command";
 
-const LOG_LEVEL_CONVERSIONS: Record<LogLevel, GeneratorLoggingApiModel.logging.LogLevel> = {
-    [LogLevel.Debug]: GeneratorLoggingApiModel.logging.LogLevel.Debug,
-    [LogLevel.Info]: GeneratorLoggingApiModel.logging.LogLevel.Info,
-    [LogLevel.Warn]: GeneratorLoggingApiModel.logging.LogLevel.Warn,
-    [LogLevel.Error]: GeneratorLoggingApiModel.logging.LogLevel.Error,
+const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
+    [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
+    [LogLevel.Info]: FernGeneratorExec.logging.LogLevel.Info,
+    [LogLevel.Warn]: FernGeneratorExec.logging.LogLevel.Warn,
+    [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error,
 };
 
 export async function runCommand({

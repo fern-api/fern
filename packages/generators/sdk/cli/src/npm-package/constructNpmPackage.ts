@@ -1,8 +1,7 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
-import { PackageCoordinate } from "@fern-fern/generator-exec-client/model/logging";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import { NpmPackage } from "./NpmPackage";
 
-export function constructNpmPackage(generatorConfig: GeneratorConfig): NpmPackage {
+export function constructNpmPackage(generatorConfig: FernGeneratorExec.GeneratorConfig): NpmPackage {
     const scope = generatorConfig.publish?.registries.npm.scope ?? generatorConfig.organization;
     const scopeWithAtSign = `@${scope}`;
     const packageNameWithoutScope = `${generatorConfig.workspaceName}-client`;
@@ -14,7 +13,7 @@ export function constructNpmPackage(generatorConfig: GeneratorConfig): NpmPackag
             generatorConfig.publish != null
                 ? {
                       registry: generatorConfig.publish.registries.npm,
-                      packageCoordinate: PackageCoordinate.npm({
+                      packageCoordinate: FernGeneratorExec.PackageCoordinate.npm({
                           name: packageName,
                           version: generatorConfig.publish.version,
                       }),

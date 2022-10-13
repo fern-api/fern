@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import { Logger } from "@fern-typescript/commons-v2";
 import execa from "execa";
 import path from "path";
@@ -32,7 +32,9 @@ export async function publishPackageIfNecessary({
         await runCommandInOutputDirectory("npm", ...args);
     };
 
-    await generatorNotificationService.sendUpdate(GeneratorUpdate.publishing(npmPackage.publishInfo.packageCoordinate));
+    await generatorNotificationService.sendUpdate(
+        FernGeneratorExec.GeneratorUpdate.publishing(npmPackage.publishInfo.packageCoordinate)
+    );
 
     const { registryUrl, token } = npmPackage.publishInfo.registry;
     await runNpmCommandInOutputDirectory(
@@ -54,5 +56,7 @@ export async function publishPackageIfNecessary({
 
     await runNpmCommandInOutputDirectory("publish");
 
-    await generatorNotificationService.sendUpdate(GeneratorUpdate.published(npmPackage.publishInfo.packageCoordinate));
+    await generatorNotificationService.sendUpdate(
+        FernGeneratorExec.GeneratorUpdate.published(npmPackage.publishInfo.packageCoordinate)
+    );
 }
