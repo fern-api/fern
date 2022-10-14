@@ -107,17 +107,26 @@ class _ErrorInfo:
     class CompileError(CompileError):
         type: typing_extensions.Literal["compileError"]
 
+        class Partial(CompileError.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["compileError"]]
+
         class Config:
             frozen = True
 
     class RuntimeError(RuntimeError):
         type: typing_extensions.Literal["runtimeError"]
 
+        class Partial(RuntimeError.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["runtimeError"]]
+
         class Config:
             frozen = True
 
     class InternalError(InternalError):
         type: typing_extensions.Literal["internalError"]
+
+        class Partial(InternalError.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["internalError"]]
 
         class Config:
             frozen = True

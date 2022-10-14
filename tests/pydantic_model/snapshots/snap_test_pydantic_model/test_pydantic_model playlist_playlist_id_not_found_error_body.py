@@ -89,6 +89,10 @@ class _PlaylistIdNotFoundErrorBody:
         type: typing_extensions.Literal["playlistId"]
         value: PlaylistId
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["playlistId"]]
+            value: typing_extensions.NotRequired[PlaylistId]
+
         class Config:
             frozen = True
 

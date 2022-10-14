@@ -97,12 +97,20 @@ class _CreateProblemResponse:
         type: typing_extensions.Literal["success"]
         value: ProblemId
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["success"]]
+            value: typing_extensions.NotRequired[ProblemId]
+
         class Config:
             frozen = True
 
     class Error(pydantic.BaseModel):
         type: typing_extensions.Literal["error"]
         value: CreateProblemError
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["error"]]
+            value: typing_extensions.NotRequired[CreateProblemError]
 
         class Config:
             frozen = True

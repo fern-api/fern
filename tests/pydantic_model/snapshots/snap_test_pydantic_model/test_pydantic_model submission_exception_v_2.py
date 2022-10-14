@@ -93,11 +93,17 @@ class _ExceptionV2:
     class Generic(ExceptionInfo):
         type: typing_extensions.Literal["generic"]
 
+        class Partial(ExceptionInfo.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["generic"]]
+
         class Config:
             frozen = True
 
     class Timeout(pydantic.BaseModel):
         type: typing_extensions.Literal["timeout"]
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["timeout"]]
 
         class Config:
             frozen = True

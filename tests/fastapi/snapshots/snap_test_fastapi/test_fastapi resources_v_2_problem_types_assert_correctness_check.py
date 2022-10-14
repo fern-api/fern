@@ -99,11 +99,17 @@ class _AssertCorrectnessCheck:
     class DeepEquality(DeepEqualityCorrectnessCheck):
         type: typing_extensions.Literal["deepEquality"]
 
+        class Partial(DeepEqualityCorrectnessCheck.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["deepEquality"]]
+
         class Config:
             frozen = True
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing_extensions.Literal["custom"]
+
+        class Partial(VoidFunctionDefinitionThatTakesActualResult.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["custom"]]
 
         class Config:
             frozen = True

@@ -185,6 +185,9 @@ class _SubmissionResponse:
     class ServerInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["serverInitialized"]
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["serverInitialized"]]
+
         class Config:
             frozen = True
 
@@ -192,17 +195,27 @@ class _SubmissionResponse:
         type: typing_extensions.Literal["problemInitialized"]
         value: ProblemId
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["problemInitialized"]]
+            value: typing_extensions.NotRequired[ProblemId]
+
         class Config:
             frozen = True
 
     class WorkspaceInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["workspaceInitialized"]
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["workspaceInitialized"]]
+
         class Config:
             frozen = True
 
     class ServerErrored(ExceptionInfo):
         type: typing_extensions.Literal["serverErrored"]
+
+        class Partial(ExceptionInfo.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["serverErrored"]]
 
         class Config:
             frozen = True
@@ -211,11 +224,18 @@ class _SubmissionResponse:
         type: typing_extensions.Literal["codeExecutionUpdate"]
         value: CodeExecutionUpdate
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["codeExecutionUpdate"]]
+            value: typing_extensions.NotRequired[CodeExecutionUpdate]
+
         class Config:
             frozen = True
 
     class Terminated(TerminatedResponse):
         type: typing_extensions.Literal["terminated"]
+
+        class Partial(TerminatedResponse.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["terminated"]]
 
         class Config:
             frozen = True

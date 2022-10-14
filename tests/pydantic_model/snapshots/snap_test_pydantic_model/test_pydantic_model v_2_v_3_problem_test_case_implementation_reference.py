@@ -119,11 +119,18 @@ class _TestCaseImplementationReference:
         type: typing_extensions.Literal["templateId"]
         value: TestCaseTemplateId
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["templateId"]]
+            value: typing_extensions.NotRequired[TestCaseTemplateId]
+
         class Config:
             frozen = True
 
     class Implementation(TestCaseImplementation):
         type: typing_extensions.Literal["implementation"]
+
+        class Partial(TestCaseImplementation.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["implementation"]]
 
         class Config:
             frozen = True

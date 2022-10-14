@@ -249,12 +249,20 @@ class _VariableValue:
         type: typing_extensions.Literal["integerValue"]
         value: int
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["integerValue"]]
+            value: typing_extensions.NotRequired[int]
+
         class Config:
             frozen = True
 
     class BooleanValue(pydantic.BaseModel):
         type: typing_extensions.Literal["booleanValue"]
         value: bool
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["booleanValue"]]
+            value: typing_extensions.NotRequired[bool]
 
         class Config:
             frozen = True
@@ -263,12 +271,20 @@ class _VariableValue:
         type: typing_extensions.Literal["doubleValue"]
         value: float
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["doubleValue"]]
+            value: typing_extensions.NotRequired[float]
+
         class Config:
             frozen = True
 
     class StringValue(pydantic.BaseModel):
         type: typing_extensions.Literal["stringValue"]
         value: str
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["stringValue"]]
+            value: typing_extensions.NotRequired[str]
 
         class Config:
             frozen = True
@@ -277,11 +293,18 @@ class _VariableValue:
         type: typing_extensions.Literal["charValue"]
         value: str
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["charValue"]]
+            value: typing_extensions.NotRequired[str]
+
         class Config:
             frozen = True
 
     class MapValue(MapValue):
         type: typing_extensions.Literal["mapValue"]
+
+        class Partial(MapValue.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["mapValue"]]
 
         class Config:
             frozen = True
@@ -290,11 +313,18 @@ class _VariableValue:
         type: typing_extensions.Literal["listValue"]
         value: typing.List[VariableValue]
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["listValue"]]
+            value: typing_extensions.NotRequired[typing.List[VariableValue]]
+
         class Config:
             frozen = True
 
     class BinaryTreeValue(BinaryTreeValue):
         type: typing_extensions.Literal["binaryTreeValue"]
+
+        class Partial(BinaryTreeValue.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["binaryTreeValue"]]
 
         class Config:
             frozen = True
@@ -302,17 +332,26 @@ class _VariableValue:
     class SinglyLinkedListValue(SinglyLinkedListValue):
         type: typing_extensions.Literal["singlyLinkedListValue"]
 
+        class Partial(SinglyLinkedListValue.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["singlyLinkedListValue"]]
+
         class Config:
             frozen = True
 
     class DoublyLinkedListValue(DoublyLinkedListValue):
         type: typing_extensions.Literal["doublyLinkedListValue"]
 
+        class Partial(DoublyLinkedListValue.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["doublyLinkedListValue"]]
+
         class Config:
             frozen = True
 
     class NullValue(pydantic.BaseModel):
         type: typing_extensions.Literal["nullValue"]
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["nullValue"]]
 
         class Config:
             frozen = True

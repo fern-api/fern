@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 from types import TracebackType
 from typing import List, Optional, Sequence, Type
 
@@ -32,11 +33,11 @@ class PydanticModel:
             name=name,
             extends=base_models or [PYDANTIC_BASE_MODEL_REFERENCE],
         )
+        self._base_models = base_models or []
         self._local_class_reference = (parent or source_file).add_class_declaration(declaration=self._class_declaration)
         self._has_aliases = False
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
-        self._should_generate_partial_class = False
         self.frozen = True
         self.name = name
 
@@ -194,7 +195,7 @@ class PydanticModel:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
-        if self._should_generate_partial_class:
+        if self._root_type is None:
             self._add_partial_class()
         self._add_config_class()
 
@@ -202,6 +203,15 @@ class PydanticModel:
         partial_class = AST.ClassDeclaration(
             name=PydanticModel._PARTIAL_CLASS_NAME,
             extends=[
+                dataclasses.replace(
+                    base_model,
+                    qualified_name_excluding_import=base_model.qualified_name_excluding_import
+                    + (PydanticModel._PARTIAL_CLASS_NAME,),
+                )
+                for base_model in self._base_models
+            ]
+            if len(self._base_models) > 0
+            else [
                 AST.ClassReference(
                     import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
                     qualified_name_excluding_import=("TypedDict",),
@@ -220,7 +230,6 @@ class PydanticModel:
         self.add_inner_class(inner_class=partial_class)
 
     def get_reference_to_partial_class(self) -> AST.ClassReference:
-        self._should_generate_partial_class = True
         return AST.ClassReference(
             qualified_name_excluding_import=(self.name, PydanticModel._PARTIAL_CLASS_NAME),
             is_forward_reference=True,

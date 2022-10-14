@@ -108,11 +108,18 @@ class _ActualResult:
         type: typing_extensions.Literal["value"]
         value: VariableValue
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["value"]]
+            value: typing_extensions.NotRequired[VariableValue]
+
         class Config:
             frozen = True
 
     class Exception(ExceptionInfo):
         type: typing_extensions.Literal["exception"]
+
+        class Partial(ExceptionInfo.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["exception"]]
 
         class Config:
             frozen = True
@@ -120,6 +127,10 @@ class _ActualResult:
     class ExceptionV2(pydantic.BaseModel):
         type: typing_extensions.Literal["exceptionV2"]
         value: ExceptionV2
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["exceptionV2"]]
+            value: typing_extensions.NotRequired[ExceptionV2]
 
         class Config:
             frozen = True

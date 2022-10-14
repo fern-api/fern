@@ -134,6 +134,10 @@ class _ProblemDescriptionBoard:
         type: typing_extensions.Literal["html"]
         value: str
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["html"]]
+            value: typing_extensions.NotRequired[str]
+
         class Config:
             frozen = True
 
@@ -141,12 +145,20 @@ class _ProblemDescriptionBoard:
         type: typing_extensions.Literal["variable"]
         value: VariableValue
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["variable"]]
+            value: typing_extensions.NotRequired[VariableValue]
+
         class Config:
             frozen = True
 
     class TestCaseId(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseId"]
         value: str
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["testCaseId"]]
+            value: typing_extensions.NotRequired[str]
 
         class Config:
             frozen = True

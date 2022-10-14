@@ -97,12 +97,19 @@ class _CustomFiles:
     class Basic(BasicCustomFiles):
         type: typing_extensions.Literal["basic"]
 
+        class Partial(BasicCustomFiles.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["basic"]]
+
         class Config:
             frozen = True
 
     class Custom(pydantic.BaseModel):
         type: typing_extensions.Literal["custom"]
         value: typing.Dict[Language, Files]
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["custom"]]
+            value: typing_extensions.NotRequired[typing.Dict[Language, Files]]
 
         class Config:
             frozen = True

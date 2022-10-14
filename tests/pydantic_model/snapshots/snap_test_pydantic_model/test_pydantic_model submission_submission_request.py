@@ -172,11 +172,17 @@ class _SubmissionRequest:
     class InitializeProblemRequest(InitializeProblemRequest):
         type: typing_extensions.Literal["initializeProblemRequest"]
 
+        class Partial(InitializeProblemRequest.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["initializeProblemRequest"]]
+
         class Config:
             frozen = True
 
     class InitializeWorkspaceRequest(pydantic.BaseModel):
         type: typing_extensions.Literal["initializeWorkspaceRequest"]
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["initializeWorkspaceRequest"]]
 
         class Config:
             frozen = True
@@ -184,17 +190,26 @@ class _SubmissionRequest:
     class SubmitV2(SubmitRequestV2):
         type: typing_extensions.Literal["submitV2"]
 
+        class Partial(SubmitRequestV2.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["submitV2"]]
+
         class Config:
             frozen = True
 
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing_extensions.Literal["workspaceSubmit"]
 
+        class Partial(WorkspaceSubmitRequest.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["workspaceSubmit"]]
+
         class Config:
             frozen = True
 
     class Stop(StopRequest):
         type: typing_extensions.Literal["stop"]
+
+        class Partial(StopRequest.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["stop"]]
 
         class Config:
             frozen = True

@@ -13,6 +13,7 @@ import uuid
 
 import fastapi
 import pydantic
+import typing_extensions
 
 
 class FernHTTPException(abc.ABC, fastapi.HTTPException):
@@ -28,6 +29,11 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         error: typing.Optional[str]
         error_instance_id: uuid.UUID = pydantic.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
         content: typing.Optional[typing.Any]
+
+        class Partial(typing_extensions.TypedDict):
+            error: typing_extensions.NotRequired[typing.Optional[str]]
+            error_instance_id: typing_extensions.NotRequired[uuid.UUID]
+            content: typing_extensions.NotRequired[typing.Optional[typing.Any]]
 
         class Config:
             frozen = True

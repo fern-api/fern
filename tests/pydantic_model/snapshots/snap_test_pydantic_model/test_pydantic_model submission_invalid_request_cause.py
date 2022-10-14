@@ -147,17 +147,26 @@ class _InvalidRequestCause:
     class SubmissionIdNotFound(SubmissionIdNotFound):
         type: typing_extensions.Literal["submissionIdNotFound"]
 
+        class Partial(SubmissionIdNotFound.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["submissionIdNotFound"]]
+
         class Config:
             frozen = True
 
     class CustomTestCasesUnsupported(CustomTestCasesUnsupported):
         type: typing_extensions.Literal["customTestCasesUnsupported"]
 
+        class Partial(CustomTestCasesUnsupported.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["customTestCasesUnsupported"]]
+
         class Config:
             frozen = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing_extensions.Literal["unexpectedLanguage"]
+
+        class Partial(UnexpectedLanguageError.Partial):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["unexpectedLanguage"]]
 
         class Config:
             frozen = True

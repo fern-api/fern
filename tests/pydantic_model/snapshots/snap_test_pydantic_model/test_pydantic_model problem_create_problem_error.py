@@ -82,6 +82,9 @@ class _CreateProblemError:
     class Generic(GenericCreateProblemError):
         error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
 
+        class Partial(GenericCreateProblemError.Partial):
+            error_type: typing_extensions.NotRequired[typing_extensions.Literal["generic"]]
+
         class Config:
             frozen = True
             allow_population_by_field_name = True

@@ -117,12 +117,20 @@ class _TestCaseImplementationDescriptionBoard:
         type: typing_extensions.Literal["html"]
         value: str
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["html"]]
+            value: typing_extensions.NotRequired[str]
+
         class Config:
             frozen = True
 
     class ParamId(pydantic.BaseModel):
         type: typing_extensions.Literal["paramId"]
         value: ParameterId
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["paramId"]]
+            value: typing_extensions.NotRequired[ParameterId]
 
         class Config:
             frozen = True

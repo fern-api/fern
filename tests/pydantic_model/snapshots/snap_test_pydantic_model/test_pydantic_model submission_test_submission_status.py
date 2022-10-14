@@ -156,12 +156,19 @@ class _TestSubmissionStatus:
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["stopped"]]
+
         class Config:
             frozen = True
 
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
         value: ErrorInfo
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["errored"]]
+            value: typing_extensions.NotRequired[ErrorInfo]
 
         class Config:
             frozen = True
@@ -170,12 +177,20 @@ class _TestSubmissionStatus:
         type: typing_extensions.Literal["running"]
         value: RunningSubmissionState
 
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["running"]]
+            value: typing_extensions.NotRequired[RunningSubmissionState]
+
         class Config:
             frozen = True
 
     class TestCaseIdToState(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseIdToState"]
         value: typing.Dict[str, SubmissionStatusForTestCase]
+
+        class Partial(typing_extensions.TypedDict):
+            type: typing_extensions.NotRequired[typing_extensions.Literal["testCaseIdToState"]]
+            value: typing_extensions.NotRequired[typing.Dict[str, SubmissionStatusForTestCase]]
 
         class Config:
             frozen = True
