@@ -4,7 +4,6 @@ import { FernFiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
-import produce from "immer";
 import urlJoin from "url-join";
 import { FIDDLE_ORIGIN, REMOTE_GENERATION_SERVICE } from "./service";
 import { substituteEnvVariables } from "./substituteEnvVariables";
@@ -51,9 +50,7 @@ async function createJob({
     context: TaskContext;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
     const generatorConfigsWithEnvVarSubstitutions = generatorConfigs.map((generatorConfig) =>
-        produce(generatorConfig, (draft) => {
-            draft.customConfig = substituteEnvVariables(draft.customConfig, context);
-        })
+        substituteEnvVariables(generatorConfig, context)
     );
     if (context.getResult() === TaskResult.Failure) {
         return TASK_FAILURE;
