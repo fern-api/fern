@@ -17,6 +17,9 @@ from .problem_description_board import ProblemDescriptionBoard
 class ProblemDescription(pydantic.BaseModel):
     boards: typing.List[ProblemDescriptionBoard]
 
+    class Partial(typing_extensions.TypedDict):
+        boards: typing_extensions.NotRequired[typing.List[ProblemDescriptionBoard]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -87,9 +90,6 @@ class ProblemDescription(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        boards: typing_extensions.NotRequired[typing.List[ProblemDescriptionBoard]]
 
     class Config:
         frozen = True

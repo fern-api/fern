@@ -16,6 +16,10 @@ class LightweightStackframeInformation(pydantic.BaseModel):
     num_stack_frames: int = pydantic.Field(alias="numStackFrames")
     top_stack_frame_method_name: str = pydantic.Field(alias="topStackFrameMethodName")
 
+    class Partial(typing_extensions.TypedDict):
+        num_stack_frames: typing_extensions.NotRequired[int]
+        top_stack_frame_method_name: typing_extensions.NotRequired[str]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -119,10 +123,6 @@ class LightweightStackframeInformation(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        num_stack_frames: typing_extensions.NotRequired[int]
-        top_stack_frame_method_name: typing_extensions.NotRequired[str]
 
     class Config:
         frozen = True

@@ -19,6 +19,10 @@ class GradedResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic.Field(alias="testCases")
 
+    class Partial(typing_extensions.TypedDict):
+        submission_id: typing_extensions.NotRequired[SubmissionId]
+        test_cases: typing_extensions.NotRequired[typing.Dict[str, TestCaseResultWithStdout]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -115,10 +119,6 @@ class GradedResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        submission_id: typing_extensions.NotRequired[SubmissionId]
-        test_cases: typing_extensions.NotRequired[typing.Dict[str, TestCaseResultWithStdout]]
 
     class Config:
         frozen = True

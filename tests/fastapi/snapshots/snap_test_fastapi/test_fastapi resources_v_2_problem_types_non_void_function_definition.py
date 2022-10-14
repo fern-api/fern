@@ -19,6 +19,10 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
     signature: NonVoidFunctionSignature
     code: FunctionImplementationForMultipleLanguages
 
+    class Partial(typing_extensions.TypedDict):
+        signature: typing_extensions.NotRequired[NonVoidFunctionSignature]
+        code: typing_extensions.NotRequired[FunctionImplementationForMultipleLanguages]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -122,10 +126,6 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        signature: typing_extensions.NotRequired[NonVoidFunctionSignature]
-        code: typing_extensions.NotRequired[FunctionImplementationForMultipleLanguages]
 
     class Config:
         frozen = True

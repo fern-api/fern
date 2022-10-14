@@ -21,6 +21,12 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
     exception: typing.Optional[ExceptionV2]
     stdout: str
 
+    class Partial(typing_extensions.TypedDict):
+        passed: typing_extensions.NotRequired[bool]
+        actual_result: typing_extensions.NotRequired[typing.Optional[VariableValue]]
+        exception: typing_extensions.NotRequired[typing.Optional[ExceptionV2]]
+        stdout: typing_extensions.NotRequired[str]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -176,12 +182,6 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        passed: typing_extensions.NotRequired[bool]
-        actual_result: typing_extensions.NotRequired[typing.Optional[VariableValue]]
-        exception: typing_extensions.NotRequired[typing.Optional[ExceptionV2]]
-        stdout: typing_extensions.NotRequired[str]
 
     class Config:
         frozen = True

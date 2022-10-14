@@ -17,6 +17,9 @@ from ..commons.debug_variable_value import DebugVariableValue
 class Scope(pydantic.BaseModel):
     variables: typing.Dict[str, DebugVariableValue]
 
+    class Partial(typing_extensions.TypedDict):
+        variables: typing_extensions.NotRequired[typing.Dict[str, DebugVariableValue]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -83,9 +86,6 @@ class Scope(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        variables: typing_extensions.NotRequired[typing.Dict[str, DebugVariableValue]]
 
     class Config:
         frozen = True

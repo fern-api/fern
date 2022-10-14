@@ -18,6 +18,9 @@ from .function_implementation import FunctionImplementation
 class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
     code_by_language: typing.Dict[Language, FunctionImplementation] = pydantic.Field(alias="codeByLanguage")
 
+    class Partial(typing_extensions.TypedDict):
+        code_by_language: typing_extensions.NotRequired[typing.Dict[Language, FunctionImplementation]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -108,9 +111,6 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        code_by_language: typing_extensions.NotRequired[typing.Dict[Language, FunctionImplementation]]
 
     class Config:
         frozen = True

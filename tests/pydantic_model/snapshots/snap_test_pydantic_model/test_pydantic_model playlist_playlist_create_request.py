@@ -18,6 +18,10 @@ class PlaylistCreateRequest(pydantic.BaseModel):
     name: str
     problems: typing.List[ProblemId]
 
+    class Partial(typing_extensions.TypedDict):
+        name: typing_extensions.NotRequired[str]
+        problems: typing_extensions.NotRequired[typing.List[ProblemId]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -114,10 +118,6 @@ class PlaylistCreateRequest(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        name: typing_extensions.NotRequired[str]
-        problems: typing_extensions.NotRequired[typing.List[ProblemId]]
 
     class Config:
         frozen = True

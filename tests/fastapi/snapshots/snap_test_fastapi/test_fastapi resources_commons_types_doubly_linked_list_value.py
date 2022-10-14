@@ -19,6 +19,10 @@ class DoublyLinkedListValue(pydantic.BaseModel):
     head: typing.Optional[NodeId]
     nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
+    class Partial(typing_extensions.TypedDict):
+        head: typing_extensions.NotRequired[typing.Optional[NodeId]]
+        nodes: typing_extensions.NotRequired[typing.Dict[NodeId, DoublyLinkedListNodeValue]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -119,10 +123,6 @@ class DoublyLinkedListValue(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        head: typing_extensions.NotRequired[typing.Optional[NodeId]]
-        nodes: typing_extensions.NotRequired[typing.Dict[NodeId, DoublyLinkedListNodeValue]]
 
     class Config:
         frozen = True

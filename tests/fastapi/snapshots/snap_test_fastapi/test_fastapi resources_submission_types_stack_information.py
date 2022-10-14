@@ -18,6 +18,10 @@ class StackInformation(pydantic.BaseModel):
     num_stack_frames: int = pydantic.Field(alias="numStackFrames")
     top_stack_frame: typing.Optional[StackFrame] = pydantic.Field(alias="topStackFrame")
 
+    class Partial(typing_extensions.TypedDict):
+        num_stack_frames: typing_extensions.NotRequired[int]
+        top_stack_frame: typing_extensions.NotRequired[typing.Optional[StackFrame]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -118,10 +122,6 @@ class StackInformation(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        num_stack_frames: typing_extensions.NotRequired[int]
-        top_stack_frame: typing_extensions.NotRequired[typing.Optional[StackFrame]]
 
     class Config:
         frozen = True

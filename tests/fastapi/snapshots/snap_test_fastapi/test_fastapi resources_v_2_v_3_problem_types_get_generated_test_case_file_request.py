@@ -19,6 +19,10 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
     template: typing.Optional[TestCaseTemplate]
     test_case: TestCaseV2 = pydantic.Field(alias="testCase")
 
+    class Partial(typing_extensions.TypedDict):
+        template: typing_extensions.NotRequired[typing.Optional[TestCaseTemplate]]
+        test_case: typing_extensions.NotRequired[TestCaseV2]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -126,10 +130,6 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        template: typing_extensions.NotRequired[typing.Optional[TestCaseTemplate]]
-        test_case: typing_extensions.NotRequired[TestCaseV2]
 
     class Config:
         frozen = True

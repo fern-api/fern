@@ -19,6 +19,11 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
     num_warming_instances: typing.Optional[int] = pydantic.Field(alias="numWarmingInstances")
     warming_session_ids: typing.List[str] = pydantic.Field(alias="warmingSessionIds")
 
+    class Partial(typing_extensions.TypedDict):
+        states: typing_extensions.NotRequired[typing.Dict[str, ExecutionSessionState]]
+        num_warming_instances: typing_extensions.NotRequired[typing.Optional[int]]
+        warming_session_ids: typing_extensions.NotRequired[typing.List[str]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -163,11 +168,6 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        states: typing_extensions.NotRequired[typing.Dict[str, ExecutionSessionState]]
-        num_warming_instances: typing_extensions.NotRequired[typing.Optional[int]]
-        warming_session_ids: typing_extensions.NotRequired[typing.List[str]]
 
     class Config:
         frozen = True

@@ -19,6 +19,10 @@ class RunningResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     state: RunningSubmissionState
 
+    class Partial(typing_extensions.TypedDict):
+        submission_id: typing_extensions.NotRequired[SubmissionId]
+        state: typing_extensions.NotRequired[RunningSubmissionState]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -109,10 +113,6 @@ class RunningResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        submission_id: typing_extensions.NotRequired[SubmissionId]
-        state: typing_extensions.NotRequired[RunningSubmissionState]
 
     class Config:
         frozen = True

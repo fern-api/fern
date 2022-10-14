@@ -16,6 +16,10 @@ class KeyValuePair(pydantic.BaseModel):
     key: VariableValue
     value: VariableValue
 
+    class Partial(typing_extensions.TypedDict):
+        key: typing_extensions.NotRequired[VariableValue]
+        value: typing_extensions.NotRequired[VariableValue]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -102,10 +106,6 @@ class KeyValuePair(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        key: typing_extensions.NotRequired[VariableValue]
-        value: typing_extensions.NotRequired[VariableValue]
 
     class Config:
         frozen = True

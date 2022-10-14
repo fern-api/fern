@@ -16,6 +16,10 @@ class ListType(pydantic.BaseModel):
     value_type: VariableType = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength")
 
+    class Partial(typing_extensions.TypedDict):
+        value_type: typing_extensions.NotRequired[VariableType]
+        is_fixed_length: typing_extensions.NotRequired[typing.Optional[bool]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -102,10 +106,6 @@ class ListType(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        value_type: typing_extensions.NotRequired[VariableType]
-        is_fixed_length: typing_extensions.NotRequired[typing.Optional[bool]]
 
     class Config:
         frozen = True

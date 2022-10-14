@@ -19,6 +19,10 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
     full_list: SinglyLinkedListValue = pydantic.Field(alias="fullList")
 
+    class Partial(typing_extensions.TypedDict):
+        node_id: typing_extensions.NotRequired[NodeId]
+        full_list: typing_extensions.NotRequired[SinglyLinkedListValue]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -126,10 +130,6 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        node_id: typing_extensions.NotRequired[NodeId]
-        full_list: typing_extensions.NotRequired[SinglyLinkedListValue]
 
     class Config:
         frozen = True

@@ -21,6 +21,12 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
     language: Language
     submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
 
+    class Partial(typing_extensions.TypedDict):
+        time_submitted: typing_extensions.NotRequired[typing.Optional[str]]
+        submission: typing_extensions.NotRequired[str]
+        language: typing_extensions.NotRequired[Language]
+        submission_type_state: typing_extensions.NotRequired[SubmissionTypeState]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -183,12 +189,6 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        time_submitted: typing_extensions.NotRequired[typing.Optional[str]]
-        submission: typing_extensions.NotRequired[str]
-        language: typing_extensions.NotRequired[Language]
-        submission_type_state: typing_extensions.NotRequired[SubmissionTypeState]
 
     class Config:
         frozen = True

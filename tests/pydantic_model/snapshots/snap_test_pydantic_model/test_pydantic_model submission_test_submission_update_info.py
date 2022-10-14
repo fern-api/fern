@@ -186,18 +186,11 @@ class _TestSubmissionUpdateInfo:
         type: typing_extensions.Literal["running"]
         value: RunningSubmissionState
 
-        class Partial(typing_extensions.TypedDict):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["running"]]
-            value: typing_extensions.NotRequired[RunningSubmissionState]
-
         class Config:
             frozen = True
 
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
-
-        class Partial(typing_extensions.TypedDict):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["stopped"]]
 
         class Config:
             frozen = True
@@ -206,18 +199,11 @@ class _TestSubmissionUpdateInfo:
         type: typing_extensions.Literal["errored"]
         value: ErrorInfo
 
-        class Partial(typing_extensions.TypedDict):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["errored"]]
-            value: typing_extensions.NotRequired[ErrorInfo]
-
         class Config:
             frozen = True
 
     class GradedTestCase(GradedTestCaseUpdate):
         type: typing_extensions.Literal["gradedTestCase"]
-
-        class Partial(GradedTestCaseUpdate.Partial):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["gradedTestCase"]]
 
         class Config:
             frozen = True
@@ -225,17 +211,11 @@ class _TestSubmissionUpdateInfo:
     class RecordedTestCase(RecordedTestCaseUpdate):
         type: typing_extensions.Literal["recordedTestCase"]
 
-        class Partial(RecordedTestCaseUpdate.Partial):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["recordedTestCase"]]
-
         class Config:
             frozen = True
 
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]
-
-        class Partial(typing_extensions.TypedDict):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["finished"]]
 
         class Config:
             frozen = True

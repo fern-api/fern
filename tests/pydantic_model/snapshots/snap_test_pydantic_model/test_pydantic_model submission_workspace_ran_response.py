@@ -19,6 +19,10 @@ class WorkspaceRanResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     run_details: WorkspaceRunDetails = pydantic.Field(alias="runDetails")
 
+    class Partial(typing_extensions.TypedDict):
+        submission_id: typing_extensions.NotRequired[SubmissionId]
+        run_details: typing_extensions.NotRequired[WorkspaceRunDetails]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -114,10 +118,6 @@ class WorkspaceRanResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        submission_id: typing_extensions.NotRequired[SubmissionId]
-        run_details: typing_extensions.NotRequired[WorkspaceRunDetails]
 
     class Config:
         frozen = True

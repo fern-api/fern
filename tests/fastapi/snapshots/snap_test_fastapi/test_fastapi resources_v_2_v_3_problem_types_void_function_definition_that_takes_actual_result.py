@@ -19,6 +19,10 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
     additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 
+    class Partial(typing_extensions.TypedDict):
+        additional_parameters: typing_extensions.NotRequired[typing.List[Parameter]]
+        code: typing_extensions.NotRequired[FunctionImplementationForMultipleLanguages]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -141,10 +145,6 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        additional_parameters: typing_extensions.NotRequired[typing.List[Parameter]]
-        code: typing_extensions.NotRequired[FunctionImplementationForMultipleLanguages]
 
     class Config:
         frozen = True

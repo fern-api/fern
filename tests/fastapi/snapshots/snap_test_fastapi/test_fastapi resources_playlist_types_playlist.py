@@ -20,6 +20,10 @@ class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
     owner_id: UserId = pydantic.Field(alias="owner-id")
 
+    class Partial(PlaylistCreateRequest.Partial):
+        playlist_id: typing_extensions.NotRequired[PlaylistId]
+        owner_id: typing_extensions.NotRequired[UserId]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -106,10 +110,6 @@ class Playlist(PlaylistCreateRequest):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(PlaylistCreateRequest.Partial):
-        playlist_id: typing_extensions.NotRequired[PlaylistId]
-        owner_id: typing_extensions.NotRequired[UserId]
 
     class Config:
         frozen = True

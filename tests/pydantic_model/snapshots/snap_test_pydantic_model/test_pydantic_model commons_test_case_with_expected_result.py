@@ -19,6 +19,10 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
     test_case: TestCase = pydantic.Field(alias="testCase")
     expected_result: VariableValue = pydantic.Field(alias="expectedResult")
 
+    class Partial(typing_extensions.TypedDict):
+        test_case: typing_extensions.NotRequired[TestCase]
+        expected_result: typing_extensions.NotRequired[VariableValue]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -117,10 +121,6 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        test_case: typing_extensions.NotRequired[TestCase]
-        expected_result: typing_extensions.NotRequired[VariableValue]
 
     class Config:
         frozen = True

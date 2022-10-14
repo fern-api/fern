@@ -170,6 +170,8 @@ class FernAwarePydanticModel:
         )
 
     def finish(self) -> None:
+        if self._pydantic_model._root_type is None:
+            self._pydantic_model.add_partial_class()
         if not self._custom_config.exclude_validators:
             self._get_validators_generator().add_validators()
         self._override_json()

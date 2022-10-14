@@ -20,6 +20,11 @@ class GeneratedFiles(pydantic.BaseModel):
     generated_template_files: typing.Dict[Language, Files] = pydantic.Field(alias="generatedTemplateFiles")
     other: typing.Dict[Language, Files]
 
+    class Partial(typing_extensions.TypedDict):
+        generated_test_case_files: typing_extensions.NotRequired[typing.Dict[Language, Files]]
+        generated_template_files: typing_extensions.NotRequired[typing.Dict[Language, Files]]
+        other: typing_extensions.NotRequired[typing.Dict[Language, Files]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -154,11 +159,6 @@ class GeneratedFiles(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        generated_test_case_files: typing_extensions.NotRequired[typing.Dict[Language, Files]]
-        generated_template_files: typing_extensions.NotRequired[typing.Dict[Language, Files]]
-        other: typing_extensions.NotRequired[typing.Dict[Language, Files]]
 
     class Config:
         frozen = True

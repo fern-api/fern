@@ -19,6 +19,10 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
     result: TestCaseResultWithStdout
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
 
+    class Partial(typing_extensions.TypedDict):
+        result: typing_extensions.NotRequired[TestCaseResultWithStdout]
+        trace_responses: typing_extensions.NotRequired[typing.List[TraceResponse]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -123,10 +127,6 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        result: typing_extensions.NotRequired[TestCaseResultWithStdout]
-        trace_responses: typing_extensions.NotRequired[typing.List[TraceResponse]]
 
     class Config:
         frozen = True

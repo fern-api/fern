@@ -98,17 +98,11 @@ class _TestCaseFunction:
     class WithActualResult(TestCaseWithActualResultImplementation):
         type: typing_extensions.Literal["withActualResult"]
 
-        class Partial(TestCaseWithActualResultImplementation.Partial):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["withActualResult"]]
-
         class Config:
             frozen = True
 
     class Custom(VoidFunctionDefinition):
         type: typing_extensions.Literal["custom"]
-
-        class Partial(VoidFunctionDefinition.Partial):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["custom"]]
 
         class Config:
             frozen = True

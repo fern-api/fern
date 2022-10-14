@@ -17,6 +17,11 @@ class ExceptionInfo(pydantic.BaseModel):
     exception_message: str = pydantic.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
+    class Partial(typing_extensions.TypedDict):
+        exception_type: typing_extensions.NotRequired[str]
+        exception_message: typing_extensions.NotRequired[str]
+        exception_stacktrace: typing_extensions.NotRequired[str]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -138,11 +143,6 @@ class ExceptionInfo(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        exception_type: typing_extensions.NotRequired[str]
-        exception_message: typing_extensions.NotRequired[str]
-        exception_stacktrace: typing_extensions.NotRequired[str]
 
     class Config:
         frozen = True

@@ -17,6 +17,9 @@ from .submission_id import SubmissionId
 class SubmissionIdNotFound(pydantic.BaseModel):
     missing_submission_id: SubmissionId = pydantic.Field(alias="missingSubmissionId")
 
+    class Partial(typing_extensions.TypedDict):
+        missing_submission_id: typing_extensions.NotRequired[SubmissionId]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -86,9 +89,6 @@ class SubmissionIdNotFound(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        missing_submission_id: typing_extensions.NotRequired[SubmissionId]
 
     class Config:
         frozen = True

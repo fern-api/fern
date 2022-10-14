@@ -19,6 +19,10 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
     test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
     grade: TestCaseGrade
 
+    class Partial(typing_extensions.TypedDict):
+        test_case_id: typing_extensions.NotRequired[TestCaseId]
+        grade: typing_extensions.NotRequired[TestCaseGrade]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -111,10 +115,6 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        test_case_id: typing_extensions.NotRequired[TestCaseId]
-        grade: typing_extensions.NotRequired[TestCaseGrade]
 
     class Config:
         frozen = True

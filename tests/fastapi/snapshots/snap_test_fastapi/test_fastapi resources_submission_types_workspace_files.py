@@ -18,6 +18,10 @@ class WorkspaceFiles(pydantic.BaseModel):
     main_file: FileInfo = pydantic.Field(alias="mainFile")
     read_only_files: typing.List[FileInfo] = pydantic.Field(alias="readOnlyFiles")
 
+    class Partial(typing_extensions.TypedDict):
+        main_file: typing_extensions.NotRequired[FileInfo]
+        read_only_files: typing_extensions.NotRequired[typing.List[FileInfo]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -112,10 +116,6 @@ class WorkspaceFiles(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        main_file: typing_extensions.NotRequired[FileInfo]
-        read_only_files: typing_extensions.NotRequired[typing.List[FileInfo]]
 
     class Config:
         frozen = True

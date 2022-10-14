@@ -195,11 +195,9 @@ class PydanticModel:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
-        if self._root_type is None:
-            self._add_partial_class()
         self._add_config_class()
 
-    def _add_partial_class(self) -> None:
+    def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(
             name=PydanticModel._PARTIAL_CLASS_NAME,
             extends=[

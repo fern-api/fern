@@ -18,6 +18,9 @@ from .file_info_v_2 import FileInfoV2
 class GetBasicSolutionFileResponse(pydantic.BaseModel):
     solution_file_by_language: typing.Dict[Language, FileInfoV2] = pydantic.Field(alias="solutionFileByLanguage")
 
+    class Partial(typing_extensions.TypedDict):
+        solution_file_by_language: typing_extensions.NotRequired[typing.Dict[Language, FileInfoV2]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -92,9 +95,6 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        solution_file_by_language: typing_extensions.NotRequired[typing.Dict[Language, FileInfoV2]]
 
     class Config:
         frozen = True

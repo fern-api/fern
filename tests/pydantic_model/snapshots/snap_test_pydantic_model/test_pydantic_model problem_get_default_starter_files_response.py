@@ -18,6 +18,9 @@ from .problem_files import ProblemFiles
 class GetDefaultStarterFilesResponse(pydantic.BaseModel):
     files: typing.Dict[Language, ProblemFiles]
 
+    class Partial(typing_extensions.TypedDict):
+        files: typing_extensions.NotRequired[typing.Dict[Language, ProblemFiles]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -94,9 +97,6 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        files: typing_extensions.NotRequired[typing.Dict[Language, ProblemFiles]]
 
     class Config:
         frozen = True

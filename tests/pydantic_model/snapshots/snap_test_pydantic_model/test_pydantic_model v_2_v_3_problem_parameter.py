@@ -20,6 +20,11 @@ class Parameter(pydantic.BaseModel):
     name: str
     variable_type: VariableType = pydantic.Field(alias="variableType")
 
+    class Partial(typing_extensions.TypedDict):
+        parameter_id: typing_extensions.NotRequired[ParameterId]
+        name: typing_extensions.NotRequired[str]
+        variable_type: typing_extensions.NotRequired[VariableType]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -130,11 +135,6 @@ class Parameter(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        parameter_id: typing_extensions.NotRequired[ParameterId]
-        name: typing_extensions.NotRequired[str]
-        variable_type: typing_extensions.NotRequired[VariableType]
 
     class Config:
         frozen = True

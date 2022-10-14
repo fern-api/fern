@@ -19,6 +19,10 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
+    class Partial(typing_extensions.TypedDict):
+        problem_id: typing_extensions.NotRequired[ProblemId]
+        submission_id: typing_extensions.NotRequired[SubmissionId]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -117,10 +121,6 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        problem_id: typing_extensions.NotRequired[ProblemId]
-        submission_id: typing_extensions.NotRequired[SubmissionId]
 
     class Config:
         frozen = True

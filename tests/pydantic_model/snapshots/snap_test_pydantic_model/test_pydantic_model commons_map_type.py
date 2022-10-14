@@ -16,6 +16,10 @@ class MapType(pydantic.BaseModel):
     key_type: VariableType = pydantic.Field(alias="keyType")
     value_type: VariableType = pydantic.Field(alias="valueType")
 
+    class Partial(typing_extensions.TypedDict):
+        key_type: typing_extensions.NotRequired[VariableType]
+        value_type: typing_extensions.NotRequired[VariableType]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -102,10 +106,6 @@ class MapType(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        key_type: typing_extensions.NotRequired[VariableType]
-        value_type: typing_extensions.NotRequired[VariableType]
 
     class Config:
         frozen = True

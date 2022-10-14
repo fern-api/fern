@@ -15,6 +15,9 @@ import typing_extensions
 class CompileError(pydantic.BaseModel):
     message: str
 
+    class Partial(typing_extensions.TypedDict):
+        message: typing_extensions.NotRequired[str]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -77,9 +80,6 @@ class CompileError(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        message: typing_extensions.NotRequired[str]
 
     class Config:
         frozen = True

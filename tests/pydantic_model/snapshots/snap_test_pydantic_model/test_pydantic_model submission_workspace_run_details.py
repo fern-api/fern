@@ -20,6 +20,11 @@ class WorkspaceRunDetails(pydantic.BaseModel):
     exception: typing.Optional[ExceptionInfo]
     stdout: str
 
+    class Partial(typing_extensions.TypedDict):
+        exception_v_2: typing_extensions.NotRequired[typing.Optional[ExceptionV2]]
+        exception: typing_extensions.NotRequired[typing.Optional[ExceptionInfo]]
+        stdout: typing_extensions.NotRequired[str]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -148,11 +153,6 @@ class WorkspaceRunDetails(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        exception_v_2: typing_extensions.NotRequired[typing.Optional[ExceptionV2]]
-        exception: typing_extensions.NotRequired[typing.Optional[ExceptionInfo]]
-        stdout: typing_extensions.NotRequired[str]
 
     class Config:
         frozen = True

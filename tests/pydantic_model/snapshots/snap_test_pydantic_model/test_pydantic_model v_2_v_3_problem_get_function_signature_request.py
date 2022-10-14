@@ -17,6 +17,9 @@ from .function_signature import FunctionSignature
 class GetFunctionSignatureRequest(pydantic.BaseModel):
     function_signature: FunctionSignature = pydantic.Field(alias="functionSignature")
 
+    class Partial(typing_extensions.TypedDict):
+        function_signature: typing_extensions.NotRequired[FunctionSignature]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -90,9 +93,6 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        function_signature: typing_extensions.NotRequired[FunctionSignature]
 
     class Config:
         frozen = True

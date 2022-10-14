@@ -17,6 +17,9 @@ from .test_case_implementation_description_board import TestCaseImplementationDe
 class TestCaseImplementationDescription(pydantic.BaseModel):
     boards: typing.List[TestCaseImplementationDescriptionBoard]
 
+    class Partial(typing_extensions.TypedDict):
+        boards: typing_extensions.NotRequired[typing.List[TestCaseImplementationDescriptionBoard]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -98,9 +101,6 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        boards: typing_extensions.NotRequired[typing.List[TestCaseImplementationDescriptionBoard]]
 
     class Config:
         frozen = True

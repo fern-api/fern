@@ -28,6 +28,15 @@ class CreateProblemRequest(pydantic.BaseModel):
     testcases: typing.List[TestCaseWithExpectedResult]
     method_name: str = pydantic.Field(alias="methodName")
 
+    class Partial(typing_extensions.TypedDict):
+        problem_name: typing_extensions.NotRequired[str]
+        problem_description: typing_extensions.NotRequired[ProblemDescription]
+        files: typing_extensions.NotRequired[typing.Dict[Language, ProblemFiles]]
+        input_params: typing_extensions.NotRequired[typing.List[VariableTypeAndName]]
+        output_type: typing_extensions.NotRequired[VariableType]
+        testcases: typing_extensions.NotRequired[typing.List[TestCaseWithExpectedResult]]
+        method_name: typing_extensions.NotRequired[str]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -271,15 +280,6 @@ class CreateProblemRequest(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        problem_name: typing_extensions.NotRequired[str]
-        problem_description: typing_extensions.NotRequired[ProblemDescription]
-        files: typing_extensions.NotRequired[typing.Dict[Language, ProblemFiles]]
-        input_params: typing_extensions.NotRequired[typing.List[VariableTypeAndName]]
-        output_type: typing_extensions.NotRequired[VariableType]
-        testcases: typing_extensions.NotRequired[typing.List[TestCaseWithExpectedResult]]
-        method_name: typing_extensions.NotRequired[str]
 
     class Config:
         frozen = True

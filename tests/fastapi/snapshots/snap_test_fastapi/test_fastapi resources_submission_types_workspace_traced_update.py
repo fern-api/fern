@@ -15,6 +15,9 @@ import typing_extensions
 class WorkspaceTracedUpdate(pydantic.BaseModel):
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
+    class Partial(typing_extensions.TypedDict):
+        trace_responses_size: typing_extensions.NotRequired[int]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -84,9 +87,6 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        trace_responses_size: typing_extensions.NotRequired[int]
 
     class Config:
         frozen = True

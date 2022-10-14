@@ -19,6 +19,10 @@ class BuildingExecutorResponse(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     status: ExecutionSessionStatus
 
+    class Partial(typing_extensions.TypedDict):
+        submission_id: typing_extensions.NotRequired[SubmissionId]
+        status: typing_extensions.NotRequired[ExecutionSessionStatus]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -118,10 +122,6 @@ class BuildingExecutorResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        submission_id: typing_extensions.NotRequired[SubmissionId]
-        status: typing_extensions.NotRequired[ExecutionSessionStatus]
 
     class Config:
         frozen = True

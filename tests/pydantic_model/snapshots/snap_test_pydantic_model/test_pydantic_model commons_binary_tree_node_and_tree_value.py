@@ -19,6 +19,10 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
     full_tree: BinaryTreeValue = pydantic.Field(alias="fullTree")
 
+    class Partial(typing_extensions.TypedDict):
+        node_id: typing_extensions.NotRequired[NodeId]
+        full_tree: typing_extensions.NotRequired[BinaryTreeValue]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -115,10 +119,6 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        node_id: typing_extensions.NotRequired[NodeId]
-        full_tree: typing_extensions.NotRequired[BinaryTreeValue]
 
     class Config:
         frozen = True

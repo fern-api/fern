@@ -96,17 +96,11 @@ class _TestCaseGrade:
     class Hidden(TestCaseHiddenGrade):
         type: typing_extensions.Literal["hidden"]
 
-        class Partial(TestCaseHiddenGrade.Partial):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["hidden"]]
-
         class Config:
             frozen = True
 
     class NonHidden(TestCaseNonHiddenGrade):
         type: typing_extensions.Literal["nonHidden"]
-
-        class Partial(TestCaseNonHiddenGrade.Partial):
-            type: typing_extensions.NotRequired[typing_extensions.Literal["nonHidden"]]
 
         class Config:
             frozen = True

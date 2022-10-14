@@ -17,6 +17,9 @@ from .file_info_v_2 import FileInfoV2
 class Files(pydantic.BaseModel):
     files: typing.List[FileInfoV2]
 
+    class Partial(typing_extensions.TypedDict):
+        files: typing_extensions.NotRequired[typing.List[FileInfoV2]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -79,9 +82,6 @@ class Files(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        files: typing_extensions.NotRequired[typing.List[FileInfoV2]]
 
     class Config:
         frozen = True

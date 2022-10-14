@@ -17,6 +17,9 @@ from .parameter import Parameter
 class VoidFunctionSignature(pydantic.BaseModel):
     parameters: typing.List[Parameter]
 
+    class Partial(typing_extensions.TypedDict):
+        parameters: typing_extensions.NotRequired[typing.List[Parameter]]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -87,9 +90,6 @@ class VoidFunctionSignature(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        parameters: typing_extensions.NotRequired[typing.List[Parameter]]
 
     class Config:
         frozen = True

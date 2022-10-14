@@ -20,6 +20,11 @@ class TestCaseResult(pydantic.BaseModel):
     actual_result: ActualResult = pydantic.Field(alias="actualResult")
     passed: bool
 
+    class Partial(typing_extensions.TypedDict):
+        expected_result: typing_extensions.NotRequired[VariableValue]
+        actual_result: typing_extensions.NotRequired[ActualResult]
+        passed: typing_extensions.NotRequired[bool]
+
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
@@ -138,11 +143,6 @@ class TestCaseResult(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
-
-    class Partial(typing_extensions.TypedDict):
-        expected_result: typing_extensions.NotRequired[VariableValue]
-        actual_result: typing_extensions.NotRequired[ActualResult]
-        passed: typing_extensions.NotRequired[bool]
 
     class Config:
         frozen = True
