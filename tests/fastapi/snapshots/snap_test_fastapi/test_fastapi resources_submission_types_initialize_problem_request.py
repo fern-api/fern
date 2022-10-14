@@ -22,6 +22,10 @@ class InitializeProblemRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @InitializeProblemRequest.Validators.root
+            def validate(values: InitializeProblemRequest.Partial) -> InitializeProblemRequest.Partial:
+                ...
+
             @InitializeProblemRequest.Validators.field("problem_id")
             def validate_problem_id(v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
                 ...
@@ -31,12 +35,22 @@ class InitializeProblemRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[InitializeProblemRequest.Partial], InitializeProblemRequest.Partial]]
+        ] = []
         _problem_id_validators: typing.ClassVar[
             typing.List[InitializeProblemRequest.Validators.ProblemIdValidator]
         ] = []
         _problem_version_validators: typing.ClassVar[
             typing.List[InitializeProblemRequest.Validators.ProblemVersionValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[InitializeProblemRequest.Partial], InitializeProblemRequest.Partial]
+        ) -> typing.Callable[[InitializeProblemRequest.Partial], InitializeProblemRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -78,6 +92,12 @@ class InitializeProblemRequest(pydantic.BaseModel):
                 self, v: typing.Optional[int], *, values: InitializeProblemRequest.Partial
             ) -> typing.Optional[int]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in InitializeProblemRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:

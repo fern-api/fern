@@ -21,12 +21,24 @@ class InternalError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @InternalError.Validators.root
+            def validate(values: InternalError.Partial) -> InternalError.Partial:
+                ...
+
             @InternalError.Validators.field("exception_info")
             def validate_exception_info(v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[InternalError.Partial], InternalError.Partial]]] = []
         _exception_info_validators: typing.ClassVar[typing.List[InternalError.Validators.ExceptionInfoValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[InternalError.Partial], InternalError.Partial]
+        ) -> typing.Callable[[InternalError.Partial], InternalError.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -49,6 +61,12 @@ class InternalError(pydantic.BaseModel):
         class ExceptionInfoValidator(typing_extensions.Protocol):
             def __call__(self, v: ExceptionInfo, *, values: InternalError.Partial) -> ExceptionInfo:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in InternalError.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("exception_info")
     def _validate_exception_info(cls, v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:

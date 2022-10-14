@@ -20,6 +20,10 @@ class TracedFile(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TracedFile.Validators.root
+            def validate(values: TracedFile.Partial) -> TracedFile.Partial:
+                ...
+
             @TracedFile.Validators.field("filename")
             def validate_filename(v: str, values: TracedFile.Partial) -> str:
                 ...
@@ -29,8 +33,16 @@ class TracedFile(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[TracedFile.Partial], TracedFile.Partial]]] = []
         _filename_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
         _directory_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TracedFile.Partial], TracedFile.Partial]
+        ) -> typing.Callable[[TracedFile.Partial], TracedFile.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -64,6 +76,12 @@ class TracedFile(pydantic.BaseModel):
         class DirectoryValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: TracedFile.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TracedFile.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("filename")
     def _validate_filename(cls, v: str, values: TracedFile.Partial) -> str:

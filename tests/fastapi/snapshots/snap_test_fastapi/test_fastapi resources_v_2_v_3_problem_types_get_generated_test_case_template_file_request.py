@@ -21,14 +21,37 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetGeneratedTestCaseTemplateFileRequest.Validators.root
+            def validate(values: GetGeneratedTestCaseTemplateFileRequest.Partial) -> GetGeneratedTestCaseTemplateFileRequest.Partial:
+                ...
+
             @GetGeneratedTestCaseTemplateFileRequest.Validators.field("template")
             def validate_template(v: TestCaseTemplate, values: GetGeneratedTestCaseTemplateFileRequest.Partial) -> TestCaseTemplate:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [GetGeneratedTestCaseTemplateFileRequest.Partial], GetGeneratedTestCaseTemplateFileRequest.Partial
+                ]
+            ]
+        ] = []
         _template_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [GetGeneratedTestCaseTemplateFileRequest.Partial], GetGeneratedTestCaseTemplateFileRequest.Partial
+            ],
+        ) -> typing.Callable[
+            [GetGeneratedTestCaseTemplateFileRequest.Partial], GetGeneratedTestCaseTemplateFileRequest.Partial
+        ]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -54,6 +77,12 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
                 self, v: TestCaseTemplate, *, values: GetGeneratedTestCaseTemplateFileRequest.Partial
             ) -> TestCaseTemplate:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("template")
     def _validate_template(

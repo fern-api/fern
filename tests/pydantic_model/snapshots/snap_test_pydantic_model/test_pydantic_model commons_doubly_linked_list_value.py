@@ -23,6 +23,10 @@ class DoublyLinkedListValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @DoublyLinkedListValue.Validators.root
+            def validate(values: DoublyLinkedListValue.Partial) -> DoublyLinkedListValue.Partial:
+                ...
+
             @DoublyLinkedListValue.Validators.field("head")
             def validate_head(v: typing.Optional[NodeId], values: DoublyLinkedListValue.Partial) -> typing.Optional[NodeId]:
                 ...
@@ -32,8 +36,18 @@ class DoublyLinkedListValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[DoublyLinkedListValue.Partial], DoublyLinkedListValue.Partial]]
+        ] = []
         _head_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.HeadValidator]] = []
         _nodes_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.NodesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[DoublyLinkedListValue.Partial], DoublyLinkedListValue.Partial]
+        ) -> typing.Callable[[DoublyLinkedListValue.Partial], DoublyLinkedListValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -75,6 +89,12 @@ class DoublyLinkedListValue(pydantic.BaseModel):
                 self, v: typing.Dict[NodeId, DoublyLinkedListNodeValue], *, values: DoublyLinkedListValue.Partial
             ) -> typing.Dict[NodeId, DoublyLinkedListNodeValue]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in DoublyLinkedListValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("head")
     def _validate_head(

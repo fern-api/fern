@@ -22,6 +22,10 @@ class StackInformation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @StackInformation.Validators.root
+            def validate(values: StackInformation.Partial) -> StackInformation.Partial:
+                ...
+
             @StackInformation.Validators.field("num_stack_frames")
             def validate_num_stack_frames(v: int, values: StackInformation.Partial) -> int:
                 ...
@@ -31,12 +35,22 @@ class StackInformation(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[StackInformation.Partial], StackInformation.Partial]]
+        ] = []
         _num_stack_frames_validators: typing.ClassVar[
             typing.List[StackInformation.Validators.NumStackFramesValidator]
         ] = []
         _top_stack_frame_validators: typing.ClassVar[
             typing.List[StackInformation.Validators.TopStackFrameValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[StackInformation.Partial], StackInformation.Partial]
+        ) -> typing.Callable[[StackInformation.Partial], StackInformation.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -76,6 +90,12 @@ class StackInformation(pydantic.BaseModel):
                 self, v: typing.Optional[StackFrame], *, values: StackInformation.Partial
             ) -> typing.Optional[StackFrame]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in StackInformation.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("num_stack_frames")
     def _validate_num_stack_frames(cls, v: int, values: StackInformation.Partial) -> int:

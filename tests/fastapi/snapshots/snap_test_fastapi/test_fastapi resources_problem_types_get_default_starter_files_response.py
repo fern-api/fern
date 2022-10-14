@@ -22,12 +22,31 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetDefaultStarterFilesResponse.Validators.root
+            def validate(values: GetDefaultStarterFilesResponse.Partial) -> GetDefaultStarterFilesResponse.Partial:
+                ...
+
             @GetDefaultStarterFilesResponse.Validators.field("files")
             def validate_files(v: typing.Dict[Language, ProblemFiles], values: GetDefaultStarterFilesResponse.Partial) -> typing.Dict[Language, ProblemFiles]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[GetDefaultStarterFilesResponse.Partial], GetDefaultStarterFilesResponse.Partial]
+            ]
+        ] = []
         _files_validators: typing.ClassVar[typing.List[GetDefaultStarterFilesResponse.Validators.FilesValidator]] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [GetDefaultStarterFilesResponse.Partial], GetDefaultStarterFilesResponse.Partial
+            ],
+        ) -> typing.Callable[[GetDefaultStarterFilesResponse.Partial], GetDefaultStarterFilesResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -53,6 +72,12 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
                 self, v: typing.Dict[Language, ProblemFiles], *, values: GetDefaultStarterFilesResponse.Partial
             ) -> typing.Dict[Language, ProblemFiles]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetDefaultStarterFilesResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("files")
     def _validate_files(

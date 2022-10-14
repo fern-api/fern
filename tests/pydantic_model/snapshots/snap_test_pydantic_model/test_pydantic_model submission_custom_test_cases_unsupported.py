@@ -23,6 +23,10 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @CustomTestCasesUnsupported.Validators.root
+            def validate(values: CustomTestCasesUnsupported.Partial) -> CustomTestCasesUnsupported.Partial:
+                ...
+
             @CustomTestCasesUnsupported.Validators.field("problem_id")
             def validate_problem_id(v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
                 ...
@@ -32,12 +36,22 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[CustomTestCasesUnsupported.Partial], CustomTestCasesUnsupported.Partial]]
+        ] = []
         _problem_id_validators: typing.ClassVar[
             typing.List[CustomTestCasesUnsupported.Validators.ProblemIdValidator]
         ] = []
         _submission_id_validators: typing.ClassVar[
             typing.List[CustomTestCasesUnsupported.Validators.SubmissionIdValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[CustomTestCasesUnsupported.Partial], CustomTestCasesUnsupported.Partial]
+        ) -> typing.Callable[[CustomTestCasesUnsupported.Partial], CustomTestCasesUnsupported.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -77,6 +91,12 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, v: SubmissionId, *, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in CustomTestCasesUnsupported.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:

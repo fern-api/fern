@@ -19,12 +19,27 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetTraceResponsesPageRequest.Validators.root
+            def validate(values: GetTraceResponsesPageRequest.Partial) -> GetTraceResponsesPageRequest.Partial:
+                ...
+
             @GetTraceResponsesPageRequest.Validators.field("offset")
             def validate_offset(v: typing.Optional[int], values: GetTraceResponsesPageRequest.Partial) -> typing.Optional[int]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetTraceResponsesPageRequest.Partial], GetTraceResponsesPageRequest.Partial]]
+        ] = []
         _offset_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[GetTraceResponsesPageRequest.Partial], GetTraceResponsesPageRequest.Partial],
+        ) -> typing.Callable[[GetTraceResponsesPageRequest.Partial], GetTraceResponsesPageRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -50,6 +65,12 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
                 self, v: typing.Optional[int], *, values: GetTraceResponsesPageRequest.Partial
             ) -> typing.Optional[int]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetTraceResponsesPageRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("offset")
     def _validate_offset(

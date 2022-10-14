@@ -19,12 +19,26 @@ class LangServerResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @LangServerResponse.Validators.root
+            def validate(values: LangServerResponse.Partial) -> LangServerResponse.Partial:
+                ...
+
             @LangServerResponse.Validators.field("response")
             def validate_response(v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[LangServerResponse.Partial], LangServerResponse.Partial]]
+        ] = []
         _response_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[LangServerResponse.Partial], LangServerResponse.Partial]
+        ) -> typing.Callable[[LangServerResponse.Partial], LangServerResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -47,6 +61,12 @@ class LangServerResponse(pydantic.BaseModel):
         class ResponseValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.Any, *, values: LangServerResponse.Partial) -> typing.Any:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in LangServerResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("response")
     def _validate_response(cls, v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:

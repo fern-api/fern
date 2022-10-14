@@ -21,12 +21,24 @@ class Files(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @Files.Validators.root
+            def validate(values: Files.Partial) -> Files.Partial:
+                ...
+
             @Files.Validators.field("files")
             def validate_files(v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[Files.Partial], Files.Partial]]] = []
         _files_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[Files.Partial], Files.Partial]
+        ) -> typing.Callable[[Files.Partial], Files.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -47,6 +59,12 @@ class Files(pydantic.BaseModel):
         class FilesValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.List[FileInfoV2], *, values: Files.Partial) -> typing.List[FileInfoV2]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in Files.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("files")
     def _validate_files(cls, v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:

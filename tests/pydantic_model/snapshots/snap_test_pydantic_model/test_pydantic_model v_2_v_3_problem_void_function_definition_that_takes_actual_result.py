@@ -23,6 +23,10 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @VoidFunctionDefinitionThatTakesActualResult.Validators.root
+            def validate(values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> VoidFunctionDefinitionThatTakesActualResult.Partial:
+                ...
+
             @VoidFunctionDefinitionThatTakesActualResult.Validators.field("additional_parameters")
             def validate_additional_parameters(v: typing.List[Parameter], values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> typing.List[Parameter]:
                 ...
@@ -32,12 +36,33 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [VoidFunctionDefinitionThatTakesActualResult.Partial],
+                    VoidFunctionDefinitionThatTakesActualResult.Partial,
+                ]
+            ]
+        ] = []
         _additional_parameters_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator]
         ] = []
         _code_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [VoidFunctionDefinitionThatTakesActualResult.Partial],
+                VoidFunctionDefinitionThatTakesActualResult.Partial,
+            ],
+        ) -> typing.Callable[
+            [VoidFunctionDefinitionThatTakesActualResult.Partial], VoidFunctionDefinitionThatTakesActualResult.Partial
+        ]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -84,6 +109,12 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
                 values: VoidFunctionDefinitionThatTakesActualResult.Partial,
             ) -> FunctionImplementationForMultipleLanguages:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("additional_parameters")
     def _validate_additional_parameters(

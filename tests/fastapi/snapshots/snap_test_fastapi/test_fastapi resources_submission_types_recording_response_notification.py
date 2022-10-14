@@ -27,6 +27,10 @@ class RecordingResponseNotification(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @RecordingResponseNotification.Validators.root
+            def validate(values: RecordingResponseNotification.Partial) -> RecordingResponseNotification.Partial:
+                ...
+
             @RecordingResponseNotification.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: RecordingResponseNotification.Partial) -> SubmissionId:
                 ...
@@ -48,6 +52,9 @@ class RecordingResponseNotification(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.SubmissionIdValidator]
         ] = []
@@ -63,6 +70,14 @@ class RecordingResponseNotification(pydantic.BaseModel):
         _traced_file_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.TracedFileValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial],
+        ) -> typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -156,6 +171,12 @@ class RecordingResponseNotification(pydantic.BaseModel):
                 self, v: typing.Optional[TracedFile], *, values: RecordingResponseNotification.Partial
             ) -> typing.Optional[TracedFile]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in RecordingResponseNotification.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: RecordingResponseNotification.Partial) -> SubmissionId:

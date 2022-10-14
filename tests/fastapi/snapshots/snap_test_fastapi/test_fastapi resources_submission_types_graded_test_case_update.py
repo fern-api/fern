@@ -23,6 +23,10 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GradedTestCaseUpdate.Validators.root
+            def validate(values: GradedTestCaseUpdate.Partial) -> GradedTestCaseUpdate.Partial:
+                ...
+
             @GradedTestCaseUpdate.Validators.field("test_case_id")
             def validate_test_case_id(v: TestCaseId, values: GradedTestCaseUpdate.Partial) -> TestCaseId:
                 ...
@@ -32,8 +36,18 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GradedTestCaseUpdate.Partial], GradedTestCaseUpdate.Partial]]
+        ] = []
         _test_case_id_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators.TestCaseIdValidator]] = []
         _grade_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators.GradeValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GradedTestCaseUpdate.Partial], GradedTestCaseUpdate.Partial]
+        ) -> typing.Callable[[GradedTestCaseUpdate.Partial], GradedTestCaseUpdate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -71,6 +85,12 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
         class GradeValidator(typing_extensions.Protocol):
             def __call__(self, v: TestCaseGrade, *, values: GradedTestCaseUpdate.Partial) -> TestCaseGrade:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GradedTestCaseUpdate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("test_case_id")
     def _validate_test_case_id(cls, v: TestCaseId, values: GradedTestCaseUpdate.Partial) -> TestCaseId:

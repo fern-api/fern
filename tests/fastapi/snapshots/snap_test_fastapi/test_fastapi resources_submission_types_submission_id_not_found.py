@@ -21,14 +21,28 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @SubmissionIdNotFound.Validators.root
+            def validate(values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
+                ...
+
             @SubmissionIdNotFound.Validators.field("missing_submission_id")
             def validate_missing_submission_id(v: SubmissionId, values: SubmissionIdNotFound.Partial) -> SubmissionId:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]]
+        ] = []
         _missing_submission_id_validators: typing.ClassVar[
             typing.List[SubmissionIdNotFound.Validators.MissingSubmissionIdValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]
+        ) -> typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -52,6 +66,12 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         class MissingSubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, v: SubmissionId, *, values: SubmissionIdNotFound.Partial) -> SubmissionId:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in SubmissionIdNotFound.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("missing_submission_id")
     def _validate_missing_submission_id(cls, v: SubmissionId, values: SubmissionIdNotFound.Partial) -> SubmissionId:

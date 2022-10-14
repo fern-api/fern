@@ -21,14 +21,33 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseImplementationDescription.Validators.root
+            def validate(values: TestCaseImplementationDescription.Partial) -> TestCaseImplementationDescription.Partial:
+                ...
+
             @TestCaseImplementationDescription.Validators.field("boards")
             def validate_boards(v: typing.List[TestCaseImplementationDescriptionBoard], values: TestCaseImplementationDescription.Partial) -> typing.List[TestCaseImplementationDescriptionBoard]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[TestCaseImplementationDescription.Partial], TestCaseImplementationDescription.Partial]
+            ]
+        ] = []
         _boards_validators: typing.ClassVar[
             typing.List[TestCaseImplementationDescription.Validators.BoardsValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [TestCaseImplementationDescription.Partial], TestCaseImplementationDescription.Partial
+            ],
+        ) -> typing.Callable[[TestCaseImplementationDescription.Partial], TestCaseImplementationDescription.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -57,6 +76,12 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
                 values: TestCaseImplementationDescription.Partial,
             ) -> typing.List[TestCaseImplementationDescriptionBoard]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseImplementationDescription.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("boards")
     def _validate_boards(

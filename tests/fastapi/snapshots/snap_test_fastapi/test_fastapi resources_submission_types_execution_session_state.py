@@ -27,6 +27,10 @@ class ExecutionSessionState(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ExecutionSessionState.Validators.root
+            def validate(values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
+                ...
+
             @ExecutionSessionState.Validators.field("last_time_contacted")
             def validate_last_time_contacted(v: typing.Optional[str], values: ExecutionSessionState.Partial) -> typing.Optional[str]:
                 ...
@@ -52,6 +56,9 @@ class ExecutionSessionState(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]]
+        ] = []
         _last_time_contacted_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.LastTimeContactedValidator]
         ] = []
@@ -62,6 +69,13 @@ class ExecutionSessionState(pydantic.BaseModel):
         _aws_task_id_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.AwsTaskIdValidator]] = []
         _language_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.LanguageValidator]] = []
         _status_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]
+        ) -> typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -167,6 +181,12 @@ class ExecutionSessionState(pydantic.BaseModel):
                 self, v: ExecutionSessionStatus, *, values: ExecutionSessionState.Partial
             ) -> ExecutionSessionStatus:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ExecutionSessionState.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("last_time_contacted")
     def _validate_last_time_contacted(

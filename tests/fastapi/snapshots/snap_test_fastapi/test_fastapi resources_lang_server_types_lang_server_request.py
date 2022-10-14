@@ -19,12 +19,26 @@ class LangServerRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @LangServerRequest.Validators.root
+            def validate(values: LangServerRequest.Partial) -> LangServerRequest.Partial:
+                ...
+
             @LangServerRequest.Validators.field("request")
             def validate_request(v: typing.Any, values: LangServerRequest.Partial) -> typing.Any:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[LangServerRequest.Partial], LangServerRequest.Partial]]
+        ] = []
         _request_validators: typing.ClassVar[typing.List[LangServerRequest.Validators.RequestValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[LangServerRequest.Partial], LangServerRequest.Partial]
+        ) -> typing.Callable[[LangServerRequest.Partial], LangServerRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -47,6 +61,12 @@ class LangServerRequest(pydantic.BaseModel):
         class RequestValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.Any, *, values: LangServerRequest.Partial) -> typing.Any:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in LangServerRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("request")
     def _validate_request(cls, v: typing.Any, values: LangServerRequest.Partial) -> typing.Any:

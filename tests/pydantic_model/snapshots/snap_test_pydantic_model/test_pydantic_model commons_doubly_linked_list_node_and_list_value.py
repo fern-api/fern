@@ -23,6 +23,10 @@ class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @DoublyLinkedListNodeAndListValue.Validators.root
+            def validate(values: DoublyLinkedListNodeAndListValue.Partial) -> DoublyLinkedListNodeAndListValue.Partial:
+                ...
+
             @DoublyLinkedListNodeAndListValue.Validators.field("node_id")
             def validate_node_id(v: NodeId, values: DoublyLinkedListNodeAndListValue.Partial) -> NodeId:
                 ...
@@ -32,12 +36,27 @@ class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[DoublyLinkedListNodeAndListValue.Partial], DoublyLinkedListNodeAndListValue.Partial]
+            ]
+        ] = []
         _node_id_validators: typing.ClassVar[
             typing.List[DoublyLinkedListNodeAndListValue.Validators.NodeIdValidator]
         ] = []
         _full_list_validators: typing.ClassVar[
             typing.List[DoublyLinkedListNodeAndListValue.Validators.FullListValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [DoublyLinkedListNodeAndListValue.Partial], DoublyLinkedListNodeAndListValue.Partial
+            ],
+        ) -> typing.Callable[[DoublyLinkedListNodeAndListValue.Partial], DoublyLinkedListNodeAndListValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -79,6 +98,12 @@ class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
                 self, v: DoublyLinkedListValue, *, values: DoublyLinkedListNodeAndListValue.Partial
             ) -> DoublyLinkedListValue:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in DoublyLinkedListNodeAndListValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: DoublyLinkedListNodeAndListValue.Partial) -> NodeId:

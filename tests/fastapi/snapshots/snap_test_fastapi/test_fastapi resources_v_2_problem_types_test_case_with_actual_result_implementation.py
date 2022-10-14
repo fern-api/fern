@@ -23,6 +23,10 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseWithActualResultImplementation.Validators.root
+            def validate(values: TestCaseWithActualResultImplementation.Partial) -> TestCaseWithActualResultImplementation.Partial:
+                ...
+
             @TestCaseWithActualResultImplementation.Validators.field("get_actual_result")
             def validate_get_actual_result(v: NonVoidFunctionDefinition, values: TestCaseWithActualResultImplementation.Partial) -> NonVoidFunctionDefinition:
                 ...
@@ -32,12 +36,31 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [TestCaseWithActualResultImplementation.Partial], TestCaseWithActualResultImplementation.Partial
+                ]
+            ]
+        ] = []
         _get_actual_result_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.GetActualResultValidator]
         ] = []
         _assert_correctness_check_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [TestCaseWithActualResultImplementation.Partial], TestCaseWithActualResultImplementation.Partial
+            ],
+        ) -> typing.Callable[
+            [TestCaseWithActualResultImplementation.Partial], TestCaseWithActualResultImplementation.Partial
+        ]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -81,6 +104,12 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
                 self, v: AssertCorrectnessCheck, *, values: TestCaseWithActualResultImplementation.Partial
             ) -> AssertCorrectnessCheck:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseWithActualResultImplementation.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("get_actual_result")
     def _validate_get_actual_result(

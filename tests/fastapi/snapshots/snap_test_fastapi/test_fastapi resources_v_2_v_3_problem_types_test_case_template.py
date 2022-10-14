@@ -24,6 +24,10 @@ class TestCaseTemplate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseTemplate.Validators.root
+            def validate(values: TestCaseTemplate.Partial) -> TestCaseTemplate.Partial:
+                ...
+
             @TestCaseTemplate.Validators.field("template_id")
             def validate_template_id(v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
                 ...
@@ -37,11 +41,21 @@ class TestCaseTemplate(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseTemplate.Partial], TestCaseTemplate.Partial]]
+        ] = []
         _template_id_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.TemplateIdValidator]] = []
         _name_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.NameValidator]] = []
         _implementation_validators: typing.ClassVar[
             typing.List[TestCaseTemplate.Validators.ImplementationValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseTemplate.Partial], TestCaseTemplate.Partial]
+        ) -> typing.Callable[[TestCaseTemplate.Partial], TestCaseTemplate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -94,6 +108,12 @@ class TestCaseTemplate(pydantic.BaseModel):
                 self, v: TestCaseImplementation, *, values: TestCaseTemplate.Partial
             ) -> TestCaseImplementation:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseTemplate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("template_id")
     def _validate_template_id(cls, v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:

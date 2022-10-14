@@ -25,6 +25,10 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ExecutionSessionResponse.Validators.root
+            def validate(values: ExecutionSessionResponse.Partial) -> ExecutionSessionResponse.Partial:
+                ...
+
             @ExecutionSessionResponse.Validators.field("session_id")
             def validate_session_id(v: str, values: ExecutionSessionResponse.Partial) -> str:
                 ...
@@ -42,6 +46,9 @@ class ExecutionSessionResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[ExecutionSessionResponse.Partial], ExecutionSessionResponse.Partial]]
+        ] = []
         _session_id_validators: typing.ClassVar[
             typing.List[ExecutionSessionResponse.Validators.SessionIdValidator]
         ] = []
@@ -50,6 +57,13 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         ] = []
         _language_validators: typing.ClassVar[typing.List[ExecutionSessionResponse.Validators.LanguageValidator]] = []
         _status_validators: typing.ClassVar[typing.List[ExecutionSessionResponse.Validators.StatusValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ExecutionSessionResponse.Partial], ExecutionSessionResponse.Partial]
+        ) -> typing.Callable[[ExecutionSessionResponse.Partial], ExecutionSessionResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -124,6 +138,12 @@ class ExecutionSessionResponse(pydantic.BaseModel):
                 self, v: ExecutionSessionStatus, *, values: ExecutionSessionResponse.Partial
             ) -> ExecutionSessionStatus:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ExecutionSessionResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("session_id")
     def _validate_session_id(cls, v: str, values: ExecutionSessionResponse.Partial) -> str:

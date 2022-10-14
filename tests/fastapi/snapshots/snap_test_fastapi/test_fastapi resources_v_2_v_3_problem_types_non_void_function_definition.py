@@ -23,6 +23,10 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @NonVoidFunctionDefinition.Validators.root
+            def validate(values: NonVoidFunctionDefinition.Partial) -> NonVoidFunctionDefinition.Partial:
+                ...
+
             @NonVoidFunctionDefinition.Validators.field("signature")
             def validate_signature(v: NonVoidFunctionSignature, values: NonVoidFunctionDefinition.Partial) -> NonVoidFunctionSignature:
                 ...
@@ -32,10 +36,20 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[NonVoidFunctionDefinition.Partial], NonVoidFunctionDefinition.Partial]]
+        ] = []
         _signature_validators: typing.ClassVar[
             typing.List[NonVoidFunctionDefinition.Validators.SignatureValidator]
         ] = []
         _code_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[NonVoidFunctionDefinition.Partial], NonVoidFunctionDefinition.Partial]
+        ) -> typing.Callable[[NonVoidFunctionDefinition.Partial], NonVoidFunctionDefinition.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -78,6 +92,12 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
                 self, v: FunctionImplementationForMultipleLanguages, *, values: NonVoidFunctionDefinition.Partial
             ) -> FunctionImplementationForMultipleLanguages:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in NonVoidFunctionDefinition.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("signature")
     def _validate_signature(

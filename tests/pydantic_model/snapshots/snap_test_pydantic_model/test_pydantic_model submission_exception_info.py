@@ -21,6 +21,10 @@ class ExceptionInfo(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ExceptionInfo.Validators.root
+            def validate(values: ExceptionInfo.Partial) -> ExceptionInfo.Partial:
+                ...
+
             @ExceptionInfo.Validators.field("exception_type")
             def validate_exception_type(v: str, values: ExceptionInfo.Partial) -> str:
                 ...
@@ -34,6 +38,7 @@ class ExceptionInfo(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[ExceptionInfo.Partial], ExceptionInfo.Partial]]] = []
         _exception_type_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators.ExceptionTypeValidator]] = []
         _exception_message_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionMessageValidator]
@@ -41,6 +46,13 @@ class ExceptionInfo(pydantic.BaseModel):
         _exception_stacktrace_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionStacktraceValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ExceptionInfo.Partial], ExceptionInfo.Partial]
+        ) -> typing.Callable[[ExceptionInfo.Partial], ExceptionInfo.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -94,6 +106,12 @@ class ExceptionInfo(pydantic.BaseModel):
         class ExceptionStacktraceValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: ExceptionInfo.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ExceptionInfo.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("exception_type")
     def _validate_exception_type(cls, v: str, values: ExceptionInfo.Partial) -> str:

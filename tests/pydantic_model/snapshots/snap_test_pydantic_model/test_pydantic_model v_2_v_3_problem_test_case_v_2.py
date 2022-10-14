@@ -28,6 +28,10 @@ class TestCaseV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseV2.Validators.root
+            def validate(values: TestCaseV2.Partial) -> TestCaseV2.Partial:
+                ...
+
             @TestCaseV2.Validators.field("metadata")
             def validate_metadata(v: TestCaseMetadata, values: TestCaseV2.Partial) -> TestCaseMetadata:
                 ...
@@ -45,10 +49,18 @@ class TestCaseV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[TestCaseV2.Partial], TestCaseV2.Partial]]] = []
         _metadata_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.MetadataValidator]] = []
         _implementation_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.ImplementationValidator]] = []
         _arguments_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.ArgumentsValidator]] = []
         _expects_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.ExpectsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseV2.Partial], TestCaseV2.Partial]
+        ) -> typing.Callable[[TestCaseV2.Partial], TestCaseV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -116,6 +128,12 @@ class TestCaseV2(pydantic.BaseModel):
                 self, v: typing.Optional[TestCaseExpects], *, values: TestCaseV2.Partial
             ) -> typing.Optional[TestCaseExpects]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("metadata")
     def _validate_metadata(cls, v: TestCaseMetadata, values: TestCaseV2.Partial) -> TestCaseMetadata:

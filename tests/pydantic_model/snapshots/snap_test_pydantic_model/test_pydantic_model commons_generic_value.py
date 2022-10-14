@@ -20,6 +20,10 @@ class GenericValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GenericValue.Validators.root
+            def validate(values: GenericValue.Partial) -> GenericValue.Partial:
+                ...
+
             @GenericValue.Validators.field("stringified_type")
             def validate_stringified_type(v: typing.Optional[str], values: GenericValue.Partial) -> typing.Optional[str]:
                 ...
@@ -29,12 +33,20 @@ class GenericValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[GenericValue.Partial], GenericValue.Partial]]] = []
         _stringified_type_validators: typing.ClassVar[
             typing.List[GenericValue.Validators.StringifiedTypeValidator]
         ] = []
         _stringified_value_validators: typing.ClassVar[
             typing.List[GenericValue.Validators.StringifiedValueValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GenericValue.Partial], GenericValue.Partial]
+        ) -> typing.Callable[[GenericValue.Partial], GenericValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -72,6 +84,12 @@ class GenericValue(pydantic.BaseModel):
         class StringifiedValueValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: GenericValue.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GenericValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("stringified_type")
     def _validate_stringified_type(cls, v: typing.Optional[str], values: GenericValue.Partial) -> typing.Optional[str]:

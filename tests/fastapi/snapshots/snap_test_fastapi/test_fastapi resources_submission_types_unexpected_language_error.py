@@ -22,6 +22,10 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @UnexpectedLanguageError.Validators.root
+            def validate(values: UnexpectedLanguageError.Partial) -> UnexpectedLanguageError.Partial:
+                ...
+
             @UnexpectedLanguageError.Validators.field("expected_language")
             def validate_expected_language(v: Language, values: UnexpectedLanguageError.Partial) -> Language:
                 ...
@@ -31,12 +35,22 @@ class UnexpectedLanguageError(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[UnexpectedLanguageError.Partial], UnexpectedLanguageError.Partial]]
+        ] = []
         _expected_language_validators: typing.ClassVar[
             typing.List[UnexpectedLanguageError.Validators.ExpectedLanguageValidator]
         ] = []
         _actual_language_validators: typing.ClassVar[
             typing.List[UnexpectedLanguageError.Validators.ActualLanguageValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[UnexpectedLanguageError.Partial], UnexpectedLanguageError.Partial]
+        ) -> typing.Callable[[UnexpectedLanguageError.Partial], UnexpectedLanguageError.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -76,6 +90,12 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         class ActualLanguageValidator(typing_extensions.Protocol):
             def __call__(self, v: Language, *, values: UnexpectedLanguageError.Partial) -> Language:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in UnexpectedLanguageError.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("expected_language")
     def _validate_expected_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:

@@ -22,6 +22,10 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetBasicSolutionFileRequest.Validators.root
+            def validate(values: GetBasicSolutionFileRequest.Partial) -> GetBasicSolutionFileRequest.Partial:
+                ...
+
             @GetBasicSolutionFileRequest.Validators.field("method_name")
             def validate_method_name(v: str, values: GetBasicSolutionFileRequest.Partial) -> str:
                 ...
@@ -31,12 +35,22 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetBasicSolutionFileRequest.Partial], GetBasicSolutionFileRequest.Partial]]
+        ] = []
         _method_name_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileRequest.Validators.MethodNameValidator]
         ] = []
         _signature_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileRequest.Validators.SignatureValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GetBasicSolutionFileRequest.Partial], GetBasicSolutionFileRequest.Partial]
+        ) -> typing.Callable[[GetBasicSolutionFileRequest.Partial], GetBasicSolutionFileRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -78,6 +92,12 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
                 self, v: NonVoidFunctionSignature, *, values: GetBasicSolutionFileRequest.Partial
             ) -> NonVoidFunctionSignature:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetBasicSolutionFileRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("method_name")
     def _validate_method_name(cls, v: str, values: GetBasicSolutionFileRequest.Partial) -> str:

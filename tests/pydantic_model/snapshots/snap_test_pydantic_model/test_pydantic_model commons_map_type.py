@@ -20,6 +20,10 @@ class MapType(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @MapType.Validators.root
+            def validate(values: MapType.Partial) -> MapType.Partial:
+                ...
+
             @MapType.Validators.field("key_type")
             def validate_key_type(v: VariableType, values: MapType.Partial) -> VariableType:
                 ...
@@ -29,8 +33,16 @@ class MapType(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[MapType.Partial], MapType.Partial]]] = []
         _key_type_validators: typing.ClassVar[typing.List[MapType.Validators.KeyTypeValidator]] = []
         _value_type_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[MapType.Partial], MapType.Partial]
+        ) -> typing.Callable[[MapType.Partial], MapType.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -64,6 +76,12 @@ class MapType(pydantic.BaseModel):
         class ValueTypeValidator(typing_extensions.Protocol):
             def __call__(self, v: VariableType, *, values: MapType.Partial) -> VariableType:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in MapType.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("key_type")
     def _validate_key_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:

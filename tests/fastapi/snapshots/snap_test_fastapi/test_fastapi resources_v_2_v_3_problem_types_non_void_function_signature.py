@@ -23,6 +23,10 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @NonVoidFunctionSignature.Validators.root
+            def validate(values: NonVoidFunctionSignature.Partial) -> NonVoidFunctionSignature.Partial:
+                ...
+
             @NonVoidFunctionSignature.Validators.field("parameters")
             def validate_parameters(v: typing.List[Parameter], values: NonVoidFunctionSignature.Partial) -> typing.List[Parameter]:
                 ...
@@ -32,12 +36,22 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[NonVoidFunctionSignature.Partial], NonVoidFunctionSignature.Partial]]
+        ] = []
         _parameters_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.ParametersValidator]
         ] = []
         _return_type_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.ReturnTypeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[NonVoidFunctionSignature.Partial], NonVoidFunctionSignature.Partial]
+        ) -> typing.Callable[[NonVoidFunctionSignature.Partial], NonVoidFunctionSignature.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -79,6 +93,12 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         class ReturnTypeValidator(typing_extensions.Protocol):
             def __call__(self, v: VariableType, *, values: NonVoidFunctionSignature.Partial) -> VariableType:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in NonVoidFunctionSignature.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("parameters")
     def _validate_parameters(

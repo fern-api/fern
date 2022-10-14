@@ -24,6 +24,10 @@ class TestCaseResult(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseResult.Validators.root
+            def validate(values: TestCaseResult.Partial) -> TestCaseResult.Partial:
+                ...
+
             @TestCaseResult.Validators.field("expected_result")
             def validate_expected_result(v: VariableValue, values: TestCaseResult.Partial) -> VariableValue:
                 ...
@@ -37,11 +41,21 @@ class TestCaseResult(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseResult.Partial], TestCaseResult.Partial]]
+        ] = []
         _expected_result_validators: typing.ClassVar[
             typing.List[TestCaseResult.Validators.ExpectedResultValidator]
         ] = []
         _actual_result_validators: typing.ClassVar[typing.List[TestCaseResult.Validators.ActualResultValidator]] = []
         _passed_validators: typing.ClassVar[typing.List[TestCaseResult.Validators.PassedValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseResult.Partial], TestCaseResult.Partial]
+        ) -> typing.Callable[[TestCaseResult.Partial], TestCaseResult.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -92,6 +106,12 @@ class TestCaseResult(pydantic.BaseModel):
         class PassedValidator(typing_extensions.Protocol):
             def __call__(self, v: bool, *, values: TestCaseResult.Partial) -> bool:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseResult.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("expected_result")
     def _validate_expected_result(cls, v: VariableValue, values: TestCaseResult.Partial) -> VariableValue:

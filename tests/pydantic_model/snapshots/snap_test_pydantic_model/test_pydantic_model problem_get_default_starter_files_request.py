@@ -24,6 +24,10 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetDefaultStarterFilesRequest.Validators.root
+            def validate(values: GetDefaultStarterFilesRequest.Partial) -> GetDefaultStarterFilesRequest.Partial:
+                ...
+
             @GetDefaultStarterFilesRequest.Validators.field("input_params")
             def validate_input_params(v: typing.List[VariableTypeAndName], values: GetDefaultStarterFilesRequest.Partial) -> typing.List[VariableTypeAndName]:
                 ...
@@ -37,6 +41,9 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetDefaultStarterFilesRequest.Partial], GetDefaultStarterFilesRequest.Partial]]
+        ] = []
         _input_params_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.InputParamsValidator]
         ] = []
@@ -46,6 +53,14 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         _method_name_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.MethodNameValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[GetDefaultStarterFilesRequest.Partial], GetDefaultStarterFilesRequest.Partial],
+        ) -> typing.Callable[[GetDefaultStarterFilesRequest.Partial], GetDefaultStarterFilesRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -103,6 +118,12 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         class MethodNameValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: GetDefaultStarterFilesRequest.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetDefaultStarterFilesRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("input_params")
     def _validate_input_params(

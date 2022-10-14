@@ -24,6 +24,10 @@ class GeneratedFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GeneratedFiles.Validators.root
+            def validate(values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
+                ...
+
             @GeneratedFiles.Validators.field("generated_test_case_files")
             def validate_generated_test_case_files(v: typing.Dict[Language, Files], values: GeneratedFiles.Partial) -> typing.Dict[Language, Files]:
                 ...
@@ -37,6 +41,9 @@ class GeneratedFiles(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GeneratedFiles.Partial], GeneratedFiles.Partial]]
+        ] = []
         _generated_test_case_files_validators: typing.ClassVar[
             typing.List[GeneratedFiles.Validators.GeneratedTestCaseFilesValidator]
         ] = []
@@ -44,6 +51,13 @@ class GeneratedFiles(pydantic.BaseModel):
             typing.List[GeneratedFiles.Validators.GeneratedTemplateFilesValidator]
         ] = []
         _other_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators.OtherValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GeneratedFiles.Partial], GeneratedFiles.Partial]
+        ) -> typing.Callable[[GeneratedFiles.Partial], GeneratedFiles.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -102,6 +116,12 @@ class GeneratedFiles(pydantic.BaseModel):
                 self, v: typing.Dict[Language, Files], *, values: GeneratedFiles.Partial
             ) -> typing.Dict[Language, Files]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GeneratedFiles.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("generated_test_case_files")
     def _validate_generated_test_case_files(

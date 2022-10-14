@@ -23,6 +23,10 @@ class BinaryTreeValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @BinaryTreeValue.Validators.root
+            def validate(values: BinaryTreeValue.Partial) -> BinaryTreeValue.Partial:
+                ...
+
             @BinaryTreeValue.Validators.field("root")
             def validate_root(v: typing.Optional[NodeId], values: BinaryTreeValue.Partial) -> typing.Optional[NodeId]:
                 ...
@@ -32,8 +36,18 @@ class BinaryTreeValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[BinaryTreeValue.Partial], BinaryTreeValue.Partial]]
+        ] = []
         _root_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.RootValidator]] = []
         _nodes_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.NodesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[BinaryTreeValue.Partial], BinaryTreeValue.Partial]
+        ) -> typing.Callable[[BinaryTreeValue.Partial], BinaryTreeValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -71,6 +85,12 @@ class BinaryTreeValue(pydantic.BaseModel):
                 self, v: typing.Dict[NodeId, BinaryTreeNodeValue], *, values: BinaryTreeValue.Partial
             ) -> typing.Dict[NodeId, BinaryTreeNodeValue]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in BinaryTreeValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("root")
     def _validate_root(cls, v: typing.Optional[NodeId], values: BinaryTreeValue.Partial) -> typing.Optional[NodeId]:

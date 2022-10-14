@@ -21,12 +21,26 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceSubmissionStatusV2.Validators.root
+            def validate(values: WorkspaceSubmissionStatusV2.Partial) -> WorkspaceSubmissionStatusV2.Partial:
+                ...
+
             @WorkspaceSubmissionStatusV2.Validators.field("updates")
             def validate_updates(v: typing.List[WorkspaceSubmissionUpdate], values: WorkspaceSubmissionStatusV2.Partial) -> typing.List[WorkspaceSubmissionUpdate]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]]
+        ] = []
         _updates_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]
+        ) -> typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -52,6 +66,12 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
                 self, v: typing.List[WorkspaceSubmissionUpdate], *, values: WorkspaceSubmissionStatusV2.Partial
             ) -> typing.List[WorkspaceSubmissionUpdate]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceSubmissionStatusV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("updates")
     def _validate_updates(

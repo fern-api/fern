@@ -19,14 +19,28 @@ class UpdateProblemResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @UpdateProblemResponse.Validators.root
+            def validate(values: UpdateProblemResponse.Partial) -> UpdateProblemResponse.Partial:
+                ...
+
             @UpdateProblemResponse.Validators.field("problem_version")
             def validate_problem_version(v: int, values: UpdateProblemResponse.Partial) -> int:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[UpdateProblemResponse.Partial], UpdateProblemResponse.Partial]]
+        ] = []
         _problem_version_validators: typing.ClassVar[
             typing.List[UpdateProblemResponse.Validators.ProblemVersionValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[UpdateProblemResponse.Partial], UpdateProblemResponse.Partial]
+        ) -> typing.Callable[[UpdateProblemResponse.Partial], UpdateProblemResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -50,6 +64,12 @@ class UpdateProblemResponse(pydantic.BaseModel):
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(self, v: int, *, values: UpdateProblemResponse.Partial) -> int:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in UpdateProblemResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_version")
     def _validate_problem_version(cls, v: int, values: UpdateProblemResponse.Partial) -> int:

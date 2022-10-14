@@ -1,9 +1,13 @@
-from typing import Sequence
+from typing import List, Sequence
 
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
 
-from .validator_generators import FieldValidatorGenerator, ValidatorGenerator
+from .validator_generators import (
+    FieldValidatorGenerator,
+    RootValidatorGenerator,
+    ValidatorGenerator,
+)
 from .validators_generator import ValidatorsGenerator
 
 
@@ -12,25 +16,37 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
 
     def __init__(self, model: PydanticModel):
         super().__init__(model=model)
-        self._validator_generators = [
+        reference_to_validators_class = self._get_reference_to_validators_class()
+        self._field_validator_generators = [
             FieldValidatorGenerator(
                 field=field,
                 model=self._model,
-                reference_to_validators_class=self._get_reference_to_validators_class(),
+                reference_to_validators_class=reference_to_validators_class,
             )
             for field in model.get_public_fields()
         ]
+        self._root_validator_generator = RootValidatorGenerator(
+            model=self._model,
+            reference_to_validators_class=reference_to_validators_class,
+        )
 
     def _populate_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
-        self._add_field_validators_to_validators_class(validators_class=validators_class)
+        self._add_validators_to_validators_class(validators_class=validators_class)
 
-    def _add_field_validators_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
-        if len(self._validator_generators) == 0:
-            return
+    def _add_validators_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
+        self._root_validator_generator.add_class_var_to_validators_class(validators_class=validators_class)
 
-        for generator in self._validator_generators:
+        for generator in self._field_validator_generators:
             validators_class.add_class_var(generator.get_class_var_for_validators_class())
 
+        self._root_validator_generator.add_decorator_to_validators_class(validators_class=validators_class)
+
+        if len(self._field_validator_generators) > 0:
+            self._add_field_validator_decorator_to_validators_class(validators_class=validators_class)
+            for generator in self._field_validator_generators:
+                validators_class.add_class(declaration=generator.get_protocol_declaration())
+
+    def _add_field_validator_decorator_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
         validators_class.add_method(
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
             declaration=AST.FunctionDeclaration(
@@ -45,48 +61,17 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                     return_type=AST.TypeHint.any(),
                 ),
                 body=AST.CodeWriter(self._write_add_field_validator_body),
-                overloads=[generator.get_overload_for_validators_class() for generator in self._validator_generators],
+                overloads=[
+                    generator.get_overload_for_validators_class() for generator in self._field_validator_generators
+                ],
             ),
         )
-
-        for generator in self._validator_generators:
-            validator_protocol = AST.ClassDeclaration(
-                name=generator.get_validator_protocol_name(),
-                extends=[
-                    AST.ClassReference(
-                        import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
-                        qualified_name_excluding_import=("Protocol",),
-                    )
-                ],
-            )
-            validator_protocol.add_method(
-                declaration=AST.FunctionDeclaration(
-                    name="__call__",
-                    signature=AST.FunctionSignature(
-                        parameters=[
-                            AST.FunctionParameter(
-                                name=PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
-                                type_hint=generator.field.type_hint,
-                            ),
-                        ],
-                        named_parameters=[
-                            AST.FunctionParameter(
-                                name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
-                                type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
-                            ),
-                        ],
-                        return_type=generator.field.type_hint,
-                    ),
-                    body=AST.CodeWriter("..."),
-                )
-            )
-            validators_class.add_class(declaration=validator_protocol)
 
     def _write_add_field_validator_body(self, writer: AST.NodeWriter) -> None:
         DECORATOR_FUNCTION_NAME = "decorator"
 
         def write_decorator_body(writer: AST.NodeWriter) -> None:
-            for generator in self._validator_generators:
+            for generator in self._field_validator_generators:
                 writer.write(f"if {FieldValidatorGenerator._DECORATOR_FIELD_NAME_ARGUMENT} == ")
                 writer.write(f'"{generator.field.name}":')
                 writer.write_line()
@@ -118,10 +103,15 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
         writer.write(f"return {DECORATOR_FUNCTION_NAME}")
 
     def _get_validator_generators(self) -> Sequence[ValidatorGenerator]:
-        return self._validator_generators
+        root_list: List[ValidatorGenerator] = [self._root_validator_generator]
+        field_list: List[ValidatorGenerator] = list(self._field_validator_generators)
+        return root_list + field_list
 
     def _write_examples_for_docstring(self, writer: AST.NodeWriter) -> None:
-        for generator in self._validator_generators:
+        writer.write_line()
+        self._root_validator_generator.write_example_for_docstring(writer=writer)
+
+        for generator in self._field_validator_generators:
             writer.write_line()
             generator.write_example_for_docstring(
                 writer=writer,

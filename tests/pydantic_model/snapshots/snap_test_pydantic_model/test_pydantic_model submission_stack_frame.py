@@ -23,6 +23,10 @@ class StackFrame(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @StackFrame.Validators.root
+            def validate(values: StackFrame.Partial) -> StackFrame.Partial:
+                ...
+
             @StackFrame.Validators.field("method_name")
             def validate_method_name(v: str, values: StackFrame.Partial) -> str:
                 ...
@@ -36,9 +40,17 @@ class StackFrame(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[StackFrame.Partial], StackFrame.Partial]]] = []
         _method_name_validators: typing.ClassVar[typing.List[StackFrame.Validators.MethodNameValidator]] = []
         _line_number_validators: typing.ClassVar[typing.List[StackFrame.Validators.LineNumberValidator]] = []
         _scopes_validators: typing.ClassVar[typing.List[StackFrame.Validators.ScopesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[StackFrame.Partial], StackFrame.Partial]
+        ) -> typing.Callable[[StackFrame.Partial], StackFrame.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -85,6 +97,12 @@ class StackFrame(pydantic.BaseModel):
         class ScopesValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.List[Scope], *, values: StackFrame.Partial) -> typing.List[Scope]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in StackFrame.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("method_name")
     def _validate_method_name(cls, v: str, values: StackFrame.Partial) -> str:

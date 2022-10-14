@@ -25,6 +25,10 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseNonHiddenGrade.Validators.root
+            def validate(values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
+                ...
+
             @TestCaseNonHiddenGrade.Validators.field("passed")
             def validate_passed(v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
                 ...
@@ -42,12 +46,22 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]]
+        ] = []
         _passed_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
         _actual_result_validators: typing.ClassVar[
             typing.List[TestCaseNonHiddenGrade.Validators.ActualResultValidator]
         ] = []
         _exception_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.ExceptionValidator]] = []
         _stdout_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]
+        ) -> typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -120,6 +134,12 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: TestCaseNonHiddenGrade.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseNonHiddenGrade.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("passed")
     def _validate_passed(cls, v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:

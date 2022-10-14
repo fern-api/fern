@@ -24,6 +24,10 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceRunDetails.Validators.root
+            def validate(values: WorkspaceRunDetails.Partial) -> WorkspaceRunDetails.Partial:
+                ...
+
             @WorkspaceRunDetails.Validators.field("exception_v_2")
             def validate_exception_v_2(v: typing.Optional[ExceptionV2], values: WorkspaceRunDetails.Partial) -> typing.Optional[ExceptionV2]:
                 ...
@@ -37,11 +41,21 @@ class WorkspaceRunDetails(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceRunDetails.Partial], WorkspaceRunDetails.Partial]]
+        ] = []
         _exception_v_2_validators: typing.ClassVar[
             typing.List[WorkspaceRunDetails.Validators.ExceptionV2Validator]
         ] = []
         _exception_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.ExceptionValidator]] = []
         _stdout_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[WorkspaceRunDetails.Partial], WorkspaceRunDetails.Partial]
+        ) -> typing.Callable[[WorkspaceRunDetails.Partial], WorkspaceRunDetails.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -98,6 +112,12 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: WorkspaceRunDetails.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceRunDetails.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("exception_v_2")
     def _validate_exception_v_2(

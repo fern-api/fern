@@ -22,6 +22,10 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceSubmissionUpdate.Validators.root
+            def validate(values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
+                ...
+
             @WorkspaceSubmissionUpdate.Validators.field("update_time")
             def validate_update_time(v: str, values: WorkspaceSubmissionUpdate.Partial) -> str:
                 ...
@@ -31,12 +35,22 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]]
+        ] = []
         _update_time_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator]
         ] = []
         _update_info_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]
+        ) -> typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -78,6 +92,12 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
                 self, v: WorkspaceSubmissionUpdateInfo, *, values: WorkspaceSubmissionUpdate.Partial
             ) -> WorkspaceSubmissionUpdateInfo:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceSubmissionUpdate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("update_time")
     def _validate_update_time(cls, v: str, values: WorkspaceSubmissionUpdate.Partial) -> str:

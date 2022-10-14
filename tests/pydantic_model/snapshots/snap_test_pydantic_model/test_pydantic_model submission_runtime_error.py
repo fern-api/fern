@@ -19,12 +19,24 @@ class RuntimeError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @RuntimeError.Validators.root
+            def validate(values: RuntimeError.Partial) -> RuntimeError.Partial:
+                ...
+
             @RuntimeError.Validators.field("message")
             def validate_message(v: str, values: RuntimeError.Partial) -> str:
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[RuntimeError.Partial], RuntimeError.Partial]]] = []
         _message_validators: typing.ClassVar[typing.List[RuntimeError.Validators.MessageValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[RuntimeError.Partial], RuntimeError.Partial]
+        ) -> typing.Callable[[RuntimeError.Partial], RuntimeError.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -45,6 +57,12 @@ class RuntimeError(pydantic.BaseModel):
         class MessageValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: RuntimeError.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in RuntimeError.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("message")
     def _validate_message(cls, v: str, values: RuntimeError.Partial) -> str:

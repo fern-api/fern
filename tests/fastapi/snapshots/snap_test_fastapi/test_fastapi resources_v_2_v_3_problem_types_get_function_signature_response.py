@@ -21,14 +21,29 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetFunctionSignatureResponse.Validators.root
+            def validate(values: GetFunctionSignatureResponse.Partial) -> GetFunctionSignatureResponse.Partial:
+                ...
+
             @GetFunctionSignatureResponse.Validators.field("function_by_language")
             def validate_function_by_language(v: typing.Dict[Language, str], values: GetFunctionSignatureResponse.Partial) -> typing.Dict[Language, str]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetFunctionSignatureResponse.Partial], GetFunctionSignatureResponse.Partial]]
+        ] = []
         _function_by_language_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[GetFunctionSignatureResponse.Partial], GetFunctionSignatureResponse.Partial],
+        ) -> typing.Callable[[GetFunctionSignatureResponse.Partial], GetFunctionSignatureResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -54,6 +69,12 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
                 self, v: typing.Dict[Language, str], *, values: GetFunctionSignatureResponse.Partial
             ) -> typing.Dict[Language, str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetFunctionSignatureResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("function_by_language")
     def _validate_function_by_language(

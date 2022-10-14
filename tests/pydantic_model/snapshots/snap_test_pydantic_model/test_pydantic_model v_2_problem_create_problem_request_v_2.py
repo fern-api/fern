@@ -31,6 +31,10 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @CreateProblemRequestV2.Validators.root
+            def validate(values: CreateProblemRequestV2.Partial) -> CreateProblemRequestV2.Partial:
+                ...
+
             @CreateProblemRequestV2.Validators.field("problem_name")
             def validate_problem_name(v: str, values: CreateProblemRequestV2.Partial) -> str:
                 ...
@@ -60,6 +64,9 @@ class CreateProblemRequestV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[CreateProblemRequestV2.Partial], CreateProblemRequestV2.Partial]]
+        ] = []
         _problem_name_validators: typing.ClassVar[
             typing.List[CreateProblemRequestV2.Validators.ProblemNameValidator]
         ] = []
@@ -77,6 +84,13 @@ class CreateProblemRequestV2(pydantic.BaseModel):
             typing.List[CreateProblemRequestV2.Validators.SupportedLanguagesValidator]
         ] = []
         _is_public_validators: typing.ClassVar[typing.List[CreateProblemRequestV2.Validators.IsPublicValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[CreateProblemRequestV2.Partial], CreateProblemRequestV2.Partial]
+        ) -> typing.Callable[[CreateProblemRequestV2.Partial], CreateProblemRequestV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -200,6 +214,12 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         class IsPublicValidator(typing_extensions.Protocol):
             def __call__(self, v: bool, *, values: CreateProblemRequestV2.Partial) -> bool:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in CreateProblemRequestV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_name")
     def _validate_problem_name(cls, v: str, values: CreateProblemRequestV2.Partial) -> str:

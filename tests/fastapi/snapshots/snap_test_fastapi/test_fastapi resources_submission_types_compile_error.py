@@ -19,12 +19,24 @@ class CompileError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @CompileError.Validators.root
+            def validate(values: CompileError.Partial) -> CompileError.Partial:
+                ...
+
             @CompileError.Validators.field("message")
             def validate_message(v: str, values: CompileError.Partial) -> str:
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[CompileError.Partial], CompileError.Partial]]] = []
         _message_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[CompileError.Partial], CompileError.Partial]
+        ) -> typing.Callable[[CompileError.Partial], CompileError.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -45,6 +57,12 @@ class CompileError(pydantic.BaseModel):
         class MessageValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: CompileError.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in CompileError.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("message")
     def _validate_message(cls, v: str, values: CompileError.Partial) -> str:

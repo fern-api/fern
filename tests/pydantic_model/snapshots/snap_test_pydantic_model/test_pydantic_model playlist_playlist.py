@@ -24,6 +24,10 @@ class Playlist(PlaylistCreateRequest):
         """
         Use this class to add validators to the Pydantic model.
 
+            @Playlist.Validators.root
+            def validate(values: Playlist.Partial) -> Playlist.Partial:
+                ...
+
             @Playlist.Validators.field("playlist_id")
             def validate_playlist_id(v: PlaylistId, values: Playlist.Partial) -> PlaylistId:
                 ...
@@ -33,8 +37,16 @@ class Playlist(PlaylistCreateRequest):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[Playlist.Partial], Playlist.Partial]]] = []
         _playlist_id_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
         _owner_id_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[Playlist.Partial], Playlist.Partial]
+        ) -> typing.Callable[[Playlist.Partial], Playlist.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -68,6 +80,12 @@ class Playlist(PlaylistCreateRequest):
         class OwnerIdValidator(typing_extensions.Protocol):
             def __call__(self, v: UserId, *, values: Playlist.Partial) -> UserId:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in Playlist.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("playlist_id")
     def _validate_playlist_id(cls, v: PlaylistId, values: Playlist.Partial) -> PlaylistId:

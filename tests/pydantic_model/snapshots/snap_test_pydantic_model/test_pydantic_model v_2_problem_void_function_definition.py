@@ -23,6 +23,10 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @VoidFunctionDefinition.Validators.root
+            def validate(values: VoidFunctionDefinition.Partial) -> VoidFunctionDefinition.Partial:
+                ...
+
             @VoidFunctionDefinition.Validators.field("parameters")
             def validate_parameters(v: typing.List[Parameter], values: VoidFunctionDefinition.Partial) -> typing.List[Parameter]:
                 ...
@@ -32,8 +36,18 @@ class VoidFunctionDefinition(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]]
+        ] = []
         _parameters_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.ParametersValidator]] = []
         _code_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]
+        ) -> typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -76,6 +90,12 @@ class VoidFunctionDefinition(pydantic.BaseModel):
                 self, v: FunctionImplementationForMultipleLanguages, *, values: VoidFunctionDefinition.Partial
             ) -> FunctionImplementationForMultipleLanguages:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in VoidFunctionDefinition.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("parameters")
     def _validate_parameters(

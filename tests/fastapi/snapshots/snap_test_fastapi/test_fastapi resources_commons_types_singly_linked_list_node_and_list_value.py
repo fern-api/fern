@@ -23,6 +23,10 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @SinglyLinkedListNodeAndListValue.Validators.root
+            def validate(values: SinglyLinkedListNodeAndListValue.Partial) -> SinglyLinkedListNodeAndListValue.Partial:
+                ...
+
             @SinglyLinkedListNodeAndListValue.Validators.field("node_id")
             def validate_node_id(v: NodeId, values: SinglyLinkedListNodeAndListValue.Partial) -> NodeId:
                 ...
@@ -32,12 +36,27 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[SinglyLinkedListNodeAndListValue.Partial], SinglyLinkedListNodeAndListValue.Partial]
+            ]
+        ] = []
         _node_id_validators: typing.ClassVar[
             typing.List[SinglyLinkedListNodeAndListValue.Validators.NodeIdValidator]
         ] = []
         _full_list_validators: typing.ClassVar[
             typing.List[SinglyLinkedListNodeAndListValue.Validators.FullListValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [SinglyLinkedListNodeAndListValue.Partial], SinglyLinkedListNodeAndListValue.Partial
+            ],
+        ) -> typing.Callable[[SinglyLinkedListNodeAndListValue.Partial], SinglyLinkedListNodeAndListValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -79,6 +98,12 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
                 self, v: SinglyLinkedListValue, *, values: SinglyLinkedListNodeAndListValue.Partial
             ) -> SinglyLinkedListValue:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in SinglyLinkedListNodeAndListValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: SinglyLinkedListNodeAndListValue.Partial) -> NodeId:

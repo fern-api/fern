@@ -22,6 +22,10 @@ class VariableTypeAndName(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @VariableTypeAndName.Validators.root
+            def validate(values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
+                ...
+
             @VariableTypeAndName.Validators.field("variable_type")
             def validate_variable_type(v: VariableType, values: VariableTypeAndName.Partial) -> VariableType:
                 ...
@@ -31,10 +35,20 @@ class VariableTypeAndName(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[VariableTypeAndName.Partial], VariableTypeAndName.Partial]]
+        ] = []
         _variable_type_validators: typing.ClassVar[
             typing.List[VariableTypeAndName.Validators.VariableTypeValidator]
         ] = []
         _name_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators.NameValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[VariableTypeAndName.Partial], VariableTypeAndName.Partial]
+        ) -> typing.Callable[[VariableTypeAndName.Partial], VariableTypeAndName.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -72,6 +86,12 @@ class VariableTypeAndName(pydantic.BaseModel):
         class NameValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: VariableTypeAndName.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in VariableTypeAndName.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("variable_type")
     def _validate_variable_type(cls, v: VariableType, values: VariableTypeAndName.Partial) -> VariableType:

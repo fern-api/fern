@@ -21,6 +21,10 @@ class GenericCreateProblemError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GenericCreateProblemError.Validators.root
+            def validate(values: GenericCreateProblemError.Partial) -> GenericCreateProblemError.Partial:
+                ...
+
             @GenericCreateProblemError.Validators.field("message")
             def validate_message(v: str, values: GenericCreateProblemError.Partial) -> str:
                 ...
@@ -34,11 +38,21 @@ class GenericCreateProblemError(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]]
+        ] = []
         _message_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.MessageValidator]] = []
         _type_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.TypeValidator]] = []
         _stacktrace_validators: typing.ClassVar[
             typing.List[GenericCreateProblemError.Validators.StacktraceValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]
+        ) -> typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -93,6 +107,12 @@ class GenericCreateProblemError(pydantic.BaseModel):
         class StacktraceValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: GenericCreateProblemError.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GenericCreateProblemError.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("message")
     def _validate_message(cls, v: str, values: GenericCreateProblemError.Partial) -> str:

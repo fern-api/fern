@@ -21,14 +21,29 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @DeepEqualityCorrectnessCheck.Validators.root
+            def validate(values: DeepEqualityCorrectnessCheck.Partial) -> DeepEqualityCorrectnessCheck.Partial:
+                ...
+
             @DeepEqualityCorrectnessCheck.Validators.field("expected_value_parameter_id")
             def validate_expected_value_parameter_id(v: ParameterId, values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial]]
+        ] = []
         _expected_value_parameter_id_validators: typing.ClassVar[
             typing.List[DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial],
+        ) -> typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -52,6 +67,12 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         class ExpectedValueParameterIdValidator(typing_extensions.Protocol):
             def __call__(self, v: ParameterId, *, values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in DeepEqualityCorrectnessCheck.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("expected_value_parameter_id")
     def _validate_expected_value_parameter_id(

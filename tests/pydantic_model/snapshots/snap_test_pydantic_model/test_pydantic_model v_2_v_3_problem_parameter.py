@@ -24,6 +24,10 @@ class Parameter(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @Parameter.Validators.root
+            def validate(values: Parameter.Partial) -> Parameter.Partial:
+                ...
+
             @Parameter.Validators.field("parameter_id")
             def validate_parameter_id(v: ParameterId, values: Parameter.Partial) -> ParameterId:
                 ...
@@ -37,9 +41,17 @@ class Parameter(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[Parameter.Partial], Parameter.Partial]]] = []
         _parameter_id_validators: typing.ClassVar[typing.List[Parameter.Validators.ParameterIdValidator]] = []
         _name_validators: typing.ClassVar[typing.List[Parameter.Validators.NameValidator]] = []
         _variable_type_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[Parameter.Partial], Parameter.Partial]
+        ) -> typing.Callable[[Parameter.Partial], Parameter.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -86,6 +98,12 @@ class Parameter(pydantic.BaseModel):
         class VariableTypeValidator(typing_extensions.Protocol):
             def __call__(self, v: VariableType, *, values: Parameter.Partial) -> VariableType:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in Parameter.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("parameter_id")
     def _validate_parameter_id(cls, v: ParameterId, values: Parameter.Partial) -> ParameterId:

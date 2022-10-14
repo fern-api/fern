@@ -20,6 +20,10 @@ class ListType(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ListType.Validators.root
+            def validate(values: ListType.Partial) -> ListType.Partial:
+                ...
+
             @ListType.Validators.field("value_type")
             def validate_value_type(v: VariableType, values: ListType.Partial) -> VariableType:
                 ...
@@ -29,8 +33,16 @@ class ListType(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[ListType.Partial], ListType.Partial]]] = []
         _value_type_validators: typing.ClassVar[typing.List[ListType.Validators.ValueTypeValidator]] = []
         _is_fixed_length_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ListType.Partial], ListType.Partial]
+        ) -> typing.Callable[[ListType.Partial], ListType.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -64,6 +76,12 @@ class ListType(pydantic.BaseModel):
         class IsFixedLengthValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.Optional[bool], *, values: ListType.Partial) -> typing.Optional[bool]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ListType.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("value_type")
     def _validate_value_type(cls, v: VariableType, values: ListType.Partial) -> VariableType:

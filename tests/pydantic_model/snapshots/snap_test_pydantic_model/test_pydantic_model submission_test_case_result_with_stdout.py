@@ -22,6 +22,10 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseResultWithStdout.Validators.root
+            def validate(values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
+                ...
+
             @TestCaseResultWithStdout.Validators.field("result")
             def validate_result(v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
                 ...
@@ -31,8 +35,18 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]]
+        ] = []
         _result_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
         _stdout_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]
+        ) -> typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -70,6 +84,12 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: TestCaseResultWithStdout.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseResultWithStdout.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("result")
     def _validate_result(cls, v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:

@@ -23,6 +23,10 @@ class RecordedResponseNotification(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @RecordedResponseNotification.Validators.root
+            def validate(values: RecordedResponseNotification.Partial) -> RecordedResponseNotification.Partial:
+                ...
+
             @RecordedResponseNotification.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: RecordedResponseNotification.Partial) -> SubmissionId:
                 ...
@@ -36,6 +40,9 @@ class RecordedResponseNotification(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[RecordedResponseNotification.Partial], RecordedResponseNotification.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[
             typing.List[RecordedResponseNotification.Validators.SubmissionIdValidator]
         ] = []
@@ -45,6 +52,14 @@ class RecordedResponseNotification(pydantic.BaseModel):
         _test_case_id_validators: typing.ClassVar[
             typing.List[RecordedResponseNotification.Validators.TestCaseIdValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[RecordedResponseNotification.Partial], RecordedResponseNotification.Partial],
+        ) -> typing.Callable[[RecordedResponseNotification.Partial], RecordedResponseNotification.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -102,6 +117,12 @@ class RecordedResponseNotification(pydantic.BaseModel):
                 self, v: typing.Optional[str], *, values: RecordedResponseNotification.Partial
             ) -> typing.Optional[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in RecordedResponseNotification.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: RecordedResponseNotification.Partial) -> SubmissionId:

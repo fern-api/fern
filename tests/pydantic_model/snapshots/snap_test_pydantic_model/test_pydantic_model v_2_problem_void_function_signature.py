@@ -21,12 +21,26 @@ class VoidFunctionSignature(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @VoidFunctionSignature.Validators.root
+            def validate(values: VoidFunctionSignature.Partial) -> VoidFunctionSignature.Partial:
+                ...
+
             @VoidFunctionSignature.Validators.field("parameters")
             def validate_parameters(v: typing.List[Parameter], values: VoidFunctionSignature.Partial) -> typing.List[Parameter]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]]
+        ] = []
         _parameters_validators: typing.ClassVar[typing.List[VoidFunctionSignature.Validators.ParametersValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]
+        ) -> typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -51,6 +65,12 @@ class VoidFunctionSignature(pydantic.BaseModel):
                 self, v: typing.List[Parameter], *, values: VoidFunctionSignature.Partial
             ) -> typing.List[Parameter]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in VoidFunctionSignature.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("parameters")
     def _validate_parameters(

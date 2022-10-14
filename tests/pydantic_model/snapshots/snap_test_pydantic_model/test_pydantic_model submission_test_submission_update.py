@@ -22,6 +22,10 @@ class TestSubmissionUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestSubmissionUpdate.Validators.root
+            def validate(values: TestSubmissionUpdate.Partial) -> TestSubmissionUpdate.Partial:
+                ...
+
             @TestSubmissionUpdate.Validators.field("update_time")
             def validate_update_time(v: str, values: TestSubmissionUpdate.Partial) -> str:
                 ...
@@ -31,8 +35,18 @@ class TestSubmissionUpdate(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestSubmissionUpdate.Partial], TestSubmissionUpdate.Partial]]
+        ] = []
         _update_time_validators: typing.ClassVar[typing.List[TestSubmissionUpdate.Validators.UpdateTimeValidator]] = []
         _update_info_validators: typing.ClassVar[typing.List[TestSubmissionUpdate.Validators.UpdateInfoValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestSubmissionUpdate.Partial], TestSubmissionUpdate.Partial]
+        ) -> typing.Callable[[TestSubmissionUpdate.Partial], TestSubmissionUpdate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -72,6 +86,12 @@ class TestSubmissionUpdate(pydantic.BaseModel):
                 self, v: TestSubmissionUpdateInfo, *, values: TestSubmissionUpdate.Partial
             ) -> TestSubmissionUpdateInfo:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestSubmissionUpdate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("update_time")
     def _validate_update_time(cls, v: str, values: TestSubmissionUpdate.Partial) -> str:

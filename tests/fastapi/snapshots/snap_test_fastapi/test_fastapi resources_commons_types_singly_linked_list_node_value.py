@@ -23,6 +23,10 @@ class SinglyLinkedListNodeValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @SinglyLinkedListNodeValue.Validators.root
+            def validate(values: SinglyLinkedListNodeValue.Partial) -> SinglyLinkedListNodeValue.Partial:
+                ...
+
             @SinglyLinkedListNodeValue.Validators.field("node_id")
             def validate_node_id(v: NodeId, values: SinglyLinkedListNodeValue.Partial) -> NodeId:
                 ...
@@ -36,9 +40,19 @@ class SinglyLinkedListNodeValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[SinglyLinkedListNodeValue.Partial], SinglyLinkedListNodeValue.Partial]]
+        ] = []
         _node_id_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeValue.Validators.NodeIdValidator]] = []
         _val_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeValue.Validators.ValValidator]] = []
         _next_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeValue.Validators.NextValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[SinglyLinkedListNodeValue.Partial], SinglyLinkedListNodeValue.Partial]
+        ) -> typing.Callable[[SinglyLinkedListNodeValue.Partial], SinglyLinkedListNodeValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -93,6 +107,12 @@ class SinglyLinkedListNodeValue(pydantic.BaseModel):
                 self, v: typing.Optional[NodeId], *, values: SinglyLinkedListNodeValue.Partial
             ) -> typing.Optional[NodeId]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in SinglyLinkedListNodeValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: SinglyLinkedListNodeValue.Partial) -> NodeId:

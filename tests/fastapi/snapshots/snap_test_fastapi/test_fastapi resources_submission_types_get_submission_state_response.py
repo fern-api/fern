@@ -25,6 +25,10 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetSubmissionStateResponse.Validators.root
+            def validate(values: GetSubmissionStateResponse.Partial) -> GetSubmissionStateResponse.Partial:
+                ...
+
             @GetSubmissionStateResponse.Validators.field("time_submitted")
             def validate_time_submitted(v: typing.Optional[str], values: GetSubmissionStateResponse.Partial) -> typing.Optional[str]:
                 ...
@@ -42,6 +46,9 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetSubmissionStateResponse.Partial], GetSubmissionStateResponse.Partial]]
+        ] = []
         _time_submitted_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.TimeSubmittedValidator]
         ] = []
@@ -52,6 +59,13 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         _submission_type_state_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GetSubmissionStateResponse.Partial], GetSubmissionStateResponse.Partial]
+        ) -> typing.Callable[[GetSubmissionStateResponse.Partial], GetSubmissionStateResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -127,6 +141,12 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
                 self, v: SubmissionTypeState, *, values: GetSubmissionStateResponse.Partial
             ) -> SubmissionTypeState:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetSubmissionStateResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("time_submitted")
     def _validate_time_submitted(

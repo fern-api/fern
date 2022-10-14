@@ -22,6 +22,10 @@ class ProblemFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ProblemFiles.Validators.root
+            def validate(values: ProblemFiles.Partial) -> ProblemFiles.Partial:
+                ...
+
             @ProblemFiles.Validators.field("solution_file")
             def validate_solution_file(v: FileInfo, values: ProblemFiles.Partial) -> FileInfo:
                 ...
@@ -31,8 +35,16 @@ class ProblemFiles(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemFiles.Partial], ProblemFiles.Partial]]] = []
         _solution_file_validators: typing.ClassVar[typing.List[ProblemFiles.Validators.SolutionFileValidator]] = []
         _read_only_files_validators: typing.ClassVar[typing.List[ProblemFiles.Validators.ReadOnlyFilesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ProblemFiles.Partial], ProblemFiles.Partial]
+        ) -> typing.Callable[[ProblemFiles.Partial], ProblemFiles.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -70,6 +82,12 @@ class ProblemFiles(pydantic.BaseModel):
         class ReadOnlyFilesValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.List[FileInfo], *, values: ProblemFiles.Partial) -> typing.List[FileInfo]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ProblemFiles.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("solution_file")
     def _validate_solution_file(cls, v: FileInfo, values: ProblemFiles.Partial) -> FileInfo:

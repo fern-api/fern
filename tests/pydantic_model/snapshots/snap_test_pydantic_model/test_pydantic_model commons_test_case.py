@@ -22,6 +22,10 @@ class TestCase(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCase.Validators.root
+            def validate(values: TestCase.Partial) -> TestCase.Partial:
+                ...
+
             @TestCase.Validators.field("id")
             def validate_id(v: str, values: TestCase.Partial) -> str:
                 ...
@@ -31,8 +35,16 @@ class TestCase(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[TestCase.Partial], TestCase.Partial]]] = []
         _id_validators: typing.ClassVar[typing.List[TestCase.Validators.IdValidator]] = []
         _params_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCase.Partial], TestCase.Partial]
+        ) -> typing.Callable[[TestCase.Partial], TestCase.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -68,6 +80,12 @@ class TestCase(pydantic.BaseModel):
                 self, v: typing.List[VariableValue], *, values: TestCase.Partial
             ) -> typing.List[VariableValue]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCase.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("id")
     def _validate_id(cls, v: str, values: TestCase.Partial) -> str:

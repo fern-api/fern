@@ -23,6 +23,10 @@ class TestCaseImplementation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseImplementation.Validators.root
+            def validate(values: TestCaseImplementation.Partial) -> TestCaseImplementation.Partial:
+                ...
+
             @TestCaseImplementation.Validators.field("description")
             def validate_description(v: TestCaseImplementationDescription, values: TestCaseImplementation.Partial) -> TestCaseImplementationDescription:
                 ...
@@ -32,10 +36,20 @@ class TestCaseImplementation(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseImplementation.Partial], TestCaseImplementation.Partial]]
+        ] = []
         _description_validators: typing.ClassVar[
             typing.List[TestCaseImplementation.Validators.DescriptionValidator]
         ] = []
         _function_validators: typing.ClassVar[typing.List[TestCaseImplementation.Validators.FunctionValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseImplementation.Partial], TestCaseImplementation.Partial]
+        ) -> typing.Callable[[TestCaseImplementation.Partial], TestCaseImplementation.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -76,6 +90,12 @@ class TestCaseImplementation(pydantic.BaseModel):
         class FunctionValidator(typing_extensions.Protocol):
             def __call__(self, v: TestCaseFunction, *, values: TestCaseImplementation.Partial) -> TestCaseFunction:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseImplementation.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("description")
     def _validate_description(

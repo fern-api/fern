@@ -23,6 +23,10 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @BinaryTreeNodeAndTreeValue.Validators.root
+            def validate(values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeNodeAndTreeValue.Partial:
+                ...
+
             @BinaryTreeNodeAndTreeValue.Validators.field("node_id")
             def validate_node_id(v: NodeId, values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:
                 ...
@@ -32,10 +36,20 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[BinaryTreeNodeAndTreeValue.Partial], BinaryTreeNodeAndTreeValue.Partial]]
+        ] = []
         _node_id_validators: typing.ClassVar[typing.List[BinaryTreeNodeAndTreeValue.Validators.NodeIdValidator]] = []
         _full_tree_validators: typing.ClassVar[
             typing.List[BinaryTreeNodeAndTreeValue.Validators.FullTreeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[BinaryTreeNodeAndTreeValue.Partial], BinaryTreeNodeAndTreeValue.Partial]
+        ) -> typing.Callable[[BinaryTreeNodeAndTreeValue.Partial], BinaryTreeNodeAndTreeValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -75,6 +89,12 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
         class FullTreeValidator(typing_extensions.Protocol):
             def __call__(self, v: BinaryTreeValue, *, values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeValue:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in BinaryTreeNodeAndTreeValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:

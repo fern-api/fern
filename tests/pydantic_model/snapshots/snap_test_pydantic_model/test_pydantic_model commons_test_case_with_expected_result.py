@@ -23,6 +23,10 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseWithExpectedResult.Validators.root
+            def validate(values: TestCaseWithExpectedResult.Partial) -> TestCaseWithExpectedResult.Partial:
+                ...
+
             @TestCaseWithExpectedResult.Validators.field("test_case")
             def validate_test_case(v: TestCase, values: TestCaseWithExpectedResult.Partial) -> TestCase:
                 ...
@@ -32,12 +36,22 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]]
+        ] = []
         _test_case_validators: typing.ClassVar[
             typing.List[TestCaseWithExpectedResult.Validators.TestCaseValidator]
         ] = []
         _expected_result_validators: typing.ClassVar[
             typing.List[TestCaseWithExpectedResult.Validators.ExpectedResultValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]
+        ) -> typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -77,6 +91,12 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         class ExpectedResultValidator(typing_extensions.Protocol):
             def __call__(self, v: VariableValue, *, values: TestCaseWithExpectedResult.Partial) -> VariableValue:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseWithExpectedResult.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("test_case")
     def _validate_test_case(cls, v: TestCase, values: TestCaseWithExpectedResult.Partial) -> TestCase:

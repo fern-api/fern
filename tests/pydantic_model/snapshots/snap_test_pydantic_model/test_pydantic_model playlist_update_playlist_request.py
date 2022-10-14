@@ -22,6 +22,10 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @UpdatePlaylistRequest.Validators.root
+            def validate(values: UpdatePlaylistRequest.Partial) -> UpdatePlaylistRequest.Partial:
+                ...
+
             @UpdatePlaylistRequest.Validators.field("name")
             def validate_name(v: str, values: UpdatePlaylistRequest.Partial) -> str:
                 ...
@@ -31,8 +35,18 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[UpdatePlaylistRequest.Partial], UpdatePlaylistRequest.Partial]]
+        ] = []
         _name_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.NameValidator]] = []
         _problems_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.ProblemsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[UpdatePlaylistRequest.Partial], UpdatePlaylistRequest.Partial]
+        ) -> typing.Callable[[UpdatePlaylistRequest.Partial], UpdatePlaylistRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -72,6 +86,12 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
                 self, v: typing.List[ProblemId], *, values: UpdatePlaylistRequest.Partial
             ) -> typing.List[ProblemId]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in UpdatePlaylistRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: UpdatePlaylistRequest.Partial) -> str:

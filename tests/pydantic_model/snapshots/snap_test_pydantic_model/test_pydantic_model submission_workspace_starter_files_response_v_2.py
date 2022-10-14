@@ -22,14 +22,33 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceStarterFilesResponseV2.Validators.root
+            def validate(values: WorkspaceStarterFilesResponseV2.Partial) -> WorkspaceStarterFilesResponseV2.Partial:
+                ...
+
             @WorkspaceStarterFilesResponseV2.Validators.field("files_by_language")
             def validate_files_by_language(v: typing.Dict[Language, Files], values: WorkspaceStarterFilesResponseV2.Partial) -> typing.Dict[Language, Files]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[WorkspaceStarterFilesResponseV2.Partial], WorkspaceStarterFilesResponseV2.Partial]
+            ]
+        ] = []
         _files_by_language_validators: typing.ClassVar[
             typing.List[WorkspaceStarterFilesResponseV2.Validators.FilesByLanguageValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [WorkspaceStarterFilesResponseV2.Partial], WorkspaceStarterFilesResponseV2.Partial
+            ],
+        ) -> typing.Callable[[WorkspaceStarterFilesResponseV2.Partial], WorkspaceStarterFilesResponseV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -55,6 +74,12 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
                 self, v: typing.Dict[Language, Files], *, values: WorkspaceStarterFilesResponseV2.Partial
             ) -> typing.Dict[Language, Files]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceStarterFilesResponseV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("files_by_language")
     def _validate_files_by_language(

@@ -23,6 +23,10 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @VoidFunctionSignatureThatTakesActualResult.Validators.root
+            def validate(values: VoidFunctionSignatureThatTakesActualResult.Partial) -> VoidFunctionSignatureThatTakesActualResult.Partial:
+                ...
+
             @VoidFunctionSignatureThatTakesActualResult.Validators.field("parameters")
             def validate_parameters(v: typing.List[Parameter], values: VoidFunctionSignatureThatTakesActualResult.Partial) -> typing.List[Parameter]:
                 ...
@@ -32,12 +36,32 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[
+                    [VoidFunctionSignatureThatTakesActualResult.Partial],
+                    VoidFunctionSignatureThatTakesActualResult.Partial,
+                ]
+            ]
+        ] = []
         _parameters_validators: typing.ClassVar[
             typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator]
         ] = []
         _actual_result_type_validators: typing.ClassVar[
             typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [VoidFunctionSignatureThatTakesActualResult.Partial], VoidFunctionSignatureThatTakesActualResult.Partial
+            ],
+        ) -> typing.Callable[
+            [VoidFunctionSignatureThatTakesActualResult.Partial], VoidFunctionSignatureThatTakesActualResult.Partial
+        ]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -81,6 +105,12 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
                 self, v: VariableType, *, values: VoidFunctionSignatureThatTakesActualResult.Partial
             ) -> VariableType:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in VoidFunctionSignatureThatTakesActualResult.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("parameters")
     def _validate_parameters(

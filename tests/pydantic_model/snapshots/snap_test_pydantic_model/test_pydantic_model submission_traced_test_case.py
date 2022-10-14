@@ -22,6 +22,10 @@ class TracedTestCase(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TracedTestCase.Validators.root
+            def validate(values: TracedTestCase.Partial) -> TracedTestCase.Partial:
+                ...
+
             @TracedTestCase.Validators.field("result")
             def validate_result(v: TestCaseResultWithStdout, values: TracedTestCase.Partial) -> TestCaseResultWithStdout:
                 ...
@@ -31,10 +35,20 @@ class TracedTestCase(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TracedTestCase.Partial], TracedTestCase.Partial]]
+        ] = []
         _result_validators: typing.ClassVar[typing.List[TracedTestCase.Validators.ResultValidator]] = []
         _trace_responses_size_validators: typing.ClassVar[
             typing.List[TracedTestCase.Validators.TraceResponsesSizeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TracedTestCase.Partial], TracedTestCase.Partial]
+        ) -> typing.Callable[[TracedTestCase.Partial], TracedTestCase.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -73,6 +87,12 @@ class TracedTestCase(pydantic.BaseModel):
         class TraceResponsesSizeValidator(typing_extensions.Protocol):
             def __call__(self, v: int, *, values: TracedTestCase.Partial) -> int:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TracedTestCase.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("result")
     def _validate_result(cls, v: TestCaseResultWithStdout, values: TracedTestCase.Partial) -> TestCaseResultWithStdout:

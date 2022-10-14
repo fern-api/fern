@@ -26,6 +26,10 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceSubmitRequest.Validators.root
+            def validate(values: WorkspaceSubmitRequest.Partial) -> WorkspaceSubmitRequest.Partial:
+                ...
+
             @WorkspaceSubmitRequest.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
                 ...
@@ -43,6 +47,9 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceSubmitRequest.Partial], WorkspaceSubmitRequest.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[
             typing.List[WorkspaceSubmitRequest.Validators.SubmissionIdValidator]
         ] = []
@@ -51,6 +58,13 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
             typing.List[WorkspaceSubmitRequest.Validators.SubmissionFilesValidator]
         ] = []
         _user_id_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.UserIdValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[WorkspaceSubmitRequest.Partial], WorkspaceSubmitRequest.Partial]
+        ) -> typing.Callable[[WorkspaceSubmitRequest.Partial], WorkspaceSubmitRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -124,6 +138,12 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
                 self, v: typing.Optional[str], *, values: WorkspaceSubmitRequest.Partial
             ) -> typing.Optional[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceSubmitRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: WorkspaceSubmitRequest.Partial) -> SubmissionId:

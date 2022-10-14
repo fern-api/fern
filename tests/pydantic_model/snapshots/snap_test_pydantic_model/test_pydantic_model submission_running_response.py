@@ -23,6 +23,10 @@ class RunningResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @RunningResponse.Validators.root
+            def validate(values: RunningResponse.Partial) -> RunningResponse.Partial:
+                ...
+
             @RunningResponse.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
                 ...
@@ -32,8 +36,18 @@ class RunningResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[RunningResponse.Partial], RunningResponse.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[typing.List[RunningResponse.Validators.SubmissionIdValidator]] = []
         _state_validators: typing.ClassVar[typing.List[RunningResponse.Validators.StateValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[RunningResponse.Partial], RunningResponse.Partial]
+        ) -> typing.Callable[[RunningResponse.Partial], RunningResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -69,6 +83,12 @@ class RunningResponse(pydantic.BaseModel):
         class StateValidator(typing_extensions.Protocol):
             def __call__(self, v: RunningSubmissionState, *, values: RunningResponse.Partial) -> RunningSubmissionState:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in RunningResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:

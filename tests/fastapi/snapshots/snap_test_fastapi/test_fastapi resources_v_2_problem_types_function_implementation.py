@@ -20,6 +20,10 @@ class FunctionImplementation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @FunctionImplementation.Validators.root
+            def validate(values: FunctionImplementation.Partial) -> FunctionImplementation.Partial:
+                ...
+
             @FunctionImplementation.Validators.field("impl")
             def validate_impl(v: str, values: FunctionImplementation.Partial) -> str:
                 ...
@@ -29,8 +33,18 @@ class FunctionImplementation(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[FunctionImplementation.Partial], FunctionImplementation.Partial]]
+        ] = []
         _impl_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImplValidator]] = []
         _imports_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[FunctionImplementation.Partial], FunctionImplementation.Partial]
+        ) -> typing.Callable[[FunctionImplementation.Partial], FunctionImplementation.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -70,6 +84,12 @@ class FunctionImplementation(pydantic.BaseModel):
                 self, v: typing.Optional[str], *, values: FunctionImplementation.Partial
             ) -> typing.Optional[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in FunctionImplementation.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("impl")
     def _validate_impl(cls, v: str, values: FunctionImplementation.Partial) -> str:

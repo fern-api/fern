@@ -22,12 +22,27 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceStarterFilesResponse.Validators.root
+            def validate(values: WorkspaceStarterFilesResponse.Partial) -> WorkspaceStarterFilesResponse.Partial:
+                ...
+
             @WorkspaceStarterFilesResponse.Validators.field("files")
             def validate_files(v: typing.Dict[Language, WorkspaceFiles], values: WorkspaceStarterFilesResponse.Partial) -> typing.Dict[Language, WorkspaceFiles]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial]]
+        ] = []
         _files_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial],
+        ) -> typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -53,6 +68,12 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
                 self, v: typing.Dict[Language, WorkspaceFiles], *, values: WorkspaceStarterFilesResponse.Partial
             ) -> typing.Dict[Language, WorkspaceFiles]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceStarterFilesResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("files")
     def _validate_files(

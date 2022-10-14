@@ -4,18 +4,40 @@
 # fmt: off
 # isort: skip_file
 
+from __future__ import annotations
+
 import typing
 
 import pydantic
+import typing_extensions
 
 
 class TerminatedResponse(pydantic.BaseModel):
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
+
+            @TerminatedResponse.Validators.root
+            def validate(values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
+                ...
         """
 
-        pass
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TerminatedResponse.Partial], TerminatedResponse.Partial]]
+        ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TerminatedResponse.Partial], TerminatedResponse.Partial]
+        ) -> typing.Callable[[TerminatedResponse.Partial], TerminatedResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TerminatedResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
@@ -24,6 +46,9 @@ class TerminatedResponse(pydantic.BaseModel):
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
+
+    class Partial(typing_extensions.TypedDict):
+        pass
 
     class Config:
         frozen = True

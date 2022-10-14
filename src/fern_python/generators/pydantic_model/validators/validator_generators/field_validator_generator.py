@@ -107,3 +107,38 @@ class FieldValidatorGenerator(ValidatorGenerator):
 
             with writer.indent():
                 writer.write_line("...")
+
+    def get_protocol_declaration(self) -> AST.ClassDeclaration:
+        validator_protocol = AST.ClassDeclaration(
+            name=self.get_validator_protocol_name(),
+            extends=[
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
+                    qualified_name_excluding_import=("Protocol",),
+                )
+            ],
+        )
+
+        validator_protocol.add_method(
+            declaration=AST.FunctionDeclaration(
+                name="__call__",
+                signature=AST.FunctionSignature(
+                    parameters=[
+                        AST.FunctionParameter(
+                            name=PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
+                            type_hint=self.field.type_hint,
+                        ),
+                    ],
+                    named_parameters=[
+                        AST.FunctionParameter(
+                            name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
+                            type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
+                        ),
+                    ],
+                    return_type=self.field.type_hint,
+                ),
+                body=AST.CodeWriter("..."),
+            )
+        )
+
+        return validator_protocol

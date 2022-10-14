@@ -21,12 +21,24 @@ class Scope(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @Scope.Validators.root
+            def validate(values: Scope.Partial) -> Scope.Partial:
+                ...
+
             @Scope.Validators.field("variables")
             def validate_variables(v: typing.Dict[str, DebugVariableValue], values: Scope.Partial) -> typing.Dict[str, DebugVariableValue]:
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[Scope.Partial], Scope.Partial]]] = []
         _variables_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[Scope.Partial], Scope.Partial]
+        ) -> typing.Callable[[Scope.Partial], Scope.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -49,6 +61,12 @@ class Scope(pydantic.BaseModel):
                 self, v: typing.Dict[str, DebugVariableValue], *, values: Scope.Partial
             ) -> typing.Dict[str, DebugVariableValue]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in Scope.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("variables")
     def _validate_variables(

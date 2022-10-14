@@ -26,6 +26,10 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestSubmissionStatusV2.Validators.root
+            def validate(values: TestSubmissionStatusV2.Partial) -> TestSubmissionStatusV2.Partial:
+                ...
+
             @TestSubmissionStatusV2.Validators.field("updates")
             def validate_updates(v: typing.List[TestSubmissionUpdate], values: TestSubmissionStatusV2.Partial) -> typing.List[TestSubmissionUpdate]:
                 ...
@@ -43,6 +47,9 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestSubmissionStatusV2.Partial], TestSubmissionStatusV2.Partial]]
+        ] = []
         _updates_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators.UpdatesValidator]] = []
         _problem_id_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators.ProblemIdValidator]] = []
         _problem_version_validators: typing.ClassVar[
@@ -51,6 +58,13 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         _problem_info_validators: typing.ClassVar[
             typing.List[TestSubmissionStatusV2.Validators.ProblemInfoValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestSubmissionStatusV2.Partial], TestSubmissionStatusV2.Partial]
+        ) -> typing.Callable[[TestSubmissionStatusV2.Partial], TestSubmissionStatusV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -122,6 +136,12 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         class ProblemInfoValidator(typing_extensions.Protocol):
             def __call__(self, v: ProblemInfoV2, *, values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestSubmissionStatusV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("updates")
     def _validate_updates(

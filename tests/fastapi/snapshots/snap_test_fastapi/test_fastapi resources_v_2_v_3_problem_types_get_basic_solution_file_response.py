@@ -22,14 +22,29 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetBasicSolutionFileResponse.Validators.root
+            def validate(values: GetBasicSolutionFileResponse.Partial) -> GetBasicSolutionFileResponse.Partial:
+                ...
+
             @GetBasicSolutionFileResponse.Validators.field("solution_file_by_language")
             def validate_solution_file_by_language(v: typing.Dict[Language, FileInfoV2], values: GetBasicSolutionFileResponse.Partial) -> typing.Dict[Language, FileInfoV2]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial]]
+        ] = []
         _solution_file_by_language_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial],
+        ) -> typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -55,6 +70,12 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
                 self, v: typing.Dict[Language, FileInfoV2], *, values: GetBasicSolutionFileResponse.Partial
             ) -> typing.Dict[Language, FileInfoV2]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetBasicSolutionFileResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("solution_file_by_language")
     def _validate_solution_file_by_language(

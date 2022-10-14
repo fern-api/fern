@@ -23,6 +23,10 @@ class BuildingExecutorResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @BuildingExecutorResponse.Validators.root
+            def validate(values: BuildingExecutorResponse.Partial) -> BuildingExecutorResponse.Partial:
+                ...
+
             @BuildingExecutorResponse.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: BuildingExecutorResponse.Partial) -> SubmissionId:
                 ...
@@ -32,10 +36,20 @@ class BuildingExecutorResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[BuildingExecutorResponse.Partial], BuildingExecutorResponse.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[
             typing.List[BuildingExecutorResponse.Validators.SubmissionIdValidator]
         ] = []
         _status_validators: typing.ClassVar[typing.List[BuildingExecutorResponse.Validators.StatusValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[BuildingExecutorResponse.Partial], BuildingExecutorResponse.Partial]
+        ) -> typing.Callable[[BuildingExecutorResponse.Partial], BuildingExecutorResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -76,6 +90,12 @@ class BuildingExecutorResponse(pydantic.BaseModel):
                 self, v: ExecutionSessionStatus, *, values: BuildingExecutorResponse.Partial
             ) -> ExecutionSessionStatus:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in BuildingExecutorResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: BuildingExecutorResponse.Partial) -> SubmissionId:

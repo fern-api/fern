@@ -29,6 +29,10 @@ class TraceResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TraceResponse.Validators.root
+            def validate(values: TraceResponse.Partial) -> TraceResponse.Partial:
+                ...
+
             @TraceResponse.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
                 ...
@@ -54,6 +58,7 @@ class TraceResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[TraceResponse.Partial], TraceResponse.Partial]]] = []
         _submission_id_validators: typing.ClassVar[typing.List[TraceResponse.Validators.SubmissionIdValidator]] = []
         _line_number_validators: typing.ClassVar[typing.List[TraceResponse.Validators.LineNumberValidator]] = []
         _return_value_validators: typing.ClassVar[typing.List[TraceResponse.Validators.ReturnValueValidator]] = []
@@ -62,6 +67,13 @@ class TraceResponse(pydantic.BaseModel):
         ] = []
         _stack_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StackValidator]] = []
         _stdout_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TraceResponse.Partial], TraceResponse.Partial]
+        ) -> typing.Callable[[TraceResponse.Partial], TraceResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -159,6 +171,12 @@ class TraceResponse(pydantic.BaseModel):
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.Optional[str], *, values: TraceResponse.Partial) -> typing.Optional[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TraceResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:

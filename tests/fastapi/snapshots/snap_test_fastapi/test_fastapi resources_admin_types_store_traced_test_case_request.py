@@ -23,6 +23,10 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @StoreTracedTestCaseRequest.Validators.root
+            def validate(values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
+                ...
+
             @StoreTracedTestCaseRequest.Validators.field("result")
             def validate_result(v: TestCaseResultWithStdout, values: StoreTracedTestCaseRequest.Partial) -> TestCaseResultWithStdout:
                 ...
@@ -32,10 +36,20 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[StoreTracedTestCaseRequest.Partial], StoreTracedTestCaseRequest.Partial]]
+        ] = []
         _result_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators.ResultValidator]] = []
         _trace_responses_validators: typing.ClassVar[
             typing.List[StoreTracedTestCaseRequest.Validators.TraceResponsesValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[StoreTracedTestCaseRequest.Partial], StoreTracedTestCaseRequest.Partial]
+        ) -> typing.Callable[[StoreTracedTestCaseRequest.Partial], StoreTracedTestCaseRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -79,6 +93,12 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
                 self, v: typing.List[TraceResponse], *, values: StoreTracedTestCaseRequest.Partial
             ) -> typing.List[TraceResponse]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in StoreTracedTestCaseRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("result")
     def _validate_result(

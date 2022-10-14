@@ -23,6 +23,10 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceRanResponse.Validators.root
+            def validate(values: WorkspaceRanResponse.Partial) -> WorkspaceRanResponse.Partial:
+                ...
+
             @WorkspaceRanResponse.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
                 ...
@@ -32,10 +36,20 @@ class WorkspaceRanResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceRanResponse.Partial], WorkspaceRanResponse.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[
             typing.List[WorkspaceRanResponse.Validators.SubmissionIdValidator]
         ] = []
         _run_details_validators: typing.ClassVar[typing.List[WorkspaceRanResponse.Validators.RunDetailsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[WorkspaceRanResponse.Partial], WorkspaceRanResponse.Partial]
+        ) -> typing.Callable[[WorkspaceRanResponse.Partial], WorkspaceRanResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -74,6 +88,12 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         class RunDetailsValidator(typing_extensions.Protocol):
             def __call__(self, v: WorkspaceRunDetails, *, values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceRanResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:

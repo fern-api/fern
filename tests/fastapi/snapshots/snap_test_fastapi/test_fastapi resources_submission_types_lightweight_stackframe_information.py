@@ -20,6 +20,10 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @LightweightStackframeInformation.Validators.root
+            def validate(values: LightweightStackframeInformation.Partial) -> LightweightStackframeInformation.Partial:
+                ...
+
             @LightweightStackframeInformation.Validators.field("num_stack_frames")
             def validate_num_stack_frames(v: int, values: LightweightStackframeInformation.Partial) -> int:
                 ...
@@ -29,12 +33,27 @@ class LightweightStackframeInformation(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial]
+            ]
+        ] = []
         _num_stack_frames_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.NumStackFramesValidator]
         ] = []
         _top_stack_frame_method_name_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial
+            ],
+        ) -> typing.Callable[[LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -74,6 +93,12 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         class TopStackFrameMethodNameValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: LightweightStackframeInformation.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in LightweightStackframeInformation.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("num_stack_frames")
     def _validate_num_stack_frames(cls, v: int, values: LightweightStackframeInformation.Partial) -> int:

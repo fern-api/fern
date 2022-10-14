@@ -21,14 +21,28 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetFunctionSignatureRequest.Validators.root
+            def validate(values: GetFunctionSignatureRequest.Partial) -> GetFunctionSignatureRequest.Partial:
+                ...
+
             @GetFunctionSignatureRequest.Validators.field("function_signature")
             def validate_function_signature(v: FunctionSignature, values: GetFunctionSignatureRequest.Partial) -> FunctionSignature:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]]
+        ] = []
         _function_signature_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureRequest.Validators.FunctionSignatureValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]
+        ) -> typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -54,6 +68,12 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
                 self, v: FunctionSignature, *, values: GetFunctionSignatureRequest.Partial
             ) -> FunctionSignature:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetFunctionSignatureRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("function_signature")
     def _validate_function_signature(

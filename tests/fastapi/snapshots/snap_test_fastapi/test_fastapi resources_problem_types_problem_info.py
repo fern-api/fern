@@ -36,6 +36,10 @@ class ProblemInfo(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ProblemInfo.Validators.root
+            def validate(values: ProblemInfo.Partial) -> ProblemInfo.Partial:
+                ...
+
             @ProblemInfo.Validators.field("problem_id")
             def validate_problem_id(v: ProblemId, values: ProblemInfo.Partial) -> ProblemId:
                 ...
@@ -77,6 +81,7 @@ class ProblemInfo(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemInfo.Partial], ProblemInfo.Partial]]] = []
         _problem_id_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemIdValidator]] = []
         _problem_description_validators: typing.ClassVar[
             typing.List[ProblemInfo.Validators.ProblemDescriptionValidator]
@@ -91,6 +96,13 @@ class ProblemInfo(pydantic.BaseModel):
         _supports_custom_test_cases_validators: typing.ClassVar[
             typing.List[ProblemInfo.Validators.SupportsCustomTestCasesValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ProblemInfo.Partial], ProblemInfo.Partial]
+        ) -> typing.Callable[[ProblemInfo.Partial], ProblemInfo.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -245,6 +257,12 @@ class ProblemInfo(pydantic.BaseModel):
         class SupportsCustomTestCasesValidator(typing_extensions.Protocol):
             def __call__(self, v: bool, *, values: ProblemInfo.Partial) -> bool:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ProblemInfo.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: ProblemInfo.Partial) -> ProblemId:

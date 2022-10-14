@@ -20,6 +20,10 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @DebugKeyValuePairs.Validators.root
+            def validate(values: DebugKeyValuePairs.Partial) -> DebugKeyValuePairs.Partial:
+                ...
+
             @DebugKeyValuePairs.Validators.field("key")
             def validate_key(v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
                 ...
@@ -29,8 +33,18 @@ class DebugKeyValuePairs(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[DebugKeyValuePairs.Partial], DebugKeyValuePairs.Partial]]
+        ] = []
         _key_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.KeyValidator]] = []
         _value_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.ValueValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[DebugKeyValuePairs.Partial], DebugKeyValuePairs.Partial]
+        ) -> typing.Callable[[DebugKeyValuePairs.Partial], DebugKeyValuePairs.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -66,6 +80,12 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         class ValueValidator(typing_extensions.Protocol):
             def __call__(self, v: DebugVariableValue, *, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in DebugKeyValuePairs.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("key")
     def _validate_key(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:

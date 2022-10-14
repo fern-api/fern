@@ -21,12 +21,26 @@ class FinishedResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @FinishedResponse.Validators.root
+            def validate(values: FinishedResponse.Partial) -> FinishedResponse.Partial:
+                ...
+
             @FinishedResponse.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: FinishedResponse.Partial) -> SubmissionId:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[FinishedResponse.Partial], FinishedResponse.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[typing.List[FinishedResponse.Validators.SubmissionIdValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[FinishedResponse.Partial], FinishedResponse.Partial]
+        ) -> typing.Callable[[FinishedResponse.Partial], FinishedResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -49,6 +63,12 @@ class FinishedResponse(pydantic.BaseModel):
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, v: SubmissionId, *, values: FinishedResponse.Partial) -> SubmissionId:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in FinishedResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: FinishedResponse.Partial) -> SubmissionId:

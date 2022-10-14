@@ -19,14 +19,28 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @WorkspaceTracedUpdate.Validators.root
+            def validate(values: WorkspaceTracedUpdate.Partial) -> WorkspaceTracedUpdate.Partial:
+                ...
+
             @WorkspaceTracedUpdate.Validators.field("trace_responses_size")
             def validate_trace_responses_size(v: int, values: WorkspaceTracedUpdate.Partial) -> int:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]]
+        ] = []
         _trace_responses_size_validators: typing.ClassVar[
             typing.List[WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]
+        ) -> typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -50,6 +64,12 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         class TraceResponsesSizeValidator(typing_extensions.Protocol):
             def __call__(self, v: int, *, values: WorkspaceTracedUpdate.Partial) -> int:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in WorkspaceTracedUpdate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("trace_responses_size")
     def _validate_trace_responses_size(cls, v: int, values: WorkspaceTracedUpdate.Partial) -> int:

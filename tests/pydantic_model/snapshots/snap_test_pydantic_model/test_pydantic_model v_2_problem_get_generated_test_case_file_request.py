@@ -23,6 +23,10 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetGeneratedTestCaseFileRequest.Validators.root
+            def validate(values: GetGeneratedTestCaseFileRequest.Partial) -> GetGeneratedTestCaseFileRequest.Partial:
+                ...
+
             @GetGeneratedTestCaseFileRequest.Validators.field("template")
             def validate_template(v: typing.Optional[TestCaseTemplate], values: GetGeneratedTestCaseFileRequest.Partial) -> typing.Optional[TestCaseTemplate]:
                 ...
@@ -32,12 +36,27 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[GetGeneratedTestCaseFileRequest.Partial], GetGeneratedTestCaseFileRequest.Partial]
+            ]
+        ] = []
         _template_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseFileRequest.Validators.TemplateValidator]
         ] = []
         _test_case_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseFileRequest.Validators.TestCaseValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [GetGeneratedTestCaseFileRequest.Partial], GetGeneratedTestCaseFileRequest.Partial
+            ],
+        ) -> typing.Callable[[GetGeneratedTestCaseFileRequest.Partial], GetGeneratedTestCaseFileRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -79,6 +98,12 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         class TestCaseValidator(typing_extensions.Protocol):
             def __call__(self, v: TestCaseV2, *, values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetGeneratedTestCaseFileRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("template")
     def _validate_template(

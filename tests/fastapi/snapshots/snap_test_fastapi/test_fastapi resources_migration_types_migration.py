@@ -22,6 +22,10 @@ class Migration(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @Migration.Validators.root
+            def validate(values: Migration.Partial) -> Migration.Partial:
+                ...
+
             @Migration.Validators.field("name")
             def validate_name(v: str, values: Migration.Partial) -> str:
                 ...
@@ -31,8 +35,16 @@ class Migration(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[Migration.Partial], Migration.Partial]]] = []
         _name_validators: typing.ClassVar[typing.List[Migration.Validators.NameValidator]] = []
         _status_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[Migration.Partial], Migration.Partial]
+        ) -> typing.Callable[[Migration.Partial], Migration.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -66,6 +78,12 @@ class Migration(pydantic.BaseModel):
         class StatusValidator(typing_extensions.Protocol):
             def __call__(self, v: MigrationStatus, *, values: Migration.Partial) -> MigrationStatus:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in Migration.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: Migration.Partial) -> str:

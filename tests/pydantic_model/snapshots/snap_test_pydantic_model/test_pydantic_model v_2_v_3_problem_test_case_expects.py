@@ -19,14 +19,28 @@ class TestCaseExpects(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseExpects.Validators.root
+            def validate(values: TestCaseExpects.Partial) -> TestCaseExpects.Partial:
+                ...
+
             @TestCaseExpects.Validators.field("expected_stdout")
             def validate_expected_stdout(v: typing.Optional[str], values: TestCaseExpects.Partial) -> typing.Optional[str]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]]
+        ] = []
         _expected_stdout_validators: typing.ClassVar[
             typing.List[TestCaseExpects.Validators.ExpectedStdoutValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]
+        ) -> typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -49,6 +63,12 @@ class TestCaseExpects(pydantic.BaseModel):
         class ExpectedStdoutValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.Optional[str], *, values: TestCaseExpects.Partial) -> typing.Optional[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseExpects.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("expected_stdout")
     def _validate_expected_stdout(

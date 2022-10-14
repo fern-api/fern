@@ -23,6 +23,10 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @StoreTracedWorkspaceRequest.Validators.root
+            def validate(values: StoreTracedWorkspaceRequest.Partial) -> StoreTracedWorkspaceRequest.Partial:
+                ...
+
             @StoreTracedWorkspaceRequest.Validators.field("workspace_run_details")
             def validate_workspace_run_details(v: WorkspaceRunDetails, values: StoreTracedWorkspaceRequest.Partial) -> WorkspaceRunDetails:
                 ...
@@ -32,12 +36,22 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[StoreTracedWorkspaceRequest.Partial], StoreTracedWorkspaceRequest.Partial]]
+        ] = []
         _workspace_run_details_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator]
         ] = []
         _trace_responses_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[StoreTracedWorkspaceRequest.Partial], StoreTracedWorkspaceRequest.Partial]
+        ) -> typing.Callable[[StoreTracedWorkspaceRequest.Partial], StoreTracedWorkspaceRequest.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -81,6 +95,12 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
                 self, v: typing.List[TraceResponse], *, values: StoreTracedWorkspaceRequest.Partial
             ) -> typing.List[TraceResponse]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in StoreTracedWorkspaceRequest.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("workspace_run_details")
     def _validate_workspace_run_details(

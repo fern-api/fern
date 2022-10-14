@@ -23,6 +23,10 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @SinglyLinkedListValue.Validators.root
+            def validate(values: SinglyLinkedListValue.Partial) -> SinglyLinkedListValue.Partial:
+                ...
+
             @SinglyLinkedListValue.Validators.field("head")
             def validate_head(v: typing.Optional[NodeId], values: SinglyLinkedListValue.Partial) -> typing.Optional[NodeId]:
                 ...
@@ -32,8 +36,18 @@ class SinglyLinkedListValue(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[SinglyLinkedListValue.Partial], SinglyLinkedListValue.Partial]]
+        ] = []
         _head_validators: typing.ClassVar[typing.List[SinglyLinkedListValue.Validators.HeadValidator]] = []
         _nodes_validators: typing.ClassVar[typing.List[SinglyLinkedListValue.Validators.NodesValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[SinglyLinkedListValue.Partial], SinglyLinkedListValue.Partial]
+        ) -> typing.Callable[[SinglyLinkedListValue.Partial], SinglyLinkedListValue.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -75,6 +89,12 @@ class SinglyLinkedListValue(pydantic.BaseModel):
                 self, v: typing.Dict[NodeId, SinglyLinkedListNodeValue], *, values: SinglyLinkedListValue.Partial
             ) -> typing.Dict[NodeId, SinglyLinkedListNodeValue]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in SinglyLinkedListValue.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("head")
     def _validate_head(

@@ -27,6 +27,10 @@ class BasicCustomFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @BasicCustomFiles.Validators.root
+            def validate(values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
+                ...
+
             @BasicCustomFiles.Validators.field("method_name")
             def validate_method_name(v: str, values: BasicCustomFiles.Partial) -> str:
                 ...
@@ -44,6 +48,9 @@ class BasicCustomFiles(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]]
+        ] = []
         _method_name_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
         _signature_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
         _additional_files_validators: typing.ClassVar[
@@ -52,6 +59,13 @@ class BasicCustomFiles(pydantic.BaseModel):
         _basic_test_case_template_validators: typing.ClassVar[
             typing.List[BasicCustomFiles.Validators.BasicTestCaseTemplateValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]
+        ) -> typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -124,6 +138,12 @@ class BasicCustomFiles(pydantic.BaseModel):
         class BasicTestCaseTemplateValidator(typing_extensions.Protocol):
             def __call__(self, v: BasicTestCaseTemplate, *, values: BasicCustomFiles.Partial) -> BasicTestCaseTemplate:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in BasicCustomFiles.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("method_name")
     def _validate_method_name(cls, v: str, values: BasicCustomFiles.Partial) -> str:

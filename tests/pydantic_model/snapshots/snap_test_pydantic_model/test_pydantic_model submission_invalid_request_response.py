@@ -23,6 +23,10 @@ class InvalidRequestResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @InvalidRequestResponse.Validators.root
+            def validate(values: InvalidRequestResponse.Partial) -> InvalidRequestResponse.Partial:
+                ...
+
             @InvalidRequestResponse.Validators.field("request")
             def validate_request(v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
                 ...
@@ -32,8 +36,18 @@ class InvalidRequestResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]]
+        ] = []
         _request_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
         _cause_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]
+        ) -> typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -73,6 +87,12 @@ class InvalidRequestResponse(pydantic.BaseModel):
                 self, v: InvalidRequestCause, *, values: InvalidRequestResponse.Partial
             ) -> InvalidRequestCause:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in InvalidRequestResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("request")
     def _validate_request(cls, v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:

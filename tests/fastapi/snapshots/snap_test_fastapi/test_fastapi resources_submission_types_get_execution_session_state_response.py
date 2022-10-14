@@ -23,6 +23,10 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @GetExecutionSessionStateResponse.Validators.root
+            def validate(values: GetExecutionSessionStateResponse.Partial) -> GetExecutionSessionStateResponse.Partial:
+                ...
+
             @GetExecutionSessionStateResponse.Validators.field("states")
             def validate_states(v: typing.Dict[str, ExecutionSessionState], values: GetExecutionSessionStateResponse.Partial) -> typing.Dict[str, ExecutionSessionState]:
                 ...
@@ -36,6 +40,11 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[
+                typing.Callable[[GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial]
+            ]
+        ] = []
         _states_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.StatesValidator]
         ] = []
@@ -45,6 +54,16 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         _warming_session_ids_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.WarmingSessionIdsValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls,
+            validator: typing.Callable[
+                [GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial
+            ],
+        ) -> typing.Callable[[GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -106,6 +125,12 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 self, v: typing.List[str], *, values: GetExecutionSessionStateResponse.Partial
             ) -> typing.List[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in GetExecutionSessionStateResponse.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("states")
     def _validate_states(

@@ -36,6 +36,10 @@ class ProblemInfoV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ProblemInfoV2.Validators.root
+            def validate(values: ProblemInfoV2.Partial) -> ProblemInfoV2.Partial:
+                ...
+
             @ProblemInfoV2.Validators.field("problem_id")
             def validate_problem_id(v: ProblemId, values: ProblemInfoV2.Partial) -> ProblemId:
                 ...
@@ -77,6 +81,7 @@ class ProblemInfoV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]]] = []
         _problem_id_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemIdValidator]] = []
         _problem_description_validators: typing.ClassVar[
             typing.List[ProblemInfoV2.Validators.ProblemDescriptionValidator]
@@ -93,6 +98,13 @@ class ProblemInfoV2(pydantic.BaseModel):
         ] = []
         _testcases_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.TestcasesValidator]] = []
         _is_public_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.IsPublicValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]
+        ) -> typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -251,6 +263,12 @@ class ProblemInfoV2(pydantic.BaseModel):
         class IsPublicValidator(typing_extensions.Protocol):
             def __call__(self, v: bool, *, values: ProblemInfoV2.Partial) -> bool:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ProblemInfoV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: ProblemInfoV2.Partial) -> ProblemId:

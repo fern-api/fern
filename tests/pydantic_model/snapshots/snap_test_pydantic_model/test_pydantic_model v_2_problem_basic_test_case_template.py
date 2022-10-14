@@ -26,6 +26,10 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @BasicTestCaseTemplate.Validators.root
+            def validate(values: BasicTestCaseTemplate.Partial) -> BasicTestCaseTemplate.Partial:
+                ...
+
             @BasicTestCaseTemplate.Validators.field("template_id")
             def validate_template_id(v: TestCaseTemplateId, values: BasicTestCaseTemplate.Partial) -> TestCaseTemplateId:
                 ...
@@ -43,6 +47,9 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]]
+        ] = []
         _template_id_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators.TemplateIdValidator]] = []
         _name_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators.NameValidator]] = []
         _description_validators: typing.ClassVar[
@@ -51,6 +58,13 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         _expected_value_parameter_id_validators: typing.ClassVar[
             typing.List[BasicTestCaseTemplate.Validators.ExpectedValueParameterIdValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]
+        ) -> typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -122,6 +136,12 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         class ExpectedValueParameterIdValidator(typing_extensions.Protocol):
             def __call__(self, v: ParameterId, *, values: BasicTestCaseTemplate.Partial) -> ParameterId:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in BasicTestCaseTemplate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("template_id")
     def _validate_template_id(cls, v: TestCaseTemplateId, values: BasicTestCaseTemplate.Partial) -> TestCaseTemplateId:

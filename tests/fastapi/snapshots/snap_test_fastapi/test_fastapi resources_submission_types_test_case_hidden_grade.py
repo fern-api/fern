@@ -19,12 +19,26 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseHiddenGrade.Validators.root
+            def validate(values: TestCaseHiddenGrade.Partial) -> TestCaseHiddenGrade.Partial:
+                ...
+
             @TestCaseHiddenGrade.Validators.field("passed")
             def validate_passed(v: bool, values: TestCaseHiddenGrade.Partial) -> bool:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseHiddenGrade.Partial], TestCaseHiddenGrade.Partial]]
+        ] = []
         _passed_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseHiddenGrade.Partial], TestCaseHiddenGrade.Partial]
+        ) -> typing.Callable[[TestCaseHiddenGrade.Partial], TestCaseHiddenGrade.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -47,6 +61,12 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         class PassedValidator(typing_extensions.Protocol):
             def __call__(self, v: bool, *, values: TestCaseHiddenGrade.Partial) -> bool:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseHiddenGrade.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("passed")
     def _validate_passed(cls, v: bool, values: TestCaseHiddenGrade.Partial) -> bool:

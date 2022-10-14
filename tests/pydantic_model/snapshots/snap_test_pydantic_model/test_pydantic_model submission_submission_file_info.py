@@ -21,6 +21,10 @@ class SubmissionFileInfo(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @SubmissionFileInfo.Validators.root
+            def validate(values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
+                ...
+
             @SubmissionFileInfo.Validators.field("directory")
             def validate_directory(v: str, values: SubmissionFileInfo.Partial) -> str:
                 ...
@@ -34,9 +38,19 @@ class SubmissionFileInfo(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[SubmissionFileInfo.Partial], SubmissionFileInfo.Partial]]
+        ] = []
         _directory_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.DirectoryValidator]] = []
         _filename_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.FilenameValidator]] = []
         _contents_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.ContentsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[SubmissionFileInfo.Partial], SubmissionFileInfo.Partial]
+        ) -> typing.Callable[[SubmissionFileInfo.Partial], SubmissionFileInfo.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -89,6 +103,12 @@ class SubmissionFileInfo(pydantic.BaseModel):
         class ContentsValidator(typing_extensions.Protocol):
             def __call__(self, v: str, *, values: SubmissionFileInfo.Partial) -> str:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in SubmissionFileInfo.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("directory")
     def _validate_directory(cls, v: str, values: SubmissionFileInfo.Partial) -> str:

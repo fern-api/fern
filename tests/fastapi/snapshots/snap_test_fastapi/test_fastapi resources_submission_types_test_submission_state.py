@@ -26,6 +26,10 @@ class TestSubmissionState(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestSubmissionState.Validators.root
+            def validate(values: TestSubmissionState.Partial) -> TestSubmissionState.Partial:
+                ...
+
             @TestSubmissionState.Validators.field("problem_id")
             def validate_problem_id(v: ProblemId, values: TestSubmissionState.Partial) -> ProblemId:
                 ...
@@ -43,6 +47,9 @@ class TestSubmissionState(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestSubmissionState.Partial], TestSubmissionState.Partial]]
+        ] = []
         _problem_id_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators.ProblemIdValidator]] = []
         _default_test_cases_validators: typing.ClassVar[
             typing.List[TestSubmissionState.Validators.DefaultTestCasesValidator]
@@ -51,6 +58,13 @@ class TestSubmissionState(pydantic.BaseModel):
             typing.List[TestSubmissionState.Validators.CustomTestCasesValidator]
         ] = []
         _status_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators.StatusValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestSubmissionState.Partial], TestSubmissionState.Partial]
+        ) -> typing.Callable[[TestSubmissionState.Partial], TestSubmissionState.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -124,6 +138,12 @@ class TestSubmissionState(pydantic.BaseModel):
         class StatusValidator(typing_extensions.Protocol):
             def __call__(self, v: TestSubmissionStatus, *, values: TestSubmissionState.Partial) -> TestSubmissionStatus:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestSubmissionState.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: TestSubmissionState.Partial) -> ProblemId:

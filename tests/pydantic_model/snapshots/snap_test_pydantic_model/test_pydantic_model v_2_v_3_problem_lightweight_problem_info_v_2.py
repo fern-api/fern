@@ -25,6 +25,10 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @LightweightProblemInfoV2.Validators.root
+            def validate(values: LightweightProblemInfoV2.Partial) -> LightweightProblemInfoV2.Partial:
+                ...
+
             @LightweightProblemInfoV2.Validators.field("problem_id")
             def validate_problem_id(v: ProblemId, values: LightweightProblemInfoV2.Partial) -> ProblemId:
                 ...
@@ -42,6 +46,9 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[LightweightProblemInfoV2.Partial], LightweightProblemInfoV2.Partial]]
+        ] = []
         _problem_id_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemIdValidator]
         ] = []
@@ -54,6 +61,13 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         _variable_types_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.VariableTypesValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[LightweightProblemInfoV2.Partial], LightweightProblemInfoV2.Partial]
+        ) -> typing.Callable[[LightweightProblemInfoV2.Partial], LightweightProblemInfoV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -127,6 +141,12 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
                 self, v: typing.List[VariableType], *, values: LightweightProblemInfoV2.Partial
             ) -> typing.List[VariableType]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in LightweightProblemInfoV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: LightweightProblemInfoV2.Partial) -> ProblemId:

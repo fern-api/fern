@@ -29,6 +29,10 @@ class SubmitRequestV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @SubmitRequestV2.Validators.root
+            def validate(values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
+                ...
+
             @SubmitRequestV2.Validators.field("submission_id")
             def validate_submission_id(v: SubmissionId, values: SubmitRequestV2.Partial) -> SubmissionId:
                 ...
@@ -54,6 +58,9 @@ class SubmitRequestV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[SubmitRequestV2.Partial], SubmitRequestV2.Partial]]
+        ] = []
         _submission_id_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.SubmissionIdValidator]] = []
         _language_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.LanguageValidator]] = []
         _submission_files_validators: typing.ClassVar[
@@ -64,6 +71,13 @@ class SubmitRequestV2(pydantic.BaseModel):
             typing.List[SubmitRequestV2.Validators.ProblemVersionValidator]
         ] = []
         _user_id_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[SubmitRequestV2.Partial], SubmitRequestV2.Partial]
+        ) -> typing.Callable[[SubmitRequestV2.Partial], SubmitRequestV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -161,6 +175,12 @@ class SubmitRequestV2(pydantic.BaseModel):
         class UserIdValidator(typing_extensions.Protocol):
             def __call__(self, v: typing.Optional[str], *, values: SubmitRequestV2.Partial) -> typing.Optional[str]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in SubmitRequestV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: SubmitRequestV2.Partial) -> SubmissionId:

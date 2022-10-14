@@ -21,12 +21,26 @@ class ProblemDescription(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ProblemDescription.Validators.root
+            def validate(values: ProblemDescription.Partial) -> ProblemDescription.Partial:
+                ...
+
             @ProblemDescription.Validators.field("boards")
             def validate_boards(v: typing.List[ProblemDescriptionBoard], values: ProblemDescription.Partial) -> typing.List[ProblemDescriptionBoard]:
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[ProblemDescription.Partial], ProblemDescription.Partial]]
+        ] = []
         _boards_validators: typing.ClassVar[typing.List[ProblemDescription.Validators.BoardsValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ProblemDescription.Partial], ProblemDescription.Partial]
+        ) -> typing.Callable[[ProblemDescription.Partial], ProblemDescription.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -51,6 +65,12 @@ class ProblemDescription(pydantic.BaseModel):
                 self, v: typing.List[ProblemDescriptionBoard], *, values: ProblemDescription.Partial
             ) -> typing.List[ProblemDescriptionBoard]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ProblemDescription.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("boards")
     def _validate_boards(

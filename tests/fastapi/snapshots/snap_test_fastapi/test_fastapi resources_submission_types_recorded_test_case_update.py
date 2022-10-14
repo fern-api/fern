@@ -22,6 +22,10 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @RecordedTestCaseUpdate.Validators.root
+            def validate(values: RecordedTestCaseUpdate.Partial) -> RecordedTestCaseUpdate.Partial:
+                ...
+
             @RecordedTestCaseUpdate.Validators.field("test_case_id")
             def validate_test_case_id(v: TestCaseId, values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
                 ...
@@ -31,12 +35,22 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[RecordedTestCaseUpdate.Partial], RecordedTestCaseUpdate.Partial]]
+        ] = []
         _test_case_id_validators: typing.ClassVar[
             typing.List[RecordedTestCaseUpdate.Validators.TestCaseIdValidator]
         ] = []
         _trace_responses_size_validators: typing.ClassVar[
             typing.List[RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[RecordedTestCaseUpdate.Partial], RecordedTestCaseUpdate.Partial]
+        ) -> typing.Callable[[RecordedTestCaseUpdate.Partial], RecordedTestCaseUpdate.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -76,6 +90,12 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         class TraceResponsesSizeValidator(typing_extensions.Protocol):
             def __call__(self, v: int, *, values: RecordedTestCaseUpdate.Partial) -> int:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in RecordedTestCaseUpdate.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("test_case_id")
     def _validate_test_case_id(cls, v: TestCaseId, values: RecordedTestCaseUpdate.Partial) -> TestCaseId:

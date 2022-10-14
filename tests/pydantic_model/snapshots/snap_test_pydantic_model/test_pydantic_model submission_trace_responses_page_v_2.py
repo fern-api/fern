@@ -22,6 +22,10 @@ class TraceResponsesPageV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TraceResponsesPageV2.Validators.root
+            def validate(values: TraceResponsesPageV2.Partial) -> TraceResponsesPageV2.Partial:
+                ...
+
             @TraceResponsesPageV2.Validators.field("offset")
             def validate_offset(v: typing.Optional[int], values: TraceResponsesPageV2.Partial) -> typing.Optional[int]:
                 ...
@@ -31,10 +35,20 @@ class TraceResponsesPageV2(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TraceResponsesPageV2.Partial], TraceResponsesPageV2.Partial]]
+        ] = []
         _offset_validators: typing.ClassVar[typing.List[TraceResponsesPageV2.Validators.OffsetValidator]] = []
         _trace_responses_validators: typing.ClassVar[
             typing.List[TraceResponsesPageV2.Validators.TraceResponsesValidator]
         ] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TraceResponsesPageV2.Partial], TraceResponsesPageV2.Partial]
+        ) -> typing.Callable[[TraceResponsesPageV2.Partial], TraceResponsesPageV2.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -77,6 +91,12 @@ class TraceResponsesPageV2(pydantic.BaseModel):
                 self, v: typing.List[TraceResponseV2], *, values: TraceResponsesPageV2.Partial
             ) -> typing.List[TraceResponseV2]:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TraceResponsesPageV2.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("offset")
     def _validate_offset(cls, v: typing.Optional[int], values: TraceResponsesPageV2.Partial) -> typing.Optional[int]:

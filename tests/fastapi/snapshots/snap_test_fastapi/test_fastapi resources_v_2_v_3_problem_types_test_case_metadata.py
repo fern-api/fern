@@ -23,6 +23,10 @@ class TestCaseMetadata(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @TestCaseMetadata.Validators.root
+            def validate(values: TestCaseMetadata.Partial) -> TestCaseMetadata.Partial:
+                ...
+
             @TestCaseMetadata.Validators.field("id")
             def validate_id(v: TestCaseId, values: TestCaseMetadata.Partial) -> TestCaseId:
                 ...
@@ -36,9 +40,19 @@ class TestCaseMetadata(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[TestCaseMetadata.Partial], TestCaseMetadata.Partial]]
+        ] = []
         _id_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.IdValidator]] = []
         _name_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.NameValidator]] = []
         _hidden_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[TestCaseMetadata.Partial], TestCaseMetadata.Partial]
+        ) -> typing.Callable[[TestCaseMetadata.Partial], TestCaseMetadata.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -87,6 +101,12 @@ class TestCaseMetadata(pydantic.BaseModel):
         class HiddenValidator(typing_extensions.Protocol):
             def __call__(self, v: bool, *, values: TestCaseMetadata.Partial) -> bool:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in TestCaseMetadata.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("id")
     def _validate_id(cls, v: TestCaseId, values: TestCaseMetadata.Partial) -> TestCaseId:

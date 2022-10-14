@@ -20,6 +20,10 @@ class ExpressionLocation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
+            @ExpressionLocation.Validators.root
+            def validate(values: ExpressionLocation.Partial) -> ExpressionLocation.Partial:
+                ...
+
             @ExpressionLocation.Validators.field("start")
             def validate_start(v: int, values: ExpressionLocation.Partial) -> int:
                 ...
@@ -29,8 +33,18 @@ class ExpressionLocation(pydantic.BaseModel):
                 ...
         """
 
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]]
+        ] = []
         _start_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
         _offset_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
+
+        @classmethod
+        def root(
+            cls, validator: typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]
+        ) -> typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]:
+            cls._validators.append(validator)
+            return validator
 
         @typing.overload
         @classmethod
@@ -68,6 +82,12 @@ class ExpressionLocation(pydantic.BaseModel):
         class OffsetValidator(typing_extensions.Protocol):
             def __call__(self, v: int, *, values: ExpressionLocation.Partial) -> int:
                 ...
+
+    @pydantic.root_validator
+    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        for validator in ExpressionLocation.Validators._validators:
+            values = validator(values)
+        return values
 
     @pydantic.validator("start")
     def _validate_start(cls, v: int, values: ExpressionLocation.Partial) -> int:
