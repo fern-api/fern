@@ -177,7 +177,7 @@ class SubmitRequestV2(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
         for validator in SubmitRequestV2.Validators._validators:
             values = validator(values)
         return values

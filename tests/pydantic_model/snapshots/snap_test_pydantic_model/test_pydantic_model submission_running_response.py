@@ -85,7 +85,7 @@ class RunningResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: RunningResponse.Partial) -> RunningResponse.Partial:
         for validator in RunningResponse.Validators._validators:
             values = validator(values)
         return values

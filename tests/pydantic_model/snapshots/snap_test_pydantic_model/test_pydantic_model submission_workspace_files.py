@@ -86,7 +86,7 @@ class WorkspaceFiles(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: WorkspaceFiles.Partial) -> WorkspaceFiles.Partial:
         for validator in WorkspaceFiles.Validators._validators:
             values = validator(values)
         return values

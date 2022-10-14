@@ -105,7 +105,7 @@ class SubmissionFileInfo(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
         for validator in SubmissionFileInfo.Validators._validators:
             values = validator(values)
         return values

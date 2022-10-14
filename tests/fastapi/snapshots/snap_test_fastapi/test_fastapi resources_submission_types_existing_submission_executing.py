@@ -68,7 +68,7 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
         for validator in ExistingSubmissionExecuting.Validators._validators:
             values = validator(values)
         return values

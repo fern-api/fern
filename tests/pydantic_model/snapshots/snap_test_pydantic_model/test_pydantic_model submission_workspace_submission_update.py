@@ -94,7 +94,7 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
         for validator in WorkspaceSubmissionUpdate.Validators._validators:
             values = validator(values)
         return values

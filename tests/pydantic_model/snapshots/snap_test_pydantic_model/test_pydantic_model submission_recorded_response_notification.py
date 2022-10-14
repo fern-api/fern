@@ -119,7 +119,7 @@ class RecordedResponseNotification(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: RecordedResponseNotification.Partial) -> RecordedResponseNotification.Partial:
         for validator in RecordedResponseNotification.Validators._validators:
             values = validator(values)
         return values

@@ -93,7 +93,7 @@ class TraceResponsesPageV2(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TraceResponsesPageV2.Partial) -> TraceResponsesPageV2.Partial:
         for validator in TraceResponsesPageV2.Validators._validators:
             values = validator(values)
         return values

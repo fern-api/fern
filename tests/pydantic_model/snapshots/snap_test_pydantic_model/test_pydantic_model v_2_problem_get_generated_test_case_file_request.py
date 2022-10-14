@@ -100,7 +100,7 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: GetGeneratedTestCaseFileRequest.Partial) -> GetGeneratedTestCaseFileRequest.Partial:
         for validator in GetGeneratedTestCaseFileRequest.Validators._validators:
             values = validator(values)
         return values

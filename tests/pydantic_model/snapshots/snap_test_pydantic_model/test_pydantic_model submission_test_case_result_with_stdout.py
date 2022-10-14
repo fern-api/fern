@@ -86,7 +86,7 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
         for validator in TestCaseResultWithStdout.Validators._validators:
             values = validator(values)
         return values

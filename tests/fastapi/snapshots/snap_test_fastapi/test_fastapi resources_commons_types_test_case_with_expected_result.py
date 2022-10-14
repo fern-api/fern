@@ -93,7 +93,7 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestCaseWithExpectedResult.Partial) -> TestCaseWithExpectedResult.Partial:
         for validator in TestCaseWithExpectedResult.Validators._validators:
             values = validator(values)
         return values

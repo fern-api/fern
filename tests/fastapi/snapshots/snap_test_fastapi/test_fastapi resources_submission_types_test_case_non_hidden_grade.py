@@ -136,7 +136,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
         for validator in TestCaseNonHiddenGrade.Validators._validators:
             values = validator(values)
         return values

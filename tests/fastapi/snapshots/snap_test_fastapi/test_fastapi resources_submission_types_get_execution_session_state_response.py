@@ -127,7 +127,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: GetExecutionSessionStateResponse.Partial) -> GetExecutionSessionStateResponse.Partial:
         for validator in GetExecutionSessionStateResponse.Validators._validators:
             values = validator(values)
         return values

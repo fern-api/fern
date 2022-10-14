@@ -108,7 +108,7 @@ class ExceptionInfo(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: ExceptionInfo.Partial) -> ExceptionInfo.Partial:
         for validator in ExceptionInfo.Validators._validators:
             values = validator(values)
         return values

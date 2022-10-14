@@ -92,7 +92,7 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: RecordedTestCaseUpdate.Partial) -> RecordedTestCaseUpdate.Partial:
         for validator in RecordedTestCaseUpdate.Validators._validators:
             values = validator(values)
         return values

@@ -92,7 +92,7 @@ class TestCaseImplementation(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestCaseImplementation.Partial) -> TestCaseImplementation.Partial:
         for validator in TestCaseImplementation.Validators._validators:
             values = validator(values)
         return values

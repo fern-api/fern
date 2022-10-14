@@ -114,7 +114,7 @@ class WorkspaceRunDetails(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: WorkspaceRunDetails.Partial) -> WorkspaceRunDetails.Partial:
         for validator in WorkspaceRunDetails.Validators._validators:
             values = validator(values)
         return values

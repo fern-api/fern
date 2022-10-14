@@ -95,7 +95,7 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
         for validator in StoreTracedTestCaseRequest.Validators._validators:
             values = validator(values)
         return values

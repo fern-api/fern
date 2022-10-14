@@ -109,7 +109,7 @@ class SinglyLinkedListNodeValue(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: SinglyLinkedListNodeValue.Partial) -> SinglyLinkedListNodeValue.Partial:
         for validator in SinglyLinkedListNodeValue.Validators._validators:
             values = validator(values)
         return values

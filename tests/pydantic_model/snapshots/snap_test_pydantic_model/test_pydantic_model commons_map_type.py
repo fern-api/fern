@@ -78,7 +78,7 @@ class MapType(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: MapType.Partial) -> MapType.Partial:
         for validator in MapType.Validators._validators:
             values = validator(values)
         return values

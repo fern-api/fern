@@ -80,7 +80,7 @@ class Migration(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: Migration.Partial) -> Migration.Partial:
         for validator in Migration.Validators._validators:
             values = validator(values)
         return values

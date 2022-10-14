@@ -93,7 +93,7 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: CustomTestCasesUnsupported.Partial) -> CustomTestCasesUnsupported.Partial:
         for validator in CustomTestCasesUnsupported.Validators._validators:
             values = validator(values)
         return values

@@ -140,7 +140,7 @@ class TestSubmissionState(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestSubmissionState.Partial) -> TestSubmissionState.Partial:
         for validator in TestSubmissionState.Validators._validators:
             values = validator(values)
         return values

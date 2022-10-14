@@ -209,7 +209,7 @@ class CreateProblemRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: CreateProblemRequest.Partial) -> CreateProblemRequest.Partial:
         for validator in CreateProblemRequest.Validators._validators:
             values = validator(values)
         return values

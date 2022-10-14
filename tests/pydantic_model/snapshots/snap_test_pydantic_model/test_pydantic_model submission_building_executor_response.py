@@ -92,7 +92,7 @@ class BuildingExecutorResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: BuildingExecutorResponse.Partial) -> BuildingExecutorResponse.Partial:
         for validator in BuildingExecutorResponse.Validators._validators:
             values = validator(values)
         return values

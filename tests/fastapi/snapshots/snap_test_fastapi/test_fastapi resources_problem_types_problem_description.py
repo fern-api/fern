@@ -67,7 +67,7 @@ class ProblemDescription(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: ProblemDescription.Partial) -> ProblemDescription.Partial:
         for validator in ProblemDescription.Validators._validators:
             values = validator(values)
         return values

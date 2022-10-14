@@ -100,7 +100,7 @@ class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: DoublyLinkedListNodeAndListValue.Partial) -> DoublyLinkedListNodeAndListValue.Partial:
         for validator in DoublyLinkedListNodeAndListValue.Validators._validators:
             values = validator(values)
         return values

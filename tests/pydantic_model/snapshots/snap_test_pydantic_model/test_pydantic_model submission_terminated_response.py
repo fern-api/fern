@@ -34,7 +34,7 @@ class TerminatedResponse(pydantic.BaseModel):
             return validator
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
         for validator in TerminatedResponse.Validators._validators:
             values = validator(values)
         return values

@@ -90,7 +90,7 @@ class WorkspaceRanResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: WorkspaceRanResponse.Partial) -> WorkspaceRanResponse.Partial:
         for validator in WorkspaceRanResponse.Validators._validators:
             values = validator(values)
         return values

@@ -74,7 +74,7 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: GetDefaultStarterFilesResponse.Partial) -> GetDefaultStarterFilesResponse.Partial:
         for validator in GetDefaultStarterFilesResponse.Validators._validators:
             values = validator(values)
         return values

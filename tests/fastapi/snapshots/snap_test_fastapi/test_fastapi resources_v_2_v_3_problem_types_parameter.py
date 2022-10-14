@@ -100,7 +100,7 @@ class Parameter(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: Parameter.Partial) -> Parameter.Partial:
         for validator in Parameter.Validators._validators:
             values = validator(values)
         return values

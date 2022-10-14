@@ -92,7 +92,7 @@ class StackInformation(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: StackInformation.Partial) -> StackInformation.Partial:
         for validator in StackInformation.Validators._validators:
             values = validator(values)
         return values

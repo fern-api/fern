@@ -88,7 +88,7 @@ class TestSubmissionUpdate(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestSubmissionUpdate.Partial) -> TestSubmissionUpdate.Partial:
         for validator in TestSubmissionUpdate.Validators._validators:
             values = validator(values)
         return values

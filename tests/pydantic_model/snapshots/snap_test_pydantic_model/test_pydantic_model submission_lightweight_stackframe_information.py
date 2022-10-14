@@ -95,7 +95,7 @@ class LightweightStackframeInformation(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: LightweightStackframeInformation.Partial) -> LightweightStackframeInformation.Partial:
         for validator in LightweightStackframeInformation.Validators._validators:
             values = validator(values)
         return values

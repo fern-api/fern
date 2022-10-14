@@ -84,7 +84,7 @@ class ProblemFiles(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: ProblemFiles.Partial) -> ProblemFiles.Partial:
         for validator in ProblemFiles.Validators._validators:
             values = validator(values)
         return values

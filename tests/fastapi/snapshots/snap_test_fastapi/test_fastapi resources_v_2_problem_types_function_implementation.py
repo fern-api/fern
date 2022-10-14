@@ -86,7 +86,7 @@ class FunctionImplementation(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: FunctionImplementation.Partial) -> FunctionImplementation.Partial:
         for validator in FunctionImplementation.Validators._validators:
             values = validator(values)
         return values

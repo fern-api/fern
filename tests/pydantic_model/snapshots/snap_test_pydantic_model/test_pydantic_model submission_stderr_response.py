@@ -84,7 +84,7 @@ class StderrResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: StderrResponse.Partial) -> StderrResponse.Partial:
         for validator in StderrResponse.Validators._validators:
             values = validator(values)
         return values

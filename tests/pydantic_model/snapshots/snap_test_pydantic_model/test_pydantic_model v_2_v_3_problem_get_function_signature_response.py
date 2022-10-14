@@ -71,7 +71,7 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: GetFunctionSignatureResponse.Partial) -> GetFunctionSignatureResponse.Partial:
         for validator in GetFunctionSignatureResponse.Validators._validators:
             values = validator(values)
         return values

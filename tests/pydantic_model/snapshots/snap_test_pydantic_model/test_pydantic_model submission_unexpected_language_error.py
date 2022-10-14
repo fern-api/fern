@@ -92,7 +92,7 @@ class UnexpectedLanguageError(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: UnexpectedLanguageError.Partial) -> UnexpectedLanguageError.Partial:
         for validator in UnexpectedLanguageError.Validators._validators:
             values = validator(values)
         return values

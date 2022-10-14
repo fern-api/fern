@@ -82,7 +82,7 @@ class Playlist(PlaylistCreateRequest):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: Playlist.Partial) -> Playlist.Partial:
         for validator in Playlist.Validators._validators:
             values = validator(values)
         return values

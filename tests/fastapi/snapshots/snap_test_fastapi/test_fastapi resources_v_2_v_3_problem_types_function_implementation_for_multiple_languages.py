@@ -84,7 +84,9 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(
+        cls, values: FunctionImplementationForMultipleLanguages.Partial
+    ) -> FunctionImplementationForMultipleLanguages.Partial:
         for validator in FunctionImplementationForMultipleLanguages.Validators._validators:
             values = validator(values)
         return values

@@ -63,7 +63,7 @@ class InternalError(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: InternalError.Partial) -> InternalError.Partial:
         for validator in InternalError.Validators._validators:
             values = validator(values)
         return values

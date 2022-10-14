@@ -107,7 +107,9 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(
+        cls, values: VoidFunctionSignatureThatTakesActualResult.Partial
+    ) -> VoidFunctionSignatureThatTakesActualResult.Partial:
         for validator in VoidFunctionSignatureThatTakesActualResult.Validators._validators:
             values = validator(values)
         return values

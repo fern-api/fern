@@ -67,7 +67,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: GetTraceResponsesPageRequest.Partial) -> GetTraceResponsesPageRequest.Partial:
         for validator in GetTraceResponsesPageRequest.Validators._validators:
             values = validator(values)
         return values

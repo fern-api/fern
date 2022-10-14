@@ -89,7 +89,7 @@ class TracedTestCase(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TracedTestCase.Partial) -> TracedTestCase.Partial:
         for validator in TracedTestCase.Validators._validators:
             values = validator(values)
         return values

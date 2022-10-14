@@ -63,7 +63,7 @@ class StopRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: StopRequest.Partial) -> StopRequest.Partial:
         for validator in StopRequest.Validators._validators:
             values = validator(values)
         return values

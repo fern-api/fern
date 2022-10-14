@@ -88,7 +88,7 @@ class VariableTypeAndName(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
         for validator in VariableTypeAndName.Validators._validators:
             values = validator(values)
         return values

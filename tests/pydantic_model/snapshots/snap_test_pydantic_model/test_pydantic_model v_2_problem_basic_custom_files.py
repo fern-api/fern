@@ -140,7 +140,7 @@ class BasicCustomFiles(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
         for validator in BasicCustomFiles.Validators._validators:
             values = validator(values)
         return values

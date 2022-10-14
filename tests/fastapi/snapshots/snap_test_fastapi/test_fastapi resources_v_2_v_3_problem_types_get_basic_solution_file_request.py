@@ -94,7 +94,7 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: GetBasicSolutionFileRequest.Partial) -> GetBasicSolutionFileRequest.Partial:
         for validator in GetBasicSolutionFileRequest.Validators._validators:
             values = validator(values)
         return values

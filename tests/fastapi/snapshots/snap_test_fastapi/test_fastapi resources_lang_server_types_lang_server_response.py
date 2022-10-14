@@ -63,7 +63,7 @@ class LangServerResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: LangServerResponse.Partial) -> LangServerResponse.Partial:
         for validator in LangServerResponse.Validators._validators:
             values = validator(values)
         return values

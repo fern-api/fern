@@ -140,7 +140,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: ExecutionSessionResponse.Partial) -> ExecutionSessionResponse.Partial:
         for validator in ExecutionSessionResponse.Validators._validators:
             values = validator(values)
         return values

@@ -103,7 +103,7 @@ class TestCaseMetadata(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: TestCaseMetadata.Partial) -> TestCaseMetadata.Partial:
         for validator in TestCaseMetadata.Validators._validators:
             values = validator(values)
         return values

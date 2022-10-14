@@ -63,7 +63,7 @@ class DebugMapValue(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: DebugMapValue.Partial) -> DebugMapValue.Partial:
         for validator in DebugMapValue.Validators._validators:
             values = validator(values)
         return values

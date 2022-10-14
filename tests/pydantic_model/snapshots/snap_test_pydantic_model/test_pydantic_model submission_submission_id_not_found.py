@@ -68,7 +68,7 @@ class SubmissionIdNotFound(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
         for validator in SubmissionIdNotFound.Validators._validators:
             values = validator(values)
         return values

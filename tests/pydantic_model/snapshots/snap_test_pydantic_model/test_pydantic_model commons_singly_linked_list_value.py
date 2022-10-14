@@ -91,7 +91,7 @@ class SinglyLinkedListValue(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: SinglyLinkedListValue.Partial) -> SinglyLinkedListValue.Partial:
         for validator in SinglyLinkedListValue.Validators._validators:
             values = validator(values)
         return values

@@ -10,8 +10,7 @@ class RootValidatorGenerator(ValidatorGenerator):
 
     def add_validator_to_model(self) -> None:
         self._model.add_root_validator(
-            validator_name="_validate",
-            body=AST.CodeWriter(self._write_validator_body),
+            validator_name="_validate", body=AST.CodeWriter(self._write_validator_body), should_use_partial_type=True
         )
 
     def _write_validator_body(self, writer: AST.NodeWriter) -> None:

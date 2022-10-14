@@ -78,7 +78,7 @@ class KeyValuePair(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def _validate(cls, values: KeyValuePair.Partial) -> KeyValuePair.Partial:
         for validator in KeyValuePair.Validators._validators:
             values = validator(values)
         return values
