@@ -32,7 +32,9 @@ export async function generateFiles({
         context: generatorContext,
         volume,
         packageName: npmPackage.packageName,
-        packageVersion: npmPackage.publishInfo?.packageCoordinate.version,
+        packageVersion:
+            // TODO(dsinghvi): Fiddle should pass in version in GitHub output mode
+            npmPackage.publishInfo != null ? npmPackage.publishInfo.packageCoordinate.version : config.publish?.version,
     });
 
     await sdkGenerator.generate();
