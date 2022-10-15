@@ -11,7 +11,9 @@ import typing
 import pydantic
 import typing_extensions
 
-from .initialize_problem_request import InitializeProblemRequest
+from .initialize_problem_request import (
+    InitializeProblemRequest as submission_initialize_problem_request_InitializeProblemRequest,
+)
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
@@ -20,7 +22,9 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def initialize_problem_request(self, value: InitializeProblemRequest) -> SubmissionRequest:
+    def initialize_problem_request(
+        self, value: submission_initialize_problem_request_InitializeProblemRequest
+    ) -> SubmissionRequest:
         return SubmissionRequest(
             __root__=_SubmissionRequest.InitializeProblemRequest(**dict(value), type="initializeProblemRequest")
         )
@@ -56,7 +60,9 @@ class SubmissionRequest(pydantic.BaseModel):
 
     def visit(
         self,
-        initialize_problem_request: typing.Callable[[InitializeProblemRequest], T_Result],
+        initialize_problem_request: typing.Callable[
+            [submission_initialize_problem_request_InitializeProblemRequest], T_Result
+        ],
         initialize_workspace_request: typing.Callable[[], T_Result],
         submit_v_2: typing.Callable[[SubmitRequestV2], T_Result],
         workspace_submit: typing.Callable[[WorkspaceSubmitRequest], T_Result],
@@ -169,7 +175,7 @@ class SubmissionRequest(pydantic.BaseModel):
 
 
 class _SubmissionRequest:
-    class InitializeProblemRequest(InitializeProblemRequest):
+    class InitializeProblemRequest(submission_initialize_problem_request_InitializeProblemRequest):
         type: typing_extensions.Literal["initializeProblemRequest"]
 
         class Config:

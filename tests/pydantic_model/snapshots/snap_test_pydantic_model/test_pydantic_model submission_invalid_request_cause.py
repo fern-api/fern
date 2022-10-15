@@ -11,20 +11,26 @@ import typing
 import pydantic
 import typing_extensions
 
-from .custom_test_cases_unsupported import CustomTestCasesUnsupported
-from .submission_id_not_found import SubmissionIdNotFound
+from .custom_test_cases_unsupported import (
+    CustomTestCasesUnsupported as submission_custom_test_cases_unsupported_CustomTestCasesUnsupported,
+)
+from .submission_id_not_found import SubmissionIdNotFound as submission_submission_id_not_found_SubmissionIdNotFound
 from .unexpected_language_error import UnexpectedLanguageError
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def submission_id_not_found(self, value: SubmissionIdNotFound) -> InvalidRequestCause:
+    def submission_id_not_found(
+        self, value: submission_submission_id_not_found_SubmissionIdNotFound
+    ) -> InvalidRequestCause:
         return InvalidRequestCause(
             __root__=_InvalidRequestCause.SubmissionIdNotFound(**dict(value), type="submissionIdNotFound")
         )
 
-    def custom_test_cases_unsupported(self, value: CustomTestCasesUnsupported) -> InvalidRequestCause:
+    def custom_test_cases_unsupported(
+        self, value: submission_custom_test_cases_unsupported_CustomTestCasesUnsupported
+    ) -> InvalidRequestCause:
         return InvalidRequestCause(
             __root__=_InvalidRequestCause.CustomTestCasesUnsupported(**dict(value), type="customTestCasesUnsupported")
         )
@@ -49,8 +55,10 @@ class InvalidRequestCause(pydantic.BaseModel):
 
     def visit(
         self,
-        submission_id_not_found: typing.Callable[[SubmissionIdNotFound], T_Result],
-        custom_test_cases_unsupported: typing.Callable[[CustomTestCasesUnsupported], T_Result],
+        submission_id_not_found: typing.Callable[[submission_submission_id_not_found_SubmissionIdNotFound], T_Result],
+        custom_test_cases_unsupported: typing.Callable[
+            [submission_custom_test_cases_unsupported_CustomTestCasesUnsupported], T_Result
+        ],
         unexpected_language: typing.Callable[[UnexpectedLanguageError], T_Result],
     ) -> T_Result:
         if self.__root__.type == "submissionIdNotFound":
@@ -144,13 +152,13 @@ class InvalidRequestCause(pydantic.BaseModel):
 
 
 class _InvalidRequestCause:
-    class SubmissionIdNotFound(SubmissionIdNotFound):
+    class SubmissionIdNotFound(submission_submission_id_not_found_SubmissionIdNotFound):
         type: typing_extensions.Literal["submissionIdNotFound"]
 
         class Config:
             frozen = True
 
-    class CustomTestCasesUnsupported(CustomTestCasesUnsupported):
+    class CustomTestCasesUnsupported(submission_custom_test_cases_unsupported_CustomTestCasesUnsupported):
         type: typing_extensions.Literal["customTestCasesUnsupported"]
 
         class Config:

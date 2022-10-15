@@ -13,7 +13,7 @@ import typing_extensions
 
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
-from .generic_value import GenericValue
+from .generic_value import GenericValue as commons_generic_value_GenericValue
 from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
 
 T_Result = typing.TypeVar("T_Result")
@@ -62,7 +62,7 @@ class _Factory:
     def null_value(self) -> DebugVariableValue:
         return DebugVariableValue(__root__=_DebugVariableValue.NullValue(type="nullValue"))
 
-    def generic_value(self, value: GenericValue) -> DebugVariableValue:
+    def generic_value(self, value: commons_generic_value_GenericValue) -> DebugVariableValue:
         return DebugVariableValue(__root__=_DebugVariableValue.GenericValue(**dict(value), type="genericValue"))
 
 
@@ -102,7 +102,7 @@ class DebugVariableValue(pydantic.BaseModel):
         doubly_linked_list_node_value: typing.Callable[[DoublyLinkedListNodeAndListValue], T_Result],
         undefined_value: typing.Callable[[], T_Result],
         null_value: typing.Callable[[], T_Result],
-        generic_value: typing.Callable[[GenericValue], T_Result],
+        generic_value: typing.Callable[[commons_generic_value_GenericValue], T_Result],
     ) -> T_Result:
         if self.__root__.type == "integerValue":
             return integer_value(self.__root__.integer_value)
@@ -356,7 +356,7 @@ class _DebugVariableValue:
         class Config:
             frozen = True
 
-    class GenericValue(GenericValue):
+    class GenericValue(commons_generic_value_GenericValue):
         type: typing_extensions.Literal["genericValue"]
 
         class Config:

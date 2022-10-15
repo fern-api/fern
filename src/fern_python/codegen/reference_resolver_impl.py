@@ -18,17 +18,22 @@ class ReferenceResolverImpl(ReferenceResolver):
         self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(set)
         self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, ResolvedImport]] = None
         self._does_file_self_import = False
+        self._declarations: Set[AST.QualifiedName] = set()
 
     def register_reference(self, reference: AST.Reference) -> None:
         default_name = self._construct_qualified_name_for_reference(reference)
         self._default_name_to_original_references[default_name].add(reference)
+
+    def register_declaration(self, declaration: str) -> None:
+        self._declarations.add((declaration,))
 
     def resolve_references(self) -> None:
         self._original_import_to_resolved_import = {}
 
         for default_name, original_references in self._default_name_to_original_references.items():
             # get the set of all imports that result in this default name.
-            # if len(set) > 1, then there's a collision, so we need to alias the imports.
+            # if len(set) > 1, or this default name is the same as a declaration,
+            # then there's a collision, so we need to alias the imports.
             original_imports = set(
                 reference.import_ for reference in original_references if reference.import_ is not None
             )
@@ -55,7 +60,7 @@ class ReferenceResolverImpl(ReferenceResolver):
                             f"Intra-file reference in {self._module_path_of_source_file} is using an alias import"
                             + ".".join(self._construct_qualified_name_for_reference(original_reference))
                         )
-                elif len(original_imports) > 1:
+                elif len(original_imports) > 1 or default_name in self._declarations:
                     import_ = dataclasses.replace(
                         import_,
                         alias=construct_import_alias_for_collision(original_reference.import_),

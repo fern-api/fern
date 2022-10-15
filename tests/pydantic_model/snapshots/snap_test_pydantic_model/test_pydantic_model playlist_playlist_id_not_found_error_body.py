@@ -11,13 +11,13 @@ import typing
 import pydantic
 import typing_extensions
 
-from .playlist_id import PlaylistId
+from .playlist_id import PlaylistId as playlist_playlist_id_PlaylistId
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def playlist_id(self, value: PlaylistId) -> PlaylistIdNotFoundErrorBody:
+    def playlist_id(self, value: playlist_playlist_id_PlaylistId) -> PlaylistIdNotFoundErrorBody:
         return PlaylistIdNotFoundErrorBody(
             __root__=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value)
         )
@@ -29,7 +29,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
     def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
         return self.__root__
 
-    def visit(self, playlist_id: typing.Callable[[PlaylistId], T_Result]) -> T_Result:
+    def visit(self, playlist_id: typing.Callable[[playlist_playlist_id_PlaylistId], T_Result]) -> T_Result:
         if self.__root__.type == "playlistId":
             return playlist_id(self.__root__.playlist_id)
 
@@ -87,7 +87,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
 class _PlaylistIdNotFoundErrorBody:
     class PlaylistId(pydantic.BaseModel):
         type: typing_extensions.Literal["playlistId"]
-        value: PlaylistId
+        value: playlist_playlist_id_PlaylistId
 
         class Config:
             frozen = True

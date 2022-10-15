@@ -30,10 +30,10 @@ class _Factory:
     def char_type(self) -> VariableType:
         return VariableType(__root__=_VariableType.CharType(type="charType"))
 
-    def list_type(self, value: ListType) -> VariableType:
+    def list_type(self, value: resources_commons_types_list_type_ListType) -> VariableType:
         return VariableType(__root__=_VariableType.ListType(**dict(value), type="listType"))
 
-    def map_type(self, value: MapType) -> VariableType:
+    def map_type(self, value: resources_commons_types_map_type_MapType) -> VariableType:
         return VariableType(__root__=_VariableType.MapType(**dict(value), type="mapType"))
 
     def binary_tree_type(self) -> VariableType:
@@ -72,8 +72,8 @@ class VariableType(pydantic.BaseModel):
         boolean_type: typing.Callable[[], T_Result],
         string_type: typing.Callable[[], T_Result],
         char_type: typing.Callable[[], T_Result],
-        list_type: typing.Callable[[ListType], T_Result],
-        map_type: typing.Callable[[MapType], T_Result],
+        list_type: typing.Callable[[resources_commons_types_list_type_ListType], T_Result],
+        map_type: typing.Callable[[resources_commons_types_map_type_MapType], T_Result],
         binary_tree_type: typing.Callable[[], T_Result],
         singly_linked_list_type: typing.Callable[[], T_Result],
         doubly_linked_list_type: typing.Callable[[], T_Result],
@@ -224,8 +224,8 @@ class VariableType(pydantic.BaseModel):
         frozen = True
 
 
-from .list_type import ListType  # noqa: E402
-from .map_type import MapType  # noqa: E402
+from .list_type import ListType as resources_commons_types_list_type_ListType  # noqa: E402
+from .map_type import MapType as resources_commons_types_map_type_MapType  # noqa: E402
 
 
 class _VariableType:
@@ -259,13 +259,13 @@ class _VariableType:
         class Config:
             frozen = True
 
-    class ListType(ListType):
+    class ListType(resources_commons_types_list_type_ListType):
         type: typing_extensions.Literal["listType"]
 
         class Config:
             frozen = True
 
-    class MapType(MapType):
+    class MapType(resources_commons_types_map_type_MapType):
         type: typing_extensions.Literal["mapType"]
 
         class Config:

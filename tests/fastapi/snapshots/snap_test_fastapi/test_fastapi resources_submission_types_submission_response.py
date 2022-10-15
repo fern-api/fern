@@ -12,7 +12,9 @@ import pydantic
 import typing_extensions
 
 from ...commons.types.problem_id import ProblemId
-from .code_execution_update import CodeExecutionUpdate
+from .code_execution_update import (
+    CodeExecutionUpdate as resources_submission_types_code_execution_update_CodeExecutionUpdate,
+)
 from .exception_info import ExceptionInfo
 from .terminated_response import TerminatedResponse
 
@@ -34,7 +36,9 @@ class _Factory:
     def server_errored(self, value: ExceptionInfo) -> SubmissionResponse:
         return SubmissionResponse(__root__=_SubmissionResponse.ServerErrored(**dict(value), type="serverErrored"))
 
-    def code_execution_update(self, value: CodeExecutionUpdate) -> SubmissionResponse:
+    def code_execution_update(
+        self, value: resources_submission_types_code_execution_update_CodeExecutionUpdate
+    ) -> SubmissionResponse:
         return SubmissionResponse(
             __root__=_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", value=value)
         )
@@ -64,7 +68,9 @@ class SubmissionResponse(pydantic.BaseModel):
         problem_initialized: typing.Callable[[ProblemId], T_Result],
         workspace_initialized: typing.Callable[[], T_Result],
         server_errored: typing.Callable[[ExceptionInfo], T_Result],
-        code_execution_update: typing.Callable[[CodeExecutionUpdate], T_Result],
+        code_execution_update: typing.Callable[
+            [resources_submission_types_code_execution_update_CodeExecutionUpdate], T_Result
+        ],
         terminated: typing.Callable[[TerminatedResponse], T_Result],
     ) -> T_Result:
         if self.__root__.type == "serverInitialized":
@@ -209,7 +215,7 @@ class _SubmissionResponse:
 
     class CodeExecutionUpdate(pydantic.BaseModel):
         type: typing_extensions.Literal["codeExecutionUpdate"]
-        value: CodeExecutionUpdate
+        value: resources_submission_types_code_execution_update_CodeExecutionUpdate
 
         class Config:
             frozen = True

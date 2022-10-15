@@ -11,21 +11,21 @@ import typing
 import pydantic
 import typing_extensions
 
-from .compile_error import CompileError
-from .internal_error import InternalError
-from .runtime_error import RuntimeError
+from .compile_error import CompileError as resources_submission_types_compile_error_CompileError
+from .internal_error import InternalError as resources_submission_types_internal_error_InternalError
+from .runtime_error import RuntimeError as resources_submission_types_runtime_error_RuntimeError
 
 T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def compile_error(self, value: CompileError) -> ErrorInfo:
+    def compile_error(self, value: resources_submission_types_compile_error_CompileError) -> ErrorInfo:
         return ErrorInfo(__root__=_ErrorInfo.CompileError(**dict(value), type="compileError"))
 
-    def runtime_error(self, value: RuntimeError) -> ErrorInfo:
+    def runtime_error(self, value: resources_submission_types_runtime_error_RuntimeError) -> ErrorInfo:
         return ErrorInfo(__root__=_ErrorInfo.RuntimeError(**dict(value), type="runtimeError"))
 
-    def internal_error(self, value: InternalError) -> ErrorInfo:
+    def internal_error(self, value: resources_submission_types_internal_error_InternalError) -> ErrorInfo:
         return ErrorInfo(__root__=_ErrorInfo.InternalError(**dict(value), type="internalError"))
 
 
@@ -37,9 +37,9 @@ class ErrorInfo(pydantic.BaseModel):
 
     def visit(
         self,
-        compile_error: typing.Callable[[CompileError], T_Result],
-        runtime_error: typing.Callable[[RuntimeError], T_Result],
-        internal_error: typing.Callable[[InternalError], T_Result],
+        compile_error: typing.Callable[[resources_submission_types_compile_error_CompileError], T_Result],
+        runtime_error: typing.Callable[[resources_submission_types_runtime_error_RuntimeError], T_Result],
+        internal_error: typing.Callable[[resources_submission_types_internal_error_InternalError], T_Result],
     ) -> T_Result:
         if self.__root__.type == "compileError":
             return compile_error(self.__root__)
@@ -104,19 +104,19 @@ class ErrorInfo(pydantic.BaseModel):
 
 
 class _ErrorInfo:
-    class CompileError(CompileError):
+    class CompileError(resources_submission_types_compile_error_CompileError):
         type: typing_extensions.Literal["compileError"]
 
         class Config:
             frozen = True
 
-    class RuntimeError(RuntimeError):
+    class RuntimeError(resources_submission_types_runtime_error_RuntimeError):
         type: typing_extensions.Literal["runtimeError"]
 
         class Config:
             frozen = True
 
-    class InternalError(InternalError):
+    class InternalError(resources_submission_types_internal_error_InternalError):
         type: typing_extensions.Literal["internalError"]
 
         class Config:

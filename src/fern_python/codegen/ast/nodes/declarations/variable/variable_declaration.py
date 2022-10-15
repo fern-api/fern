@@ -11,6 +11,7 @@ class VariableDeclaration(AstNode):
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
+        metadata.declarations.add(self.name)
         if self.type_hint is not None:
             metadata.update(self.type_hint.get_metadata())
         if self.initializer is not None:

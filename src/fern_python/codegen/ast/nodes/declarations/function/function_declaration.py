@@ -31,6 +31,7 @@ class FunctionDeclaration(AstNode):
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
+        metadata.declarations.add(self.name)
         if len(self.overloads) > 0:
             metadata.references.add(OVERLOAD_DECORATOR)
         metadata.update(self.signature.get_metadata())

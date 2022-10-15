@@ -8,7 +8,10 @@ class TypeAliasDeclaration(AstNode):
         self.type_hint = type_hint
 
     def get_metadata(self) -> AstNodeMetadata:
-        return self.type_hint.get_metadata()
+        metadata = AstNodeMetadata()
+        metadata.declarations.add(self.name)
+        metadata.update(self.type_hint.get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name} = ")

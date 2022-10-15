@@ -150,15 +150,20 @@ class SourceFileImpl(SourceFile):
             statement_metadata = statement.get_metadata()
             ast_metadata.update(statement_metadata)
 
+            references_in_statement = set(statement_metadata.references)
+
             # get generics declarations
             generics_declarations = self._get_generics_declarations(statement_metadata.generics)
             for generic_declaration in generics_declarations:
                 generics_statements.append(generic_declaration)
-                ast_metadata.update(generic_declaration.get_metadata())
+                metadata_for_generic_declaration = generic_declaration.get_metadata()
+                ast_metadata.update(metadata_for_generic_declaration)
+                references_in_statement.update(metadata_for_generic_declaration.references)
 
             # resolve constraints for imports in this statement
             self._imports_manager.resolve_constraints(
-                statement_id=statement.id, references=statement_metadata.references
+                statement_id=statement.id,
+                references=references_in_statement,
             )
 
         for reference in ast_metadata.references:
@@ -170,6 +175,9 @@ class SourceFileImpl(SourceFile):
                 dependency = reference.import_.module.get_dependency()
                 if dependency is not None:
                     self._dependency_manager.add_dependency(dependency)
+
+        for declaration in ast_metadata.declarations:
+            self._reference_resolver.register_declaration(declaration)
 
         # add generics declarations to the top of the file
         self._statements = generics_statements + self._statements

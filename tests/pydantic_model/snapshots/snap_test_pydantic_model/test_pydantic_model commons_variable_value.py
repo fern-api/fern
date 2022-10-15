@@ -11,9 +11,9 @@ import typing
 import pydantic
 import typing_extensions
 
-from .binary_tree_value import BinaryTreeValue
-from .doubly_linked_list_value import DoublyLinkedListValue
-from .singly_linked_list_value import SinglyLinkedListValue
+from .binary_tree_value import BinaryTreeValue as commons_binary_tree_value_BinaryTreeValue
+from .doubly_linked_list_value import DoublyLinkedListValue as commons_doubly_linked_list_value_DoublyLinkedListValue
+from .singly_linked_list_value import SinglyLinkedListValue as commons_singly_linked_list_value_SinglyLinkedListValue
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -34,19 +34,19 @@ class _Factory:
     def char_value(self, value: str) -> VariableValue:
         return VariableValue(__root__=_VariableValue.CharValue(type="charValue", value=value))
 
-    def map_value(self, value: MapValue) -> VariableValue:
+    def map_value(self, value: commons_map_value_MapValue) -> VariableValue:
         return VariableValue(__root__=_VariableValue.MapValue(**dict(value), type="mapValue"))
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
         return VariableValue(__root__=_VariableValue.ListValue(type="listValue", value=value))
 
-    def binary_tree_value(self, value: BinaryTreeValue) -> VariableValue:
+    def binary_tree_value(self, value: commons_binary_tree_value_BinaryTreeValue) -> VariableValue:
         return VariableValue(__root__=_VariableValue.BinaryTreeValue(**dict(value), type="binaryTreeValue"))
 
-    def singly_linked_list_value(self, value: SinglyLinkedListValue) -> VariableValue:
+    def singly_linked_list_value(self, value: commons_singly_linked_list_value_SinglyLinkedListValue) -> VariableValue:
         return VariableValue(__root__=_VariableValue.SinglyLinkedListValue(**dict(value), type="singlyLinkedListValue"))
 
-    def doubly_linked_list_value(self, value: DoublyLinkedListValue) -> VariableValue:
+    def doubly_linked_list_value(self, value: commons_doubly_linked_list_value_DoublyLinkedListValue) -> VariableValue:
         return VariableValue(__root__=_VariableValue.DoublyLinkedListValue(**dict(value), type="doublyLinkedListValue"))
 
     def null_value(self) -> VariableValue:
@@ -80,11 +80,11 @@ class VariableValue(pydantic.BaseModel):
         double_value: typing.Callable[[float], T_Result],
         string_value: typing.Callable[[str], T_Result],
         char_value: typing.Callable[[str], T_Result],
-        map_value: typing.Callable[[MapValue], T_Result],
+        map_value: typing.Callable[[commons_map_value_MapValue], T_Result],
         list_value: typing.Callable[[typing.List[VariableValue]], T_Result],
-        binary_tree_value: typing.Callable[[BinaryTreeValue], T_Result],
-        singly_linked_list_value: typing.Callable[[SinglyLinkedListValue], T_Result],
-        doubly_linked_list_value: typing.Callable[[DoublyLinkedListValue], T_Result],
+        binary_tree_value: typing.Callable[[commons_binary_tree_value_BinaryTreeValue], T_Result],
+        singly_linked_list_value: typing.Callable[[commons_singly_linked_list_value_SinglyLinkedListValue], T_Result],
+        doubly_linked_list_value: typing.Callable[[commons_doubly_linked_list_value_DoublyLinkedListValue], T_Result],
         null_value: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self.__root__.type == "integerValue":
@@ -241,7 +241,7 @@ class VariableValue(pydantic.BaseModel):
         frozen = True
 
 
-from .map_value import MapValue  # noqa: E402
+from .map_value import MapValue as commons_map_value_MapValue  # noqa: E402
 
 
 class _VariableValue:
@@ -280,7 +280,7 @@ class _VariableValue:
         class Config:
             frozen = True
 
-    class MapValue(MapValue):
+    class MapValue(commons_map_value_MapValue):
         type: typing_extensions.Literal["mapValue"]
 
         class Config:
@@ -293,19 +293,19 @@ class _VariableValue:
         class Config:
             frozen = True
 
-    class BinaryTreeValue(BinaryTreeValue):
+    class BinaryTreeValue(commons_binary_tree_value_BinaryTreeValue):
         type: typing_extensions.Literal["binaryTreeValue"]
 
         class Config:
             frozen = True
 
-    class SinglyLinkedListValue(SinglyLinkedListValue):
+    class SinglyLinkedListValue(commons_singly_linked_list_value_SinglyLinkedListValue):
         type: typing_extensions.Literal["singlyLinkedListValue"]
 
         class Config:
             frozen = True
 
-    class DoublyLinkedListValue(DoublyLinkedListValue):
+    class DoublyLinkedListValue(commons_doubly_linked_list_value_DoublyLinkedListValue):
         type: typing_extensions.Literal["doublyLinkedListValue"]
 
         class Config:

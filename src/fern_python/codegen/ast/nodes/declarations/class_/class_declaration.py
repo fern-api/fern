@@ -112,6 +112,7 @@ class ClassDeclaration(AstNode):
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
+        metadata.declarations.add(self.name)
         metadata.references.update({*self.extends, *self.ghost_references})
         if self.constructor is not None:
             metadata.update(self.constructor.get_metadata())
