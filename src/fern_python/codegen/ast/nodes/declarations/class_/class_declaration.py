@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Sequence, Set
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import ClassReference, Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
 from ...docstring import Docstring
@@ -110,25 +110,16 @@ class ClassDeclaration(AstNode):
     def add_ghost_reference(self, reference: Reference) -> None:
         self.ghost_references.add(reference)
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = {*self.extends, *self.ghost_references}
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
+        metadata.references.update({*self.extends, *self.ghost_references})
         if self.constructor is not None:
-            references.update(self.constructor.get_references())
+            metadata.update(self.constructor.get_metadata())
         for statement in self.statements:
-            references.update(statement.get_references())
+            metadata.update(statement.get_metadata())
         if self.docstring is not None:
-            references.update(self.docstring.get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        if self.constructor is not None:
-            generics.update(self.constructor.get_generics())
-        for statement in self.statements:
-            generics.update(statement.get_generics())
-        if self.docstring is not None:
-            generics.update(self.docstring.get_generics())
-        return generics
+            metadata.update(self.docstring.get_metadata())
+        return metadata
 
     def add_expression(self, expression: Expression) -> None:
         self.statements.append(expression)

@@ -1,14 +1,13 @@
 from types import TracebackType
-from typing import Optional, Set, Type
+from typing import Optional, Type
 
-from ...ast_node import AstNode, GenericTypeVar, IndentableWriter, NodeWriter
+from ...ast_node import AstNode, AstNodeMetadata, IndentableWriter, NodeWriter
 from ...references import Reference
 
 
-class ReferenceLoadingNodeWriter(NodeWriter):
+class MetadataLoadingNodeWriter(NodeWriter):
     def __init__(self) -> None:
-        self.references: Set[Reference] = set()
-        self.generics: Set[GenericTypeVar] = set()
+        self.metadata = AstNodeMetadata()
 
     def write(self, content: str) -> None:
         pass
@@ -20,11 +19,10 @@ class ReferenceLoadingNodeWriter(NodeWriter):
         pass
 
     def write_node(self, node: AstNode) -> None:
-        self.references.update(node.get_references())
-        self.generics.update(node.get_generics())
+        self.metadata.update(node.get_metadata())
 
     def write_reference(self, reference: Reference) -> None:
-        self.references.add(reference)
+        self.metadata.references.add(reference)
 
     def indent(self) -> IndentableWriter:
         return NoopIndentableWriter()

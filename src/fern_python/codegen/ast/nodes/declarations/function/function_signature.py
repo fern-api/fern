@@ -1,7 +1,6 @@
-from typing import Sequence, Set
+from typing import Sequence
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
-from ....references import Reference
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...type_hint import TypeHint
 from .function_parameter import FunctionParameter
 
@@ -25,25 +24,15 @@ class FunctionSignature(AstNode):
     def has_arguments(self) -> bool:
         return len(self.parameters) > 0 or self.include_args or len(self.named_parameters) > 0 or self.include_kwargs
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
         for parameter in self.parameters:
-            references.update(parameter.get_references())
+            metadata.update(parameter.get_metadata())
         for named_parameter in self.named_parameters:
-            references.update(named_parameter.get_references())
+            metadata.update(named_parameter.get_metadata())
         if self.return_type is not None:
-            references.update(self.return_type.get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        for parameter in self.parameters:
-            generics.update(parameter.get_generics())
-        for named_parameter in self.named_parameters:
-            generics.update(named_parameter.get_generics())
-        if self.return_type is not None:
-            generics.update(self.return_type.get_generics())
-        return generics
+            metadata.update(self.return_type.get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         writer.write("(")

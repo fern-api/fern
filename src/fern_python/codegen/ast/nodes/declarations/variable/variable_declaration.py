@@ -1,7 +1,4 @@
-from typing import Set
-
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
-from ....references import Reference
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...expressions import Expression
 from ...type_hint import TypeHint
 
@@ -12,21 +9,13 @@ class VariableDeclaration(AstNode):
         self.type_hint = type_hint
         self.initializer = initializer
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
         if self.type_hint is not None:
-            references.update(self.type_hint.get_references())
+            metadata.update(self.type_hint.get_metadata())
         if self.initializer is not None:
-            references.update(self.initializer.get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        if self.type_hint is not None:
-            generics.update(self.type_hint.get_generics())
-        if self.initializer is not None:
-            generics.update(self.initializer.get_generics())
-        return generics
+            metadata.update(self.initializer.get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name}")

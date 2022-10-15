@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional, Set, Union
+from typing import Optional, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter
+from ...ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...references import Reference
 from ..code_writer import CodeWriter
 
@@ -17,21 +17,15 @@ class Expression(AstNode):
         self.expression = CodeWriter(expression) if isinstance(expression, str) else expression
         self.spread = spread
 
-    def get_references(self) -> Set[Reference]:
+    def get_metadata(self) -> AstNodeMetadata:
         if isinstance(self, str):
-            return set()
+            return AstNodeMetadata()
         if isinstance(self.expression, Reference):
-            return set([self.expression])
+            metadata = AstNodeMetadata()
+            metadata.references.add(self.expression)
+            return metadata
         if isinstance(self.expression, AstNode):
-            return self.expression.get_references()
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        if isinstance(self, str):
-            return set()
-        if isinstance(self.expression, Reference):
-            return set()
-        if isinstance(self.expression, AstNode):
-            return self.expression.get_generics()
+            return self.expression.get_metadata()
 
     def write(self, writer: NodeWriter) -> None:
         if self.spread is not None:

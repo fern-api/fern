@@ -1,7 +1,4 @@
-from typing import Set
-
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
-from ....references import Reference
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...type_hint import TypeHint
 
 
@@ -10,11 +7,8 @@ class TypeAliasDeclaration(AstNode):
         self.name = name
         self.type_hint = type_hint
 
-    def get_references(self) -> Set[Reference]:
-        return self.type_hint.get_references()
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        return self.type_hint.get_generics()
+    def get_metadata(self) -> AstNodeMetadata:
+        return self.type_hint.get_metadata()
 
     def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name} = ")

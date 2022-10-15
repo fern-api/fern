@@ -1,9 +1,9 @@
 from collections import defaultdict
-from typing import DefaultDict, Sequence, Set
+from typing import DefaultDict, Set
 
 from . import AST
 from .reference_resolver_impl import ReferenceResolverImpl
-from .top_level_statement import StatementId, TopLevelStatement
+from .top_level_statement import StatementId
 
 
 class ImportsManager:
@@ -15,34 +15,29 @@ class ImportsManager:
         ] = defaultdict(set)
 
         self._postponed_annotations = False
-        self._has_resolved_constraints = False
         self._has_written_top_imports = False
         self._has_written_any_statements = False
 
-    def resolve_constraints(self, statements: Sequence[TopLevelStatement]) -> None:
-        for statement in statements:
-            for reference in statement.references:
-                if reference.is_forward_reference:
+    def resolve_constraints(self, *, statement_id: StatementId, references: Set[AST.Reference]) -> None:
+        for reference in references:
+            if reference.is_forward_reference:
+                self._postponed_annotations = True
+            if reference.import_ is not None:
+                if reference.must_import_after_current_declaration:
+                    self._import_to_statements_that_must_precede_it[reference.import_].add(statement_id)
                     self._postponed_annotations = True
-                if reference.import_ is not None:
-                    if reference.must_import_after_current_declaration:
-                        self._import_to_statements_that_must_precede_it[reference.import_].add(statement.id)
-                        self._postponed_annotations = True
-                    elif reference.import_ not in self._import_to_statements_that_must_precede_it:
-                        # even if there's no constraints, we still store the import
-                        # so that we write it to the file.
-                        self._import_to_statements_that_must_precede_it[reference.import_] = set()
-        self._has_resolved_constraints = True
+                elif reference.import_ not in self._import_to_statements_that_must_precede_it:
+                    # even if there's no constraints, we still store the import
+                    # so that we write it to the file.
+                    self._import_to_statements_that_must_precede_it[reference.import_] = set()
 
     def write_top_imports_for_file(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
-        if not self._has_resolved_constraints:
-            raise RuntimeError("Constraints haven't been resolved yet")
         if self._postponed_annotations or reference_resolver.does_file_self_import():
             writer.write_line("from __future__ import annotations")
         self._has_written_top_imports = True
 
     def write_top_imports_for_statement(
-        self, statement: TopLevelStatement, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl
+        self, *, statement_id: StatementId, writer: AST.NodeWriter, reference_resolver: ReferenceResolverImpl
     ) -> None:
         if not self._has_written_top_imports:
             raise RuntimeError("Top imports haven't been written yet")
@@ -53,8 +48,8 @@ class ImportsManager:
             if len(statements_that_must_precede_it) == 0:
                 self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
                 written_imports.add(import_)
-            elif statement.id in statements_that_must_precede_it:
-                statements_that_must_precede_it.remove(statement.id)
+            elif statement_id in statements_that_must_precede_it:
+                statements_that_must_precede_it.remove(statement_id)
         for import_ in written_imports:
             del self._import_to_statements_that_must_precede_it[import_]
 

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Sequence, Set, Tuple
+from typing import TYPE_CHECKING, Sequence, Tuple
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Reference
 
 
@@ -17,22 +17,14 @@ class CallableInvocation(AstNode):
         self.args = args or []
         self.kwargs = kwargs or []
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
-        references.add(self.callable)
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
+        metadata.references.add(self.callable)
         for arg in self.args:
-            references.update(arg.get_references())
+            metadata.update(arg.get_metadata())
         for kwarg in self.kwargs:
-            references.update(kwarg[1].get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        for arg in self.args:
-            generics.update(arg.get_generics())
-        for kwarg in self.kwargs:
-            generics.update(kwarg[1].get_generics())
-        return generics
+            metadata.update(kwarg[1].get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         writer.write_reference(self.callable)

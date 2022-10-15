@@ -119,15 +119,12 @@ class SourceFileImpl(SourceFile):
         self._footer_statements.append(TopLevelStatement(node=expression))
 
     def finish(self) -> None:
-        self._prepend_generics_declarations_to_statements()
-        self._resolve_references()
-        self._imports_manager.resolve_constraints(statements=self._get_all_statements())
-
+        self._prepare_for_writing()
         with NodeWriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
             self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
             for statement in self._statements:
                 self._imports_manager.write_top_imports_for_statement(
-                    statement=statement,
+                    statement_id=statement.id,
                     writer=writer,
                     reference_resolver=self._reference_resolver,
                 )
@@ -142,7 +139,43 @@ class SourceFileImpl(SourceFile):
         if self._completion_listener is not None:
             self._completion_listener(self)
 
-        self._update_dependencies()
+    def _prepare_for_writing(self) -> None:
+        # metadata about the whole file's AST
+        ast_metadata = AST.AstNodeMetadata()
+
+        # generics declarations we need to prepend to the file
+        generics_statements: List[TopLevelStatement] = []
+
+        for statement in self._statements:
+            statement_metadata = statement.get_metadata()
+            ast_metadata.update(statement_metadata)
+
+            # get generics declarations
+            generics_declarations = self._get_generics_declarations(statement_metadata.generics)
+            for generic_declaration in generics_declarations:
+                generics_statements.append(generic_declaration)
+                ast_metadata.update(generic_declaration.get_metadata())
+
+            # resolve constraints for imports in this statement
+            self._imports_manager.resolve_constraints(
+                statement_id=statement.id, references=statement_metadata.references
+            )
+
+        for reference in ast_metadata.references:
+            # register refrence for resolving later
+            self._reference_resolver.register_reference(reference)
+
+            # track depenency if this references relies on an external dep
+            if reference.import_ is not None:
+                dependency = reference.import_.module.get_dependency()
+                if dependency is not None:
+                    self._dependency_manager.add_dependency(dependency)
+
+        # add generics declarations to the top of the file
+        self._statements = generics_statements + self._statements
+
+        # resolve references
+        self._reference_resolver.resolve_references()
 
     def get_exports(self) -> Set[str]:
         return self._exports
@@ -150,8 +183,8 @@ class SourceFileImpl(SourceFile):
     def _get_all_statements(self) -> List[TopLevelStatement]:
         return self._statements + self._footer_statements
 
-    def _prepend_generics_declarations_to_statements(self) -> None:
-        generics_declarations: List[TopLevelStatement] = [
+    def _get_generics_declarations(self, generics: Set[AST.GenericTypeVar]) -> List[TopLevelStatement]:
+        return [
             TopLevelStatement(
                 id=generic.name,
                 node=AST.VariableDeclaration(
@@ -167,29 +200,8 @@ class SourceFileImpl(SourceFile):
                     ),
                 ),
             )
-            for generic in self._get_generics()
+            for generic in generics
         ]
-        self._statements = generics_declarations + self._statements
-
-    def _get_generics(self) -> Set[AST.GenericTypeVar]:
-        generics: Set[AST.GenericTypeVar] = set()
-        for statement in self._get_all_statements():
-            generics.update(statement.node.get_generics())
-        return generics
-
-    def _resolve_references(self) -> None:
-        for statement in self._get_all_statements():
-            for reference in statement.references:
-                self._reference_resolver.register_reference(reference)
-        self._reference_resolver.resolve_references()
-
-    def _update_dependencies(self) -> None:
-        for statement in self._get_all_statements():
-            for reference in statement.references:
-                if reference.import_ is not None:
-                    dependency = reference.import_.module.get_dependency()
-                    if dependency is not None:
-                        self._dependency_manager.add_dependency(dependency)
 
     def __enter__(self) -> SourceFile:
         return self

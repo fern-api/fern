@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from typing import List, Set, Union
+from typing import List, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter
-from ...references import Reference
+from ...ast_node import AstNode, AstNodeMetadata, GenericTypeVar, NodeWriter
 
 
 class TypeParameter(AstNode):
@@ -13,25 +12,16 @@ class TypeParameter(AstNode):
     ):
         self._type_parameter = type_parameter
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
         if isinstance(self._type_parameter, AstNode):
-            references.update(self._type_parameter.get_references())
-        elif isinstance(self._type_parameter, list):
-            for type_parameter in self._type_parameter:
-                references.update(type_parameter.get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        if isinstance(self._type_parameter, AstNode):
-            generics.update(self._type_parameter.get_generics())
+            metadata.update(self._type_parameter.get_metadata())
         elif isinstance(self._type_parameter, GenericTypeVar):
-            generics.add(self._type_parameter)
+            metadata.generics.add(self._type_parameter)
         elif isinstance(self._type_parameter, list):
             for type_parameter in self._type_parameter:
-                generics.update(type_parameter.get_generics())
-        return generics
+                metadata.update(type_parameter.get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         if isinstance(self._type_parameter, AstNode):

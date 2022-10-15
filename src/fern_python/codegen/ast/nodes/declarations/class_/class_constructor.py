@@ -1,7 +1,4 @@
-from typing import Set
-
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
-from ....references import Reference
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...code_writer import CodeWriter
 from ...type_hint import TypeHint
 from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
@@ -27,11 +24,8 @@ class ClassConstructor(AstNode):
             body=body,
         )
 
-    def get_references(self) -> Set[Reference]:
-        return self.function_declaration.get_references()
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        return self.function_declaration.get_generics()
+    def get_metadata(self) -> AstNodeMetadata:
+        return self.function_declaration.get_metadata()
 
     def write(self, writer: NodeWriter) -> None:
         writer.write_node(self.function_declaration)

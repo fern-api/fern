@@ -1,8 +1,7 @@
-from typing import Protocol, Set, Union
+from typing import Protocol, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter
-from ...references import Reference
-from .reference_loading_node_writer import ReferenceLoadingNodeWriter
+from ...ast_node import AstNode, AstNodeMetadata, NodeWriter
+from .metadata_loading_node_writer import MetadataLoadingNodeWriter
 
 
 class CodeWriterFunction(Protocol):
@@ -17,19 +16,12 @@ class CodeWriter(AstNode):
     def __init__(self, code_writer: Union[CodeWriterFunction, str]):
         self._code_writer = code_writer
 
-    def get_references(self) -> Set[Reference]:
+    def get_metadata(self) -> AstNodeMetadata:
         if isinstance(self._code_writer, str):
-            return set()
-        writer = ReferenceLoadingNodeWriter()
+            return AstNodeMetadata()
+        writer = MetadataLoadingNodeWriter()
         self._code_writer(writer=writer)
-        return writer.references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        if isinstance(self._code_writer, str):
-            return set()
-        writer = ReferenceLoadingNodeWriter()
-        self._code_writer(writer=writer)
-        return writer.generics
+        return writer.metadata
 
     def write(self, writer: NodeWriter) -> None:
         if isinstance(self._code_writer, str):

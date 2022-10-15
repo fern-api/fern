@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Sequence, Set, Tuple
+from typing import TYPE_CHECKING, Sequence, Tuple
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
-from ....references import ClassReference, Reference
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
+from ....references import ClassReference
 from ..callable_invocation import CallableInvocation
 
 
@@ -16,11 +16,8 @@ class ClassInstantiation(AstNode):
     ):
         self.callable_invocation = CallableInvocation(callable=class_, args=args, kwargs=kwargs)
 
-    def get_references(self) -> Set[Reference]:
-        return self.callable_invocation.get_references()
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        return self.callable_invocation.get_generics()
+    def get_metadata(self) -> AstNodeMetadata:
+        return self.callable_invocation.get_metadata()
 
     def write(self, writer: NodeWriter) -> None:
         return self.callable_invocation.write(writer=writer)

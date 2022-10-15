@@ -1,6 +1,6 @@
-from typing import Optional, Sequence, Set
+from typing import Optional, Sequence
 
-from ....ast_node import AstNode, GenericTypeVar, NodeWriter
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
 from .function_signature import FunctionSignature
@@ -29,27 +29,17 @@ class FunctionDeclaration(AstNode):
         self.body = body
         self.decorators = decorators or []
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
         if len(self.overloads) > 0:
-            references.add(OVERLOAD_DECORATOR)
-        references.update(self.signature.get_references())
+            metadata.references.add(OVERLOAD_DECORATOR)
+        metadata.update(self.signature.get_metadata())
         for overload in self.overloads:
-            references.update(overload.get_references())
-        references.update(self.body.get_references())
+            metadata.update(overload.get_metadata())
+        metadata.update(self.body.get_metadata())
         for decorator in self.decorators:
-            references.update(decorator.get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
-        generics.update(self.signature.get_generics())
-        for overload in self.overloads:
-            generics.update(overload.get_generics())
-        generics.update(self.body.get_generics())
-        for decorator in self.decorators:
-            generics.update(decorator.get_generics())
-        return generics
+            metadata.update(decorator.get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         for overload in self.overloads:

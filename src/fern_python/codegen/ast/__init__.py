@@ -1,4 +1,11 @@
-from .ast_node import AstNode, GenericTypeVar, IndentableWriter, NodeWriter, Writer
+from .ast_node import (
+    AstNode,
+    AstNodeMetadata,
+    GenericTypeVar,
+    IndentableWriter,
+    NodeWriter,
+    Writer,
+)
 from .dependency import Dependency, DependencyName, DependencyVersion
 from .nodes import (
     ClassConstructor,
@@ -62,4 +69,5 @@ __all__ = [
     "ReferenceNode",
     "FunctionSignature",
     "Docstring",
+    "AstNodeMetadata",
 ]

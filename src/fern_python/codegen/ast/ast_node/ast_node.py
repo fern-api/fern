@@ -1,19 +1,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Set
 
-from ..references import Reference
-from .generic_type_var import GenericTypeVar
+from .ast_node_metadata import AstNodeMetadata
 
 
 class AstNode(ABC):
     @abstractmethod
-    def get_references(self) -> Set[Reference]:
-        ...
-
-    @abstractmethod
-    def get_generics(self) -> Set[GenericTypeVar]:
+    def get_metadata(self) -> AstNodeMetadata:
         ...
 
     @abstractmethod

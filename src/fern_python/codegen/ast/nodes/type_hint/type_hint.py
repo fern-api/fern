@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Sequence, Set, Union
+from typing import Sequence, Union
 
-from ...ast_node import AstNode, GenericTypeVar, NodeWriter
+from ...ast_node import AstNode, AstNodeMetadata, GenericTypeVar, NodeWriter
 from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
 from .type_parameter import TypeParameter
@@ -136,21 +136,15 @@ class TypeHint(AstNode):
             type_parameters=[TypeParameter(class_var_type)],
         )
 
-    def get_references(self) -> Set[Reference]:
-        references: Set[Reference] = set()
+    def get_metadata(self) -> AstNodeMetadata:
+        metadata = AstNodeMetadata()
         if isinstance(self._type, Reference):
-            references.add(self._type)
-        for type_parameter in self._type_parameters:
-            references.update(type_parameter.get_references())
-        return references
-
-    def get_generics(self) -> Set[GenericTypeVar]:
-        generics: Set[GenericTypeVar] = set()
+            metadata.references.add(self._type)
         if isinstance(self._type, GenericTypeVar):
-            generics.add(self._type)
+            metadata.generics.add(self._type)
         for type_parameter in self._type_parameters:
-            generics.update(type_parameter.get_generics())
-        return generics
+            metadata.update(type_parameter.get_metadata())
+        return metadata
 
     def write(self, writer: NodeWriter) -> None:
         if isinstance(self._type, GenericTypeVar):
