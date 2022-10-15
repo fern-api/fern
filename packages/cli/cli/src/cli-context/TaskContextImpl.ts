@@ -73,6 +73,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
+        this.finish();
         throw new FernCliError();
     }
 

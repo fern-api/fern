@@ -48,7 +48,12 @@ async function runCli() {
         try {
             await tryRunCli(cliContext);
         } catch (error) {
-            cliContext.fail("Failed to run", error);
+            if (error instanceof FernCliError) {
+                // thrower is responsible for logging, so we don't need to log here
+                cliContext.fail();
+            } else {
+                cliContext.fail("Failed to run", error);
+            }
         }
     }
 
@@ -64,13 +69,6 @@ async function tryRunCli(cliContext: CliContext) {
             if (error == null) {
                 argv.showHelp();
                 cliContext.logger.error(message);
-            } else {
-                if (error instanceof FernCliError) {
-                    // thrower is responsible for logging
-                    cliContext.fail();
-                } else {
-                    throw error;
-                }
             }
         })
         .strict()
