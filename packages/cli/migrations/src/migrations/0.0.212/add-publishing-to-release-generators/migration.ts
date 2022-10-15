@@ -14,7 +14,7 @@ export const migration: Migration = {
             try {
                 await migrateGeneratorsYml(filepath, context);
             } catch (error) {
-                context.failAndThrow(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
     },
@@ -28,17 +28,17 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         return;
     }
     if (!YAML.isSeq(releaseGenerators)) {
-        context.failAndThrow(`release generators are not a list in ${filepath}`);
+        context.failWithoutThrowing(`release generators are not a list in ${filepath}`);
         return;
     }
     releaseGenerators.items.forEach((releaseGenerator) => {
         if (!YAML.isMap(releaseGenerator)) {
-            context.failAndThrow(`release generator is not an object in ${filepath}`);
+            context.failWithoutThrowing(`release generator is not an object in ${filepath}`);
             return;
         }
         const outputs = releaseGenerator.get("outputs");
         if (!YAML.isMap(outputs)) {
-            context.failAndThrow(`outputs is not an object in ${filepath}`);
+            context.failWithoutThrowing(`outputs is not an object in ${filepath}`);
             return;
         }
 

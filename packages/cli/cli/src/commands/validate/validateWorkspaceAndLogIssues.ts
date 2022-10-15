@@ -10,9 +10,6 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
     }
 
     const violations = await validateWorkspace(workspace, context.logger);
-    if (violations.length > 0) {
-        context.failAndThrow();
-    }
 
     for (const violation of violations) {
         context.logger.log(
@@ -22,6 +19,10 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
                 title: violation.message,
             })
         );
+    }
+
+    if (violations.length > 0) {
+        context.failAndThrow();
     }
 }
 

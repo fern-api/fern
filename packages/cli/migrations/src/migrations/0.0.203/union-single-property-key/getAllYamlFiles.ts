@@ -8,7 +8,7 @@ const FERN_DIRECTORY = "fern";
 export async function getAllYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const filepaths = await glob("*/definition/**/*.yml", {
         cwd: fernDirectory,

@@ -22,21 +22,22 @@ export function pollJobAndReportStatus({
         (acc, taskId, index) => {
             const generatorInvocation = generatorInvocations[index];
             if (generatorInvocation == null) {
-                context.failAndThrow("Task IDs list is longer than generators list.");
-            } else {
-                const interactiveTaskContext = context
-                    .addInteractiveTask({
-                        name: generatorInvocation.name,
-                    })
-                    .start();
-                interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
-                acc[taskId] = new RemoteTaskHandler({
-                    job,
-                    taskId,
-                    generatorInvocation,
-                    interactiveTaskContext,
-                });
+                return context.failAndThrow("Task IDs list is longer than generators list.");
             }
+
+            const interactiveTaskContext = context
+                .addInteractiveTask({
+                    name: generatorInvocation.name,
+                })
+                .start();
+            interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
+            acc[taskId] = new RemoteTaskHandler({
+                job,
+                taskId,
+                generatorInvocation,
+                interactiveTaskContext,
+            });
+
             return acc;
         },
         {}
@@ -50,7 +51,7 @@ export function pollJobAndReportStatus({
             if (taskStatuses == null) {
                 numConsecutiveFailed++;
                 if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                    context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
+                    context.failWithoutThrowing(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
                     return resolve();
                 }
             } else {

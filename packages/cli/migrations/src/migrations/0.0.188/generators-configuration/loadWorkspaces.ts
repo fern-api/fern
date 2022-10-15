@@ -8,7 +8,7 @@ const FERN_DIRECTORY = "fern";
 export async function loadWorkspaces(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     return fernDirectoryContents.reduce<AbsoluteFilePath[]>((all, item) => {

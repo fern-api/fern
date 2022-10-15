@@ -16,7 +16,7 @@ export const migration: Migration = {
             try {
                 await migrateWorkspace(pathToWorkspace);
             } catch (error) {
-                context.failAndThrow("Failed to migrate generators configuration", error);
+                context.failWithoutThrowing("Failed to migrate generators configuration", error);
             }
         }
     },
