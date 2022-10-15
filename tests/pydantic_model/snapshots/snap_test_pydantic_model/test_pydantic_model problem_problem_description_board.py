@@ -44,11 +44,11 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
         test_case_id: typing.Callable[[str], T_Result],
     ) -> T_Result:
         if self.__root__.type == "html":
-            return html(self.__root__.html)
+            return html(self.__root__.value)
         if self.__root__.type == "variable":
-            return variable(self.__root__.variable)
+            return variable(self.__root__.value)
         if self.__root__.type == "testCaseId":
-            return test_case_id(self.__root__.test_case_id)
+            return test_case_id(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
         typing.Union[

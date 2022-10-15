@@ -40,9 +40,9 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
         self, html: typing.Callable[[str], T_Result], param_id: typing.Callable[[ParameterId], T_Result]
     ) -> T_Result:
         if self.__root__.type == "html":
-            return html(self.__root__.html)
+            return html(self.__root__.value)
         if self.__root__.type == "paramId":
-            return param_id(self.__root__.param_id)
+            return param_id(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
         typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId],

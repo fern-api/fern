@@ -164,9 +164,7 @@ class UnionGenerator(AbstractTypeGenerator):
                                     ),
                                 ),
                                 single_property=lambda property: VisitorArgument(
-                                    expression=AST.Expression(
-                                        f"self.__root__.{single_union_type.discriminant_value.snake_case}"
-                                    ),
+                                    expression=AST.Expression(f"self.__root__.{property.name.snake_case}"),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(property.type),
                                 ),
                                 no_properties=lambda: None,

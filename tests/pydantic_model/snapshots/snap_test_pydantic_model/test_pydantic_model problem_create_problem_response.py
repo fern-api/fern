@@ -35,9 +35,9 @@ class CreateProblemResponse(pydantic.BaseModel):
         self, success: typing.Callable[[ProblemId], T_Result], error: typing.Callable[[CreateProblemError], T_Result]
     ) -> T_Result:
         if self.__root__.type == "success":
-            return success(self.__root__.success)
+            return success(self.__root__.value)
         if self.__root__.type == "error":
-            return error(self.__root__.error)
+            return error(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
         typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error], pydantic.Field(discriminator="type")

@@ -33,7 +33,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
         self, playlist_id: typing.Callable[[resources_playlist_types_playlist_id_PlaylistId], T_Result]
     ) -> T_Result:
         if self.__root__.type == "playlistId":
-            return playlist_id(self.__root__.playlist_id)
+            return playlist_id(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
         typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId], pydantic.Field(discriminator="type")

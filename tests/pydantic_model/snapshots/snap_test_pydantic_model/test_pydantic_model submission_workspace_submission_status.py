@@ -60,9 +60,9 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
         if self.__root__.type == "stopped":
             return stopped()
         if self.__root__.type == "errored":
-            return errored(self.__root__.errored)
+            return errored(self.__root__.value)
         if self.__root__.type == "running":
-            return running(self.__root__.running)
+            return running(self.__root__.value)
         if self.__root__.type == "ran":
             return ran(self.__root__)
         if self.__root__.type == "traced":

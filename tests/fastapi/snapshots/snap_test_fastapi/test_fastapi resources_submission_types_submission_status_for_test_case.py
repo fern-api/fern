@@ -48,7 +48,7 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
         if self.__root__.type == "graded":
             return graded(self.__root__)
         if self.__root__.type == "gradedV2":
-            return graded_v_2(self.__root__.graded_v_2)
+            return graded_v_2(self.__root__.value)
         if self.__root__.type == "traced":
             return traced(self.__root__)
 

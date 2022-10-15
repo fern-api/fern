@@ -88,19 +88,19 @@ class VariableValue(pydantic.BaseModel):
         null_value: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self.__root__.type == "integerValue":
-            return integer_value(self.__root__.integer_value)
+            return integer_value(self.__root__.value)
         if self.__root__.type == "booleanValue":
-            return boolean_value(self.__root__.boolean_value)
+            return boolean_value(self.__root__.value)
         if self.__root__.type == "doubleValue":
-            return double_value(self.__root__.double_value)
+            return double_value(self.__root__.value)
         if self.__root__.type == "stringValue":
-            return string_value(self.__root__.string_value)
+            return string_value(self.__root__.value)
         if self.__root__.type == "charValue":
-            return char_value(self.__root__.char_value)
+            return char_value(self.__root__.value)
         if self.__root__.type == "mapValue":
             return map_value(self.__root__)
         if self.__root__.type == "listValue":
-            return list_value(self.__root__.list_value)
+            return list_value(self.__root__.value)
         if self.__root__.type == "binaryTreeValue":
             return binary_tree_value(self.__root__)
         if self.__root__.type == "singlyLinkedListValue":

@@ -40,7 +40,7 @@ class CustomFiles(pydantic.BaseModel):
         if self.__root__.type == "basic":
             return basic(self.__root__)
         if self.__root__.type == "custom":
-            return custom(self.__root__.custom)
+            return custom(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
         typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")

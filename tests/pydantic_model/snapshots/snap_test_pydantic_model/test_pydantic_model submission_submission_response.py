@@ -70,13 +70,13 @@ class SubmissionResponse(pydantic.BaseModel):
         if self.__root__.type == "serverInitialized":
             return server_initialized()
         if self.__root__.type == "problemInitialized":
-            return problem_initialized(self.__root__.problem_initialized)
+            return problem_initialized(self.__root__.value)
         if self.__root__.type == "workspaceInitialized":
             return workspace_initialized()
         if self.__root__.type == "serverErrored":
             return server_errored(self.__root__)
         if self.__root__.type == "codeExecutionUpdate":
-            return code_execution_update(self.__root__.code_execution_update)
+            return code_execution_update(self.__root__.value)
         if self.__root__.type == "terminated":
             return terminated(self.__root__)
 

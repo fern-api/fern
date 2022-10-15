@@ -46,7 +46,7 @@ class ActualResult(pydantic.BaseModel):
         if self.__root__.type == "exception":
             return exception(self.__root__)
         if self.__root__.type == "exceptionV2":
-            return exception_v_2(self.__root__.exception_v_2)
+            return exception_v_2(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
         typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2],

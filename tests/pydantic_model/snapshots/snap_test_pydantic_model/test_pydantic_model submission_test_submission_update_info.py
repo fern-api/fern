@@ -68,11 +68,11 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
         finished: typing.Callable[[], T_Result],
     ) -> T_Result:
         if self.__root__.type == "running":
-            return running(self.__root__.running)
+            return running(self.__root__.value)
         if self.__root__.type == "stopped":
             return stopped()
         if self.__root__.type == "errored":
-            return errored(self.__root__.errored)
+            return errored(self.__root__.value)
         if self.__root__.type == "gradedTestCase":
             return graded_test_case(self.__root__)
         if self.__root__.type == "recordedTestCase":

@@ -43,7 +43,7 @@ class TestCaseImplementationReference(pydantic.BaseModel):
         implementation: typing.Callable[[TestCaseImplementation], T_Result],
     ) -> T_Result:
         if self.__root__.type == "templateId":
-            return template_id(self.__root__.template_id)
+            return template_id(self.__root__.value)
         if self.__root__.type == "implementation":
             return implementation(self.__root__)
 
