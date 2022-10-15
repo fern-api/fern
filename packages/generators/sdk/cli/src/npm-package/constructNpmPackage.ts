@@ -9,6 +9,7 @@ export function constructNpmPackage(generatorConfig: FernGeneratorExec.Generator
         case "publish":
             return {
                 packageName: outputMode.registriesV2.npm.packageName,
+                version: outputMode.version,
                 publishInfo: {
                     registry: outputMode.registriesV2.npm,
                     packageCoordinate: FernGeneratorExec.PackageCoordinate.npm({
@@ -16,6 +17,7 @@ export function constructNpmPackage(generatorConfig: FernGeneratorExec.Generator
                         version: outputMode.version,
                     }),
                 },
+                repoUrl: undefined,
             };
         case "github":
             if (outputMode.publishInfo.type != "npm") {
@@ -25,7 +27,9 @@ export function constructNpmPackage(generatorConfig: FernGeneratorExec.Generator
             }
             return {
                 packageName: outputMode.publishInfo.packageName,
+                version: outputMode.version,
                 publishInfo: undefined,
+                repoUrl: outputMode.repoUrl,
             };
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode.type}`);

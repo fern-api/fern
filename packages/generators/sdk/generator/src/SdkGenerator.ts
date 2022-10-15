@@ -52,6 +52,7 @@ export declare namespace SdkGenerator {
         volume: Volume;
         packageName: string;
         packageVersion: string | undefined;
+        repositoryUrl: string | undefined;
     }
 }
 
@@ -86,6 +87,7 @@ export class SdkGenerator {
         volume,
         packageName,
         packageVersion,
+        repositoryUrl,
     }: SdkGenerator.Init) {
         this.apiName = apiName;
         this.context = context;
@@ -144,6 +146,7 @@ export class SdkGenerator {
                 packageVersion,
                 project,
                 dependencies: this.dependencyManager.getDependencies(),
+                repositoryUrl,
             });
         };
     }

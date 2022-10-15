@@ -15,12 +15,14 @@ export async function generateTypeScriptProject({
     volume,
     packageName,
     packageVersion,
+    repositoryUrl,
     project,
     dependencies,
 }: {
     volume: Volume;
     packageName: string;
     packageVersion: string | undefined;
+    repositoryUrl: string | undefined;
     project: Project;
     dependencies: PackageDependencies;
 }): Promise<void> {
@@ -29,6 +31,7 @@ export async function generateTypeScriptProject({
         volume,
         packageName,
         packageVersion,
+        repositoryUrl,
         dependencies,
     });
     await generateTsConfig(volume);

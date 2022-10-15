@@ -15,10 +15,12 @@ export async function generatePackageJson({
     packageName,
     packageVersion,
     dependencies,
+    repositoryUrl,
 }: {
     volume: Volume;
     packageName: string;
     packageVersion: string | undefined;
+    repositoryUrl: string | undefined;
     dependencies: PackageDependencies | undefined;
 }): Promise<void> {
     let packageJson: IPackageJson = {
@@ -35,6 +37,7 @@ export async function generatePackageJson({
     packageJson = {
         ...packageJson,
         version: packageVersion,
+        repository: repositoryUrl,
         main: "./index.js",
         types: "./index.d.ts",
         files: [
