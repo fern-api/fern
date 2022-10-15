@@ -28,7 +28,7 @@ async function getFileContents({
         const buffer = await readFile(filepath);
         return buffer.toString();
     } catch (error) {
-        return context.fail("Failed to open file: " + filepath, error);
+        return context.failAndThrow("Failed to open file: " + filepath, error);
     }
 }
 

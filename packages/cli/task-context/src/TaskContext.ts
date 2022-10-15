@@ -3,7 +3,8 @@ import { Logger } from "@fern-api/logger";
 export interface TaskContext {
     logger: Logger;
     takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
-    fail(message?: string, error?: unknown): never;
+    failAndThrow: (message?: string, error?: unknown) => never;
+    failWithoutThrowing: (message?: string, error?: unknown) => void;
     getResult: () => TaskResult;
     addInteractiveTask: (params: CreateInteractiveTaskParams) => Startable<InteractiveTaskContext>;
     runInteractiveTask: (

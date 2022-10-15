@@ -14,7 +14,7 @@ export const migration: Migration = {
             try {
                 await migrateFile(filepath, context);
             } catch (error) {
-                context.fail(`Failed to add 'key' property to union in ${filepath}`, error);
+                context.failAndThrow(`Failed to add 'key' property to union in ${filepath}`, error);
             }
         }
     },
@@ -28,7 +28,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         return;
     }
     if (!YAML.isMap(types)) {
-        context.fail(`"types" is not a map in ${filepath}`);
+        context.failAndThrow(`"types" is not a map in ${filepath}`);
         return;
     }
 
@@ -39,7 +39,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
                 continue;
             }
             if (!YAML.isMap(union)) {
-                context.fail(`"union" is not a map in ${filepath}`);
+                context.failAndThrow(`"union" is not a map in ${filepath}`);
                 continue;
             }
             for (const singleUnionType of union.items) {

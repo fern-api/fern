@@ -28,7 +28,7 @@ export async function loadProject({
 }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
@@ -40,10 +40,10 @@ export async function loadProject({
 
     if (commandLineWorkspace != null) {
         if (!allWorkspaceDirectoryNames.includes(commandLineWorkspace)) {
-            return context.fail("API does not exist: " + commandLineWorkspace);
+            return context.failAndThrow("API does not exist: " + commandLineWorkspace);
         }
     } else if (allWorkspaceDirectoryNames.length === 0) {
-        return context.fail("No APIs found.");
+        return context.failAndThrow("No APIs found.");
     } else if (allWorkspaceDirectoryNames.length > 1 && !defaultToAllWorkspaces) {
         let message = "There are multiple workspaces. You must specify one with --api:\n";
         const longestWorkspaceName = Math.max(
@@ -55,7 +55,7 @@ export async function loadProject({
                 return ` › ${chalk.bold(workspaceName.padEnd(longestWorkspaceName))}  ${chalk.dim(suggestedCommand)}`;
             })
             .join("\n");
-        return context.fail(message);
+        return context.failAndThrow(message);
     }
 
     const workspaces = await loadWorkspaces({
@@ -91,7 +91,7 @@ async function loadWorkspaces({
                 allWorkspaces.push(workspace.workspace);
             } else {
                 handleFailedWorkspaceParserResult(workspace, context.logger);
-                context.fail();
+                context.failAndThrow();
             }
         })
     );

@@ -15,7 +15,7 @@ export async function initialize({
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
     if (await doesPathExist(pathToFernDirectory)) {
-        context.fail("Directory already exists: " + pathToFernDirectory);
+        context.failAndThrow("Directory already exists: " + pathToFernDirectory);
         return;
     }
 

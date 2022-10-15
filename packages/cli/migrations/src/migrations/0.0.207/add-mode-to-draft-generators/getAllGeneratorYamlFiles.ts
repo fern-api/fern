@@ -8,7 +8,7 @@ const FERN_DIRECTORY = "fern";
 export async function getAllGeneratorYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const filepaths = await glob("*/generators.yml", {
         cwd: fernDirectory,

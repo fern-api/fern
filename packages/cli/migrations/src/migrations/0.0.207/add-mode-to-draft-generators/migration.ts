@@ -14,7 +14,7 @@ export const migration: Migration = {
             try {
                 await migrateGeneratorsYml(filepath, context);
             } catch (error) {
-                context.fail(`Failed to migrate ${filepath}`, error);
+                context.failAndThrow(`Failed to migrate ${filepath}`, error);
             }
         }
     },
@@ -28,17 +28,17 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         return;
     }
     if (!YAML.isSeq(draftGenerators)) {
-        context.fail(`draft generators are not a list in ${filepath}`);
+        context.failAndThrow(`draft generators are not a list in ${filepath}`);
         return;
     }
     draftGenerators.items.forEach((draftGenerator) => {
         if (!YAML.isMap(draftGenerator)) {
-            context.fail(`draft generator is not an object in ${filepath}`);
+            context.failAndThrow(`draft generator is not an object in ${filepath}`);
             return;
         }
         const name = draftGenerator.get("name", true);
         if (typeof name?.value !== "string") {
-            context.fail(`draft generator didn't have name in ${filepath}`);
+            context.failAndThrow(`draft generator didn't have name in ${filepath}`);
             return;
         }
         const localOutput = draftGenerator.get("local-output");

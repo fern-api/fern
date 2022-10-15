@@ -71,13 +71,17 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public fail(message?: string, error?: unknown): never {
+    public failAndThrow(message?: string, error?: unknown): never {
+        this.failWithoutThrowing(message, error);
+        throw new FernCliError();
+    }
+
+    public failWithoutThrowing(message?: string, error?: unknown): void {
         const errorMessage = constructErrorMessage({ message, error });
         if (errorMessage != null) {
             this.logger.error(errorMessage);
         }
         this.result = TaskResult.Failure;
-        throw new FernCliError();
     }
 
     public getResult(): TaskResult {

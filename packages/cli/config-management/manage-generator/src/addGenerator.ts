@@ -20,7 +20,7 @@ export function addGenerator({
         generatorsConfiguration.draft != null &&
         generatorsConfiguration.draft.some((generator) => generator.name === invocation.name)
     ) {
-        context.fail(`${generatorName} is already installed.`);
+        context.failAndThrow(`${generatorName} is already installed.`);
     }
 
     return produce(generatorsConfiguration, (draft) => {

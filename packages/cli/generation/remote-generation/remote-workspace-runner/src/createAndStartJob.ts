@@ -54,10 +54,10 @@ async function createJob({
     if (!createResponse.ok) {
         return createResponse.error._visit({
             illegalApiNameError: () => {
-                return context.fail("API name is invalid: " + workspace.name);
+                return context.failAndThrow("API name is invalid: " + workspace.name);
             },
             generatorsDoNotExistError: (value) => {
-                return context.fail(
+                return context.failAndThrow(
                     "Generators do not exist: " +
                         value.nonExistentGenerators
                             .map((generator) => `${generator.id}@${generator.version}`)
@@ -65,7 +65,7 @@ async function createJob({
                 );
             },
             _other: (content) => {
-                return context.fail("Failed to create job", content);
+                return context.failAndThrow("Failed to create job", content);
             },
         });
     }
@@ -93,6 +93,6 @@ async function startJob({
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
-        context.fail("Failed to start job", errorBody);
+        context.failAndThrow("Failed to start job", errorBody);
     }
 }

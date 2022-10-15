@@ -14,7 +14,7 @@ export const migration: Migration = {
             try {
                 await migrateFile(filepath, context);
             } catch (error) {
-                context.fail(`Failed to add 'key' property to union in ${filepath}`, error);
+                context.failAndThrow(`Failed to add 'key' property to union in ${filepath}`, error);
             }
         }
     },
@@ -31,7 +31,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
                 [typeName]: typeDeclaration,
             });
         } else if (!YAML.isMap(types)) {
-            context.fail(`"types" is not a map in ${filepath}`);
+            context.failAndThrow(`"types" is not a map in ${filepath}`);
         } else {
             types.set(typeName, typeDeclaration);
         }
@@ -43,13 +43,13 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
     }
 
     if (!YAML.isMap(errors)) {
-        context.fail(`"errors" is not a map in ${filepath}`);
+        context.failAndThrow(`"errors" is not a map in ${filepath}`);
         return;
     }
 
     for (const errorDeclaration of errors.items) {
         if (!YAML.isMap(errorDeclaration.value)) {
-            context.fail(`Error "${errorDeclaration.key}" is not a map in ${filepath}`);
+            context.failAndThrow(`Error "${errorDeclaration.key}" is not a map in ${filepath}`);
             continue;
         }
 
@@ -65,7 +65,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         const httpSection = errorDeclaration.value.get("http");
         if (httpSection != null) {
             if (!YAML.isMap(httpSection)) {
-                context.fail(`http in "${errorDeclaration.key}" is not a map in ${filepath}`);
+                context.failAndThrow(`http in "${errorDeclaration.key}" is not a map in ${filepath}`);
             } else {
                 const statusCode = httpSection.get("statusCode", true);
                 errorDeclaration.value.delete("http");

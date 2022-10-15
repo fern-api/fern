@@ -9,9 +9,12 @@ export function createMockTaskContext(): TaskContext {
         takeOverTerminal: () => {
             throw new Error("Not implemented");
         },
-        fail: () => {
+        failAndThrow: () => {
             result = TaskResult.Failure;
             throw new FernCliError();
+        },
+        failWithoutThrowing: () => {
+            result = TaskResult.Failure;
         },
         getResult: () => result,
         addInteractiveTask: () => {
