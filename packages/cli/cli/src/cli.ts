@@ -30,7 +30,10 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
-    process.on("SIGINT", exit);
+    process.on("SIGINT", async () => {
+        cliContext.suppressUpgradeMessage();
+        await exit();
+    });
 
     const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
     if (cliContext.environment.packageVersion !== versionOfCliToRun) {
