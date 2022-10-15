@@ -235,8 +235,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
 
 function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["release <package-version>"],
-        "Run the release tasks from generators.yml",
+        "release <package-version>",
         false, // hide from help message
         (yargs) =>
             yargs
