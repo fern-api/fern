@@ -3,11 +3,13 @@ import shutil
 import subprocess
 from glob import glob
 from pathlib import Path
-from typing import Callable, Set
+from typing import Callable, List, Set
 
 from generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
 from snapshottest.module import SnapshotTest  # type: ignore
+
+PYTHON_VERSION = "3.7.13"
 
 
 def run_snapshot_test(
@@ -51,8 +53,6 @@ def run_snapshot_test(
 
     subprocess.run(
         ["npx", "--yes", "fern-api", "ir", "--output", path_to_ir],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
         cwd=path_to_fixture,
         check=True,
     )
@@ -72,3 +72,14 @@ def run_snapshot_test(
         name="filepaths",
         value=sorted(list(relative_filepaths)),
     )
+
+    # check compile
+    def run_command_in_output_directory(command: List[str]) -> None:
+        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=path_to_output, text=True)
+        print(proc.stdout)
+        proc.check_returncode()
+
+    run_command_in_output_directory(["poetry", "init", "--no-interaction", "--python", PYTHON_VERSION])
+    run_command_in_output_directory(["poetry", "env", "use", PYTHON_VERSION])
+    run_command_in_output_directory(["poetry", "add", "fastapi", "pydantic", "mypy"])
+    run_command_in_output_directory(["poetry", "run", "mypy", "."])
