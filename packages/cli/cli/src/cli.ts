@@ -194,7 +194,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["generate"],
-        "Run the draft tasks from generators.yml",
+        "Run code generators defined in generators.yml",
         (yargs) =>
             yargs
                 .option("keepDocker", {
@@ -237,6 +237,7 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
     cli.command(
         ["release <package-version>"],
         "Run the release tasks from generators.yml",
+        false, // hide from help message
         (yargs) =>
             yargs
                 .positional("package-version", {
@@ -324,7 +325,7 @@ function addUpgradeCommand({
     cliContext: CliContext;
     onRun: () => void;
 }) {
-    cli.command("upgrade", "Upgrades generator versions in generators.yml", noop, async () => {
+    cli.command("upgrade", "Upgrades versions in generators.yml and fern.config.json", noop, async () => {
         await upgrade({
             cliContext,
         });
