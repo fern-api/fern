@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
@@ -9,15 +9,10 @@ export const migration: Migration = {
     summary: "Adds 'discriminant: \"_type\"' to all discriminated types.",
     run: async ({ context }) => {
         const yamlFilepaths = await getAllYamlFiles(context);
-        if (yamlFilepaths === TASK_FAILURE) {
-            return;
-        }
         for (const yamlFilepath of yamlFilepaths) {
             const fileContents = await getFileContents({ filepath: yamlFilepath, context });
-            if (fileContents !== TASK_FAILURE) {
-                const newContents = addDiscriminantToFile(fileContents);
-                await writeFile(yamlFilepath, newContents);
-            }
+            const newContents = addDiscriminantToFile(fileContents);
+            await writeFile(yamlFilepath, newContents);
         }
     },
 };
@@ -28,7 +23,7 @@ async function getFileContents({
 }: {
     filepath: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<string | TASK_FAILURE> {
+}): Promise<string> {
     try {
         const buffer = await readFile(filepath);
         return buffer.toString();

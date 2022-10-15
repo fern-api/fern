@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
@@ -10,9 +10,6 @@ export const migration: Migration = {
     summary: "migrates union types to set the `key` property on non-object subtypes to the discriminant value.",
     run: async ({ context }) => {
         const yamlFiles = await getAllYamlFiles(context);
-        if (yamlFiles === TASK_FAILURE) {
-            return;
-        }
         for (const filepath of yamlFiles) {
             try {
                 await migrateFile(filepath, context);

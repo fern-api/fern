@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, join } from "@fern-api/core-utils";
-import { TASK_FAILURE } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { Migration } from "../../../types/Migration";
@@ -13,9 +12,6 @@ export const migration: Migration = {
         "migrates the generators configuration to a new format that handles publishing to public registries and GitHub repositories.",
     run: async ({ context }) => {
         const workspaces = await loadWorkspaces(context);
-        if (workspaces === TASK_FAILURE) {
-            return;
-        }
         for (const pathToWorkspace of workspaces) {
             try {
                 await migrateWorkspace(pathToWorkspace);

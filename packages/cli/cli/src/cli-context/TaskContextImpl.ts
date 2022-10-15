@@ -2,12 +2,12 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
+    FernCliError,
     Finishable,
     InteractiveTaskContext,
     Startable,
     TaskContext,
     TaskResult,
-    TASK_FAILURE,
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { constructErrorMessage } from "./constructErrorMessage";
@@ -71,13 +71,13 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public fail(message?: string, error?: unknown): TASK_FAILURE {
+    public fail(message?: string, error?: unknown): never {
         const errorMessage = constructErrorMessage({ message, error });
         if (errorMessage != null) {
             this.logger.error(errorMessage);
         }
         this.result = TaskResult.Failure;
-        return TASK_FAILURE;
+        throw new FernCliError();
     }
 
     public getResult(): TaskResult {

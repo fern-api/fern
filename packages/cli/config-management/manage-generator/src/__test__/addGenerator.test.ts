@@ -1,5 +1,5 @@
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { createMockTaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
 import { addGenerator } from "../addGenerator";
 import { JAVA_GENERATOR_INVOCATION } from "../generatorInvocations";
 
@@ -11,9 +11,6 @@ describe("addGenerator", () => {
             generatorsConfiguration,
             context: createMockTaskContext(),
         });
-        if (newConfiguration === TASK_FAILURE) {
-            throw new Error("Failed to create new configuration");
-        }
         expect(newConfiguration.draft).toMatchObject([
             {
                 name: JAVA_GENERATOR_INVOCATION.name,
@@ -31,11 +28,13 @@ describe("addGenerator", () => {
                 },
             ],
         };
-        const newConfiguration = addGenerator({
-            generatorName: "typescript",
-            generatorsConfiguration,
-            context: createMockTaskContext(),
-        });
-        expect(newConfiguration).toBe(TASK_FAILURE);
+
+        expect(() =>
+            addGenerator({
+                generatorName: "typescript",
+                generatorsConfiguration,
+                context: createMockTaskContext(),
+            })
+        ).toThrow(FernCliError);
     });
 });

@@ -1,7 +1,6 @@
 import { loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { addGenerator, SimpleGeneratorName } from "@fern-api/manage-generator";
 import { Project } from "@fern-api/project-loader";
-import { TASK_FAILURE } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -19,13 +18,11 @@ export async function addGeneratorToWorkspaces(
                     absolutePathToWorkspace: workspace.absolutePathToWorkspace,
                 });
                 const newConfiguration = addGenerator({ generatorName, generatorsConfiguration, context });
-                if (newConfiguration !== TASK_FAILURE) {
-                    await writeFile(
-                        workspace.generatorsConfiguration.absolutePathToConfiguration,
-                        yaml.dump(newConfiguration)
-                    );
-                    context.logger.info(chalk.green(`Added ${generatorName} generator`));
-                }
+                await writeFile(
+                    workspace.generatorsConfiguration.absolutePathToConfiguration,
+                    yaml.dump(newConfiguration)
+                );
+                context.logger.info(chalk.green(`Added ${generatorName} generator`));
             });
         })
     );

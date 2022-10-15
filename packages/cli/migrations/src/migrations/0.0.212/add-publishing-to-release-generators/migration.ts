@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
@@ -10,9 +10,6 @@ export const migration: Migration = {
     summary: "Adds publishing and github keys to release generators configuration",
     run: async ({ context }) => {
         const generatorYamlFiles = await getAllGeneratorYamlFiles(context);
-        if (generatorYamlFiles === TASK_FAILURE) {
-            return;
-        }
         for (const filepath of generatorYamlFiles) {
             try {
                 await migrateGeneratorsYml(filepath, context);

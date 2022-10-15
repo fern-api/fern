@@ -1,12 +1,9 @@
 import { Logger } from "@fern-api/logger";
 
-export const TASK_FAILURE = Symbol();
-export type TASK_FAILURE = typeof TASK_FAILURE;
-
 export interface TaskContext {
     logger: Logger;
     takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
-    fail(message?: string, error?: unknown): TASK_FAILURE;
+    fail(message?: string, error?: unknown): never;
     getResult: () => TaskResult;
     addInteractiveTask: (params: CreateInteractiveTaskParams) => Startable<InteractiveTaskContext>;
     runInteractiveTask: (

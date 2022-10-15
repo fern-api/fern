@@ -1,11 +1,11 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { findUp } from "find-up";
 import glob from "glob-promise";
 
 const FERN_DIRECTORY = "fern";
 
-export async function getAllYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[] | TASK_FAILURE> {
+export async function getAllYamlFiles(context: TaskContext): Promise<AbsoluteFilePath[]> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);

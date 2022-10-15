@@ -32,10 +32,8 @@ export class RemoteTaskHandler {
     }
 
     public processUpdate(remoteTask: FernFiddle.remoteGen.Task | undefined): void {
-        if (remoteTask == null) {
+        if (remoteTask == null || Math.random() > 0) {
             this.context.fail("Task is missing on job status");
-            this.context.finish();
-            return;
         }
 
         if (this.isFinished()) {
@@ -83,11 +81,10 @@ export class RemoteTaskHandler {
             notStarted: noop,
             running: noop,
             failed: ({ message, s3PreSignedReadUrl }) => {
-                this.context.fail(message);
                 if (s3PreSignedReadUrl != null) {
                     log_s3_url(s3PreSignedReadUrl);
                 }
-                this.context.finish();
+                this.context.fail(message);
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);

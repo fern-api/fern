@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -25,7 +25,7 @@ export async function loadProject({
     commandLineWorkspace,
     defaultToAllWorkspaces,
     context,
-}: loadProject.Args): Promise<Project | TASK_FAILURE> {
+}: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);
@@ -65,10 +65,6 @@ export async function loadProject({
         context,
     });
 
-    if (workspaces === TASK_FAILURE) {
-        return workspaces;
-    }
-
     return {
         config: await loadProjectConfig({ directory: fernDirectory }),
         workspaces,
@@ -83,10 +79,8 @@ async function loadWorkspaces({
     fernDirectory: AbsoluteFilePath;
     workspaceDirectoryNames: string[];
     context: TaskContext;
-}): Promise<Workspace[] | TASK_FAILURE> {
+}): Promise<Workspace[]> {
     const allWorkspaces: Workspace[] = [];
-
-    let encounteredError = false;
 
     await Promise.all(
         workspaceDirectoryNames.map(async (workspaceDirectoryName) => {
@@ -98,15 +92,9 @@ async function loadWorkspaces({
             } else {
                 handleFailedWorkspaceParserResult(workspace, context.logger);
                 context.fail();
-                encounteredError = true;
             }
         })
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (encounteredError) {
-        return TASK_FAILURE;
-    }
 
     return allWorkspaces;
 }

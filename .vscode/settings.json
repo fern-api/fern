@@ -1,8 +1,7 @@
 {
   "search.exclude": {
     "**/.pnp.*": true,
-    "**/.yarn": true,
-    "packages/cli/migrations/src/**/*.ts": true
+    "**/.yarn": true
   },
   "eslint.nodePath": ".yarn/sdks",
   "prettier.prettierPath": ".yarn/sdks/prettier/index.js",

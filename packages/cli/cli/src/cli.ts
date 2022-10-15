@@ -3,7 +3,7 @@ import { initialize } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
-import { TASK_FAILURE } from "@fern-api/task-context";
+import { FernCliError } from "@fern-api/task-context";
 import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -22,9 +22,9 @@ interface GlobalCliOptions {
     "log-level": LogLevel;
 }
 
-void tryRunCli();
+void runCli();
 
-async function tryRunCli() {
+async function runCli() {
     const cliContext = new CliContext(process.stdout);
 
     const exit = async () => {
@@ -43,25 +43,33 @@ async function tryRunCli() {
         }
     } else {
         try {
-            await runCli(cliContext);
+            await tryRunCli(cliContext);
         } catch (error) {
-            // for yargs validation errors, don't show a log (yargs shows the help message by default)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            if ((error as any)?.name === "YError") {
-                cliContext.fail();
-            } else {
-                cliContext.fail("Failed to run", error);
-            }
+            cliContext.fail("Failed to run", error);
         }
     }
 
     await exit();
 }
 
-async function runCli(cliContext: CliContext) {
+async function tryRunCli(cliContext: CliContext) {
     const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
         .scriptName(cliContext.environment.cliName)
         .version(false)
+        .fail((message, error: unknown, argv) => {
+            // if error is null, it's a yargs validation error
+            if (error == null) {
+                argv.showHelp();
+                cliContext.logger.error(message);
+            } else {
+                if (error instanceof FernCliError) {
+                    // thrower is responsible for logging
+                    cliContext.fail();
+                } else {
+                    throw error;
+                }
+            }
+        })
         .strict()
         .exitProcess(false)
         .command(
@@ -78,7 +86,6 @@ async function runCli(cliContext: CliContext) {
                 if (argv.version != null) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
-                    cliContext.fail();
                     cli.showHelp();
                 }
             }
@@ -172,7 +179,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await addGeneratorToWorkspaces(
-                await loadProjectOrExit(cliContext, {
+                await loadProjectAndRegisterWorkspaces(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
@@ -213,7 +220,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
         async (argv) => {
             await generateWorkspaces({
-                project: await loadProjectOrExit(cliContext, {
+                project: await loadProjectAndRegisterWorkspaces(cliContext, {
                     commandLineWorkspace: argv.all ? undefined : argv.api,
                     defaultToAllWorkspaces: argv.all,
                 }),
@@ -247,7 +254,7 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 }),
         async (argv) => {
             await releaseWorkspaces({
-                project: await loadProjectOrExit(cliContext, {
+                project: await loadProjectAndRegisterWorkspaces(cliContext, {
                     commandLineWorkspace: argv.all ? undefined : argv.api,
                     defaultToAllWorkspaces: argv.all,
                 }),
@@ -275,7 +282,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
-                project: await loadProjectOrExit(cliContext, {
+                project: await loadProjectAndRegisterWorkspaces(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
@@ -297,7 +304,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }),
         async (argv) => {
             await validateWorkspaces({
-                project: await loadProjectOrExit(cliContext, {
+                project: await loadProjectAndRegisterWorkspaces(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: true,
                 }),
@@ -324,7 +331,7 @@ function addUpgradeCommand({
     });
 }
 
-async function loadProjectOrExit(
+async function loadProjectAndRegisterWorkspaces(
     cliContext: CliContext,
     args: Omit<loadProject.Args, "context" | "cliName">
 ): Promise<Project> {
@@ -335,10 +342,6 @@ async function loadProjectOrExit(
         context,
     });
     context.finish();
-
-    if (project === TASK_FAILURE) {
-        return cliContext.exit();
-    }
 
     cliContext.registerWorkspaces(project.workspaces);
     return project;

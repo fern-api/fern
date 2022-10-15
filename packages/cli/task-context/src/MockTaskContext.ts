@@ -1,5 +1,6 @@
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { TaskContext, TaskResult, TASK_FAILURE } from "./TaskContext";
+import { FernCliError } from "./FernCliError";
+import { TaskContext, TaskResult } from "./TaskContext";
 
 export function createMockTaskContext(): TaskContext {
     let result = TaskResult.Success;
@@ -10,7 +11,7 @@ export function createMockTaskContext(): TaskContext {
         },
         fail: () => {
             result = TaskResult.Failure;
-            return TASK_FAILURE;
+            throw new FernCliError();
         },
         getResult: () => result,
         addInteractiveTask: () => {

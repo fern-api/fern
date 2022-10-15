@@ -1,5 +1,5 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -36,9 +36,6 @@ export async function runRemoteGenerationForWorkspace({
         version,
         context,
     });
-    if (job === TASK_FAILURE) {
-        return;
-    }
 
     await pollJobAndReportStatus({
         job,
