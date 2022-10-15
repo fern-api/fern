@@ -4,12 +4,11 @@ exports[`help no arguments 1`] = `
 "fern
 
 Commands:
-  fern init                       Initialize a Fern API
-  fern add <generator>            Add a code generator to generators.yml
-  fern generate                   Run the draft tasks from generators.yml
-  fern release <package-version>  Run the release tasks from generators.yml
-  fern check                      Validates your Fern Definition
-  fern upgrade                    Upgrades generator versions in generators.yml
+  fern init             Initialize a Fern API
+  fern add <generator>  Add a code generator to generators.yml
+  fern generate         Run code generators defined in generators.yml
+  fern check            Validates your Fern Definition
+  fern upgrade          Upgrades versions in generators.yml and fern.config.json
 
 Options:
       --help       Show help                                           [boolean]
