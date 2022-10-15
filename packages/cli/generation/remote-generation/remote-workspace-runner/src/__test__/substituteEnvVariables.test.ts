@@ -1,4 +1,4 @@
-import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
+import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
 import { substituteEnvVariables } from "../substituteEnvVariables";
 
 describe("substituteEnvVariables", () => {
@@ -14,11 +14,9 @@ describe("substituteEnvVariables", () => {
             },
             plugh: "${FOO_VAR}-${BAR_VAR}",
         };
-        const context = createMockTaskContext();
-        const substituted = substituteEnvVariables(content, context);
+        const substituted = substituteEnvVariables(content, createMockTaskContext());
 
         expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "foo" } }, plugh: "foo-bar" });
-        expect(context.getResult()).toBe(TaskResult.Success);
     });
 
     it("fails with undefined env var", () => {
@@ -32,8 +30,6 @@ describe("substituteEnvVariables", () => {
             },
             plugh: "${FOO_VAR}",
         };
-        const context = createMockTaskContext();
-        substituteEnvVariables(content, context);
-        expect(context.getResult()).toBe(TaskResult.Failure);
+        expect(() => substituteEnvVariables(content, createMockTaskContext())).toThrow(FernCliError);
     });
 });

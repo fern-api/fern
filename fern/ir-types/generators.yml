@@ -13,7 +13,7 @@ draft:
 release:
   - name: fernapi/java-model
     version: 0.0.108
-    outputs:
+    publishing:
       maven:
         url: https://s01.oss.sonatype.org/content/repositories/releases/
         coordinate: io.github.fern-api:ir-model

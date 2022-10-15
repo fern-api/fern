@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
@@ -10,14 +10,11 @@ export const migration: Migration = {
     summary: "Adds 'mode' to draft generators in generators.yml, which can either be 'download-files' or 'publish'.",
     run: async ({ context }) => {
         const generatorYamlFiles = await getAllGeneratorYamlFiles(context);
-        if (generatorYamlFiles === TASK_FAILURE) {
-            return;
-        }
         for (const filepath of generatorYamlFiles) {
             try {
                 await migrateGeneratorsYml(filepath, context);
             } catch (error) {
-                context.fail(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
     },
@@ -31,17 +28,17 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         return;
     }
     if (!YAML.isSeq(draftGenerators)) {
-        context.fail(`draft generators are not a list in ${filepath}`);
+        context.failWithoutThrowing(`draft generators are not a list in ${filepath}`);
         return;
     }
     draftGenerators.items.forEach((draftGenerator) => {
         if (!YAML.isMap(draftGenerator)) {
-            context.fail(`draft generator is not an object in ${filepath}`);
+            context.failWithoutThrowing(`draft generator is not an object in ${filepath}`);
             return;
         }
         const name = draftGenerator.get("name", true);
         if (typeof name?.value !== "string") {
-            context.fail(`draft generator didn't have name in ${filepath}`);
+            context.failWithoutThrowing(`draft generator didn't have name in ${filepath}`);
             return;
         }
         const localOutput = draftGenerator.get("local-output");

@@ -1,4 +1,4 @@
-import { TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -22,17 +22,9 @@ export async function createAndStartJob({
     generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
     version: string | undefined;
     context: TaskContext;
-}): Promise<FernFiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
+}): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({ workspace, organization, generatorConfigs, version, context });
-    if (job === TASK_FAILURE) {
-        return job;
-    }
-
-    const startJobResult = await startJob({ intermediateRepresentation, job, context });
-    if (startJobResult === TASK_FAILURE) {
-        return startJobResult;
-    }
-
+    await startJob({ intermediateRepresentation, job, context });
     return job;
 }
 
@@ -48,14 +40,10 @@ async function createJob({
     generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
     version: string | undefined;
     context: TaskContext;
-}): Promise<FernFiddle.remoteGen.CreateJobResponse | TASK_FAILURE> {
+}): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfigsWithEnvVarSubstitutions = generatorConfigs.map((generatorConfig) =>
         substituteEnvVariables(generatorConfig, context)
     );
-    if (context.getResult() === TaskResult.Failure) {
-        return TASK_FAILURE;
-    }
-
     const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
         apiName: workspace.name,
         version,
@@ -66,10 +54,10 @@ async function createJob({
     if (!createResponse.ok) {
         return createResponse.error._visit({
             illegalApiNameError: () => {
-                return context.fail("API name is invalid: " + workspace.name);
+                return context.failAndThrow("API name is invalid: " + workspace.name);
             },
             generatorsDoNotExistError: (value) => {
-                return context.fail(
+                return context.failAndThrow(
                     "Generators do not exist: " +
                         value.nonExistentGenerators
                             .map((generator) => `${generator.id}@${generator.version}`)
@@ -77,7 +65,7 @@ async function createJob({
                 );
             },
             _other: (content) => {
-                return context.fail("Failed to create job", content);
+                return context.failAndThrow("Failed to create job", content);
             },
         });
     }
@@ -93,7 +81,7 @@ async function startJob({
     intermediateRepresentation: IntermediateRepresentation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
-}): Promise<TASK_FAILURE | void> {
+}): Promise<void> {
     const formData = new FormData();
     formData.append("file", JSON.stringify(intermediateRepresentation));
     const url = urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/jobs/${job.jobId}/start`);
@@ -105,6 +93,6 @@ async function startJob({
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
-        return context.fail("Failed to start job", errorBody);
+        context.failAndThrow("Failed to start job", errorBody);
     }
 }

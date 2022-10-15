@@ -39,7 +39,7 @@ export async function runMigrations({ fromVersion, toVersion, context }: runMigr
     await context.takeOverTerminal(async () => {
         const wantsToContinue = await askForConfirmation(migrationsToRun);
         if (!wantsToContinue) {
-            context.fail("Canceled.");
+            context.failAndThrow("Canceled.");
         }
     });
     if (context.getResult() === TaskResult.Failure) {

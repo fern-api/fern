@@ -1,5 +1,4 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
@@ -9,32 +8,21 @@ export const migration: Migration = {
     summary: "Adds 'discriminant: \"_type\"' to all discriminated types.",
     run: async ({ context }) => {
         const yamlFilepaths = await getAllYamlFiles(context);
-        if (yamlFilepaths === TASK_FAILURE) {
-            return;
-        }
         for (const yamlFilepath of yamlFilepaths) {
-            const fileContents = await getFileContents({ filepath: yamlFilepath, context });
-            if (fileContents !== TASK_FAILURE) {
+            try {
+                const fileContents = await getFileContents(yamlFilepath);
                 const newContents = addDiscriminantToFile(fileContents);
                 await writeFile(yamlFilepath, newContents);
+            } catch (error) {
+                context.failAndThrow("Failed to migrate " + yamlFilepath, error);
             }
         }
     },
 };
 
-async function getFileContents({
-    filepath,
-    context,
-}: {
-    filepath: AbsoluteFilePath;
-    context: TaskContext;
-}): Promise<string | TASK_FAILURE> {
-    try {
-        const buffer = await readFile(filepath);
-        return buffer.toString();
-    } catch (error) {
-        return context.fail("Failed to open file: " + filepath, error);
-    }
+async function getFileContents(filepath: AbsoluteFilePath): Promise<string> {
+    const buffer = await readFile(filepath);
+    return buffer.toString();
 }
 
 const UNION_REGEX = /^(\s{2,})union:\s*$/gm;

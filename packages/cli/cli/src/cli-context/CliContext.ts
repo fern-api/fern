@@ -1,6 +1,6 @@
 import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { Finishable, Startable, TaskContext, TaskResult, TASK_FAILURE } from "@fern-api/task-context";
+import { Finishable, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
@@ -78,13 +78,12 @@ export class CliContext {
         );
     }
 
-    public fail(message?: string, error?: unknown): TASK_FAILURE {
+    public fail(message?: string, error?: unknown): void {
         this.didSucceed = false;
         const errorMessage = constructErrorMessage({ message, error });
         if (errorMessage != null) {
             this.logger.error(errorMessage);
         }
-        return TASK_FAILURE;
     }
 
     public async exit(): Promise<never> {

@@ -1,7 +1,6 @@
 import { runMigrations } from "@fern-api/migrations";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject } from "@fern-api/project-loader";
-import { TASK_FAILURE } from "@fern-api/task-context";
 import chalk from "chalk";
 import execa from "execa";
 import { writeFile } from "fs/promises";
@@ -62,10 +61,6 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
             context: contextForLoadingProject,
         });
         contextForLoadingProject.finish();
-        if (project === TASK_FAILURE) {
-            return;
-        }
-
         await upgradeGeneratorsInWorkspaces(project, cliContext);
     } else {
         const fernDirectory = await getFernDirectory();

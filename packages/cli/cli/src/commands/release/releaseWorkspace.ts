@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { MavenGeneratorPublishing, NpmGeneratorPublishing } from "@fern-api/generators-configuration";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
@@ -18,10 +18,6 @@ export async function releaseWorkspace({
     version: string;
 }): Promise<void> {
     const intermediateRepresentation = await generateIrForWorkspace({ workspace, context });
-    if (intermediateRepresentation === TASK_FAILURE) {
-        return;
-    }
-
     await runRemoteGenerationForWorkspace({
         workspace,
         intermediateRepresentation,

@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
@@ -10,14 +10,11 @@ export const migration: Migration = {
     summary: "Adds publishing and github keys to release generators configuration",
     run: async ({ context }) => {
         const generatorYamlFiles = await getAllGeneratorYamlFiles(context);
-        if (generatorYamlFiles === TASK_FAILURE) {
-            return;
-        }
         for (const filepath of generatorYamlFiles) {
             try {
                 await migrateGeneratorsYml(filepath, context);
             } catch (error) {
-                context.fail(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
     },
@@ -31,17 +28,17 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         return;
     }
     if (!YAML.isSeq(releaseGenerators)) {
-        context.fail(`release generators are not a list in ${filepath}`);
+        context.failWithoutThrowing(`release generators are not a list in ${filepath}`);
         return;
     }
     releaseGenerators.items.forEach((releaseGenerator) => {
         if (!YAML.isMap(releaseGenerator)) {
-            context.fail(`release generator is not an object in ${filepath}`);
+            context.failWithoutThrowing(`release generator is not an object in ${filepath}`);
             return;
         }
         const outputs = releaseGenerator.get("outputs");
         if (!YAML.isMap(outputs)) {
-            context.fail(`outputs is not an object in ${filepath}`);
+            context.failWithoutThrowing(`outputs is not an object in ${filepath}`);
             return;
         }
 

@@ -6,13 +6,10 @@ import validatePackageName from "validate-npm-package-name";
 
 export async function validateWorkspaceAndLogIssues(workspace: Workspace, context: TaskContext): Promise<void> {
     if (!validatePackageName(workspace.name).validForNewPackages) {
-        context.fail("Workspace name is not valid.");
+        context.failAndThrow("Workspace name is not valid.");
     }
 
     const violations = await validateWorkspace(workspace, context.logger);
-    if (violations.length > 0) {
-        context.fail();
-    }
 
     for (const violation of violations) {
         context.logger.log(
@@ -22,6 +19,10 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
                 title: violation.message,
             })
         );
+    }
+
+    if (violations.length > 0) {
+        context.failAndThrow();
     }
 }
 

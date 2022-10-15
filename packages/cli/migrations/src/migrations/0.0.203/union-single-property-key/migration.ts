@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
@@ -10,14 +10,11 @@ export const migration: Migration = {
     summary: "migrates union types to set the `key` property on non-object subtypes to the discriminant value.",
     run: async ({ context }) => {
         const yamlFiles = await getAllYamlFiles(context);
-        if (yamlFiles === TASK_FAILURE) {
-            return;
-        }
         for (const filepath of yamlFiles) {
             try {
                 await migrateFile(filepath, context);
             } catch (error) {
-                context.fail(`Failed to add 'key' property to union in ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to add 'key' property to union in ${filepath}`, error);
             }
         }
     },
@@ -31,7 +28,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         return;
     }
     if (!YAML.isMap(types)) {
-        context.fail(`"types" is not a map in ${filepath}`);
+        context.failWithoutThrowing(`"types" is not a map in ${filepath}`);
         return;
     }
 
@@ -42,7 +39,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
                 continue;
             }
             if (!YAML.isMap(union)) {
-                context.fail(`"union" is not a map in ${filepath}`);
+                context.failWithoutThrowing(`"union" is not a map in ${filepath}`);
                 continue;
             }
             for (const singleUnionType of union.items) {

@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -25,10 +25,10 @@ export async function loadProject({
     commandLineWorkspace,
     defaultToAllWorkspaces,
     context,
-}: loadProject.Args): Promise<Project | TASK_FAILURE> {
+}: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return context.fail(`Directory "${FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const fernDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
     const allWorkspaceDirectoryNames = fernDirectoryContents.reduce<string[]>((all, item) => {
@@ -40,10 +40,10 @@ export async function loadProject({
 
     if (commandLineWorkspace != null) {
         if (!allWorkspaceDirectoryNames.includes(commandLineWorkspace)) {
-            return context.fail("API does not exist: " + commandLineWorkspace);
+            return context.failAndThrow("API does not exist: " + commandLineWorkspace);
         }
     } else if (allWorkspaceDirectoryNames.length === 0) {
-        return context.fail("No APIs found.");
+        return context.failAndThrow("No APIs found.");
     } else if (allWorkspaceDirectoryNames.length > 1 && !defaultToAllWorkspaces) {
         let message = "There are multiple workspaces. You must specify one with --api:\n";
         const longestWorkspaceName = Math.max(
@@ -55,7 +55,7 @@ export async function loadProject({
                 return ` › ${chalk.bold(workspaceName.padEnd(longestWorkspaceName))}  ${chalk.dim(suggestedCommand)}`;
             })
             .join("\n");
-        return context.fail(message);
+        return context.failAndThrow(message);
     }
 
     const workspaces = await loadWorkspaces({
@@ -64,10 +64,6 @@ export async function loadProject({
             commandLineWorkspace != null ? [commandLineWorkspace] : [...allWorkspaceDirectoryNames],
         context,
     });
-
-    if (workspaces === TASK_FAILURE) {
-        return workspaces;
-    }
 
     return {
         config: await loadProjectConfig({ directory: fernDirectory }),
@@ -83,10 +79,8 @@ async function loadWorkspaces({
     fernDirectory: AbsoluteFilePath;
     workspaceDirectoryNames: string[];
     context: TaskContext;
-}): Promise<Workspace[] | TASK_FAILURE> {
+}): Promise<Workspace[]> {
     const allWorkspaces: Workspace[] = [];
-
-    let encounteredError = false;
 
     await Promise.all(
         workspaceDirectoryNames.map(async (workspaceDirectoryName) => {
@@ -97,16 +91,10 @@ async function loadWorkspaces({
                 allWorkspaces.push(workspace.workspace);
             } else {
                 handleFailedWorkspaceParserResult(workspace, context.logger);
-                context.fail();
-                encounteredError = true;
+                context.failAndThrow();
             }
         })
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (encounteredError) {
-        return TASK_FAILURE;
-    }
 
     return allWorkspaces;
 }

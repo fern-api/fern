@@ -1,6 +1,6 @@
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
-import { TaskContext, TASK_FAILURE } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import { generateIrForWorkspace } from "../generate-ir/generateIrForWorkspace";
@@ -19,9 +19,6 @@ export async function generateWorkspace({
     context: TaskContext;
 }): Promise<void> {
     const intermediateRepresentation = await generateIrForWorkspace({ workspace, context });
-    if (intermediateRepresentation === TASK_FAILURE) {
-        return;
-    }
 
     if (runLocal) {
         await runLocalGenerationForWorkspace({
