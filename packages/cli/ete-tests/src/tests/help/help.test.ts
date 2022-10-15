@@ -8,6 +8,6 @@ describe("help", () => {
             reject: false,
         });
         expect(stderr).toMatchSnapshot();
-        expect(failed).toBe(true);
+        expect(failed).toBe(false);
     }, 60_000);
 });
