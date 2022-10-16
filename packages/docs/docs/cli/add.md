@@ -1,6 +1,5 @@
 ---
 title: fern add
-position: 2
 ---
 
 Add a code generator to `generators.yml`.

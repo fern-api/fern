@@ -38,7 +38,7 @@ Fern makes it easy to code generate SDKs, server interfaces, a Postman collectio
 
 ### Generate an OpenAPI spec
 
-`fernapi/fern-openapi`: generates an [OpenAPI spec](https://swagger.io/resources/open-api/) (also known as an OpenAPI spec).
+`fernapi/fern-openapi`: generates an [OpenAPI spec](https://swagger.io/resources/open-api/).
 
 ## Contributing
 
