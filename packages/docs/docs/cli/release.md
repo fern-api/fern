@@ -9,16 +9,11 @@ Run the release tasks from **generators.yml**.
 <!-- markdownlint-disable MD040 -->
 
 ```
-fern generate
+fern release <version>
 ```
 
 ## Example
 
-If we have previously run `fern add typescript` and now run `fern generate`, the output will look similar to:
-
 ```
-┌─
-│ ✓  fernapi/fern-typescript-sdk
-│    ◦ @fern-examples-fern/imdb-client@0.0.1
-└─
+fern release 0.0.3
 ```
