@@ -2,7 +2,7 @@
 title: fern check
 ---
 
-Validates your **Fern Definition**.
+Check whether your **Fern Definition** is valid and ready to be used by code generators. This runs a validator/linter locally.
 
 ## Usage
 

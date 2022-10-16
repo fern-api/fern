@@ -62,15 +62,7 @@ module.exports = {
         {
             type: "category",
             label: "CLI",
-            items: [
-                `cli/add`,
-                `cli/check`,
-                `cli/generate`,
-                `cli/release`,
-                `cli/init`,
-                `cli/upgrade`,
-                `cli/fern.config`,
-            ],
+            items: [`cli/add`, `cli/check`, `cli/generate`, `cli/init`, `cli/upgrade`, `cli/fern.config`],
         },
         {
             type: "category",

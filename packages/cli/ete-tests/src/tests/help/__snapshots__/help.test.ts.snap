@@ -9,8 +9,7 @@ Commands:
   fern generate                   Run the draft tasks from generators.yml
   fern release <package-version>  Run the release tasks from generators.yml
   fern check                      Validates your Fern Definition
-  fern upgrade                    Upgrades versions in generators.yml and fern.c
-                                  onfig.json
+  fern upgrade                    Upgrades generator versions in generators.yml
 
 Options:
       --help       Show help                                           [boolean]

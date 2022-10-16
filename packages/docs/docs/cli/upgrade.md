@@ -2,7 +2,7 @@
 title: fern upgrade
 ---
 
-Upgrade versions in `generators.yml` and `fern.config.json`. This ensures that you have the latest Fern CLI, including recently added `fern check` rules, and the latest code generation improvements.
+Upgrade version in `fern.config.json` and code generator versions in `generators.yml`. This ensures that you have the latest Fern CLI, including recently added `fern check` rules, and the latest code generation improvements.
 
 ## Usage
 

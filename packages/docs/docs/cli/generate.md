@@ -1,8 +1,9 @@
 ---
 title: fern generate
+position: 4
 ---
 
-Run the draft tasks from **generators.yml**.
+Invoke your code generators defined in `generators.yml` for your **Fern Definition**.
 
 ## Usage
 

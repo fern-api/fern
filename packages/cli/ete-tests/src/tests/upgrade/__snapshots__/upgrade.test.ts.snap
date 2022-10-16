@@ -13,10 +13,10 @@ exports[`fern upgrade upgrades generators 1`] = `
     mode: download-files
     output-path: ./generated-openapi
   - name: fernapi/fern-java-sdk
-    version: 0.0.116
+    version: 0.0.115
     mode: publish
   - name: fernapi/fern-typescript-sdk
-    version: 0.0.209
+    version: 0.0.199
     mode: publish
 "
 `;

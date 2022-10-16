@@ -1,8 +1,9 @@
 ---
 title: fern init
+position: 1
 ---
 
-Initialize a **Fern API**.
+Create a new **Fern Definition**.
 
 ## Usage
 

@@ -324,7 +324,7 @@ function addUpgradeCommand({
     cliContext: CliContext;
     onRun: () => void;
 }) {
-    cli.command("upgrade", "Upgrades versions in generators.yml and fern.config.json", noop, async () => {
+    cli.command("upgrade", "Upgrades generator versions in generators.yml", noop, async () => {
         await upgrade({
             cliContext,
         });
