@@ -18,6 +18,9 @@ types:
     properties:
       name: string
       problems: list<commons.ProblemId>
+      aliasOfUnknown: AliasOfUnknown
+
+  AliasOfUnknown: unknown
 
 services:
   http:

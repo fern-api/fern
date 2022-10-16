@@ -25,21 +25,23 @@ export abstract class AbstractTypeReferenceConverter<T> {
         return TypeReference._visit<T>(typeReference, {
             named: this.named.bind(this),
             primitive: this.primitive.bind(this),
-            container: (container) => {
-                return ContainerType._visit<T>(container, {
-                    map: this.map.bind(this),
-                    list: this.list.bind(this),
-                    set: this.set.bind(this),
-                    optional: this.optional.bind(this),
-                    _unknown: () => {
-                        throw new Error("Unexpected container type: " + container._type);
-                    },
-                });
-            },
+            container: this.container.bind(this),
             unknown: this.unknown.bind(this),
             void: this.void.bind(this),
             _unknown: () => {
                 throw new Error("Unexpected type reference: " + typeReference._type);
+            },
+        });
+    }
+
+    protected container(container: ContainerType): T {
+        return ContainerType._visit<T>(container, {
+            map: this.map.bind(this),
+            list: this.list.bind(this),
+            set: this.set.bind(this),
+            optional: this.optional.bind(this),
+            _unknown: () => {
+                throw new Error("Unexpected container type: " + container._type);
             },
         });
     }

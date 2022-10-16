@@ -1,4 +1,4 @@
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
@@ -18,10 +18,31 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override named(typeName: DeclaredTypeName): TypeReferenceNode {
-        return {
-            typeNode: ts.factory.createTypeReferenceNode(this.getReferenceToNamedType(typeName)),
-            isOptional: false,
-        };
+        const resolvedType = this.resolveType(typeName);
+        const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
+            container: (container) => this.container(container).isOptional,
+            primitive: (primitive) => this.primitive(primitive).isOptional,
+            named: () => false,
+            void: () => this.void().isOptional,
+            unknown: () => this.unknown().isOptional,
+            _unknown: () => {
+                throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType._type);
+            },
+        });
+
+        const typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(this.getReferenceToNamedType(typeName));
+        if (!isOptional) {
+            return {
+                isOptional: false,
+                typeNode: typeNodeWithoutUndefined,
+            };
+        } else {
+            return {
+                isOptional: true,
+                typeNodeWithoutUndefined,
+                typeNode: this.addUndefinedToTypeNode(typeNodeWithoutUndefined),
+            };
+        }
     }
 
     protected override string(): TypeReferenceNode {
@@ -48,13 +69,17 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected override optional(itemType: TypeReference): TypeReferenceNode {
         const referencedToValueType = this.convert(itemType).typeNode;
         return {
-            typeNode: ts.factory.createUnionTypeNode([
-                referencedToValueType,
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-            ]),
+            typeNode: this.addUndefinedToTypeNode(referencedToValueType),
             typeNodeWithoutUndefined: referencedToValueType,
             isOptional: true,
         };
+    }
+
+    private addUndefinedToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
+        return ts.factory.createUnionTypeNode([
+            typeNode,
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+        ]);
     }
 
     protected override unknown(): TypeReferenceNode {
