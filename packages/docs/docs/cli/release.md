@@ -1,8 +1,8 @@
 ---
-title: fern generate
+title: fern release
 ---
 
-Run the draft tasks from **generators.yml**.
+Run the release tasks from **generators.yml**.
 
 ## Usage
 
