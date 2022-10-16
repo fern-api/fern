@@ -31,48 +31,56 @@
 // module.exports = sidebars;
 
 module.exports = {
-  mySidebar: [
-    `intro`,
-    `getting-started`,
-    {
-      type: "category",
-      label: "What you get",
-      items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`, `features/openapi`],
-    },
-    {
-      type: "category",
-      label: "Defining an API",
-      link: {
-        type: "doc",
-        id: "definition",
-      },
-      items: [
-        `definition/services`,
-        `definition/types`,
-        `definition/errors`,
-        `definition/docs`,
-        `definition/imports`,
-      ],
-    },
-    {
-      type: "category",
-      label: "Generators",
-      items: [`generators/supported`, `generators/generators`],
-    },
-    {
-      type: "category",
-      label: "CLI",
-      items: [`cli/add`, `cli/check`, `cli/generate`, `cli/release`, `cli/init`, `cli/upgrade`, `cli/fern.config`],
-    },
-    {
-      type: "category",
-      label: "Tutorials",
-      items: [`tutorials/express`, `tutorials/fastapi`, `tutorials/spring`],
-    },
-    {
-      type: "link",
-      label: "Join Discord",
-      href: "https://discord.gg/JkkXumPzcG",
-    },
-  ],
+    mySidebar: [
+        `intro`,
+        `getting-started`,
+        {
+            type: "category",
+            label: "What you get",
+            items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`, `features/openapi`],
+        },
+        {
+            type: "category",
+            label: "Defining an API",
+            link: {
+                type: "doc",
+                id: "definition",
+            },
+            items: [
+                `definition/services`,
+                `definition/types`,
+                `definition/errors`,
+                `definition/docs`,
+                `definition/imports`,
+            ],
+        },
+        {
+            type: "category",
+            label: "Generators",
+            items: [`generators/supported`, `generators/generators`],
+        },
+        {
+            type: "category",
+            label: "CLI",
+            items: [
+                `cli/add`,
+                `cli/check`,
+                `cli/generate`,
+                `cli/release`,
+                `cli/init`,
+                `cli/upgrade`,
+                `cli/fern.config`,
+            ],
+        },
+        {
+            type: "category",
+            label: "Tutorials",
+            items: [`tutorials/express`, `tutorials/fastapi`, `tutorials/spring`],
+        },
+        {
+            type: "link",
+            label: "Join Discord",
+            href: "https://discord.gg/JkkXumPzcG",
+        },
+    ],
 };
