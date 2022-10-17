@@ -5,8 +5,8 @@ import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment";
-import { constructErrorMessage } from "./constructErrorMessage";
 import { Log } from "./Log";
+import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
@@ -80,10 +80,7 @@ export class CliContext {
 
     public fail(message?: string, error?: unknown): void {
         this.didSucceed = false;
-        const errorMessage = constructErrorMessage({ message, error });
-        if (errorMessage != null) {
-            this.logger.error(errorMessage);
-        }
+        logErrorMessage({ message, error, logger: this.logger });
     }
 
     public async exit(): Promise<never> {
@@ -122,8 +119,8 @@ export class CliContext {
         }
     }
 
-    public async runTask(run: (context: TaskContext) => void | Promise<void>): Promise<void> {
-        await this.runTaskWithInit(this.constructTaskInit(), run);
+    public runTask<T>(run: (context: TaskContext) => T | Promise<T>): Promise<T> {
+        return this.runTaskWithInit(this.constructTaskInit(), run);
     }
 
     public addTask(): Startable<TaskContext & Finishable> {
@@ -143,13 +140,14 @@ export class CliContext {
         return context;
     }
 
-    private async runTaskWithInit(
+    private async runTaskWithInit<T>(
         init: TaskContextImpl.Init,
-        run: (context: TaskContext) => void | Promise<void>
-    ): Promise<void> {
+        run: (context: TaskContext) => T | Promise<T>
+    ): Promise<T> {
         const context = this.addTaskWithInit(init).start();
-        await run(context);
+        const result = await run(context);
         context.finish();
+        return result;
     }
 
     get logger(): Logger {

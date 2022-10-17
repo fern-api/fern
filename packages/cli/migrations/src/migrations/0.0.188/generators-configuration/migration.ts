@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { Migration } from "../../../types/Migration";
@@ -14,7 +15,7 @@ export const migration: Migration = {
         const workspaces = await loadWorkspaces(context);
         for (const pathToWorkspace of workspaces) {
             try {
-                await migrateWorkspace(pathToWorkspace);
+                await migrateWorkspace(pathToWorkspace, context);
             } catch (error) {
                 context.failWithoutThrowing("Failed to migrate generators configuration", error);
             }
@@ -22,10 +23,11 @@ export const migration: Migration = {
     },
 };
 
-async function migrateWorkspace(pathToWorkspace: AbsoluteFilePath) {
+async function migrateWorkspace(pathToWorkspace: AbsoluteFilePath, context: TaskContext) {
     const absolutePathToGeneratorsConfiguration = join(pathToWorkspace, "generators.yml");
     const oldRawConfiguration = await oldConfigurationUtils.loadRawGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration,
+        context,
     });
     const oldConfiguration = oldConfigurationUtils.convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration,

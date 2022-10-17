@@ -66,7 +66,7 @@ export async function loadProject({
     });
 
     return {
-        config: await loadProjectConfig({ directory: fernDirectory }),
+        config: await loadProjectConfig({ directory: fernDirectory, context }),
         workspaces,
     };
 }
@@ -86,6 +86,7 @@ async function loadWorkspaces({
         workspaceDirectoryNames.map(async (workspaceDirectoryName) => {
             const workspace = await loadWorkspace({
                 absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
+                context,
             });
             if (workspace.didSucceed) {
                 allWorkspaces.push(workspace.workspace);

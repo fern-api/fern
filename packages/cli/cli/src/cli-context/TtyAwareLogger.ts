@@ -140,7 +140,7 @@ function countLines(str: string): number {
 }
 
 function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }): string {
-    let content = log.parts.map(stringify).join(" ").trim();
+    let content = log.parts.map(stringify).join(" ");
     if (log.prefix != null) {
         content = addPrefixToString({
             prefix: log.prefix,

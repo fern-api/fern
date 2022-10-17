@@ -1,6 +1,6 @@
 export class FernCliError extends Error {
-    constructor(message?: string) {
-        super(message);
+    constructor() {
+        super();
         Object.setPrototypeOf(this, FernCliError.prototype);
     }
 }

@@ -25,6 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "zod": "^3.14.3"
   },
   "devDependencies": {

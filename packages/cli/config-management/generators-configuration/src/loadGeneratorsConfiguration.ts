@@ -1,6 +1,7 @@
 import { validateSchema } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
+import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
@@ -9,20 +10,30 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
+    context,
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
+    context: TaskContext;
 }): Promise<GeneratorsConfigurationSchema> {
-    const contentsStr = await readFile(getPathToGeneratorsConfiguration({ absolutePathToWorkspace }));
+    const filepath = getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    const contentsStr = await readFile(filepath);
     const contentsParsed = yaml.load(contentsStr.toString());
-    return await validateSchema(GeneratorsConfigurationSchema, contentsParsed);
+    return validateSchema({
+        schema: GeneratorsConfigurationSchema,
+        value: contentsParsed,
+        context,
+        filepathBeingParsed: filepath,
+    });
 }
 
 export async function loadGeneratorsConfiguration({
     absolutePathToWorkspace,
+    context,
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
+    context: TaskContext;
 }): Promise<GeneratorsConfiguration> {
-    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace });
+    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
     return convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration: getPathToGeneratorsConfiguration({ absolutePathToWorkspace }),
         rawGeneratorsConfiguration,

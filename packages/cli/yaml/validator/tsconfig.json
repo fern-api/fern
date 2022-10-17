@@ -6,6 +6,7 @@
     { "path": "../../../commons/core-utils" },
     { "path": "../../generation/ir-generator" },
     { "path": "../../logger" },
+    { "path": "../../task-context" },
     { "path": "../../workspace-loader" },
     { "path": "../yaml-schema" }
   ]

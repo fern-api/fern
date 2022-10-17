@@ -28,6 +28,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "chalk": "^5.0.1",

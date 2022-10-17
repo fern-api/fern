@@ -10,8 +10,8 @@ import {
     TaskResult,
 } from "@fern-api/task-context";
 import chalk from "chalk";
-import { constructErrorMessage } from "./constructErrorMessage";
 import { Log } from "./Log";
+import { logErrorMessage } from "./logErrorMessage";
 
 export declare namespace TaskContextImpl {
     export interface Init {
@@ -78,10 +78,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
-        const errorMessage = constructErrorMessage({ message, error });
-        if (errorMessage != null) {
-            this.logger.error(errorMessage);
-        }
+        logErrorMessage({ message, error, logger: this.logger });
         this.result = TaskResult.Failure;
     }
 
