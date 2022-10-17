@@ -9,40 +9,40 @@ Array [
           Object {
             "contents": "name: ci
 
-    on: [push]
+on: [push]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up node
+        uses: actions/setup-node@v2
+
+      - name: compile
+        run: yarn && yarn build
+  
+  publish:
+    needs: [ compile ]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
     
-    jobs:
-      compile:
-        runs-on: ubuntu-latest
-    
-        steps:
-          - uses: actions/checkout@v2
-    
-          - name: Set up node
-            uses: actions/setup-node@v2
-    
-          - name: compile
-            run: yarn && yarn build
-      
-      publish:
-        needs: [ compile ]
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        runs-on: ubuntu-latest
-        
-        steps:
-          - uses: actions/checkout@v2
-    
-          - name: Set up node
-            uses: actions/setup-node@v2
-    
-          - run: yarn install
-    
-          - name: Publish to NPM
-            run: |
-              npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-              npm publish --ignore-scripts
-            env:
-              NPM_TOKEN: \${secrets.NPM_TOKEN}",
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up node
+        uses: actions/setup-node@v2
+
+      - run: yarn install
+
+      - name: Publish to NPM
+        run: |
+          npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
+          npm publish --ignore-scripts
+        env:
+          NPM_TOKEN: \${secrets.NPM_TOKEN}",
             "name": "ci.yml",
             "type": "file",
           },

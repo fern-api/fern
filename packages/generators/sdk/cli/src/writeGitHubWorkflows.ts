@@ -1,4 +1,5 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import endent from "endent";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
@@ -14,7 +15,7 @@ export async function writeGitHubWorkflows({
             `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
         );
     }
-    const workflowYaml = `name: ci
+    const workflowYaml = endent`name: ci
 
     on: [push]
     

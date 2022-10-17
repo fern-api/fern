@@ -3776,6 +3776,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/webpack-bundle-analyzer", "npm:4.4.1"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.3"],\
+            ["endent", "npm:2.1.0"],\
             ["eslint", "npm:8.23.1"],\
             ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
@@ -7715,6 +7716,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["endent", [\
+        ["npm:2.1.0", {\
+          "packageLocation": "./.yarn/cache/endent-npm-2.1.0-0eb3dd7fb3-c352831088.zip/node_modules/endent/",\
+          "packageDependencies": [\
+            ["endent", "npm:2.1.0"],\
+            ["dedent", "npm:0.7.0"],\
+            ["fast-json-parse", "npm:1.0.3"],\
+            ["objectorarray", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["enhanced-resolve", [\
         ["npm:5.10.0", {\
           "packageLocation": "./.yarn/cache/enhanced-resolve-npm-5.10.0-7941304306-0bb9830704.zip/node_modules/enhanced-resolve/",\
@@ -8141,6 +8154,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["glob-parent", "npm:5.1.2"],\
             ["merge2", "npm:1.4.1"],\
             ["micromatch", "npm:4.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["fast-json-parse", [\
+        ["npm:1.0.3", {\
+          "packageLocation": "./.yarn/cache/fast-json-parse-npm-1.0.3-6bc2572d6c-c19117c56e.zip/node_modules/fast-json-parse/",\
+          "packageDependencies": [\
+            ["fast-json-parse", "npm:1.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10816,6 +10838,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["define-properties", "npm:1.1.4"],\
             ["has-symbols", "npm:1.0.3"],\
             ["object-keys", "npm:1.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["objectorarray", [\
+        ["npm:1.0.5", {\
+          "packageLocation": "./.yarn/cache/objectorarray-npm-1.0.5-427ebc82ab-8fd776aa49.zip/node_modules/objectorarray/",\
+          "packageDependencies": [\
+            ["objectorarray", "npm:1.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -36,6 +36,7 @@
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",
+    "endent": "^2.1.0",
     "execa": "^5.1.1",
     "lodash-es": "^4.17.21",
     "memfs": "^3.4.1",
