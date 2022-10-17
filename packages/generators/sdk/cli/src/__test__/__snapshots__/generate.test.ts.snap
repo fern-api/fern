@@ -47,7 +47,7 @@ Array [
             "type": "file",
           },
         ],
-        "name": ".workflows",
+        "name": "workflows",
         "type": "directory",
       },
     ],

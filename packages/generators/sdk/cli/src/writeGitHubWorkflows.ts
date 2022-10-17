@@ -50,7 +50,7 @@ export async function writeGitHubWorkflows({
               npm publish --ignore-scripts
             env:
               NPM_TOKEN: \${secrets.${githubOutputMode.publishInfo.tokenEnvironmentVariable}}`;
-    const githubWorkflowsDir = path.join(config.output.path, ".github", ".workflows");
+    const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
     await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml);
 }
