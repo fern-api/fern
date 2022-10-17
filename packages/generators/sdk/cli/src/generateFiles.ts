@@ -54,6 +54,7 @@ export async function generateFiles({
         },
     });
     await runYarnCommand(["run", PackageJsonScript.FORMAT]);
+    await runYarnCommand(["dlx", "@yarnpkg/sdks", "vscode"]);
 
     return { writtenTo: directoyOnDiskToWriteTo };
 }

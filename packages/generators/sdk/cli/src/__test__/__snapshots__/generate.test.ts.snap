@@ -81,6 +81,37 @@ node_modules
     "type": "file",
   },
   Object {
+    "contents": Array [
+      Object {
+        "contents": "{
+  \\"recommendations\\": [
+    \\"arcanis.vscode-zipfs\\",
+    \\"esbenp.prettier-vscode\\"
+  ]
+}
+",
+        "name": "extensions.json",
+        "type": "file",
+      },
+      Object {
+        "contents": "{
+  \\"search.exclude\\": {
+    \\"**/.yarn\\": true,
+    \\"**/.pnp.*\\": true
+  },
+  \\"prettier.prettierPath\\": \\".yarn/sdks/prettier/index.js\\",
+  \\"typescript.tsdk\\": \\".yarn/sdks/typescript/lib\\",
+  \\"typescript.enablePromptUseWorkspaceTsdk\\": true
+}
+",
+        "name": "settings.json",
+        "type": "file",
+      },
+    ],
+    "name": ".vscode",
+    "type": "directory",
+  },
+  Object {
     "contents": "nodeLinker: pnp
 
 yarnPath: .yarn/releases/yarn-3.2.4.cjs
@@ -2899,6 +2930,37 @@ node_modules
 *.d.ts",
     "name": ".prettierignore",
     "type": "file",
+  },
+  Object {
+    "contents": Array [
+      Object {
+        "contents": "{
+  \\"recommendations\\": [
+    \\"arcanis.vscode-zipfs\\",
+    \\"esbenp.prettier-vscode\\"
+  ]
+}
+",
+        "name": "extensions.json",
+        "type": "file",
+      },
+      Object {
+        "contents": "{
+  \\"search.exclude\\": {
+    \\"**/.yarn\\": true,
+    \\"**/.pnp.*\\": true
+  },
+  \\"prettier.prettierPath\\": \\".yarn/sdks/prettier/index.js\\",
+  \\"typescript.tsdk\\": \\".yarn/sdks/typescript/lib\\",
+  \\"typescript.enablePromptUseWorkspaceTsdk\\": true
+}
+",
+        "name": "settings.json",
+        "type": "file",
+      },
+    ],
+    "name": ".vscode",
+    "type": "directory",
   },
   Object {
     "contents": "nodeLinker: pnp
