@@ -35,25 +35,25 @@ async function runCli() {
         await exit();
     });
 
-    const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-    if (cliContext.environment.packageVersion !== versionOfCliToRun) {
-        const { failed } = await rerunFernCliAtVersion({
-            version: versionOfCliToRun,
-            cliContext,
-        });
-        if (failed) {
-            cliContext.fail();
-        }
-    } else {
-        try {
+    try {
+        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+        if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
-        } catch (error) {
-            if (error instanceof FernCliError) {
-                // thrower is responsible for logging, so we don't need to log here
+        } else {
+            const { failed } = await rerunFernCliAtVersion({
+                version: versionOfCliToRun,
+                cliContext,
+            });
+            if (failed) {
                 cliContext.fail();
-            } else {
-                cliContext.fail("Failed to run", error);
             }
+        }
+    } catch (error) {
+        if (error instanceof FernCliError) {
+            // thrower is responsible for logging, so we don't need to log here
+            cliContext.fail();
+        } else {
+            cliContext.fail("Failed to run", error);
         }
     }
 
@@ -124,9 +124,10 @@ async function tryRunCli(cliContext: CliContext) {
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
-        try {
-            return (await loadProjectConfig({ directory: fernDirectory })).version;
-        } catch {}
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        return projectConfig.version;
     }
     return getLatestVersionOfCli(cliContext.environment);
 }

@@ -27,6 +27,7 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "find-up": "^6.3.0",
     "zod": "^3.14.3"
   },

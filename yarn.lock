@@ -3272,6 +3272,8 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3373,6 +3375,7 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -3626,6 +3629,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3775,6 +3779,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/logger": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3802,6 +3807,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5

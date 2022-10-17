@@ -16,6 +16,7 @@ export async function addGeneratorToWorkspaces(
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration = await loadRawGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absolutePathToWorkspace,
+                    context,
                 });
                 const newConfiguration = addGenerator({ generatorName, generatorsConfiguration, context });
                 await writeFile(

@@ -68,7 +68,9 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
             cliContext.fail(`Directory "${FERN_DIRECTORY}" not found.`);
             return;
         }
-        const projectConfig = await loadProjectConfig({ directory: fernDirectory });
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.latestVersion;
         });

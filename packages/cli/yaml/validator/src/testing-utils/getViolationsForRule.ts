@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, entries } from "@fern-api/core-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { visitFernYamlAst } from "@fern-api/yaml-schema";
 import stripAnsi from "strip-ansi";
@@ -20,6 +21,7 @@ export async function getViolationsForRule({
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const parseResult = await loadWorkspace({
         absolutePathToWorkspace,
+        context: createMockTaskContext(),
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));

@@ -2,6 +2,7 @@ import { validateSchema } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join } from "@fern-api/core-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { TaskContext } from "@fern-api/task-context";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -13,10 +14,12 @@ import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export async function loadWorkspace({
     absolutePathToWorkspace,
+    context,
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
+    context: TaskContext;
 }): Promise<WorkspaceLoader.Result> {
-    const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace });
+    const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
     const absolutePathToDefinition = join(absolutePathToWorkspace, DEFINITION_DIRECTORY);
     const serviceFiles = await listServiceFilesForWorkspace(absolutePathToDefinition);
 
@@ -30,9 +33,15 @@ export async function loadWorkspace({
         return structuralValidationResult;
     }
 
-    const rootApiFile = await readFile(path.join(absolutePathToDefinition, ROOT_API_FILENAME));
+    const rootApiFilepath = path.join(absolutePathToDefinition, ROOT_API_FILENAME);
+    const rootApiFile = await readFile(rootApiFilepath);
     const parsedRootApiFile = yaml.load(rootApiFile.toString());
-    const validatedRootApiFile = await validateSchema(RootApiFileSchema, parsedRootApiFile);
+    const validatedRootApiFile = await validateSchema({
+        schema: RootApiFileSchema,
+        value: parsedRootApiFile,
+        context,
+        filepathBeingParsed: rootApiFilepath,
+    });
 
     return {
         didSucceed: true,

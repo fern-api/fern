@@ -29,6 +29,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
