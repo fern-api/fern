@@ -53,8 +53,20 @@ export class SamePropertyAsObjectSingleUnionTypeGenerator implements SingleUnion
         return file.getReferenceToNamedType(this.extended).typeNode;
     }
 
-    public getVisitorArguments({ referenceToUnionValue }: { referenceToUnionValue: ts.Expression }): ts.Expression[] {
-        return [referenceToUnionValue];
+    public getVisitorArguments({
+        localReferenceToUnionValue,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.Expression[] {
+        return [localReferenceToUnionValue];
+    }
+
+    public getBuilderArguments({
+        localReferenceToUnionValue,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.Expression[] {
+        return [localReferenceToUnionValue];
     }
 
     public getNonDiscriminantPropertiesForSchema(

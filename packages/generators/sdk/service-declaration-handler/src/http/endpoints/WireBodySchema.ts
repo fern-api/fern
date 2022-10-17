@@ -48,10 +48,7 @@ export class WireBodySchema extends AbstractSchemaGenerator {
 
     public getReferenceToSchema(file: SdkFile): Zurg.Schema {
         return file.coreUtilities.zurg.Schema._fromExpression(
-            ts.factory.createPropertyAccessExpression(
-                file.getReferenceToEndpointSchemaFile(this.serviceName, this.endpoint).expression,
-                this.typeName
-            )
+            file.getReferenceToEndpointSchemaFileExport(this.serviceName, this.endpoint, this.typeName).expression
         );
     }
 

@@ -71,10 +71,7 @@ export class ParsedEnumValue {
     }): ts.ObjectLiteralExpression {
         return ts.factory.createObjectLiteralExpression(
             [
-                ts.factory.createPropertyAssignment(
-                    EnumInterface.GET_METHOD_NAME,
-                    ts.factory.createArrowFunction(undefined, undefined, [], undefined, undefined, enumValue)
-                ),
+                ts.factory.createPropertyAssignment(EnumInterface.VALUE_PROPERTY_NAME, enumValue),
                 ts.factory.createPropertyAssignment(
                     EnumInterface.VISIT_METHOD_NAME,
                     EnumVisitHelper.getVisitMethod({

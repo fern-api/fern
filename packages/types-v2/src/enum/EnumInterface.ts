@@ -7,7 +7,7 @@ import { EnumVisitHelper } from "./EnumVisitHelper";
 import { ParsedEnumValue } from "./ParsedEnumValue";
 
 export class EnumInterface extends AbstractEnumFileDeclaration {
-    public static GET_METHOD_NAME = "toString";
+    public static VALUE_PROPERTY_NAME = "value";
     public static VISIT_METHOD_NAME = "visit";
     private static RAW_VALUE_TYPE_PARAMETER_NAME = EnumModule.RAW_VALUE_TYPE_ALIAS_NAME;
 
@@ -26,14 +26,8 @@ export class EnumInterface extends AbstractEnumFileDeclaration {
         maybeAddDocs(interfaceNode, this.typeDeclaration.docs);
 
         interfaceNode.addProperty({
-            name: EnumInterface.GET_METHOD_NAME,
-            type: getTextOfTsNode(
-                ts.factory.createFunctionTypeNode(
-                    undefined,
-                    [],
-                    ts.factory.createTypeReferenceNode(EnumInterface.RAW_VALUE_TYPE_PARAMETER_NAME)
-                )
-            ),
+            name: EnumInterface.VALUE_PROPERTY_NAME,
+            type: getTextOfTsNode(ts.factory.createTypeReferenceNode(EnumInterface.RAW_VALUE_TYPE_PARAMETER_NAME)),
         });
 
         interfaceNode.addProperty({
@@ -58,10 +52,6 @@ export class EnumInterface extends AbstractEnumFileDeclaration {
     }
 
     public static getReferenceToRawValue(referenceToEnumValue: ts.Expression): ts.Expression {
-        return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(referenceToEnumValue, EnumInterface.GET_METHOD_NAME),
-            undefined,
-            undefined
-        );
+        return ts.factory.createPropertyAccessExpression(referenceToEnumValue, EnumInterface.VALUE_PROPERTY_NAME);
     }
 }

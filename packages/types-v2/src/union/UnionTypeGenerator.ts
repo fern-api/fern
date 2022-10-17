@@ -1,5 +1,5 @@
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
-import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { AbstractUnionGenerator } from "./AbstractUnionGenerator";
 import { AbstractParsedSingleUnionType } from "./parsed-single-union-type/AbstractParsedSingleUnionType";
@@ -45,8 +45,8 @@ export class UnionTypeGenerator extends AbstractUnionGenerator {
         this.typeDeclaration = typeDeclaration;
     }
 
-    protected override getReferenceToUnionType(file: SdkFile): ts.TypeNode {
-        return file.getReferenceToNamedType(this.typeDeclaration.name).typeNode;
+    protected override getReferenceToUnionType(file: SdkFile): Reference {
+        return file.getReferenceToNamedType(this.typeDeclaration.name);
     }
 
     protected override shouldWriteSchema(): boolean {

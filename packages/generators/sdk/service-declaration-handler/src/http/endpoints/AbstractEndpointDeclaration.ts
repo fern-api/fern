@@ -1,7 +1,6 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
-import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
-import { ts } from "ts-morph";
+import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 
 export declare namespace AbstractEndpointDeclaration {
     export interface Init {
@@ -19,29 +18,26 @@ export abstract class AbstractEndpointDeclaration {
         this.endpoint = endpoint;
     }
 
-    protected getReferenceToEndpointFileType(typeName: string, file: SdkFile): ts.EntityName {
-        return AbstractEndpointDeclaration.getReferenceToEndpointFileType({
-            typeName,
+    protected getReferenceToEndpointFileExport(export_: string, file: SdkFile): Reference {
+        return AbstractEndpointDeclaration.getReferenceToEndpointFileExport({
+            export_,
             file,
             serviceName: this.service.name,
             endpoint: this.endpoint,
         });
     }
 
-    protected static getReferenceToEndpointFileType({
-        typeName,
+    protected static getReferenceToEndpointFileExport({
+        export_,
         file,
         serviceName,
         endpoint,
     }: {
-        typeName: string;
+        export_: string;
         file: SdkFile;
         serviceName: DeclaredServiceName;
         endpoint: HttpEndpoint;
-    }): ts.EntityName {
-        return ts.factory.createQualifiedName(
-            file.getReferenceToEndpointFile(serviceName, endpoint).entityName,
-            typeName
-        );
+    }): Reference {
+        return file.getReferenceToEndpointFileExport(serviceName, endpoint, export_);
     }
 }

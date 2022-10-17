@@ -31,6 +31,10 @@ export class NoPropertiesSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [];
     }
 
+    public getBuilderArguments(): ts.Expression[] {
+        return [];
+    }
+
     public getNonDiscriminantPropertiesForSchema(): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         return { isInline: true, properties: [] };
     }

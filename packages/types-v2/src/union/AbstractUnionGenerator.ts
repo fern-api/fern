@@ -1,6 +1,6 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractSchemaGenerator } from "../AbstractSchemaGenerator";
 import { AbstractTypeSchemaGenerator } from "../AbstractTypeSchemaGenerator";
@@ -78,7 +78,7 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
 
     protected override getSchema(file: SdkFile): Zurg.Schema {
         return this.schema.toSchema(file, {
-            referenceToParsedShape: this.getReferenceToParsedShape(file),
+            referenceToParsedShape: this.getReferenceToUnionType(file),
             shouldIncludeDefaultCaseInTransform: this.shouldIncludeDefaultCaseInSchemaTransform(),
         });
     }
@@ -88,9 +88,9 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
     }
 
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
-        return this.getReferenceToUnionType(file);
+        return this.getReferenceToUnionType(file).typeNode;
     }
 
-    protected abstract getReferenceToUnionType(file: SdkFile): ts.TypeNode;
+    protected abstract getReferenceToUnionType(file: SdkFile): Reference;
     protected abstract shouldWriteSchema(): boolean;
 }

@@ -41,7 +41,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
                     this.endpoint.response.type._type === "void"
                         ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                         : endpointFile.getReferenceToType(this.endpoint.response.type).typeNode,
-                    this.endpointError.getReferenceToType(endpointFile)
+                    this.endpointError.getReferenceTo(endpointFile).typeNode
                 )
             ),
         });
@@ -51,12 +51,8 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
 
     public getResponseType(file: SdkFile): ts.TypeNode {
         return ts.factory.createTypeReferenceNode("Promise", [
-            ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(
-                    file.getReferenceToEndpointFile(this.service.name, this.endpoint).entityName,
-                    EndpointResponse.TYPE_NAME
-                )
-            ),
+            file.getReferenceToEndpointFileExport(this.service.name, this.endpoint, EndpointResponse.TYPE_NAME)
+                .typeNode,
         ]);
     }
 

@@ -64,8 +64,20 @@ export class SinglePropertySingleUnionTypeGenerator implements SingleUnionTypeGe
         return file.getReferenceToType(this.singleProperty.type).typeNode;
     }
 
-    public getVisitorArguments({ referenceToUnionValue }: { referenceToUnionValue: ts.Expression }): ts.Expression[] {
-        return [ts.factory.createPropertyAccessExpression(referenceToUnionValue, this.getSinglePropertyKey())];
+    public getVisitorArguments({
+        localReferenceToUnionValue,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.Expression[] {
+        return [ts.factory.createPropertyAccessExpression(localReferenceToUnionValue, this.getSinglePropertyKey())];
+    }
+
+    public getBuilderArguments({
+        localReferenceToUnionValue,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.Expression[] {
+        return [ts.factory.createPropertyAccessExpression(localReferenceToUnionValue, this.getSinglePropertyKey())];
     }
 
     public getNonDiscriminantPropertiesForSchema(

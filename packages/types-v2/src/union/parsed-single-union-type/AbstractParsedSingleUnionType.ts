@@ -174,6 +174,20 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
         );
     }
 
+    public invokeBuilder({
+        referenceToParsedUnionType,
+        localReferenceToUnionValue,
+    }: {
+        referenceToParsedUnionType: ts.Expression;
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.CallExpression {
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(referenceToParsedUnionType, this.getBuilderName()),
+            undefined,
+            this.singleUnionType.getBuilderArguments({ localReferenceToUnionValue })
+        );
+    }
+
     private getDiscriminantKey(): string {
         return AbstractParsedSingleUnionType.getDiscriminantKey(this.getDiscriminant());
     }
@@ -189,10 +203,14 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
         };
     }
 
-    public getVisitMethod({ referenceToUnionValue }: { referenceToUnionValue: ts.Expression }): ts.ArrowFunction {
+    public getVisitMethod({
+        localReferenceToUnionValue,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.ArrowFunction {
         return UnionVisitHelper.getVisitMethod({
             visitorKey: this.getVisitorKey(),
-            visitorArguments: this.singleUnionType.getVisitorArguments({ referenceToUnionValue }),
+            visitorArguments: this.singleUnionType.getVisitorArguments({ localReferenceToUnionValue }),
         });
     }
 

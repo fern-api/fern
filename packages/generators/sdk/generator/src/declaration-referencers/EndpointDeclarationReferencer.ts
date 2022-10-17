@@ -38,7 +38,7 @@ export class EndpointDeclarationReferencer extends AbstractServiceDeclarationRef
         return endpoint.name.camelCase;
     }
 
-    public getReferenceToEndpoint(
+    public getReferenceToEndpointExport(
         args: DeclarationReferencer.getReferenceTo.Options<EndpointDeclarationReferencer.Name>
     ): Reference {
         return this.getReferenceTo(this.getNamespaceExport(args.name), args);

@@ -32,8 +32,16 @@ export interface SdkFile {
     // services
     getReferenceToService: (serviceName: DeclaredServiceName, options: { importAlias: string }) => Reference;
     getServiceDeclaration: (serviceName: DeclaredServiceName) => HttpService;
-    getReferenceToEndpointFile: (serviceName: DeclaredServiceName, endpoint: HttpEndpoint) => Reference;
-    getReferenceToEndpointSchemaFile: (serviceName: DeclaredServiceName, endpoint: HttpEndpoint) => Reference;
+    getReferenceToEndpointFileExport: (
+        serviceName: DeclaredServiceName,
+        endpoint: HttpEndpoint,
+        export_: string | string[]
+    ) => Reference;
+    getReferenceToEndpointSchemaFileExport: (
+        serviceName: DeclaredServiceName,
+        endpoint: HttpEndpoint,
+        export_: string | string[]
+    ) => Reference;
 
     // wrappers
     getReferenceToWrapper: (wrapperName: WrapperName, options: { importAlias: string }) => Reference;

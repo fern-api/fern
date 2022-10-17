@@ -385,19 +385,21 @@ export class SdkGenerator {
                     addImport,
                     importStrategy: { type: "direct", alias: importAlias },
                 }),
-            getReferenceToEndpointFile: (serviceName, endpoint) =>
-                this.endpointDeclarationReferencer.getReferenceToEndpoint({
+            getReferenceToEndpointFileExport: (serviceName, endpoint, export_) =>
+                this.endpointDeclarationReferencer.getReferenceToEndpointExport({
                     name: { serviceName, endpoint },
                     referencedIn: sourceFile,
                     addImport,
                     importStrategy: { type: "fromRoot" },
+                    subImport: typeof export_ === "string" ? [export_] : export_,
                 }),
-            getReferenceToEndpointSchemaFile: (serviceName, endpoint) =>
-                this.endpointSchemaDeclarationReferencer.getReferenceToEndpoint({
+            getReferenceToEndpointSchemaFileExport: (serviceName, endpoint, export_) =>
+                this.endpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
                     name: { serviceName, endpoint },
                     referencedIn: sourceFile,
                     addImport,
                     importStrategy: SCHEMA_IMPORT_STRATEGY,
+                    subImport: typeof export_ === "string" ? [export_] : export_,
                 }),
             getReferenceToWrapper: (wrapperName, { importAlias }) =>
                 this.wrapperDeclarationReferencer.getReferenceToWrapper({

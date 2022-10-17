@@ -1,7 +1,7 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { AbstractUnionGenerator, ParsedSingleUnionType } from "@fern-typescript/types-v2";
 import { ts } from "ts-morph";
 import { EndpointError } from "./EndpointError";
@@ -56,8 +56,8 @@ export class EndpointErrorUnionGenerator extends AbstractUnionGenerator {
         this.endpoint = endpoint;
     }
 
-    protected override getReferenceToUnionType(file: SdkFile): ts.TypeNode {
-        return EndpointError.getReferenceToType(file, {
+    protected override getReferenceToUnionType(file: SdkFile): Reference {
+        return EndpointError.getReferenceTo(file, {
             serviceName: this.serviceName,
             endpoint: this.endpoint,
         });

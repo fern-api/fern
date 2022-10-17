@@ -51,12 +51,10 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
     }
 
     protected override getRequestParameterType(file: SdkFile): TypeReferenceNode {
-        const typeNode = ts.factory.createTypeReferenceNode(
-            this.getReferenceToEndpointFileType(WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME, file)
-        );
         return {
             isOptional: false,
-            typeNode,
+            typeNode: this.getReferenceToEndpointFileExport(WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME, file)
+                .typeNode,
         };
     }
 

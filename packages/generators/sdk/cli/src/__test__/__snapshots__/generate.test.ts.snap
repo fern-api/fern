@@ -1309,20 +1309,20 @@ export interface KeyValuePair {
  */
 
 export interface Language<RawValue extends Language.RawValue = Language.RawValue> {
-  toString: () => RawValue;
+  value: RawValue;
   visit: <Result>(visitor: Language._Visitor<Result>) => Result;
 }
 
 const _Java: Language<\\"JAVA\\"> = {
-  toString: () => \\"JAVA\\",
+  value: \\"JAVA\\",
   visit: (visitor) => visitor.java(),
 };
 const _Javascript: Language<\\"JAVASCRIPT\\"> = {
-  toString: () => \\"JAVASCRIPT\\",
+  value: \\"JAVASCRIPT\\",
   visit: (visitor) => visitor.javascript(),
 };
 const _Python: Language<\\"PYTHON\\"> = {
-  toString: () => \\"PYTHON\\",
+  value: \\"PYTHON\\",
   visit: (visitor) => visitor.python(),
 };
 export const Language = {
@@ -2392,20 +2392,20 @@ export interface Migration {
  */
 
 export interface MigrationStatus<RawValue extends MigrationStatus.RawValue = MigrationStatus.RawValue> {
-  toString: () => RawValue;
+  value: RawValue;
   visit: <Result>(visitor: MigrationStatus._Visitor<Result>) => Result;
 }
 
 const _Running: MigrationStatus<\\"RUNNING\\"> = {
-  toString: () => \\"RUNNING\\",
+  value: \\"RUNNING\\",
   visit: (visitor) => visitor.running(),
 };
 const _Failed: MigrationStatus<\\"FAILED\\"> = {
-  toString: () => \\"FAILED\\",
+  value: \\"FAILED\\",
   visit: (visitor) => visitor.failed(),
 };
 const _Finished: MigrationStatus<\\"FINISHED\\"> = {
-  toString: () => \\"FINISHED\\",
+  value: \\"FINISHED\\",
   visit: (visitor) => visitor.finished(),
 };
 export const MigrationStatus = {
@@ -4755,32 +4755,32 @@ export interface ExecutionSessionState {
 export interface ExecutionSessionStatus<
   RawValue extends ExecutionSessionStatus.RawValue = ExecutionSessionStatus.RawValue
 > {
-  toString: () => RawValue;
+  value: RawValue;
   visit: <Result>(visitor: ExecutionSessionStatus._Visitor<Result>) => Result;
 }
 
 const _CreatingContainer: ExecutionSessionStatus<\\"CREATING_CONTAINER\\"> = {
-  toString: () => \\"CREATING_CONTAINER\\",
+  value: \\"CREATING_CONTAINER\\",
   visit: (visitor) => visitor.creatingContainer(),
 };
 const _ProvisioningContainer: ExecutionSessionStatus<\\"PROVISIONING_CONTAINER\\"> = {
-  toString: () => \\"PROVISIONING_CONTAINER\\",
+  value: \\"PROVISIONING_CONTAINER\\",
   visit: (visitor) => visitor.provisioningContainer(),
 };
 const _PendingContainer: ExecutionSessionStatus<\\"PENDING_CONTAINER\\"> = {
-  toString: () => \\"PENDING_CONTAINER\\",
+  value: \\"PENDING_CONTAINER\\",
   visit: (visitor) => visitor.pendingContainer(),
 };
 const _RunningContainer: ExecutionSessionStatus<\\"RUNNING_CONTAINER\\"> = {
-  toString: () => \\"RUNNING_CONTAINER\\",
+  value: \\"RUNNING_CONTAINER\\",
   visit: (visitor) => visitor.runningContainer(),
 };
 const _LiveContainer: ExecutionSessionStatus<\\"LIVE_CONTAINER\\"> = {
-  toString: () => \\"LIVE_CONTAINER\\",
+  value: \\"LIVE_CONTAINER\\",
   visit: (visitor) => visitor.liveContainer(),
 };
 const _FailedToLaunch: ExecutionSessionStatus<\\"FAILED_TO_LAUNCH\\"> = {
-  toString: () => \\"FAILED_TO_LAUNCH\\",
+  value: \\"FAILED_TO_LAUNCH\\",
   visit: (visitor) => visitor.failedToLaunch(),
 };
 export const ExecutionSessionStatus = {
@@ -5171,28 +5171,28 @@ export interface RunningResponse {
 export interface RunningSubmissionState<
   RawValue extends RunningSubmissionState.RawValue = RunningSubmissionState.RawValue
 > {
-  toString: () => RawValue;
+  value: RawValue;
   visit: <Result>(visitor: RunningSubmissionState._Visitor<Result>) => Result;
 }
 
 const _QueueingSubmission: RunningSubmissionState<\\"QUEUEING_SUBMISSION\\"> = {
-  toString: () => \\"QUEUEING_SUBMISSION\\",
+  value: \\"QUEUEING_SUBMISSION\\",
   visit: (visitor) => visitor.queueingSubmission(),
 };
 const _KillingHistoricalSubmissions: RunningSubmissionState<\\"KILLING_HISTORICAL_SUBMISSIONS\\"> = {
-  toString: () => \\"KILLING_HISTORICAL_SUBMISSIONS\\",
+  value: \\"KILLING_HISTORICAL_SUBMISSIONS\\",
   visit: (visitor) => visitor.killingHistoricalSubmissions(),
 };
 const _WritingSubmissionToFile: RunningSubmissionState<\\"WRITING_SUBMISSION_TO_FILE\\"> = {
-  toString: () => \\"WRITING_SUBMISSION_TO_FILE\\",
+  value: \\"WRITING_SUBMISSION_TO_FILE\\",
   visit: (visitor) => visitor.writingSubmissionToFile(),
 };
 const _CompilingSubmission: RunningSubmissionState<\\"COMPILING_SUBMISSION\\"> = {
-  toString: () => \\"COMPILING_SUBMISSION\\",
+  value: \\"COMPILING_SUBMISSION\\",
   visit: (visitor) => visitor.compilingSubmission(),
 };
 const _RunningSubmission: RunningSubmissionState<\\"RUNNING_SUBMISSION\\"> = {
-  toString: () => \\"RUNNING_SUBMISSION\\",
+  value: \\"RUNNING_SUBMISSION\\",
   visit: (visitor) => visitor.runningSubmission(),
 };
 export const RunningSubmissionState = {
@@ -5832,12 +5832,12 @@ export const SubmissionStatusV2 = {
  * Keep in sync with SubmissionType.
  */
 export interface SubmissionTypeEnum<RawValue extends SubmissionTypeEnum.RawValue = SubmissionTypeEnum.RawValue> {
-  toString: () => RawValue;
+  value: RawValue;
   visit: <Result>(visitor: SubmissionTypeEnum._Visitor<Result>) => Result;
 }
 
 const _Test: SubmissionTypeEnum<\\"TEST\\"> = {
-  toString: () => \\"TEST\\",
+  value: \\"TEST\\",
   visit: (visitor) => visitor.test(),
 };
 export const SubmissionTypeEnum = {
@@ -11674,82 +11674,43 @@ export const DebugVariableValue: core.schemas.Schema<DebugVariableValue.Raw, Tra
       parse: (value) => {
         switch (value.type) {
           case \\"integerValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.integerValue(value.value),
-            };
+            return TraceApi.commons.DebugVariableValue.integerValue(value.value);
           }
           case \\"booleanValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.booleanValue(value.value),
-            };
+            return TraceApi.commons.DebugVariableValue.booleanValue(value.value);
           }
           case \\"doubleValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.doubleValue(value.value),
-            };
+            return TraceApi.commons.DebugVariableValue.doubleValue(value.value);
           }
           case \\"stringValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.stringValue(value.value),
-            };
+            return TraceApi.commons.DebugVariableValue.stringValue(value.value);
           }
           case \\"charValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.charValue(value.value),
-            };
+            return TraceApi.commons.DebugVariableValue.charValue(value.value);
           }
           case \\"mapValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.mapValue(value),
-            };
+            return TraceApi.commons.DebugVariableValue.mapValue(value);
           }
           case \\"listValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.listValue(value.value),
-            };
+            return TraceApi.commons.DebugVariableValue.listValue(value.value);
           }
           case \\"binaryTreeNodeValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.binaryTreeNodeValue(value),
-            };
+            return TraceApi.commons.DebugVariableValue.binaryTreeNodeValue(value);
           }
           case \\"singlyLinkedListNodeValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.singlyLinkedListNodeValue(value),
-            };
+            return TraceApi.commons.DebugVariableValue.singlyLinkedListNodeValue(value);
           }
           case \\"doublyLinkedListNodeValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.doublyLinkedListNodeValue(value),
-            };
+            return TraceApi.commons.DebugVariableValue.doublyLinkedListNodeValue(value);
           }
           case \\"undefinedValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.undefinedValue(),
-            };
+            return TraceApi.commons.DebugVariableValue.undefinedValue();
           }
           case \\"nullValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.nullValue(),
-            };
+            return TraceApi.commons.DebugVariableValue.nullValue();
           }
           case \\"genericValue\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.genericValue(value),
-            };
+            return TraceApi.commons.DebugVariableValue.genericValue(value);
           }
           default: {
             return {
@@ -12024,13 +11985,13 @@ export const Language: core.schemas.Schema<Language.Raw, TraceApi.commons.Langua
         }
         default: {
           return {
-            toString: () => value,
+            value: value,
             visit: (visitor) => visitor._other(value),
           };
         }
       }
     },
-    json: (value) => value.toString(),
+    json: (value) => value.value,
   });
 
 export declare namespace Language {
@@ -12324,64 +12285,34 @@ export const VariableType: core.schemas.Schema<VariableType.Raw, TraceApi.common
     parse: (value) => {
       switch (value.type) {
         case \\"integerType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.integerType(),
-          };
+          return TraceApi.commons.VariableType.integerType();
         }
         case \\"doubleType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.doubleType(),
-          };
+          return TraceApi.commons.VariableType.doubleType();
         }
         case \\"booleanType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.booleanType(),
-          };
+          return TraceApi.commons.VariableType.booleanType();
         }
         case \\"stringType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stringType(),
-          };
+          return TraceApi.commons.VariableType.stringType();
         }
         case \\"charType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.charType(),
-          };
+          return TraceApi.commons.VariableType.charType();
         }
         case \\"listType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.listType(value),
-          };
+          return TraceApi.commons.VariableType.listType(value);
         }
         case \\"mapType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.mapType(value),
-          };
+          return TraceApi.commons.VariableType.mapType(value);
         }
         case \\"binaryTreeType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.binaryTreeType(),
-          };
+          return TraceApi.commons.VariableType.binaryTreeType();
         }
         case \\"singlyLinkedListType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.singlyLinkedListType(),
-          };
+          return TraceApi.commons.VariableType.singlyLinkedListType();
         }
         case \\"doublyLinkedListType\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.doublyLinkedListType(),
-          };
+          return TraceApi.commons.VariableType.doublyLinkedListType();
         }
         default: {
           return {
@@ -12490,70 +12421,37 @@ export const VariableValue: core.schemas.Schema<VariableValue.Raw, TraceApi.comm
     parse: (value) => {
       switch (value.type) {
         case \\"integerValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.integerValue(value.value),
-          };
+          return TraceApi.commons.VariableValue.integerValue(value.value);
         }
         case \\"booleanValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.booleanValue(value.value),
-          };
+          return TraceApi.commons.VariableValue.booleanValue(value.value);
         }
         case \\"doubleValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.doubleValue(value.value),
-          };
+          return TraceApi.commons.VariableValue.doubleValue(value.value);
         }
         case \\"stringValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stringValue(value.value),
-          };
+          return TraceApi.commons.VariableValue.stringValue(value.value);
         }
         case \\"charValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.charValue(value.value),
-          };
+          return TraceApi.commons.VariableValue.charValue(value.value);
         }
         case \\"mapValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.mapValue(value),
-          };
+          return TraceApi.commons.VariableValue.mapValue(value);
         }
         case \\"listValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.listValue(value.value),
-          };
+          return TraceApi.commons.VariableValue.listValue(value.value);
         }
         case \\"binaryTreeValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.binaryTreeValue(value),
-          };
+          return TraceApi.commons.VariableValue.binaryTreeValue(value);
         }
         case \\"singlyLinkedListValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.singlyLinkedListValue(value),
-          };
+          return TraceApi.commons.VariableValue.singlyLinkedListValue(value);
         }
         case \\"doublyLinkedListValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.doublyLinkedListValue(value),
-          };
+          return TraceApi.commons.VariableValue.doublyLinkedListValue(value);
         }
         case \\"nullValue\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.nullValue(),
-          };
+          return TraceApi.commons.VariableValue.nullValue();
         }
         default: {
           return {
@@ -12909,13 +12807,13 @@ export const MigrationStatus: core.schemas.Schema<MigrationStatus.Raw, TraceApi.
         }
         default: {
           return {
-            toString: () => value,
+            value: value,
             visit: (visitor) => visitor._other(value),
           };
         }
       }
     },
-    json: (value) => value.toString(),
+    json: (value) => value.value,
   });
 
 export declare namespace MigrationStatus {
@@ -12964,16 +12862,10 @@ export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.getPlaylist
     parse: (value) => {
       switch (value.errorName) {
         case \\"PlaylistIdNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.playlistIdNotFoundError(value.content),
-          };
+          return TraceApi.playlist.getPlaylist.Error.playlistIdNotFoundError(value.content);
         }
         case \\"UnauthorizedError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.unauthorizedError(),
-          };
+          return TraceApi.playlist.getPlaylist.Error.unauthorizedError();
         }
       }
     },
@@ -13046,10 +12938,7 @@ export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.updatePlayl
     parse: (value) => {
       switch (value.errorName) {
         case \\"PlaylistIdNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.playlistIdNotFoundError(value.content),
-          };
+          return TraceApi.playlist.updatePlaylist.Error.playlistIdNotFoundError(value.content);
         }
       }
     },
@@ -13096,10 +12985,7 @@ export const PlaylistIdNotFoundError: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"playlistId\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.playlistId(value.value),
-          };
+          return TraceApi.playlist.PlaylistIdNotFoundError.playlistId(value.value);
         }
         default: {
           return {
@@ -13313,10 +13199,7 @@ export const CreateProblemError: core.schemas.Schema<CreateProblemError.Raw, Tra
       parse: (value) => {
         switch (value.errorType) {
           case \\"generic\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.generic(value),
-            };
+            return TraceApi.problem.CreateProblemError.generic(value);
           }
           default: {
             return {
@@ -13405,16 +13288,10 @@ export const CreateProblemResponse: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"success\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.success(value.value),
-          };
+          return TraceApi.problem.CreateProblemResponse.success(value.value);
         }
         case \\"error\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.error(value.value),
-          };
+          return TraceApi.problem.CreateProblemResponse.error(value.value);
         }
         default: {
           return {
@@ -13582,22 +13459,13 @@ export const ProblemDescriptionBoard: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"html\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.html(value.value),
-          };
+          return TraceApi.problem.ProblemDescriptionBoard.html(value.value);
         }
         case \\"variable\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.variable(value.value),
-          };
+          return TraceApi.problem.ProblemDescriptionBoard.variable(value.value);
         }
         case \\"testCaseId\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.testCaseId(value.value),
-          };
+          return TraceApi.problem.ProblemDescriptionBoard.testCaseId(value.value);
         }
         default: {
           return {
@@ -13840,22 +13708,13 @@ export const ActualResult: core.schemas.Schema<ActualResult.Raw, TraceApi.submis
     parse: (value) => {
       switch (value.type) {
         case \\"value\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.value(value.value),
-          };
+          return TraceApi.submission.ActualResult.value(value.value);
         }
         case \\"exception\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.exception(value),
-          };
+          return TraceApi.submission.ActualResult.exception(value);
         }
         case \\"exceptionV2\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.exceptionV2(value.value),
-          };
+          return TraceApi.submission.ActualResult.exceptionV2(value.value);
         }
         default: {
           return {
@@ -13946,70 +13805,37 @@ export const CodeExecutionUpdate: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"buildingExecutor\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.buildingExecutor(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.buildingExecutor(value);
         }
         case \\"running\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.running(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.running(value);
         }
         case \\"errored\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.errored(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.errored(value);
         }
         case \\"stopped\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stopped(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.stopped(value);
         }
         case \\"graded\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.graded(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.graded(value);
         }
         case \\"gradedV2\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.gradedV2(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.gradedV2(value);
         }
         case \\"workspaceRan\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.workspaceRan(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.workspaceRan(value);
         }
         case \\"recording\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.recording(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.recording(value);
         }
         case \\"recorded\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.recorded(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.recorded(value);
         }
         case \\"invalidRequest\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.invalidRequest(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.invalidRequest(value);
         }
         case \\"finished\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.finished(value),
-          };
+          return TraceApi.submission.CodeExecutionUpdate.finished(value);
         }
         default: {
           return {
@@ -14152,22 +13978,13 @@ export const ErrorInfo: core.schemas.Schema<ErrorInfo.Raw, TraceApi.submission.E
     parse: (value) => {
       switch (value.type) {
         case \\"compileError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.compileError(value),
-          };
+          return TraceApi.submission.ErrorInfo.compileError(value);
         }
         case \\"runtimeError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.runtimeError(value),
-          };
+          return TraceApi.submission.ErrorInfo.runtimeError(value);
         }
         case \\"internalError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.internalError(value),
-          };
+          return TraceApi.submission.ErrorInfo.internalError(value);
         }
         default: {
           return {
@@ -14268,16 +14085,10 @@ export const ExceptionV2: core.schemas.Schema<ExceptionV2.Raw, TraceApi.submissi
     parse: (value) => {
       switch (value.type) {
         case \\"generic\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.generic(value),
-          };
+          return TraceApi.submission.ExceptionV2.generic(value);
         }
         case \\"timeout\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.timeout(),
-          };
+          return TraceApi.submission.ExceptionV2.timeout();
         }
         default: {
           return {
@@ -14405,13 +14216,13 @@ export const ExecutionSessionStatus: core.schemas.Schema<
       }
       default: {
         return {
-          toString: () => value,
+          value: value,
           visit: (visitor) => visitor._other(value),
         };
       }
     }
   },
-  json: (value) => value.toString(),
+  json: (value) => value.value,
 });
 
 export declare namespace ExecutionSessionStatus {
@@ -14737,22 +14548,13 @@ export const InvalidRequestCause: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"submissionIdNotFound\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.submissionIdNotFound(value),
-          };
+          return TraceApi.submission.InvalidRequestCause.submissionIdNotFound(value);
         }
         case \\"customTestCasesUnsupported\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.customTestCasesUnsupported(value),
-          };
+          return TraceApi.submission.InvalidRequestCause.customTestCasesUnsupported(value);
         }
         case \\"unexpectedLanguage\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.unexpectedLanguage(value),
-          };
+          return TraceApi.submission.InvalidRequestCause.unexpectedLanguage(value);
         }
         default: {
           return {
@@ -14985,13 +14787,13 @@ export const RunningSubmissionState: core.schemas.Schema<
       }
       default: {
         return {
-          toString: () => value,
+          value: value,
           visit: (visitor) => visitor._other(value),
         };
       }
     }
   },
-  json: (value) => value.toString(),
+  json: (value) => value.value,
 });
 
 export declare namespace RunningSubmissionState {
@@ -15306,34 +15108,19 @@ export const SubmissionRequest: core.schemas.Schema<SubmissionRequest.Raw, Trace
       parse: (value) => {
         switch (value.type) {
           case \\"initializeProblemRequest\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.initializeProblemRequest(value),
-            };
+            return TraceApi.submission.SubmissionRequest.initializeProblemRequest(value);
           }
           case \\"initializeWorkspaceRequest\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.initializeWorkspaceRequest(),
-            };
+            return TraceApi.submission.SubmissionRequest.initializeWorkspaceRequest();
           }
           case \\"submitV2\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.submitV2(value),
-            };
+            return TraceApi.submission.SubmissionRequest.submitV2(value);
           }
           case \\"workspaceSubmit\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.workspaceSubmit(value),
-            };
+            return TraceApi.submission.SubmissionRequest.workspaceSubmit(value);
           }
           case \\"stop\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.stop(value),
-            };
+            return TraceApi.submission.SubmissionRequest.stop(value);
           }
           default: {
             return {
@@ -15405,40 +15192,22 @@ export const SubmissionResponse: core.schemas.Schema<SubmissionResponse.Raw, Tra
       parse: (value) => {
         switch (value.type) {
           case \\"serverInitialized\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.serverInitialized(),
-            };
+            return TraceApi.submission.SubmissionResponse.serverInitialized();
           }
           case \\"problemInitialized\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.problemInitialized(value.value),
-            };
+            return TraceApi.submission.SubmissionResponse.problemInitialized(value.value);
           }
           case \\"workspaceInitialized\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.workspaceInitialized(),
-            };
+            return TraceApi.submission.SubmissionResponse.workspaceInitialized();
           }
           case \\"serverErrored\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.serverErrored(value),
-            };
+            return TraceApi.submission.SubmissionResponse.serverErrored(value);
           }
           case \\"codeExecutionUpdate\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.codeExecutionUpdate(value.value),
-            };
+            return TraceApi.submission.SubmissionResponse.codeExecutionUpdate(value.value);
           }
           case \\"terminated\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.terminated(value),
-            };
+            return TraceApi.submission.SubmissionResponse.terminated(value);
           }
           default: {
             return {
@@ -15514,22 +15283,13 @@ export const SubmissionStatusForTestCase: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"graded\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.graded(value),
-          };
+          return TraceApi.submission.SubmissionStatusForTestCase.graded(value);
         }
         case \\"gradedV2\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.gradedV2(value.value),
-          };
+          return TraceApi.submission.SubmissionStatusForTestCase.gradedV2(value.value);
         }
         case \\"traced\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.traced(value),
-          };
+          return TraceApi.submission.SubmissionStatusForTestCase.traced(value);
         }
         default: {
           return {
@@ -15584,16 +15344,10 @@ export const SubmissionStatusV2: core.schemas.Schema<SubmissionStatusV2.Raw, Tra
       parse: (value) => {
         switch (value.type) {
           case \\"test\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.test(value),
-            };
+            return TraceApi.submission.SubmissionStatusV2.test(value);
           }
           case \\"workspace\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.workspace(value),
-            };
+            return TraceApi.submission.SubmissionStatusV2.workspace(value);
           }
           default: {
             return {
@@ -15638,13 +15392,13 @@ export const SubmissionTypeEnum: core.schemas.Schema<SubmissionTypeEnum.Raw, Tra
         }
         default: {
           return {
-            toString: () => value,
+            value: value,
             visit: (visitor) => visitor._other(value),
           };
         }
       }
     },
-    json: (value) => value.toString(),
+    json: (value) => value.value,
   });
 
 export declare namespace SubmissionTypeEnum {
@@ -15675,16 +15429,10 @@ export const SubmissionTypeState: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"test\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.test(value),
-          };
+          return TraceApi.submission.SubmissionTypeState.test(value);
         }
         case \\"workspace\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.workspace(value),
-          };
+          return TraceApi.submission.SubmissionTypeState.workspace(value);
         }
         default: {
           return {
@@ -15783,16 +15531,10 @@ export const TestCaseGrade: core.schemas.Schema<TestCaseGrade.Raw, TraceApi.subm
     parse: (value) => {
       switch (value.type) {
         case \\"hidden\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.hidden(value),
-          };
+          return TraceApi.submission.TestCaseGrade.hidden(value);
         }
         case \\"nonHidden\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.nonHidden(value),
-          };
+          return TraceApi.submission.TestCaseGrade.nonHidden(value);
         }
         default: {
           return {
@@ -15992,28 +15734,16 @@ export const TestSubmissionStatus: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"stopped\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stopped(),
-          };
+          return TraceApi.submission.TestSubmissionStatus.stopped();
         }
         case \\"errored\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.errored(value.value),
-          };
+          return TraceApi.submission.TestSubmissionStatus.errored(value.value);
         }
         case \\"running\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.running(value.value),
-          };
+          return TraceApi.submission.TestSubmissionStatus.running(value.value);
         }
         case \\"testCaseIdToState\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.testCaseIdToState(value.value),
-          };
+          return TraceApi.submission.TestSubmissionStatus.testCaseIdToState(value.value);
         }
         default: {
           return {
@@ -16143,40 +15873,22 @@ export const TestSubmissionUpdateInfo: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"running\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.running(value.value),
-          };
+          return TraceApi.submission.TestSubmissionUpdateInfo.running(value.value);
         }
         case \\"stopped\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stopped(),
-          };
+          return TraceApi.submission.TestSubmissionUpdateInfo.stopped();
         }
         case \\"errored\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.errored(value.value),
-          };
+          return TraceApi.submission.TestSubmissionUpdateInfo.errored(value.value);
         }
         case \\"gradedTestCase\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.gradedTestCase(value),
-          };
+          return TraceApi.submission.TestSubmissionUpdateInfo.gradedTestCase(value);
         }
         case \\"recordedTestCase\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.recordedTestCase(value),
-          };
+          return TraceApi.submission.TestSubmissionUpdateInfo.recordedTestCase(value);
         }
         case \\"finished\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.finished(),
-          };
+          return TraceApi.submission.TestSubmissionUpdateInfo.finished();
         }
         default: {
           return {
@@ -16616,34 +16328,19 @@ export const WorkspaceSubmissionStatus: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"stopped\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stopped(),
-          };
+          return TraceApi.submission.WorkspaceSubmissionStatus.stopped();
         }
         case \\"errored\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.errored(value.value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionStatus.errored(value.value);
         }
         case \\"running\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.running(value.value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionStatus.running(value.value);
         }
         case \\"ran\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ran(value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionStatus.ran(value);
         }
         case \\"traced\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.traced(value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionStatus.traced(value);
         }
         default: {
           return {
@@ -16772,46 +16469,25 @@ export const WorkspaceSubmissionUpdateInfo: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"running\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.running(value.value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.running(value.value);
         }
         case \\"ran\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ran(value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.ran(value);
         }
         case \\"stopped\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.stopped(),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.stopped();
         }
         case \\"traced\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.traced(),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.traced();
         }
         case \\"tracedV2\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.tracedV2(value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.tracedV2(value);
         }
         case \\"errored\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.errored(value.value),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.errored(value.value);
         }
         case \\"finished\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.finished(),
-          };
+          return TraceApi.submission.WorkspaceSubmissionUpdateInfo.finished();
         }
         default: {
           return {
@@ -17146,16 +16822,10 @@ export const AssertCorrectnessCheck: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"deepEquality\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.deepEquality(value),
-          };
+          return TraceApi.v2.problem.AssertCorrectnessCheck.deepEquality(value);
         }
         case \\"custom\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.custom(value),
-          };
+          return TraceApi.v2.problem.AssertCorrectnessCheck.custom(value);
         }
         default: {
           return {
@@ -17306,16 +16976,10 @@ export const CustomFiles: core.schemas.Schema<CustomFiles.Raw, TraceApi.v2.probl
     parse: (value) => {
       switch (value.type) {
         case \\"basic\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.basic(value),
-          };
+          return TraceApi.v2.problem.CustomFiles.basic(value);
         }
         case \\"custom\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.custom(value.value),
-          };
+          return TraceApi.v2.problem.CustomFiles.custom(value.value);
         }
         default: {
           return {
@@ -17522,22 +17186,13 @@ export const FunctionSignature: core.schemas.Schema<FunctionSignature.Raw, Trace
       parse: (value) => {
         switch (value.type) {
           case \\"void\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.void(value),
-            };
+            return TraceApi.v2.problem.FunctionSignature.void(value);
           }
           case \\"nonVoid\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.nonVoid(value),
-            };
+            return TraceApi.v2.problem.FunctionSignature.nonVoid(value);
           }
           case \\"voidThatTakesActualResult\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.voidThatTakesActualResult(value),
-            };
+            return TraceApi.v2.problem.FunctionSignature.voidThatTakesActualResult(value);
           }
           default: {
             return {
@@ -17972,16 +17627,10 @@ export const TestCaseFunction: core.schemas.Schema<TestCaseFunction.Raw, TraceAp
       parse: (value) => {
         switch (value.type) {
           case \\"withActualResult\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.withActualResult(value),
-            };
+            return TraceApi.v2.problem.TestCaseFunction.withActualResult(value);
           }
           case \\"custom\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.custom(value),
-            };
+            return TraceApi.v2.problem.TestCaseFunction.custom(value);
           }
           default: {
             return {
@@ -18103,16 +17752,10 @@ export const TestCaseImplementationDescriptionBoard: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"html\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.html(value.value),
-          };
+          return TraceApi.v2.problem.TestCaseImplementationDescriptionBoard.html(value.value);
         }
         case \\"paramId\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.paramId(value.value),
-          };
+          return TraceApi.v2.problem.TestCaseImplementationDescriptionBoard.paramId(value.value);
         }
         default: {
           return {
@@ -18165,16 +17808,10 @@ export const TestCaseImplementationReference: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"templateId\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.templateId(value.value),
-          };
+          return TraceApi.v2.problem.TestCaseImplementationReference.templateId(value.value);
         }
         case \\"implementation\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.implementation(value),
-          };
+          return TraceApi.v2.problem.TestCaseImplementationReference.implementation(value);
         }
         default: {
           return {
@@ -18582,16 +18219,10 @@ export const AssertCorrectnessCheck: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"deepEquality\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.deepEquality(value),
-          };
+          return TraceApi.v2.v3.problem.AssertCorrectnessCheck.deepEquality(value);
         }
         case \\"custom\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.custom(value),
-          };
+          return TraceApi.v2.v3.problem.AssertCorrectnessCheck.custom(value);
         }
         default: {
           return {
@@ -18744,16 +18375,10 @@ export const CustomFiles: core.schemas.Schema<CustomFiles.Raw, TraceApi.v2.v3.pr
     parse: (value) => {
       switch (value.type) {
         case \\"basic\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.basic(value),
-          };
+          return TraceApi.v2.v3.problem.CustomFiles.basic(value);
         }
         case \\"custom\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.custom(value.value),
-          };
+          return TraceApi.v2.v3.problem.CustomFiles.custom(value.value);
         }
         default: {
           return {
@@ -18960,22 +18585,13 @@ export const FunctionSignature: core.schemas.Schema<FunctionSignature.Raw, Trace
       parse: (value) => {
         switch (value.type) {
           case \\"void\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.void(value),
-            };
+            return TraceApi.v2.v3.problem.FunctionSignature.void(value);
           }
           case \\"nonVoid\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.nonVoid(value),
-            };
+            return TraceApi.v2.v3.problem.FunctionSignature.nonVoid(value);
           }
           case \\"voidThatTakesActualResult\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.voidThatTakesActualResult(value),
-            };
+            return TraceApi.v2.v3.problem.FunctionSignature.voidThatTakesActualResult(value);
           }
           default: {
             return {
@@ -19412,16 +19028,10 @@ export const TestCaseFunction: core.schemas.Schema<TestCaseFunction.Raw, TraceAp
       parse: (value) => {
         switch (value.type) {
           case \\"withActualResult\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.withActualResult(value),
-            };
+            return TraceApi.v2.v3.problem.TestCaseFunction.withActualResult(value);
           }
           case \\"custom\\": {
-            return {
-              ...value,
-              _visit: (visitor) => visitor.custom(value),
-            };
+            return TraceApi.v2.v3.problem.TestCaseFunction.custom(value);
           }
           default: {
             return {
@@ -19543,16 +19153,10 @@ export const TestCaseImplementationDescriptionBoard: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"html\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.html(value.value),
-          };
+          return TraceApi.v2.v3.problem.TestCaseImplementationDescriptionBoard.html(value.value);
         }
         case \\"paramId\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.paramId(value.value),
-          };
+          return TraceApi.v2.v3.problem.TestCaseImplementationDescriptionBoard.paramId(value.value);
         }
         default: {
           return {
@@ -19605,16 +19209,10 @@ export const TestCaseImplementationReference: core.schemas.Schema<
     parse: (value) => {
       switch (value.type) {
         case \\"templateId\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.templateId(value.value),
-          };
+          return TraceApi.v2.v3.problem.TestCaseImplementationReference.templateId(value.value);
         }
         case \\"implementation\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.implementation(value),
-          };
+          return TraceApi.v2.v3.problem.TestCaseImplementationReference.implementation(value);
         }
         default: {
           return {

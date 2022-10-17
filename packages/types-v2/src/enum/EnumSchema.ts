@@ -71,13 +71,9 @@ export class EnumSchema extends AbstractEnumFileDeclaration {
                 ],
                 undefined,
                 undefined,
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(parsedValueParameterName),
-                        EnumInterface.GET_METHOD_NAME
-                    ),
-                    undefined,
-                    undefined
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(parsedValueParameterName),
+                    EnumInterface.VALUE_PROPERTY_NAME
                 )
             ),
         });

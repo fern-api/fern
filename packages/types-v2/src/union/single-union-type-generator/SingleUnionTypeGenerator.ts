@@ -8,10 +8,11 @@ export interface SingleUnionTypeGenerator {
         file: SdkFile,
         opts: { isRaw: boolean }
     ): OptionalKind<PropertySignatureStructure>[];
-    getVisitorArguments(args: { referenceToUnionValue: ts.Expression }): ts.Expression[];
+    getVisitorArguments(args: { localReferenceToUnionValue: ts.Expression }): ts.Expression[];
     getVisitorArgumentsForBuilder(): ts.Expression[];
     getVisitMethodParameterType(file: SdkFile): ts.TypeNode | undefined;
     getParametersForBuilder(file: SdkFile): ts.ParameterDeclaration[];
+    getBuilderArguments(args: { localReferenceToUnionValue: ts.Expression }): ts.Expression[];
     getNonDiscriminantPropertiesForBuilder(file: SdkFile): ts.ObjectLiteralElementLike[];
     getNonDiscriminantPropertiesForSchema(file: SdkFile): Zurg.union.SingleUnionType["nonDiscriminantProperties"];
 }

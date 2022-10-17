@@ -10,8 +10,12 @@ export interface ParsedSingleUnionType {
     getInterfaceDeclaration(file: SdkFile): ParsedSingleUnionType.InterfaceDeclaration;
     getSchema(file: SdkFile): Zurg.union.SingleUnionType;
     getBuilder(file: SdkFile, args: { referenceToBuiltType: ts.TypeNode }): ts.ArrowFunction;
+    invokeBuilder(args: {
+        referenceToParsedUnionType: ts.Expression;
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.CallExpression;
     getBuilderName(): string;
-    getVisitMethod(args: { referenceToUnionValue: ts.Expression }): ts.ArrowFunction;
+    getVisitMethod(args: { localReferenceToUnionValue: ts.Expression }): ts.ArrowFunction;
     getVisitMethodSignature(file: SdkFile): ts.FunctionTypeNode;
     getVisitorKey(): string;
 }

@@ -1,6 +1,6 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { AbstractParsedSingleUnionType } from "./parsed-single-union-type/AbstractParsedSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
@@ -28,7 +28,7 @@ export class UnionSchema {
         {
             referenceToParsedShape,
             shouldIncludeDefaultCaseInTransform,
-        }: { referenceToParsedShape: ts.TypeNode; shouldIncludeDefaultCaseInTransform: boolean }
+        }: { referenceToParsedShape: Reference; shouldIncludeDefaultCaseInTransform: boolean }
     ): Zurg.Schema {
         const rawValueParameterName = "value";
         const parsedValueParameterName = "value";
@@ -36,13 +36,12 @@ export class UnionSchema {
         const transformCaseStatements: ts.CaseOrDefaultClause[] = this.parsedSingleUnionTypes.map((singleUnionType) =>
             ts.factory.createCaseClause(ts.factory.createStringLiteral(singleUnionType.getDiscriminantValue()), [
                 ts.factory.createBlock([
-                    this.getTransformReturnStatement({
-                        rawValueParameterName,
-                        shouldCastRawAsAny: false,
-                        visitMethod: singleUnionType.getVisitMethod({
-                            referenceToUnionValue: ts.factory.createIdentifier(rawValueParameterName),
-                        }),
-                    }),
+                    ts.factory.createReturnStatement(
+                        singleUnionType.invokeBuilder({
+                            referenceToParsedUnionType: referenceToParsedShape.expression,
+                            localReferenceToUnionValue: ts.factory.createIdentifier(rawValueParameterName),
+                        })
+                    ),
                 ]),
             ])
         );
@@ -71,7 +70,7 @@ export class UnionSchema {
                 singleUnionTypes: this.parsedSingleUnionTypes.map((singleUnionType) => singleUnionType.getSchema(file)),
             })
             .transform({
-                newShape: referenceToParsedShape,
+                newShape: referenceToParsedShape.typeNode,
                 parse: ts.factory.createArrowFunction(
                     undefined,
                     undefined,
