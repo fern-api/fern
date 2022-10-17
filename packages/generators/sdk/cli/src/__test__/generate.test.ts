@@ -11,7 +11,24 @@ import path from "path";
 import tmp from "tmp-promise";
 import { runGenerator } from "../runGenerator";
 
-const FIXTURES = ["trace"];
+interface FixtureInfo {
+    path: string;
+    orgName: string;
+    outputMode: "github" | "publish";
+}
+
+const FIXTURES: FixtureInfo[] = [
+    {
+        path: "trace",
+        orgName: "trace",
+        outputMode: "publish",
+    },
+    {
+        path: "nursery",
+        orgName: "fern",
+        outputMode: "github",
+    },
+];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
 describe("runGenerator", () => {
@@ -21,9 +38,9 @@ describe("runGenerator", () => {
     for (const fixture of FIXTURES) {
         it(
             // eslint-disable-next-line jest/valid-title
-            fixture,
+            fixture.path,
             async () => {
-                const fixturePath = path.join(FIXTURES_PATH, fixture);
+                const fixturePath = path.join(FIXTURES_PATH, fixture.path);
                 const irPath = path.join(fixturePath, "ir.json");
                 const configJsonPath = path.join(fixturePath, "config.json");
 
@@ -58,12 +75,16 @@ describe("runGenerator", () => {
                     irFilepath: irPath,
                     output: {
                         path: outputPath,
-                        mode: generateOutputMode("trace", "api"),
+                        mode: generateOutputMode(
+                            fixture.orgName,
+                            intermediateRepresentation.apiName,
+                            fixture.outputMode
+                        ),
                     },
                     publish: undefined,
                     customConfig: undefined,
-                    workspaceName: "api",
-                    organization: "trace",
+                    workspaceName: intermediateRepresentation.apiName,
+                    organization: fixture.orgName,
                     environment: FernGeneratorExec.GeneratorEnvironment.local(),
                 };
                 await writeFile(configJsonPath, JSON.stringify(config, undefined, 4));
@@ -95,40 +116,53 @@ describe("runGenerator", () => {
     }
 });
 
-function generateOutputMode(org: string, apiName: string): FernGeneratorExec.OutputMode {
-    return FernGeneratorExec.OutputMode.publish({
-        registries: {
-            maven: {
-                username: "",
-                password: "",
-                registryUrl: "",
-                group: "",
-            },
-            npm: {
-                registryUrl: "https://registry.npmjs.org",
-                token: "token",
-                scope: `fern-${org}`,
-            },
-        },
-        registriesV2: {
-            maven: {
-                username: "",
-                password: "",
-                registryUrl: "",
-                coordinate: "",
-            },
-            npm: {
-                registryUrl: "https://registry.npmjs.org",
-                token: "token",
-                packageName: `@fern-${org}/${apiName}-sdk`,
-            },
-            pypi: {
-                registryUrl: "",
-                username: "",
-                password: "",
-                packageName: "",
-            },
-        },
-        version: "",
-    });
+function generateOutputMode(org: string, apiName: string, mode: "github" | "publish"): FernGeneratorExec.OutputMode {
+    switch (mode) {
+        case "github":
+            return FernGeneratorExec.OutputMode.github({
+                version: "0.0.1",
+                repoUrl: `https://github.com/${org}/${apiName}}`,
+                publishInfo: FernGeneratorExec.GithubPublishInfo.npm({
+                    registryUrl: "https://npmjs.org/",
+                    tokenEnvironmentVariable: "NPM_TOKEN",
+                    packageName: `@${org}/${apiName}`,
+                }),
+            });
+        case "publish":
+            return FernGeneratorExec.OutputMode.publish({
+                registries: {
+                    maven: {
+                        username: "",
+                        password: "",
+                        registryUrl: "",
+                        group: "",
+                    },
+                    npm: {
+                        registryUrl: "https://registry.npmjs.org",
+                        token: "token",
+                        scope: `fern-${org}`,
+                    },
+                },
+                registriesV2: {
+                    maven: {
+                        username: "",
+                        password: "",
+                        registryUrl: "",
+                        coordinate: "",
+                    },
+                    npm: {
+                        registryUrl: "https://registry.npmjs.org",
+                        token: "token",
+                        packageName: `@fern-${org}/${apiName}-sdk`,
+                    },
+                    pypi: {
+                        registryUrl: "",
+                        username: "",
+                        password: "",
+                        packageName: "",
+                    },
+                },
+                version: "",
+            });
+    }
 }

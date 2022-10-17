@@ -1,7 +1,7 @@
 import { Logger } from "@fern-typescript/commons-v2";
 import execa from "execa";
 
-export type YarnRunner = (args: readonly string[], opts?: { env?: Record<string, string> }) => void;
+export type YarnRunner = (args: readonly string[], opts?: { env?: Record<string, string> }) => Promise<void>;
 
 export function createYarnRunner(logger: Logger, directoyOnDiskToWriteTo: string): YarnRunner {
     return async (args, { env } = {}) => {

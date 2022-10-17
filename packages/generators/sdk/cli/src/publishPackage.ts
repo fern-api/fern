@@ -4,27 +4,22 @@ import { Logger } from "@fern-typescript/commons-v2";
 import { PackageJsonScript } from "@fern-typescript/sdk-generator";
 import execa from "execa";
 import path from "path";
-import { NpmPackage } from "./npm-package/NpmPackage";
+import { PublishInfo } from "./npm-package/NpmPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
 import { YarnRunner } from "./yarnRunner";
 
-export async function publishPackageIfNecessary({
-    config,
+export async function publishPackage({
     generatorNotificationService,
-    npmPackage,
+    publishInfo,
     pathToPackageOnDisk,
     runYarnCommand,
 }: {
-    config: FernGeneratorExec.GeneratorConfig;
     generatorNotificationService: GeneratorNotificationService;
     logger: Logger;
-    npmPackage: NpmPackage;
+    publishInfo: PublishInfo;
     pathToPackageOnDisk: AbsoluteFilePath;
     runYarnCommand: YarnRunner;
 }): Promise<void> {
-    if (npmPackage.publishInfo == null || config.dryRun) {
-        return;
-    }
     const runCommandInOutputDirectory = async (executable: string, ...args: string[]): Promise<void> => {
         const command = execa(executable, args, {
             cwd: pathToPackageOnDisk,
@@ -41,10 +36,10 @@ export async function publishPackageIfNecessary({
     await runYarnCommand(["run", PackageJsonScript.BUILD]);
 
     await generatorNotificationService.sendUpdate(
-        FernGeneratorExec.GeneratorUpdate.publishing(npmPackage.publishInfo.packageCoordinate)
+        FernGeneratorExec.GeneratorUpdate.publishing(publishInfo.packageCoordinate)
     );
 
-    const { registryUrl, token } = npmPackage.publishInfo.registry;
+    const { registryUrl, token } = publishInfo.registry;
     await runNpmCommandInOutputDirectory("config", "set", "registry", registryUrl, "--location", "project");
     const parsedRegistryUrl = new URL(registryUrl);
     await runNpmCommandInOutputDirectory(
@@ -58,6 +53,6 @@ export async function publishPackageIfNecessary({
     await runNpmCommandInOutputDirectory("publish");
 
     await generatorNotificationService.sendUpdate(
-        FernGeneratorExec.GeneratorUpdate.published(npmPackage.publishInfo.packageCoordinate)
+        FernGeneratorExec.GeneratorUpdate.published(publishInfo.packageCoordinate)
     );
 }

@@ -5,8 +5,9 @@ import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import { readFile } from "fs/promises";
 import { generateFiles } from "./generateFiles";
 import { constructNpmPackage } from "./npm-package/constructNpmPackage";
-import { publishPackageIfNecessary } from "./publishPackageIfNecessary";
+import { publishPackage } from "./publishPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
+import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
 import { createYarnRunner } from "./yarnRunner";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -50,14 +51,22 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
             npmPackage,
             runYarnCommand,
         });
-        await publishPackageIfNecessary({
-            config,
-            generatorNotificationService,
-            logger,
-            npmPackage,
-            pathToPackageOnDisk,
-            runYarnCommand,
-        });
+
+        if (config.output.mode.type === "publish" && npmPackage.publishInfo != null && !config.dryRun) {
+            await publishPackage({
+                generatorNotificationService,
+                logger,
+                publishInfo: npmPackage.publishInfo,
+                pathToPackageOnDisk,
+                runYarnCommand,
+            });
+        } else if (config.output.mode.type === "github") {
+            await writeGitHubWorkflows({
+                config,
+                githubOutputMode: config.output.mode,
+            });
+        }
+
         await generatorNotificationService.sendUpdate(
             FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful())
         );

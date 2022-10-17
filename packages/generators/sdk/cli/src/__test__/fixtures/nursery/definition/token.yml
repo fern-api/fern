@@ -1,0 +1,70 @@
+imports:
+  owner: owner.yml
+
+types:
+  TokenId: string
+
+  CreateTokenRequest:
+    properties:
+      ownerId: owner.OwnerId
+      description: optional<string>
+
+  CreateTokenResponse:
+    properties:
+      token: string
+      tokenId: TokenId
+
+  GetTokenMetadataRequest:
+    properties:
+      token: string
+
+  TokenMetadata:
+    properties:
+      tokenId: TokenId
+      ownerId: owner.OwnerId
+      description: optional<string>
+      createdTime: datetime
+      status: TokenStatus
+
+  TokenStatus:
+    union:
+      active: {}
+      expired: {}
+      revoked: {}
+
+services:
+  http:
+    TokenService:
+      auth: false
+      base-path: /tokens
+      endpoints:
+        create:
+          method: POST
+          path: /create
+          request: CreateTokenRequest
+          response: CreateTokenResponse
+          errors:
+            - owner.OwnerNotFoundError
+
+        getTokenMetadata:
+          method: POST
+          path: /metadata
+          request: GetTokenMetadataRequest
+          response: TokenMetadata
+          errors:
+            - TokenNotFoundError
+
+        # add paging
+        getTokensForOwner:
+          method: GET
+          path: /owner/{ownerId}
+          path-parameters:
+            ownerId: owner.OwnerId
+          response: list<TokenMetadata>
+          errors:
+            - owner.OwnerNotFoundError
+
+errors:
+  TokenNotFoundError:
+    http:
+      statusCode: 404
