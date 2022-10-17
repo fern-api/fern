@@ -2299,10 +2299,7 @@ export const Error: core.schemas.Schema<Error.Raw, FernNurseryApi.owner.create.E
     parse: (value) => {
       switch (value.errorName) {
         case \\"OwnerAlreadyExistsError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ownerAlreadyExistsError(),
-          };
+          return FernNurseryApi.owner.create.Error.ownerAlreadyExistsError();
         }
       }
     },
@@ -2336,10 +2333,7 @@ export const Error: core.schemas.Schema<Error.Raw, FernNurseryApi.owner.get.Erro
     parse: (value) => {
       switch (value.errorName) {
         case \\"OwnerNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ownerNotFoundError(),
-          };
+          return FernNurseryApi.owner.get.Error.ownerNotFoundError();
         }
       }
     },
@@ -2381,10 +2375,7 @@ export const Error: core.schemas.Schema<Error.Raw, FernNurseryApi.owner.update.E
     parse: (value) => {
       switch (value.errorName) {
         case \\"OwnerNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ownerNotFoundError(),
-          };
+          return FernNurseryApi.owner.update.Error.ownerNotFoundError();
         }
       }
     },
@@ -2544,10 +2535,7 @@ export const Error: core.schemas.Schema<Error.Raw, FernNurseryApi.token.create.E
     parse: (value) => {
       switch (value.errorName) {
         case \\"OwnerNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ownerNotFoundError(),
-          };
+          return FernNurseryApi.token.create.Error.ownerNotFoundError();
         }
       }
     },
@@ -2581,10 +2569,7 @@ export const Error: core.schemas.Schema<Error.Raw, FernNurseryApi.token.getToken
     parse: (value) => {
       switch (value.errorName) {
         case \\"TokenNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.tokenNotFoundError(),
-          };
+          return FernNurseryApi.token.getTokenMetadata.Error.tokenNotFoundError();
         }
       }
     },
@@ -2621,10 +2606,7 @@ export const Error: core.schemas.Schema<Error.Raw, FernNurseryApi.token.getToken
     parse: (value) => {
       switch (value.errorName) {
         case \\"OwnerNotFoundError\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.ownerNotFoundError(),
-          };
+          return FernNurseryApi.token.getTokensForOwner.Error.ownerNotFoundError();
         }
       }
     },
@@ -2807,22 +2789,13 @@ export const TokenStatus: core.schemas.Schema<TokenStatus.Raw, FernNurseryApi.to
     parse: (value) => {
       switch (value.type) {
         case \\"active\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.active(),
-          };
+          return FernNurseryApi.token.TokenStatus.active();
         }
         case \\"expired\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.expired(),
-          };
+          return FernNurseryApi.token.TokenStatus.expired();
         }
         case \\"revoked\\": {
-          return {
-            ...value,
-            _visit: (visitor) => visitor.revoked(),
-          };
+          return FernNurseryApi.token.TokenStatus.revoked();
         }
         default: {
           return {
