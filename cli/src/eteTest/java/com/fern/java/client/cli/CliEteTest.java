@@ -55,18 +55,14 @@ public class CliEteTest {
             if (path.toFile().isDirectory()) {
                 continue;
             }
+            Path relativizedPath = dotFernProjectPath.relativize(path);
+            filesGenerated = true;
             try {
-                Path relativizedPath = dotFernProjectPath.relativize(path);
-                filesGenerated = true;
-                if (relativizedPath.getFileName().toString().endsWith("jar")) {
-                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
-                } else {
-                    String fileContents = Files.readString(path);
-
-                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
-                }
+                String fileContents = Files.readString(path);
+                expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to read file: " + path);
+                log.error("Encountered error while reading file {}", relativizedPath, e);
+                expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
             }
         }
         if (!filesGenerated) {

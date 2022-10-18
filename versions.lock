@@ -71,7 +71,7 @@ org.springframework:spring-web:5.3.19 (4 constraints: 6934f126)
 org.springframework:spring-webmvc:5.3.19 (2 constraints: 3012fb24)
 
 [Test dependencies]
-io.github.origin-energy:java-snapshot-testing-junit5:3.2.7 (1 constraints: 0e050736)
+io.github.origin-energy:java-snapshot-testing-junit5:3.3.2 (1 constraints: 0a050536)
 net.bytebuddy:byte-buddy:1.11.3 (1 constraints: 400b38de)
 net.bytebuddy:byte-buddy-agent:1.11.3 (1 constraints: 400b38de)
 org.apiguardian:apiguardian-api:1.1.0 (5 constraints: 0654a8a8)

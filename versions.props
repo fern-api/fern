@@ -15,7 +15,7 @@ com.fern-fern.fern:generator-logging-api-client = 0.0.25
 org.junit.jupiter:* = 5.5.0
 org.assertj:* = 3.19.0
 org.mockito:* = 3.11.2
-io.github.origin-energy:java-snapshot-* = 3.2.7
+io.github.origin-energy:java-snapshot-* = 3.3.2
 
 # jackson
 com.fasterxml.jackson.*:jackson-* = 2.12.3

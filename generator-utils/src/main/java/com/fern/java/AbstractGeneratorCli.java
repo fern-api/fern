@@ -36,6 +36,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -99,6 +100,8 @@ public abstract class AbstractGeneratorCli {
                                 mavenPackageCoordinate.mavenRegistryConfig().getRegistryUrl()));
                 generatorExecClient.sendUpdate(GeneratorUpdate.published(mavenPackageCoordinate.packageCoordinate()));
             });
+
+            runCommandBlocking(new String[] {"gradle", "wrapper"}, Paths.get(outputDirectory), Collections.emptyMap());
 
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (Exception e) {

@@ -49,34 +49,37 @@ public class ModelGeneratorEteTest {
                 ? currentPath.resolve(Paths.get("src/eteTest/.fern"))
                 : currentPath.resolve(Paths.get("model-generator/src/eteTest/.fern"));
         runCommand(dotFernProjectPath, new String[] {"fern-dev", "generate", "--local", "--keepDocker"});
+
+        Path basicApiPath = dotFernProjectPath.resolve("basic");
+        Path generatedJavaPath = basicApiPath.resolve("generated-java");
+
+        runCommand(generatedJavaPath, new String[] {"git", "init"});
+        runCommand(generatedJavaPath, new String[] {"git", "add", "-A"});
+        runCommand(generatedJavaPath, new String[] {"git", "commit", "-m", "generate"});
+        runCommand(generatedJavaPath, new String[] {"git", "clean", "-fdx"});
+        runCommand(generatedJavaPath, new String[] {"rm", "-rf", ".git"});
+
+        boolean filesGenerated = false;
         List<Path> paths = Files.walk(dotFernProjectPath.resolve(Paths.get("basic/generated-java")))
                 .collect(Collectors.toList());
-        boolean filesGenerated = false;
         for (Path path : paths) {
-            if (path.toFile().isDirectory()) {
+            if (path.toFile().isDirectory() || path.toAbsolutePath().toString().endsWith(".bat")) {
                 continue;
             }
+            Path relativizedPath = dotFernProjectPath.relativize(path);
+            filesGenerated = true;
             try {
-                Path relativizedPath = dotFernProjectPath.relativize(path);
-                filesGenerated = true;
-                if (relativizedPath.getFileName().toString().endsWith("jar")) {
-                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
-                } else {
-                    String fileContents = Files.readString(path);
-                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
-                }
+                String fileContents = Files.readString(path);
+                expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to read file: " + path);
+                log.error("Encountered error while reading file {}", relativizedPath, e);
+                expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
             }
         }
         if (!filesGenerated) {
             throw new RuntimeException("Failed to generate any files!");
         }
 
-        Path basicApiPath = dotFernProjectPath.resolve("basic");
-        Path generatedJavaPath = basicApiPath.resolve("generated-java");
-        runCommand(basicApiPath, new String[] {"cp", "gradlew", "generated-java/"});
-        runCommand(basicApiPath, new String[] {"cp", "-R", "gradle-wrapper/.", "generated-java/"});
         runCommand(generatedJavaPath, new String[] {"./gradlew", "compileJava"});
     }
 
