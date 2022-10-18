@@ -24,12 +24,13 @@ export async function writeGitHubWorkflows({
         runs-on: ubuntu-latest
     
         steps:
-          - uses: actions/checkout@v2
+          - name: Checkout repo
+            uses: actions/checkout@v2
     
           - name: Set up node
             uses: actions/setup-node@v2
     
-          - name: compile
+          - name: Compile
             run: yarn && yarn build
       
       publish:
@@ -38,14 +39,16 @@ export async function writeGitHubWorkflows({
         runs-on: ubuntu-latest
         
         steps:
-          - uses: actions/checkout@v2
+          - name: Checkout repo
+            uses: actions/checkout@v2
     
           - name: Set up node
             uses: actions/setup-node@v2
     
-          - run: yarn install
+          - name: Install dependencies
+            run: yarn install
     
-          - name: Publish to NPM
+          - name: Publish to npm
             run: |
               npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
               npm publish --ignore-scripts
