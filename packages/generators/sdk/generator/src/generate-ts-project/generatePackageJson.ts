@@ -10,6 +10,13 @@ export const PackageJsonScript = {
     FORMAT: "format",
 } as const;
 
+export const DEV_DEPENDENCIES: Record<string, string> = {
+    "@types/node": "17.0.33",
+    esbuild: "0.14.47",
+    prettier: "2.7.1",
+    typescript: "4.6.4",
+};
+
 export async function generatePackageJson({
     volume,
     packageName,
@@ -67,10 +74,7 @@ export async function generatePackageJson({
         }
         draft.devDependencies = {
             ...dependencies?.[DependencyType.DEV],
-            "@types/node": "17.0.33",
-            esbuild: "0.14.47",
-            prettier: "2.7.1",
-            typescript: "4.6.4",
+            ...DEV_DEPENDENCIES,
         };
     });
 
