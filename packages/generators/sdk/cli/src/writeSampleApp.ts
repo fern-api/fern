@@ -70,7 +70,7 @@ async function generateSampleApp({
     await generateGitIgnore(volume);
     await volume.promises.writeFile(
         getPathToProjectFile("app.ts"),
-        endent`import { ${exportDeclaration} } from ${npmPackage.packageName}`
+        endent`import { ${exportDeclaration} } from "${npmPackage.packageName}";`
     );
 }
 

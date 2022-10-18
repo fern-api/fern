@@ -1075,7 +1075,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
         "type": "file",
       },
       Object {
-        "contents": "import { FernNurseryApi } from @fern/nursery-api",
+        "contents": "import { FernNurseryApi } from \\"@fern/nursery-api\\";",
         "name": "app.ts",
         "type": "file",
       },
