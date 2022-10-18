@@ -24,18 +24,20 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public interface BuildGradleConfig {
+public abstract class BuildGradleConfig {
 
-    List<String> dependencies();
+    public static final String MAVEN_USERNAME_ENV_VAR = "MAVEN_USERNAME";
+    public static final String MAVEN_PASSWORD_ENV_VAR = "MAVEN_PASSWORD";
+    public static final String MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR = "MAVEN_PUBLISH_REGISTRY_URL";
 
-    Optional<PublishingConfig> publishing();
+    public abstract List<String> dependencies();
+
+    public abstract Optional<PublishingConfig> publishing();
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
     interface PublishingConfig {
         String version();
-
-        String registryUrl();
 
         String group();
 
@@ -46,7 +48,7 @@ public interface BuildGradleConfig {
         }
     }
 
-    default String getFileContents() {
+    public final String getFileContents() {
         String dependencies = "dependencies {\n" + dependencies().stream().collect(Collectors.joining("\n")) + "\n}\n";
         String result = "plugins {\n"
                 + "    id 'java-library'\n"
@@ -80,10 +82,10 @@ public interface BuildGradleConfig {
                     + "    }\n"
                     + "    repositories {\n"
                     + "        maven {\n"
-                    + "            url '" + publishingConfig.registryUrl() + "'\n"
+                    + "            url \"$System.env." + MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR + "\"\n"
                     + "            credentials {\n"
-                    + "                username \"$System.env.MAVEN_USERNAME\"\n"
-                    + "                password \"$System.env.MAVEN_PASSWORD\"\n"
+                    + "                username \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"\n"
+                    + "                password \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"\n"
                     + "            }\n"
                     + "        }\n"
                     + "    }\n"

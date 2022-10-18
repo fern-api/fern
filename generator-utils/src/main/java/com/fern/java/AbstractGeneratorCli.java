@@ -91,10 +91,12 @@ public abstract class AbstractGeneratorCli {
                         new String[] {"gradle", "publish"},
                         Paths.get(outputDirectory),
                         Map.of(
-                                "MAVEN_USERNAME",
+                                BuildGradleConfig.MAVEN_USERNAME_ENV_VAR,
                                 mavenPackageCoordinate.mavenRegistryConfig().getUsername(),
-                                "MAVEN_PASSWORD",
-                                mavenPackageCoordinate.mavenRegistryConfig().getPassword()));
+                                BuildGradleConfig.MAVEN_PASSWORD_ENV_VAR,
+                                mavenPackageCoordinate.mavenRegistryConfig().getPassword(),
+                                BuildGradleConfig.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
+                                mavenPackageCoordinate.mavenRegistryConfig().getRegistryUrl()));
                 generatorExecClient.sendUpdate(GeneratorUpdate.published(mavenPackageCoordinate.packageCoordinate()));
             });
 
@@ -128,7 +130,6 @@ public abstract class AbstractGeneratorCli {
                     }
                     return ImmutablePublishingConfig.builder()
                             .version(generatorPublishConfig.getVersion())
-                            .registryUrl(mavenRegistryConfigV2.getRegistryUrl())
                             .group(splitCoordinate[0])
                             .artifact(splitCoordinate[1])
                             .build();
