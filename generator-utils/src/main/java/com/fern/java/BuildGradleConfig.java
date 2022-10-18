@@ -37,10 +37,6 @@ public interface BuildGradleConfig {
 
         String registryUrl();
 
-        String registryUsername();
-
-        String registryPassword();
-
         String group();
 
         String artifact();
@@ -86,8 +82,8 @@ public interface BuildGradleConfig {
                     + "        maven {\n"
                     + "            url '" + publishingConfig.registryUrl() + "'\n"
                     + "            credentials {\n"
-                    + "                username '" + publishingConfig.registryUsername() + "'\n"
-                    + "                password '" + publishingConfig.registryPassword() + "'\n"
+                    + "                username \"$System.env.MAVEN_USERNAME\"\n"
+                    + "                password \"$System.env.MAVEN_PASSWORD\"\n"
                     + "            }\n"
                     + "        }\n"
                     + "    }\n"

@@ -25,6 +25,7 @@ import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.output.AbstractGeneratedFileOutput;
 import com.squareup.javapoet.JavaFile;
@@ -36,8 +37,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,9 +67,10 @@ public abstract class AbstractGeneratorCli {
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
-            Optional<PackageCoordinate> maybePackageCoordinate = getMavenCoordinateFromRegistryConfig(generatorConfig);
-            maybePackageCoordinate.ifPresent(packageCoordinate -> {
-                generatorExecClient.sendUpdate(GeneratorUpdate.publishing(packageCoordinate));
+            Optional<MavenPackageCoordinate> maybeMavenPkgCoordinate =
+                    getMavenCoordinateFromRegistryConfig(generatorConfig);
+            maybeMavenPkgCoordinate.ifPresent(mavenPackageCoordinate -> {
+                generatorExecClient.sendUpdate(GeneratorUpdate.publishing(mavenPackageCoordinate.packageCoordinate()));
             });
 
             IntermediateRepresentation ir = getIr(generatorConfig);
@@ -82,9 +86,16 @@ public abstract class AbstractGeneratorCli {
             generatedFiles.forEach(generatedFileOutput ->
                     writeFile(Paths.get(outputDirectory, SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
 
-            maybePackageCoordinate.ifPresent(packageCoordinate -> {
-                runCommandBlocking(new String[] {"gradle", "publish"}, Paths.get(outputDirectory));
-                generatorExecClient.sendUpdate(GeneratorUpdate.published(packageCoordinate));
+            maybeMavenPkgCoordinate.ifPresent(mavenPackageCoordinate -> {
+                runCommandBlocking(
+                        new String[] {"gradle", "publish"},
+                        Paths.get(outputDirectory),
+                        Map.of(
+                                "MAVEN_USERNAME",
+                                mavenPackageCoordinate.mavenRegistryConfig().getUsername(),
+                                "MAVEN_PASSWORD",
+                                mavenPackageCoordinate.mavenRegistryConfig().getPassword()));
+                generatorExecClient.sendUpdate(GeneratorUpdate.published(mavenPackageCoordinate.packageCoordinate()));
             });
 
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
@@ -118,8 +129,6 @@ public abstract class AbstractGeneratorCli {
                     return ImmutablePublishingConfig.builder()
                             .version(generatorPublishConfig.getVersion())
                             .registryUrl(mavenRegistryConfigV2.getRegistryUrl())
-                            .registryUsername(mavenRegistryConfigV2.getUsername())
-                            .registryPassword(mavenRegistryConfigV2.getPassword())
                             .group(splitCoordinate[0])
                             .artifact(splitCoordinate[1])
                             .build();
@@ -127,7 +136,20 @@ public abstract class AbstractGeneratorCli {
                 .build();
     }
 
-    private static Optional<PackageCoordinate> getMavenCoordinateFromRegistryConfig(GeneratorConfig generatorConfig) {
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    interface MavenPackageCoordinate {
+        PackageCoordinate packageCoordinate();
+
+        MavenRegistryConfigV2 mavenRegistryConfig();
+
+        static ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
+            return ImmutableMavenPackageCoordinate.builder();
+        }
+    }
+
+    private static Optional<MavenPackageCoordinate> getMavenCoordinateFromRegistryConfig(
+            GeneratorConfig generatorConfig) {
         if (generatorConfig.getPublish().isEmpty()) {
             return Optional.empty();
         }
@@ -140,11 +162,14 @@ public abstract class AbstractGeneratorCli {
             throw new IllegalStateException(
                     "Received invalid maven coordinate: " + mavenRegistryConfigV2.getCoordinate());
         }
-        return Optional.of(PackageCoordinate.maven(MavenCoordinate.builder()
-                .group(splitCoordinate[0])
-                .artifact(splitCoordinate[1])
-                .version(generatorPublishConfig.getVersion())
-                .build()));
+        return Optional.of(MavenPackageCoordinate.builder()
+                .packageCoordinate(PackageCoordinate.maven(MavenCoordinate.builder()
+                        .group(splitCoordinate[0])
+                        .artifact(splitCoordinate[1])
+                        .version(generatorPublishConfig.getVersion())
+                        .build()))
+                .mavenRegistryConfig(mavenRegistryConfigV2)
+                .build());
     }
 
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {
@@ -180,9 +205,9 @@ public abstract class AbstractGeneratorCli {
         }
     }
 
-    private static void runCommandBlocking(String[] command, Path workingDirectory) {
+    private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
         try {
-            Process process = runCommandAsync(command, workingDirectory);
+            Process process = runCommandAsync(command, workingDirectory, environment);
             int exitCode = process.waitFor();
             if (exitCode != 0) {
                 throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
@@ -193,9 +218,10 @@ public abstract class AbstractGeneratorCli {
         }
     }
 
-    private static Process runCommandAsync(String[] command, Path workingDirectory) {
+    private static Process runCommandAsync(String[] command, Path workingDirectory, Map<String, String> environment) {
         try {
             ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
+            pb.environment().putAll(environment);
             Process process = pb.start();
             StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
             StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
