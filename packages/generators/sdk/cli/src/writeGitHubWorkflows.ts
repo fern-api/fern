@@ -25,10 +25,10 @@ export async function writeGitHubWorkflows({
     
         steps:
           - name: Checkout repo
-            uses: actions/checkout@v2
+            uses: actions/checkout@3
     
           - name: Set up node
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
     
           - name: Compile
             run: yarn && yarn build
@@ -40,10 +40,10 @@ export async function writeGitHubWorkflows({
         
         steps:
           - name: Checkout repo
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
     
           - name: Set up node
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
     
           - name: Install dependencies
             run: yarn install
