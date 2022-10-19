@@ -1,3 +1,4 @@
+export { constructCasingsGenerator, type CasingsGenerator } from "./casings/CasingsGenerator";
 export { constructHttpPath } from "./converters/services/constructHttpPath";
 export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
@@ -7,6 +8,7 @@ export {
 } from "./converters/type-declarations/convertUnionTypeDeclaration";
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
+export { Language } from "./language";
 export { type ResolvedType } from "./resolvers/ResolvedType";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";

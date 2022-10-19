@@ -8,7 +8,10 @@ types:
     extends: commons.WithDocs
     properties:
       name: DeclaredErrorName
-      discriminantValue: commons.WireStringWithAllCasings
+      discriminantValue:
+        type: commons.WireStringWithAllCasings
+        docs: this is deprecated. use discriminantValueV2 instead
+      discriminantValueV2: commons.NameAndWireValue
       type:
         docs: this is deprecated. use typeV3 instead.
         type: types.Type
@@ -20,11 +23,17 @@ types:
       statusCode: integer
   DeclaredErrorName:
     properties:
-      fernFilepath: commons.FernFilepath
+      fernFilepath:
+        docs: this is deprecated. use fernFilepathV2
+        type: commons.FernFilepath
+      fernFilepathV2: commons.FernFilepathV2
       name:
-        docs: this is deprecated. use nameV2 instead
+        docs: this is deprecated. use nameV3 instead
         type: string
-      nameV2: commons.StringWithAllCasings
+      nameV2:
+        docs: this is deprecated. use nameV3 instead
+        type: commons.StringWithAllCasings
+      nameV3: commons.Name
   HttpErrorConfiguration:
     properties:
       statusCode: integer

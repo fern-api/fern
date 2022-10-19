@@ -1,7 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { WebSocketChannel, WebSocketMessenger } from "@fern-fern/ir-model/services/websocket";
 import { FernFileContext } from "../../FernFileContext";
-import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertWebsocketChannel({
@@ -17,6 +16,7 @@ export function convertWebsocketChannel({
         docs: channelDefinition.docs,
         name: {
             fernFilepath: file.fernFilepath,
+            fernFilepathV2: file.fernFilepathV2,
             name: channelId,
         },
         path: channelDefinition.path,
@@ -49,7 +49,7 @@ function convertWebSocketMessenger({
                 ? Object.entries(messenger.operations).map(([operationKey, operation]) => {
                       return {
                           docs: operation.docs,
-                          name: generateWireStringWithAllCasings({
+                          name: file.casingsGenerator.generateWireCasingsV1({
                               wireValue: operationKey,
                               name: operation.name ?? operationKey,
                           }),

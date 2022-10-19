@@ -17,7 +17,11 @@ export async function releaseWorkspace({
     context: TaskContext;
     version: string;
 }): Promise<void> {
-    const intermediateRepresentation = await generateIrForWorkspace({ workspace, context });
+    const intermediateRepresentation = await generateIrForWorkspace({
+        workspace,
+        context,
+        generationLanguage: undefined,
+    });
     await runRemoteGenerationForWorkspace({
         workspace,
         intermediateRepresentation,

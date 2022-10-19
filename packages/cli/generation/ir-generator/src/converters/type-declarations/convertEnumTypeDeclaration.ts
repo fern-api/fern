@@ -1,11 +1,21 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Type } from "@fern-fern/ir-model/types";
-import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
+import { FernFileContext } from "../../FernFileContext";
 
-export function convertEnumTypeDeclaration(_enum: RawSchemas.EnumSchema): Type {
+export function convertEnumTypeDeclaration({
+    _enum,
+    file,
+}: {
+    _enum: RawSchemas.EnumSchema;
+    file: FernFileContext;
+}): Type {
     return Type.enum({
         values: _enum.enum.map((value) => ({
-            name: generateWireStringWithAllCasings({
+            name: file.casingsGenerator.generateWireCasingsV1({
+                wireValue: typeof value === "string" ? value : value.value,
+                name: getEnumName(value).name,
+            }),
+            nameV2: file.casingsGenerator.generateNameAndWireValue({
                 wireValue: typeof value === "string" ? value : value.value,
                 name: getEnumName(value).name,
             }),

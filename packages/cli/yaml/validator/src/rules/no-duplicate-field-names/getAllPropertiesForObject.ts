@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/core-utils";
 import { constructFernFileContext, getPropertyName, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export interface ObjectPropertyWithPath {
     name: string;
@@ -53,6 +54,7 @@ export function getAllPropertiesForObject({
                 file: constructFernFileContext({
                     relativeFilepath: filepathOfDeclaration,
                     serviceFile,
+                    casingsGenerator: CASINGS_GENERATOR,
                 }),
             });
 

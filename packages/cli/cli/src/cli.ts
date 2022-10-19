@@ -1,5 +1,6 @@
 import { cwd, noop, resolve } from "@fern-api/core-utils";
 import { initialize } from "@fern-api/init";
+import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
@@ -269,17 +270,21 @@ function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
 
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "ir",
+        "ir <path-to-output>",
         false, // hide from help message
         (yargs) =>
             yargs
-                .option("output", {
+                .positional("path-to-output", {
                     type: "string",
                     description: "Path to write intermediate representation (IR)",
                     demandOption: true,
                 })
                 .option("api", {
                     string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("language", {
+                    choices: Object.values(Language),
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
@@ -288,8 +293,9 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
-                irFilepath: resolve(cwd(), argv.output),
+                irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
+                generationLanguage: argv.language,
             });
         }
     );

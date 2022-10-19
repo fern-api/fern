@@ -52,6 +52,7 @@ export class TypeResolverImpl implements TypeResolver {
             file: constructFernFileContext({
                 relativeFilepath: parsedReference.relativeFilepath,
                 serviceFile,
+                casingsGenerator: file.casingsGenerator,
             }),
         };
     }

@@ -4,9 +4,17 @@ imports:
 types:
   Constants:
     properties:
-      errors: ErrorConstants
+      errors:
+        docs: this is deprecated. use errorsV2
+        type: ErrorConstants
+      errorsV2: ErrorConstantsV2
   ErrorConstants:
     properties:
       errorDiscriminant: commons.WireStringWithAllCasings
       errorInstanceIdKey: commons.WireStringWithAllCasings
       errorContentKey: commons.WireStringWithAllCasings
+  ErrorConstantsV2:
+    properties:
+      errorDiscriminant: commons.NameAndWireValue
+      errorInstanceIdKey: commons.NameAndWireValue
+      errorContentKey: commons.NameAndWireValue

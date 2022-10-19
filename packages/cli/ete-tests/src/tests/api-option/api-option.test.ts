@@ -13,7 +13,7 @@ function testFixture(fixtureName: string) {
     describe(fixtureName, () => {
         it("Fails if API is not specified", async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { stdout, failed } = await runFernCli(["ir", "--output", (await tmp.file()).path], {
+            const { stdout, failed } = await runFernCli(["ir", (await tmp.file()).path], {
                 cwd: fixturePath,
                 reject: false,
             });
@@ -23,7 +23,7 @@ function testFixture(fixtureName: string) {
 
         it("Succeeds if API is specified", async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { failed } = await runFernCli(["--api", "api1", "ir", "--output", (await tmp.file()).path], {
+            const { failed } = await runFernCli(["--api", "api1", "ir", (await tmp.file()).path], {
                 cwd: fixturePath,
             });
             expect(failed).toBe(false);
@@ -31,7 +31,7 @@ function testFixture(fixtureName: string) {
 
         it("Fail if API does not exist", async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { failed } = await runFernCli(["--api", "api3", "ir", "--output", (await tmp.file()).path], {
+            const { failed } = await runFernCli(["--api", "api3", "ir", (await tmp.file()).path], {
                 cwd: fixturePath,
                 reject: false,
             });

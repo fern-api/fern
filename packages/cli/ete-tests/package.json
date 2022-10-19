@@ -28,6 +28,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "execa": "^5.1.1",
     "js-yaml": "^4.1.0",

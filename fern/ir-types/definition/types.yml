@@ -15,11 +15,17 @@ types:
 
   DeclaredTypeName:
     properties:
-      fernFilepath: commons.FernFilepath
+      fernFilepath:
+        docs: this is deprecated. use fernFilepathV2
+        type: commons.FernFilepath
+      fernFilepathV2: commons.FernFilepathV2
       name:
-        docs: this is deprecated. use nameV2 instead
+        docs: this is deprecated. use nameV3 instead
         type: string
-      nameV2: commons.StringWithAllCasings
+      nameV2:
+        docs: this is deprecated. use nameV3 instead
+        type: commons.StringWithAllCasings
+      nameV3: commons.Name
 
   Type:
     discriminant:
@@ -65,7 +71,10 @@ types:
   EnumValue:
     extends: commons.WithDocs
     properties:
-      name: commons.WireStringWithAllCasings
+      name:
+        type: commons.WireStringWithAllCasings
+        docs: this is deprecated. use nameV2 instead
+      nameV2: commons.NameAndWireValue
       value: string
 
   ObjectTypeDeclaration:
@@ -77,18 +86,29 @@ types:
   ObjectProperty:
     extends: commons.WithDocs
     properties:
-      name: commons.WireStringWithAllCasings
+      name:
+        docs: this is deprecated. use nameV2 instead
+        type: commons.WireStringWithAllCasings
+      nameV2: commons.NameAndWireValue
       valueType: TypeReference
 
   UnionTypeDeclaration:
     properties:
-      discriminant: string
-      discriminantV2: commons.WireStringWithAllCasings
+      discriminant:
+        docs: this is deprecated. use discriminantV3 instead
+        type: string
+      discriminantV2:
+        docs: this is deprecated. use discriminantV3 instead
+        type: commons.WireStringWithAllCasings
+      discriminantV3: commons.NameAndWireValue
       types: list<SingleUnionType>
   SingleUnionType:
     extends: commons.WithDocs
     properties:
-      discriminantValue: commons.WireStringWithAllCasings
+      discriminantValue:
+        docs: this is deprecated. use discriminantValueV2 instead
+        type: commons.WireStringWithAllCasings
+      discriminantValueV2: commons.NameAndWireValue
       valueType:
         type: TypeReference
         docs: This is deprecated. Use shape instead.
@@ -103,7 +123,10 @@ types:
       noProperties: {}
   SingleUnionTypeProperty:
     properties:
-      name: commons.WireStringWithAllCasings
+      name:
+        docs: this is deprecated. use nameV2 instead
+        type: commons.WireStringWithAllCasings
+      nameV2: commons.NameAndWireValue
       type: TypeReference
 
   TypeReference:

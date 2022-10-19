@@ -21,7 +21,10 @@ types:
     extends: commons.WithDocs
     properties:
       id: HttpEndpointId
-      name: commons.StringWithAllCasings
+      name:
+        type: commons.StringWithAllCasings
+        docs: this is deprecated. use nameV2 instead
+      nameV2: commons.Name
       method: HttpMethod
       headers: list<HttpHeader>
       path: HttpPath
@@ -52,17 +55,26 @@ types:
   HttpHeader:
     extends: commons.WithDocs
     properties:
-      name: commons.WireStringWithAllCasings
+      name:
+        docs: this is deprecated. use nameV2 instead.
+        type: commons.WireStringWithAllCasings
+      nameV2: commons.NameAndWireValue
       valueType: types.TypeReference
   PathParameter:
     extends: commons.WithDocs
     properties:
-      name: commons.StringWithAllCasings
+      name:
+        docs: this is deprecated. use nameV2 instead
+        type: commons.StringWithAllCasings
+      nameV2: commons.Name
       valueType: types.TypeReference
   QueryParameter:
     extends: commons.WithDocs
     properties:
-      name: commons.WireStringWithAllCasings
+      name:
+        docs: this is deprecated. use nameV2 instead
+        type: commons.StringWithAllCasings
+      nameV2: commons.NameAndWireValue
       valueType: types.TypeReference
   HttpRequest:
     extends: commons.WithDocs
