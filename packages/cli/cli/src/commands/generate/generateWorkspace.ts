@@ -18,7 +18,11 @@ export async function generateWorkspace({
     organization: string;
     context: TaskContext;
 }): Promise<void> {
-    const intermediateRepresentation = await generateIrForWorkspace({ workspace, context });
+    const intermediateRepresentation = await generateIrForWorkspace({
+        workspace,
+        context,
+        generationLanguage: undefined,
+    });
 
     if (runLocal) {
         await runLocalGenerationForWorkspace({

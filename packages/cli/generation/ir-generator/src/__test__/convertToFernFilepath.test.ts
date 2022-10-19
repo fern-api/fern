@@ -1,5 +1,8 @@
 import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";
+
+const casingsGenerator = constructCasingsGenerator(undefined);
 
 describe("convertToFernFilepath", () => {
     it("post.yml", () => {
@@ -12,7 +15,7 @@ describe("convertToFernFilepath", () => {
                 screamingSnakeCase: "POSTS",
             },
         ];
-        expect(convertToFernFilepath("posts.yml")).toEqual(expected);
+        expect(convertToFernFilepath({ relativeFilepath: "posts.yml", casingsGenerator })).toEqual(expected);
     });
 
     it("a/b.yml", () => {
@@ -32,7 +35,7 @@ describe("convertToFernFilepath", () => {
                 screamingSnakeCase: "B",
             },
         ];
-        expect(convertToFernFilepath("a/b.yml")).toEqual(expected);
+        expect(convertToFernFilepath({ relativeFilepath: "a/b.yml", casingsGenerator })).toEqual(expected);
     });
 
     it("a/b/c.yml", () => {
@@ -59,6 +62,6 @@ describe("convertToFernFilepath", () => {
                 screamingSnakeCase: "C",
             },
         ];
-        expect(convertToFernFilepath("a/b/c.yml")).toEqual(expected);
+        expect(convertToFernFilepath({ relativeFilepath: "a/b/c.yml", casingsGenerator })).toEqual(expected);
     });
 });

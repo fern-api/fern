@@ -1,6 +1,7 @@
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 import { isRawObjectDefinition, isRawUnionDefinition } from "@fern-api/yaml-schema";
 import { Rule, RuleViolation } from "../../Rule";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoObjectSinglePropertyKeyRule: Rule = {
     name: "no-object-single-property-key",
@@ -20,7 +21,11 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                             singleUnionType.type != null
                                 ? typeResolver.resolveType({
                                       type: singleUnionType.type,
-                                      file: constructFernFileContext({ relativeFilepath, serviceFile: contents }),
+                                      file: constructFernFileContext({
+                                          relativeFilepath,
+                                          serviceFile: contents,
+                                          casingsGenerator: CASINGS_GENERATOR,
+                                      }),
                                   })
                                 : undefined;
                         if (resolvedType == null || resolvedType._type === "void") {

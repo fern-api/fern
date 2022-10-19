@@ -3349,6 +3349,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5

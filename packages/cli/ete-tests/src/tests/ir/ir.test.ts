@@ -1,28 +1,28 @@
-import { readFile, rm } from "fs/promises";
-import path from "path";
-import { runFernCli } from "../../utils/runFernCli";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { Language } from "@fern-api/ir-generator";
+import { generateIrAsString } from "./generateIrAsString";
 
-const FIXTURES_DIR = path.join(__dirname, "fixtures");
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
+
+const FIXTURES = ["simple"];
 
 describe("ir", () => {
-    itFixture("simple");
+    for (const fixtureName of FIXTURES) {
+        itFixture(fixtureName);
+        for (const language of Object.values(Language)) {
+            itFixture(fixtureName, language);
+        }
+    }
 });
 
-function itFixture(fixtureName: string) {
+function itFixture(fixtureName: string, language?: Language) {
     it(
         // eslint-disable-next-line jest/valid-title
         fixtureName,
         async () => {
-            const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const irOutputPath = path.join(fixturePath, "ir.json");
-            await rm(irOutputPath, { force: true, recursive: true });
-
-            await runFernCli(["ir", "--output", irOutputPath], {
-                cwd: fixturePath,
-            });
-
-            const irContents = await readFile(irOutputPath);
-            expect(irContents.toString()).toMatchSnapshot();
+            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixtureName));
+            const irContents = await generateIrAsString({ fixturePath, language });
+            expect(irContents).toMatchSnapshot();
         },
         90_000
     );

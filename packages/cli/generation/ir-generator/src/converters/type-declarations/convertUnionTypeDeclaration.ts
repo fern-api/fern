@@ -2,7 +2,6 @@ import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
@@ -19,7 +18,7 @@ export function convertUnionTypeDeclaration({
     const discriminant = getUnionDiscriminant(union);
     return Type.union({
         discriminant,
-        discriminantV2: generateWireStringWithAllCasings({
+        discriminantV2: file.casingsGenerator.generateWireCasings({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name,
         }),
@@ -27,7 +26,7 @@ export function convertUnionTypeDeclaration({
             const rawType: string | undefined =
                 typeof unionedType === "string" ? unionedType : unionedType.type != null ? unionedType.type : undefined;
 
-            const discriminantValue = generateWireStringWithAllCasings({
+            const discriminantValue = file.casingsGenerator.generateWireCasings({
                 wireValue: unionKey,
                 name: getUnionedTypeName({ unionKey, unionedType }).name,
             });
@@ -126,7 +125,7 @@ function getSingleUnionTypeProperties({
         return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
     } else {
         return SingleUnionTypeProperties.singleProperty({
-            name: generateWireStringWithAllCasings({
+            name: file.casingsGenerator.generateWireCasings({
                 wireValue: getSinglePropertyKeyValue(rawSingleUnionType),
                 name: getSinglePropertyKeyName(rawSingleUnionType),
             }),

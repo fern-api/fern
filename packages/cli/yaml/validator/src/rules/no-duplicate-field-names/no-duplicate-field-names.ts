@@ -8,6 +8,7 @@ import {
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
     getAllPropertiesForObject,
     ObjectPropertyPath,
@@ -95,6 +96,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     file: constructFernFileContext({
                                         relativeFilepath,
                                         serviceFile: contents,
+                                        casingsGenerator: CASINGS_GENERATOR,
                                     }),
                                 });
 

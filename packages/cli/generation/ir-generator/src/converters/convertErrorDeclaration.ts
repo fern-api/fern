@@ -2,7 +2,6 @@ import { RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../resolvers/TypeResolver";
-import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../utils/generateCasings";
 import { convertType } from "./type-declarations/convertTypeDeclaration";
 
 export function convertErrorDeclaration({
@@ -30,10 +29,10 @@ export function convertErrorDeclaration({
     return {
         name: {
             name: errorName,
-            nameV2: generateStringWithAllCasings(errorName),
+            nameV2: file.casingsGenerator.generateNameCasings(errorName),
             fernFilepath: file.fernFilepath,
         },
-        discriminantValue: generateWireStringWithAllCasings({
+        discriminantValue: file.casingsGenerator.generateWireCasings({
             wireValue: errorName,
             name: errorName,
         }),

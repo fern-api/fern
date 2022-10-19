@@ -3,7 +3,6 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
-import { generateStringWithAllCasings, generateWireStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertHttpRequest } from "./convertHttpRequest";
@@ -49,7 +48,7 @@ export function convertHttpService({
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 id: endpointKey,
-                name: generateStringWithAllCasings(endpointKey),
+                name: file.casingsGenerator.generateNameCasings(endpointKey),
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 docs: endpoint.docs,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
@@ -70,7 +69,7 @@ export function convertHttpService({
                               const valueType = file.parseTypeReference(parameter);
                               return {
                                   docs: typeof parameter !== "string" ? parameter.docs : undefined,
-                                  name: generateWireStringWithAllCasings({
+                                  name: file.casingsGenerator.generateWireCasings({
                                       wireValue: parameterName,
                                       name:
                                           typeof parameter !== "string" && parameter.name != null
@@ -107,7 +106,7 @@ function convertPathParameter({
 }): PathParameter {
     return {
         docs: typeof parameter !== "string" ? parameter.docs : undefined,
-        name: generateStringWithAllCasings(parameterName),
+        name: file.casingsGenerator.generateNameCasings(parameterName),
         valueType: file.parseTypeReference(parameter),
     };
 }
@@ -139,7 +138,7 @@ export function convertHttpHeader({
     file: FernFileContext;
 }): HttpHeader {
     return {
-        name: generateWireStringWithAllCasings({
+        name: file.casingsGenerator.generateWireCasings({
             wireValue: headerKey,
             name: typeof header !== "string" && header.name != null ? header.name : headerKey,
         }),

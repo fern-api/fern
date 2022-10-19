@@ -2,20 +2,31 @@ import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { FERN_CONSTANTS, FERN_CONSTANTS_V2 } from "./FernConstants";
+import { FERN_CONSTANTS, generateFernConstantsV2 } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
+import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 
-export async function generateIntermediateRepresentation(workspace: Workspace): Promise<IntermediateRepresentation> {
+export async function generateIntermediateRepresentation({
+    workspace,
+    generationLanguage,
+}: {
+    workspace: Workspace;
+    generationLanguage: Language | undefined;
+}): Promise<IntermediateRepresentation> {
+    const casingsGenerator = constructCasingsGenerator(generationLanguage);
+
     const rootApiFile = constructFernFileContext({
         relativeFilepath: undefined,
         serviceFile: workspace.rootApiFile,
+        casingsGenerator,
     });
 
     const intermediateRepresentation: IntermediateRepresentation = {
@@ -31,7 +42,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
             websocket: [],
         },
         constants: FERN_CONSTANTS,
-        constantsV2: FERN_CONSTANTS_V2,
+        constantsV2: generateFernConstantsV2(casingsGenerator),
     };
 
     const typeResolver = new TypeResolverImpl(workspace);
@@ -105,7 +116,7 @@ export async function generateIntermediateRepresentation(workspace: Workspace): 
 
     for (const [filepath, schema] of entries(workspace.serviceFiles)) {
         await visitServiceFile({
-            file: constructFernFileContext({ relativeFilepath: filepath, serviceFile: schema }),
+            file: constructFernFileContext({ relativeFilepath: filepath, serviceFile: schema, casingsGenerator }),
             schema,
         });
     }

@@ -44,3 +44,8 @@ services:
           response: Movie
           errors:
             - NotFoundError
+        delete:
+          method: DELETE
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId

@@ -2,7 +2,6 @@ import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { generateStringWithAllCasings } from "../../utils/generateCasings";
 import { getDocs } from "../../utils/getDocs";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
@@ -26,7 +25,7 @@ export function convertTypeDeclaration({
         name: {
             fernFilepath: file.fernFilepath,
             name: typeName,
-            nameV2: generateStringWithAllCasings(typeName),
+            nameV2: file.casingsGenerator.generateNameCasings(typeName),
         },
         shape: convertType({ typeDeclaration, file, typeResolver }),
         referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
@@ -46,6 +45,6 @@ export function convertType({
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         union: (union) => convertUnionTypeDeclaration({ union, file, typeResolver }),
-        enum: convertEnumTypeDeclaration,
+        enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file }),
     });
 }
