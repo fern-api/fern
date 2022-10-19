@@ -5,13 +5,8 @@ from types import TracebackType
 from typing import List, Optional, Sequence, Type
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
+from fern_python.external_dependencies import Pydantic
 
-from .pydantic_exports import (
-    PYDANTIC_BASE_MODEL_REFERENCE,
-    PYDANTIC_FIELD_REFERENCE,
-    PYDANTIC_PRIVATE_ATTR_REFERENCE,
-    get_reference_to_pydantic_export,
-)
 from .pydantic_field import PydanticField
 
 
@@ -31,7 +26,7 @@ class PydanticModel:
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
             name=name,
-            extends=base_models or [PYDANTIC_BASE_MODEL_REFERENCE],
+            extends=base_models or [Pydantic.BaseModel],
         )
         self._base_models = base_models or []
         self._local_class_reference = (parent or source_file).add_class_declaration(declaration=self._class_declaration)
@@ -82,7 +77,7 @@ class PydanticModel:
                 type_hint=type_hint,
                 initializer=AST.Expression(
                     AST.ClassInstantiation(
-                        PYDANTIC_PRIVATE_ATTR_REFERENCE,
+                        Pydantic.PrivateAttr,
                         kwargs=[("default_factory", default_factory)] if default_factory is not None else None,
                     )
                 ),
@@ -158,12 +153,7 @@ class PydanticModel:
                     return_type=field_type,
                 ),
                 body=body,
-                decorators=[
-                    AST.FunctionInvocation(
-                        function_definition=get_reference_to_pydantic_export("validator"),
-                        args=[AST.Expression(expression=f'"{field_name}"')],
-                    )
-                ],
+                decorators=[Pydantic.validator(field_name)],
             ),
         )
 
@@ -187,7 +177,7 @@ class PydanticModel:
                     return_type=value_type,
                 ),
                 body=body,
-                decorators=[AST.ReferenceNode(get_reference_to_pydantic_export("root_validator"))],
+                decorators=[Pydantic.root_validator],
             ),
         )
 
@@ -271,7 +261,7 @@ def get_field_name_initializer(
     json_field_name: str, default_factory: Optional[AST.Expression]
 ) -> AST.CodeWriterFunction:
     def write(writer: AST.NodeWriter) -> None:
-        writer.write_reference(PYDANTIC_FIELD_REFERENCE)
+        writer.write_reference(Pydantic.Field)
         writer.write(f'(alias="{json_field_name}"')
         if default_factory is not None:
             writer.write(", default_factory=")

@@ -4,11 +4,8 @@ import fern.ir.pydantic as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
-from fern_python.pydantic_codegen import (
-    PYDANTIC_FIELD_REFERENCE,
-    PydanticField,
-    PydanticModel,
-)
+from fern_python.external_dependencies import Pydantic
+from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
 from ..custom_config import CustomConfig
@@ -181,7 +178,7 @@ class UnionGenerator(AbstractTypeGenerator):
                 root_type=root_type,
                 annotation=AST.Expression(
                     AST.FunctionInvocation(
-                        function_definition=PYDANTIC_FIELD_REFERENCE,
+                        function_definition=Pydantic.Field,
                         kwargs=[
                             (
                                 "discriminator",

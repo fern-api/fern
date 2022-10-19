@@ -1,9 +1,9 @@
 import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
+from fern_python.external_dependencies import FastAPI
 
 from ..context import FastApiGeneratorContext
-from ..external_dependencies import FastAPI
 from .abstract_auth_generator import AbstractAuthGenerator
 
 
