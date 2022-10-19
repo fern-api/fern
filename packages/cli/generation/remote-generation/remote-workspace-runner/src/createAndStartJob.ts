@@ -1,3 +1,4 @@
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-client";
@@ -12,18 +13,18 @@ export async function createAndStartJob({
     workspace,
     organization,
     intermediateRepresentation,
-    generatorConfigs,
+    generatorInvocation,
     version,
     context,
 }: {
     workspace: Workspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
-    generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
+    generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization, generatorConfigs, version, context });
+    const job = await createJob({ workspace, organization, generatorInvocation, version, context });
     await startJob({ intermediateRepresentation, job, context });
     return job;
 }
@@ -31,24 +32,28 @@ export async function createAndStartJob({
 async function createJob({
     workspace,
     organization,
-    generatorConfigs,
+    generatorInvocation,
     version,
     context,
 }: {
     workspace: Workspace;
     organization: string;
-    generatorConfigs: FernFiddle.remoteGen.GeneratorConfigV2[];
+    generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const generatorConfigsWithEnvVarSubstitutions = generatorConfigs.map((generatorConfig) =>
-        substituteEnvVariables(generatorConfig, context)
-    );
+    const generatorConfig: FernFiddle.GeneratorConfigV2 = {
+        id: generatorInvocation.name,
+        version: generatorInvocation.version,
+        outputMode: generatorInvocation.outputMode,
+        customConfig: generatorInvocation.config,
+    };
+    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
     const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
         apiName: workspace.name,
         version,
         organizationName: organization,
-        generators: generatorConfigsWithEnvVarSubstitutions,
+        generators: [generatorConfigsWithEnvVarSubstitutions],
     });
 
     if (!createResponse.ok) {
