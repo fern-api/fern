@@ -25,7 +25,7 @@ export async function writeGitHubWorkflows({
     
         steps:
           - name: Checkout repo
-            uses: actions/checkout@3
+            uses: actions/checkout@v3
     
           - name: Set up node
             uses: actions/setup-node@v3
