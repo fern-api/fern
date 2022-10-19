@@ -52,7 +52,7 @@
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-client": "^0.0.54",
-    "@fern-fern/ir-model": "0.0.241",
+    "@fern-fern/ir-model": "0.0.258",
     "ansi-escapes": "^5.0.0",
     "boxen": "^7.0.0",
     "chalk": "^5.0.1",

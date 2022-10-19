@@ -16,6 +16,7 @@ export function convertWebsocketChannel({
         docs: channelDefinition.docs,
         name: {
             fernFilepath: file.fernFilepath,
+            fernFilepathV2: file.fernFilepathV2,
             name: channelId,
         },
         path: channelDefinition.path,
@@ -48,7 +49,7 @@ function convertWebSocketMessenger({
                 ? Object.entries(messenger.operations).map(([operationKey, operation]) => {
                       return {
                           docs: operation.docs,
-                          name: file.casingsGenerator.generateWireCasings({
+                          name: file.casingsGenerator.generateWireCasingsV1({
                               wireValue: operationKey,
                               name: operation.name ?? operationKey,
                           }),

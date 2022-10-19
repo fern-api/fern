@@ -16,7 +16,7 @@ export function convertResponseErrorsV2({
     file: FernFileContext;
     errorResolver: ErrorResolver;
 }): ResponseErrorsV2 {
-    const discriminant = file.casingsGenerator.generateWireCasings({
+    const discriminant = file.casingsGenerator.generateWireCasingsV1({
         wireValue: ERROR_DISCRIMINANT,
         name: ERROR_DISCRIMINANT,
     });
@@ -44,14 +44,14 @@ export function convertResponseErrorsV2({
 
             return {
                 docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                discriminantValue: file.casingsGenerator.generateWireCasings({
+                discriminantValue: file.casingsGenerator.generateWireCasingsV1({
                     wireValue: discriminantValue,
                     name: discriminantValue,
                 }),
                 shape:
                     rawErrorType != null && rawErrorType !== RawPrimitiveType.void
                         ? ResponseErrorShape.singleProperty({
-                              name: file.casingsGenerator.generateWireCasings({
+                              name: file.casingsGenerator.generateWireCasingsV1({
                                   wireValue: ERROR_CONTENT_PROPERTY_NAME,
                                   name: ERROR_CONTENT_PROPERTY_NAME,
                               }),

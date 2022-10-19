@@ -29,10 +29,16 @@ export function convertErrorDeclaration({
     return {
         name: {
             name: errorName,
-            nameV2: file.casingsGenerator.generateNameCasings(errorName),
+            nameV2: file.casingsGenerator.generateNameCasingsV1(errorName),
+            nameV3: file.casingsGenerator.generateName(errorName),
             fernFilepath: file.fernFilepath,
+            fernFilepathV2: file.fernFilepathV2,
         },
-        discriminantValue: file.casingsGenerator.generateWireCasings({
+        discriminantValue: file.casingsGenerator.generateWireCasingsV1({
+            wireValue: errorName,
+            name: errorName,
+        }),
+        discriminantValueV2: file.casingsGenerator.generateNameAndWireValue({
             wireValue: errorName,
             name: errorName,
         }),

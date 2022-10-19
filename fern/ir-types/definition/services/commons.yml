@@ -6,7 +6,10 @@ imports:
 types:
   DeclaredServiceName:
     properties:
-      fernFilepath: commons.FernFilepath
+      fernFilepath:
+        docs: this is deprecated. use fernFilepathV2
+        type: commons.FernFilepath
+      fernFilepathV2: commons.FernFilepathV2
       name: string
 
   ResponseErrors: list<ResponseError>
