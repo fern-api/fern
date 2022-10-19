@@ -7770,7 +7770,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.54"],\
             ["@fern-fern/ir-model", "npm:0.0.258"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/inquirer", "npm:9.0.1"],\
@@ -7984,6 +7983,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-fern/fiddle-client", "virtual:7a0d022688cabe639b6484b8f72dad74127d9f764dc3fd210fbc00c43f9980b4094b8a045f943fad495e6a9c884b037e102a707b514358b394a7b71d57604f74#npm:0.0.54"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -8311,10 +8311,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
+            ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.54"],\
+            ["@fern-fern/fiddle-client", "virtual:7a0d022688cabe639b6484b8f72dad74127d9f764dc3fd210fbc00c43f9980b4094b8a045f943fad495e6a9c884b037e102a707b514358b394a7b71d57604f74#npm:0.0.54"],\
             ["@fern-fern/ir-model", "npm:0.0.258"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8497,18 +8498,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.54", {\
-          "packageLocation": "./.yarn/__virtual__/@fern-fern-fiddle-client-virtual-5f80b6c0b8/0/cache/@fern-fern-fiddle-client-npm-0.0.54-47a2c64a84-9b03ebace4.zip/node_modules/@fern-fern/fiddle-client/",\
+        ["virtual:7a0d022688cabe639b6484b8f72dad74127d9f764dc3fd210fbc00c43f9980b4094b8a045f943fad495e6a9c884b037e102a707b514358b394a7b71d57604f74#npm:0.0.54", {\
+          "packageLocation": "./.yarn/__virtual__/@fern-fern-fiddle-client-virtual-41da949bc5/0/cache/@fern-fern-fiddle-client-npm-0.0.54-47a2c64a84-9b03ebace4.zip/node_modules/@fern-fern/fiddle-client/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-client", "virtual:e82592a2fa54b3817c130e87ea72c1c2da25fb5bd7d7805a56e6d3c473ec17c10c77ea416434af2afd8b941456e07453b6304d648fc307d419e9321f1a2f9de3#npm:0.0.54"],\
+            ["@fern-fern/fiddle-client", "virtual:7a0d022688cabe639b6484b8f72dad74127d9f764dc3fd210fbc00c43f9980b4094b8a045f943fad495e6a9c884b037e102a707b514358b394a7b71d57604f74#npm:0.0.54"],\
             ["@types/axios", null],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "packagePeers": [\
-            "@types/axios",\
-            "axios"\
+            "@types/axios"\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,0 +1,70 @@
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
+import { InteractiveTaskContext } from "@fern-api/task-context";
+import { Workspace } from "@fern-api/workspace-loader";
+import { createAndStartJob } from "./createAndStartJob";
+import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
+import { RemoteTaskHandler } from "./RemoteTaskHandler";
+
+export async function runRemoteGenerationForGenerator({
+    organization,
+    workspace,
+    interactiveTaskContext,
+    generatorInvocation,
+    version,
+}: {
+    organization: string;
+    workspace: Workspace;
+    interactiveTaskContext: InteractiveTaskContext;
+    generatorInvocation: GeneratorInvocation;
+    version: string | undefined;
+}): Promise<void> {
+    const intermediateRepresentation = await generateIntermediateRepresentation({
+        workspace,
+        generationLanguage: getLanguageFromGeneratorName(generatorInvocation.name),
+    });
+
+    const job = await createAndStartJob({
+        workspace,
+        organization,
+        generatorInvocation,
+        context: interactiveTaskContext,
+        version,
+        intermediateRepresentation,
+    });
+    interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
+
+    const taskId = job.taskIds[0];
+    if (taskId == null) {
+        interactiveTaskContext.failWithoutThrowing("Did not receive a task ID.");
+        return;
+    }
+    interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
+
+    const taskHandler = new RemoteTaskHandler({
+        job,
+        taskId,
+        generatorInvocation,
+        interactiveTaskContext,
+    });
+
+    await pollJobAndReportStatus({
+        job,
+        taskHandler,
+        taskId,
+        context: interactiveTaskContext,
+    });
+}
+
+function getLanguageFromGeneratorName(generatorName: string) {
+    if (generatorName.includes("typescript")) {
+        return Language.TYPESCRIPT;
+    }
+    if (generatorName.includes("java")) {
+        return Language.TYPESCRIPT;
+    }
+    if (generatorName.includes("python")) {
+        return Language.TYPESCRIPT;
+    }
+    return undefined;
+}

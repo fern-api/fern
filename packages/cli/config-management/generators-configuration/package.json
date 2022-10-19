@@ -29,6 +29,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-fern/fiddle-client": "^0.0.54",
     "js-yaml": "^4.1.0",
     "zod": "^3.14.3"
   },

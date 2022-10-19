@@ -1,9 +1,8 @@
-import { AbsoluteFilePath, assertNever, dirname, resolve } from "@fern-api/core-utils";
-import { GeneratorsConfiguration, MavenGeneratorPublishing, NpmGeneratorPublishing } from "./GeneratorsConfiguration";
-import { GeneratorPublishingSchema } from "./schemas/GeneratorPublishingSchema";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/core-utils";
+import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
+import { getOutputModeForDraft } from "./getOutputModeForDraft";
+import { getOutputModeForRelease } from "./getOutputModeForRelease";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
-import { MavenPublishingSchema } from "./schemas/MavenPublishingSchema";
-import { NpmPublishingSchema } from "./schemas/NpmPublishingSchema";
 
 export function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -22,7 +21,6 @@ export function convertGeneratorsConfiguration({
                           type: "draft",
                           name: draftInvocation.name,
                           version: draftInvocation.version,
-                          mode: draftInvocation.mode,
                           absolutePathToLocalOutput:
                               draftInvocation["output-path"] != null
                                   ? resolve(
@@ -31,6 +29,7 @@ export function convertGeneratorsConfiguration({
                                     )
                                   : undefined,
                           config: draftInvocation.config,
+                          outputMode: getOutputModeForDraft(draftInvocation),
                       };
                   })
                 : [],
@@ -41,45 +40,10 @@ export function convertGeneratorsConfiguration({
                           type: "release",
                           name: releaseInvocation.name,
                           version: releaseInvocation.version,
-                          publishing: convertReleasePublishing(releaseInvocation.publishing),
-                          github: releaseInvocation.github,
                           config: releaseInvocation.config,
+                          outputMode: getOutputModeForRelease(releaseInvocation),
                       };
                   })
                 : [],
     };
-}
-
-function convertReleasePublishing(
-    rawGeneratorPublishing: GeneratorPublishingSchema
-): NpmGeneratorPublishing | MavenGeneratorPublishing {
-    if (isNpmPublishing(rawGeneratorPublishing)) {
-        return {
-            type: "npm",
-            url: rawGeneratorPublishing.npm.url,
-            token: rawGeneratorPublishing.npm.token,
-            packageName: rawGeneratorPublishing.npm["package-name"],
-        };
-    } else if (isMavenPublishing(rawGeneratorPublishing)) {
-        return {
-            type: "maven",
-            url: rawGeneratorPublishing.maven.url,
-            username: rawGeneratorPublishing.maven.username,
-            password: rawGeneratorPublishing.maven.password,
-            coordinate: rawGeneratorPublishing.maven.coordinate,
-        };
-    }
-    assertNever(rawGeneratorPublishing);
-}
-
-function isNpmPublishing(rawPublishingSchema: GeneratorPublishingSchema): rawPublishingSchema is NpmPublishingSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (rawPublishingSchema as NpmPublishingSchema).npm != null;
-}
-
-function isMavenPublishing(
-    rawPublishingSchema: GeneratorPublishingSchema
-): rawPublishingSchema is MavenPublishingSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (rawPublishingSchema as MavenPublishingSchema).maven != null;
 }

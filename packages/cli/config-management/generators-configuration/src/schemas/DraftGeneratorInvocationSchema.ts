@@ -2,7 +2,7 @@ import { z } from "zod";
 import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema";
 
 export const DraftGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({
-    mode: z.literal("publish").or(z.literal("download-files")),
+    mode: z.union([z.literal("publish"), z.literal("download-files")]),
     "output-path": z.optional(z.string()),
 });
 

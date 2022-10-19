@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, noop } from "@fern-api/core-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
-import { Finishable, InteractiveTaskContext } from "@fern-api/task-context";
+import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import axios from "axios";
 import chalk from "chalk";
@@ -16,13 +16,13 @@ export declare namespace RemoteTaskHandler {
     export interface Init {
         job: FernFiddle.remoteGen.CreateJobResponse;
         taskId: FernFiddle.remoteGen.RemoteGenTaskId;
-        interactiveTaskContext: Finishable & InteractiveTaskContext;
+        interactiveTaskContext: InteractiveTaskContext;
         generatorInvocation: GeneratorInvocation;
     }
 }
 
 export class RemoteTaskHandler {
-    private context: Finishable & InteractiveTaskContext;
+    private context: InteractiveTaskContext;
     private generatorInvocation: GeneratorInvocation;
     private lengthOfLastLogs = 0;
 
@@ -34,10 +34,6 @@ export class RemoteTaskHandler {
     public processUpdate(remoteTask: FernFiddle.remoteGen.Task | undefined): void {
         if (remoteTask == null) {
             this.context.failWithoutThrowing("Task is missing on job status");
-            return;
-        }
-
-        if (this.isFinished()) {
             return;
         }
 
@@ -86,22 +82,22 @@ export class RemoteTaskHandler {
                     log_s3_url(s3PreSignedReadUrl);
                 }
                 this.context.failWithoutThrowing(message);
-                this.context.finish();
+                this.#isFinished = true;
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
                 log_s3_url(finishedStatus.s3PreSignedReadUrl);
-                this.context.finish();
+                this.#isFinished = true;
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
-                this.context.finish();
             },
         });
     }
 
-    public isFinished(): boolean {
-        return this.context.isFinished();
+    #isFinished = false;
+    public get isFinished(): boolean {
+        return this.#isFinished;
     }
 
     private async maybeDownloadFiles(status: FernFiddle.remoteGen.FinishedTaskStatus): Promise<void> {
@@ -122,7 +118,7 @@ async function downloadFilesForTask({
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
-    context: Finishable & InteractiveTaskContext;
+    context: InteractiveTaskContext;
 }) {
     const tmpDir = await tmp.dir({
         prefix: "fern",
