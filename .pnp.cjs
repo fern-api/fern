@@ -7770,7 +7770,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-client", "virtual:7a0d022688cabe639b6484b8f72dad74127d9f764dc3fd210fbc00c43f9980b4094b8a045f943fad495e6a9c884b037e102a707b514358b394a7b71d57604f74#npm:0.0.54"],\
             ["@fern-fern/ir-model", "npm:0.0.258"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/inquirer", "npm:9.0.1"],\

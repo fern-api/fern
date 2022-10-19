@@ -3174,7 +3174,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-client": ^0.0.54
     "@fern-fern/ir-model": 0.0.258
     "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.1
