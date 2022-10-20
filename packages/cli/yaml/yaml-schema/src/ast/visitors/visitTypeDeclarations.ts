@@ -71,6 +71,7 @@ export async function visitTypeDeclaration({
                             await visitObject(property, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
+                                availability: noop,
                                 type: async (type) => {
                                     await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
                                 },
@@ -118,6 +119,7 @@ export async function visitTypeDeclaration({
                         if (typeof enumType !== "string") {
                             await visitObject(enumType, {
                                 docs: createDocsVisitor(visitor, nodePathForEnumType),
+                                availability: noop,
                                 name: noop,
                                 value: noop,
                             });

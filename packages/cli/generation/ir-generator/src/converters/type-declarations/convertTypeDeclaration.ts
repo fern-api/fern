@@ -2,7 +2,7 @@ import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getDocs } from "../../utils/getDocs";
+import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
@@ -21,7 +21,7 @@ export function convertTypeDeclaration({
     typeResolver: TypeResolver;
 }): TypeDeclaration {
     return {
-        docs: getDocs(typeDeclaration),
+        ...convertDeclaration(typeDeclaration),
         name: {
             fernFilepath: file.fernFilepath,
             fernFilepathV2: file.fernFilepathV2,

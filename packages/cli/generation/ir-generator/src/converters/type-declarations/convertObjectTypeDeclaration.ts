@@ -1,8 +1,8 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Type } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { getDocs } from "../../utils/getDocs";
 import { parseTypeName } from "../../utils/parseTypeName";
+import { convertDeclaration } from "../convertDeclaration";
 
 export function convertObjectTypeDeclaration({
     object,
@@ -21,6 +21,7 @@ export function convertObjectTypeDeclaration({
         properties:
             object.properties != null
                 ? Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
+                      ...convertDeclaration(propertyDefinition),
                       name: file.casingsGenerator.generateWireCasingsV1({
                           wireValue: propertyKey,
                           name: getPropertyName({ propertyKey, declaration: propertyDefinition }).name,
@@ -30,7 +31,6 @@ export function convertObjectTypeDeclaration({
                           name: getPropertyName({ propertyKey, declaration: propertyDefinition }).name,
                       }),
                       valueType: file.parseTypeReference(propertyDefinition),
-                      docs: getDocs(propertyDefinition),
                   }))
                 : [],
     });
