@@ -152,5 +152,7 @@ export const RESERVED_KEYWORDS: Record<Language, Set<string>> = {
         "while",
         "with",
         "yield",
+        // the following aren't actually reserved, but we treat them as unavailable
+        "self",
     ]),
 };
