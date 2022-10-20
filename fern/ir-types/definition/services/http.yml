@@ -4,9 +4,10 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
+  declaration: ../declaration.yml
 types:
   HttpService:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name: serviceCommons.DeclaredServiceName
       basePath:
@@ -18,7 +19,7 @@ types:
       pathParameters: list<PathParameter>
   HttpEndpointId: string
   HttpEndpoint:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       id: HttpEndpointId
       name:
@@ -53,7 +54,7 @@ types:
       - PATCH
       - DELETE
   HttpHeader:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name:
         docs: this is deprecated. use nameV2 instead.
@@ -61,7 +62,7 @@ types:
       nameV2: commons.NameAndWireValue
       valueType: types.TypeReference
   PathParameter:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name:
         docs: this is deprecated. use nameV2 instead
@@ -69,7 +70,7 @@ types:
       nameV2: commons.Name
       valueType: types.TypeReference
   QueryParameter:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name:
         docs: this is deprecated. use nameV2 instead

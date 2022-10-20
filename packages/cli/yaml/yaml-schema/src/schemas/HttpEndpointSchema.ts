@@ -1,13 +1,13 @@
 import { z } from "zod";
+import { DeclarationSchema } from "./DeclarationSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 import { HttpRequestSchema } from "./HttpRequestSchema";
 import { HttpResponseSchema } from "./HttpResponseSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
-import { WithDocsSchema } from "./WithDocsSchema";
 
-export const HttpEndpointSchema = WithDocsSchema.extend({
+export const HttpEndpointSchema = DeclarationSchema.extend({
     method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
     path: z.string(),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { DeclarationSchema } from "./DeclarationSchema";
 
 // This return type is too crazy to write explicitly!
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -17,12 +17,12 @@ export function extendTypeReferenceSchema<T extends z.ZodRawShape>(extension: T)
 export const TypeReferenceSchema = extendTypeReferenceSchema({});
 export type TypeReferenceSchema = z.infer<typeof TypeReferenceSchema>;
 
-export const TypeReferenceWithDocsSchema = extendTypeReferenceSchema(WithDocsSchema.shape);
-export type TypeReferenceWithDocsSchema = z.infer<typeof TypeReferenceWithDocsSchema>;
+export const TypeReferenceDeclarationSchema = extendTypeReferenceSchema(DeclarationSchema.shape);
+export type TypeReferenceDeclarationSchema = z.infer<typeof TypeReferenceDeclarationSchema>;
 
-export const TypeReferenceWithDocsAndNameSchema = extendTypeReferenceSchema(
-    WithDocsSchema.extend({
+export const TypeReferenceDeclarationWithNameSchema = extendTypeReferenceSchema(
+    DeclarationSchema.extend({
         name: z.optional(z.string()),
     }).shape
 );
-export type TypeReferenceWithDocsAndNameSchema = z.infer<typeof TypeReferenceWithDocsAndNameSchema>;
+export type TypeReferenceWithDocsAndNameSchema = z.infer<typeof TypeReferenceDeclarationWithNameSchema>;
