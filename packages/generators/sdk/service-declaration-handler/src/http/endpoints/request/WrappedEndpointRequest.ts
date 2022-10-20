@@ -44,7 +44,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
                 pathParameter,
             })
         );
-        this.parsedHeaders = this.endpoint.headers.map((header) => ({
+        this.parsedHeaders = [...this.service.headers, ...this.endpoint.headers].map((header) => ({
             keyInWrapper: header.name.camelCase,
             header,
         }));
