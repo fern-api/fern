@@ -32,6 +32,22 @@
                                 "docs": {
                                   "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                 },
+                                "availability": {
+                                  "anyOf": [
+                                    { "type": "string", "enum": ["in-development", "pre-release", "deprecated"] },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "status": {
+                                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability/anyOf/0"
+                                        },
+                                        "message": { "type": "string" }
+                                      },
+                                      "required": ["status"],
+                                      "additionalProperties": false
+                                    }
+                                  ]
+                                },
                                 "name": { "type": "string" }
                               },
                               "required": ["type"],
@@ -136,6 +152,9 @@
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
+                            "availability": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                            },
                             "name": { "type": "string" },
                             "value": { "type": "string" }
                           },
@@ -174,6 +193,9 @@
                             "type": { "type": "string" },
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                            },
+                            "availability": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
                             }
                           },
                           "required": ["type"],
@@ -194,6 +216,9 @@
                       "type": "object",
                       "properties": {
                         "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                        "availability": {
+                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                        },
                         "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                         "path": { "type": "string" },
                         "path-parameters": {
