@@ -47,7 +47,7 @@ export class EnumInterface extends AbstractEnumFileDeclaration {
         );
     }
 
-    private getInterfaceName(): string {
+    public getInterfaceName(): string {
         return this.typeName;
     }
 

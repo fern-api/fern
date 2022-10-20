@@ -56,7 +56,11 @@ export class EnumTypeGenerator extends AbstractTypeSchemaGenerator {
         for (const parsedEnumValue of this.parsedEnumValues) {
             typeFile.sourceFile.addVariableStatement(parsedEnumValue.getBuiltObjectDeclaration(this.enumInterface));
         }
-        this.enumConst.writeToFile(typeFile);
+        this.enumConst.writeToFile({
+            file: typeFile,
+            enumInterface: this.enumInterface,
+            enumModule: this.enumModule,
+        });
         this.enumModule.writeToFile(typeFile, this.visitHelper);
         this.writeSchemaToFile(schemaFile);
     }

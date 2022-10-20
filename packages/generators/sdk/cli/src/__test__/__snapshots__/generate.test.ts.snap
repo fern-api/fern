@@ -5672,10 +5672,29 @@ export const Language = {
   Java: _Java,
   Javascript: _Javascript,
   Python: _Python,
+  _parse: (value: string): Language => {
+    switch (value) {
+      case \\"JAVA\\": {
+        return _Java;
+      }
+      case \\"JAVASCRIPT\\": {
+        return _Javascript;
+      }
+      case \\"PYTHON\\": {
+        return _Python;
+      }
+      default: {
+        return {
+          value: value as Language.RawValue,
+          visit: (visitor) => visitor._other(value),
+        };
+      }
+    }
+  },
 } as const;
 
 export declare namespace Language {
-  type RawValue = \\"JAVA\\" | \\"JAVASCRIPT\\" | \\"PYTHON\\" | string;
+  type RawValue = \\"JAVA\\" | \\"JAVASCRIPT\\" | \\"PYTHON\\";
 
   interface _Visitor<Result> {
     java: () => Result;
@@ -6755,10 +6774,29 @@ export const MigrationStatus = {
   Running: _Running,
   Failed: _Failed,
   Finished: _Finished,
+  _parse: (value: string): MigrationStatus => {
+    switch (value) {
+      case \\"RUNNING\\": {
+        return _Running;
+      }
+      case \\"FAILED\\": {
+        return _Failed;
+      }
+      case \\"FINISHED\\": {
+        return _Finished;
+      }
+      default: {
+        return {
+          value: value as MigrationStatus.RawValue,
+          visit: (visitor) => visitor._other(value),
+        };
+      }
+    }
+  },
 } as const;
 
 export declare namespace MigrationStatus {
-  type RawValue = \\"RUNNING\\" | \\"FAILED\\" | \\"FINISHED\\" | string;
+  type RawValue = \\"RUNNING\\" | \\"FAILED\\" | \\"FINISHED\\";
 
   interface _Visitor<Result> {
     running: () => Result;
@@ -9133,6 +9171,34 @@ export const ExecutionSessionStatus = {
   RunningContainer: _RunningContainer,
   LiveContainer: _LiveContainer,
   FailedToLaunch: _FailedToLaunch,
+  _parse: (value: string): ExecutionSessionStatus => {
+    switch (value) {
+      case \\"CREATING_CONTAINER\\": {
+        return _CreatingContainer;
+      }
+      case \\"PROVISIONING_CONTAINER\\": {
+        return _ProvisioningContainer;
+      }
+      case \\"PENDING_CONTAINER\\": {
+        return _PendingContainer;
+      }
+      case \\"RUNNING_CONTAINER\\": {
+        return _RunningContainer;
+      }
+      case \\"LIVE_CONTAINER\\": {
+        return _LiveContainer;
+      }
+      case \\"FAILED_TO_LAUNCH\\": {
+        return _FailedToLaunch;
+      }
+      default: {
+        return {
+          value: value as ExecutionSessionStatus.RawValue,
+          visit: (visitor) => visitor._other(value),
+        };
+      }
+    }
+  },
 } as const;
 
 export declare namespace ExecutionSessionStatus {
@@ -9142,8 +9208,7 @@ export declare namespace ExecutionSessionStatus {
     | \\"PENDING_CONTAINER\\"
     | \\"RUNNING_CONTAINER\\"
     | \\"LIVE_CONTAINER\\"
-    | \\"FAILED_TO_LAUNCH\\"
-    | string;
+    | \\"FAILED_TO_LAUNCH\\";
 
   interface _Visitor<Result> {
     creatingContainer: () => Result;
@@ -9544,6 +9609,31 @@ export const RunningSubmissionState = {
   WritingSubmissionToFile: _WritingSubmissionToFile,
   CompilingSubmission: _CompilingSubmission,
   RunningSubmission: _RunningSubmission,
+  _parse: (value: string): RunningSubmissionState => {
+    switch (value) {
+      case \\"QUEUEING_SUBMISSION\\": {
+        return _QueueingSubmission;
+      }
+      case \\"KILLING_HISTORICAL_SUBMISSIONS\\": {
+        return _KillingHistoricalSubmissions;
+      }
+      case \\"WRITING_SUBMISSION_TO_FILE\\": {
+        return _WritingSubmissionToFile;
+      }
+      case \\"COMPILING_SUBMISSION\\": {
+        return _CompilingSubmission;
+      }
+      case \\"RUNNING_SUBMISSION\\": {
+        return _RunningSubmission;
+      }
+      default: {
+        return {
+          value: value as RunningSubmissionState.RawValue,
+          visit: (visitor) => visitor._other(value),
+        };
+      }
+    }
+  },
 } as const;
 
 export declare namespace RunningSubmissionState {
@@ -9552,8 +9642,7 @@ export declare namespace RunningSubmissionState {
     | \\"KILLING_HISTORICAL_SUBMISSIONS\\"
     | \\"WRITING_SUBMISSION_TO_FILE\\"
     | \\"COMPILING_SUBMISSION\\"
-    | \\"RUNNING_SUBMISSION\\"
-    | string;
+    | \\"RUNNING_SUBMISSION\\";
 
   interface _Visitor<Result> {
     queueingSubmission: () => Result;
@@ -10185,10 +10274,23 @@ const _Test: SubmissionTypeEnum<\\"TEST\\"> = {
 };
 export const SubmissionTypeEnum = {
   Test: _Test,
+  _parse: (value: string): SubmissionTypeEnum => {
+    switch (value) {
+      case \\"TEST\\": {
+        return _Test;
+      }
+      default: {
+        return {
+          value: value as SubmissionTypeEnum.RawValue,
+          visit: (visitor) => visitor._other(value),
+        };
+      }
+    }
+  },
 } as const;
 
 export declare namespace SubmissionTypeEnum {
-  type RawValue = \\"TEST\\" | string;
+  type RawValue = \\"TEST\\";
 
   interface _Visitor<Result> {
     test: () => Result;
@@ -16315,26 +16417,8 @@ import * as core from \\"../../../core\\";
 export const Language: core.schemas.Schema<Language.Raw, TraceApi.commons.Language> = core.schemas
   .string()
   .transform<TraceApi.commons.Language>({
-    parse: (value) => {
-      switch (value) {
-        case \\"JAVA\\": {
-          return TraceApi.commons.Language.Java;
-        }
-        case \\"JAVASCRIPT\\": {
-          return TraceApi.commons.Language.Javascript;
-        }
-        case \\"PYTHON\\": {
-          return TraceApi.commons.Language.Python;
-        }
-        default: {
-          return {
-            value: value,
-            visit: (visitor) => visitor._other(value),
-          };
-        }
-      }
-    },
-    json: (value) => value.value,
+    parse: (value) => TraceApi.commons.Language._parse(value),
+    json: ({ value }) => value,
   });
 
 export declare namespace Language {
@@ -17137,26 +17221,8 @@ import * as core from \\"../../../core\\";
 
 export const MigrationStatus: core.schemas.Schema<MigrationStatus.Raw, TraceApi.migration.MigrationStatus> =
   core.schemas.string().transform<TraceApi.migration.MigrationStatus>({
-    parse: (value) => {
-      switch (value) {
-        case \\"RUNNING\\": {
-          return TraceApi.migration.MigrationStatus.Running;
-        }
-        case \\"FAILED\\": {
-          return TraceApi.migration.MigrationStatus.Failed;
-        }
-        case \\"FINISHED\\": {
-          return TraceApi.migration.MigrationStatus.Finished;
-        }
-        default: {
-          return {
-            value: value,
-            visit: (visitor) => visitor._other(value),
-          };
-        }
-      }
-    },
-    json: (value) => value.value,
+    parse: (value) => TraceApi.migration.MigrationStatus._parse(value),
+    json: ({ value }) => value,
   });
 
 export declare namespace MigrationStatus {
@@ -18537,35 +18603,8 @@ export const ExecutionSessionStatus: core.schemas.Schema<
   ExecutionSessionStatus.Raw,
   TraceApi.submission.ExecutionSessionStatus
 > = core.schemas.string().transform<TraceApi.submission.ExecutionSessionStatus>({
-  parse: (value) => {
-    switch (value) {
-      case \\"CREATING_CONTAINER\\": {
-        return TraceApi.submission.ExecutionSessionStatus.CreatingContainer;
-      }
-      case \\"PROVISIONING_CONTAINER\\": {
-        return TraceApi.submission.ExecutionSessionStatus.ProvisioningContainer;
-      }
-      case \\"PENDING_CONTAINER\\": {
-        return TraceApi.submission.ExecutionSessionStatus.PendingContainer;
-      }
-      case \\"RUNNING_CONTAINER\\": {
-        return TraceApi.submission.ExecutionSessionStatus.RunningContainer;
-      }
-      case \\"LIVE_CONTAINER\\": {
-        return TraceApi.submission.ExecutionSessionStatus.LiveContainer;
-      }
-      case \\"FAILED_TO_LAUNCH\\": {
-        return TraceApi.submission.ExecutionSessionStatus.FailedToLaunch;
-      }
-      default: {
-        return {
-          value: value,
-          visit: (visitor) => visitor._other(value),
-        };
-      }
-    }
-  },
-  json: (value) => value.value,
+  parse: (value) => TraceApi.submission.ExecutionSessionStatus._parse(value),
+  json: ({ value }) => value,
 });
 
 export declare namespace ExecutionSessionStatus {
@@ -19111,32 +19150,8 @@ export const RunningSubmissionState: core.schemas.Schema<
   RunningSubmissionState.Raw,
   TraceApi.submission.RunningSubmissionState
 > = core.schemas.string().transform<TraceApi.submission.RunningSubmissionState>({
-  parse: (value) => {
-    switch (value) {
-      case \\"QUEUEING_SUBMISSION\\": {
-        return TraceApi.submission.RunningSubmissionState.QueueingSubmission;
-      }
-      case \\"KILLING_HISTORICAL_SUBMISSIONS\\": {
-        return TraceApi.submission.RunningSubmissionState.KillingHistoricalSubmissions;
-      }
-      case \\"WRITING_SUBMISSION_TO_FILE\\": {
-        return TraceApi.submission.RunningSubmissionState.WritingSubmissionToFile;
-      }
-      case \\"COMPILING_SUBMISSION\\": {
-        return TraceApi.submission.RunningSubmissionState.CompilingSubmission;
-      }
-      case \\"RUNNING_SUBMISSION\\": {
-        return TraceApi.submission.RunningSubmissionState.RunningSubmission;
-      }
-      default: {
-        return {
-          value: value,
-          visit: (visitor) => visitor._other(value),
-        };
-      }
-    }
-  },
-  json: (value) => value.value,
+  parse: (value) => TraceApi.submission.RunningSubmissionState._parse(value),
+  json: ({ value }) => value,
 });
 
 export declare namespace RunningSubmissionState {
@@ -19728,20 +19743,8 @@ import * as core from \\"../../../core\\";
 
 export const SubmissionTypeEnum: core.schemas.Schema<SubmissionTypeEnum.Raw, TraceApi.submission.SubmissionTypeEnum> =
   core.schemas.string().transform<TraceApi.submission.SubmissionTypeEnum>({
-    parse: (value) => {
-      switch (value) {
-        case \\"TEST\\": {
-          return TraceApi.submission.SubmissionTypeEnum.Test;
-        }
-        default: {
-          return {
-            value: value,
-            visit: (visitor) => visitor._other(value),
-          };
-        }
-      }
-    },
-    json: (value) => value.value,
+    parse: (value) => TraceApi.submission.SubmissionTypeEnum._parse(value),
+    json: ({ value }) => value,
   });
 
 export declare namespace SubmissionTypeEnum {

@@ -18,10 +18,9 @@ export class EnumModule extends AbstractEnumFileDeclaration {
         module.addTypeAlias({
             name: EnumModule.RAW_VALUE_TYPE_ALIAS_NAME,
             type: getTextOfTsNode(
-                ts.factory.createUnionTypeNode([
-                    ...this.parsedEnumValues.map((enumValue) => enumValue.getRawValue().typeNode),
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                ])
+                ts.factory.createUnionTypeNode(
+                    this.parsedEnumValues.map((enumValue) => enumValue.getRawValue().typeNode)
+                )
             ),
         });
 
