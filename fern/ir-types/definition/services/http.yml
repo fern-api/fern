@@ -73,7 +73,7 @@ types:
     properties:
       name:
         docs: this is deprecated. use nameV2 instead
-        type: commons.StringWithAllCasings
+        type: commons.WireStringWithAllCasings
       nameV2: commons.NameAndWireValue
       valueType: types.TypeReference
   HttpRequest:
