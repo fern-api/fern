@@ -1,6 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Type } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
+import { convertDeclaration } from "../convertDeclaration";
 
 export function convertEnumTypeDeclaration({
     _enum,
@@ -11,6 +12,7 @@ export function convertEnumTypeDeclaration({
 }): Type {
     return Type.enum({
         values: _enum.enum.map((value) => ({
+            ...convertDeclaration(value),
             name: file.casingsGenerator.generateWireCasingsV1({
                 wireValue: typeof value === "string" ? value : value.value,
                 name: getEnumName(value).name,
@@ -20,7 +22,6 @@ export function convertEnumTypeDeclaration({
                 name: getEnumName(value).name,
             }),
             value: typeof value === "string" ? value : value.value,
-            docs: typeof value !== "string" ? value.docs : undefined,
         })),
     });
 }

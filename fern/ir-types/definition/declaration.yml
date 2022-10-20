@@ -4,8 +4,7 @@ types:
   Declaration:
     extends: commons.WithDocs
     properties:
-      {}
-      # availability: Availability
+      availability: Availability
   Availability:
     properties:
       status: AvailabilityStatus

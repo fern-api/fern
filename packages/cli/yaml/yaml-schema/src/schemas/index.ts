@@ -3,6 +3,8 @@ export { AnyAuthSchemesSchema } from "./AnyAuthSchemesSchema";
 export { ApiAuthSchema } from "./ApiAuthSchema";
 export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
 export { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
+export { AvailabilitySchema } from "./AvailabilitySchema";
+export { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
 export { BaseServiceSchema } from "./BaseServiceSchema";
 export { DeclarationSchema } from "./DeclarationSchema";
 export { EnumSchema } from "./EnumSchema";

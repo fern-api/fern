@@ -9,6 +9,9 @@ exports[`ir simple 1`] = `
     },
     "types": [
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -66,6 +69,9 @@ exports[`ir simple 1`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "name",
                             "camelCase": "name",
@@ -99,6 +105,9 @@ exports[`ir simple 1`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "age",
                             "camelCase": "age",
@@ -241,6 +250,9 @@ exports[`ir simple 1`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -308,6 +320,9 @@ exports[`ir simple 1`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -375,6 +390,9 @@ exports[`ir simple 1`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -442,6 +460,9 @@ exports[`ir simple 1`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -499,6 +520,9 @@ exports[`ir simple 1`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "id",
                             "camelCase": "id",
@@ -582,6 +606,9 @@ exports[`ir simple 1`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -615,6 +642,9 @@ exports[`ir simple 1`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "rating",
                             "camelCase": "rating",
@@ -707,6 +737,9 @@ exports[`ir simple 1`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -764,6 +797,9 @@ exports[`ir simple 1`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -797,6 +833,9 @@ exports[`ir simple 1`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "ratings",
                             "camelCase": "ratings",
@@ -841,6 +880,9 @@ exports[`ir simple 1`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -1429,6 +1471,9 @@ exports[`ir simple 1`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -1540,6 +1585,9 @@ exports[`ir simple 1`] = `
                 ],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "selfRefrencing",
                             "camelCase": "selfRefrencing",
@@ -1858,6 +1906,9 @@ exports[`ir simple 1`] = `
     "services": {
         "http": [
             {
+                "availability": {
+                    "status": "GENERAL_AVAILABILITY"
+                },
                 "name": {
                     "name": "MoviesService",
                     "fernFilepath": [
@@ -1897,6 +1948,9 @@ exports[`ir simple 1`] = `
                 "pathParameters": [],
                 "endpoints": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "createMovie",
                         "name": {
                             "originalValue": "createMovie",
@@ -2164,6 +2218,9 @@ exports[`ir simple 1`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "getMovie",
                         "name": {
                             "originalValue": "getMovie",
@@ -2201,6 +2258,9 @@ exports[`ir simple 1`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -2542,6 +2602,9 @@ exports[`ir simple 1`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "delete",
                         "name": {
                             "originalValue": "delete",
@@ -2579,6 +2642,9 @@ exports[`ir simple 1`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -2792,6 +2858,9 @@ exports[`ir simple 2`] = `
     },
     "types": [
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -2849,6 +2918,9 @@ exports[`ir simple 2`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "name",
                             "camelCase": "name",
@@ -2882,6 +2954,9 @@ exports[`ir simple 2`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "age",
                             "camelCase": "age",
@@ -3024,6 +3099,9 @@ exports[`ir simple 2`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -3091,6 +3169,9 @@ exports[`ir simple 2`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -3158,6 +3239,9 @@ exports[`ir simple 2`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -3225,6 +3309,9 @@ exports[`ir simple 2`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -3282,6 +3369,9 @@ exports[`ir simple 2`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "id",
                             "camelCase": "id",
@@ -3365,6 +3455,9 @@ exports[`ir simple 2`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -3398,6 +3491,9 @@ exports[`ir simple 2`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "rating",
                             "camelCase": "rating",
@@ -3490,6 +3586,9 @@ exports[`ir simple 2`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -3547,6 +3646,9 @@ exports[`ir simple 2`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -3580,6 +3682,9 @@ exports[`ir simple 2`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "ratings",
                             "camelCase": "ratings",
@@ -3624,6 +3729,9 @@ exports[`ir simple 2`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -4212,6 +4320,9 @@ exports[`ir simple 2`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -4323,6 +4434,9 @@ exports[`ir simple 2`] = `
                 ],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "selfRefrencing",
                             "camelCase": "selfRefrencing",
@@ -4641,6 +4755,9 @@ exports[`ir simple 2`] = `
     "services": {
         "http": [
             {
+                "availability": {
+                    "status": "GENERAL_AVAILABILITY"
+                },
                 "name": {
                     "name": "MoviesService",
                     "fernFilepath": [
@@ -4680,6 +4797,9 @@ exports[`ir simple 2`] = `
                 "pathParameters": [],
                 "endpoints": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "createMovie",
                         "name": {
                             "originalValue": "createMovie",
@@ -4947,6 +5067,9 @@ exports[`ir simple 2`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "getMovie",
                         "name": {
                             "originalValue": "getMovie",
@@ -4984,6 +5107,9 @@ exports[`ir simple 2`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -5325,6 +5451,9 @@ exports[`ir simple 2`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "delete",
                         "name": {
                             "originalValue": "delete",
@@ -5362,6 +5491,9 @@ exports[`ir simple 2`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -5575,6 +5707,9 @@ exports[`ir simple 3`] = `
     },
     "types": [
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -5632,6 +5767,9 @@ exports[`ir simple 3`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "name",
                             "camelCase": "name",
@@ -5665,6 +5803,9 @@ exports[`ir simple 3`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "age",
                             "camelCase": "age",
@@ -5807,6 +5948,9 @@ exports[`ir simple 3`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -5874,6 +6018,9 @@ exports[`ir simple 3`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -5941,6 +6088,9 @@ exports[`ir simple 3`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -6008,6 +6158,9 @@ exports[`ir simple 3`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -6065,6 +6218,9 @@ exports[`ir simple 3`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "id",
                             "camelCase": "id",
@@ -6148,6 +6304,9 @@ exports[`ir simple 3`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -6181,6 +6340,9 @@ exports[`ir simple 3`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "rating",
                             "camelCase": "rating",
@@ -6273,6 +6435,9 @@ exports[`ir simple 3`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -6330,6 +6495,9 @@ exports[`ir simple 3`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -6363,6 +6531,9 @@ exports[`ir simple 3`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "ratings",
                             "camelCase": "ratings",
@@ -6407,6 +6578,9 @@ exports[`ir simple 3`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -6995,6 +7169,9 @@ exports[`ir simple 3`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -7106,6 +7283,9 @@ exports[`ir simple 3`] = `
                 ],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "selfRefrencing",
                             "camelCase": "selfRefrencing",
@@ -7424,6 +7604,9 @@ exports[`ir simple 3`] = `
     "services": {
         "http": [
             {
+                "availability": {
+                    "status": "GENERAL_AVAILABILITY"
+                },
                 "name": {
                     "name": "MoviesService",
                     "fernFilepath": [
@@ -7463,6 +7646,9 @@ exports[`ir simple 3`] = `
                 "pathParameters": [],
                 "endpoints": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "createMovie",
                         "name": {
                             "originalValue": "createMovie",
@@ -7730,6 +7916,9 @@ exports[`ir simple 3`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "getMovie",
                         "name": {
                             "originalValue": "getMovie",
@@ -7767,6 +7956,9 @@ exports[`ir simple 3`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -8108,6 +8300,9 @@ exports[`ir simple 3`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "delete",
                         "name": {
                             "originalValue": "delete",
@@ -8145,6 +8340,9 @@ exports[`ir simple 3`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -8358,6 +8556,9 @@ exports[`ir simple 4`] = `
     },
     "types": [
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -8415,6 +8616,9 @@ exports[`ir simple 4`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "name",
                             "camelCase": "name",
@@ -8448,6 +8652,9 @@ exports[`ir simple 4`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "age",
                             "camelCase": "age",
@@ -8590,6 +8797,9 @@ exports[`ir simple 4`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -8657,6 +8867,9 @@ exports[`ir simple 4`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -8724,6 +8937,9 @@ exports[`ir simple 4`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -8791,6 +9007,9 @@ exports[`ir simple 4`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -8848,6 +9067,9 @@ exports[`ir simple 4`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "id",
                             "camelCase": "id",
@@ -8931,6 +9153,9 @@ exports[`ir simple 4`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -8964,6 +9189,9 @@ exports[`ir simple 4`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "rating",
                             "camelCase": "rating",
@@ -9056,6 +9284,9 @@ exports[`ir simple 4`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -9113,6 +9344,9 @@ exports[`ir simple 4`] = `
                 "extends": [],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "title",
                             "camelCase": "title",
@@ -9146,6 +9380,9 @@ exports[`ir simple 4`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "ratings",
                             "camelCase": "ratings",
@@ -9190,6 +9427,9 @@ exports[`ir simple 4`] = `
             "referencedTypes": []
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -9778,6 +10018,9 @@ exports[`ir simple 4`] = `
             ]
         },
         {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
             "name": {
                 "fernFilepath": [
                     {
@@ -9889,6 +10132,9 @@ exports[`ir simple 4`] = `
                 ],
                 "properties": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "name": {
                             "originalValue": "selfRefrencing",
                             "camelCase": "selfRefrencing",
@@ -10207,6 +10453,9 @@ exports[`ir simple 4`] = `
     "services": {
         "http": [
             {
+                "availability": {
+                    "status": "GENERAL_AVAILABILITY"
+                },
                 "name": {
                     "name": "MoviesService",
                     "fernFilepath": [
@@ -10246,6 +10495,9 @@ exports[`ir simple 4`] = `
                 "pathParameters": [],
                 "endpoints": [
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "createMovie",
                         "name": {
                             "originalValue": "createMovie",
@@ -10513,6 +10765,9 @@ exports[`ir simple 4`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "getMovie",
                         "name": {
                             "originalValue": "getMovie",
@@ -10550,6 +10805,9 @@ exports[`ir simple 4`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",
@@ -10891,6 +11149,9 @@ exports[`ir simple 4`] = `
                         }
                     },
                     {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
                         "id": "delete",
                         "name": {
                             "originalValue": "delete",
@@ -10928,6 +11189,9 @@ exports[`ir simple 4`] = `
                         },
                         "pathParameters": [
                             {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
                                 "name": {
                                     "originalValue": "movieId",
                                     "camelCase": "movieId",

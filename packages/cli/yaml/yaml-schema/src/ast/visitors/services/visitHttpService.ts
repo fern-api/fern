@@ -27,6 +27,7 @@ export async function visitHttpService({
                 } else {
                     await visitObject(header, {
                         name: noop,
+                        availability: noop,
                         type: async (type) => {
                             await visitor.typeReference?.(type, nodePathForHeader);
                         },
@@ -50,6 +51,7 @@ export async function visitHttpService({
                             await visitor.typeReference?.(type, nodePathForPathParameter);
                         },
                         docs: createDocsVisitor(visitor, nodePathForPathParameter),
+                        availability: noop,
                     });
                 }
             }
@@ -75,6 +77,7 @@ async function visitEndpoint({
 }) {
     await visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
+        availability: noop,
         path: noop,
         "path-parameters": async (pathParameters) => {
             if (pathParameters == null) {
@@ -87,6 +90,7 @@ async function visitEndpoint({
                 } else {
                     await visitObject(pathParameter, {
                         docs: createDocsVisitor(visitor, nodePathForPathParameter),
+                        availability: noop,
                         type: async (type) => {
                             await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
                         },
@@ -106,6 +110,7 @@ async function visitEndpoint({
                     await visitObject(queryParameter, {
                         name: noop,
                         docs: createDocsVisitor(visitor, nodePathForQueryParameter),
+                        availability: noop,
                         type: async (type) => {
                             await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
                         },
