@@ -5,6 +5,13 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
     await volume.promises.writeFile(
         getPathToProjectFile(".gitignore"),
         [
+            "node_modules",
+            ".DS_Store",
+            "*.d.ts",
+            "*.js",
+            "*.js.map",
+            "",
+            "# yarn berry",
             ".pnp.*",
             ".yarn/*",
             "!.yarn/patches",
@@ -12,11 +19,13 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
             "!.yarn/releases",
             "!.yarn/sdks",
             "!.yarn/versions",
-            "node_modules",
-            ".DS_Store",
-            "*.d.ts",
-            "*.js",
-            "*.js.map",
+            "",
+            "# these are needed to override '*.js' above",
+            "!.yarn/patches/**",
+            "!.yarn/plugins/**",
+            "!.yarn/releases/**",
+            "!.yarn/sdks/**",
+            "!.yarn/versions/**",
         ].join("\n")
     );
 }
