@@ -21,6 +21,11 @@ types:
     union:
       playlistId: PlaylistId
 
+  ReservedKeywordEnum:
+    enum:
+      - is
+      - as
+
 services:
   http:
     PlaylistCrudService:

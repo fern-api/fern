@@ -63,4 +63,4 @@ class EnumGenerator(AbstractTypeGenerator):
         return enum_value.name.screaming_snake_case
 
     def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
-        return enum_value.name.snake_case
+        return enum_value.name_v_2.name.safe_name.snake_case

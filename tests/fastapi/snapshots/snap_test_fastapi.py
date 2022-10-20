@@ -95,6 +95,7 @@ snapshots['test_fastapi filepaths'] = [
     'resources/playlist/types/playlist_create_request.py',
     'resources/playlist/types/playlist_id.py',
     'resources/playlist/types/playlist_id_not_found_error_body.py',
+    'resources/playlist/types/reserved_keyword_enum.py',
     'resources/playlist/types/update_playlist_request.py',
     'resources/problem/__init__.py',
     'resources/problem/service.py',
@@ -400,6 +401,8 @@ snapshots['test_fastapi resources_playlist_types_playlist_create_request'] = Fil
 snapshots['test_fastapi resources_playlist_types_playlist_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_playlist_types_playlist_id.py')
 
 snapshots['test_fastapi resources_playlist_types_playlist_id_not_found_error_body'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_playlist_types_playlist_id_not_found_error_body.py')
+
+snapshots['test_fastapi resources_playlist_types_reserved_keyword_enum'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_playlist_types_reserved_keyword_enum.py')
 
 snapshots['test_fastapi resources_playlist_types_update_playlist_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_playlist_types_update_playlist_request.py')
 

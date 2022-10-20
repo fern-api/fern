@@ -6,7 +6,14 @@
 
 from .errors import PlaylistIdNotFoundError, UnauthorizedError
 from .service import AbstractPlaylistCrudService
-from .types import Playlist, PlaylistCreateRequest, PlaylistId, PlaylistIdNotFoundErrorBody, UpdatePlaylistRequest
+from .types import (
+    Playlist,
+    PlaylistCreateRequest,
+    PlaylistId,
+    PlaylistIdNotFoundErrorBody,
+    ReservedKeywordEnum,
+    UpdatePlaylistRequest,
+)
 
 __all__ = [
     "AbstractPlaylistCrudService",
@@ -15,6 +22,7 @@ __all__ = [
     "PlaylistId",
     "PlaylistIdNotFoundError",
     "PlaylistIdNotFoundErrorBody",
+    "ReservedKeywordEnum",
     "UnauthorizedError",
     "UpdatePlaylistRequest",
 ]
