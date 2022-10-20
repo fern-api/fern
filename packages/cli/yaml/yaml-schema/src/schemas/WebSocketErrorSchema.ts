@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { TypeReferenceDeclarationSchema } from "./TypeReferenceSchema";
 
-export const WebSocketErrorSchema = TypeReferenceWithDocsSchema;
+export const WebSocketErrorSchema = TypeReferenceDeclarationSchema;
 
 export type WebSocketErrorSchema = z.infer<typeof WebSocketErrorSchema>;

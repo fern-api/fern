@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { TypeReferenceDeclarationSchema } from "./TypeReferenceSchema";
 
-export const HttpPathParameterSchema = TypeReferenceWithDocsSchema;
+export const HttpPathParameterSchema = TypeReferenceDeclarationSchema;
 
 export type HttpPathParameterSchema = z.infer<typeof HttpPathParameterSchema>;

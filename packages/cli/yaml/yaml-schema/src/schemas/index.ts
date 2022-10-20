@@ -4,6 +4,7 @@ export { ApiAuthSchema } from "./ApiAuthSchema";
 export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
 export { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 export { BaseServiceSchema } from "./BaseServiceSchema";
+export { DeclarationSchema } from "./DeclarationSchema";
 export { EnumSchema } from "./EnumSchema";
 export { EnumValueSchema } from "./EnumValueSchema";
 export { ErrorDeclarationSchema } from "./ErrorDeclarationSchema";

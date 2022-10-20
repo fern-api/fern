@@ -2,10 +2,11 @@
 
 imports:
   commons: commons.yml
+  declaration: declaration.yml
 types:
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name: DeclaredTypeName
       shape: Type
@@ -69,7 +70,7 @@ types:
     properties:
       values: list<EnumValue>
   EnumValue:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name:
         type: commons.WireStringWithAllCasings
@@ -84,7 +85,7 @@ types:
         type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
   ObjectProperty:
-    extends: commons.WithDocs
+    extends: declaration.Declaration
     properties:
       name:
         docs: this is deprecated. use nameV2 instead

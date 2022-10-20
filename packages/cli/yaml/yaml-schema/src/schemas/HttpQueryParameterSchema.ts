@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsAndNameSchema } from "./TypeReferenceSchema";
+import { TypeReferenceDeclarationWithNameSchema } from "./TypeReferenceSchema";
 
-export const HttpQueryParameterSchema = TypeReferenceWithDocsAndNameSchema;
+export const HttpQueryParameterSchema = TypeReferenceDeclarationWithNameSchema;
 
 export type HttpQueryParameterSchema = z.infer<typeof HttpQueryParameterSchema>;
