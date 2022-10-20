@@ -60,11 +60,11 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("typescript")) {
         return Language.TYPESCRIPT;
     }
-    if (generatorName.includes("java")) {
-        return Language.TYPESCRIPT;
+    if (generatorName.includes("java") || generatorName.includes("spring")) {
+        return Language.JAVA;
     }
-    if (generatorName.includes("python")) {
-        return Language.TYPESCRIPT;
+    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
+        return Language.PYTHON;
     }
     return undefined;
 }
