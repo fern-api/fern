@@ -4,8 +4,14 @@ types:
       foo: string
   AliasOfObject: Object
   AliasOfAliasOfObject: Object
+
   AliasOfPrimitive: boolean
   AliasOfAliasOfPrimitive: string
+
+  Color:
+    - RED
+    - BLACK
+
 services:
   http:
     MyService:
@@ -27,3 +33,4 @@ services:
             f: optional<AliasOfAliasOfPrimitive>
             g: optional<AliasOfAliasOfObject>
             h: MadeUpType
+            i: optional<Color>
