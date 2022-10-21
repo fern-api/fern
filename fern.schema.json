@@ -180,6 +180,9 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                  },
                   "auth": { "type": "boolean" },
                   "base-path": { "type": "string" },
                   "path-parameters": {
@@ -308,6 +311,9 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                  },
                   "auth": { "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth" },
                   "path": { "type": "string" },
                   "client": {
