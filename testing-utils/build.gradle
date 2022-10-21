@@ -1,0 +1,5 @@
+
+dependencies {
+    implementation project(':generator-utils')
+    implementation 'io.github.origin-energy:java-snapshot-testing-junit5'
+}

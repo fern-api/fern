@@ -18,13 +18,17 @@ package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
+import com.fern.generator.exec.model.config.GithubOutputMode;
+import com.fern.generator.exec.model.config.MavenGithubPublishInfo;
 import com.fern.generator.exec.model.config.MavenRegistryConfigV2;
+import com.fern.generator.exec.model.config.OutputMode.Visitor;
 import com.fern.generator.exec.model.logging.ErrorExitStatusUpdate;
 import com.fern.generator.exec.model.logging.ExitStatusUpdate;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.output.AbstractGeneratedFileOutput;
@@ -39,7 +43,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
@@ -56,6 +59,8 @@ public abstract class AbstractGeneratorCli {
 
     private final List<AbstractGeneratedFileOutput> generatedFiles = new ArrayList<>();
 
+    private Path outputDirectory = null;
+
     @SuppressWarnings("checkstyle:VisibilityModifier")
     protected final Consumer<AbstractGeneratedFileOutput> addGeneratedFile;
 
@@ -68,41 +73,33 @@ public abstract class AbstractGeneratorCli {
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
-            Optional<MavenPackageCoordinate> maybeMavenPkgCoordinate =
-                    getMavenCoordinateFromRegistryConfig(generatorConfig);
-            maybeMavenPkgCoordinate.ifPresent(mavenPackageCoordinate -> {
-                generatorExecClient.sendUpdate(GeneratorUpdate.publishing(mavenPackageCoordinate.packageCoordinate()));
-            });
-
             IntermediateRepresentation ir = getIr(generatorConfig);
-            run(generatorExecClient, generatorConfig, ir);
+            this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
+            generatorConfig.getOutput().getMode().visit(new Visitor<Void>() {
 
-            String outputDirectory = generatorConfig.getOutput().getPath();
+                @Override
+                public Void visitPublish(GeneratorPublishConfig value) {
+                    runInPublishMode(generatorExecClient, generatorConfig, ir, value);
+                    return null;
+                }
 
-            BuildGradleConfig buildGradleConfig = getBuildGradle(generatorConfig);
-            writeFileContents(Paths.get(outputDirectory, BUILD_GRADLE), buildGradleConfig.getFileContents());
-            writeFileContents(Paths.get(outputDirectory, SETTINGS_GRADLE), "");
-            writeFileContents(Paths.get(outputDirectory, GITIGNORE), GitIgnoreGenerator.getGitignore());
+                @Override
+                public Void visitDownloadFiles() {
+                    runInDownloadFilesMode(generatorExecClient, generatorConfig, ir);
+                    return null;
+                }
 
-            generatedFiles.forEach(generatedFileOutput ->
-                    writeFile(Paths.get(outputDirectory, SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+                @Override
+                public Void visitGithub(GithubOutputMode value) {
+                    runInGithubMode(generatorExecClient, generatorConfig, ir, value);
+                    return null;
+                }
 
-            maybeMavenPkgCoordinate.ifPresent(mavenPackageCoordinate -> {
-                runCommandBlocking(
-                        new String[] {"gradle", "publish"},
-                        Paths.get(outputDirectory),
-                        Map.of(
-                                BuildGradleConfig.MAVEN_USERNAME_ENV_VAR,
-                                mavenPackageCoordinate.mavenRegistryConfig().getUsername(),
-                                BuildGradleConfig.MAVEN_PASSWORD_ENV_VAR,
-                                mavenPackageCoordinate.mavenRegistryConfig().getPassword(),
-                                BuildGradleConfig.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
-                                mavenPackageCoordinate.mavenRegistryConfig().getRegistryUrl()));
-                generatorExecClient.sendUpdate(GeneratorUpdate.published(mavenPackageCoordinate.packageCoordinate()));
+                @Override
+                public Void visitUnknown(String unknownType) {
+                    throw new RuntimeException("Encountered unknown output mode: " + unknownType);
+                }
             });
-
-            runCommandBlocking(new String[] {"gradle", "wrapper"}, Paths.get(outputDirectory), Collections.emptyMap());
-
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
@@ -112,33 +109,115 @@ public abstract class AbstractGeneratorCli {
         }
     }
 
-    public abstract void run(
+    public final void runInDownloadFilesMode(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir) {
+        runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir);
+        generatedFiles.forEach(generatedFileOutput ->
+                writeFile(outputDirectory.resolve(SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+    }
+
+    public abstract void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir);
 
-    public abstract List<String> getBuildGradleDependencies();
+    public final void runInGithubMode(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GithubOutputMode githubOutputMode) {
+        MavenGithubPublishInfo mavenGithubPublishInfo = githubOutputMode
+                .getPublishInfo()
+                .getMaven()
+                .orElseThrow(() -> new RuntimeException("Expected maven publish info, but received other!"));
+        MavenArtifactAndGroup mavenArtifactAndGroup =
+                MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
 
-    private BuildGradleConfig getBuildGradle(GeneratorConfig generatorConfig) {
-        return BuildGradleConfig.builder()
+        runInGithubModeHook(generatorExecClient, generatorConfig, ir, githubOutputMode);
+
+        // write all files
+        BuildGradleConfig buildGradleConfig = BuildGradleConfig.builder()
                 .addAllDependencies(getBuildGradleDependencies())
-                .publishing(generatorConfig.getPublish().map(generatorPublishConfig -> {
-                    MavenRegistryConfigV2 mavenRegistryConfigV2 =
-                            generatorPublishConfig.getRegistriesV2().getMaven();
-                    String[] splitCoordinate =
-                            mavenRegistryConfigV2.getCoordinate().split(":");
-                    if (splitCoordinate.length < 2) {
-                        throw new IllegalStateException(
-                                "Received invalid maven coordinate: " + mavenRegistryConfigV2.getCoordinate());
-                    }
-                    return ImmutablePublishingConfig.builder()
-                            .version(generatorPublishConfig.getVersion())
-                            .group(splitCoordinate[0])
-                            .artifact(splitCoordinate[1])
-                            .build();
-                }))
+                .publishing(ImmutablePublishingConfig.builder()
+                        .version(githubOutputMode.getVersion())
+                        .group(mavenArtifactAndGroup.group())
+                        .artifact(mavenArtifactAndGroup.artifact())
+                        .build())
                 .build();
+        writeFileContents(outputDirectory.resolve(BUILD_GRADLE), buildGradleConfig.getFileContents());
+        writeFileContents(outputDirectory.resolve(SETTINGS_GRADLE), "");
+        writeFileContents(outputDirectory.resolve(GITIGNORE), GitIgnoreGenerator.getGitignore());
+        generatedFiles.forEach(generatedFileOutput ->
+                writeFile(outputDirectory.resolve(SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
     }
+
+    public abstract void runInGithubModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GithubOutputMode githubOutputMode);
+
+    public final void runInPublishMode(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GeneratorPublishConfig publishOutputMode) {
+        // send publishing update
+        MavenRegistryConfigV2 mavenRegistryConfigV2 =
+                publishOutputMode.getRegistriesV2().getMaven();
+        MavenArtifactAndGroup mavenArtifactAndGroup =
+                MavenCoordinateParser.parse(mavenRegistryConfigV2.getCoordinate());
+        MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
+                .group(mavenArtifactAndGroup.group())
+                .artifact(mavenArtifactAndGroup.artifact())
+                .version(publishOutputMode.getVersion())
+                .build();
+        generatorExecClient.sendUpdate(GeneratorUpdate.publishing(PackageCoordinate.maven(mavenCoordinate)));
+
+        runInPublishModeHook(generatorExecClient, generatorConfig, ir, publishOutputMode);
+
+        // write all files
+        BuildGradleConfig buildGradleConfig = BuildGradleConfig.builder()
+                .addAllDependencies(getBuildGradleDependencies())
+                .publishing(ImmutablePublishingConfig.builder()
+                        .version(mavenCoordinate.getVersion())
+                        .group(mavenCoordinate.getGroup())
+                        .artifact(mavenCoordinate.getArtifact())
+                        .build())
+                .build();
+        writeFileContents(outputDirectory.resolve(BUILD_GRADLE), buildGradleConfig.getFileContents());
+        writeFileContents(outputDirectory.resolve(SETTINGS_GRADLE), "");
+        writeFileContents(outputDirectory.resolve(GITIGNORE), GitIgnoreGenerator.getGitignore());
+        generatedFiles.forEach(generatedFileOutput ->
+                writeFile(outputDirectory.resolve(SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+
+        // run publish
+        if (!generatorConfig.getDryRun()) {
+            runCommandBlocking(
+                    new String[] {"gradle", "publish"},
+                    Paths.get(generatorConfig.getOutput().getPath()),
+                    Map.of(
+                            BuildGradleConfig.MAVEN_USERNAME_ENV_VAR,
+                            mavenRegistryConfigV2.getUsername(),
+                            BuildGradleConfig.MAVEN_PASSWORD_ENV_VAR,
+                            mavenRegistryConfigV2.getPassword(),
+                            BuildGradleConfig.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
+                            mavenRegistryConfigV2.getRegistryUrl()));
+        }
+        generatorExecClient.sendUpdate(GeneratorUpdate.published(PackageCoordinate.maven(mavenCoordinate)));
+    }
+
+    public abstract void runInPublishModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GeneratorPublishConfig publishOutputMode);
+
+    public abstract List<String> getBuildGradleDependencies();
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
@@ -150,30 +229,6 @@ public abstract class AbstractGeneratorCli {
         static ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
             return ImmutableMavenPackageCoordinate.builder();
         }
-    }
-
-    private static Optional<MavenPackageCoordinate> getMavenCoordinateFromRegistryConfig(
-            GeneratorConfig generatorConfig) {
-        if (generatorConfig.getPublish().isEmpty()) {
-            return Optional.empty();
-        }
-        GeneratorPublishConfig generatorPublishConfig =
-                generatorConfig.getPublish().get();
-        MavenRegistryConfigV2 mavenRegistryConfigV2 =
-                generatorPublishConfig.getRegistriesV2().getMaven();
-        String[] splitCoordinate = mavenRegistryConfigV2.getCoordinate().split(":");
-        if (splitCoordinate.length < 2) {
-            throw new IllegalStateException(
-                    "Received invalid maven coordinate: " + mavenRegistryConfigV2.getCoordinate());
-        }
-        return Optional.of(MavenPackageCoordinate.builder()
-                .packageCoordinate(PackageCoordinate.maven(MavenCoordinate.builder()
-                        .group(splitCoordinate[0])
-                        .artifact(splitCoordinate[1])
-                        .version(generatorPublishConfig.getVersion())
-                        .build()))
-                .mavenRegistryConfig(mavenRegistryConfigV2)
-                .build());
     }
 
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {

@@ -17,26 +17,46 @@
 package com.fern.java.model;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GeneratorPublishConfig;
+import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class ModelGeneratorCli extends AbstractGeneratorCli {
 
     private static final String UTILS_VERSION = "0.0.82";
 
-    private static final Logger log = LoggerFactory.getLogger(ModelGeneratorCli.class);
-
     @Override
-    public void run(
-            DefaultGeneratorExecClient defaultGeneratorExecClient,
+    public void runInDownloadFilesModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir) {
+        throw new RuntimeException("Download files mode is unsupported!");
+    }
+
+    @Override
+    public void runInGithubModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GithubOutputMode githubOutputMode) {
+        generateTypes(generatorConfig, ir);
+    }
+
+    @Override
+    public void runInPublishModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GeneratorPublishConfig publishOutputMode) {
+        generateTypes(generatorConfig, ir);
+    }
+
+    private void generateTypes(GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         ModelGeneratorContext context = new ModelGeneratorContext(ir, generatorConfig);
 
         // types

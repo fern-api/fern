@@ -17,6 +17,8 @@
 package com.fern.java.client;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GeneratorPublishConfig;
+import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.model.errors.DeclaredErrorName;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.ir.IntermediateRepresentation;
@@ -44,7 +46,32 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
     @Override
-    public void run(
+    public void runInDownloadFilesModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir) {
+        throw new RuntimeException("Download files mode is unsupported!");
+    }
+
+    @Override
+    public void runInGithubModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GithubOutputMode githubOutputMode) {
+        generateClient(generatorExecClient, generatorConfig, ir);
+    }
+
+    @Override
+    public void runInPublishModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            GeneratorPublishConfig publishOutputMode) {
+        generateClient(generatorExecClient, generatorConfig, ir);
+    }
+
+    public void generateClient(
             DefaultGeneratorExecClient defaultGeneratorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir) {

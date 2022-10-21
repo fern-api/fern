@@ -49,4 +49,4 @@ com.palantir.common:streams = 2.0.0
 net.sourceforge.argparse4j:argparse4j = 0.9.0
 jakarta.ws.rs:jakarta.ws.rs-api = 2.1.6
 ch.qos.logback:logback-classic = 1.2.6
-com.fern.fern:generator-exec-client = 0.0.9
+com.fern.fern:generator-exec-client = 0.0.34

@@ -1,4 +1,4 @@
-basic[basic/generated-java/.gitignore]=[
+basic[.gitignore]=[
 *.class
 .project
 .gradle
@@ -26,38 +26,12 @@ build
 ]
 
 
-basic[basic/generated-java/build.gradle]=[
-plugins {
-    id 'java-library'
-    id 'maven-publish'
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
-repositories {
-    mavenCentral()
-    maven {
-        url "https://s01.oss.sonatype.org/content/repositories/releases/"
-    }
-}
-
-dependencies {
-    api 'io.github.fern-api:jackson-utils:0.0.82'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
-}
-
+basic[gradle/wrapper/gradle-wrapper.jar]=[
+gradle/wrapper/gradle-wrapper.jar
 ]
 
 
-basic[basic/generated-java/gradle/wrapper/gradle-wrapper.jar]=[
-basic/generated-java/gradle/wrapper/gradle-wrapper.jar
-]
-
-
-basic[basic/generated-java/gradle/wrapper/gradle-wrapper.properties]=[
+basic[gradle/wrapper/gradle-wrapper.properties]=[
 distributionBase=GRADLE_USER_HOME
 distributionPath=wrapper/dists
 distributionUrl=https\://services.gradle.org/distributions/gradle-7.4.2-bin.zip
@@ -67,7 +41,7 @@ zipStorePath=wrapper/dists
 ]
 
 
-basic[basic/generated-java/gradlew]=[
+basic[gradlew]=[
 #!/bin/sh
 
 #
@@ -306,12 +280,7 @@ exec "$JAVACMD" "$@"
 ]
 
 
-basic[basic/generated-java/settings.gradle]=[
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/Age.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/Age.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -363,7 +332,7 @@ public final class Age {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/Author.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/Author.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -558,7 +527,7 @@ public final class Author {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/BlogPost.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/BlogPost.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -744,7 +713,7 @@ public final class BlogPost {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/CreatePostRequest.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/CreatePostRequest.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -930,7 +899,7 @@ public final class CreatePostRequest {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/GeneratorIdAndVersion.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/GeneratorIdAndVersion.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -1050,7 +1019,7 @@ public final class GeneratorIdAndVersion {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/PostId.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/PostId.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -1101,7 +1070,105 @@ public final class PostId {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/blog/types/PostType.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/PostNotFoundErrorBody.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = PostNotFoundErrorBody.Builder.class
+)
+public final class PostNotFoundErrorBody {
+  private final PostId id;
+
+  private int _cachedHashCode;
+
+  PostNotFoundErrorBody(PostId id) {
+    this.id = id;
+  }
+
+  @JsonProperty("id")
+  public PostId getId() {
+    return id;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof PostNotFoundErrorBody && equalTo((PostNotFoundErrorBody) other);
+  }
+
+  private boolean equalTo(PostNotFoundErrorBody other) {
+    return id.equals(other.id);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.id);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "PostNotFoundErrorBody{" + "id: " + id + "}";
+  }
+
+  public static IdStage builder() {
+    return new Builder();
+  }
+
+  public interface IdStage {
+    _FinalStage id(PostId id);
+
+    Builder from(PostNotFoundErrorBody other);
+  }
+
+  public interface _FinalStage {
+    PostNotFoundErrorBody build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements IdStage, _FinalStage {
+    private PostId id;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(PostNotFoundErrorBody other) {
+      id(other.getId());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("id")
+    public _FinalStage id(PostId id) {
+      this.id = id;
+      return this;
+    }
+
+    @Override
+    public PostNotFoundErrorBody build() {
+      return new PostNotFoundErrorBody(id);
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/model/blog/types/PostType.java]=[
 package com.fern.basic.model.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -1203,7 +1270,105 @@ public final class PostType {
 ]
 
 
-basic[basic/generated-java/src/main/java/com/fern/basic/model/dummy/service/types/DummyId.java]=[
+basic[src/main/java/com/fern/basic/model/blog/types/UnauthorizedErrorBody.java]=[
+package com.fern.basic.model.blog.types;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = UnauthorizedErrorBody.Builder.class
+)
+public final class UnauthorizedErrorBody {
+  private final String reason;
+
+  private int _cachedHashCode;
+
+  UnauthorizedErrorBody(String reason) {
+    this.reason = reason;
+  }
+
+  @JsonProperty("reason")
+  public String getReason() {
+    return reason;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof UnauthorizedErrorBody && equalTo((UnauthorizedErrorBody) other);
+  }
+
+  private boolean equalTo(UnauthorizedErrorBody other) {
+    return reason.equals(other.reason);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.reason);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "UnauthorizedErrorBody{" + "reason: " + reason + "}";
+  }
+
+  public static ReasonStage builder() {
+    return new Builder();
+  }
+
+  public interface ReasonStage {
+    _FinalStage reason(String reason);
+
+    Builder from(UnauthorizedErrorBody other);
+  }
+
+  public interface _FinalStage {
+    UnauthorizedErrorBody build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  static final class Builder implements ReasonStage, _FinalStage {
+    private String reason;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(UnauthorizedErrorBody other) {
+      reason(other.getReason());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("reason")
+    public _FinalStage reason(String reason) {
+      this.reason = reason;
+      return this;
+    }
+
+    @Override
+    public UnauthorizedErrorBody build() {
+      return new UnauthorizedErrorBody(reason);
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/model/dummy/service/types/DummyId.java]=[
 package com.fern.basic.model.dummy.service.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -1248,1309 +1413,6 @@ public final class DummyId {
 
   public static DummyId valueOf(String value) {
     return of(value);
-  }
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/ContainerType.java]=[
-package com.fern.basic.model.ir.types;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class ContainerType {
-  private final Value value;
-
-  private ContainerType(Value value) {
-    this.value = value;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public static ContainerType list(TypeReference value) {
-    return new ContainerType(new ListValue(value));
-  }
-
-  public static ContainerType map(MapType value) {
-    return new ContainerType(new MapValue(value));
-  }
-
-  public static ContainerType optional(TypeReference value) {
-    return new ContainerType(new OptionalValue(value));
-  }
-
-  public static ContainerType set(TypeReference value) {
-    return new ContainerType(new SetValue(value));
-  }
-
-  public boolean isList() {
-    return value instanceof ListValue;
-  }
-
-  public boolean isMap() {
-    return value instanceof MapValue;
-  }
-
-  public boolean isOptional() {
-    return value instanceof OptionalValue;
-  }
-
-  public boolean isSet() {
-    return value instanceof SetValue;
-  }
-
-  public boolean _isUnknown() {
-    return value instanceof _UnknownValue;
-  }
-
-  public Optional<TypeReference> getList() {
-    if (isList()) {
-      return Optional.of(((ListValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<MapType> getMap() {
-    if (isMap()) {
-      return Optional.of(((MapValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<TypeReference> getOptional() {
-    if (isOptional()) {
-      return Optional.of(((OptionalValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<TypeReference> getSet() {
-    if (isSet()) {
-      return Optional.of(((SetValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<Object> _getUnknown() {
-    if (_isUnknown()) {
-      return Optional.of(((_UnknownValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  @JsonValue
-  private Value getValue() {
-    return this.value;
-  }
-
-  public interface Visitor<T> {
-    T visitList(TypeReference list);
-
-    T visitMap(MapType map);
-
-    T visitOptional(TypeReference optional);
-
-    T visitSet(TypeReference set);
-
-    T _visitUnknown(Object unknown);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = _UnknownValue.class
-  )
-  @JsonSubTypes({
-      @JsonSubTypes.Type(ListValue.class),
-      @JsonSubTypes.Type(MapValue.class),
-      @JsonSubTypes.Type(OptionalValue.class),
-      @JsonSubTypes.Type(SetValue.class)
-  })
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  @JsonTypeName("list")
-  private static final class ListValue implements Value {
-    private TypeReference value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private ListValue(@JsonProperty("value") TypeReference value) {
-      this.value = value;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitList(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof ListValue && equalTo((ListValue) other);
-    }
-
-    private boolean equalTo(ListValue other) {
-      return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "ContainerType{" + "value: " + value + "}";
-    }
-  }
-
-  @JsonTypeName("map")
-  private static final class MapValue implements Value {
-    @JsonUnwrapped
-    private MapType value;
-
-    private MapValue(MapType value) {
-      this.value = value;
-    }
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private MapValue() {
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitMap(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof MapValue && equalTo((MapValue) other);
-    }
-
-    private boolean equalTo(MapValue other) {
-      return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "ContainerType{" + "value: " + value + "}";
-    }
-  }
-
-  @JsonTypeName("optional")
-  private static final class OptionalValue implements Value {
-    private TypeReference value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private OptionalValue(@JsonProperty("value") TypeReference value) {
-      this.value = value;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOptional(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof OptionalValue && equalTo((OptionalValue) other);
-    }
-
-    private boolean equalTo(OptionalValue other) {
-      return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "ContainerType{" + "value: " + value + "}";
-    }
-  }
-
-  @JsonTypeName("set")
-  private static final class SetValue implements Value {
-    private TypeReference value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private SetValue(@JsonProperty("value") TypeReference value) {
-      this.value = value;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitSet(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof SetValue && equalTo((SetValue) other);
-    }
-
-    private boolean equalTo(SetValue other) {
-      return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "ContainerType{" + "value: " + value + "}";
-    }
-  }
-
-  private static final class _UnknownValue implements Value {
-    private String type;
-
-    @JsonValue
-    private Object value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private _UnknownValue(@JsonProperty("value") Object value) {
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitUnknown(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
-    }
-
-    private boolean equalTo(_UnknownValue other) {
-      return type.equals(other.type) && value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.type, this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "ContainerType{" + "type: " + type + ", value: " + value + "}";
-    }
-  }
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/IStringWithAllCasings.java]=[
-package com.fern.basic.model.ir.types;
-
-import java.lang.String;
-
-public interface IStringWithAllCasings {
-  String getOriginalValue();
-
-  String getCamelCase();
-
-  String getPascalCase();
-
-  String getSnakeCase();
-
-  String getScreamingSnakeCase();
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/MapType.java]=[
-package com.fern.basic.model.ir.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Objects;
-
-@JsonDeserialize(
-    builder = MapType.Builder.class
-)
-public final class MapType {
-  private final TypeReference keyType;
-
-  private final TypeReference valueType;
-
-  private int _cachedHashCode;
-
-  MapType(TypeReference keyType, TypeReference valueType) {
-    this.keyType = keyType;
-    this.valueType = valueType;
-  }
-
-  @JsonProperty("keyType")
-  public TypeReference getKeyType() {
-    return keyType;
-  }
-
-  @JsonProperty("valueType")
-  public TypeReference getValueType() {
-    return valueType;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof MapType && equalTo((MapType) other);
-  }
-
-  private boolean equalTo(MapType other) {
-    return keyType.equals(other.keyType) && valueType.equals(other.valueType);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.keyType, this.valueType);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "MapType{" + "keyType: " + keyType + ", valueType: " + valueType + "}";
-  }
-
-  public static KeyTypeStage builder() {
-    return new Builder();
-  }
-
-  public interface KeyTypeStage {
-    ValueTypeStage keyType(TypeReference keyType);
-
-    Builder from(MapType other);
-  }
-
-  public interface ValueTypeStage {
-    _FinalStage valueType(TypeReference valueType);
-  }
-
-  public interface _FinalStage {
-    MapType build();
-  }
-
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements KeyTypeStage, ValueTypeStage, _FinalStage {
-    private TypeReference keyType;
-
-    private TypeReference valueType;
-
-    private Builder() {
-    }
-
-    @Override
-    public Builder from(MapType other) {
-      keyType(other.getKeyType());
-      valueType(other.getValueType());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("keyType")
-    public ValueTypeStage keyType(TypeReference keyType) {
-      this.keyType = keyType;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("valueType")
-    public _FinalStage valueType(TypeReference valueType) {
-      this.valueType = valueType;
-      return this;
-    }
-
-    @Override
-    public MapType build() {
-      return new MapType(keyType, valueType);
-    }
-  }
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/PrimitiveType.java]=[
-package com.fern.basic.model.ir.types;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Locale;
-
-public final class PrimitiveType {
-  public static final PrimitiveType INTEGER = new PrimitiveType(Value.INTEGER, "INTEGER");
-
-  public static final PrimitiveType BOOLEAN = new PrimitiveType(Value.BOOLEAN, "BOOLEAN");
-
-  public static final PrimitiveType DATE_TIME = new PrimitiveType(Value.DATE_TIME, "DATE_TIME");
-
-  public static final PrimitiveType LONG = new PrimitiveType(Value.LONG, "LONG");
-
-  public static final PrimitiveType STRING = new PrimitiveType(Value.STRING, "STRING");
-
-  public static final PrimitiveType DOUBLE = new PrimitiveType(Value.DOUBLE, "DOUBLE");
-
-  public static final PrimitiveType UUID = new PrimitiveType(Value.UUID, "UUID");
-
-  private final Value value;
-
-  private final String string;
-
-  PrimitiveType(Value value, String string) {
-    this.value = value;
-    this.string = string;
-  }
-
-  public Value getEnumValue() {
-    return value;
-  }
-
-  @Override
-  @JsonValue
-  public String toString() {
-    return this.string;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return (this == other) 
-      || (other instanceof PrimitiveType && this.string.equals(((PrimitiveType) other).string));
-  }
-
-  @Override
-  public int hashCode() {
-    return this.string.hashCode();
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    switch (value) {
-      case INTEGER:
-        return visitor.visitInteger();
-      case BOOLEAN:
-        return visitor.visitBoolean();
-      case DATE_TIME:
-        return visitor.visitDateTime();
-      case LONG:
-        return visitor.visitLong();
-      case STRING:
-        return visitor.visitString();
-      case DOUBLE:
-        return visitor.visitDouble();
-      case UUID:
-        return visitor.visitUuid();
-      case UNKNOWN:
-      default:
-        return visitor.visitUnknown(string);
-    }
-  }
-
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static PrimitiveType valueOf(String value) {
-    String upperCasedValue = value.toUpperCase(Locale.ROOT);
-    switch (upperCasedValue) {
-      case "INTEGER":
-        return INTEGER;
-      case "BOOLEAN":
-        return BOOLEAN;
-      case "DATE_TIME":
-        return DATE_TIME;
-      case "LONG":
-        return LONG;
-      case "STRING":
-        return STRING;
-      case "DOUBLE":
-        return DOUBLE;
-      case "UUID":
-        return UUID;
-      default:
-        return new PrimitiveType(Value.UNKNOWN, upperCasedValue);
-    }
-  }
-
-  public enum Value {
-    INTEGER,
-
-    DOUBLE,
-
-    STRING,
-
-    BOOLEAN,
-
-    LONG,
-
-    DATE_TIME,
-
-    UUID,
-
-    UNKNOWN
-  }
-
-  public interface Visitor<T> {
-    T visitInteger();
-
-    T visitDouble();
-
-    T visitString();
-
-    T visitBoolean();
-
-    T visitLong();
-
-    T visitDateTime();
-
-    T visitUuid();
-
-    T visitUnknown(String unknownType);
-  }
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/StringWithAllCasings.java]=[
-package com.fern.basic.model.ir.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Objects;
-
-@JsonDeserialize(
-    builder = StringWithAllCasings.Builder.class
-)
-public final class StringWithAllCasings implements IStringWithAllCasings {
-  private final String originalValue;
-
-  private final String camelCase;
-
-  private final String pascalCase;
-
-  private final String snakeCase;
-
-  private final String screamingSnakeCase;
-
-  private int _cachedHashCode;
-
-  StringWithAllCasings(String originalValue, String camelCase, String pascalCase, String snakeCase,
-      String screamingSnakeCase) {
-    this.originalValue = originalValue;
-    this.camelCase = camelCase;
-    this.pascalCase = pascalCase;
-    this.snakeCase = snakeCase;
-    this.screamingSnakeCase = screamingSnakeCase;
-  }
-
-  @JsonProperty("originalValue")
-  @Override
-  public String getOriginalValue() {
-    return originalValue;
-  }
-
-  @JsonProperty("camelCase")
-  @Override
-  public String getCamelCase() {
-    return camelCase;
-  }
-
-  @JsonProperty("pascalCase")
-  @Override
-  public String getPascalCase() {
-    return pascalCase;
-  }
-
-  @JsonProperty("snakeCase")
-  @Override
-  public String getSnakeCase() {
-    return snakeCase;
-  }
-
-  @JsonProperty("screamingSnakeCase")
-  @Override
-  public String getScreamingSnakeCase() {
-    return screamingSnakeCase;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof StringWithAllCasings && equalTo((StringWithAllCasings) other);
-  }
-
-  private boolean equalTo(StringWithAllCasings other) {
-    return originalValue.equals(other.originalValue) && camelCase.equals(other.camelCase) && pascalCase.equals(other.pascalCase) && snakeCase.equals(other.snakeCase) && screamingSnakeCase.equals(other.screamingSnakeCase);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.originalValue, this.camelCase, this.pascalCase, this.snakeCase, this.screamingSnakeCase);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "StringWithAllCasings{" + "originalValue: " + originalValue + ", camelCase: " + camelCase + ", pascalCase: " + pascalCase + ", snakeCase: " + snakeCase + ", screamingSnakeCase: " + screamingSnakeCase + "}";
-  }
-
-  public static OriginalValueStage builder() {
-    return new Builder();
-  }
-
-  public interface OriginalValueStage {
-    CamelCaseStage originalValue(String originalValue);
-
-    Builder from(StringWithAllCasings other);
-  }
-
-  public interface CamelCaseStage {
-    PascalCaseStage camelCase(String camelCase);
-  }
-
-  public interface PascalCaseStage {
-    SnakeCaseStage pascalCase(String pascalCase);
-  }
-
-  public interface SnakeCaseStage {
-    ScreamingSnakeCaseStage snakeCase(String snakeCase);
-  }
-
-  public interface ScreamingSnakeCaseStage {
-    _FinalStage screamingSnakeCase(String screamingSnakeCase);
-  }
-
-  public interface _FinalStage {
-    StringWithAllCasings build();
-  }
-
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements OriginalValueStage, CamelCaseStage, PascalCaseStage, SnakeCaseStage, ScreamingSnakeCaseStage, _FinalStage {
-    private String originalValue;
-
-    private String camelCase;
-
-    private String pascalCase;
-
-    private String snakeCase;
-
-    private String screamingSnakeCase;
-
-    private Builder() {
-    }
-
-    @Override
-    public Builder from(StringWithAllCasings other) {
-      originalValue(other.getOriginalValue());
-      camelCase(other.getCamelCase());
-      pascalCase(other.getPascalCase());
-      snakeCase(other.getSnakeCase());
-      screamingSnakeCase(other.getScreamingSnakeCase());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("originalValue")
-    public CamelCaseStage originalValue(String originalValue) {
-      this.originalValue = originalValue;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("camelCase")
-    public PascalCaseStage camelCase(String camelCase) {
-      this.camelCase = camelCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("pascalCase")
-    public SnakeCaseStage pascalCase(String pascalCase) {
-      this.pascalCase = pascalCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("snakeCase")
-    public ScreamingSnakeCaseStage snakeCase(String snakeCase) {
-      this.snakeCase = snakeCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("screamingSnakeCase")
-    public _FinalStage screamingSnakeCase(String screamingSnakeCase) {
-      this.screamingSnakeCase = screamingSnakeCase;
-      return this;
-    }
-
-    @Override
-    public StringWithAllCasings build() {
-      return new StringWithAllCasings(originalValue, camelCase, pascalCase, snakeCase, screamingSnakeCase);
-    }
-  }
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/TypeReference.java]=[
-package com.fern.basic.model.ir.types;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class TypeReference {
-  private final Value value;
-
-  private TypeReference(Value value) {
-    this.value = value;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public static TypeReference container(ContainerType value) {
-    return new TypeReference(new ContainerValue(value));
-  }
-
-  public static TypeReference primitive(PrimitiveType value) {
-    return new TypeReference(new PrimitiveValue(value));
-  }
-
-  public static TypeReference unknown() {
-    return new TypeReference(new UnknownValue());
-  }
-
-  public static TypeReference _void() {
-    return new TypeReference(new VoidValue());
-  }
-
-  public boolean isContainer() {
-    return value instanceof ContainerValue;
-  }
-
-  public boolean isPrimitive() {
-    return value instanceof PrimitiveValue;
-  }
-
-  public boolean isUnknown() {
-    return value instanceof UnknownValue;
-  }
-
-  public boolean isVoid() {
-    return value instanceof VoidValue;
-  }
-
-  public boolean _isUnknown() {
-    return value instanceof _UnknownValue;
-  }
-
-  public Optional<ContainerType> getContainer() {
-    if (isContainer()) {
-      return Optional.of(((ContainerValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<PrimitiveType> getPrimitive() {
-    if (isPrimitive()) {
-      return Optional.of(((PrimitiveValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<Object> _getUnknown() {
-    if (_isUnknown()) {
-      return Optional.of(((_UnknownValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  @JsonValue
-  private Value getValue() {
-    return this.value;
-  }
-
-  public interface Visitor<T> {
-    T visitContainer(ContainerType container);
-
-    T visitPrimitive(PrimitiveType primitive);
-
-    T visitUnknown();
-
-    T visitVoid();
-
-    T _visitUnknown(Object unknown);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = _UnknownValue.class
-  )
-  @JsonSubTypes({
-      @JsonSubTypes.Type(ContainerValue.class),
-      @JsonSubTypes.Type(PrimitiveValue.class),
-      @JsonSubTypes.Type(UnknownValue.class),
-      @JsonSubTypes.Type(VoidValue.class)
-  })
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  @JsonTypeName("container")
-  private static final class ContainerValue implements Value {
-    private ContainerType value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private ContainerValue(@JsonProperty("value") ContainerType value) {
-      this.value = value;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitContainer(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof ContainerValue && equalTo((ContainerValue) other);
-    }
-
-    private boolean equalTo(ContainerValue other) {
-      return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "TypeReference{" + "value: " + value + "}";
-    }
-  }
-
-  @JsonTypeName("primitive")
-  private static final class PrimitiveValue implements Value {
-    private PrimitiveType value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private PrimitiveValue(@JsonProperty("value") PrimitiveType value) {
-      this.value = value;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitPrimitive(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof PrimitiveValue && equalTo((PrimitiveValue) other);
-    }
-
-    private boolean equalTo(PrimitiveValue other) {
-      return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "TypeReference{" + "value: " + value + "}";
-    }
-  }
-
-  @JsonTypeName("unknown")
-  private static final class UnknownValue implements Value {
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private UnknownValue() {
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitUnknown();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownValue;
-    }
-
-    @Override
-    public String toString() {
-      return "TypeReference{" + "}";
-    }
-  }
-
-  @JsonTypeName("void")
-  private static final class VoidValue implements Value {
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private VoidValue() {
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitVoid();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof VoidValue;
-    }
-
-    @Override
-    public String toString() {
-      return "TypeReference{" + "}";
-    }
-  }
-
-  private static final class _UnknownValue implements Value {
-    private String type;
-
-    @JsonValue
-    private Object value;
-
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private _UnknownValue(@JsonProperty("value") Object value) {
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitUnknown(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
-    }
-
-    private boolean equalTo(_UnknownValue other) {
-      return type.equals(other.type) && value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.type, this.value);
-    }
-
-    @Override
-    public String toString() {
-      return "TypeReference{" + "type: " + type + ", value: " + value + "}";
-    }
-  }
-}
-
-]
-
-
-basic[basic/generated-java/src/main/java/com/fern/basic/model/ir/types/WireStringWithAllCasings.java]=[
-package com.fern.basic.model.ir.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Objects;
-
-@JsonDeserialize(
-    builder = WireStringWithAllCasings.Builder.class
-)
-public final class WireStringWithAllCasings implements IStringWithAllCasings {
-  private final String originalValue;
-
-  private final String camelCase;
-
-  private final String pascalCase;
-
-  private final String snakeCase;
-
-  private final String screamingSnakeCase;
-
-  private final String wireValue;
-
-  private int _cachedHashCode;
-
-  WireStringWithAllCasings(String originalValue, String camelCase, String pascalCase,
-      String snakeCase, String screamingSnakeCase, String wireValue) {
-    this.originalValue = originalValue;
-    this.camelCase = camelCase;
-    this.pascalCase = pascalCase;
-    this.snakeCase = snakeCase;
-    this.screamingSnakeCase = screamingSnakeCase;
-    this.wireValue = wireValue;
-  }
-
-  @JsonProperty("originalValue")
-  @Override
-  public String getOriginalValue() {
-    return originalValue;
-  }
-
-  @JsonProperty("camelCase")
-  @Override
-  public String getCamelCase() {
-    return camelCase;
-  }
-
-  @JsonProperty("pascalCase")
-  @Override
-  public String getPascalCase() {
-    return pascalCase;
-  }
-
-  @JsonProperty("snakeCase")
-  @Override
-  public String getSnakeCase() {
-    return snakeCase;
-  }
-
-  @JsonProperty("screamingSnakeCase")
-  @Override
-  public String getScreamingSnakeCase() {
-    return screamingSnakeCase;
-  }
-
-  @JsonProperty("wireValue")
-  public String getWireValue() {
-    return wireValue;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof WireStringWithAllCasings && equalTo((WireStringWithAllCasings) other);
-  }
-
-  private boolean equalTo(WireStringWithAllCasings other) {
-    return originalValue.equals(other.originalValue) && camelCase.equals(other.camelCase) && pascalCase.equals(other.pascalCase) && snakeCase.equals(other.snakeCase) && screamingSnakeCase.equals(other.screamingSnakeCase) && wireValue.equals(other.wireValue);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.originalValue, this.camelCase, this.pascalCase, this.snakeCase, this.screamingSnakeCase, this.wireValue);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "WireStringWithAllCasings{" + "originalValue: " + originalValue + ", camelCase: " + camelCase + ", pascalCase: " + pascalCase + ", snakeCase: " + snakeCase + ", screamingSnakeCase: " + screamingSnakeCase + ", wireValue: " + wireValue + "}";
-  }
-
-  public static OriginalValueStage builder() {
-    return new Builder();
-  }
-
-  public interface OriginalValueStage {
-    CamelCaseStage originalValue(String originalValue);
-
-    Builder from(WireStringWithAllCasings other);
-  }
-
-  public interface CamelCaseStage {
-    PascalCaseStage camelCase(String camelCase);
-  }
-
-  public interface PascalCaseStage {
-    SnakeCaseStage pascalCase(String pascalCase);
-  }
-
-  public interface SnakeCaseStage {
-    ScreamingSnakeCaseStage snakeCase(String snakeCase);
-  }
-
-  public interface ScreamingSnakeCaseStage {
-    WireValueStage screamingSnakeCase(String screamingSnakeCase);
-  }
-
-  public interface WireValueStage {
-    _FinalStage wireValue(String wireValue);
-  }
-
-  public interface _FinalStage {
-    WireStringWithAllCasings build();
-  }
-
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements OriginalValueStage, CamelCaseStage, PascalCaseStage, SnakeCaseStage, ScreamingSnakeCaseStage, WireValueStage, _FinalStage {
-    private String originalValue;
-
-    private String camelCase;
-
-    private String pascalCase;
-
-    private String snakeCase;
-
-    private String screamingSnakeCase;
-
-    private String wireValue;
-
-    private Builder() {
-    }
-
-    @Override
-    public Builder from(WireStringWithAllCasings other) {
-      originalValue(other.getOriginalValue());
-      camelCase(other.getCamelCase());
-      pascalCase(other.getPascalCase());
-      snakeCase(other.getSnakeCase());
-      screamingSnakeCase(other.getScreamingSnakeCase());
-      wireValue(other.getWireValue());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("originalValue")
-    public CamelCaseStage originalValue(String originalValue) {
-      this.originalValue = originalValue;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("camelCase")
-    public PascalCaseStage camelCase(String camelCase) {
-      this.camelCase = camelCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("pascalCase")
-    public SnakeCaseStage pascalCase(String pascalCase) {
-      this.pascalCase = pascalCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("snakeCase")
-    public ScreamingSnakeCaseStage snakeCase(String snakeCase) {
-      this.snakeCase = snakeCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("screamingSnakeCase")
-    public WireValueStage screamingSnakeCase(String screamingSnakeCase) {
-      this.screamingSnakeCase = screamingSnakeCase;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("wireValue")
-    public _FinalStage wireValue(String wireValue) {
-      this.wireValue = wireValue;
-      return this;
-    }
-
-    @Override
-    public WireStringWithAllCasings build() {
-      return new WireStringWithAllCasings(originalValue, camelCase, pascalCase, snakeCase, screamingSnakeCase, wireValue);
-    }
   }
 }
 
