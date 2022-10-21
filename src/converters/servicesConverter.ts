@@ -97,7 +97,7 @@ function convertHttpEndpoint({
     ];
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
-        operationId: httpEndpoint.id,
+        operationId: httpService.name.name + "." + httpEndpoint.id,
         tags: [httpService.name.name],
         parameters,
         responses: {

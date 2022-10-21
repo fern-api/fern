@@ -75,7 +75,7 @@ Object {
     "/create": Object {
       "post": Object {
         "description": undefined,
-        "operationId": "createPost",
+        "operationId": "PostsService.createPost",
         "parameters": Array [],
         "requestBody": Object {
           "content": Object {
@@ -115,7 +115,7 @@ Object {
     "/{postId}": Object {
       "get": Object {
         "description": undefined,
-        "operationId": "getPost",
+        "operationId": "PostsService.getPost",
         "parameters": Array [
           Object {
             "description": undefined,
@@ -223,7 +223,7 @@ Object {
     "/create": Object {
       "post": Object {
         "description": undefined,
-        "operationId": "createPost",
+        "operationId": "PostsService.createPost",
         "parameters": Array [],
         "requestBody": Object {
           "content": Object {
@@ -267,7 +267,7 @@ Object {
     "/{postId}": Object {
       "get": Object {
         "description": undefined,
-        "operationId": "getPost",
+        "operationId": "PostsService.getPost",
         "parameters": Array [
           Object {
             "description": undefined,
@@ -440,7 +440,7 @@ Object {
     "/create": Object {
       "post": Object {
         "description": "Creates a blog post and returns blog post id.",
-        "operationId": "createPost",
+        "operationId": "PostsService.createPost",
         "parameters": Array [
           Object {
             "description": "I'm a header!",
@@ -486,7 +486,7 @@ Object {
     "/{postId}": Object {
       "get": Object {
         "description": "Gets a blog post.",
-        "operationId": "getPost",
+        "operationId": "PostsService.getPost",
         "parameters": Array [
           Object {
             "description": undefined,
