@@ -16,6 +16,7 @@ export async function visitHttpService({
     await visitObject(service, {
         "base-path": noop,
         docs: createDocsVisitor(visitor, nodePathForService),
+        availability: noop,
         headers: async (headers) => {
             if (headers == null) {
                 return;

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { DeclarationSchema } from "./DeclarationSchema";
 
-export const BaseServiceSchema = WithDocsSchema.extend({
+export const BaseServiceSchema = DeclarationSchema.extend({
     auth: z.boolean(),
 });
 
