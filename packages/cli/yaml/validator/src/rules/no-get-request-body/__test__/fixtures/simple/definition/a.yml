@@ -1,0 +1,26 @@
+services:
+  http:
+    MyService:
+      auth: false
+      base-path: /
+      endpoints:
+        foo:
+          path: /
+          method: POST
+        foo2:
+          path: /
+          method: POST
+          request: string
+        bar:
+          path: /
+          method: GET
+        baz:
+          path: /
+          method: GET
+          request: boolean
+        bing:
+          path: /
+          method: GET
+          request:
+            docs: i'm a request
+            type: string
