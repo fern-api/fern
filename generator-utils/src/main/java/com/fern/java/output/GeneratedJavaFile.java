@@ -16,31 +16,14 @@
 
 package com.fern.java.output;
 
-import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.squareup.javapoet.MethodSpec;
-import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedInterfaceOutput extends AbstractGeneratedFileOutput {
+public abstract class GeneratedJavaFile implements IGeneratedJavaFile {
 
-    public abstract List<PropertyMethodSpec> propertyMethodSpecs();
-
-    @Value.Immutable
-    @StagedBuilderImmutablesStyle
-    public interface PropertyMethodSpec {
-        ObjectProperty objectProperty();
-
-        MethodSpec methodSpec();
-
-        static ImmutablePropertyMethodSpec.ObjectPropertyBuildStage builder() {
-            return ImmutablePropertyMethodSpec.builder();
-        }
-    }
-
-    public static ImmutableGeneratedInterfaceOutput.ClassNameBuildStage builder() {
-        return ImmutableGeneratedInterfaceOutput.builder();
+    public static ImmutableGeneratedJavaFile.ClassNameBuildStage builder() {
+        return ImmutableGeneratedJavaFile.builder();
     }
 }

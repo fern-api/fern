@@ -21,8 +21,8 @@ import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
-import com.fern.java.output.GeneratedFileOutput;
-import com.fern.java.output.GeneratedInterfaceOutput;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -33,13 +33,13 @@ import java.util.stream.Collectors;
 
 public final class ObjectGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
-    private final Optional<GeneratedInterfaceOutput> selfInterface;
-    private final List<GeneratedInterfaceOutput> extendedInterfaces = new ArrayList<>();
+    private final Optional<GeneratedJavaInterface> selfInterface;
+    private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
-            Optional<GeneratedInterfaceOutput> selfInterface,
-            List<GeneratedInterfaceOutput> extendedInterfaces,
+            Optional<GeneratedJavaInterface> selfInterface,
+            List<GeneratedJavaInterface> extendedInterfaces,
             AbstractGeneratorContext generatorContext,
             ClassName className) {
         super(className, generatorContext);
@@ -50,7 +50,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
         List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
         if (selfInterface.isEmpty()) {
@@ -78,7 +78,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(javaFile)
                 .build();

@@ -26,8 +26,8 @@ import com.fern.java.client.generators.exception.ClientExceptionTypeSpecGenerato
 import com.fern.java.client.generators.exception.ClientExceptionUnionOtherSubType;
 import com.fern.java.client.generators.exception.ClientExceptionUnionSubType;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.IGeneratedJavaFile;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
@@ -37,13 +37,13 @@ import java.util.stream.Collectors;
 public final class ClientEndpointExceptionGenerator extends AbstractFileGenerator {
 
     private final HttpEndpoint httpEndpoint;
-    private final Map<DeclaredErrorName, AbstractGeneratedFileOutput> generatedClientErrors;
+    private final Map<DeclaredErrorName, GeneratedJavaFile> generatedClientErrors;
 
     public ClientEndpointExceptionGenerator(
             ClientGeneratorContext clientGeneratorContext,
             HttpService httpService,
             HttpEndpoint httpEndpoint,
-            Map<DeclaredErrorName, AbstractGeneratedFileOutput> generatedClientErrors) {
+            Map<DeclaredErrorName, GeneratedJavaFile> generatedClientErrors) {
         super(
                 clientGeneratorContext
                         .getPoetClassNameFactory()
@@ -54,14 +54,13 @@ public final class ClientEndpointExceptionGenerator extends AbstractFileGenerato
     }
 
     @Override
-    public AbstractGeneratedFileOutput generateFile() {
+    public IGeneratedJavaFile generateFile() {
         FernConstants fernConstants = generatorContext.getIr().getConstants();
         List<ClientExceptionUnionSubType> clientExceptionSubTypes = httpEndpoint.getErrors().get().stream()
                 .map(responseError -> {
                     ErrorDeclaration errorDeclaration =
                             generatorContext.getErrorDefinitionsByName().get(responseError.getError());
-                    AbstractGeneratedFileOutput generatedClientError =
-                            generatedClientErrors.get(responseError.getError());
+                    IGeneratedJavaFile generatedClientError = generatedClientErrors.get(responseError.getError());
                     return new ClientExceptionUnionSubType(
                             className, errorDeclaration, generatedClientError, fernConstants);
                 })
@@ -72,7 +71,7 @@ public final class ClientEndpointExceptionGenerator extends AbstractFileGenerato
         TypeSpec exceptionTypeSpec = clientExceptionGenerator.generateUnionTypeSpec();
         JavaFile exceptionFile =
                 JavaFile.builder(className.packageName(), exceptionTypeSpec).build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(exceptionFile)
                 .build();

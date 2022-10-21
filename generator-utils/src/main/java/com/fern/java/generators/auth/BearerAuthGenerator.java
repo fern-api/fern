@@ -19,7 +19,7 @@ package com.fern.java.generators.auth;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -36,7 +36,7 @@ public final class BearerAuthGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         TypeSpec authHeaderTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(FieldSpec.builder(String.class, TOKEN_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
@@ -72,7 +72,7 @@ public final class BearerAuthGenerator extends AbstractFileGenerator {
                 .build();
         JavaFile authHeaderFile =
                 JavaFile.builder(className.packageName(), authHeaderTypeSpec).build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(authHeaderFile)
                 .build();

@@ -23,8 +23,8 @@ import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedInterfaceOutput;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
 import java.util.Comparator;
 import java.util.List;
@@ -32,18 +32,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class SingleTypeGenerator implements Type.Visitor<AbstractGeneratedFileOutput> {
+public final class SingleTypeGenerator implements Type.Visitor<GeneratedJavaFile> {
 
     private final AbstractGeneratorContext generatorContext;
     private final DeclaredTypeName declaredTypeName;
     private final ClassName className;
-    private final Map<DeclaredTypeName, GeneratedInterfaceOutput> allGeneratedInterfaces;
+    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
 
     public SingleTypeGenerator(
             AbstractGeneratorContext generatorContext,
             DeclaredTypeName declaredTypeName,
             ClassName className,
-            Map<DeclaredTypeName, GeneratedInterfaceOutput> allGeneratedInterfaces) {
+            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces) {
         this.generatorContext = generatorContext;
         this.className = className;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
@@ -51,20 +51,20 @@ public final class SingleTypeGenerator implements Type.Visitor<AbstractGenerated
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitAlias(AliasTypeDeclaration value) {
+    public GeneratedJavaFile visitAlias(AliasTypeDeclaration value) {
         AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, value);
         return aliasGenerator.generateFile();
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitEnum(EnumTypeDeclaration value) {
+    public GeneratedJavaFile visitEnum(EnumTypeDeclaration value) {
         EnumGenerator enumGenerator = new EnumGenerator(className, generatorContext, value);
         return enumGenerator.generateFile();
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitObject(ObjectTypeDeclaration value) {
-        List<GeneratedInterfaceOutput> extendedInterfaces = value.getExtends().stream()
+    public GeneratedJavaFile visitObject(ObjectTypeDeclaration value) {
+        List<GeneratedJavaInterface> extendedInterfaces = value.getExtends().stream()
                 .map(allGeneratedInterfaces::get)
                 .sorted(Comparator.comparing(
                         generatedInterface -> generatedInterface.getClassName().simpleName()))
@@ -79,13 +79,13 @@ public final class SingleTypeGenerator implements Type.Visitor<AbstractGenerated
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitUnion(UnionTypeDeclaration value) {
+    public GeneratedJavaFile visitUnion(UnionTypeDeclaration value) {
         UnionGenerator unionGenerator = new UnionGenerator(className, generatorContext, value);
         return unionGenerator.generateFile();
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitUnknown(String unknownType) {
+    public GeneratedJavaFile visitUnknown(String unknownType) {
         throw new RuntimeException("Encountered unknown type: " + unknownType);
     }
 }

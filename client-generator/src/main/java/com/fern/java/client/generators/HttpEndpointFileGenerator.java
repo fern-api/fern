@@ -20,12 +20,12 @@ import com.fern.ir.model.errors.DeclaredErrorName;
 import com.fern.ir.model.services.http.HttpEndpoint;
 import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
-import com.fern.java.client.GeneratedEndpointRequestOutput;
+import com.fern.java.client.GeneratedEndpointRequest;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedAuthFilesOutput;
+import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -48,16 +48,16 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
     private final HttpEndpoint httpEndpoint;
     private final List<ParameterSpec> serviceInterfaceMethodParameters;
 
-    private final Optional<GeneratedAuthFilesOutput> maybeAuth;
-    private final Map<DeclaredErrorName, AbstractGeneratedFileOutput> generatedErrors;
+    private final Optional<GeneratedAuthFiles> maybeAuth;
+    private final Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors;
 
     public HttpEndpointFileGenerator(
             ClientGeneratorContext generatorContext,
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             List<ParameterSpec> serviceInterfaceMethodParameters,
-            Optional<GeneratedAuthFilesOutput> maybeAuth,
-            Map<DeclaredErrorName, AbstractGeneratedFileOutput> generatedErrors) {
+            Optional<GeneratedAuthFiles> maybeAuth,
+            Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors) {
         super(
                 generatorContext.getPoetClassNameFactory().getEndpointClassName(httpService.getName(), httpEndpoint),
                 generatorContext);
@@ -68,8 +68,8 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedEndpointRequestOutput generateFile() {
-        GeneratedEndpointRequestOutput.Builder outputBuilder = GeneratedEndpointRequestOutput.builder();
+    public GeneratedEndpointRequest generateFile() {
+        GeneratedEndpointRequest.Builder outputBuilder = GeneratedEndpointRequest.builder();
         TypeSpec.Builder endpointTypeSpecBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethod(MethodSpec.constructorBuilder()
@@ -82,7 +82,7 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
         return outputBuilder.className(className).javaFile(endpointJavaFile).build();
     }
 
-    private TypeSpec generateNestedRequestType(GeneratedEndpointRequestOutput.Builder outputBuilder) {
+    private TypeSpec generateNestedRequestType(GeneratedEndpointRequest.Builder outputBuilder) {
         ClassName requestClassName = className.nestedClass(REQUEST_CLASS_NAME);
         List<EnrichedObjectProperty> enrichedObjectProperties = getRequestParameters().stream()
                 .map(parameterSpec -> EnrichedObjectProperty.builder()
@@ -108,7 +108,7 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
     private List<ParameterSpec> getRequestParameters() {
         List<ParameterSpec> requestParameters = new ArrayList<>();
         if (httpEndpoint.getAuth() && maybeAuth.isPresent()) {
-            GeneratedAuthFilesOutput auth = maybeAuth.get();
+            GeneratedAuthFiles auth = maybeAuth.get();
             requestParameters.add(ParameterSpec.builder(
                             ParameterizedTypeName.get(ClassName.get(Optional.class), auth.getClassName()),
                             AUTH_REQUEST_PARAMETER)

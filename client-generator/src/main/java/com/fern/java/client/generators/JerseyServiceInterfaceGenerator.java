@@ -23,15 +23,16 @@ import com.fern.ir.model.services.http.HttpRequest;
 import com.fern.ir.model.services.http.HttpResponse;
 import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
-import com.fern.java.client.GeneratedJerseyServiceInterfaceOutput;
+import com.fern.java.client.GeneratedJerseyServiceInterface;
 import com.fern.java.client.generators.jersey.AuthToJerseyParameterSpecConverter;
 import com.fern.java.client.generators.jersey.JerseyHttpMethodToAnnotationSpec;
 import com.fern.java.client.generators.jersey.JerseyParameterSpecFactory;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedAuthFilesOutput;
+import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.IGeneratedJavaFile;
 import com.fern.java.utils.HttpPathUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.CodeBlock;
@@ -60,15 +61,15 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
     public static final String GET_CLIENT_METHOD_NAME = "getClient";
 
     private final HttpService httpService;
-    private final Map<DeclaredErrorName, AbstractGeneratedFileOutput> generatedErrors;
-    private final Optional<GeneratedAuthFilesOutput> maybeAuth;
+    private final Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors;
+    private final Optional<GeneratedAuthFiles> maybeAuth;
     private final ClientGeneratorContext clientGeneratorContext;
     private final JerseyParameterSpecFactory jerseyParameterSpecFactory;
 
     public JerseyServiceInterfaceGenerator(
             ClientGeneratorContext clientGeneratorContext,
-            Map<DeclaredErrorName, AbstractGeneratedFileOutput> generatedErrors,
-            Optional<GeneratedAuthFilesOutput> maybeAuth,
+            Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors,
+            Optional<GeneratedAuthFiles> maybeAuth,
             HttpService httpService) {
         super(
                 clientGeneratorContext.getPoetClassNameFactory().getServiceInterfaceClassName(httpService),
@@ -81,7 +82,7 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
     }
 
     @Override
-    public GeneratedJerseyServiceInterfaceOutput generateFile() {
+    public GeneratedJerseyServiceInterface generateFile() {
         TypeSpec.Builder jerseyInterfaceBuilder = TypeSpec.interfaceBuilder(className)
                 .addAnnotation(AnnotationSpec.builder(Consumes.class)
                         .addMember("value", "$T.APPLICATION_JSON", MediaType.class)
@@ -94,12 +95,12 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                         .build());
 
         Map<HttpEndpointId, MethodSpec> endpointMethods = new HashMap<>();
-        Map<HttpEndpointId, AbstractGeneratedFileOutput> endpointExceptions = new HashMap<>();
+        Map<HttpEndpointId, IGeneratedJavaFile> endpointExceptions = new HashMap<>();
         for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
             HttpEndpointId httpEndpointId = httpEndpoint.getId();
             ClientEndpointExceptionGenerator endpointExceptionGenerator = new ClientEndpointExceptionGenerator(
                     clientGeneratorContext, httpService, httpEndpoint, generatedErrors);
-            AbstractGeneratedFileOutput endpointException = endpointExceptionGenerator.generateFile();
+            IGeneratedJavaFile endpointException = endpointExceptionGenerator.generateFile();
 
             MethodSpec endpointMethodSpec = getEndpointMethodSpec(httpEndpoint, endpointException);
             jerseyInterfaceBuilder.addMethod(endpointMethodSpec);
@@ -108,14 +109,14 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
             endpointMethods.put(httpEndpointId, endpointMethodSpec);
         }
 
-        AbstractGeneratedFileOutput errorDecoder = getErrorDecoder(endpointExceptions);
+        IGeneratedJavaFile errorDecoder = getErrorDecoder(endpointExceptions);
         TypeSpec jerseyInterfaceTypeSpec = jerseyInterfaceBuilder
                 .addMethod(getStaticClientBuilderMethod(errorDecoder))
                 .build();
         JavaFile jerseyServiceFile = JavaFile.builder(className.packageName(), jerseyInterfaceTypeSpec)
                 .build();
 
-        return GeneratedJerseyServiceInterfaceOutput.builder()
+        return GeneratedJerseyServiceInterface.builder()
                 .className(className)
                 .javaFile(jerseyServiceFile)
                 .errorDecoder(errorDecoder)
@@ -124,7 +125,7 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                 .build();
     }
 
-    private MethodSpec getEndpointMethodSpec(HttpEndpoint httpEndpoint, AbstractGeneratedFileOutput endpointException) {
+    private MethodSpec getEndpointMethodSpec(HttpEndpoint httpEndpoint, IGeneratedJavaFile endpointException) {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getId().get())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
@@ -185,14 +186,13 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
         return parameters;
     }
 
-    private AbstractGeneratedFileOutput getErrorDecoder(
-            Map<HttpEndpointId, AbstractGeneratedFileOutput> endpointExceptions) {
+    private IGeneratedJavaFile getErrorDecoder(Map<HttpEndpointId, IGeneratedJavaFile> endpointExceptions) {
         ClientErrorDecoderGenerator clientErrorDecoderGenerator =
                 new ClientErrorDecoderGenerator(clientGeneratorContext, httpService, endpointExceptions);
         return clientErrorDecoderGenerator.generateFile();
     }
 
-    private MethodSpec getStaticClientBuilderMethod(AbstractGeneratedFileOutput generatedErrorDecoder) {
+    private MethodSpec getStaticClientBuilderMethod(IGeneratedJavaFile generatedErrorDecoder) {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder()
                 .add("return $T.builder()\n", Feign.class)
                 .indent()

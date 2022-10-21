@@ -17,6 +17,7 @@
 package com.fern.java;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.output.RawGeneratedFile;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public abstract class BuildGradleConfig {
         }
     }
 
-    public final String getFileContents() {
+    public final RawGeneratedFile toRawGeneratedFile() {
         String dependencies = "dependencies {\n" + dependencies().stream().collect(Collectors.joining("\n")) + "\n}\n";
         String result = "plugins {\n"
                 + "    id 'java-library'\n"
@@ -92,7 +93,10 @@ public abstract class BuildGradleConfig {
                     + "}\n"
                     + "\n";
         }
-        return result;
+        return RawGeneratedFile.builder()
+                .filename("build.gradle")
+                .contents(result)
+                .build();
     }
 
     static ImmutableBuildGradleConfig.Builder builder() {

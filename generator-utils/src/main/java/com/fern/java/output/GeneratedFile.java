@@ -16,12 +16,12 @@
 
 package com.fern.java.output;
 
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
+import java.io.IOException;
+import java.nio.file.Path;
 
-public abstract class AbstractGeneratedFileOutput {
+public interface GeneratedFile {
 
-    public abstract ClassName getClassName();
+    String filename();
 
-    public abstract JavaFile javaFile();
+    void writeToFile(Path directory) throws IOException;
 }

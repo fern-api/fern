@@ -29,13 +29,13 @@ import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
+import com.fern.java.generators.GithubWorkflowGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.squareup.javapoet.JavaFile;
+import com.fern.java.output.GeneratedFile;
+import com.fern.java.output.RawGeneratedFile;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -43,7 +43,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,21 +51,11 @@ public abstract class AbstractGeneratorCli {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractGeneratorCli.class);
 
-    private static final String SRC_MAIN_JAVA = "src/main/java";
-    private static final String BUILD_GRADLE = "build.gradle";
-    private static final String SETTINGS_GRADLE = "settings.gradle";
-    private static final String GITIGNORE = ".gitignore";
-
-    private final List<AbstractGeneratedFileOutput> generatedFiles = new ArrayList<>();
+    private final List<GeneratedFile> generatedFiles = new ArrayList<>();
 
     private Path outputDirectory = null;
 
-    @SuppressWarnings("checkstyle:VisibilityModifier")
-    protected final Consumer<AbstractGeneratedFileOutput> addGeneratedFile;
-
-    protected AbstractGeneratorCli() {
-        this.addGeneratedFile = generatedFiles::add;
-    }
+    protected AbstractGeneratorCli() {}
 
     public final void run(String... args) {
         String pluginPath = args[0];
@@ -109,13 +98,22 @@ public abstract class AbstractGeneratorCli {
         }
     }
 
+    protected final void addGeneratedFile(GeneratedFile generatedFile) {
+        generatedFiles.add(generatedFile);
+    }
+
     public final void runInDownloadFilesMode(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir);
-        generatedFiles.forEach(generatedFileOutput ->
-                writeFile(outputDirectory.resolve(SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+        generatedFiles.forEach(generatedFile -> {
+            try {
+                generatedFile.writeToFile(outputDirectory);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to write generated file: " + generatedFile);
+            }
+        });
     }
 
     public abstract void runInDownloadFilesModeHook(
@@ -137,7 +135,7 @@ public abstract class AbstractGeneratorCli {
 
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, githubOutputMode);
 
-        // write all files
+        // add project level files
         BuildGradleConfig buildGradleConfig = BuildGradleConfig.builder()
                 .addAllDependencies(getBuildGradleDependencies())
                 .publishing(ImmutablePublishingConfig.builder()
@@ -146,11 +144,23 @@ public abstract class AbstractGeneratorCli {
                         .artifact(mavenArtifactAndGroup.artifact())
                         .build())
                 .build();
-        writeFileContents(outputDirectory.resolve(BUILD_GRADLE), buildGradleConfig.getFileContents());
-        writeFileContents(outputDirectory.resolve(SETTINGS_GRADLE), "");
-        writeFileContents(outputDirectory.resolve(GITIGNORE), GitIgnoreGenerator.getGitignore());
-        generatedFiles.forEach(generatedFileOutput ->
-                writeFile(outputDirectory.resolve(SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+        addGeneratedFile(buildGradleConfig.toRawGeneratedFile());
+        addGeneratedFile(RawGeneratedFile.builder()
+                .filename("settings.gradle")
+                .contents("")
+                .build());
+        addGeneratedFile(GitIgnoreGenerator.getGitignore());
+        addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(mavenGithubPublishInfo.getRegistryUrl()));
+
+        // write files to disk
+        generatedFiles.forEach(generatedFile -> {
+            try {
+                generatedFile.writeToFile(outputDirectory);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to write generated file: " + generatedFile);
+            }
+        });
+
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
     }
 
@@ -179,7 +189,7 @@ public abstract class AbstractGeneratorCli {
 
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, publishOutputMode);
 
-        // write all files
+        // add project files
         BuildGradleConfig buildGradleConfig = BuildGradleConfig.builder()
                 .addAllDependencies(getBuildGradleDependencies())
                 .publishing(ImmutablePublishingConfig.builder()
@@ -188,11 +198,20 @@ public abstract class AbstractGeneratorCli {
                         .artifact(mavenCoordinate.getArtifact())
                         .build())
                 .build();
-        writeFileContents(outputDirectory.resolve(BUILD_GRADLE), buildGradleConfig.getFileContents());
-        writeFileContents(outputDirectory.resolve(SETTINGS_GRADLE), "");
-        writeFileContents(outputDirectory.resolve(GITIGNORE), GitIgnoreGenerator.getGitignore());
-        generatedFiles.forEach(generatedFileOutput ->
-                writeFile(outputDirectory.resolve(SRC_MAIN_JAVA), generatedFileOutput.javaFile()));
+        addGeneratedFile(buildGradleConfig.toRawGeneratedFile());
+        addGeneratedFile(RawGeneratedFile.builder()
+                .filename("settings.gradle")
+                .contents("")
+                .build());
+        addGeneratedFile(GitIgnoreGenerator.getGitignore());
+
+        generatedFiles.forEach(generatedFile -> {
+            try {
+                generatedFile.writeToFile(outputDirectory);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to write generated file: " + generatedFile);
+            }
+        });
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
 
         // run publish
@@ -245,22 +264,6 @@ public abstract class AbstractGeneratorCli {
                     new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
-        }
-    }
-
-    private static void writeFile(Path path, JavaFile javaFile) {
-        try {
-            javaFile.writeToFile(path.toFile());
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to write generated java file: " + javaFile.typeSpec.name, e);
-        }
-    }
-
-    private static void writeFileContents(Path path, String contents) {
-        try {
-            Files.writeString(path, contents);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to write .gitignore ", e);
         }
     }
 

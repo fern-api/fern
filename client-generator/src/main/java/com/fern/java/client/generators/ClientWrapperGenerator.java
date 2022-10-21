@@ -18,12 +18,12 @@ package com.fern.java.client.generators;
 
 import com.fern.ir.model.commons.FernFilepath;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.client.GeneratedClientWrapperOutput;
-import com.fern.java.client.GeneratedServiceClientOutput;
+import com.fern.java.client.GeneratedClientWrapper;
+import com.fern.java.client.GeneratedServiceClient;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.GeneratedAuthFilesOutput;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.CasingUtils;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -54,14 +54,14 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
     private static final String MEMOIZE_METHOD_NAME = "memoize";
     private static final String URL_PARAMETER_NAME = "url";
     private static final String AUTH_PARAMETER_NAME = "auth";
-    private final List<GeneratedServiceClientOutput> generatedHttpServiceClients;
+    private final List<GeneratedServiceClient> generatedHttpServiceClients;
     private final ClientConfig rootClientConfig;
-    private final Optional<GeneratedAuthFilesOutput> maybeAuth;
+    private final Optional<GeneratedAuthFiles> maybeAuth;
 
     public ClientWrapperGenerator(
             AbstractGeneratorContext<?> generatorContext,
-            List<GeneratedServiceClientOutput> generatedHttpServiceClients,
-            Optional<GeneratedAuthFilesOutput> maybeAuth) {
+            List<GeneratedServiceClient> generatedHttpServiceClients,
+            Optional<GeneratedAuthFiles> maybeAuth) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -71,8 +71,8 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                                         generatorContext.getGeneratorConfig().getWorkspaceName())
                                 + "Client"),
                 generatorContext);
-        List<GeneratedServiceClientOutput> clientsOrderedByDepth = generatedHttpServiceClients.stream()
-                .sorted(Comparator.comparingInt(generatedServiceClientOutput -> generatedServiceClientOutput
+        List<GeneratedServiceClient> clientsOrderedByDepth = generatedHttpServiceClients.stream()
+                .sorted(Comparator.comparingInt(generatedServiceClient -> generatedServiceClient
                         .httpService()
                         .getName()
                         .getFernFilepath()
@@ -85,31 +85,31 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedClientWrapperOutput generateFile() {
-        GeneratedFileOutput rootClientWrapper = createClient(rootClientConfig);
+    public GeneratedClientWrapper generateFile() {
+        GeneratedJavaFile rootClientWrapper = createClient(rootClientConfig);
 
         Queue<ClientConfig> nestedClientConfigs =
                 new LinkedList<>(rootClientConfig.nestedClients().values());
-        List<GeneratedFileOutput> generatedNestedClients = new ArrayList<>();
+        List<GeneratedJavaFile> generatedNestedClients = new ArrayList<>();
         while (!nestedClientConfigs.isEmpty()) {
             ClientConfig clientConfig = nestedClientConfigs.poll();
             generatedNestedClients.add(createClient(clientConfig));
             nestedClientConfigs.addAll(clientConfig.nestedClients().values());
         }
-        return GeneratedClientWrapperOutput.builder()
+        return GeneratedClientWrapper.builder()
                 .className(rootClientWrapper.getClassName())
                 .javaFile(rootClientWrapper.javaFile())
                 .addAllNestedClients(generatedNestedClients)
                 .build();
     }
 
-    private GeneratedFileOutput createClient(ClientConfig clientConfig) {
+    private GeneratedJavaFile createClient(ClientConfig clientConfig) {
         TypeSpec.Builder clientWrapperBuilder =
                 TypeSpec.classBuilder(clientConfig.className()).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
-        Map<String, GeneratedServiceClientOutput> supplierFields = new HashMap<>();
+        Map<String, GeneratedServiceClient> supplierFields = new HashMap<>();
         Map<String, ClassName> nestedClientFields = new HashMap<>();
-        for (GeneratedServiceClientOutput serviceClient : clientConfig.generatedServiceClients()) {
+        for (GeneratedServiceClient serviceClient : clientConfig.generatedServiceClients()) {
             String fieldName =
                     StringUtils.uncapitalize(serviceClient.getClassName().simpleName());
             clientWrapperBuilder.addField(
@@ -152,14 +152,14 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
         JavaFile clientWrapperJavaFile = JavaFile.builder(
                         clientConfig.className().packageName(), clientWrapperTypeSpec)
                 .build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(clientConfig.className())
                 .javaFile(clientWrapperJavaFile)
                 .build();
     }
 
     private MethodSpec createUrlOnlyConstructor(
-            Map<String, GeneratedServiceClientOutput> supplierFields, Map<String, ClassName> nestedClientFields) {
+            Map<String, GeneratedServiceClient> supplierFields, Map<String, ClassName> nestedClientFields) {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, URL_PARAMETER_NAME);
@@ -179,9 +179,9 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createUrlAndAuthConstructor(
-            Map<String, GeneratedServiceClientOutput> supplierFields,
+            Map<String, GeneratedServiceClient> supplierFields,
             Map<String, ClassName> nestedClientFields,
-            GeneratedAuthFilesOutput auth) {
+            GeneratedAuthFiles auth) {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, URL_PARAMETER_NAME)
@@ -241,11 +241,11 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
 
     @SuppressWarnings("CheckReturnValue")
     private ClientConfig createClientConfig(
-            List<GeneratedServiceClientOutput> serviceClients, int fernFilePathSize, ClassName wrapperClassName) {
+            List<GeneratedServiceClient> serviceClients, int fernFilePathSize, ClassName wrapperClassName) {
         ImmutableClientConfig.BuildFinal clientConfigBuilder =
                 ClientConfig.builder().className(wrapperClassName);
-        Map<String, List<GeneratedServiceClientOutput>> nestedClients = new HashMap<>();
-        for (GeneratedServiceClientOutput generatedHttpServiceClient : serviceClients) {
+        Map<String, List<GeneratedServiceClient>> nestedClients = new HashMap<>();
+        for (GeneratedServiceClient generatedHttpServiceClient : serviceClients) {
             FernFilepath fernFilepath =
                     generatedHttpServiceClient.httpService().getName().getFernFilepath();
             if (fernFilepath.get().size() <= fernFilePathSize) {
@@ -255,7 +255,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                 if (nestedClients.containsKey(prefix)) {
                     nestedClients.get(prefix).add(generatedHttpServiceClient);
                 } else {
-                    List<GeneratedServiceClientOutput> clients = new ArrayList<>();
+                    List<GeneratedServiceClient> clients = new ArrayList<>();
                     clients.add(generatedHttpServiceClient);
                     nestedClients.put(prefix, clients);
                 }
@@ -277,7 +277,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
 
         ClassName className();
 
-        List<GeneratedServiceClientOutput> generatedServiceClients();
+        List<GeneratedServiceClient> generatedServiceClients();
 
         Map<String, ClientConfig> nestedClients();
 

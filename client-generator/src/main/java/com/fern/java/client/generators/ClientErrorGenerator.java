@@ -21,18 +21,18 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.SingleTypeGenerator;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedInterfaceOutput;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedJavaInterface;
 import java.util.Map;
 
 public final class ClientErrorGenerator extends AbstractFileGenerator {
     private final ErrorDeclaration errorDeclaration;
-    private final Map<DeclaredTypeName, GeneratedInterfaceOutput> generatedInterfaces;
+    private final Map<DeclaredTypeName, GeneratedJavaInterface> generatedInterfaces;
 
     public ClientErrorGenerator(
             ErrorDeclaration errorDeclaration,
             ClientGeneratorContext clientGeneratorContext,
-            Map<DeclaredTypeName, GeneratedInterfaceOutput> generatedInterfaces) {
+            Map<DeclaredTypeName, GeneratedJavaInterface> generatedInterfaces) {
         super(
                 clientGeneratorContext.getPoetClassNameFactory().getErrorClassName(errorDeclaration),
                 clientGeneratorContext);
@@ -41,7 +41,7 @@ public final class ClientErrorGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public AbstractGeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         return errorDeclaration
                 .getType()
                 .visit(new SingleTypeGenerator(

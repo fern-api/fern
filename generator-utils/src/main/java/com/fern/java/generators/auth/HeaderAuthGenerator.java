@@ -21,7 +21,7 @@ import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;
-import com.fern.java.output.AbstractGeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
 
 public final class HeaderAuthGenerator extends AbstractFileGenerator {
     private static final String VALUE_METHOD_NAME = "value";
@@ -38,7 +38,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public AbstractGeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         AliasTypeDeclaration aliasTypeDeclaration = AliasTypeDeclaration.builder()
                 .aliasOf(httpHeader.getValueType())
                 .build();

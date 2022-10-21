@@ -21,8 +21,8 @@ import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedInterfaceOutput;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +45,8 @@ public final class TypesGenerator {
     }
 
     public Result generateFiles() {
-        Map<DeclaredTypeName, GeneratedInterfaceOutput> generatedInterfaces = getGeneratedInterfaces();
-        Map<DeclaredTypeName, AbstractGeneratedFileOutput> generatedTypes = typeDeclarations.stream()
+        Map<DeclaredTypeName, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
+        Map<DeclaredTypeName, GeneratedJavaFile> generatedTypes = typeDeclarations.stream()
                 .collect(Collectors.toMap(TypeDeclaration::getName, typeDeclaration -> {
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
@@ -58,7 +58,7 @@ public final class TypesGenerator {
         return new Result(generatedInterfaces, generatedTypes);
     }
 
-    private Map<DeclaredTypeName, GeneratedInterfaceOutput> getGeneratedInterfaces() {
+    private Map<DeclaredTypeName, GeneratedJavaInterface> getGeneratedInterfaces() {
         Set<DeclaredTypeName> interfaceCandidates = typeDeclarations.stream()
                 .map(TypeDeclaration::getShape)
                 .map(Type::getObject)
@@ -83,21 +83,21 @@ public final class TypesGenerator {
     }
 
     public static final class Result {
-        private final Map<DeclaredTypeName, GeneratedInterfaceOutput> interfaces;
-        private final Map<DeclaredTypeName, AbstractGeneratedFileOutput> types;
+        private final Map<DeclaredTypeName, GeneratedJavaInterface> interfaces;
+        private final Map<DeclaredTypeName, GeneratedJavaFile> types;
 
         public Result(
-                Map<DeclaredTypeName, GeneratedInterfaceOutput> interfaces,
-                Map<DeclaredTypeName, AbstractGeneratedFileOutput> types) {
+                Map<DeclaredTypeName, GeneratedJavaInterface> interfaces,
+                Map<DeclaredTypeName, GeneratedJavaFile> types) {
             this.interfaces = interfaces;
             this.types = types;
         }
 
-        public Map<DeclaredTypeName, AbstractGeneratedFileOutput> getTypes() {
+        public Map<DeclaredTypeName, GeneratedJavaFile> getTypes() {
             return types;
         }
 
-        public Map<DeclaredTypeName, GeneratedInterfaceOutput> getInterfaces() {
+        public Map<DeclaredTypeName, GeneratedJavaInterface> getInterfaces() {
             return interfaces;
         }
     }

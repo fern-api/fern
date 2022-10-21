@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package com.fern.java.generators;
+package com.fern.java.output;
 
-import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.IGeneratedJavaFile;
-import java.util.List;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.util.Map;
+import java.util.Optional;
+import org.immutables.value.Value;
 
-public abstract class AbstractFilesGenerator {
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+public abstract class GeneratedAuthFiles implements IGeneratedJavaFile {
 
-    @SuppressWarnings("checkstyle:VisibilityModifier")
-    protected AbstractGeneratorContext<?> generatorContext;
+    public abstract Optional<Map<AuthScheme, GeneratedJavaFile>> authSchemeFileOutputs();
 
-    public AbstractFilesGenerator(AbstractGeneratorContext<?> generatorContext) {
-        this.generatorContext = generatorContext;
+    public static ImmutableGeneratedAuthFiles.ClassNameBuildStage builder() {
+        return ImmutableGeneratedAuthFiles.builder();
     }
-
-    public abstract List<IGeneratedJavaFile> generateFiles();
 }

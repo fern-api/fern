@@ -16,24 +16,29 @@
 
 package com.fern.java.client;
 
-import com.fern.ir.model.services.http.HttpEndpointId;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.AbstractGeneratedFileOutput;
+import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.IGeneratedJavaFile;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
-import java.util.Map;
+import com.squareup.javapoet.TypeSpec;
+import java.util.List;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@StagedBuilderImmutablesStyle
-public abstract class GeneratedJerseyServiceInterfaceOutput extends AbstractGeneratedFileOutput {
+public abstract class GeneratedEndpointRequest implements IGeneratedJavaFile {
 
-    public abstract Map<HttpEndpointId, MethodSpec> endpointMethods();
+    public abstract TypeSpec requestTypeSpec();
 
-    public abstract Map<HttpEndpointId, AbstractGeneratedFileOutput> endpointExceptions();
+    public abstract ClassName requestClassName();
 
-    public abstract AbstractGeneratedFileOutput errorDecoder();
+    public abstract List<EnrichedObjectProperty> enrichedObjectProperties();
 
-    public static ImmutableGeneratedJerseyServiceInterfaceOutput.ClassNameBuildStage builder() {
-        return ImmutableGeneratedJerseyServiceInterfaceOutput.builder();
+    public abstract Optional<MethodSpec> authMethodSpec();
+
+    public static class Builder extends ImmutableGeneratedEndpointRequest.Builder {}
+
+    public static GeneratedEndpointRequest.Builder builder() {
+        return new Builder();
     }
 }

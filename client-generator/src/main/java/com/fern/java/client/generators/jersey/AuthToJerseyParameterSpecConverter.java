@@ -22,8 +22,8 @@ import com.fern.ir.model.commons.WithDocs;
 import com.fern.ir.model.services.http.HttpEndpoint;
 import com.fern.ir.model.services.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedAuthFilesOutput;
+import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.IGeneratedJavaFile;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
@@ -38,12 +38,12 @@ public final class AuthToJerseyParameterSpecConverter {
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
 
     private final AbstractGeneratorContext<?> generatorContext;
-    private final GeneratedAuthFilesOutput generatedAuthFilesOutput;
+    private final GeneratedAuthFiles generatedAuthFiles;
 
     public AuthToJerseyParameterSpecConverter(
-            AbstractGeneratorContext<?> generatorContext, GeneratedAuthFilesOutput generatedAuthFilesOutput) {
+            AbstractGeneratorContext<?> generatorContext, GeneratedAuthFiles generatedAuthFiles) {
         this.generatorContext = generatorContext;
-        this.generatedAuthFilesOutput = generatedAuthFilesOutput;
+        this.generatedAuthFiles = generatedAuthFiles;
     }
 
     public List<ParameterSpec> getAuthParameters(HttpEndpoint httpEndpoint) {
@@ -53,7 +53,7 @@ public final class AuthToJerseyParameterSpecConverter {
         } else if (apiAuth.getSchemes().size() == 1) {
             AuthScheme authScheme = apiAuth.getSchemes().get(0);
             ParameterSpec parameterSpec =
-                    authScheme.visit(new AuthSchemeParameterSpec(generatedAuthFilesOutput, "auth", false));
+                    authScheme.visit(new AuthSchemeParameterSpec(generatedAuthFiles, "auth", false));
             return Collections.singletonList(parameterSpec);
         }
         return Collections.emptyList();
@@ -61,12 +61,11 @@ public final class AuthToJerseyParameterSpecConverter {
 
     private static final class AuthSchemeParameterSpec implements AuthScheme.Visitor<ParameterSpec> {
 
-        private final AbstractGeneratedFileOutput generatedFile;
+        private final IGeneratedJavaFile generatedFile;
         private final boolean isOptional;
         private final String parameterName;
 
-        private AuthSchemeParameterSpec(
-                AbstractGeneratedFileOutput generatedFile, String parameterName, boolean isOptional) {
+        private AuthSchemeParameterSpec(IGeneratedJavaFile generatedFile, String parameterName, boolean isOptional) {
             this.generatedFile = generatedFile;
             this.isOptional = isOptional;
             this.parameterName = parameterName;

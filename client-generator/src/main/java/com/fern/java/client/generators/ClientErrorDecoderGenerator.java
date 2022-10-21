@@ -22,8 +22,8 @@ import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.jackson.ClientObjectMappers;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.IGeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
@@ -46,12 +46,12 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
     private static final String DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME = "clazz";
 
     private final HttpService httpService;
-    private final Map<HttpEndpointId, AbstractGeneratedFileOutput> generatedEndpointExceptions;
+    private final Map<HttpEndpointId, IGeneratedJavaFile> generatedEndpointExceptions;
 
     public ClientErrorDecoderGenerator(
             ClientGeneratorContext generatorContext,
             HttpService httpService,
-            Map<HttpEndpointId, AbstractGeneratedFileOutput> generatedEndpointExceptions) {
+            Map<HttpEndpointId, IGeneratedJavaFile> generatedEndpointExceptions) {
         super(
                 generatorContext.getPoetClassNameFactory().getServiceErrorDecoderClassname(httpService),
                 generatorContext);
@@ -60,7 +60,7 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public AbstractGeneratedFileOutput generateFile() {
+    public IGeneratedJavaFile generateFile() {
         TypeSpec errorDecoderTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.FINAL)
                 .addSuperinterface(ErrorDecoder.class)
@@ -69,7 +69,7 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
                 .build();
         JavaFile errorDecoderFile =
                 JavaFile.builder(className.packageName(), errorDecoderTypeSpec).build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(errorDecoderFile)
                 .build();
@@ -85,7 +85,7 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().beginControlFlow("try");
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
-            AbstractGeneratedFileOutput endpointException = generatedEndpointExceptions.get(httpEndpoint.getId());
+            IGeneratedJavaFile endpointException = generatedEndpointExceptions.get(httpEndpoint.getId());
             codeBlockBuilder
                     .beginControlFlow(
                             "$L ($L.contains($S))",

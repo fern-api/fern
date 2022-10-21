@@ -23,7 +23,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.VisitorFactory;
 import com.fern.java.VisitorFactory.GeneratedVisitor;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -66,7 +66,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         Map<EnumValue, FieldSpec> enumConstants = getConstants();
         VisitorFactory.GeneratedVisitor<EnumValue> generatedVisitor = getVisitor();
         TypeSpec enumTypeSpec = TypeSpec.classBuilder(className)
@@ -85,7 +85,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
                 .build();
         JavaFile enumFile =
                 JavaFile.builder(className.packageName(), enumTypeSpec).build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(enumFile)
                 .build();

@@ -21,8 +21,8 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.AuthSchemesRequirement;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.auth.AuthSchemeGenerator;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedAuthFilesOutput;
+import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedJavaFile;
 import java.util.Optional;
 
 public final class AuthGenerator {
@@ -35,13 +35,13 @@ public final class AuthGenerator {
         this.generatorContext = generatorContext;
     }
 
-    public Optional<GeneratedAuthFilesOutput> generate() {
+    public Optional<GeneratedAuthFiles> generate() {
         if (apiAuth.getSchemes().size() == 0) {
             return Optional.empty();
         } else if (apiAuth.getSchemes().size() == 1) {
             AuthScheme authScheme = apiAuth.getSchemes().get(0);
-            AbstractGeneratedFileOutput generatedFile = authScheme.visit(new AuthSchemeGenerator(generatorContext));
-            return Optional.of(GeneratedAuthFilesOutput.builder()
+            GeneratedJavaFile generatedFile = authScheme.visit(new AuthSchemeGenerator(generatorContext));
+            return Optional.of(GeneratedAuthFiles.builder()
                     .className(generatedFile.getClassName())
                     .javaFile(generatedFile.javaFile())
                     .build());

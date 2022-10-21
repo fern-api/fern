@@ -14,25 +14,29 @@
  * limitations under the License.
  */
 
-package com.fern.java.client;
+package com.fern.java.output;
 
-import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedServiceClientOutput extends AbstractGeneratedFileOutput {
+public abstract class RawGeneratedFile implements GeneratedFile {
 
-    public abstract HttpService httpService();
+    public abstract String contents();
 
-    public abstract GeneratedJerseyServiceInterfaceOutput jerseyServiceInterfaceOutput();
+    public abstract Optional<String> directoryPrefix();
 
-    public abstract List<GeneratedEndpointRequestOutput> generatedEndpointRequestOutputs();
+    @Override
+    public final void writeToFile(Path directory) throws IOException {
+        Files.writeString(directory.resolve(filename()), contents());
+    }
 
-    public static ImmutableGeneratedServiceClientOutput.ClassNameBuildStage builder() {
-        return ImmutableGeneratedServiceClientOutput.builder();
+    public static ImmutableRawGeneratedFile.FilenameBuildStage builder() {
+        return ImmutableRawGeneratedFile.builder();
     }
 }

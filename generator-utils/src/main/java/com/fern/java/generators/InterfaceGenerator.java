@@ -17,8 +17,8 @@ package com.fern.java.generators;
 
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.GeneratedInterfaceOutput;
-import com.fern.java.output.GeneratedInterfaceOutput.PropertyMethodSpec;
+import com.fern.java.output.GeneratedJavaInterface;
+import com.fern.java.output.GeneratedJavaInterface.PropertyMethodSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -41,7 +41,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedInterfaceOutput generateFile() {
+    public GeneratedJavaInterface generateFile() {
         List<PropertyMethodSpec> methodSpecsByProperties = getPropertyGetters();
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
@@ -51,7 +51,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                 .build();
         JavaFile interfaceFile =
                 JavaFile.builder(className.packageName(), interfaceTypeSpec).build();
-        return GeneratedInterfaceOutput.builder()
+        return GeneratedJavaInterface.builder()
                 .className(className)
                 .javaFile(interfaceFile)
                 .addAllPropertyMethodSpecs(methodSpecsByProperties)

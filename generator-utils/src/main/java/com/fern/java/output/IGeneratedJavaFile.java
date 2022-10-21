@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package com.fern.java.client;
+package com.fern.java.output;
 
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import java.util.List;
-import org.immutables.value.Value;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import java.io.IOException;
+import java.nio.file.Path;
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-public abstract class GeneratedClientWrapperOutput extends AbstractGeneratedFileOutput {
+public interface IGeneratedJavaFile extends GeneratedFile {
 
-    public abstract List<AbstractGeneratedFileOutput> nestedClients();
+    ClassName getClassName();
 
-    public static ImmutableGeneratedClientWrapperOutput.ClassNameBuildStage builder() {
-        return ImmutableGeneratedClientWrapperOutput.builder();
+    JavaFile javaFile();
+
+    @Override
+    default String filename() {
+        return getClassName().simpleName() + ".java";
+    }
+
+    @Override
+    default void writeToFile(Path directory) throws IOException {
+        javaFile().writeToFile(directory.resolve("src/main/java").toFile());
     }
 }

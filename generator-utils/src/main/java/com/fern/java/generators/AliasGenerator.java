@@ -22,8 +22,7 @@ import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
@@ -48,7 +47,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public AbstractGeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         TypeSpec.Builder aliasTypeSpecBuilder =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         if (aliasTypeDeclaration.getAliasOf().isVoid()) {
@@ -80,7 +79,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
         }
         JavaFile aliasFile = JavaFile.builder(className.packageName(), aliasTypeSpecBuilder.build())
                 .build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(aliasFile)
                 .build();

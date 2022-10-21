@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package com.fern.java.output;
+package com.fern.java.client;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.output.IGeneratedJavaFile;
+import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedFileOutput extends AbstractGeneratedFileOutput {
+public abstract class GeneratedClientWrapper implements IGeneratedJavaFile {
 
-    public static ImmutableGeneratedFileOutput.ClassNameBuildStage builder() {
-        return ImmutableGeneratedFileOutput.builder();
+    public abstract List<IGeneratedJavaFile> nestedClients();
+
+    public static ImmutableGeneratedClientWrapper.ClassNameBuildStage builder() {
+        return ImmutableGeneratedClientWrapper.builder();
     }
 }

@@ -20,9 +20,9 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.commons.WithDocs;
 import com.fern.ir.model.services.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.AbstractGeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
 
-public final class AuthSchemeGenerator implements AuthScheme.Visitor<AbstractGeneratedFileOutput> {
+public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJavaFile> {
 
     private final AbstractGeneratorContext<?> generatorContext;
 
@@ -31,25 +31,25 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<AbstractGen
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitBearer(WithDocs value) {
+    public GeneratedJavaFile visitBearer(WithDocs value) {
         BearerAuthGenerator bearerAuthGenerator = new BearerAuthGenerator(generatorContext);
         return bearerAuthGenerator.generateFile();
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitBasic(WithDocs value) {
+    public GeneratedJavaFile visitBasic(WithDocs value) {
         BasicAuthGenerator basicAuthGenerator = new BasicAuthGenerator(generatorContext);
         return basicAuthGenerator.generateFile();
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitHeader(HttpHeader value) {
+    public GeneratedJavaFile visitHeader(HttpHeader value) {
         HeaderAuthGenerator headerAuthGenerator = new HeaderAuthGenerator(generatorContext, value);
         return headerAuthGenerator.generateFile();
     }
 
     @Override
-    public AbstractGeneratedFileOutput visitUnknown(String unknownType) {
+    public GeneratedJavaFile visitUnknown(String unknownType) {
         throw new RuntimeException("Encountered unknown auth scheme: " + unknownType);
     }
 }

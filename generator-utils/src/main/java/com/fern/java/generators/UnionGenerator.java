@@ -29,7 +29,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
-import com.fern.java.output.GeneratedFileOutput;
+import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -56,7 +56,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedFileOutput generateFile() {
+    public GeneratedJavaFile generateFile() {
         List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
                 .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType))
                 .collect(Collectors.toList());
@@ -69,7 +69,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
         TypeSpec unionTypeSpec = unionTypeSpecGenerator.generateUnionTypeSpec();
         JavaFile unionFile =
                 JavaFile.builder(className.packageName(), unionTypeSpec).build();
-        return GeneratedFileOutput.builder()
+        return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(unionFile)
                 .build();

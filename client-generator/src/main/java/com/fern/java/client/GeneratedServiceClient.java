@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package com.fern.java.output;
+package com.fern.java.client;
 
-import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.util.Map;
-import java.util.Optional;
+import com.fern.java.output.IGeneratedJavaFile;
+import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedAuthFilesOutput extends AbstractGeneratedFileOutput {
+public abstract class GeneratedServiceClient implements IGeneratedJavaFile {
 
-    public abstract Optional<Map<AuthScheme, GeneratedFileOutput>> authSchemeFileOutputs();
+    public abstract HttpService httpService();
 
-    public static ImmutableGeneratedAuthFilesOutput.ClassNameBuildStage builder() {
-        return ImmutableGeneratedAuthFilesOutput.builder();
+    public abstract GeneratedJerseyServiceInterface jerseyServiceInterfaceOutput();
+
+    public abstract List<GeneratedEndpointRequest> generatedEndpointRequestOutputs();
+
+    public static ImmutableGeneratedServiceClient.ClassNameBuildStage builder() {
+        return ImmutableGeneratedServiceClient.builder();
     }
 }

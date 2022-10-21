@@ -30,8 +30,8 @@ import com.fern.java.client.generators.HttpServiceClientGenerator;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
-import com.fern.java.output.AbstractGeneratedFileOutput;
-import com.fern.java.output.GeneratedAuthFilesOutput;
+import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedJavaFile;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -79,52 +79,52 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
 
         // auth
         AuthGenerator authGenerator = new AuthGenerator(context);
-        Optional<GeneratedAuthFilesOutput> maybeAuth = authGenerator.generate();
-        maybeAuth.ifPresent(addGeneratedFile);
+        Optional<GeneratedAuthFiles> maybeAuth = authGenerator.generate();
+        maybeAuth.ifPresent(this::addGeneratedFile);
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
-        generatedTypes.getTypes().values().forEach(addGeneratedFile);
-        generatedTypes.getInterfaces().values().forEach(addGeneratedFile);
+        generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
+        generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
         // errors
-        Map<DeclaredErrorName, AbstractGeneratedFileOutput> errors = ir.getErrors().stream()
+        Map<DeclaredErrorName, GeneratedJavaFile> errors = ir.getErrors().stream()
                 .collect(Collectors.toMap(ErrorDeclaration::getName, errorDeclaration -> {
                     ClientErrorGenerator clientErrorGenerator =
                             new ClientErrorGenerator(errorDeclaration, context, generatedTypes.getInterfaces());
                     return clientErrorGenerator.generateFile();
                 }));
-        errors.values().forEach(addGeneratedFile);
+        errors.values().forEach(this::addGeneratedFile);
 
         // services
-        List<GeneratedServiceClientOutput> generatedServiceClients = ir.getServices().getHttp().stream()
+        List<GeneratedServiceClient> generatedServiceClients = ir.getServices().getHttp().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator =
                             new HttpServiceClientGenerator(context, httpService, errors, maybeAuth);
                     return httpServiceClientGenerator.generateFile();
                 })
                 .collect(Collectors.toList());
-        generatedServiceClients.forEach(addGeneratedFile);
-        generatedServiceClients.forEach(generatedServiceClientOutput -> {
-            addGeneratedFile.accept(generatedServiceClientOutput);
-            addGeneratedFile.accept(generatedServiceClientOutput.jerseyServiceInterfaceOutput());
-            addGeneratedFile.accept(
-                    generatedServiceClientOutput.jerseyServiceInterfaceOutput().errorDecoder());
-            generatedServiceClientOutput.generatedEndpointRequestOutputs().forEach(addGeneratedFile);
-            generatedServiceClientOutput
+        generatedServiceClients.forEach(this::addGeneratedFile);
+        generatedServiceClients.forEach(generatedServiceClient -> {
+            this.addGeneratedFile(generatedServiceClient);
+            this.addGeneratedFile(generatedServiceClient.jerseyServiceInterfaceOutput());
+            this.addGeneratedFile(
+                    generatedServiceClient.jerseyServiceInterfaceOutput().errorDecoder());
+            generatedServiceClient.generatedEndpointRequestOutputs().forEach(this::addGeneratedFile);
+            generatedServiceClient
                     .jerseyServiceInterfaceOutput()
                     .endpointExceptions()
                     .values()
-                    .forEach(addGeneratedFile);
+                    .forEach(this::addGeneratedFile);
         });
 
         // client wrapper
         ClientWrapperGenerator clientWrapperGenerator =
                 new ClientWrapperGenerator(context, generatedServiceClients, maybeAuth);
-        GeneratedClientWrapperOutput generatedClientWrapperOutput = clientWrapperGenerator.generateFile();
-        addGeneratedFile.accept(generatedClientWrapperOutput);
-        generatedClientWrapperOutput.nestedClients().forEach(addGeneratedFile);
+        GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generateFile();
+        this.addGeneratedFile(generatedClientWrapper);
+        generatedClientWrapper.nestedClients().forEach(this::addGeneratedFile);
     }
 
     @Override
