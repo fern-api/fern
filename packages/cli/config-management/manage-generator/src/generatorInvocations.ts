@@ -2,13 +2,13 @@ import { DraftGeneratorInvocationSchema } from "@fern-api/generators-configurati
 
 export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-java-sdk",
-    version: "0.0.116",
+    version: "0.0.120",
     mode: "publish",
 };
 
 export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-typescript-sdk",
-    version: "0.0.209",
+    version: "0.0.219",
     mode: "publish",
 };
 
@@ -21,7 +21,7 @@ export const POSTMAN_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
 
 export const OPENAPI_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
-    version: "0.0.8",
+    version: "0.0.9",
     config: {
         format: "yaml",
     },
