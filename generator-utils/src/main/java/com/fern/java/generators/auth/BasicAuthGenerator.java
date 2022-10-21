@@ -67,13 +67,13 @@ public final class BasicAuthGenerator extends AbstractFileGenerator {
                         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                         .returns(String.class)
                         .addStatement("$L()", DECODE_METHOD_NAME)
-                        .addStatement("this.$L", USERNAME_FIELD_NAME)
+                        .addStatement("return this.$L", USERNAME_FIELD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(PASSWORD_FIELD_NAME)
                         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                         .returns(String.class)
                         .addStatement("$L()", DECODE_METHOD_NAME)
-                        .addStatement("this.$L", PASSWORD_FIELD_NAME)
+                        .addStatement("return this.$L", PASSWORD_FIELD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder(DECODE_METHOD_NAME)
                         .beginControlFlow(
@@ -90,13 +90,14 @@ public final class BasicAuthGenerator extends AbstractFileGenerator {
                                 "credentials",
                                 "decodedToken",
                                 StandardCharsets.class,
-                                StandardCharsets.UTF_8.name())
+                                "UTF_8")
                         .addStatement("String[] values = credentials.split(\":\", 2)")
                         .beginControlFlow("if (values.length != 2)")
                         .addStatement("throw new $T($S)", IllegalStateException.class, "Failed to decode basic token")
                         .endControlFlow()
                         .addStatement("this.$L = values[0]", USERNAME_FIELD_NAME)
                         .addStatement("this.$L = values[1]", PASSWORD_FIELD_NAME)
+                        .endControlFlow()
                         .build())
                 .addMethod(MethodSpec.methodBuilder("toString")
                         .addAnnotation(Override.class)
