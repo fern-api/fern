@@ -9,8 +9,9 @@ types:
   AliasOfAliasOfPrimitive: string
 
   Color:
-    - RED
-    - BLACK
+    enum:
+      - RED
+      - BLACK
 
 services:
   http:
