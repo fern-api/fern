@@ -29,6 +29,7 @@ types:
 services:
   http:
     PlaylistCrudService:
+      availability: in-development
       auth: true
       base-path: /v2/playlist/{serviceParam}
       path-parameters:

@@ -6,14 +6,20 @@ from ..context import FastApiGeneratorContext
 
 
 class ServiceInitializer:
-    def __init__(self, service: ir_types.services.HttpService, context: FastApiGeneratorContext):
+    def __init__(
+        self, service: ir_types.services.HttpService, context: FastApiGeneratorContext, is_in_development: bool
+    ):
         self._service = service
         self._context = context
+        self.is_in_development = is_in_development
 
     def get_register_parameter(self) -> AST.FunctionParameter:
+        type_hint = AST.TypeHint(type=self._context.get_reference_to_service(service_name=self._service.name))
+        if self.is_in_development:
+            type_hint = AST.TypeHint.optional(type_hint)
         return AST.FunctionParameter(
             name=self.get_parameter_name(),
-            type_hint=AST.TypeHint(type=self._context.get_reference_to_service(service_name=self._service.name)),
+            type_hint=type_hint,
         )
 
     def get_parameter_name(self) -> str:

@@ -1,3 +1,5 @@
+import fern.ir.pydantic as ir_types
+
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI, Starlette
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -17,7 +19,12 @@ class RegisterFileGenerator:
     def __init__(self, context: FastApiGeneratorContext):
         self._context = context
         self._service_initializers = [
-            ServiceInitializer(context=context, service=service) for service in self._context.ir.services.http
+            ServiceInitializer(
+                context=context,
+                service=service,
+                is_in_development=service.availability.status == ir_types.AvailabilityStatus.IN_DEVELOPMENT,
+            )
+            for service in self._context.ir.services.http
         ]
 
     def generate_registry_file(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
@@ -50,19 +57,24 @@ class RegisterFileGenerator:
 
     def _write_register_method_body(self, writer: AST.NodeWriter) -> None:
         for service_initializer in self._service_initializers:
-            writer.write_node(
-                node=FastAPI.include_router(
-                    app_variable=RegisterFileGenerator._APP_PARAMETER_NAME,
-                    router=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=AST.Reference(
-                                qualified_name_excluding_import=(RegisterFileGenerator._REGISTER_SERVICE_FUNCTION_NAME,)
-                            ),
-                            args=[AST.Expression(service_initializer.get_parameter_name())],
-                        )
-                    ),
-                )
+            parameter_name = service_initializer.get_parameter_name()
+            initialize_invocation = FastAPI.include_router(
+                app_variable=RegisterFileGenerator._APP_PARAMETER_NAME,
+                router=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            qualified_name_excluding_import=(RegisterFileGenerator._REGISTER_SERVICE_FUNCTION_NAME,)
+                        ),
+                        args=[AST.Expression(parameter_name)],
+                    )
+                ),
             )
+            if service_initializer.is_in_development:
+                writer.write_line(f"if {parameter_name} is not None:")
+                with writer.indent():
+                    writer.write_node(node=initialize_invocation)
+            else:
+                writer.write_node(node=initialize_invocation)
             writer.write_line()
         writer.write_line()
         self._write_exception_handler(

@@ -131,7 +131,7 @@ reference = "fern-dev"
 
 [[package]]
 name = "fern-fern-ir-model"
-version = "0.0.259"
+version = "0.0.261"
 description = ""
 category = "main"
 optional = false
@@ -608,7 +608,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4ae1f0cd5b3f3cfc087053a08d78ebcb0abc430f061f33d2b3bb88e19dd1618e"
+content-hash = "23206bac5f4918860f9569f68e0264201092097ebac35d87828178aff9de1e68"
 
 [metadata.files]
 attrs = [
@@ -675,8 +675,8 @@ fern-fern-generator-exec = [
     {file = "fern_fern_generator_exec-0.3.0-py3-none-any.whl", hash = "sha256:02406f828b38c6ed176a26bcd19344c53ac27b76ea79ebefb04ffecc594baf69"},
 ]
 fern-fern-ir-model = [
-    {file = "fern-fern-ir-model-0.0.259.tar.gz", hash = "sha256:95dbcc3ee598f54db212c15caac29a3e07acea1e2f7df2aaaba21a4916f069bc"},
-    {file = "fern_fern_ir_model-0.0.259-py3-none-any.whl", hash = "sha256:8c8f353dcc213010312a779e951e1c755f6a28c95284f064dba32bc8f3bf04b2"},
+    {file = "fern-fern-ir-model-0.0.261.tar.gz", hash = "sha256:3e1f68f81279b9f501bcf2d32b38aa3caed1c36368587b0ff9a5b0c232448353"},
+    {file = "fern_fern_ir_model-0.0.261-py3-none-any.whl", hash = "sha256:461b4cfbd82070a88851a8fda45af9ce4c4686272c366957813dfb3de91a5a73"},
 ]
 filelock = [
     {file = "filelock-3.8.0-py3-none-any.whl", hash = "sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4"},
