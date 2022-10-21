@@ -7,16 +7,16 @@ exports[`fern upgrade upgrades generators 1`] = `
     mode: download-files
     output-path: ./generated-postman
   - name: fernapi/fern-openapi
-    version: 0.0.8
+    version: 0.0.9
     config:
       format: yaml
     mode: download-files
     output-path: ./generated-openapi
   - name: fernapi/fern-java-sdk
-    version: 0.0.116
+    version: 0.0.120
     mode: publish
   - name: fernapi/fern-typescript-sdk
-    version: 0.0.209
+    version: 0.0.219
     mode: publish
 "
 `;
