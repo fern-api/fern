@@ -81,7 +81,9 @@ async function generateSampleAppPackageJson({ volume }: { volume: Volume }) {
             ["start"]: "ts-node app.ts",
         },
         devDependencies: {
-            ...DEV_DEPENDENCIES,
+            "@types/node": DEV_DEPENDENCIES["@types/node"],
+            "ts-node": "^10.9.1",
+            typescript: DEV_DEPENDENCIES.typescript,
         },
     };
     await volume.promises.writeFile(getPathToProjectFile("package.json"), JSON.stringify(packageJson, undefined, 4));
