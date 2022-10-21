@@ -49,6 +49,7 @@ export function createAstVisitorForRules({
         ...createAstNodeVisitor("typeName"),
         ...createAstNodeVisitor("httpService"),
         ...createAstNodeVisitor("httpEndpoint"),
+        ...createAstNodeVisitor("queryParameter"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
     };

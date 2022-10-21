@@ -100,6 +100,11 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     }),
                                 });
 
+                                if (resolvedType == null) {
+                                    // invalid will be caught by another rule
+                                    continue;
+                                }
+
                                 if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
                                     const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
                                     const serviceFile = workspace.serviceFiles[resolvedType.filepath];

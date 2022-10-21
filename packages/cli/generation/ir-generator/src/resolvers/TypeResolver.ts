@@ -1,13 +1,14 @@
 import { Workspace } from "@fern-api/workspace-loader";
-import { isRawAliasDefinition, RawSchemas } from "@fern-api/yaml-schema";
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { isRawAliasDefinition, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 import { ResolvedType } from "./ResolvedType";
 
 export interface TypeResolver {
-    resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType;
+    resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType | undefined;
+    resolveTypeOrThrow: (args: { type: string; file: FernFileContext }) => ResolvedType;
     getDeclarationOfNamedType: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
@@ -18,8 +19,12 @@ export interface TypeResolver {
 export class TypeResolverImpl implements TypeResolver {
     constructor(private readonly workspace: Workspace) {}
 
-    public resolveType({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
-        return this.resolveTypeRecursive({ type, file });
+    public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
+        const resolvedType = this.resolveType({ type, file });
+        if (resolvedType == null) {
+            throw new Error("Cannot resolve type: " + type);
+        }
+        return resolvedType;
     }
 
     public getDeclarationOfNamedType({
@@ -57,7 +62,7 @@ export class TypeResolverImpl implements TypeResolver {
         };
     }
 
-    private resolveTypeRecursive({
+    public resolveType({
         type,
         file,
         objectPath = [],
@@ -65,27 +70,77 @@ export class TypeResolverImpl implements TypeResolver {
         type: string;
         file: FernFileContext;
         objectPath?: string[];
-    }): ResolvedType {
-        const parsedType = parseInlineType({ type, file });
-        return TypeReference._visit<ResolvedType>(parsedType, {
-            container: (container) => ({ _type: "container", container }),
-            primitive: (primitive) => ({ _type: "primitive", primitive }),
-            unknown: () => ({ _type: "unknown" }),
-            void: () => ({ _type: "void" }),
-            named: () => {
-                const declaration = this.resolveNamedType({
-                    referenceToNamedType: type,
+    }): ResolvedType | undefined {
+        return visitRawTypeReference<ResolvedType | undefined>(type, {
+            primitive: (primitive) => ({
+                _type: "primitive",
+                primitive,
+                originalTypeReference: TypeReference.primitive(primitive),
+            }),
+            unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
+            void: () => ({ _type: "void", originalTypeReference: TypeReference.void() }),
+            map: ({ keyType, valueType }) =>
+                keyType != null && valueType != null
+                    ? {
+                          _type: "container",
+                          container: {
+                              _type: "map",
+                              keyType,
+                              valueType,
+                          },
+                          originalTypeReference: TypeReference.container(
+                              ContainerType.map({
+                                  keyType: keyType.originalTypeReference,
+                                  valueType: valueType.originalTypeReference,
+                              })
+                          ),
+                      }
+                    : undefined,
+            list: (itemType) =>
+                itemType != null
+                    ? {
+                          _type: "container",
+                          container: {
+                              _type: "list",
+                              itemType,
+                          },
+                          originalTypeReference: TypeReference.container(
+                              ContainerType.list(itemType.originalTypeReference)
+                          ),
+                      }
+                    : undefined,
+            optional: (itemType) =>
+                itemType != null
+                    ? {
+                          _type: "container",
+                          container: {
+                              _type: "optional",
+                              itemType,
+                          },
+                          originalTypeReference: TypeReference.container(
+                              ContainerType.optional(itemType.originalTypeReference)
+                          ),
+                      }
+                    : undefined,
+            set: (itemType) =>
+                itemType != null
+                    ? {
+                          _type: "container",
+                          container: {
+                              _type: "set",
+                              itemType,
+                          },
+                          originalTypeReference: TypeReference.container(
+                              ContainerType.set(itemType.originalTypeReference)
+                          ),
+                      }
+                    : undefined,
+            named: (referenceToNamedType) =>
+                this.resolveNamedType({
+                    referenceToNamedType,
                     file,
-                    objectPath: [...objectPath, type],
-                });
-                if (declaration == null) {
-                    throw new Error("Cannot find type: " + type);
-                }
-                return declaration;
-            },
-            _unknown: () => {
-                throw new Error("Unknown type reference type: " + parsedType._type);
-            },
+                    objectPath: [...objectPath, referenceToNamedType],
+                }),
         });
     }
 
@@ -108,24 +163,25 @@ export class TypeResolverImpl implements TypeResolver {
         const { declaration, file: fileOfResolvedDeclaration } = maybeDeclaration;
 
         if (isRawAliasDefinition(declaration)) {
-            return this.resolveTypeRecursive({
+            return this.resolveType({
                 type: typeof declaration === "string" ? declaration : declaration.alias,
                 file: fileOfResolvedDeclaration,
                 objectPath,
             });
         }
 
-        const parsedTypeName = parseInlineType({ type: referenceToNamedType, file });
-        if (parsedTypeName._type !== "named") {
+        const parsedTypeReference = parseInlineType({ type: referenceToNamedType, file });
+        if (parsedTypeReference._type !== "named") {
             return undefined;
         }
 
         return {
             _type: "named",
-            name: parsedTypeName,
+            name: parsedTypeReference,
             declaration,
             filepath: fileOfResolvedDeclaration.relativeFilepath,
             objectPath,
+            originalTypeReference: parsedTypeReference,
         };
     }
 }

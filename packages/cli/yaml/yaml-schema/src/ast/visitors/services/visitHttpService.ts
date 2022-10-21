@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { HttpEndpointSchema, HttpServiceSchema } from "../../../schemas";
+import { HttpEndpointSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { FernAstVisitor } from "../../FernAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
@@ -39,23 +39,11 @@ export async function visitHttpService({
         },
         auth: noop,
         "path-parameters": async (pathParameters) => {
-            if (pathParameters == null) {
-                return;
-            }
-            for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
-                const nodePathForPathParameter = [...nodePathForService, "path-parameters", pathParameterKey];
-                if (typeof pathParameter === "string") {
-                    await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
-                } else {
-                    await visitObject(pathParameter, {
-                        type: async (type) => {
-                            await visitor.typeReference?.(type, nodePathForPathParameter);
-                        },
-                        docs: createDocsVisitor(visitor, nodePathForPathParameter),
-                        availability: noop,
-                    });
-                }
-            }
+            await visitPathParameters({
+                pathParameters,
+                visitor,
+                nodePath: nodePathForService,
+            });
         },
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
@@ -81,30 +69,20 @@ async function visitEndpoint({
         availability: noop,
         path: noop,
         "path-parameters": async (pathParameters) => {
-            if (pathParameters == null) {
-                return;
-            }
-            for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
-                const nodePathForPathParameter = [...nodePathForEndpoint, "path-parameters", pathParameterKey];
-                if (typeof pathParameter === "string") {
-                    await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
-                } else {
-                    await visitObject(pathParameter, {
-                        docs: createDocsVisitor(visitor, nodePathForPathParameter),
-                        availability: noop,
-                        type: async (type) => {
-                            await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
-                        },
-                    });
-                }
-            }
+            await visitPathParameters({
+                pathParameters,
+                visitor,
+                nodePath: nodePathForEndpoint,
+            });
         },
         "query-parameters": async (queryParameters) => {
             if (queryParameters == null) {
                 return;
             }
             for (const [queryParameterKey, queryParameter] of Object.entries(queryParameters)) {
-                const nodePathForQueryParameter = [...nodePathForEndpoint, "query", queryParameterKey];
+                const nodePathForQueryParameter = [...nodePathForEndpoint, "query-parameters", queryParameterKey];
+                await visitor.queryParameter?.({ queryParameterKey, queryParameter }, nodePathForQueryParameter);
+
                 if (typeof queryParameter === "string") {
                     await visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
                 } else {
@@ -178,4 +156,32 @@ async function visitEndpoint({
             }
         },
     });
+}
+
+async function visitPathParameters({
+    pathParameters,
+    visitor,
+    nodePath,
+}: {
+    pathParameters: Record<string, HttpPathParameterSchema> | undefined;
+    visitor: Partial<FernAstVisitor>;
+    nodePath: NodePath;
+}) {
+    if (pathParameters == null) {
+        return;
+    }
+    for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
+        const nodePathForPathParameter = [...nodePath, "path-parameters", pathParameterKey];
+        if (typeof pathParameter === "string") {
+            await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
+        } else {
+            await visitObject(pathParameter, {
+                docs: createDocsVisitor(visitor, nodePathForPathParameter),
+                availability: noop,
+                type: async (type) => {
+                    await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
+                },
+            });
+        }
+    }
 }

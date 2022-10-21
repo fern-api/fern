@@ -1,20 +1,19 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule } from "../../Rule";
 
 export const NoGetRequestBodyRule: Rule = {
     name: "no-get-request-body",
     create: () => {
         return {
-            httpService: (service) => {
-                const violations: RuleViolation[] = [];
-                for (const [endpointId, endpoint] of Object.entries(service.service.endpoints)) {
-                    if (endpoint.method === "GET" && endpoint.request != null) {
-                        violations.push({
+            httpEndpoint: ({ endpoint }) => {
+                if (endpoint.method === "GET" && endpoint.request != null) {
+                    return [
+                        {
                             severity: "error",
-                            message: `Endpoint '${endpointId}' is a GET request, so it cannot have a request body.`,
-                        });
-                    }
+                            message: "Endpoint is a GET, so it cannot have a request body.",
+                        },
+                    ];
                 }
-                return violations;
+                return [];
             },
         };
     },

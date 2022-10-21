@@ -79,3 +79,8 @@ types:
       name: foo
     union:
       a: ObjectWithDuplicatedNameFooByDifferentExtensions
+
+  # shouldn't throw
+  ObjectWithUndefinedReference:
+    properties:
+      madeUp: MadeUpType

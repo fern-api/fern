@@ -29,16 +29,13 @@ function constructResolvedTypeReference({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): ResolvedTypeReference {
-    const resolvedType = typeResolver.resolveType({ type: aliasOf, file });
+    const resolvedType = typeResolver.resolveTypeOrThrow({ type: aliasOf, file });
     switch (resolvedType._type) {
         case "primitive":
-            return ResolvedTypeReference.primitive(resolvedType.primitive);
         case "container":
-            return ResolvedTypeReference.container(resolvedType.container);
         case "void":
-            return ResolvedTypeReference.void();
         case "unknown":
-            return ResolvedTypeReference.unknown();
+            return resolvedType.originalTypeReference;
         case "named": {
             const shapeType = isRawObjectDefinition(resolvedType.declaration)
                 ? ShapeType.Object
