@@ -1,6 +1,7 @@
 import {
     ErrorDeclarationSchema,
     HttpEndpointSchema,
+    HttpQueryParameterSchema,
     HttpServiceSchema,
     TypeDeclarationSchema,
     TypeReferenceSchema,
@@ -19,6 +20,7 @@ export interface FernAstNodeTypes {
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema };
+    queryParameter: { queryParameterKey: string; queryParameter: HttpQueryParameterSchema };
     errorDeclaration: { errorName: string; declaration: ErrorDeclarationSchema };
     errorReference: string;
 }

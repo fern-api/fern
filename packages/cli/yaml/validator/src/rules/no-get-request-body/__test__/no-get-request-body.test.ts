@@ -11,14 +11,14 @@ describe("no-get-request-body", () => {
 
         expect(violations).toEqual([
             {
-                message: "Endpoint 'baz' is a GET request, so it cannot have a request body.",
-                nodePath: ["services", "http", "MyService"],
+                message: "Endpoint is a GET, so it cannot have a request body.",
+                nodePath: ["services", "http", "MyService", "endpoints", "baz"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },
             {
-                message: "Endpoint 'bing' is a GET request, so it cannot have a request body.",
-                nodePath: ["services", "http", "MyService"],
+                message: "Endpoint is a GET, so it cannot have a request body.",
+                nodePath: ["services", "http", "MyService", "endpoints", "bing"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },

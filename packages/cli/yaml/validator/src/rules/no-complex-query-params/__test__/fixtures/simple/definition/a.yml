@@ -1,0 +1,29 @@
+types:
+  Object:
+    properties:
+      foo: string
+  AliasOfObject: Object
+  AliasOfAliasOfObject: Object
+  AliasOfPrimitive: boolean
+  AliasOfAliasOfPrimitive: string
+services:
+  http:
+    MyService:
+      auth: false
+      base-path: /
+      endpoints:
+        foo:
+          path: /
+          method: POST
+        bar:
+          path: /
+          method: POST
+          query-parameters:
+            a: string
+            b: optional<string>
+            c: list<string>
+            d: unknown
+            e: optional<AliasOfPrimitive>
+            f: optional<AliasOfAliasOfPrimitive>
+            g: optional<AliasOfAliasOfObject>
+            h: MadeUpType

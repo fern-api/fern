@@ -9,7 +9,7 @@ export {
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
 export { Language } from "./language";
-export { type ResolvedType } from "./resolvers/ResolvedType";
+export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";

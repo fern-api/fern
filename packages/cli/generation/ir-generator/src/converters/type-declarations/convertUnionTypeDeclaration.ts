@@ -130,7 +130,7 @@ function getSingleUnionTypeProperties({
     typeResolver: TypeResolver;
     rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema | undefined;
 }): SingleUnionTypeProperties {
-    const resolvedType = typeResolver.resolveType({ type: rawType, file });
+    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawType, file });
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
