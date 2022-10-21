@@ -68,7 +68,7 @@ services:
           errors:
             - PlaylistIdNotFoundError
 
-        deletePlaylist:
+        delete:
           docs: Deletes a playlist
           method: DELETE
           path: /{playlist_id}

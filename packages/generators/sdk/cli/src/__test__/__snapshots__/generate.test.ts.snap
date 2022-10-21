@@ -4895,6 +4895,12 @@ Array [
     "type": "file",
   },
   Object {
+    "contents": "registry=https://registry.npmjs.org/
+",
+    "name": ".npmrc",
+    "type": "file",
+  },
+  Object {
     "contents": ".yarn
 node_modules
 .npmignore
@@ -7407,7 +7413,7 @@ export interface Client {
   getPlaylists(request: TraceApi.playlist.getPlaylists.Request): Promise<TraceApi.playlist.getPlaylists.Response>;
   getPlaylist(request: TraceApi.playlist.getPlaylist.Request): Promise<TraceApi.playlist.getPlaylist.Response>;
   updatePlaylist(request: TraceApi.playlist.updatePlaylist.Request): Promise<TraceApi.playlist.updatePlaylist.Response>;
-  deletePlaylist(request: TraceApi.playlist.deletePlaylist.Request): Promise<TraceApi.playlist.deletePlaylist.Response>;
+  delete(request: TraceApi.playlist.delete.Request): Promise<TraceApi.playlist.delete.Response>;
 }
 
 export declare namespace Client {
@@ -7577,9 +7583,7 @@ export class Client implements Client {
     };
   }
 
-  public async deletePlaylist(
-    request: TraceApi.playlist.deletePlaylist.Request
-  ): Promise<TraceApi.playlist.deletePlaylist.Response> {
+  public async delete(request: TraceApi.playlist.delete.Request): Promise<TraceApi.playlist.delete.Response> {
     const response = await core.fetcher({
       url: urlJoin(this.options._origin, \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`),
       method: \\"DELETE\\",
@@ -7664,7 +7668,7 @@ export interface Request {
   playlistId: TraceApi.playlist.PlaylistId;
 }
 
-export type Response = core.APIResponse<void, TraceApi.playlist.deletePlaylist.Error>;
+export type Response = core.APIResponse<void, TraceApi.playlist.delete.Error>;
 export type Error = Error._Unknown;
 
 export declare namespace Error {
@@ -7682,7 +7686,7 @@ export declare namespace Error {
   }
 }
 ",
-                "name": "deletePlaylist.ts",
+                "name": "delete.ts",
                 "type": "file",
               },
               Object {
@@ -7804,7 +7808,7 @@ export declare namespace Error {
 export * as getPlaylists from \\"./getPlaylists\\";
 export * as getPlaylist from \\"./getPlaylist\\";
 export * as updatePlaylist from \\"./updatePlaylist\\";
-export * as deletePlaylist from \\"./deletePlaylist\\";
+export * as delete from \\"./delete\\";
 ",
                 "name": "index.ts",
                 "type": "file",

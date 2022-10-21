@@ -13,12 +13,14 @@ export async function publishPackage({
     publishInfo,
     pathToPackageOnDisk,
     runYarnCommand,
+    dryRun,
 }: {
     generatorNotificationService: GeneratorNotificationService;
     logger: Logger;
     publishInfo: PublishInfo;
     pathToPackageOnDisk: AbsoluteFilePath;
     runYarnCommand: YarnRunner;
+    dryRun: boolean;
 }): Promise<void> {
     const runCommandInOutputDirectory = async (executable: string, ...args: string[]): Promise<void> => {
         const command = execa(executable, args, {
@@ -47,10 +49,15 @@ export async function publishPackage({
         "set",
         `//${path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname)}:_authToken`,
         token
-        // intentionally not writing this to the project config, so the token isn't persisted
+        // intentionally not writing this to the project config with `--location project`,
+        // so the token isn't persisted
     );
 
-    await runNpmCommandInOutputDirectory("publish");
+    const publishCommand = ["publish"];
+    if (dryRun) {
+        publishCommand.push("--dry-run");
+    }
+    await runNpmCommandInOutputDirectory(...publishCommand);
 
     await generatorNotificationService.sendUpdate(
         FernGeneratorExec.GeneratorUpdate.published(publishInfo.packageCoordinate)

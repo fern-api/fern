@@ -53,21 +53,34 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
             runYarnCommand,
         });
 
-        if (config.output.mode.type === "publish" && npmPackage.publishInfo != null && !config.dryRun) {
-            await publishPackage({
-                generatorNotificationService,
-                logger,
-                publishInfo: npmPackage.publishInfo,
-                pathToPackageOnDisk,
-                runYarnCommand,
-            });
-        } else if (config.output.mode.type === "github") {
-            await writeGitHubWorkflows({
-                config,
-                githubOutputMode: config.output.mode,
-            });
-            await writeSampleApp({ config, logger, npmPackage, exportDeclaration });
-        }
+        await config.output.mode._visit({
+            publish: async () => {
+                if (npmPackage.publishInfo == null) {
+                    throw new Error("npmPackage.publishInfo is not defined.");
+                }
+                await publishPackage({
+                    generatorNotificationService,
+                    logger,
+                    publishInfo: npmPackage.publishInfo,
+                    pathToPackageOnDisk,
+                    runYarnCommand,
+                    dryRun: config.dryRun,
+                });
+            },
+            github: async (githubOutputMode) => {
+                await writeGitHubWorkflows({
+                    config,
+                    githubOutputMode,
+                });
+                await writeSampleApp({ config, logger, npmPackage, exportDeclaration });
+            },
+            downloadFiles: () => {
+                throw new Error("download-files output mode is not implemented");
+            },
+            _other: ({ type }) => {
+                throw new Error(`${type} mode is not implemented`);
+            },
+        });
 
         await generatorNotificationService.sendUpdate(
             FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful())
