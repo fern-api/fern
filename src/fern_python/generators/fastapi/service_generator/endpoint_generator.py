@@ -1,4 +1,3 @@
-from functools import cached_property
 from typing import List
 
 import fern.ir.pydantic as ir_types
@@ -52,19 +51,17 @@ class EndpointGenerator:
             name=self._get_method_name(),
             signature=AST.FunctionSignature(
                 named_parameters=[parameter.to_function_parameter() for parameter in self._parameters],
-                return_type=self._return_type,
+                return_type=self._get_return_type(),
             ),
         )
 
-    @cached_property
-    def _return_type(self) -> AST.TypeHint:
+    def _get_return_type(self) -> AST.TypeHint:
         response_type = self._endpoint.response.type_v_2
         if response_type is None:
             return AST.TypeHint.none()
         return self._context.pydantic_generator_context.get_type_hint_for_type_reference(response_type)
 
-    @cached_property
-    def _endpoint_path(self) -> str:
+    def _get_endpoint_path(self) -> str:
         base_path = self._service.base_path_v_2
         service_part = (
             base_path.head
@@ -120,7 +117,9 @@ class EndpointGenerator:
             node=AST.FunctionDeclaration(
                 name=_TRY_EXCEPT_WRAPPER_NAME,
                 body=AST.CodeWriter(self._write_try_except_wrapper_body),
-                signature=AST.FunctionSignature(include_args=True, include_kwargs=True, return_type=self._return_type),
+                signature=AST.FunctionSignature(
+                    include_args=True, include_kwargs=True, return_type=self._get_return_type()
+                ),
                 decorators=[
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
@@ -145,10 +144,10 @@ class EndpointGenerator:
         writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
         writer.write_line("(")
         with writer.indent():
-            writer.write_line(f'path="{self._endpoint_path}",')
+            writer.write_line(f'path="{self._get_endpoint_path()}",')
             if self._endpoint.response.type_v_2 is not None:
                 writer.write("response_model=")
-                writer.write_node(self._return_type)
+                writer.write_node(self._get_return_type())
                 writer.write_line(",")
             writer.write("**")
             writer.write_node(self._context.core_utilities.get_route_args(AST.Expression(method_on_cls)))

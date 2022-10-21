@@ -1,4 +1,6 @@
-from typing import Protocol, Union
+from typing import Union
+
+from typing_extensions import Protocol
 
 from ...ast_node import AstNode, AstNodeMetadata, NodeWriter
 from .metadata_loading_node_writer import MetadataLoadingNodeWriter
