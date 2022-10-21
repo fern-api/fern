@@ -33,7 +33,14 @@ public abstract class RawGeneratedFile implements GeneratedFile {
 
     @Override
     public final void writeToFile(Path directory) throws IOException {
-        Files.writeString(directory.resolve(filename()), contents());
+        Path outputDirectory = directory;
+        if (directoryPrefix().isPresent()) {
+            outputDirectory = directory.resolve(directoryPrefix().get());
+            if (!outputDirectory.toFile().exists()) {
+                outputDirectory.toFile().mkdirs();
+            }
+        }
+        Files.writeString(outputDirectory.resolve(filename()), contents());
     }
 
     public static ImmutableRawGeneratedFile.FilenameBuildStage builder() {
