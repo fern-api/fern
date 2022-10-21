@@ -386,7 +386,7 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(
                     createMapPutAllSetter(enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
-                            .addStatement("this.$L.putAll($L, $L)", fieldSpec.name, fieldSpec.name)
+                            .addStatement("this.$L.putAll($L)", fieldSpec.name, fieldSpec.name)
                             .addStatement("return this")
                             .build());
             implSetterConsumer.accept(

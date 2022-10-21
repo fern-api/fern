@@ -1881,10 +1881,14 @@ package com.fern.basic.client.blog.types;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(
@@ -1901,14 +1905,18 @@ public final class CreatePostRequest {
 
   private final int _switch;
 
+  private final Map<String, Integer> ratings;
+
   private int _cachedHashCode;
 
-  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch) {
+  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch,
+      Map<String, Integer> ratings) {
     this.title = title;
     this.author = author;
     this.content = content;
     this.postType = postType;
     this._switch = _switch;
+    this.ratings = ratings;
   }
 
   @JsonProperty("title")
@@ -1936,6 +1944,11 @@ public final class CreatePostRequest {
     return _switch;
   }
 
+  @JsonProperty("ratings")
+  public Map<String, Integer> getRatings() {
+    return ratings;
+  }
+
   @Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -1943,20 +1956,20 @@ public final class CreatePostRequest {
   }
 
   private boolean equalTo(CreatePostRequest other) {
-    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch;
+    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch && ratings.equals(other.ratings);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch);
+      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch, this.ratings);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + "}";
+    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + ", ratings: " + ratings + "}";
   }
 
   public static TitleStage builder() {
@@ -1987,6 +2000,12 @@ public final class CreatePostRequest {
 
   public interface _FinalStage {
     CreatePostRequest build();
+
+    _FinalStage ratings(Map<String, Integer> ratings);
+
+    _FinalStage putAllRatings(Map<String, Integer> ratings);
+
+    _FinalStage ratings(String key, Integer value);
   }
 
   @JsonIgnoreProperties(
@@ -2003,6 +2022,8 @@ public final class CreatePostRequest {
 
     private int _switch;
 
+    private Map<String, Integer> ratings = new LinkedHashMap<>();
+
     private Builder() {
     }
 
@@ -2013,6 +2034,7 @@ public final class CreatePostRequest {
       content(other.getContent());
       postType(other.getPostType());
       _switch(other.getSwitch());
+      ratings(other.getRatings());
       return this;
     }
 
@@ -2052,8 +2074,31 @@ public final class CreatePostRequest {
     }
 
     @Override
+    public _FinalStage ratings(String key, Integer value) {
+      this.ratings.put(key, value);
+      return this;
+    }
+
+    @Override
+    public _FinalStage putAllRatings(Map<String, Integer> ratings) {
+      this.ratings.putAll(ratings);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "ratings",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage ratings(Map<String, Integer> ratings) {
+      this.ratings.clear();
+      this.ratings.putAll(ratings);
+      return this;
+    }
+
+    @Override
     public CreatePostRequest build() {
-      return new CreatePostRequest(title, author, content, postType, _switch);
+      return new CreatePostRequest(title, author, content, postType, _switch, ratings);
     }
   }
 }
