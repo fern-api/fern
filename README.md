@@ -1,5 +1,11 @@
 # Fern
 
+<div align="right">
+  <a href="https://www.npmjs.com/package/fern-api" alt="fern-api npm package">
+    <img src="https://img.shields.io/npm/v/fern-api?style=flat-square" />
+  </a>
+</div>
+
 Fern keeps your docs and SDKs in sync with your API.
 
 [View our docs ➚](https://buildwithfern.com/docs/intro)
