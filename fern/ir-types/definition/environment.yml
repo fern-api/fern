@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+types:
+  EnvironmentId: string
+  Environment:
+    extends: commons.WithDocs
+    properties:
+      name: commons.Name
+      url: string

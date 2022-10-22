@@ -8,6 +8,7 @@ imports:
   http: services/http.yml
   websocket: services/websocket.yml
   constants: constants.yml
+  environment: environment.yml
 types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
@@ -25,6 +26,8 @@ types:
         type: FernConstants
         docs: this is deprecated. use constantsV2
       constantsV2: constants.Constants
+      defaultEnvironment: environment.EnvironmentId
+      environments: map<environment.EnvironmentId, environment.Environment>
   Services:
     properties:
       http: list<http.HttpService>
