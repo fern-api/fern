@@ -7,5 +7,6 @@ types:
   Environment:
     extends: commons.WithDocs
     properties:
+      id: EnvironmentId
       name: commons.Name
       url: string
