@@ -3,7 +3,10 @@
 imports:
   commons: commons.yml
 types:
-  EnvironmentId: string
+  Environments:
+    properties:
+      defaultEnvironment: optional<Environment>
+      otherEnvironments: list<Environment>
   Environment:
     extends: commons.WithDocs
     properties:

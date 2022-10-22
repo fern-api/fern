@@ -26,8 +26,7 @@ types:
         type: FernConstants
         docs: this is deprecated. use constantsV2
       constantsV2: constants.Constants
-      defaultEnvironment: environment.EnvironmentId
-      environments: map<environment.EnvironmentId, environment.Environment>
+      environments: environment.Environments
   Services:
     properties:
       http: list<http.HttpService>
