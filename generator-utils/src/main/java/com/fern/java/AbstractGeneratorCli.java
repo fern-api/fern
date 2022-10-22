@@ -32,8 +32,12 @@ import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.generators.GithubWorkflowGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.RawGeneratedFile;
+import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.GradlePublishingConfig;
+import com.fern.java.output.gradle.GradleRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,6 +47,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,13 +112,7 @@ public abstract class AbstractGeneratorCli {
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir);
-        generatedFiles.forEach(generatedFile -> {
-            try {
-                generatedFile.writeToFile(outputDirectory);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to write generated file: " + generatedFile);
-            }
-        });
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
     }
 
     public abstract void runInDownloadFilesModeHook(
@@ -132,34 +131,20 @@ public abstract class AbstractGeneratorCli {
                 .orElseThrow(() -> new RuntimeException("Expected maven publish info, but received other!"));
         MavenArtifactAndGroup mavenArtifactAndGroup =
                 MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
+        MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
+                .group(mavenArtifactAndGroup.group())
+                .artifact(mavenArtifactAndGroup.artifact())
+                .version(githubOutputMode.getVersion())
+                .build();
 
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, githubOutputMode);
 
         // add project level files
-        BuildGradleConfig buildGradleConfig = BuildGradleConfig.builder()
-                .addAllDependencies(getBuildGradleDependencies())
-                .publishing(ImmutablePublishingConfig.builder()
-                        .version(githubOutputMode.getVersion())
-                        .group(mavenArtifactAndGroup.group())
-                        .artifact(mavenArtifactAndGroup.artifact())
-                        .build())
-                .build();
-        addGeneratedFile(buildGradleConfig.toRawGeneratedFile());
-        addGeneratedFile(RawGeneratedFile.builder()
-                .filename("settings.gradle")
-                .contents("")
-                .build());
-        addGeneratedFile(GitIgnoreGenerator.getGitignore());
+        addRootProjectFiles(mavenCoordinate);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(mavenGithubPublishInfo.getRegistryUrl()));
 
         // write files to disk
-        generatedFiles.forEach(generatedFile -> {
-            try {
-                generatedFile.writeToFile(outputDirectory);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to write generated file: " + generatedFile);
-            }
-        });
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
 
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
     }
@@ -189,29 +174,9 @@ public abstract class AbstractGeneratorCli {
 
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, publishOutputMode);
 
-        // add project files
-        BuildGradleConfig buildGradleConfig = BuildGradleConfig.builder()
-                .addAllDependencies(getBuildGradleDependencies())
-                .publishing(ImmutablePublishingConfig.builder()
-                        .version(mavenCoordinate.getVersion())
-                        .group(mavenCoordinate.getGroup())
-                        .artifact(mavenCoordinate.getArtifact())
-                        .build())
-                .build();
-        addGeneratedFile(buildGradleConfig.toRawGeneratedFile());
-        addGeneratedFile(RawGeneratedFile.builder()
-                .filename("settings.gradle")
-                .contents("")
-                .build());
-        addGeneratedFile(GitIgnoreGenerator.getGitignore());
+        addRootProjectFiles(mavenCoordinate);
 
-        generatedFiles.forEach(generatedFile -> {
-            try {
-                generatedFile.writeToFile(outputDirectory);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to write generated file: " + generatedFile);
-            }
-        });
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
 
         // run publish
@@ -220,11 +185,11 @@ public abstract class AbstractGeneratorCli {
                     new String[] {"gradle", "publish"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     Map.of(
-                            BuildGradleConfig.MAVEN_USERNAME_ENV_VAR,
+                            GeneratedBuildGradle.MAVEN_USERNAME_ENV_VAR,
                             mavenRegistryConfigV2.getUsername(),
-                            BuildGradleConfig.MAVEN_PASSWORD_ENV_VAR,
+                            GeneratedBuildGradle.MAVEN_PASSWORD_ENV_VAR,
                             mavenRegistryConfigV2.getPassword(),
-                            BuildGradleConfig.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
+                            GeneratedBuildGradle.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
                             mavenRegistryConfigV2.getRegistryUrl()));
         }
         generatorExecClient.sendUpdate(GeneratorUpdate.published(PackageCoordinate.maven(mavenCoordinate)));
@@ -236,7 +201,9 @@ public abstract class AbstractGeneratorCli {
             IntermediateRepresentation ir,
             GeneratorPublishConfig publishOutputMode);
 
-    public abstract List<String> getBuildGradleDependencies();
+    public abstract List<GradleDependency> getBuildGradleDependencies();
+
+    public abstract List<String> getSubProjects();
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
@@ -248,6 +215,31 @@ public abstract class AbstractGeneratorCli {
         static ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
             return ImmutableMavenPackageCoordinate.builder();
         }
+    }
+
+    private void addRootProjectFiles(MavenCoordinate mavenCoordinate) {
+        GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
+                .addAllPluginIds(List.of(
+                        GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID, GeneratedBuildGradle.MAVEN_PUBLISH_PLUGIN_ID))
+                .addCustomRepositories(GradleRepository.builder()
+                        .url("https://s01.oss.sonatype.org/content/repositories/releases/")
+                        .build())
+                .gradlePublishingConfig(GradlePublishingConfig.builder()
+                        .version(mavenCoordinate.getVersion())
+                        .group(mavenCoordinate.getGroup())
+                        .artifact(mavenCoordinate.getArtifact())
+                        .build())
+                .addAllDependencies(getBuildGradleDependencies())
+                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
+                .build();
+        addGeneratedFile(buildGradle);
+        addGeneratedFile(RawGeneratedFile.builder()
+                .filename("settings.gradle")
+                .contents(getSubProjects().stream()
+                        .map(project -> "include '" + project + "'")
+                        .collect(Collectors.joining("\n")))
+                .build());
+        addGeneratedFile(GitIgnoreGenerator.getGitignore());
     }
 
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {

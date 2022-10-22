@@ -26,8 +26,8 @@ import com.fern.java.client.generators.exception.ClientExceptionTypeSpecGenerato
 import com.fern.java.client.generators.exception.ClientExceptionUnionOtherSubType;
 import com.fern.java.client.generators.exception.ClientExceptionUnionSubType;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaFile;
-import com.fern.java.output.IGeneratedJavaFile;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.util.List;
@@ -54,13 +54,14 @@ public final class ClientEndpointExceptionGenerator extends AbstractFileGenerato
     }
 
     @Override
-    public IGeneratedJavaFile generateFile() {
+    public AbstractGeneratedJavaFile generateFile() {
         FernConstants fernConstants = generatorContext.getIr().getConstants();
         List<ClientExceptionUnionSubType> clientExceptionSubTypes = httpEndpoint.getErrors().get().stream()
                 .map(responseError -> {
                     ErrorDeclaration errorDeclaration =
                             generatorContext.getErrorDefinitionsByName().get(responseError.getError());
-                    IGeneratedJavaFile generatedClientError = generatedClientErrors.get(responseError.getError());
+                    AbstractGeneratedJavaFile generatedClientError =
+                            generatedClientErrors.get(responseError.getError());
                     return new ClientExceptionUnionSubType(
                             className, errorDeclaration, generatedClientError, fernConstants);
                 })

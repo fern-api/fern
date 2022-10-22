@@ -24,7 +24,7 @@ import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.errors.HttpErrorConfiguration;
 import com.fern.ir.model.ir.FernConstants;
 import com.fern.java.generators.union.UnionSubType;
-import com.fern.java.output.IGeneratedJavaFile;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -41,7 +41,7 @@ public final class ClientExceptionUnionSubType extends UnionSubType {
     private static final String ERROR_INSTANCE_ID_FIELD_NAME = "errorInstanceId";
 
     private final ErrorDeclaration errorDeclaration;
-    private final IGeneratedJavaFile generatedError;
+    private final AbstractGeneratedJavaFile generatedError;
     private final FernConstants fernConstants;
     private final List<FieldSpec> fieldSpecs = new ArrayList<>();
     private final List<MethodSpec> constructors = new ArrayList<>();
@@ -49,7 +49,7 @@ public final class ClientExceptionUnionSubType extends UnionSubType {
     public ClientExceptionUnionSubType(
             ClassName unionClassName,
             ErrorDeclaration errorDeclaration,
-            IGeneratedJavaFile generatedError,
+            AbstractGeneratedJavaFile generatedError,
             FernConstants fernConstants) {
         super(unionClassName);
         this.errorDeclaration = errorDeclaration;

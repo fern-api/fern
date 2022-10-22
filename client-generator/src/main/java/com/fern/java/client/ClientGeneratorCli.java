@@ -27,11 +27,15 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.client.generators.ClientErrorGenerator;
 import com.fern.java.client.generators.ClientWrapperGenerator;
 import com.fern.java.client.generators.HttpServiceClientGenerator;
+import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
+import com.fern.java.output.gradle.GradleDependency;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,9 +45,9 @@ import org.slf4j.LoggerFactory;
 
 public final class ClientGeneratorCli extends AbstractGeneratorCli {
 
-    private static final String UTILS_VERSION = "0.0.82";
-
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
+
+    private final List<String> subprojects = new ArrayList<>();
 
     @Override
     public void runInDownloadFilesModeHook(
@@ -59,7 +63,11 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             GithubOutputMode githubOutputMode) {
-        generateClient(generatorExecClient, generatorConfig, ir);
+        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig);
+        GeneratedClientWrapper generatedClientWrapper = generateClient(context, ir);
+        SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
+        sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
+        subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
     }
 
     @Override
@@ -68,14 +76,11 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             GeneratorPublishConfig publishOutputMode) {
-        generateClient(generatorExecClient, generatorConfig, ir);
+        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig);
+        generateClient(context, ir);
     }
 
-    public void generateClient(
-            DefaultGeneratorExecClient defaultGeneratorExecClient,
-            GeneratorConfig generatorConfig,
-            IntermediateRepresentation ir) {
-        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig);
+    public GeneratedClientWrapper generateClient(ClientGeneratorContext context, IntermediateRepresentation ir) {
 
         // auth
         AuthGenerator authGenerator = new AuthGenerator(context);
@@ -125,18 +130,60 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
         GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generateFile();
         this.addGeneratedFile(generatedClientWrapper);
         generatedClientWrapper.nestedClients().forEach(this::addGeneratedFile);
+
+        return generatedClientWrapper;
     }
 
     @Override
-    public List<String> getBuildGradleDependencies() {
+    public List<GradleDependency> getBuildGradleDependencies() {
         return List.of(
-                "    api 'io.github.fern-api:jackson-utils:" + UTILS_VERSION + "'",
-                "    implementation 'io.github.fern-api:jersey-utils:" + UTILS_VERSION + "'",
-                "    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'",
-                "    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'",
-                "    implementation 'io.github.openfeign:feign-jackson:11.8'",
-                "    implementation 'io.github.openfeign:feign-core:11.8'",
-                "    implementation 'io.github.openfeign:feign-jaxrs2:11.8'");
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("io.github.fern-api")
+                        .artifact("jackson-utils")
+                        .version(GradleDependency.UTILS_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("io.github.fern-api")
+                        .artifact("jersey-utils")
+                        .version(GradleDependency.UTILS_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.fasterxml.jackson.core")
+                        .artifact("jackson-databind")
+                        .version(GradleDependency.JACKSON_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.fasterxml.jackson.datatype")
+                        .artifact("jackson-datatype-jdk8")
+                        .version(GradleDependency.JACKSON_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("io.github.openfeign")
+                        .artifact("feign-jackson")
+                        .version(GradleDependency.FEIGN_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("io.github.openfeign")
+                        .artifact("feign-core")
+                        .version(GradleDependency.FEIGN_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("io.github.openfeign")
+                        .artifact("feign-jaxrs2")
+                        .version(GradleDependency.FEIGN_VERSION)
+                        .build());
+    }
+
+    @Override
+    public List<String> getSubProjects() {
+        return subprojects;
     }
 
     public static void main(String... args) {

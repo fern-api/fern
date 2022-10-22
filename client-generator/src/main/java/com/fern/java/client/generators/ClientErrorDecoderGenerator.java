@@ -22,8 +22,8 @@ import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaFile;
-import com.fern.java.output.IGeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
@@ -46,12 +46,12 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
     private static final String DECODE_EXCEPTION_CLAZZ_PARAMETER_NAME = "clazz";
 
     private final HttpService httpService;
-    private final Map<HttpEndpointId, IGeneratedJavaFile> generatedEndpointExceptions;
+    private final Map<HttpEndpointId, AbstractGeneratedJavaFile> generatedEndpointExceptions;
 
     public ClientErrorDecoderGenerator(
             ClientGeneratorContext generatorContext,
             HttpService httpService,
-            Map<HttpEndpointId, IGeneratedJavaFile> generatedEndpointExceptions) {
+            Map<HttpEndpointId, AbstractGeneratedJavaFile> generatedEndpointExceptions) {
         super(
                 generatorContext.getPoetClassNameFactory().getServiceErrorDecoderClassname(httpService),
                 generatorContext);
@@ -60,7 +60,7 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public IGeneratedJavaFile generateFile() {
+    public AbstractGeneratedJavaFile generateFile() {
         TypeSpec errorDecoderTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.FINAL)
                 .addSuperinterface(ErrorDecoder.class)
@@ -85,7 +85,7 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().beginControlFlow("try");
         boolean ifStatementStarted = false;
         for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
-            IGeneratedJavaFile endpointException = generatedEndpointExceptions.get(httpEndpoint.getId());
+            AbstractGeneratedJavaFile endpointException = generatedEndpointExceptions.get(httpEndpoint.getId());
             codeBlockBuilder
                     .beginControlFlow(
                             "$L ($L.contains($S))",

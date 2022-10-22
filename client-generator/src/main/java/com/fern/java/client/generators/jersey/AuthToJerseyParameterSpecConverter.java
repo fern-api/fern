@@ -22,8 +22,8 @@ import com.fern.ir.model.commons.WithDocs;
 import com.fern.ir.model.services.http.HttpEndpoint;
 import com.fern.ir.model.services.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
-import com.fern.java.output.IGeneratedJavaFile;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
@@ -61,11 +61,12 @@ public final class AuthToJerseyParameterSpecConverter {
 
     private static final class AuthSchemeParameterSpec implements AuthScheme.Visitor<ParameterSpec> {
 
-        private final IGeneratedJavaFile generatedFile;
+        private final AbstractGeneratedJavaFile generatedFile;
         private final boolean isOptional;
         private final String parameterName;
 
-        private AuthSchemeParameterSpec(IGeneratedJavaFile generatedFile, String parameterName, boolean isOptional) {
+        private AuthSchemeParameterSpec(
+                AbstractGeneratedJavaFile generatedFile, String parameterName, boolean isOptional) {
             this.generatedFile = generatedFile;
             this.isOptional = isOptional;
             this.parameterName = parameterName;

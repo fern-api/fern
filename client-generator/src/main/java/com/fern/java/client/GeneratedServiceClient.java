@@ -18,13 +18,13 @@ package com.fern.java.client;
 
 import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.IGeneratedJavaFile;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedServiceClient implements IGeneratedJavaFile {
+public abstract class GeneratedServiceClient extends AbstractGeneratedJavaFile {
 
     public abstract HttpService httpService();
 

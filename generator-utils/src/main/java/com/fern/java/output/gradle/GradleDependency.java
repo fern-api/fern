@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-package com.fern.java.client;
+package com.fern.java.output.gradle;
 
-import com.fern.ir.model.services.http.HttpEndpointId;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.AbstractGeneratedJavaFile;
-import com.squareup.javapoet.MethodSpec;
-import java.util.Map;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedJerseyServiceInterface extends AbstractGeneratedJavaFile {
+public abstract class GradleDependency extends AbstractGradleDependency {
 
-    public abstract Map<HttpEndpointId, MethodSpec> endpointMethods();
+    public static final String JACKSON_VERSION = "2.12.3";
+    public static final String UTILS_VERSION = "0.0.82";
+    public static final String FEIGN_VERSION = "11.8";
 
-    public abstract Map<HttpEndpointId, AbstractGeneratedJavaFile> endpointExceptions();
+    public abstract String group();
 
-    public abstract AbstractGeneratedJavaFile errorDecoder();
+    public abstract String artifact();
 
-    public static ImmutableGeneratedJerseyServiceInterface.ClassNameBuildStage builder() {
-        return ImmutableGeneratedJerseyServiceInterface.builder();
+    public abstract String version();
+
+    @Override
+    public final String coordinate() {
+        return "'" + group() + ":" + artifact() + ":" + version() + "'";
+    }
+
+    public static ImmutableGradleDependency.TypeBuildStage builder() {
+        return ImmutableGradleDependency.builder();
     }
 }

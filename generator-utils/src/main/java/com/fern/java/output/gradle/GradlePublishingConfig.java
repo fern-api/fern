@@ -14,26 +14,22 @@
  * limitations under the License.
  */
 
-package com.fern.java.client;
+package com.fern.java.output.gradle;
 
-import com.fern.ir.model.services.http.HttpEndpointId;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.AbstractGeneratedJavaFile;
-import com.squareup.javapoet.MethodSpec;
-import java.util.Map;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedJerseyServiceInterface extends AbstractGeneratedJavaFile {
+public abstract class GradlePublishingConfig {
 
-    public abstract Map<HttpEndpointId, MethodSpec> endpointMethods();
+    public abstract String version();
 
-    public abstract Map<HttpEndpointId, AbstractGeneratedJavaFile> endpointExceptions();
+    public abstract String group();
 
-    public abstract AbstractGeneratedJavaFile errorDecoder();
+    public abstract String artifact();
 
-    public static ImmutableGeneratedJerseyServiceInterface.ClassNameBuildStage builder() {
-        return ImmutableGeneratedJerseyServiceInterface.builder();
+    public static ImmutableGradlePublishingConfig.VersionBuildStage builder() {
+        return ImmutableGradlePublishingConfig.builder();
     }
 }

@@ -14,26 +14,18 @@
  * limitations under the License.
  */
 
-package com.fern.java.output;
+package com.fern.java.output.gradle;
 
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import java.io.IOException;
-import java.nio.file.Path;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import org.immutables.value.Value;
 
-public interface IGeneratedJavaFile extends GeneratedFile {
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+public abstract class GradleRepository {
 
-    ClassName getClassName();
+    public abstract String url();
 
-    JavaFile javaFile();
-
-    @Override
-    default String filename() {
-        return getClassName().simpleName() + ".java";
-    }
-
-    @Override
-    default void writeToFile(Path directory) throws IOException {
-        javaFile().writeToFile(directory.resolve("src/main/java").toFile());
+    public static ImmutableGradleRepository.UrlBuildStage builder() {
+        return ImmutableGradleRepository.builder();
     }
 }

@@ -24,7 +24,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedJavaInterface implements IGeneratedJavaFile {
+public abstract class GeneratedJavaInterface extends AbstractGeneratedJavaFile {
 
     public abstract List<PropertyMethodSpec> propertyMethodSpecs();
 

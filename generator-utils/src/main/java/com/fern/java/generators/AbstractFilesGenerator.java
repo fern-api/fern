@@ -17,7 +17,7 @@
 package com.fern.java.generators;
 
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.IGeneratedJavaFile;
+import com.fern.java.output.GeneratedFile;
 import java.util.List;
 
 public abstract class AbstractFilesGenerator {
@@ -29,5 +29,5 @@ public abstract class AbstractFilesGenerator {
         this.generatorContext = generatorContext;
     }
 
-    public abstract List<IGeneratedJavaFile> generateFiles();
+    public abstract List<GeneratedFile> generateFiles();
 }

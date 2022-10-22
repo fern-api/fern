@@ -16,19 +16,24 @@
 
 package com.fern.java.output;
 
-import com.fern.ir.model.auth.AuthScheme;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.util.Map;
-import java.util.Optional;
-import org.immutables.value.Value;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import java.io.IOException;
+import java.nio.file.Path;
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-public abstract class GeneratedAuthFiles extends AbstractGeneratedJavaFile {
+public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
 
-    public abstract Optional<Map<AuthScheme, GeneratedJavaFile>> authSchemeFileOutputs();
+    public abstract ClassName getClassName();
 
-    public static ImmutableGeneratedAuthFiles.ClassNameBuildStage builder() {
-        return ImmutableGeneratedAuthFiles.builder();
+    public abstract JavaFile javaFile();
+
+    @Override
+    public final String filename() {
+        return getClassName().simpleName() + ".java";
+    }
+
+    @Override
+    public final void writeToFile(Path directory) throws IOException {
+        javaFile().writeToFile(directory.resolve("src/main/java").toFile());
     }
 }

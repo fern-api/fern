@@ -21,7 +21,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedJavaFile implements IGeneratedJavaFile {
+public abstract class GeneratedJavaFile extends AbstractGeneratedJavaFile {
 
     public static ImmutableGeneratedJavaFile.ClassNameBuildStage builder() {
         return ImmutableGeneratedJavaFile.builder();

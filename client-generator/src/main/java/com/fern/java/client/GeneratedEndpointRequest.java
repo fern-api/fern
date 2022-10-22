@@ -17,7 +17,7 @@
 package com.fern.java.client;
 
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.IGeneratedJavaFile;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -26,7 +26,7 @@ import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public abstract class GeneratedEndpointRequest implements IGeneratedJavaFile {
+public abstract class GeneratedEndpointRequest extends AbstractGeneratedJavaFile {
 
     public abstract TypeSpec requestTypeSpec();
 

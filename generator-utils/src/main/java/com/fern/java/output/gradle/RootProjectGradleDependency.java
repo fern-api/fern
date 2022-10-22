@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package com.fern.java.output;
+package com.fern.java.output.gradle;
 
-import com.fern.ir.model.auth.AuthScheme;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.util.Map;
-import java.util.Optional;
-import org.immutables.value.Value;
+public final class RootProjectGradleDependency extends AbstractGradleDependency {
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-public abstract class GeneratedAuthFiles extends AbstractGeneratedJavaFile {
+    public static final RootProjectGradleDependency INSTANCE = new RootProjectGradleDependency();
 
-    public abstract Optional<Map<AuthScheme, GeneratedJavaFile>> authSchemeFileOutputs();
+    @Override
+    public DependencyType type() {
+        return DependencyType.IMPLEMENTATION;
+    }
 
-    public static ImmutableGeneratedAuthFiles.ClassNameBuildStage builder() {
-        return ImmutableGeneratedAuthFiles.builder();
+    @Override
+    public String coordinate() {
+        return "rootProject";
     }
 }

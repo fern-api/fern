@@ -17,7 +17,7 @@
 package com.fern.java.generators;
 
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.IGeneratedJavaFile;
+import com.fern.java.output.GeneratedFile;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
 import java.util.List;
@@ -32,10 +32,10 @@ public abstract class AbstractFileGenerator extends AbstractFilesGenerator {
         this.className = className;
     }
 
-    public abstract IGeneratedJavaFile generateFile();
+    public abstract GeneratedFile generateFile();
 
     @Override
-    public final List<IGeneratedJavaFile> generateFiles() {
+    public final List<GeneratedFile> generateFiles() {
         return Collections.singletonList(generateFile());
     }
 }

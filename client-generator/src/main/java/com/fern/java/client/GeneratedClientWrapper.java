@@ -17,15 +17,15 @@
 package com.fern.java.client;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import com.fern.java.output.IGeneratedJavaFile;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedClientWrapper implements IGeneratedJavaFile {
+public abstract class GeneratedClientWrapper extends AbstractGeneratedJavaFile {
 
-    public abstract List<IGeneratedJavaFile> nestedClients();
+    public abstract List<AbstractGeneratedJavaFile> nestedClients();
 
     public static ImmutableGeneratedClientWrapper.ClassNameBuildStage builder() {
         return ImmutableGeneratedClientWrapper.builder();
