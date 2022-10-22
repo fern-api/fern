@@ -36,12 +36,11 @@ public final class RawFileWriter {
         stringBuilder.append(val);
     }
 
-    public void indent() {
+    private void indent() {
         this.numIndents += 1;
-        stringBuilder.append(indent.repeat(numIndents));
     }
 
-    public void unIndent() {
+    private void unIndent() {
         this.numIndents -= 1;
     }
 
@@ -54,7 +53,7 @@ public final class RawFileWriter {
     }
 
     public void beginControlFlow(String prefix) {
-        stringBuilder.append(prefix).append(" { \n");
+        stringBuilder.append(indent.repeat(numIndents) + prefix).append(" {\n");
         indent();
     }
 

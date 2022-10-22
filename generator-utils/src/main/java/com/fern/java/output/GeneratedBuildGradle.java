@@ -68,7 +68,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.addLine("mavenCentral()");
         for (GradleRepository gradleRepository : customRepositories()) {
             writer.beginControlFlow("maven");
-            writer.append("url '" + gradleRepository.url() + "'\n");
+            writer.addLine("url '" + gradleRepository.url() + "'");
             writer.endControlFlow();
         }
         writer.endControlFlow();
