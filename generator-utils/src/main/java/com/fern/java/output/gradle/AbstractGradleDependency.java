@@ -24,7 +24,7 @@ public abstract class AbstractGradleDependency {
 
     @Override
     public final String toString() {
-        return type().toString().toLowerCase() + coordinate();
+        return type().toString().toLowerCase() + " " + coordinate();
     }
 
     public enum DependencyType {

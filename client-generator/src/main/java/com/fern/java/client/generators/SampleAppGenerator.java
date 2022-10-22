@@ -60,14 +60,14 @@ public final class SampleAppGenerator extends AbstractFilesGenerator {
                 .addMethod(MethodSpec.methodBuilder("main")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .addParameter(ArrayTypeName.of(ClassName.get(String.class)), "args")
+                        .addComment("import "
+                                + generatedClientWrapper.getClassName().toString())
                         .build())
                 .build();
         ClassName appClassName = ClassName.get("sample", appTypeSpec.name);
         GeneratedJavaFile appJava = GeneratedJavaFile.builder()
                 .className(appClassName)
                 .javaFile(JavaFile.builder(appClassName.packageName(), appTypeSpec)
-                        .addFileComment("import "
-                                + generatedClientWrapper.getClassName().toString())
                         .build())
                 .directoryPrefix(SAMPLE_APP_DIRECTORY)
                 .build();
