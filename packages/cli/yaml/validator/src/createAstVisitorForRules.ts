@@ -4,6 +4,7 @@ import {
     FernAstNodeVisitor,
     FernAstVisitor,
     NodePath,
+    RootApiFileSchema,
     ServiceFileSchema,
 } from "@fern-api/yaml-schema";
 import { RuleRunner } from "./Rule";
@@ -16,7 +17,7 @@ export function createAstVisitorForRules({
     addViolations,
 }: {
     relativeFilepath: RelativeFilePath;
-    contents: ServiceFileSchema;
+    contents: ServiceFileSchema | RootApiFileSchema;
     ruleRunners: RuleRunner[];
     addViolations: (newViolations: ValidationViolation[]) => void;
 }): FernAstVisitor {
@@ -41,18 +42,38 @@ export function createAstVisitorForRules({
         return { [nodeType]: visit } as Record<K, FernAstNodeVisitor<K>>;
     }
 
-    const astVisitor: FernAstVisitor = {
-        ...createAstNodeVisitor("docs"),
-        ...createAstNodeVisitor("import"),
-        ...createAstNodeVisitor("typeReference"),
-        ...createAstNodeVisitor("typeDeclaration"),
-        ...createAstNodeVisitor("typeName"),
-        ...createAstNodeVisitor("httpService"),
-        ...createAstNodeVisitor("httpEndpoint"),
-        ...createAstNodeVisitor("queryParameter"),
-        ...createAstNodeVisitor("errorDeclaration"),
-        ...createAstNodeVisitor("errorReference"),
-    };
+    if (isRootApiFile(contents)) {
+        return {
+            docs: () => void {},
+            import: () => void {},
+            typeReference: () => void {},
+            typeDeclaration: () => void {},
+            typeName: () => void {},
+            httpService: () => void {},
+            httpEndpoint: () => void {},
+            queryParameter: () => void {},
+            errorDeclaration: () => void {},
+            errorReference: () => void {},
+            ...createAstNodeVisitor("defaultEnvironment"),
+        };
+    } else {
+        return {
+            ...createAstNodeVisitor("docs"),
+            ...createAstNodeVisitor("import"),
+            ...createAstNodeVisitor("typeReference"),
+            ...createAstNodeVisitor("typeDeclaration"),
+            ...createAstNodeVisitor("typeName"),
+            ...createAstNodeVisitor("httpService"),
+            ...createAstNodeVisitor("httpEndpoint"),
+            ...createAstNodeVisitor("queryParameter"),
+            ...createAstNodeVisitor("errorDeclaration"),
+            ...createAstNodeVisitor("errorReference"),
+            defaultEnvironment: () => void {},
+        };
+    }
+}
 
-    return astVisitor;
+function isRootApiFile(contents: ServiceFileSchema | RootApiFileSchema): contents is RootApiFileSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (contents as RootApiFileSchema).name !== undefined;
 }
