@@ -9,6 +9,9 @@ export function convertEnvironments({
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
     casingsGenerator: CasingsGenerator;
 }): Environment[] {
+    if (rawApiFileSchema.environments == null) {
+        return [];
+    }
     const environments: Environment[] = [];
     for (const [environmentId, environment] of rawApiFileSchema.environments) {
         if (typeof environment === "string") {
