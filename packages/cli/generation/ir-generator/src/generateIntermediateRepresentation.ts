@@ -4,6 +4,7 @@ import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { convertApiAuth } from "./converters/convertApiAuth";
+import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
@@ -43,6 +44,8 @@ export async function generateIntermediateRepresentation({
         },
         constants: FERN_CONSTANTS,
         constantsV2: generateFernConstantsV2(casingsGenerator),
+        defaultEnvironment: workspace.rootApiFile["default-environment"],
+        environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile }),
     };
 
     const typeResolver = new TypeResolverImpl(workspace);

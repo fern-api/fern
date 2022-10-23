@@ -2845,7 +2845,8 @@ exports[`ir simple 1`] = `
                 "wireValue": "content"
             }
         }
-    }
+    },
+    "environments": []
 }"
 `;
 
@@ -5694,7 +5695,8 @@ exports[`ir simple 2`] = `
                 "wireValue": "content"
             }
         }
-    }
+    },
+    "environments": []
 }"
 `;
 
@@ -8543,7 +8545,8 @@ exports[`ir simple 3`] = `
                 "wireValue": "content"
             }
         }
-    }
+    },
+    "environments": []
 }"
 `;
 
@@ -11392,6 +11395,7 @@ exports[`ir simple 4`] = `
                 "wireValue": "content"
             }
         }
-    }
+    },
+    "environments": []
 }"
 `;
