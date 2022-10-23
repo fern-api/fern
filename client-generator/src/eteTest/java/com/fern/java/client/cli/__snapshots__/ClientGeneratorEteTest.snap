@@ -374,7 +374,7 @@ package com.fern.basic.client.auth;
 
 import com.fern.basic.client.BearerAuth;
 import com.fern.basic.client.auth.exceptions.GetAuthException;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.basic.core.ObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -399,8 +399,8 @@ interface AuthService {
   static AuthService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
         .errorDecoder(new AuthServiceErrorDecoder()).target(AuthService.class, url);
   }
 }
@@ -446,7 +446,7 @@ basic[src/main/java/com/fern/basic/client/auth/AuthServiceErrorDecoder.java]=[
 package com.fern.basic.client.auth;
 
 import com.fern.basic.client.auth.exceptions.GetAuthException;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.basic.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -471,7 +471,7 @@ final class AuthServiceErrorDecoder implements ErrorDecoder {
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -693,7 +693,7 @@ import com.fern.basic.client.blog.exceptions.GetPostException;
 import com.fern.basic.client.blog.types.BlogPost;
 import com.fern.basic.client.blog.types.CreatePostRequest;
 import com.fern.basic.client.blog.types.PostId;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.basic.core.ObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -723,8 +723,8 @@ interface PostsService {
   static PostsService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
         .errorDecoder(new PostsServiceErrorDecoder()).target(PostsService.class, url);
   }
 }
@@ -766,7 +766,7 @@ package com.fern.basic.client.blog;
 
 import com.fern.basic.client.blog.exceptions.CreatePostException;
 import com.fern.basic.client.blog.exceptions.GetPostException;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.basic.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -794,7 +794,7 @@ final class PostsServiceErrorDecoder implements ErrorDecoder {
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -2581,7 +2581,7 @@ package com.fern.basic.client.dummy.service;
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
 import com.fern.basic.client.dummy.service.exceptions.HealthException;
 import com.fern.basic.client.dummy.service.types.DummyId;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.basic.core.ObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -2609,8 +2609,8 @@ interface DummyService {
   static DummyService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
         .errorDecoder(new DummyServiceErrorDecoder()).target(DummyService.class, url);
   }
 }
@@ -2650,7 +2650,7 @@ package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
 import com.fern.basic.client.dummy.service.exceptions.HealthException;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.basic.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -2678,7 +2678,7 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -3068,5 +3068,26 @@ public final class DummyId {
     return of(value);
   }
 }
+
+]
+
+
+basic[src/main/java/com/fern/basic/core/ObjectMappers.java]=[
+package com.fern.basic.core;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+
+public final class ObjectMappers {
+  public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
+    .addModule(new Jdk8Module())
+    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+    .build();
+
+    private ObjectMappers() {
+    }
+  }
 
 ]

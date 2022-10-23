@@ -28,7 +28,7 @@ import com.fern.java.client.generators.jersey.AuthToJerseyParameterSpecConverter
 import com.fern.java.client.generators.jersey.JerseyHttpMethodToAnnotationSpec;
 import com.fern.java.client.generators.jersey.JerseyParameterSpecFactory;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -65,12 +65,14 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final ClientGeneratorContext clientGeneratorContext;
     private final JerseyParameterSpecFactory jerseyParameterSpecFactory;
+    private final GeneratedJavaFile objectMapper;
 
     public JerseyServiceInterfaceGenerator(
             ClientGeneratorContext clientGeneratorContext,
             Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors,
             Optional<GeneratedAuthFiles> maybeAuth,
-            HttpService httpService) {
+            HttpService httpService,
+            GeneratedJavaFile objectMapper) {
         super(
                 clientGeneratorContext.getPoetClassNameFactory().getServiceInterfaceClassName(httpService),
                 clientGeneratorContext);
@@ -78,6 +80,7 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
         this.httpService = httpService;
         this.generatedErrors = generatedErrors;
         this.maybeAuth = maybeAuth;
+        this.objectMapper = objectMapper;
         this.jerseyParameterSpecFactory = new JerseyParameterSpecFactory(clientGeneratorContext);
     }
 
@@ -189,7 +192,7 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
     private AbstractGeneratedJavaFile getErrorDecoder(
             Map<HttpEndpointId, AbstractGeneratedJavaFile> endpointExceptions) {
         ClientErrorDecoderGenerator clientErrorDecoderGenerator =
-                new ClientErrorDecoderGenerator(clientGeneratorContext, httpService, endpointExceptions);
+                new ClientErrorDecoderGenerator(clientGeneratorContext, httpService, endpointExceptions, objectMapper);
         return clientErrorDecoderGenerator.generateFile();
     }
 
@@ -199,8 +202,16 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                 .indent()
                 .indent()
                 .add(".contract(new $T(new $T()))\n", OptionalAwareContract.class, JAXRSContract.class)
-                .add(".decoder(new $T($T.$L))\n", JacksonDecoder.class, ClientObjectMappers.class, "JSON_MAPPER")
-                .add(".encoder(new $T($T.$L))\n", JacksonEncoder.class, ClientObjectMappers.class, "JSON_MAPPER")
+                .add(
+                        ".decoder(new $T($T.$L))\n",
+                        JacksonDecoder.class,
+                        objectMapper.getClassName(),
+                        ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME)
+                .add(
+                        ".encoder(new $T($T.$L))\n",
+                        JacksonEncoder.class,
+                        objectMapper.getClassName(),
+                        ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME)
                 .add(".errorDecoder(new $T())", generatedErrorDecoder.getClassName());
         codeBlockBuilder.add(".target($T.class, $L);", className, "url");
         CodeBlock codeBlock = codeBlockBuilder.unindent().unindent().build();

@@ -36,6 +36,11 @@ public final class ClientPoetClassNameFactory extends AbstractPoetClassNameFacto
         return "client";
     }
 
+    @Override
+    protected Optional<String> getTypesPrefix() {
+        return Optional.of("types");
+    }
+
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
         String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
         return ClassName.get(packageName, errorDeclaration.getName().getName());

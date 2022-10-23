@@ -2,7 +2,6 @@ dependencies {
     implementation project(':model-codegen')
     implementation project(':codegen-utils')
     implementation project(':runtime-utils:spring-utils')
-    implementation project(':runtime-utils:jackson-utils')
     implementation project(':runtime-utils:exception-utils')
     implementation 'com.fern.fern:ir-model'
     implementation 'com.squareup:javapoet'

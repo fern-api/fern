@@ -18,6 +18,7 @@ package com.fern.java.model;
 
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractPoetClassNameFactory;
+import java.util.Optional;
 
 public final class ModelPoetClassNameFactory extends AbstractPoetClassNameFactory {
 
@@ -28,5 +29,10 @@ public final class ModelPoetClassNameFactory extends AbstractPoetClassNameFactor
     @Override
     public String rootPackageName() {
         return "model";
+    }
+
+    @Override
+    protected Optional<String> getTypesPrefix() {
+        return Optional.empty();
     }
 }

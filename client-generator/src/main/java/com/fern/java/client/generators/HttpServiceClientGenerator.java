@@ -53,13 +53,15 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors;
     private final ClientGeneratorContext clientGeneratorContext;
+    private final GeneratedJavaFile objectMapper;
     private final boolean atleastOneEndpointHasAuth;
 
     public HttpServiceClientGenerator(
             ClientGeneratorContext clientGeneratorContext,
             HttpService httpService,
             Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors,
-            Optional<GeneratedAuthFiles> maybeAuth) {
+            Optional<GeneratedAuthFiles> maybeAuth,
+            GeneratedJavaFile objectMapper) {
         super(
                 clientGeneratorContext.getPoetClassNameFactory().getServiceClientClassname(httpService),
                 clientGeneratorContext);
@@ -68,12 +70,13 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
         this.clientGeneratorContext = clientGeneratorContext;
         this.maybeAuth = maybeAuth;
         this.atleastOneEndpointHasAuth = httpService.getEndpoints().stream().anyMatch(HttpEndpoint::getAuth);
+        this.objectMapper = objectMapper;
     }
 
     @Override
     public GeneratedServiceClient generateFile() {
-        JerseyServiceInterfaceGenerator jerseyServiceInterfaceGenerator =
-                new JerseyServiceInterfaceGenerator(clientGeneratorContext, generatedErrors, maybeAuth, httpService);
+        JerseyServiceInterfaceGenerator jerseyServiceInterfaceGenerator = new JerseyServiceInterfaceGenerator(
+                clientGeneratorContext, generatedErrors, maybeAuth, httpService, objectMapper);
         GeneratedJerseyServiceInterface jerseyServiceInterfaceOutput = jerseyServiceInterfaceGenerator.generateFile();
         TypeSpec.Builder serviceClientBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)

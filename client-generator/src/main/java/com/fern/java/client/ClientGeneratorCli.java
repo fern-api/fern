@@ -29,6 +29,7 @@ import com.fern.java.client.generators.ClientWrapperGenerator;
 import com.fern.java.client.generators.HttpServiceClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.generators.AuthGenerator;
+import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -82,6 +83,11 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
 
     public GeneratedClientWrapper generateClient(ClientGeneratorContext context, IntermediateRepresentation ir) {
 
+        // core
+        ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
+        GeneratedJavaFile objectMapper = objectMappersGenerator.generateFile();
+        this.addGeneratedFile(objectMapper);
+
         // auth
         AuthGenerator authGenerator = new AuthGenerator(context);
         Optional<GeneratedAuthFiles> maybeAuth = authGenerator.generate();
@@ -106,7 +112,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
         List<GeneratedServiceClient> generatedServiceClients = ir.getServices().getHttp().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator =
-                            new HttpServiceClientGenerator(context, httpService, errors, maybeAuth);
+                            new HttpServiceClientGenerator(context, httpService, errors, maybeAuth, objectMapper);
                     return httpServiceClientGenerator.generateFile();
                 })
                 .collect(Collectors.toList());
@@ -140,12 +146,6 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
                 GradleDependency.builder()
                         .type(DependencyType.API)
                         .group("io.github.fern-api")
-                        .artifact("jackson-utils")
-                        .version(GradleDependency.UTILS_VERSION)
-                        .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
-                        .group("io.github.fern-api")
                         .artifact("jersey-utils")
                         .version(GradleDependency.UTILS_VERSION)
                         .build(),
@@ -153,13 +153,13 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
                         .type(DependencyType.API)
                         .group("com.fasterxml.jackson.core")
                         .artifact("jackson-databind")
-                        .version(GradleDependency.JACKSON_VERSION)
+                        .version(GradleDependency.JACKSON_DATABIND_VERSION)
                         .build(),
                 GradleDependency.builder()
                         .type(DependencyType.API)
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jdk8")
-                        .version(GradleDependency.JACKSON_VERSION)
+                        .version(GradleDependency.JACKSON_JDK8_VERSION)
                         .build(),
                 GradleDependency.builder()
                         .type(DependencyType.API)

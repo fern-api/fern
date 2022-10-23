@@ -13,6 +13,8 @@ dependencies {
     compileOnly 'org.immutables:value::annotations'
     annotationProcessor 'org.immutables:value'
 
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core'

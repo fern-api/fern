@@ -22,6 +22,7 @@ import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
+import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
@@ -60,6 +61,10 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
     private void generateTypes(GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         ModelGeneratorContext context = new ModelGeneratorContext(ir, generatorConfig);
 
+        // core
+        ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
+        this.addGeneratedFile(objectMappersGenerator.generateFile());
+
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
@@ -72,15 +77,15 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
         return List.of(
                 GradleDependency.builder()
                         .type(DependencyType.API)
-                        .group("io.github.fern-api")
-                        .artifact("jackson-utils")
-                        .version(GradleDependency.UTILS_VERSION)
+                        .group("com.fasterxml.jackson.core")
+                        .artifact("jackson-databind")
+                        .version(GradleDependency.JACKSON_DATABIND_VERSION)
                         .build(),
                 GradleDependency.builder()
                         .type(DependencyType.API)
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jdk8")
-                        .version(GradleDependency.JACKSON_VERSION)
+                        .version(GradleDependency.JACKSON_JDK8_VERSION)
                         .build());
     }
 

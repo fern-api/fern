@@ -21,7 +21,7 @@ import com.fern.ir.model.services.http.HttpEndpointId;
 import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -47,16 +47,19 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
 
     private final HttpService httpService;
     private final Map<HttpEndpointId, AbstractGeneratedJavaFile> generatedEndpointExceptions;
+    private final GeneratedJavaFile objectMapper;
 
     public ClientErrorDecoderGenerator(
             ClientGeneratorContext generatorContext,
             HttpService httpService,
-            Map<HttpEndpointId, AbstractGeneratedJavaFile> generatedEndpointExceptions) {
+            Map<HttpEndpointId, AbstractGeneratedJavaFile> generatedEndpointExceptions,
+            GeneratedJavaFile objectMapper) {
         super(
                 generatorContext.getPoetClassNameFactory().getServiceErrorDecoderClassname(httpService),
                 generatorContext);
         this.httpService = httpService;
         this.generatedEndpointExceptions = generatedEndpointExceptions;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -125,8 +128,8 @@ public final class ClientErrorDecoderGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "return $T.$L.reader().withAttribute($S, $L.status())"
                                 + ".readValue($L.body().asInputStream(), $L)",
-                        ClientObjectMappers.class,
-                        "JSON_MAPPER",
+                        objectMapper.getClassName(),
+                        ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
                         "statusCode",
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,
                         DECODE_EXCEPTION_RESPONSE_PARAMETER_NAME,

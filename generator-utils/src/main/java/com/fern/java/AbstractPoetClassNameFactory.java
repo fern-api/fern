@@ -54,9 +54,17 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(packageName, className);
     }
 
-    protected final String getTypesPackageName(FernFilepath fernFilepath) {
-        return getPackage(Optional.of(fernFilepath), Optional.of("types"));
+    public final ClassName getCoreClassName(String className) {
+        List<String> tokens = new ArrayList<>(packagePrefixTokens);
+        tokens.add("core");
+        return ClassName.get(String.join(".", tokens), className);
     }
+
+    protected final String getTypesPackageName(FernFilepath fernFilepath) {
+        return getPackage(Optional.of(fernFilepath), getTypesPrefix());
+    }
+
+    protected abstract Optional<String> getTypesPrefix();
 
     protected final String getEndpointsPackageName(FernFilepath fernFilepath) {
         return getPackage(Optional.of(fernFilepath), Optional.of("endpoints"));
