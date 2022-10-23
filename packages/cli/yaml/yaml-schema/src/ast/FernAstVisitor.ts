@@ -13,6 +13,7 @@ export type FernAstVisitor<R = void | Promise<void>> = {
 };
 
 export interface FernAstNodeTypes {
+    defaultEnvironment: string | null | undefined;
     docs: string;
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };

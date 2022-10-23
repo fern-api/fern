@@ -13,7 +13,7 @@ export function convertEnvironments({
         return [];
     }
     const environments: Environment[] = [];
-    for (const [environmentId, environment] of rawApiFileSchema.environments) {
+    for (const [environmentId, environment] of Object.entries(rawApiFileSchema.environments)) {
         if (typeof environment === "string") {
             environments.push({
                 id: environmentId,

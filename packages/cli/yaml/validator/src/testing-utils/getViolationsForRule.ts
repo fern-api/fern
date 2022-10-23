@@ -30,6 +30,16 @@ export async function getViolationsForRule({
     const ruleRunner = await rule.create({ workspace: parseResult.workspace, logger: NOOP_LOGGER });
     const violations: ValidationViolation[] = [];
 
+    const rootApiFileVisitor = createAstVisitorForRules({
+        relativeFilepath: "api.yml",
+        contents: parseResult.workspace.rootApiFile,
+        ruleRunners: [ruleRunner],
+        addViolations: (newViolations) => {
+            violations.push(...newViolations);
+        },
+    });
+    await visitFernYamlAst(parseResult.workspace.rootApiFile, rootApiFileVisitor);
+
     for (const [relativeFilepath, contents] of entries(parseResult.workspace.serviceFiles)) {
         const visitor = createAstVisitorForRules({
             relativeFilepath,

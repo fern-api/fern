@@ -10,6 +10,7 @@ import NoObjectSinglePropertyKey from "./rules/no-object-single-property-key";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
+import ValidDefaultEnvironmentRule from "./rules/valid-default-environment";
 import ValidFieldNamesRule from "./rules/valid-field-names";
 
 export function getAllRules(): Rule[] {
@@ -26,5 +27,6 @@ export function getAllRules(): Rule[] {
         NoObjectSinglePropertyKey,
         NoGetRequestBody,
         NoComplexQueryParamsRule,
+        ValidDefaultEnvironmentRule,
     ];
 }
