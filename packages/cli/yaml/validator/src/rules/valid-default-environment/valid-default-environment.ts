@@ -7,7 +7,7 @@ export const ValidDefaultEnvironmentRule: Rule = {
         return {
             defaultEnvironment: (defaultEnvironment) => {
                 if (defaultEnvironment != null) {
-                    if (environments == null || !(defaultEnvironment in Object.keys(environments))) {
+                    if (environments == null || !Object.keys(environments).includes(defaultEnvironment)) {
                         return [
                             {
                                 severity: "error",
