@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { noop, RelativeFilePath } from "@fern-api/core-utils";
 import {
     FernAstNodeTypes,
     FernAstNodeVisitor,
@@ -44,16 +44,16 @@ export function createAstVisitorForRules({
 
     if (isRootApiFile(contents)) {
         return {
-            docs: () => void {},
-            import: () => void {},
-            typeReference: () => void {},
-            typeDeclaration: () => void {},
-            typeName: () => void {},
-            httpService: () => void {},
-            httpEndpoint: () => void {},
-            queryParameter: () => void {},
-            errorDeclaration: () => void {},
-            errorReference: () => void {},
+            ...createAstNodeVisitor("docs"),
+            ...createAstNodeVisitor("import"),
+            ...createAstNodeVisitor("typeReference"),
+            ...createAstNodeVisitor("typeDeclaration"),
+            ...createAstNodeVisitor("typeName"),
+            ...createAstNodeVisitor("httpService"),
+            ...createAstNodeVisitor("httpEndpoint"),
+            ...createAstNodeVisitor("queryParameter"),
+            ...createAstNodeVisitor("errorDeclaration"),
+            ...createAstNodeVisitor("errorReference"),
             ...createAstNodeVisitor("defaultEnvironment"),
         };
     } else {
@@ -68,7 +68,7 @@ export function createAstVisitorForRules({
             ...createAstNodeVisitor("queryParameter"),
             ...createAstNodeVisitor("errorDeclaration"),
             ...createAstNodeVisitor("errorReference"),
-            defaultEnvironment: () => void {},
+            defaultEnvironment: noop,
         };
     }
 }

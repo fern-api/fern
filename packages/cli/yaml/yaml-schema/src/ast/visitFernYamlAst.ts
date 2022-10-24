@@ -1,4 +1,4 @@
-import { visitObject } from "@fern-api/core-utils";
+import { noop, visitObject } from "@fern-api/core-utils";
 import { RootApiFileSchema, ServiceFileSchema } from "../schemas";
 import { FernAstVisitor } from "./FernAstVisitor";
 import { visitServices } from "./visitors/services/visitServices";
@@ -11,6 +11,18 @@ export async function visitFernYamlAst(
     visitor: Partial<FernAstVisitor>
 ): Promise<void> {
     if (isRootApiFile(contents)) {
+        await visitObject(contents, {
+            name: noop,
+            imports: async (imports) => {
+                await visitImports({ imports, visitor, nodePath: ["imports"] });
+            },
+            auth: noop,
+            "auth-schemes": noop,
+            "default-environment": async (defaultEnvironment) => {
+                await visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
+            },
+            environments: noop,
+        });
         await visitor.defaultEnvironment?.(contents["default-environment"], ["default-environment"]);
     } else {
         await visitObject(contents, {
