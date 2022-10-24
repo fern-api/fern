@@ -164,7 +164,7 @@ export class TypeResolverImpl implements TypeResolver {
 
         if (isRawAliasDefinition(declaration)) {
             return this.resolveType({
-                type: typeof declaration === "string" ? declaration : declaration.alias,
+                type: typeof declaration === "string" ? declaration : declaration.type,
                 file: fileOfResolvedDeclaration,
                 objectPath,
             });

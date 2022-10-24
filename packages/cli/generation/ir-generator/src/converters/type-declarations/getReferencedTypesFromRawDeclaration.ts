@@ -22,7 +22,7 @@ export function getReferencedTypesFromRawDeclaration({
 }): DeclaredTypeName[] {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
-            return [typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.alias];
+            return [typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type];
         },
         object: (objectDeclaration) => {
             const types: string[] = [];

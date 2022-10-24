@@ -31,7 +31,7 @@ export function isRawAliasDefinition(
     rawTypeDeclaration: TypeDeclarationSchema
 ): rawTypeDeclaration is string | AliasSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return typeof rawTypeDeclaration === "string" || (rawTypeDeclaration as AliasSchema).alias != null;
+    return typeof rawTypeDeclaration === "string" || (rawTypeDeclaration as AliasSchema).type != null;
 }
 
 export function isRawObjectDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is ObjectSchema {
