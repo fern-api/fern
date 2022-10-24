@@ -44,7 +44,7 @@ public final class ClientExceptionTypeSpecGenerator extends UnionTypeSpecGenerat
             List<? extends UnionSubType> subTypes,
             UnionSubType unknownSubType,
             FernConstants fernConstants) {
-        super(unionClassName, subTypes, unknownSubType, fernConstants);
+        super(unionClassName, subTypes, unknownSubType, fernConstants, false);
         this.deserializerClassName = getUnionClassName().nestedClass(DESERIALIZER_CLASS_NAME);
     }
 

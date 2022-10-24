@@ -1482,6 +1482,9 @@ import java.util.Optional;
 public final class Author {
   private final Value value;
 
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
   private Author(Value value) {
     this.value = value;
   }

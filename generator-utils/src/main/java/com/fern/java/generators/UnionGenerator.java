@@ -82,7 +82,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 List<? extends UnionSubType> subTypes,
                 UnionSubType unknownSubType,
                 FernConstants fernConstants) {
-            super(unionClassName, subTypes, unknownSubType, fernConstants);
+            super(unionClassName, subTypes, unknownSubType, fernConstants, true);
         }
 
         @Override

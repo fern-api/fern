@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fern.ir.model.ir.FernConstants;
+import com.fern.java.FernJavaAnnotations;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -47,12 +48,14 @@ public abstract class UnionTypeSpecGenerator {
     private final UnionSubType unknownSubType;
     private final FernConstants fernConstants;
     private final ParameterizedTypeName visitorInterfaceClassName;
+    private final boolean deserializable;
 
     public UnionTypeSpecGenerator(
             ClassName unionClassName,
             List<? extends UnionSubType> subTypes,
             UnionSubType unknownSubType,
-            FernConstants fernConstants) {
+            FernConstants fernConstants,
+            boolean deserializable) {
         this.unionClassName = unionClassName;
         this.subTypes = subTypes;
         this.unknownSubType = unknownSubType;
@@ -60,6 +63,7 @@ public abstract class UnionTypeSpecGenerator {
         this.valueInterfaceClassName = unionClassName.nestedClass("Value");
         this.visitorInterfaceClassName =
                 ParameterizedTypeName.get(unionClassName.nestedClass(VISITOR_CLASS_NAME), VISITOR_RETURN_TYPE);
+        this.deserializable = deserializable;
     }
 
     public abstract List<FieldSpec> getAdditionalFieldSpecs();
@@ -114,6 +118,9 @@ public abstract class UnionTypeSpecGenerator {
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(valueInterfaceClassName, getValueFieldName())
                 .addStatement("this.$L = $L", getValueFieldName(), getValueFieldName());
+        if (deserializable) {
+            constructorBuilder.addAnnotation(FernJavaAnnotations.jacksonDelegatingCreator());
+        }
         getAdditionalFieldSpecs().forEach(fieldSpec -> {
             constructorBuilder.addParameter(
                     ParameterSpec.builder(fieldSpec.type, fieldSpec.name).build());
