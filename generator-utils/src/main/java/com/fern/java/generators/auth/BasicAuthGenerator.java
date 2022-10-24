@@ -37,7 +37,7 @@ public final class BasicAuthGenerator extends AbstractFileGenerator {
     private static final String DECODE_METHOD_NAME = "decode";
 
     public BasicAuthGenerator(AbstractGeneratorContext<?> generatorContext) {
-        super(generatorContext.getPoetClassNameFactory().getTopLevelClassName("BasicAuth"), generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getCoreClassName("BasicAuth"), generatorContext);
     }
 
     @Override

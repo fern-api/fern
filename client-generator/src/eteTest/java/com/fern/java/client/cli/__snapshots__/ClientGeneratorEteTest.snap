@@ -280,44 +280,13 @@ exec "$JAVACMD" "$@"
 ]
 
 
-basic[src/main/java/com/fern/basic/client/BearerAuth.java]=[
-package com.fern.basic.client;
-
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
-import java.lang.String;
-
-public final class BearerAuth {
-  private final String token;
-
-  private BearerAuth(String token) {
-    this.token = token;
-  }
-
-  @JsonValue
-  public String getToken() {
-    return token;
-  }
-
-  @Override
-  public String toString() {
-    return "Bearer " + getToken();
-  }
-
-  public static BearerAuth of(String token) {
-    return new BearerAuth(token.startsWith("Bearer ") ? token.substring(7) : token);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/client/FernClient.java]=[
-package com.fern.basic.client;
+basic[src/main/java/com/fern/basic/FernClient.java]=[
+package com.fern.basic;
 
 import com.fern.basic.client.auth.AuthServiceClient;
 import com.fern.basic.client.blog.PostsServiceClient;
 import com.fern.basic.client.dummy.service.DummyServiceClient;
+import com.fern.basic.core.BearerAuth;
 import java.lang.String;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -372,8 +341,8 @@ public final class FernClient {
 basic[src/main/java/com/fern/basic/client/auth/AuthService.java]=[
 package com.fern.basic.client.auth;
 
-import com.fern.basic.client.BearerAuth;
 import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -411,9 +380,9 @@ interface AuthService {
 basic[src/main/java/com/fern/basic/client/auth/AuthServiceClient.java]=[
 package com.fern.basic.client.auth;
 
-import com.fern.basic.client.BearerAuth;
 import com.fern.basic.client.auth.endpoints.GetAuth;
 import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fern.basic.core.BearerAuth;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
@@ -481,7 +450,7 @@ final class AuthServiceErrorDecoder implements ErrorDecoder {
 basic[src/main/java/com/fern/basic/client/auth/endpoints/GetAuth.java]=[
 package com.fern.basic.client.auth.endpoints;
 
-import com.fern.basic.client.BearerAuth;
+import com.fern.basic.core.BearerAuth;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -3066,6 +3035,38 @@ public final class DummyId {
 
   public static DummyId valueOf(String value) {
     return of(value);
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/core/BearerAuth.java]=[
+package com.fern.basic.core;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Override;
+import java.lang.String;
+
+public final class BearerAuth {
+  private final String token;
+
+  private BearerAuth(String token) {
+    this.token = token;
+  }
+
+  @JsonValue
+  public String getToken() {
+    return token;
+  }
+
+  @Override
+  public String toString() {
+    return "Bearer " + getToken();
+  }
+
+  public static BearerAuth of(String token) {
+    return new BearerAuth(token.startsWith("Bearer ") ? token.substring(7) : token);
   }
 }
 

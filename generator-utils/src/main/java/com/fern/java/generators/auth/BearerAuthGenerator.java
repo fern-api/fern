@@ -32,7 +32,7 @@ public final class BearerAuthGenerator extends AbstractFileGenerator {
     private static final String GET_TOKEN_METHOD_NAME = "getToken";
 
     public BearerAuthGenerator(AbstractGeneratorContext<?> generatorContext) {
-        super(generatorContext.getPoetClassNameFactory().getTopLevelClassName("BearerAuth"), generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getCoreClassName("BearerAuth"), generatorContext);
     }
 
     @Override

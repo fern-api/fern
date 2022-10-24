@@ -52,6 +52,12 @@ public final class SnapshotTestRunner {
         Path pathToIr = tmpDir.resolve("ir.json");
         Path pathToConfig = tmpDir.resolve("config.json");
 
+        if (pathToOutput.toFile().exists()) {
+            runCommand(fernDir, new String[] {"rm", "-rf", "generated-java/"});
+        } else {
+            pathToOutput.toFile().mkdirs();
+        }
+
         GeneratorConfig generatorConfig = GeneratorConfig.builder()
                 .dryRun(true)
                 .irFilepath("/fern/ir.json")
@@ -162,10 +168,10 @@ public final class SnapshotTestRunner {
         }
     }
 
-    private static void runCommand(Path projectPath, String[] command) {
+    private static void runCommand(Path workingDirPath, String[] command) {
         int exitCode;
         try {
-            ProcessBuilder pb = new ProcessBuilder(command).directory(projectPath.toFile());
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirPath.toFile());
 
             Map<String, String> env = pb.environment();
 

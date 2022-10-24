@@ -65,7 +65,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
-                        .getTopLevelClassName(CasingUtils.convertKebabCaseToUpperCamelCase(
+                        .getRootClassName(CasingUtils.convertKebabCaseToUpperCamelCase(
                                         generatorContext.getGeneratorConfig().getOrganization())
                                 + CasingUtils.convertKebabCaseToUpperCamelCase(
                                         generatorContext.getGeneratorConfig().getWorkspaceName())

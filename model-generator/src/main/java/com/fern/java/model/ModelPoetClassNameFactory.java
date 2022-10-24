@@ -27,7 +27,7 @@ public final class ModelPoetClassNameFactory extends AbstractPoetClassNameFactor
     }
 
     @Override
-    public String rootPackageName() {
+    public String generatorTypePackage() {
         return "model";
     }
 

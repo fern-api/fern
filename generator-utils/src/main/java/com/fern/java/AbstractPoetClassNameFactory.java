@@ -37,7 +37,7 @@ public abstract class AbstractPoetClassNameFactory {
         packagePrefixTokens.addAll(splitOnNonAlphaNumericChar(ir.getApiName()));
     }
 
-    public abstract String rootPackageName();
+    public abstract String generatorTypePackage();
 
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
@@ -54,10 +54,12 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(packageName, className);
     }
 
+    public final ClassName getRootClassName(String className) {
+        return ClassName.get(getRootPackage(), className);
+    }
+
     public final ClassName getCoreClassName(String className) {
-        List<String> tokens = new ArrayList<>(packagePrefixTokens);
-        tokens.add("core");
-        return ClassName.get(String.join(".", tokens), className);
+        return ClassName.get(getCorePackage(), className);
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
@@ -80,13 +82,22 @@ public abstract class AbstractPoetClassNameFactory {
 
     protected final String getPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
         List<String> tokens = new ArrayList<>(packagePrefixTokens);
-        tokens.add(rootPackageName());
+        tokens.add(generatorTypePackage());
         fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.get().stream()
                 .map(StringWithAllCasings::getSnakeCase)
                 .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
                 .collect(Collectors.toList())));
         suffix.ifPresent(tokens::add);
         return String.join(".", tokens);
+    }
+
+    protected final String getRootPackage() {
+        List<String> tokens = new ArrayList<>(packagePrefixTokens);
+        return String.join(".", tokens);
+    }
+
+    protected final String getCorePackage() {
+        return getRootPackage() + ".core";
     }
 
     protected static List<String> splitOnNonAlphaNumericChar(String value) {

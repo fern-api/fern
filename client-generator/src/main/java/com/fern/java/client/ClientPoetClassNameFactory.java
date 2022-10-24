@@ -32,7 +32,7 @@ public final class ClientPoetClassNameFactory extends AbstractPoetClassNameFacto
     }
 
     @Override
-    public String rootPackageName() {
+    public String generatorTypePackage() {
         return "client";
     }
 
