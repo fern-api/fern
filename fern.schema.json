@@ -132,9 +132,9 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                  "alias": { "type": "string" }
+                  "type": { "type": "string" }
                 },
-                "required": ["alias"],
+                "required": ["type"],
                 "additionalProperties": false
               },
               {

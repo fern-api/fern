@@ -10,5 +10,6 @@ exports[`rename-alias-key-to-type simple 1`] = `
       foo: string
   d:
     docs: hello world
-    type: c"
+    type: c
+"
 `;
