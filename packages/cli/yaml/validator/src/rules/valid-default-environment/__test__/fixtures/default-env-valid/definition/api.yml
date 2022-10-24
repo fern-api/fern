@@ -1,0 +1,7 @@
+name: simple-api
+
+default-environment: staging
+
+environments:
+  staging: staging.fern.com
+  prod: prod.fern.com
