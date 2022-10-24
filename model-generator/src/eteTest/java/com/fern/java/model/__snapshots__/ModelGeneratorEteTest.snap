@@ -432,7 +432,7 @@ public final class Author {
 
   @JsonTypeInfo(
       use = JsonTypeInfo.Id.NAME,
-      property = "_error",
+      property = "type",
       visible = true,
       defaultImpl = _UnknownValue.class
   )

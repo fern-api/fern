@@ -49,13 +49,15 @@ public abstract class UnionTypeSpecGenerator {
     private final FernConstants fernConstants;
     private final ParameterizedTypeName visitorInterfaceClassName;
     private final boolean deserializable;
+    private final String discriminantProperty;
 
     public UnionTypeSpecGenerator(
             ClassName unionClassName,
             List<? extends UnionSubType> subTypes,
             UnionSubType unknownSubType,
             FernConstants fernConstants,
-            boolean deserializable) {
+            boolean deserializable,
+            String discriminantProperty) {
         this.unionClassName = unionClassName;
         this.subTypes = subTypes;
         this.unknownSubType = unknownSubType;
@@ -64,6 +66,7 @@ public abstract class UnionTypeSpecGenerator {
         this.visitorInterfaceClassName =
                 ParameterizedTypeName.get(unionClassName.nestedClass(VISITOR_CLASS_NAME), VISITOR_RETURN_TYPE);
         this.deserializable = deserializable;
+        this.discriminantProperty = discriminantProperty;
     }
 
     public abstract List<FieldSpec> getAdditionalFieldSpecs();
@@ -198,7 +201,7 @@ public abstract class UnionTypeSpecGenerator {
                 .addModifiers(Modifier.PRIVATE)
                 .addAnnotation(AnnotationSpec.builder(JsonTypeInfo.class)
                         .addMember("use", "$T.Id.$L", JsonTypeInfo.class, Id.NAME.name())
-                        .addMember("property", "$S", fernConstants.getErrorDiscriminant())
+                        .addMember("property", "$S", discriminantProperty)
                         .addMember("visible", "$L", true)
                         .addMember("defaultImpl", "$T.class", unknownSubType.getUnionSubTypeWrapperClass())
                         .build());

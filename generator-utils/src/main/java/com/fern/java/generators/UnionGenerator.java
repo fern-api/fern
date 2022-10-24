@@ -75,14 +75,14 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private static final class ModelUnionTypeSpecGenerator extends UnionTypeSpecGenerator {
+    private final class ModelUnionTypeSpecGenerator extends UnionTypeSpecGenerator {
 
         private ModelUnionTypeSpecGenerator(
                 ClassName unionClassName,
                 List<? extends UnionSubType> subTypes,
-                UnionSubType unknownSubType,
+                UnionSubType unionSubType,
                 FernConstants fernConstants) {
-            super(unionClassName, subTypes, unknownSubType, fernConstants, true);
+            super(unionClassName, subTypes, unionSubType, fernConstants, true, unionTypeDeclaration.getDiscriminant());
         }
 
         @Override
