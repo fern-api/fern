@@ -3790,8 +3790,8 @@ exports[`ir simple 2`] = `
                 "discriminant": "type",
                 "discriminantV2": {
                     "originalValue": "type",
-                    "camelCase": "type_",
-                    "snakeCase": "type_",
+                    "camelCase": "type",
+                    "snakeCase": "type",
                     "pascalCase": "Type",
                     "screamingSnakeCase": "TYPE",
                     "wireValue": "type"
@@ -5458,8 +5458,8 @@ exports[`ir simple 2`] = `
                         "id": "delete",
                         "name": {
                             "originalValue": "delete",
-                            "camelCase": "delete_",
-                            "snakeCase": "delete_",
+                            "camelCase": "delete",
+                            "snakeCase": "delete",
                             "pascalCase": "Delete",
                             "screamingSnakeCase": "DELETE"
                         },

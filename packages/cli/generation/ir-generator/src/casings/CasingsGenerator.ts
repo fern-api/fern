@@ -12,8 +12,9 @@ export interface CasingsGenerator {
 
 export function constructCasingsGenerator(generationLanguage: Language | undefined): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
-        generateNameCasingsV1: (name) => generateNameCasings({ name, generationLanguage }),
-        generateWireCasingsV1: ({ name, wireValue }) => generateWireCasings({ name, wireValue, generationLanguage }),
+        generateNameCasingsV1: (name) => generateNameCasings({ name, generationLanguage: undefined }),
+        generateWireCasingsV1: ({ name, wireValue }) =>
+            generateWireCasings({ name, wireValue, generationLanguage: undefined }),
         generateName: (name) => ({
             unsafeName: generateNameCasings({ name, generationLanguage: undefined }),
             safeName: generateNameCasings({ name, generationLanguage }),
