@@ -5,7 +5,7 @@ export const ValidDefaultEnvironmentRule: Rule = {
     create: ({ workspace }) => {
         const environments = workspace.rootApiFile.environments;
         return {
-            defaultEnvironment: (defaultEnvironment, { relativeFilepath }) => {
+            defaultEnvironment: (defaultEnvironment) => {
                 if (defaultEnvironment != null) {
                     if (environments == null || !(defaultEnvironment in Object.keys(environments))) {
                         return [
