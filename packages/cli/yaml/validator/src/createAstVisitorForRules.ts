@@ -1,4 +1,4 @@
-import { noop, RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/core-utils";
 import {
     FernAstNodeTypes,
     FernAstNodeVisitor,
@@ -42,38 +42,17 @@ export function createAstVisitorForRules({
         return { [nodeType]: visit } as Record<K, FernAstNodeVisitor<K>>;
     }
 
-    if (isRootApiFile(contents)) {
-        return {
-            ...createAstNodeVisitor("docs"),
-            ...createAstNodeVisitor("import"),
-            ...createAstNodeVisitor("typeReference"),
-            ...createAstNodeVisitor("typeDeclaration"),
-            ...createAstNodeVisitor("typeName"),
-            ...createAstNodeVisitor("httpService"),
-            ...createAstNodeVisitor("httpEndpoint"),
-            ...createAstNodeVisitor("queryParameter"),
-            ...createAstNodeVisitor("errorDeclaration"),
-            ...createAstNodeVisitor("errorReference"),
-            ...createAstNodeVisitor("defaultEnvironment"),
-        };
-    } else {
-        return {
-            ...createAstNodeVisitor("docs"),
-            ...createAstNodeVisitor("import"),
-            ...createAstNodeVisitor("typeReference"),
-            ...createAstNodeVisitor("typeDeclaration"),
-            ...createAstNodeVisitor("typeName"),
-            ...createAstNodeVisitor("httpService"),
-            ...createAstNodeVisitor("httpEndpoint"),
-            ...createAstNodeVisitor("queryParameter"),
-            ...createAstNodeVisitor("errorDeclaration"),
-            ...createAstNodeVisitor("errorReference"),
-            defaultEnvironment: noop,
-        };
-    }
-}
-
-function isRootApiFile(contents: ServiceFileSchema | RootApiFileSchema): contents is RootApiFileSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (contents as RootApiFileSchema).name !== undefined;
+    return {
+        ...createAstNodeVisitor("docs"),
+        ...createAstNodeVisitor("import"),
+        ...createAstNodeVisitor("typeReference"),
+        ...createAstNodeVisitor("typeDeclaration"),
+        ...createAstNodeVisitor("typeName"),
+        ...createAstNodeVisitor("httpService"),
+        ...createAstNodeVisitor("httpEndpoint"),
+        ...createAstNodeVisitor("queryParameter"),
+        ...createAstNodeVisitor("errorDeclaration"),
+        ...createAstNodeVisitor("errorReference"),
+        ...createAstNodeVisitor("defaultEnvironment"),
+    };
 }
