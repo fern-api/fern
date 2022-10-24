@@ -9,9 +9,6 @@ export async function visitObject<T extends Record<string, unknown>>(
     visitor: ObjectPropertiesVisitor<T, void | Promise<void>>
 ): Promise<void> {
     for (const key of keys(visitor)) {
-        // object _could_ contain more properties than the visitor.
-        // (just because object is a T doesn't mean it doesn't have extra properties).
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        await visitor[key]?.(object[key]);
+        await visitor[key](object[key]);
     }
 }
