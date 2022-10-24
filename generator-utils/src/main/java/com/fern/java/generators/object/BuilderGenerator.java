@@ -446,12 +446,12 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(createCollectionItemAppender(
                             enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
-                    .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .addStatement("this.$L.add($L)", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
             implSetterConsumer.accept(createCollectionAddAllSetter(
                             enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
-                    .addStatement("this.$L.add($L)", fieldSpec.name, fieldSpec.name)
+                    .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
         }
