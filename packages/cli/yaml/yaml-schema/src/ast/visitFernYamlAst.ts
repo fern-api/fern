@@ -23,7 +23,6 @@ export async function visitFernYamlAst(
             },
             environments: noop,
         });
-        await visitor.defaultEnvironment?.(contents["default-environment"], ["default-environment"]);
     } else {
         await visitObject(contents, {
             imports: async (imports) => {
