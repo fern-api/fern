@@ -1,5 +1,6 @@
-import { AbsoluteFilePath, dirname, FilePath, join, RelativeFilePath, resolve } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/core-utils";
+import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
@@ -18,7 +19,7 @@ export declare namespace runEteTest {
          * fixture for the ETE test. Should contain a src/ directory will the
          * fern yaml files.
          */
-        pathToFixture: FilePath;
+        pathToFixture: string;
 
         generateFiles: (args: {
             volume: Volume;
@@ -37,11 +38,15 @@ export async function runEteTest({ testFile, pathToFixture, generateFiles }: run
 
     const parseWorkspaceResult = await loadWorkspace({
         absolutePathToWorkspace: absolutePathToFixture,
+        context: createMockTaskContext(),
     });
     if (!parseWorkspaceResult.didSucceed) {
         throw new Error(JSON.stringify(parseWorkspaceResult.failures));
     }
-    const intermediateRepresentation = await generateIntermediateRepresentation(parseWorkspaceResult.workspace);
+    const intermediateRepresentation = await generateIntermediateRepresentation({
+        workspace: parseWorkspaceResult.workspace,
+        generationLanguage: Language.TYPESCRIPT,
+    });
 
     const volume = new Volume();
 

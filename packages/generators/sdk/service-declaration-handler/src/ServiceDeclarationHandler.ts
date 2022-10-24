@@ -1,4 +1,5 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { AugmentedService } from "@fern-typescript/commons-v2";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { generateHttpService } from "./http/generateHttpService";
 
@@ -22,7 +23,7 @@ export declare namespace ServiceDeclarationHandler {
 }
 
 export function ServiceDeclarationHandler(
-    service: HttpService,
+    service: AugmentedService,
     { serviceFile, serviceClassName, withEndpoint }: ServiceDeclarationHandler.Args
 ): void {
     generateHttpService({ service, serviceFile, serviceClassName, withEndpoint });

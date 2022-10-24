@@ -25,9 +25,7 @@ export * as posts from \\"./posts\\";
 ",
   "/model/posts/_errors/PostNotFoundError.ts": "import * as model from \\"../..\\";
 
-export interface PostNotFoundError {
-    id: model.commons.PostId;
-}
+export type PostNotFoundError = model.posts.PostNotFoundErrorBody;
 ",
   "/model/posts/_errors/index.ts": "export * from \\"./PostNotFoundError\\";
 ",
@@ -383,6 +381,12 @@ export interface Post {
     relatedPosts: model.posts.Post[];
 }
 ",
+  "/model/posts/_types/PostNotFoundErrorBody.ts": "import * as model from \\"../..\\";
+
+export interface PostNotFoundErrorBody {
+    id: model.commons.PostId;
+}
+",
   "/model/posts/_types/PostType.ts": "export type PostType =
     | \\"LONG\\"
     | \\"SHORT\\";
@@ -417,6 +421,7 @@ export declare namespace PostType {
 export * from \\"./CreatePostRequest\\";
 export * from \\"./PostType\\";
 export * from \\"./Author\\";
+export * from \\"./PostNotFoundErrorBody\\";
 ",
   "/model/posts/index.ts": "export * from \\"./_types\\";
 export * from \\"./_errors\\";

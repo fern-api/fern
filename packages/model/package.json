@@ -25,8 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.0.196-7-g43c51f07",
-    "@fern-fern/ir-model": "0.0.220",
+    "@fern-api/core-utils": "0.0.220-11-g7be2f095",
+    "@fern-fern/ir-model": "0.0.265",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/errors": "workspace:*",
     "@fern-typescript/model-context": "workspace:*",

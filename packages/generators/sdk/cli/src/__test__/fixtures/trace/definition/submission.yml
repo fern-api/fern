@@ -3,9 +3,9 @@ imports:
   problemV2: ./v2/problem.yml
 types:
   SubmissionId:
-    alias: string
+    type: string
   ShareId:
-    alias: string
+    type: string
   SubmissionRequest:
     union:
       initializeProblemRequest: InitializeProblemRequest

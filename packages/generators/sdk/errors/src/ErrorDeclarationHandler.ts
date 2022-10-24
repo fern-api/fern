@@ -1,3 +1,4 @@
+import { AvailabilityStatus } from "@fern-fern/ir-model/declaration";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
@@ -21,6 +22,10 @@ export function ErrorDeclarationHandler(
     }
 
     const typeDeclaration: TypeDeclaration = {
+        availability: {
+            status: AvailabilityStatus.GeneralAvailability,
+            message: undefined,
+        },
         name: errorDeclaration.name,
         docs: errorDeclaration.docs,
         shape: errorDeclaration.type,

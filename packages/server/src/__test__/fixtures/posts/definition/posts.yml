@@ -29,13 +29,14 @@ types:
       anonymous: {}
       named: string
 
+  PostNotFoundErrorBody:
+    properties:
+      id: commons.PostId
+
 errors:
   PostNotFoundError:
-    http:
-      statusCode: 404
-    type:
-      properties:
-        id: commons.PostId
+    status-code: 404
+    type: PostNotFoundErrorBody
 
 services:
   http:

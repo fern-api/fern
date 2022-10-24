@@ -2,9 +2,8 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
-ids:
-  - EndpointId
 types:
+  EndpointId: string
   HttpService:
     extends: commons.WithDocs
     properties:

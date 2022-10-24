@@ -1,8 +1,7 @@
 imports:
   commons: commons.yml
-ids:
-  - PlaylistId
 types:
+  PlaylistId: string
   Playlist:
     properties:
       playlist_id: PlaylistId
@@ -19,6 +18,10 @@ types:
     properties:
       name: string
       problems: list<commons.ProblemId>
+
+  PlaylistIdNotFoundErrorBody:
+    properties:
+      playlistId: PlaylistId
 
 services:
   http:
@@ -73,11 +76,7 @@ services:
 
 errors:
   PlaylistIdNotFoundError:
-    http:
-      statusCode: 404
-    type:
-      properties:
-        playlistId: PlaylistId
+    status-code: 404
+    type: PlaylistIdNotFoundErrorBody
   UnauthorizedError:
-    http:
-      statusCode: 401
+    status-code: 401

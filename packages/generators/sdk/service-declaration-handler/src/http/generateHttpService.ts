@@ -1,4 +1,5 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { AugmentedService } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ServiceDeclarationHandler } from "../ServiceDeclarationHandler";
 import { Client } from "./Client";
@@ -10,7 +11,7 @@ export function generateHttpService({
     serviceFile,
     withEndpoint,
 }: {
-    service: HttpService;
+    service: AugmentedService;
     serviceClassName: string;
     serviceFile: SdkFile;
     withEndpoint: (endpoint: HttpEndpoint, run: (args: ServiceDeclarationHandler.withEndpoint.Args) => void) => void;
@@ -18,16 +19,19 @@ export function generateHttpService({
     const client = new Client({ service, serviceClassName });
     const endpoints: Endpoint[] = [];
 
-    for (const irEndpoint of service.endpoints) {
-        withEndpoint(irEndpoint, ({ endpointFile, schemaFile }) => {
-            const endpoint = new Endpoint({
-                service,
-                endpoint: irEndpoint,
-                file: endpointFile,
+    const { originalService } = service;
+    if (originalService != null) {
+        for (const irEndpoint of originalService.endpoints) {
+            withEndpoint(irEndpoint, ({ endpointFile, schemaFile }) => {
+                const endpoint = new Endpoint({
+                    service: originalService,
+                    endpoint: irEndpoint,
+                    file: endpointFile,
+                });
+                endpoint.generate({ endpointFile, schemaFile });
+                endpoints.push(endpoint);
             });
-            endpoint.generate({ endpointFile, schemaFile });
-            endpoints.push(endpoint);
-        });
+        }
     }
 
     client.generate(serviceFile, endpoints);

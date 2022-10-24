@@ -1638,9 +1638,7 @@ export * from \\"./_service-types\\";
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
-export interface PlaylistIdNotFoundError {
-    playlistId: model.playlist.PlaylistId;
-}
+export type PlaylistIdNotFoundError = model.playlist.PlaylistIdNotFoundErrorBody;
 ",
                     "name": "PlaylistIdNotFoundError.ts",
                     "type": "file",
@@ -2023,6 +2021,16 @@ export interface PlaylistCreateRequest {
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
+export interface PlaylistIdNotFoundErrorBody {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../..\\";
+
 export interface UpdatePlaylistRequest {
     name: string;
     problems: model.commons.ProblemId[];
@@ -2036,6 +2044,7 @@ export interface UpdatePlaylistRequest {
 export * from \\"./Playlist\\";
 export * from \\"./PlaylistCreateRequest\\";
 export * from \\"./UpdatePlaylistRequest\\";
+export * from \\"./PlaylistIdNotFoundErrorBody\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -9808,9 +9817,7 @@ export * from \\"./_service-types\\";
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
-export interface PlaylistIdNotFoundError {
-    playlistId: model.playlist.PlaylistId;
-}
+export type PlaylistIdNotFoundError = model.playlist.PlaylistIdNotFoundErrorBody;
 ",
                     "name": "PlaylistIdNotFoundError.ts",
                     "type": "file",
@@ -10193,6 +10200,16 @@ export interface PlaylistCreateRequest {
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
+export interface PlaylistIdNotFoundErrorBody {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../..\\";
+
 export interface UpdatePlaylistRequest {
     name: string;
     problems: model.commons.ProblemId[];
@@ -10206,6 +10223,7 @@ export interface UpdatePlaylistRequest {
 export * from \\"./Playlist\\";
 export * from \\"./PlaylistCreateRequest\\";
 export * from \\"./UpdatePlaylistRequest\\";
+export * from \\"./PlaylistIdNotFoundErrorBody\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -17973,9 +17991,7 @@ export * from \\"./_service-types\\";
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
-export interface PlaylistIdNotFoundError {
-    playlistId: model.playlist.PlaylistId;
-}
+export type PlaylistIdNotFoundError = model.playlist.PlaylistIdNotFoundErrorBody;
 ",
                     "name": "PlaylistIdNotFoundError.ts",
                     "type": "file",
@@ -18358,6 +18374,16 @@ export interface PlaylistCreateRequest {
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
+export interface PlaylistIdNotFoundErrorBody {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../..\\";
+
 export interface UpdatePlaylistRequest {
     name: string;
     problems: model.commons.ProblemId[];
@@ -18371,6 +18397,7 @@ export interface UpdatePlaylistRequest {
 export * from \\"./Playlist\\";
 export * from \\"./PlaylistCreateRequest\\";
 export * from \\"./UpdatePlaylistRequest\\";
+export * from \\"./PlaylistIdNotFoundErrorBody\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -25706,9 +25733,7 @@ export * from \\"./_service-types\\";
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
-export interface PlaylistIdNotFoundError {
-    playlistId: model.playlist.PlaylistId;
-}
+export type PlaylistIdNotFoundError = model.playlist.PlaylistIdNotFoundErrorBody;
 ",
                     "name": "PlaylistIdNotFoundError.ts",
                     "type": "file",
@@ -26091,6 +26116,16 @@ export interface PlaylistCreateRequest {
                   Object {
                     "contents": "import * as model from \\"../..\\";
 
+export interface PlaylistIdNotFoundErrorBody {
+    playlistId: model.playlist.PlaylistId;
+}
+",
+                    "name": "PlaylistIdNotFoundErrorBody.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import * as model from \\"../..\\";
+
 export interface UpdatePlaylistRequest {
     name: string;
     problems: model.commons.ProblemId[];
@@ -26104,6 +26139,7 @@ export interface UpdatePlaylistRequest {
 export * from \\"./Playlist\\";
 export * from \\"./PlaylistCreateRequest\\";
 export * from \\"./UpdatePlaylistRequest\\";
+export * from \\"./PlaylistIdNotFoundErrorBody\\";
 ",
                     "name": "index.ts",
                     "type": "file",

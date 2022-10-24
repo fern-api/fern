@@ -21,7 +21,7 @@ type PathToDirectory = string;
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
 
-    public addExport(from: SourceFile | string, exportDeclaration: ExportDeclaration): void {
+    public addExport(from: SourceFile | string, exportDeclaration: ExportDeclaration | undefined): void {
         const fromPath = typeof from === "string" ? from : from.getFilePath();
         if (path.extname(fromPath).length === 0) {
             throw new Error("Cannot export from directory: " + fromPath);
@@ -38,22 +38,19 @@ export class ExportsManager {
 
     public addExportsForFilepath(filepath: ExportedFilePath): void {
         this.addExportsForDirectories(filepath.directories);
-        if (filepath.file?.exportDeclaration != null) {
-            this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file.exportDeclaration);
-        }
+        this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file?.exportDeclaration);
     }
 
     public addExportsForDirectories(directories: ExportedDirectory[]): void {
         let directoryFilepath = "/";
         for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
-            if (part.exportDeclaration != null) {
-                this.addExportDeclarationForDirectory({
-                    directory: directoryFilepath,
-                    moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(directoryFilepath, nextDirectoryPath),
-                    exportDeclaration: part.exportDeclaration,
-                });
-            }
+            this.addExportDeclarationForDirectory({
+                directory: directoryFilepath,
+                moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(directoryFilepath, nextDirectoryPath),
+                exportDeclaration: part.exportDeclaration,
+            });
+
             if (part.subExports != null) {
                 for (const [relativeFilePath, exportDeclaration] of Object.entries(part.subExports)) {
                     this.addExportDeclarationForDirectory({
@@ -77,7 +74,7 @@ export class ExportsManager {
     }: {
         directory: Directory | PathToDirectory;
         moduleSpecifierToExport: ModuleSpecifier;
-        exportDeclaration: ExportDeclaration;
+        exportDeclaration: ExportDeclaration | undefined;
     }): void {
         const pathToDirectory = typeof directory === "string" ? directory : directory.getPath();
         const exportsForDirectory = (this.exports[pathToDirectory] ??= {});
@@ -87,6 +84,10 @@ export class ExportsManager {
             namespaceExports: new Set(),
             namedExports: new Set(),
         });
+
+        if (exportDeclaration == null) {
+            return;
+        }
 
         if (exportDeclaration.exportAll != null) {
             exportsForModuleSpecifier.exportAll ||= exportDeclaration.exportAll;
@@ -105,6 +106,11 @@ export class ExportsManager {
 
     public writeExportsToProject(rootDirectory: Directory): void {
         for (const [pathToDirectory, moduleSpecifierToExports] of Object.entries(this.exports)) {
+            const exportsFile = getExportsFileForDirectory({
+                pathToDirectory,
+                rootDirectory,
+            });
+
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
                 const namespaceExports = [...combinedExportDeclarations.namespaceExports];
                 if (namespaceExports.length > 1) {
@@ -112,11 +118,6 @@ export class ExportsManager {
                         `Multiple namespace exports from ${moduleSpecifier}: ${namespaceExports.join(", ")}`
                     );
                 }
-
-                const exportsFile = getExportsFileForDirectory({
-                    pathToDirectory,
-                    rootDirectory,
-                });
 
                 const namespaceExport = namespaceExports[0];
                 if (namespaceExport != null) {
@@ -136,6 +137,10 @@ export class ExportsManager {
                         namedExports: [...combinedExportDeclarations.namedExports],
                     });
                 }
+            }
+
+            if (exportsFile.getStatements().length === 0) {
+                exportsFile.addExportDeclaration({});
             }
         }
     }

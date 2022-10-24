@@ -4,10 +4,10 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { DeclaredTypeName, ShapeType } from "@fern-fern/ir-model/types";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/sdk-errors";
-import { ServiceDeclarationHandler, WrapperDeclarationHandler } from "@fern-typescript/sdk-service-declaration-handler";
+import { ServiceDeclarationHandler } from "@fern-typescript/sdk-service-declaration-handler";
 import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToRawTypeNodeConverter,
@@ -17,14 +17,14 @@ import {
 import { EnumTypeGenerator, getSubImportPathToRawSchema, TypeDeclarationHandler } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project } from "ts-morph";
-import { constructWrapperDeclarations } from "./constructWrapperDeclarations";
+import { constructAugmentedServices } from "./constructAugmentedServices";
 import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { ImportStrategy } from "./declaration-referencers/DeclarationReferencer";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
+import { RootServiceDeclarationReferencer } from "./declaration-referencers/RootServiceDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
-import { WrapperDeclarationReferencer } from "./declaration-referencers/WrapperDeclarationReferencer";
 import { DependencyManager } from "./dependency-manager/DependencyManager";
 import {
     convertExportedFilePathToFilePath,
@@ -67,16 +67,15 @@ export class SdkGenerator {
     private coreUtilitiesManager = new CoreUtilitiesManager();
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
-    private serviceResolver: ServiceResolver;
 
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private errorDeclarationReferencer: ErrorDeclarationReferencer;
     private errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
     private serviceDeclarationReferencer: ServiceDeclarationReferencer;
+    private rootServiceDeclarationReferencer: RootServiceDeclarationReferencer;
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
     private endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
-    private wrapperDeclarationReferencer: WrapperDeclarationReferencer;
 
     private generatePackage: () => Promise<void>;
 
@@ -99,7 +98,6 @@ export class SdkGenerator {
         this.rootDirectory = project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
-        this.serviceResolver = new ServiceResolver(intermediateRepresentation);
 
         const apiDirectory: ExportedDirectory[] = [
             {
@@ -129,14 +127,15 @@ export class SdkGenerator {
         this.serviceDeclarationReferencer = new ServiceDeclarationReferencer({
             containingDirectory: apiDirectory,
         });
+        this.rootServiceDeclarationReferencer = new RootServiceDeclarationReferencer({
+            containingDirectory: [],
+            apiName,
+        });
         this.endpointDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
         });
         this.endpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
-        });
-        this.wrapperDeclarationReferencer = new WrapperDeclarationReferencer({
-            containingDirectory: apiDirectory,
         });
 
         this.generatePackage = async () => {
@@ -155,7 +154,7 @@ export class SdkGenerator {
         this.generateTypeDeclarations();
         this.generateErrorDeclarations();
         this.generateServiceDeclarations();
-        this.generateWrappers();
+        // this.generateEnvironments();
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         await this.generatePackage();
@@ -210,15 +209,20 @@ export class SdkGenerator {
     }
 
     private generateServiceDeclarations() {
-        for (const serviceDeclaration of this.intermediateRepresentation.services.http) {
+        const services = constructAugmentedServices(this.intermediateRepresentation);
+        for (const service of services) {
+            const declarationReferencer =
+                service.name.fernFilepath.length > 0
+                    ? this.serviceDeclarationReferencer
+                    : this.rootServiceDeclarationReferencer;
             this.withFile({
-                filepath: this.serviceDeclarationReferencer.getExportedFilepath(serviceDeclaration.name),
+                filepath: declarationReferencer.getExportedFilepath(service.name),
                 run: (serviceFile) => {
-                    ServiceDeclarationHandler(serviceDeclaration, {
-                        serviceClassName: this.serviceDeclarationReferencer.getExportedName(),
+                    ServiceDeclarationHandler(service, {
+                        serviceClassName: declarationReferencer.getExportedName(),
                         context: this.context,
                         serviceFile,
-                        withEndpoint: this.createWithEndpoint(serviceDeclaration.name),
+                        withEndpoint: this.createWithEndpoint(service.name),
                     });
                 },
             });
@@ -243,22 +247,6 @@ export class SdkGenerator {
                 },
             });
         };
-    }
-
-    private generateWrappers() {
-        const wrapperDeclarations = constructWrapperDeclarations(this.intermediateRepresentation);
-        for (const wrapperDeclaration of wrapperDeclarations) {
-            this.withFile({
-                filepath: this.wrapperDeclarationReferencer.getExportedFilepath(wrapperDeclaration.name),
-                run: (file) => {
-                    WrapperDeclarationHandler(wrapperDeclaration, {
-                        file,
-                        wrapperClassName: this.wrapperDeclarationReferencer.getExportedName(wrapperDeclaration.name),
-                        context: this.context,
-                    });
-                },
-            });
-        }
     }
 
     private withFile({
@@ -377,7 +365,6 @@ export class SdkGenerator {
                 typeReferenceToParsedTypeNodeConverter
             ),
             getReferenceToNamedType,
-            getServiceDeclaration: (serviceName) => this.serviceResolver.getServiceDeclarationFromName(serviceName),
             getReferenceToService: (serviceName, { importAlias }) =>
                 this.serviceDeclarationReferencer.getReferenceToClient({
                     name: serviceName,
@@ -400,13 +387,6 @@ export class SdkGenerator {
                     addImport,
                     importStrategy: SCHEMA_IMPORT_STRATEGY,
                     subImport: typeof export_ === "string" ? [export_] : export_,
-                }),
-            getReferenceToWrapper: (wrapperName, { importAlias }) =>
-                this.wrapperDeclarationReferencer.getReferenceToWrapper({
-                    name: wrapperName,
-                    referencedIn: sourceFile,
-                    addImport,
-                    importStrategy: { type: "direct", alias: importAlias },
                 }),
             resolveTypeReference: this.typeResolver.resolveTypeReference.bind(this.typeResolver),
             getErrorDeclaration: (errorName) => this.errorResolver.getErrorDeclarationFromName(errorName),

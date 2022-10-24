@@ -1,8 +1,7 @@
 imports:
   commons: commons.yml
-ids:
-  - PlaylistId
 types:
+  PlaylistId: string
   Playlist:
     extends: PlaylistCreateRequest
     properties:
@@ -18,13 +17,19 @@ types:
     properties:
       name: string
       problems: list<commons.ProblemId>
-      aliasOfUnknown: AliasOfUnknown
+  PlaylistIdNotFoundErrorBody:
+    union:
+      playlistId: PlaylistId
 
-  AliasOfUnknown: unknown
+  ReservedKeywordEnum:
+    enum:
+      - is
+      - as
 
 services:
   http:
     PlaylistCrudService:
+      availability: in-development
       auth: true
       base-path: /v2/playlist/{serviceParam}
       path-parameters:
@@ -37,12 +42,13 @@ services:
           request: PlaylistCreateRequest
           response: Playlist
 
-        get_playlists:
+        getPlaylists:
           docs: Returns the user's playlists
           method: GET
           path: /all
           query-parameters:
             limit: optional<integer>
+            otherField: string
           response: list<Playlist>
 
         getPlaylist:
@@ -68,7 +74,7 @@ services:
           errors:
             - PlaylistIdNotFoundError
 
-        delete:
+        deletePlaylist:
           docs: Deletes a playlist
           method: DELETE
           path: /{playlist_id}
@@ -77,11 +83,7 @@ services:
 
 errors:
   PlaylistIdNotFoundError:
-    http:
-      statusCode: 404
-    type:
-      union:
-        playlistId: PlaylistId
+    type: PlaylistIdNotFoundErrorBody
+    status-code: 404
   UnauthorizedError:
-    http:
-      statusCode: 401
+    status-code: 401

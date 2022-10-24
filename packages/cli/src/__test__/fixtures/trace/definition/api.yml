@@ -1,7 +1,7 @@
 name: my-api
 
 auth:
-  all:
+  any:
     - bearer
     - basic
     - CustomAuthHeader

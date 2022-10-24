@@ -1,6 +1,6 @@
 types:
   OwnerId:
-    alias: string
+    type: string
     docs: Unique id for an owner.
 
   CreateOwnerRequest:
@@ -51,8 +51,6 @@ services:
 
 errors:
   OwnerAlreadyExistsError:
-    http:
-      statusCode: 400
+    status-code: 400
   OwnerNotFoundError:
-    http:
-      statusCode: 404
+    status-code: 404

@@ -1,6 +1,6 @@
 import { validateWorkspaceAndLogIssues } from "@fern-api/cli";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
 import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
@@ -32,22 +32,24 @@ describe("runGenerator", () => {
                 await rm(generatedDir, { force: true, recursive: true });
                 await mkdir(generatedDir, { recursive: true });
 
+                const taskContext = createMockTaskContext();
                 const parseWorkspaceResult = await loadWorkspace({
                     absolutePathToWorkspace: AbsoluteFilePath.of(fixturePath),
+                    context: taskContext,
                 });
                 if (!parseWorkspaceResult.didSucceed) {
                     throw new Error(JSON.stringify(parseWorkspaceResult.failures));
                 }
 
-                const taskContext = createMockTaskContext();
                 await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace, taskContext);
                 if (taskContext.getResult() === TaskResult.Failure) {
                     throw new Error("Failed to validate workspace");
                 }
 
-                const intermediateRepresentation = await generateIntermediateRepresentation(
-                    parseWorkspaceResult.workspace
-                );
+                const intermediateRepresentation = await generateIntermediateRepresentation({
+                    workspace: parseWorkspaceResult.workspace,
+                    generationLanguage: Language.TYPESCRIPT,
+                });
 
                 await writeFile(irPath, JSON.stringify(intermediateRepresentation, undefined, 4));
             });

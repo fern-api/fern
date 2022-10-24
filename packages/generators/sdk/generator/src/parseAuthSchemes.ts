@@ -40,13 +40,13 @@ export function parseAuthSchemes({
         AuthScheme._visit<ParsedAuthSchemeProperty>(scheme, {
             bearer: () => {
                 return {
-                    propertyName: "_token",
+                    propertyName: "token",
                     getType: () => coreUtilities.auth.BearerToken._getReferenceToType(),
                 };
             },
             basic: () => {
                 return {
-                    propertyName: "_credentials",
+                    propertyName: "credentials",
                     getType: () => coreUtilities.auth.BasicAuth._getReferenceToType(),
                 };
             },

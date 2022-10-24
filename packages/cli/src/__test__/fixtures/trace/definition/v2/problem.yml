@@ -2,12 +2,10 @@ imports:
   commons: ../commons.yml
   problem: ../problem.yml
 
-ids:
-  - TestCaseTemplateId
-  - TestCaseId
-  - ParameterId
-
 types:
+  TestCaseTemplateId: string
+  TestCaseId: string
+  ParameterId: string
   ProblemInfoV2:
     properties:
       problemId: commons.ProblemId

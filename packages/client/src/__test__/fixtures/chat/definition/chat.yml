@@ -1,7 +1,5 @@
-ids:
-  - ChatMessageId
-
 types:
+  ChatMessageId: string
   ChatMessage:
     properties:
       id: ChatMessageId
@@ -16,6 +14,7 @@ types:
 errors:
   GenericMessage:
     type: string
+    status-code: 400
 
 services:
   websocket:

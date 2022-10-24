@@ -41,8 +41,7 @@ types:
 
 errors:
   PostNotFoundError:
-    http:
-      statusCode: 404
+    status-code: 404
     type: string
 
 services:

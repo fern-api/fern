@@ -1,9 +1,9 @@
 import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernConstants } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
-import { ExpressionReferenceNode, TypeReferenceNode, WrapperName, Zurg } from "@fern-typescript/commons-v2";
+import { ExpressionReferenceNode, TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
 import { SourceFile, ts } from "ts-morph";
 import { CoreUtilities } from "./core-utilities";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
@@ -31,7 +31,6 @@ export interface SdkFile {
 
     // services
     getReferenceToService: (serviceName: DeclaredServiceName, options: { importAlias: string }) => Reference;
-    getServiceDeclaration: (serviceName: DeclaredServiceName) => HttpService;
     getReferenceToEndpointFileExport: (
         serviceName: DeclaredServiceName,
         endpoint: HttpEndpoint,
@@ -43,12 +42,10 @@ export interface SdkFile {
         export_: string | string[]
     ) => Reference;
 
-    // wrappers
-    getReferenceToWrapper: (wrapperName: WrapperName, options: { importAlias: string }) => Reference;
-
     // misc
     externalDependencies: ExternalDependencies;
     coreUtilities: CoreUtilities;
     authSchemes: ParsedAuthSchemes;
+    // environments: ParsedEnvironments | undefined;
     fernConstants: FernConstants;
 }

@@ -1,11 +1,6 @@
-import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-exec-client/api";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-client/schemas";
-import {
-    FernTypescriptGeneratorConfig,
-    FernTypescriptGeneratorCustomConfig,
-    FernTypescriptGeneratorCustomConfigSchema,
-} from "@fern-typescript/commons";
+import { FernTypescriptGeneratorConfig, FernTypescriptGeneratorCustomConfigSchema } from "@fern-typescript/commons";
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
 import { createClientCommand } from "../commands/impls/clientCommand";
@@ -18,10 +13,9 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
     const rawConfig = JSON.parse(configStr.toString());
     const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig) as FernTypescriptGeneratorConfig;
-    await validateSchema<FernTypescriptGeneratorCustomConfig>(
-        FernTypescriptGeneratorCustomConfigSchema,
-        config.customConfig as FernTypescriptGeneratorCustomConfig
-    );
+
+    // validate custom config
+    FernTypescriptGeneratorCustomConfigSchema.parse(config.customConfig);
 
     const commands = getCommands(config);
     const generatorNotificationService = new GeneratorNotificationService(config);
