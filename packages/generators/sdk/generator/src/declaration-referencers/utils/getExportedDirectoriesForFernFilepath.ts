@@ -9,15 +9,21 @@ export function getExportedDirectoriesForFernFilepath({
     fernFilepath: FernFilepath;
     subExports?: Record<string, ExportDeclaration>;
 }): ExportedDirectory[] {
-    return fernFilepath.flatMap((fernFilepathPart, index) => [
-        {
-            nameOnDisk: "resources",
-            exportDeclaration: { exportAll: true },
-        },
-        index === fernFilepath.length - 1
-            ? createExportForFernFilepathFile(fernFilepathPart, subExports)
-            : createExportForFernFilepathDirectory(fernFilepathPart),
-    ]);
+    return fernFilepath.flatMap((fernFilepathPart, index) => {
+        const directories: ExportedDirectory[] = [];
+        if (index > 0) {
+            directories.push({
+                nameOnDisk: "resources",
+                exportDeclaration: { exportAll: true },
+            });
+        }
+        if (index < fernFilepath.length - 1) {
+            directories.push(createExportForFernFilepathDirectory(fernFilepathPart));
+        } else {
+            directories.push(createExportForFernFilepathFile(fernFilepathPart, subExports));
+        }
+        return directories;
+    });
 }
 
 export function createExportForFernFilepathDirectory(fernFilepathPart: StringWithAllCasings): ExportedDirectory {

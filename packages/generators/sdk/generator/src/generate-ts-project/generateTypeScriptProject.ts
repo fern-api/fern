@@ -26,7 +26,8 @@ export async function generateTypeScriptProject({
     project: Project;
     dependencies: PackageDependencies;
 }): Promise<void> {
-    await writeProjectToVolume(project, volume, "/");
+    await volume.promises.mkdir("/src");
+    await writeProjectToVolume(project, volume, "/src");
     await generatePackageJson({
         volume,
         packageName,

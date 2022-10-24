@@ -50,6 +50,7 @@ export class CoreUtilitiesManager {
             [...Object.values(this.referencedCoreUtilities)].map(async (utility) => {
                 const toPath = join(
                     pathToPackage,
+                    "src",
                     ...getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
                 );
                 await cp(
