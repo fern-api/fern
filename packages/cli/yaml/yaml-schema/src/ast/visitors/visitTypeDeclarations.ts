@@ -40,7 +40,7 @@ export async function visitTypeDeclaration({
                 await visitor.typeReference?.(alias, nodePathForType);
             } else {
                 await visitObject(alias, {
-                    alias: async (aliasOf) => {
+                    type: async (aliasOf) => {
                         await visitor.typeReference?.(aliasOf, [...nodePathForType, "alias"]);
                     },
                     docs: createDocsVisitor(visitor, nodePathForType),

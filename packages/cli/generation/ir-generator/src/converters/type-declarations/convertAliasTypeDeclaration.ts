@@ -13,7 +13,7 @@ export function convertAliasTypeDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): Type {
-    const aliasOfStr = typeof alias === "string" ? alias : alias.alias;
+    const aliasOfStr = typeof alias === "string" ? alias : alias.type;
     return Type.alias({
         aliasOf: file.parseTypeReference(aliasOfStr),
         resolvedType: constructResolvedTypeReference({ aliasOf: aliasOfStr, file, typeResolver }),
