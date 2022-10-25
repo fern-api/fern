@@ -4,7 +4,7 @@ import { GeneratorPublishingSchema } from "./GeneratorPublishingSchema";
 import { GithubRepositoryOutputSchema } from "./GithubRepositoryOutputSchema";
 
 export const ReleaseGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({
-    publishing: GeneratorPublishingSchema,
+    publishing: z.optional(GeneratorPublishingSchema),
     github: z.optional(GithubRepositoryOutputSchema),
 });
 

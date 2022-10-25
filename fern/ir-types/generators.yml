@@ -19,3 +19,4 @@ release:
         coordinate: io.github.fern-api:ir-model
         username: ${FERN_MAVEN_PUBLISH_USERNAME}
         password: ${FERN_MAVEN_PUBLISH_PASSWORD}
+    github: asdfdsfsd
