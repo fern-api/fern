@@ -185,6 +185,11 @@ public final class UnionGenerator extends AbstractFileGenerator {
             return constructors;
         }
 
+        @Override
+        public String getValueFieldName() {
+            return singleUnionType.getDiscriminantValue().getCamelCase();
+        }
+
         private Optional<FieldSpec> getValueField() {
             if (singleUnionType.getValueType().isVoid()) {
                 return Optional.empty();
@@ -194,6 +199,13 @@ public final class UnionGenerator extends AbstractFileGenerator {
                     FieldSpec.builder(getUnionSubTypeTypeName().get(), getValueFieldName(), Modifier.PRIVATE);
             if (errorIsObject) {
                 valueFieldSpecBuilder.addAnnotation(JsonUnwrapped.class);
+            } else {
+                valueFieldSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                        .addMember(
+                                "value",
+                                "$S",
+                                singleUnionType.getDiscriminantValue().getWireValue())
+                        .build());
             }
             return Optional.of(valueFieldSpecBuilder.build());
         }
