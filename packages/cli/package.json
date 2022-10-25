@@ -27,9 +27,9 @@
     "dockerTagVersion": "./docker/create_docker.sh"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.0.220-11-g7be2f095",
-    "@fern-api/ir-generator": "0.0.220-11-g7be2f095",
-    "@fern-api/workspace-loader": "0.0.220-11-g7be2f095",
+    "@fern-api/core-utils": "0.0.220-12-g896ac474",
+    "@fern-api/ir-generator": "0.0.220-12-g896ac474",
+    "@fern-api/workspace-loader": "0.0.220-12-g896ac474",
     "@fern-fern/generator-exec-client": "^0.0.34",
     "@fern-fern/ir-model": "0.0.265",
     "@fern-typescript/client": "workspace:*",
@@ -47,8 +47,8 @@
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
-    "@fern-api/cli": "0.0.220-11-g7be2f095",
-    "@fern-api/task-context": "0.0.220-11-g7be2f095",
+    "@fern-api/cli": "0.0.220-12-g896ac474",
+    "@fern-api/task-context": "0.0.220-12-g896ac474",
     "@fern-typescript/testing-utils": "workspace:*",
     "@ts-morph/common": "^0.16.0",
     "@types/jest": "^28.1.6",

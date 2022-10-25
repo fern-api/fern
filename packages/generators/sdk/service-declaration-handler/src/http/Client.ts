@@ -1,4 +1,4 @@
-import { getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { AugmentedService } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { Scope, ts } from "ts-morph";
@@ -15,7 +15,8 @@ export declare namespace Client {
 export class Client {
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "options";
-    public static ORIGIN_OPTIONS_PROPERTY_NAME = "_origin";
+    public static ORIGIN_OPTION_PROPERTY_NAME = "environment";
+    public static AUTH_OPTION_PROPERTY_NAME = "auth";
 
     private service: AugmentedService;
     private serviceClassName: string;
@@ -26,11 +27,6 @@ export class Client {
     }
 
     public generate(file: SdkFile, endpoints: Endpoint[]): void {
-        // const serviceInterface = file.sourceFile.addInterface({
-        //     name: this.serviceClassName,
-        //     isExported: true,
-        // });
-
         const serviceModule = file.sourceFile.addModule({
             name: this.serviceClassName,
             isExported: true,
@@ -41,13 +37,28 @@ export class Client {
             name: Client.OPTIONS_INTERFACE_NAME,
             properties: [
                 {
-                    name: Client.ORIGIN_OPTIONS_PROPERTY_NAME,
-                    type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
+                    name: Client.ORIGIN_OPTION_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        file.environments != null
+                            ? ts.factory.createUnionTypeNode([
+                                  file.environments.getReferenceToEnvironmentEnum().typeNode,
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                              ])
+                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                    ),
+                    hasQuestionToken: file.environments?.getReferenceToDefaultEnvironment != null,
                 },
             ],
         });
 
-        optionsInterface.addProperties(file.authSchemes.getProperties());
+        const authProperties = file.authSchemes.getProperties();
+        if (authProperties.length > 0) {
+            optionsInterface.addProperty({
+                name: Client.AUTH_OPTION_PROPERTY_NAME,
+                type: getTextOfTsNode(ts.factory.createTypeLiteralNode(authProperties)),
+                hasQuestionToken: true,
+            });
+        }
 
         const serviceClass = file.sourceFile.addClass({
             name: this.serviceClassName,
@@ -74,7 +85,6 @@ export class Client {
         });
 
         for (const endpoint of endpoints) {
-            // serviceInterface.addMethod(endpoint.getSignature(file));
             serviceClass.addMethod(endpoint.getImplementation(file));
         }
 
@@ -82,17 +92,16 @@ export class Client {
             const wrappedServiceGenerator = new WrappedServiceGenerator({
                 wrappedService,
             });
-            // wrappedServiceGenerator.addToServiceInterface(serviceInterface, file);
             wrappedServiceGenerator.addToServiceClass(serviceClass, file);
         }
     }
 
     public static getAuthHeaders(file: SdkFile): ts.ObjectLiteralElementLike[] {
-        return file.authSchemes.getHeaders(this.getReferenceToOptions());
+        return file.authSchemes.getHeaders(Client.getReferenceToAuthOption());
     }
 
     public static getReferenceToOrigin(): ts.Expression {
-        return this.getReferenceToOption(Client.ORIGIN_OPTIONS_PROPERTY_NAME);
+        return this.getReferenceToOption(Client.ORIGIN_OPTION_PROPERTY_NAME);
     }
 
     public static getReferenceToOptions(): ts.Expression {
@@ -101,6 +110,10 @@ export class Client {
 
     private static getReferenceToOption(option: string): ts.Expression {
         return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
+    }
+
+    private static getReferenceToAuthOption(): ts.Expression {
+        return Client.getReferenceToOption(Client.AUTH_OPTION_PROPERTY_NAME);
     }
 
     public static instatiate({

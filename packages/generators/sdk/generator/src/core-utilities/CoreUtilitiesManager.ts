@@ -78,7 +78,7 @@ export class CoreUtilitiesManager {
             return getReferenceToExportViaNamespaceImport({
                 exportedName,
                 filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
-                directoryToNamespaceImport: CORE_UTILITIES_FILEPATH,
+                filepathToNamespaceImport: { directories: CORE_UTILITIES_FILEPATH, file: undefined },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
                 addImport: (moduleSpecifier, importDeclaration) => {

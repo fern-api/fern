@@ -1,6 +1,6 @@
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ts } from "ts-morph";
 
 export interface ParsedAuthSchemes {
-    getProperties: () => OptionalKind<PropertySignatureStructure>[];
+    getProperties: () => ts.TypeElement[];
     getHeaders: (nodeWithProperties: ts.Expression) => ts.ObjectLiteralElementLike[];
 }

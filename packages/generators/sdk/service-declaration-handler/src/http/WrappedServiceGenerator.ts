@@ -1,7 +1,7 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
-import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
+import { ClassDeclaration, Scope, ts } from "ts-morph";
 import { Client } from "./Client";
 
 export declare namespace WrappedServiceGenerator {
@@ -15,14 +15,6 @@ export class WrappedServiceGenerator {
 
     constructor({ wrappedService }: WrappedServiceGenerator.Init) {
         this.wrappedService = wrappedService;
-    }
-
-    public addToServiceInterface(interface_: InterfaceDeclaration, file: SdkFile): void {
-        interface_.addProperty({
-            name: this.getGetterName(),
-            type: getTextOfTsNode(this.getReferenceToWrappedService(file).typeNode),
-            isReadonly: true,
-        });
     }
 
     public addToServiceClass(class_: ClassDeclaration, file: SdkFile): void {

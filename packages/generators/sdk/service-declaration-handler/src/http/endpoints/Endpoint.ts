@@ -66,7 +66,7 @@ export class Endpoint {
         this.error.generate({ endpointFile, schemaFile });
     }
 
-    public getSignature(file: SdkFile): OptionalKind<MethodSignatureStructure> {
+    private getSignature(file: SdkFile): OptionalKind<MethodSignatureStructure> {
         const requestParameter = this.request.getRequestParameter(file);
         return {
             name: this.getMethodName(),

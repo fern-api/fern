@@ -1,6 +1,5 @@
 import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
 import { TypeReference } from "@fern-fern/ir-model/types";
-import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createPropertyAssignment } from "@fern-typescript/commons-v2";
 import { CoreUtilities, ParsedAuthSchemes } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
@@ -70,8 +69,9 @@ export function parseAuthSchemes({
         scheme: AuthScheme;
     }): ts.Expression => {
         return coreUtilities.fetcher.Supplier.get(
-            ts.factory.createPropertyAccessExpression(
+            ts.factory.createPropertyAccessChain(
                 nodeWithAuthProperties,
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                 getPropertyForAuthScheme(scheme).propertyName
             )
         );
@@ -116,11 +116,12 @@ export function parseAuthSchemes({
         getProperties: () =>
             apiAuth.schemes.map((scheme) => {
                 const property = getPropertyForAuthScheme(scheme);
-                return {
-                    name: property.propertyName,
-                    hasQuestionToken: true,
-                    type: getTextOfTsNode(coreUtilities.fetcher.Supplier._getReferenceToType(property.getType())),
-                };
+                return ts.factory.createPropertySignature(
+                    undefined,
+                    property.propertyName,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    coreUtilities.fetcher.Supplier._getReferenceToType(property.getType())
+                );
             }),
 
         getHeaders: (nodeWithAuthProperties) => {

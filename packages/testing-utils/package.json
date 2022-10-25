@@ -25,10 +25,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.0.220-11-g7be2f095",
-    "@fern-api/ir-generator": "0.0.220-11-g7be2f095",
-    "@fern-api/task-context": "0.0.220-11-g7be2f095",
-    "@fern-api/workspace-loader": "0.0.220-11-g7be2f095",
+    "@fern-api/core-utils": "0.0.220-12-g896ac474",
+    "@fern-api/ir-generator": "0.0.220-12-g896ac474",
+    "@fern-api/task-context": "0.0.220-12-g896ac474",
+    "@fern-api/workspace-loader": "0.0.220-12-g896ac474",
     "@fern-fern/ir-model": "0.0.265",
     "@fern-typescript/commons": "workspace:*",
     "execa": "^5.1.1",

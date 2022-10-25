@@ -2,7 +2,7 @@ import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import {
-    convertExportedDirectoryPathToFilePath,
+    convertExportedFilePathToFilePath,
     ExportedDirectory,
     ExportedFilePath,
 } from "../../exports-manager/ExportedFilePath";
@@ -13,7 +13,7 @@ import { getExpressionToDirectory } from "./getExpressionToDirectory";
 
 export function getReferenceToExportViaNamespaceImport({
     exportedName,
-    directoryToNamespaceImport,
+    filepathToNamespaceImport,
     filepathInsideNamespaceImport,
     namespaceImport,
     addImport,
@@ -21,7 +21,7 @@ export function getReferenceToExportViaNamespaceImport({
     subImport = [],
 }: {
     exportedName: string;
-    directoryToNamespaceImport: ExportedDirectory[];
+    filepathToNamespaceImport: ExportedFilePath;
     filepathInsideNamespaceImport: ExportedDirectory[] | ExportedFilePath | undefined;
     namespaceImport: string;
     addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
@@ -29,10 +29,7 @@ export function getReferenceToExportViaNamespaceImport({
     subImport?: string[];
 }): Reference {
     addImport(
-        getRelativePathAsModuleSpecifierTo(
-            referencedIn,
-            convertExportedDirectoryPathToFilePath(directoryToNamespaceImport)
-        ),
+        getRelativePathAsModuleSpecifierTo(referencedIn, convertExportedFilePathToFilePath(filepathToNamespaceImport)),
         { namespaceImport }
     );
 

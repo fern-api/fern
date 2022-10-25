@@ -193,8 +193,6 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
     protected override generateTypeDeclaration(file: SdkFile): void {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
-        properties.push(...file.authSchemes.getProperties());
-
         for (const { keyInWrapper, queryParameter } of this.parsedQueryParameters) {
             const type = file.getReferenceToType(queryParameter.valueType);
             properties.push({

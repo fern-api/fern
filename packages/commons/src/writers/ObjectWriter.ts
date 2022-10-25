@@ -2,6 +2,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph";
 import { getPropertyKey } from "../utils/getPropertyKey";
 
+const NEWLINE_REGEX = /^/gm;
+
 export declare namespace ObjectWriter {
     export interface Init {
         asConst?: boolean;
@@ -93,6 +95,13 @@ export class ObjectWriter {
     }
 
     private writeProperty(writer: CodeBlockWriter, property: ObjectWriter.Property) {
+        if (property.docs != null) {
+            writer.writeLine("/**");
+            writer.write(property.docs.replaceAll(NEWLINE_REGEX, " * "));
+            writer.newLineIfLastNot();
+            writer.writeLine(" */");
+        }
+
         writer.write(getPropertyKey(property.key));
         writer.write(": ");
         writeValue(writer, property.value);

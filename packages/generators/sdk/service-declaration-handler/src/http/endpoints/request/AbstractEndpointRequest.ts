@@ -66,10 +66,19 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
             statements.push(...queryParameters.statements);
         }
 
+        let referenceToOrigin = Client.getReferenceToOrigin();
+        if (file.environments?.getReferenceToDefaultEnvironment != null) {
+            referenceToOrigin = ts.factory.createBinaryExpression(
+                referenceToOrigin,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                file.environments.getReferenceToDefaultEnvironment()
+            );
+        }
+
         return {
             statements,
             fetcherArgs: {
-                url: file.externalDependencies.urlJoin.invoke([Client.getReferenceToOrigin(), this.getUrlPath(file)]),
+                url: file.externalDependencies.urlJoin.invoke([referenceToOrigin, this.getUrlPath(file)]),
                 method: ts.factory.createStringLiteral(this.endpoint.method),
                 headers: [...Client.getAuthHeaders(file), ...this.getHeaders()],
                 queryParameters: queryParameters?.referenceToUrlParams,
