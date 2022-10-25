@@ -12,9 +12,12 @@ export function getOutputModeForRelease(generatorInvocation: ReleaseGeneratorInv
         return FernFiddle.OutputMode.github({
             owner: repository.substring(0, separatorIndex),
             repo: repository.substring(separatorIndex + 1),
-            publishInfo: getGitHubPublishingInfo(generatorInvocation.publishing),
+            publishInfo:
+                generatorInvocation.publishing != null
+                    ? getGitHubPublishingInfo(generatorInvocation.publishing)
+                    : undefined,
         });
-    } else {
+    } else if (generatorInvocation.publishing != null) {
         return FernFiddle.OutputMode.publish({
             registryOverrides: {
                 npm: isNpmPublishing(generatorInvocation.publishing)
@@ -36,6 +39,11 @@ export function getOutputModeForRelease(generatorInvocation: ReleaseGeneratorInv
                     : undefined,
             },
         });
+    } else {
+        // TODO(dsinghvi): Need to validate that either you are in GitHub mode or publishing is supported
+        throw new Error(
+            `Failed to release generator ${generatorInvocation.name} because neither publishing nor GitHub is specified!`
+        );
     }
 }
 
