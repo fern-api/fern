@@ -19,6 +19,8 @@ package com.fern.jersey.client;
 import com.fern.codegen.GeneratedInterface;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
+import com.fern.ir.model.declaration.Availability;
+import com.fern.ir.model.declaration.AvailabilityStatus;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -49,9 +51,17 @@ public final class ClientErrorGenerator {
                 .getType()
                 .visit(new TypeDefinitionGenerator(
                         TypeDeclaration.builder()
+                                // TODO(dsinghvi): use errorDeclaration availablity
+                                .availability(Availability.builder()
+                                        .status(AvailabilityStatus.GENERAL_AVAILABILITY)
+                                        .build())
                                 .name(DeclaredTypeName.builder()
                                         .fernFilepath(errorDeclaration.getName().getFernFilepath())
+                                        .fernFilepathV2(
+                                                errorDeclaration.getName().getFernFilepathV2())
                                         .name(errorClassName.simpleName())
+                                        .nameV2(errorDeclaration.getName().getNameV2())
+                                        .nameV3(errorDeclaration.getName().getNameV3())
                                         .build())
                                 .shape(errorDeclaration.getType())
                                 .build(),

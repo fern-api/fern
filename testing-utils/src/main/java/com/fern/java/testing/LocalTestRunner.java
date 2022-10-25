@@ -16,7 +16,6 @@
 
 package com.fern.java.testing;
 
-import au.com.origin.snapshots.Expect;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorEnvironment;
 import com.fern.generator.exec.model.config.GeneratorOutputConfig;
@@ -29,46 +28,32 @@ import com.fern.generator.exec.model.config.NpmRegistryConfig;
 import com.fern.generator.exec.model.config.NpmRegistryConfigV2;
 import com.fern.generator.exec.model.config.OutputMode;
 import com.fern.generator.exec.model.config.PypiRegistryConfig;
+import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.StreamGobbler;
 import com.fern.java.jackson.ClientObjectMappers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public final class SnapshotTestRunner {
+public final class LocalTestRunner {
 
-    private SnapshotTestRunner() {}
+    private LocalTestRunner() {}
 
-    public static void snapshotTest(Path fernDir, Expect expect, String docker) throws IOException {
-        snapshotTest(fernDir, expect, docker, Optional.empty());
-    }
-
-    public static void snapshotTest(Path fernDir, Expect expect, String docker, Optional<Object> customConfig)
-            throws IOException {
+    public static void test(Path fernDir, AbstractGeneratorCli generator) throws IOException {
 
         Path tmpDir = Files.createTempDirectory("fern");
 
-        Path pathToOutput = fernDir.resolve("generated-java");
+        Path pathToOutput = Files.createTempDirectory("output");
         Path pathToIr = tmpDir.resolve("ir.json");
         Path pathToConfig = tmpDir.resolve("config.json");
 
-        if (pathToOutput.toFile().exists()) {
-            runCommand(fernDir, new String[] {"rm", "-rf", "generated-java/"});
-        } else {
-            pathToOutput.toFile().mkdirs();
-        }
-
         GeneratorConfig generatorConfig = GeneratorConfig.builder()
                 .dryRun(true)
-                .irFilepath("/fern/ir.json")
+                .irFilepath(pathToIr.toAbsolutePath().toString())
                 .output(GeneratorOutputConfig.builder()
-                        .path("/fern/output")
+                        .path(pathToOutput.toAbsolutePath().toString())
                         .mode(OutputMode.publish(GeneratorPublishConfig.builder()
                                 .registries(GeneratorRegistriesConfig.builder()
                                         .maven(MavenRegistryConfig.builder()
@@ -107,10 +92,9 @@ public final class SnapshotTestRunner {
                                 .version("0.0.0")
                                 .build()))
                         .build())
-                .workspaceName("fern")
+                .workspaceName("")
                 .organization("fern")
                 .environment(GeneratorEnvironment.local())
-                .customConfig(customConfig)
                 .build();
 
         Files.writeString(pathToConfig, ClientObjectMappers.JSON_MAPPER.writeValueAsString(generatorConfig));
@@ -118,61 +102,7 @@ public final class SnapshotTestRunner {
         runCommand(
                 fernDir, new String[] {"fern", "ir", pathToIr.toAbsolutePath().toString()});
 
-        runCommand(fernDir, new String[] {
-            "docker",
-            "run",
-            "-v",
-            pathToIr.toAbsolutePath() + ":/fern/ir.json",
-            "-v",
-            pathToConfig.toAbsolutePath() + ":/fern/config.json",
-            "-v",
-            pathToOutput.toAbsolutePath() + ":/fern/output/",
-            docker,
-            "/fern/config.json",
-        });
-
-        if (System.getenv().containsKey("CIRCLECI")) {
-            runCommand(pathToOutput, new String[] {"sudo", "git", "init"});
-            runCommand(pathToOutput, new String[] {"sudo", "git", "add", "-A"});
-            runCommand(pathToOutput, new String[] {"sudo", "git", "commit", "-m", "generate"});
-            runCommand(pathToOutput, new String[] {"sudo", "git", "clean", "-fdx"});
-            runCommand(pathToOutput, new String[] {"sudo", "rm", "-rf", ".git"});
-        } else {
-            runCommand(pathToOutput, new String[] {"git", "init"});
-            runCommand(pathToOutput, new String[] {"git", "add", "-A"});
-            runCommand(pathToOutput, new String[] {"git", "commit", "-m", "generate"});
-            runCommand(pathToOutput, new String[] {"git", "clean", "-fdx"});
-            runCommand(pathToOutput, new String[] {"rm", "-rf", ".git"});
-        }
-
-        try (Stream<Path> pathStream = Files.walk(pathToOutput)) {
-            List<Path> paths = pathStream.collect(Collectors.toList());
-            boolean filesGenerated = false;
-            for (Path path : paths) {
-                if (path.toFile().isDirectory()
-                        || path.toAbsolutePath().toString().endsWith(".bat")
-                        || path.toAbsolutePath().toString().endsWith(".gradle")) {
-                    continue;
-                }
-
-                Path relativizedPath = pathToOutput.relativize(path);
-                filesGenerated = true;
-                try {
-                    String fileContents = Files.readString(path);
-                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
-                } catch (IOException e) {
-                    // log.error("Encountered error while reading file {}", relativizedPath, e);
-                    expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
-                }
-            }
-            if (!filesGenerated) {
-                throw new RuntimeException("Failed to generate any files!");
-            }
-        }
-
-        if (!System.getenv().containsKey("CIRCLECI")) {
-            runCommand(pathToOutput, new String[] {"./gradlew", "compileJava"});
-        }
+        generator.run(pathToConfig.toAbsolutePath().toString());
     }
 
     private static void runCommand(Path workingDirPath, String[] command) {

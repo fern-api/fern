@@ -124,7 +124,7 @@ public final class AllAuthGenerator extends Generator {
         }
 
         @Override
-        public MethodSpec visitUnknown(String unknownType) {
+        public MethodSpec _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown auth scheme: " + unknownType);
         }
     }

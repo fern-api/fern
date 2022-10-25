@@ -94,7 +94,7 @@ public final class TypeDefinitionGenerator implements Type.Visitor<IGeneratedFil
     }
 
     @Override
-    public IGeneratedFile visitUnknown(String unknownType) {
+    public IGeneratedFile _visitUnknown(Object unknownType) {
         throw new RuntimeException("Encountered unknown Type: " + unknownType);
     }
 }

@@ -48,7 +48,10 @@ public final class InterfaceGenerator extends Generator {
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.declaredTypeName = DeclaredTypeName.builder()
                 .fernFilepath(declaredTypeName.getFernFilepath())
+                .fernFilepathV2(declaredTypeName.getFernFilepathV2())
                 .name(INTERFACE_PREFIX + declaredTypeName.getName())
+                .nameV2(declaredTypeName.getNameV2())
+                .nameV3(declaredTypeName.getNameV3())
                 .build();
     }
 

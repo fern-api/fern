@@ -52,8 +52,8 @@ public final class AuthSchemeUtils {
         }
 
         @Override
-        public String visitUnknown(String unknownType) {
-            throw new RuntimeException("Encountered unknown authScheme: " + unknownType);
+        public String _visitUnknown(Object unknown) {
+            throw new RuntimeException("Encountered unknown authScheme: " + unknown);
         }
     }
 }

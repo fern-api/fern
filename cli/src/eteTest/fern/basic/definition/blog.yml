@@ -1,6 +1,5 @@
-ids:
-  - PostId
 types:
+  PostId: string
   Age: integer
   BlogPost:
     docs: A blog post
@@ -17,6 +16,7 @@ types:
       content: string
       postType: PostType
       switch: integer
+      ratings: map<string, integer>
   PostType:
     enum:
       - LONG
@@ -27,27 +27,29 @@ types:
     union:
       anonymous: {}
       name: string
+
   GeneratorIdAndVersion:
     properties:
       id: string
       version: string
+  PostNotFoundErrorBody:
+    properties:
+      id: PostId
+  UnauthorizedErrorBody:
+    properties:
+      reason: string
+
 errors:
   PostNotFoundError:
-    http:
-      statusCode: 400
-    type:
-      properties:
-        id: PostId
+    status-code: 400
+    type: PostNotFoundErrorBody
   UnauthorizedError:
-    http:
-      statusCode: 403
-    type:
-      properties:
-        reason: string
+    status-code: 403
+    type: UnauthorizedErrorBody
   GeneratorsDoNotExistError:
-    http:
-      statusCode: 400
+    status-code: 400
     type: list<GeneratorIdAndVersion>
+
 services:
   http:
     PostsService:

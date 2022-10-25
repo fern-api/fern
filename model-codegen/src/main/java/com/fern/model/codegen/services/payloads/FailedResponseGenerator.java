@@ -90,6 +90,7 @@ public final class FailedResponseGenerator extends Generator {
                 .getClassNameFromServiceName(
                         DeclaredServiceName.builder()
                                 .fernFilepath(httpService.getName().getFernFilepath())
+                                .fernFilepathV2(httpService.getName().getFernFilepathV2())
                                 .name(httpEndpoint.getId().get())
                                 .build(),
                         FAILED_RESPONSE_SUFFIX,

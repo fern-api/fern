@@ -18,14 +18,13 @@ package com.fern.java.client.cli;
 import au.com.origin.snapshots.Expect;
 import au.com.origin.snapshots.annotations.SnapshotName;
 import au.com.origin.snapshots.junit5.SnapshotExtension;
+import com.fern.java.testing.SnapshotTestRunner;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -42,38 +41,21 @@ public class CliEteTest {
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
-
         Path currentPath = Paths.get("").toAbsolutePath();
-        Path dotFernProjectPath = currentPath.endsWith("cli")
-                ? currentPath.resolve(Paths.get("src/eteTest/.fern"))
-                : currentPath.resolve(Paths.get("cli/src/eteTest/.fern"));
-        runCommand(dotFernProjectPath, new String[] {"fern-dev", "generate", "--local", "--keepDocker"});
-        List<Path> paths = Files.walk(dotFernProjectPath.resolve(Paths.get("basic/generated-java")))
-                .collect(Collectors.toList());
-        boolean filesGenerated = false;
-        for (Path path : paths) {
-            if (path.toFile().isDirectory()) {
-                continue;
-            }
-            Path relativizedPath = dotFernProjectPath.relativize(path);
-            filesGenerated = true;
-            try {
-                String fileContents = Files.readString(path);
-                expect.scenario(relativizedPath.toString()).toMatchSnapshot(fileContents);
-            } catch (IOException e) {
-                log.error("Encountered error while reading file {}", relativizedPath, e);
-                expect.scenario(relativizedPath.toString()).toMatchSnapshot(relativizedPath.toString());
-            }
-        }
-        if (!filesGenerated) {
-            throw new RuntimeException("Failed to generate any files!");
-        }
-
-        Path basicApiPath = dotFernProjectPath.resolve("basic");
-        Path generatedJavaPath = basicApiPath.resolve("generated-java");
-        runCommand(basicApiPath, new String[] {"cp", "gradlew", "generated-java/"});
-        runCommand(basicApiPath, new String[] {"cp", "-R", "gradle-wrapper/.", "generated-java/"});
-        runCommand(generatedJavaPath, new String[] {"./gradlew", "compileJava"});
+        Path fernDirPath = currentPath.endsWith("cli")
+                ? currentPath.resolve(Paths.get("src/eteTest"))
+                : currentPath.resolve(Paths.get("cli/src/eteTest"));
+        SnapshotTestRunner.snapshotTest(
+                fernDirPath,
+                expect,
+                "fern-java:latest",
+                Optional.of(Map.of(
+                        "mode", "client_and_server",
+                        "serverFrameworks", "spring,jersey")));
+        // Path pathToOutput = fernDirPath.resolve("generated-java");
+        // runCommand(fernDirPath, new String[] {"cp", "gradlew", "generated-java/"});
+        // runCommand(fernDirPath, new String[] {"cp", "-R", "gradle-wrapper/.", "generated-java/"});
+        // runCommand(pathToOutput, new String[] {"./gradlew", "compileJava"});
     }
 
     private static void runCommand(Path projectPath, String[] command) {

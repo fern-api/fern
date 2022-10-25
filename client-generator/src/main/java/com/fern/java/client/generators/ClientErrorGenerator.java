@@ -48,7 +48,10 @@ public final class ClientErrorGenerator extends AbstractFileGenerator {
                         generatorContext,
                         DeclaredTypeName.builder()
                                 .fernFilepath(errorDeclaration.getName().getFernFilepath())
+                                .fernFilepathV2(errorDeclaration.getName().getFernFilepathV2())
                                 .name(errorDeclaration.getName().getName())
+                                .nameV2(errorDeclaration.getName().getNameV2())
+                                .nameV3(errorDeclaration.getName().getNameV3())
                                 .build(),
                         className,
                         generatedInterfaces));

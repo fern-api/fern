@@ -1,5 +1,5 @@
-ids:
-  - DummyId
+types:
+  DummyId: string
 services:
   http:
     DummyService:

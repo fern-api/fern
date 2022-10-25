@@ -82,8 +82,8 @@ public final class PoetTypeNameMapper {
         }
 
         @Override
-        public TypeName visitUnknown(String unknownType) {
-            throw new RuntimeException("Encountered unknown type reference: " + unknownType);
+        public TypeName _visitUnknown(Object unknown) {
+            throw new RuntimeException("Encountered unknown type reference: " + unknown);
         }
     }
 
@@ -182,8 +182,8 @@ public final class PoetTypeNameMapper {
         }
 
         @Override
-        public TypeName visitUnknown(String unknownType) {
-            throw new RuntimeException("Encountered unknown container type: " + unknownType);
+        public TypeName _visitUnknown(Object unknown) {
+            throw new RuntimeException("Encountered unknown container type: " + unknown);
         }
     }
 }

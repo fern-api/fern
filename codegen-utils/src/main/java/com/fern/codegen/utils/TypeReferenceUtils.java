@@ -82,7 +82,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitUnknown(String unknownType) {
+        public TypeName _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown type reference: " + unknownType);
         }
     }
@@ -182,7 +182,7 @@ class TypeReferenceUtils {
         }
 
         @Override
-        public TypeName visitUnknown(String unknownType) {
+        public TypeName _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown container type: " + unknownType);
         }
     }

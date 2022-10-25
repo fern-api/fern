@@ -280,7 +280,7 @@ exec "$JAVACMD" "$@"
 ]
 
 
-basic[src/main/java/com/fern/basic/FernClient.java]=[
+basic[src/main/java/com/fern/basic/FernFernClient.java]=[
 package com.fern.basic;
 
 import com.fern.basic.client.auth.AuthServiceClient;
@@ -292,20 +292,20 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
-public final class FernClient {
+public final class FernFernClient {
   private final Supplier<AuthServiceClient> authServiceClient;
 
   private final Supplier<PostsServiceClient> postsServiceClient;
 
   private final Supplier<DummyServiceClient> dummyServiceClient;
 
-  public FernClient(String url) {
+  public FernFernClient(String url) {
     this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
     this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
     this.authServiceClient = memoize(() -> new AuthServiceClient(url));
   }
 
-  public FernClient(String url, BearerAuth auth) {
+  public FernFernClient(String url, BearerAuth auth) {
     this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
     this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
     this.authServiceClient = memoize(() -> new AuthServiceClient(url, auth));
@@ -2361,9 +2361,9 @@ import java.util.Locale;
 public final class PostType {
   public static final PostType LONG = new PostType(Value.LONG, "LONG");
 
-  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
-
   public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
+
+  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
 
   private final Value value;
 
@@ -2399,10 +2399,10 @@ public final class PostType {
     switch (value) {
       case LONG:
         return visitor.visitLong();
-      case SHORT:
-        return visitor.visitShort();
       case MEDIUM:
         return visitor.visitMedium();
+      case SHORT:
+        return visitor.visitShort();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -2417,10 +2417,10 @@ public final class PostType {
     switch (upperCasedValue) {
       case "LONG":
         return LONG;
-      case "SHORT":
-        return SHORT;
       case "med.med":
         return MEDIUM;
+      case "SHORT":
+        return SHORT;
       default:
         return new PostType(Value.UNKNOWN, upperCasedValue);
     }

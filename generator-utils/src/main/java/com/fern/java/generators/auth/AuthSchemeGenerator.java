@@ -49,7 +49,7 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJa
     }
 
     @Override
-    public GeneratedJavaFile visitUnknown(String unknownType) {
-        throw new RuntimeException("Encountered unknown auth scheme: " + unknownType);
+    public GeneratedJavaFile _visitUnknown(Object unknown) {
+        throw new RuntimeException("Encountered unknown auth scheme: " + unknown);
     }
 }

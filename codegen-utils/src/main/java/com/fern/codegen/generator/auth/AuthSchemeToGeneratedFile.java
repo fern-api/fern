@@ -52,7 +52,7 @@ public final class AuthSchemeToGeneratedFile implements AuthScheme.Visitor<Gener
     }
 
     @Override
-    public GeneratedFile visitUnknown(String unknownType) {
+    public GeneratedFile _visitUnknown(Object unknownType) {
         throw new RuntimeException("Encountered unknown auth scheme: " + unknownType);
     }
 }

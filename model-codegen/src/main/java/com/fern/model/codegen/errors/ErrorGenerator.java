@@ -21,6 +21,8 @@ import com.fern.codegen.Generator;
 import com.fern.codegen.GeneratorContext;
 import com.fern.codegen.IGeneratedFile;
 import com.fern.codegen.utils.ClassNameUtils.PackageType;
+import com.fern.ir.model.declaration.Availability;
+import com.fern.ir.model.declaration.AvailabilityStatus;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -61,7 +63,10 @@ public final class ErrorGenerator extends Generator {
     public GeneratedError generate() {
         DeclaredTypeName declaredTypeName = DeclaredTypeName.builder()
                 .fernFilepath(errorDeclaration.getName().getFernFilepath())
+                .fernFilepathV2(errorDeclaration.getName().getFernFilepathV2())
                 .name(errorClassName.simpleName() + BODY_SUFFIX)
+                .nameV2(errorDeclaration.getName().getNameV2())
+                .nameV3(errorDeclaration.getName().getNameV3())
                 .build();
         ClassName className = generatorContext
                 .getClassNameUtils()
@@ -70,6 +75,10 @@ public final class ErrorGenerator extends Generator {
                 .getType()
                 .visit(new TypeDefinitionGenerator(
                         TypeDeclaration.builder()
+                                // TODO(dsinghvi): don't use a dummy availability
+                                .availability(Availability.builder()
+                                        .status(AvailabilityStatus.GENERAL_AVAILABILITY)
+                                        .build())
                                 .name(declaredTypeName)
                                 .shape(errorDeclaration.getType())
                                 .build(),

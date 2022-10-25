@@ -100,7 +100,7 @@ public final class AuthToJerseyParameterSpecConverter {
         }
 
         @Override
-        public ParameterSpec visitUnknown(String unknownType) {
+        public ParameterSpec _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown AuthScheme: " + unknownType);
         }
 

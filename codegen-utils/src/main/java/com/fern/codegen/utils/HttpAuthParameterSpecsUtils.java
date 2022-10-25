@@ -122,8 +122,8 @@ public final class HttpAuthParameterSpecsUtils {
         }
 
         @Override
-        public ParameterSpec visitUnknown(String unknownType) {
-            throw new RuntimeException("Encountered unknown AuthScheme: " + unknownType);
+        public ParameterSpec _visitUnknown(Object unknown) {
+            throw new RuntimeException("Encountered unknown AuthScheme: " + unknown);
         }
 
         private TypeName getTypeName() {
