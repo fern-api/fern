@@ -1,1 +1,3 @@
 name: my-api
+
+error-discriminant: error
