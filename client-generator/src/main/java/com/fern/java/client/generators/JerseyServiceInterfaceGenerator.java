@@ -130,7 +130,7 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
 
     private MethodSpec getEndpointMethodSpec(HttpEndpoint httpEndpoint, AbstractGeneratedJavaFile endpointException) {
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
-                        httpEndpoint.getId().get())
+                        httpEndpoint.getName().getCamelCase())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(httpEndpoint.getMethod().visit(JerseyHttpMethodToAnnotationSpec.INSTANCE))
                 .addAnnotation(AnnotationSpec.builder(Path.class)
