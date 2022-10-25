@@ -47,6 +47,9 @@ export async function writeGitHubWorkflows({
     
           - name: Install dependencies
             run: yarn install
+
+          - name: Build
+            run: yarn build
     
           - name: Publish to npm
             run: |
