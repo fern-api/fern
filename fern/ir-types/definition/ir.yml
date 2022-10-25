@@ -9,6 +9,7 @@ imports:
   websocket: services/websocket.yml
   constants: constants.yml
   environment: environment.yml
+  commons: commons.yml
 types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
@@ -28,6 +29,7 @@ types:
       constantsV2: constants.Constants
       defaultEnvironment: optional<environment.EnvironmentId>
       environments: list<environment.Environment>
+      errorDiscriminant: optional<commons.Name>
   Services:
     properties:
       http: list<http.HttpService>

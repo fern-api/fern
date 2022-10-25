@@ -1,6 +1,6 @@
 import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
-import { visitFernYamlAst } from "@fern-api/yaml-schema";
+import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -41,12 +41,14 @@ export const NoDuplicateDeclarationsRule: Rule = {
         };
 
         return {
-            typeName: (typeName, { relativeFilepath }) =>
-                getRuleViolations({ declaredName: typeName, relativeFilepath }),
-            errorDeclaration: ({ errorName }, { relativeFilepath }) =>
-                getRuleViolations({ declaredName: errorName, relativeFilepath }),
-            httpService: ({ serviceName }, { relativeFilepath }) =>
-                getRuleViolations({ declaredName: serviceName, relativeFilepath }),
+            serviceFile: {
+                typeName: (typeName, { relativeFilepath }) =>
+                    getRuleViolations({ declaredName: typeName, relativeFilepath }),
+                errorDeclaration: ({ errorName }, { relativeFilepath }) =>
+                    getRuleViolations({ declaredName: errorName, relativeFilepath }),
+                httpService: ({ serviceName }, { relativeFilepath }) =>
+                    getRuleViolations({ declaredName: serviceName, relativeFilepath }),
+            },
         };
     },
 };
@@ -62,7 +64,7 @@ async function getDeclarations(workspace: Workspace): Promise<Declarations> {
             (declarationsForDirectory[declaredName] ??= []).push(relativeFilepath);
         };
 
-        await visitFernYamlAst(file, {
+        await visitFernServiceFileYamlAst(file, {
             typeName: (typeName) => {
                 addDeclaration(typeName);
             },

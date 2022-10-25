@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../commons/core-utils" },
+    { "path": "../../config-management/project-configuration" },
     { "path": "../../generation/ir-generator" },
     { "path": "../../logger" },
     { "path": "../../task-context" },

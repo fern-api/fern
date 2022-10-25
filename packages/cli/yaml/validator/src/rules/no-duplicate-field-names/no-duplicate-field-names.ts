@@ -22,132 +22,137 @@ export const NoDuplicateFieldNamesRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
 
         return {
-            typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
-                const violations: RuleViolation[] = [];
+            serviceFile: {
+                typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
+                    const violations: RuleViolation[] = [];
 
-                visitRawTypeDeclaration(declaration, {
-                    alias: noop,
+                    visitRawTypeDeclaration(declaration, {
+                        alias: noop,
 
-                    enum: (enumDeclaration) => {
-                        const duplicateNames = getDuplicateNames(
-                            enumDeclaration.enum,
-                            (value) => getEnumName(value).name
-                        );
-                        for (const duplicateName of duplicateNames) {
-                            violations.push({
-                                severity: "error",
-                                message: `Name "${duplicateName}" is used by multiple values.`,
-                            });
-                        }
-                    },
-
-                    object: (objectDeclaration) => {
-                        const allProperties = getAllPropertiesForObject({
-                            objectDeclaration,
-                            filepathOfDeclaration: relativeFilepath,
-                            serviceFile: contents,
-                            workspace,
-                            typeResolver,
-                        });
-                        const propertiesGroupedByName = groupBy(allProperties, (property) => property.name);
-                        for (const [propertyName, propertiesWithName] of Object.entries(propertiesGroupedByName)) {
-                            if (propertiesWithName.length > 1) {
-                                const message = [
-                                    `Object has multiple properties named "${propertyName}":`,
-                                    ...propertiesWithName.map(
-                                        (property) =>
-                                            `  - ${convertObjectPropertyWithPathToString({
-                                                property,
-                                                prefixBreadcrumbs: [typeName],
-                                            })}`
-                                    ),
-                                ].join("\n");
+                        enum: (enumDeclaration) => {
+                            const duplicateNames = getDuplicateNames(
+                                enumDeclaration.enum,
+                                (value) => getEnumName(value).name
+                            );
+                            for (const duplicateName of duplicateNames) {
                                 violations.push({
                                     severity: "error",
-                                    message,
+                                    message: `Name "${duplicateName}" is used by multiple values.`,
                                 });
                             }
-                        }
-                    },
+                        },
 
-                    union: (unionDeclaration) => {
-                        const duplicateNames = getDuplicateNames(
-                            Object.entries(unionDeclaration.union),
-                            ([unionKey, unionedType]) => getUnionedTypeName({ unionKey, unionedType }).name
-                        );
-                        for (const duplicateName of duplicateNames) {
-                            violations.push({
-                                severity: "error",
-                                message: `Name ${duplicateName} is used by multiple subtypes of this union.`,
+                        object: (objectDeclaration) => {
+                            const allProperties = getAllPropertiesForObject({
+                                objectDeclaration,
+                                filepathOfDeclaration: relativeFilepath,
+                                serviceFile: contents,
+                                workspace,
+                                typeResolver,
                             });
-                        }
-
-                        for (const [unionKey, unionedType] of Object.entries(unionDeclaration.union)) {
-                            const specifiedType =
-                                typeof unionedType === "string"
-                                    ? unionedType
-                                    : unionedType.type != null
-                                    ? unionedType.type
-                                    : undefined;
-
-                            if (specifiedType != null) {
-                                const resolvedType = typeResolver.resolveType({
-                                    type: specifiedType,
-                                    file: constructFernFileContext({
-                                        relativeFilepath,
-                                        serviceFile: contents,
-                                        casingsGenerator: CASINGS_GENERATOR,
-                                    }),
-                                });
-
-                                if (resolvedType == null) {
-                                    // invalid will be caught by another rule
-                                    continue;
+                            const propertiesGroupedByName = groupBy(allProperties, (property) => property.name);
+                            for (const [propertyName, propertiesWithName] of Object.entries(propertiesGroupedByName)) {
+                                if (propertiesWithName.length > 1) {
+                                    const message = [
+                                        `Object has multiple properties named "${propertyName}":`,
+                                        ...propertiesWithName.map(
+                                            (property) =>
+                                                `  - ${convertObjectPropertyWithPathToString({
+                                                    property,
+                                                    prefixBreadcrumbs: [typeName],
+                                                })}`
+                                        ),
+                                    ].join("\n");
+                                    violations.push({
+                                        severity: "error",
+                                        message,
+                                    });
                                 }
+                            }
+                        },
 
-                                if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-                                    const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
-                                    const serviceFile = workspace.serviceFiles[resolvedType.filepath];
-                                    if (serviceFile == null) {
+                        union: (unionDeclaration) => {
+                            const duplicateNames = getDuplicateNames(
+                                Object.entries(unionDeclaration.union),
+                                ([unionKey, unionedType]) => getUnionedTypeName({ unionKey, unionedType }).name
+                            );
+                            for (const duplicateName of duplicateNames) {
+                                violations.push({
+                                    severity: "error",
+                                    message: `Name ${duplicateName} is used by multiple subtypes of this union.`,
+                                });
+                            }
+
+                            for (const [unionKey, unionedType] of Object.entries(unionDeclaration.union)) {
+                                const specifiedType =
+                                    typeof unionedType === "string"
+                                        ? unionedType
+                                        : unionedType.type != null
+                                        ? unionedType.type
+                                        : undefined;
+
+                                if (specifiedType != null) {
+                                    const resolvedType = typeResolver.resolveType({
+                                        type: specifiedType,
+                                        file: constructFernFileContext({
+                                            relativeFilepath,
+                                            serviceFile: contents,
+                                            casingsGenerator: CASINGS_GENERATOR,
+                                        }),
+                                    });
+
+                                    if (resolvedType == null) {
+                                        // invalid will be caught by another rule
                                         continue;
                                     }
-                                    const propertiesOnObject = getAllPropertiesForObject({
-                                        objectDeclaration: resolvedType.declaration,
-                                        filepathOfDeclaration: resolvedType.filepath,
-                                        serviceFile,
-                                        workspace,
-                                        typeResolver,
-                                    });
-                                    const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
-                                        (property) => property.name === discriminantName
-                                    );
-                                    if (propertiesWithSameNameAsDiscriminant.length > 0) {
-                                        const message = [
-                                            `Discriminant "${discriminantName}" conflicts with extended ${
-                                                propertiesWithSameNameAsDiscriminant.length === 1
-                                                    ? "property"
-                                                    : "properties"
-                                            }:`,
-                                            ...propertiesWithSameNameAsDiscriminant.map(
-                                                (property) =>
-                                                    `  - ${convertObjectPropertyWithPathToString({
-                                                        property,
-                                                        prefixBreadcrumbs: [unionKey, specifiedType],
-                                                    })}`
-                                            ),
-                                        ].join("\n");
-                                        violations.push({
-                                            severity: "error",
-                                            message,
+
+                                    if (
+                                        resolvedType._type === "named" &&
+                                        isRawObjectDefinition(resolvedType.declaration)
+                                    ) {
+                                        const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
+                                        const serviceFile = workspace.serviceFiles[resolvedType.filepath];
+                                        if (serviceFile == null) {
+                                            continue;
+                                        }
+                                        const propertiesOnObject = getAllPropertiesForObject({
+                                            objectDeclaration: resolvedType.declaration,
+                                            filepathOfDeclaration: resolvedType.filepath,
+                                            serviceFile,
+                                            workspace,
+                                            typeResolver,
                                         });
+                                        const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
+                                            (property) => property.name === discriminantName
+                                        );
+                                        if (propertiesWithSameNameAsDiscriminant.length > 0) {
+                                            const message = [
+                                                `Discriminant "${discriminantName}" conflicts with extended ${
+                                                    propertiesWithSameNameAsDiscriminant.length === 1
+                                                        ? "property"
+                                                        : "properties"
+                                                }:`,
+                                                ...propertiesWithSameNameAsDiscriminant.map(
+                                                    (property) =>
+                                                        `  - ${convertObjectPropertyWithPathToString({
+                                                            property,
+                                                            prefixBreadcrumbs: [unionKey, specifiedType],
+                                                        })}`
+                                                ),
+                                            ].join("\n");
+                                            violations.push({
+                                                severity: "error",
+                                                message,
+                                            });
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                });
+                        },
+                    });
 
-                return violations;
+                    return violations;
+                },
             },
         };
     },

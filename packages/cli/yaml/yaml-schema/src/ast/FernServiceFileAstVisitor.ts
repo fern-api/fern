@@ -8,12 +8,11 @@ import {
 } from "../schemas";
 import { NodePath } from "./NodePath";
 
-export type FernAstVisitor<R = void | Promise<void>> = {
-    [K in keyof FernAstNodeTypes]: FernAstNodeVisitor<K, R>;
+export type FernServiceFileAstVisitor<R = void | Promise<void>> = {
+    [K in keyof FernServiceFileAstNodeTypes]: FernServiceFileAstNodeVisitor<K, R>;
 };
 
-export interface FernAstNodeTypes {
-    defaultEnvironment: string | null | undefined;
+export interface FernServiceFileAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
@@ -26,7 +25,7 @@ export interface FernAstNodeTypes {
     errorReference: string;
 }
 
-export type FernAstNodeVisitor<K extends keyof FernAstNodeTypes, R = void | Promise<void>> = (
-    node: FernAstNodeTypes[K],
+export type FernServiceFileAstNodeVisitor<K extends keyof FernServiceFileAstNodeTypes, R = void | Promise<void>> = (
+    node: FernServiceFileAstNodeTypes[K],
     nodePath: NodePath
 ) => R;

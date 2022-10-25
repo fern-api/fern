@@ -1,6 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { ErrorDeclarationSchema } from "../../schemas";
-import { FernAstVisitor } from "../FernAstVisitor";
+import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";
@@ -11,7 +11,7 @@ export async function visitErrorDeclarations({
     nodePath,
 }: {
     errorDeclarations: Record<string, ErrorDeclarationSchema> | undefined;
-    visitor: Partial<FernAstVisitor>;
+    visitor: Partial<FernServiceFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (errorDeclarations == null) {
@@ -26,7 +26,7 @@ export async function visitErrorDeclarations({
 
 async function visitErrorDeclaration(
     declaration: ErrorDeclarationSchema,
-    visitor: Partial<FernAstVisitor>,
+    visitor: Partial<FernServiceFileAstVisitor>,
     nodePathForError: NodePath
 ) {
     if (typeof declaration === "string") {

@@ -10,6 +10,7 @@ export const RootApiFileSchema = z.strictObject({
     "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
     "default-environment": z.optional(z.string().or(z.null())),
     environments: z.optional(z.record(z.string(), EnvironmentSchema)),
+    "error-discriminant": z.string().optional(),
 });
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

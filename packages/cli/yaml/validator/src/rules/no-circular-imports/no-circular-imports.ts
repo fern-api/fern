@@ -16,31 +16,34 @@ export const NoCircularImportsRule: Rule = {
         const circularImports = findCircularImports(workspace.serviceFiles);
 
         return {
-            import: async ({ importPath }, { relativeFilepath }) => {
-                const circularImportsForFile = circularImports[relativeFilepath];
-                if (circularImportsForFile == null) {
-                    return [];
-                }
+            serviceFile: {
+                import: async ({ importPath }, { relativeFilepath }) => {
+                    const circularImportsForFile = circularImports[relativeFilepath];
+                    if (circularImportsForFile == null) {
+                        return [];
+                    }
 
-                const resolvedImportPath = getResolvedPathOfImportedFile({
-                    referencedIn: relativeFilepath,
-                    importPath: RelativeFilePath.of(importPath),
-                });
-                const circularImportsToReport = circularImportsForFile.filter(
-                    ({ chainWithoutStartingFilepath: chain }) => chain.length === 0 || chain[0] === resolvedImportPath
-                );
+                    const resolvedImportPath = getResolvedPathOfImportedFile({
+                        referencedIn: relativeFilepath,
+                        importPath: RelativeFilePath.of(importPath),
+                    });
+                    const circularImportsToReport = circularImportsForFile.filter(
+                        ({ chainWithoutStartingFilepath: chain }) =>
+                            chain.length === 0 || chain[0] === resolvedImportPath
+                    );
 
-                return circularImportsToReport.map((circularImport) => ({
-                    severity: "error",
-                    message:
-                        circularImport.chainWithoutStartingFilepath.length === 0
-                            ? "A file cannot import itself"
-                            : `Circular import detected: ${[
-                                  circularImport.startingFilepath,
-                                  ...circularImport.chainWithoutStartingFilepath,
-                                  circularImport.startingFilepath,
-                              ].join(" -> ")}`,
-                }));
+                    return circularImportsToReport.map((circularImport) => ({
+                        severity: "error",
+                        message:
+                            circularImport.chainWithoutStartingFilepath.length === 0
+                                ? "A file cannot import itself"
+                                : `Circular import detected: ${[
+                                      circularImport.startingFilepath,
+                                      ...circularImport.chainWithoutStartingFilepath,
+                                      circularImport.startingFilepath,
+                                  ].join(" -> ")}`,
+                    }));
+                },
             },
         };
     },

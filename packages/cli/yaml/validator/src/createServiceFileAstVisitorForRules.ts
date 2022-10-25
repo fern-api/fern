@@ -1,30 +1,34 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import {
-    FernAstNodeTypes,
-    FernAstNodeVisitor,
-    FernAstVisitor,
+    FernServiceFileAstNodeTypes,
+    FernServiceFileAstNodeVisitor,
+    FernServiceFileAstVisitor,
     NodePath,
-    RootApiFileSchema,
     ServiceFileSchema,
 } from "@fern-api/yaml-schema";
-import { RuleRunner } from "./Rule";
+import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
-export function createAstVisitorForRules({
+export function createServiceFileAstVisitorForRules({
     relativeFilepath,
     contents,
-    ruleRunners,
+    allRuleVisitors,
     addViolations,
 }: {
     relativeFilepath: RelativeFilePath;
-    contents: ServiceFileSchema | RootApiFileSchema;
-    ruleRunners: RuleRunner[];
+    contents: ServiceFileSchema;
+    allRuleVisitors: RuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): FernAstVisitor {
-    function createAstNodeVisitor<K extends keyof FernAstNodeTypes>(nodeType: K): Record<K, FernAstNodeVisitor<K>> {
-        const visit: FernAstNodeVisitor<K> = async (node: FernAstNodeTypes[K], nodePath: NodePath) => {
-            for (const visitorInRule of ruleRunners) {
-                const visitFromRule = visitorInRule[nodeType];
+}): FernServiceFileAstVisitor {
+    function createAstNodeVisitor<K extends keyof FernServiceFileAstNodeTypes>(
+        nodeType: K
+    ): Record<K, FernServiceFileAstNodeVisitor<K>> {
+        const visit: FernServiceFileAstNodeVisitor<K> = async (
+            node: FernServiceFileAstNodeTypes[K],
+            nodePath: NodePath
+        ) => {
+            for (const ruleVisitors of allRuleVisitors) {
+                const visitFromRule = ruleVisitors.serviceFile?.[nodeType];
                 if (visitFromRule != null) {
                     const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
@@ -39,7 +43,7 @@ export function createAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, FernAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, FernServiceFileAstNodeVisitor<K>>;
     }
 
     return {
@@ -53,6 +57,5 @@ export function createAstVisitorForRules({
         ...createAstNodeVisitor("queryParameter"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
-        ...createAstNodeVisitor("defaultEnvironment"),
     };
 }
