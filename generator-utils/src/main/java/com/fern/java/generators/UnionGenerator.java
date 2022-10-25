@@ -30,6 +30,7 @@ import com.fern.java.FernJavaAnnotations;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -187,7 +188,8 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
         @Override
         public String getValueFieldName() {
-            return singleUnionType.getDiscriminantValue().getCamelCase();
+            return KeyWordUtils.getKeyWordCompatibleName(
+                    singleUnionType.getDiscriminantValue().getCamelCase());
         }
 
         private Optional<FieldSpec> getValueField() {
