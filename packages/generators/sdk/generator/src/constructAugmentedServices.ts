@@ -16,7 +16,7 @@ export function constructAugmentedServices(intermediateRepresentation: Intermedi
         augmentedServices[stringifyFernFilepath(service.name.fernFilepath)] = leafService;
 
         let lastDeclaredService = leafService;
-        for (let index = service.name.fernFilepath.length - 2; index >= 0; index--) {
+        for (let index = service.name.fernFilepath.length - 1; index >= 0; index--) {
             const fernFilepath = service.name.fernFilepath.slice(0, index);
             const fernFilepathV2 = service.name.fernFilepathV2.slice(0, index);
 
