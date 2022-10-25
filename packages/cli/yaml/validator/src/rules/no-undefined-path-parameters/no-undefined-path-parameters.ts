@@ -8,19 +8,21 @@ export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",
     create: () => {
         return {
-            httpService: ({ service }) => {
-                return getPathParameterRuleViolations({
-                    path: service["base-path"],
-                    pathParameters: service["path-parameters"] ?? {},
-                    pathType: "service",
-                });
-            },
-            httpEndpoint: ({ endpoint }) => {
-                return getPathParameterRuleViolations({
-                    path: endpoint.path,
-                    pathParameters: endpoint["path-parameters"] ?? {},
-                    pathType: "endpoint",
-                });
+            serviceFile: {
+                httpService: ({ service }) => {
+                    return getPathParameterRuleViolations({
+                        path: service["base-path"],
+                        pathParameters: service["path-parameters"] ?? {},
+                        pathType: "service",
+                    });
+                },
+                httpEndpoint: ({ endpoint }) => {
+                    return getPathParameterRuleViolations({
+                        path: endpoint.path,
+                        pathParameters: endpoint["path-parameters"] ?? {},
+                        pathType: "endpoint",
+                    });
+                },
             },
         };
     },

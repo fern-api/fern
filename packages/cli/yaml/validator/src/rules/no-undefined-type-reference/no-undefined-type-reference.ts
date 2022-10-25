@@ -1,7 +1,7 @@
 import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
-import { visitFernYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { visitFernServiceFileYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -25,26 +25,28 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         }
 
         return {
-            typeReference: (typeReference, { relativeFilepath, contents }) => {
-                const type = typeof typeReference === "string" ? typeReference : typeReference.type;
-                const namedTypes = getAllNamedTypes({
-                    type,
-                    relativeFilepath,
-                    imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
-                });
+            serviceFile: {
+                typeReference: (typeReference, { relativeFilepath, contents }) => {
+                    const type = typeof typeReference === "string" ? typeReference : typeReference.type;
+                    const namedTypes = getAllNamedTypes({
+                        type,
+                        relativeFilepath,
+                        imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
+                    });
 
-                return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
-                    if (!doesTypeExist(namedType)) {
-                        violations.push({
-                            severity: "error",
-                            message: `Type ${chalk.bold(
-                                namedType.parsed?.typeName ?? namedType.fullyQualifiedName
-                            )} is not defined.`,
-                        });
-                    }
+                    return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
+                        if (!doesTypeExist(namedType)) {
+                            violations.push({
+                                severity: "error",
+                                message: `Type ${chalk.bold(
+                                    namedType.parsed?.typeName ?? namedType.fullyQualifiedName
+                                )} is not defined.`,
+                            });
+                        }
 
-                    return violations;
-                }, []);
+                        return violations;
+                    }, []);
+                },
             },
         };
     },
@@ -57,7 +59,7 @@ async function getTypesByFilepath(workspace: Workspace) {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitFernYamlAst(file, {
+        await visitFernServiceFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 typesForFile.add(typeName);
             },

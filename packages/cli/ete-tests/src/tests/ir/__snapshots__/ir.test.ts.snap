@@ -2846,7 +2846,23 @@ exports[`ir simple 1`] = `
             }
         }
     },
-    "environments": []
+    "environments": [],
+    "errorDiscriminant": {
+        "unsafeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        },
+        "safeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        }
+    }
 }"
 `;
 
@@ -5696,7 +5712,23 @@ exports[`ir simple 2`] = `
             }
         }
     },
-    "environments": []
+    "environments": [],
+    "errorDiscriminant": {
+        "unsafeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        },
+        "safeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        }
+    }
 }"
 `;
 
@@ -8546,7 +8578,23 @@ exports[`ir simple 3`] = `
             }
         }
     },
-    "environments": []
+    "environments": [],
+    "errorDiscriminant": {
+        "unsafeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        },
+        "safeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        }
+    }
 }"
 `;
 
@@ -11396,6 +11444,22 @@ exports[`ir simple 4`] = `
             }
         }
     },
-    "environments": []
+    "environments": [],
+    "errorDiscriminant": {
+        "unsafeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        },
+        "safeName": {
+            "originalValue": "error",
+            "camelCase": "error",
+            "snakeCase": "error",
+            "pascalCase": "Error",
+            "screamingSnakeCase": "ERROR"
+        }
+    }
 }"
 `;

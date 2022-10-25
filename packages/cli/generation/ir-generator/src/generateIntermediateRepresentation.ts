@@ -46,6 +46,10 @@ export async function generateIntermediateRepresentation({
         constantsV2: generateFernConstantsV2(casingsGenerator),
         defaultEnvironment: workspace.rootApiFile["default-environment"],
         environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile }),
+        errorDiscriminant:
+            workspace.rootApiFile["error-discriminant"] != null
+                ? casingsGenerator.generateName(workspace.rootApiFile["error-discriminant"])
+                : undefined,
     };
 
     const typeResolver = new TypeResolverImpl(workspace);

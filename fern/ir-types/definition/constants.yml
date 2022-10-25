@@ -15,6 +15,10 @@ types:
       errorContentKey: commons.WireStringWithAllCasings
   ErrorConstantsV2:
     properties:
-      errorDiscriminant: commons.NameAndWireValue
+      errorDiscriminant:
+        docs: this is deprecated. use IR. errorDiscriminant instead
+        type: commons.NameAndWireValue
+      errorContentKey:
+        docs: this is deprecated. properties are defined on error bodies now.
+        type: commons.NameAndWireValue
       errorInstanceIdKey: commons.NameAndWireValue
-      errorContentKey: commons.NameAndWireValue

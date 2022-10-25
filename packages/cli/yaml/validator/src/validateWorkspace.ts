@@ -1,24 +1,30 @@
 import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
+import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
-import { RootApiFileSchema, ServiceFileSchema, visitFernYamlAst } from "@fern-api/yaml-schema";
-import { createAstVisitorForRules } from "./createAstVisitorForRules";
+import {
+    RootApiFileSchema,
+    ServiceFileSchema,
+    visitFernRootApiFileYamlAst,
+    visitFernServiceFileYamlAst,
+} from "@fern-api/yaml-schema";
+import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
+import { createServiceFileAstVisitorForRules } from "./createServiceFileAstVisitorForRules";
 import { getAllRules } from "./getAllRules";
 import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateWorkspace(workspace: Workspace, logger: Logger): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
-    const violationsForRoot = await validateFernFile({
+    const violationsForRoot = await validateRootApiFile({
         workspace,
-        relativeFilepath: "api.yml",
         contents: workspace.rootApiFile,
         logger,
     });
     violations.push(...violationsForRoot);
 
     for (const [relativeFilepath, contents] of entries(workspace.serviceFiles)) {
-        const violationsForFile = await validateFernFile({
+        const violationsForFile = await validateServiceFile({
             workspace,
             relativeFilepath,
             contents,
@@ -30,7 +36,7 @@ export async function validateWorkspace(workspace: Workspace, logger: Logger): P
     return violations;
 }
 
-async function validateFernFile({
+async function validateServiceFile({
     workspace,
     relativeFilepath,
     contents,
@@ -38,21 +44,46 @@ async function validateFernFile({
 }: {
     workspace: Workspace;
     relativeFilepath: RelativeFilePath;
-    contents: ServiceFileSchema | RootApiFileSchema;
+    contents: ServiceFileSchema;
     logger: Logger;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const ruleRunners = await Promise.all(getAllRules().map((rule) => rule.create({ workspace, logger })));
+    const allRuleVisitors = await Promise.all(getAllRules().map((rule) => rule.create({ workspace, logger })));
 
-    const astVisitor = createAstVisitorForRules({
+    const astVisitor = createServiceFileAstVisitorForRules({
         relativeFilepath,
         contents,
-        ruleRunners,
+        allRuleVisitors,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
         },
     });
-    await visitFernYamlAst(contents, astVisitor);
+    await visitFernServiceFileYamlAst(contents, astVisitor);
+
+    return violations;
+}
+
+async function validateRootApiFile({
+    workspace,
+    contents,
+    logger,
+}: {
+    workspace: Workspace;
+    contents: RootApiFileSchema;
+    logger: Logger;
+}): Promise<ValidationViolation[]> {
+    const violations: ValidationViolation[] = [];
+    const allRuleVisitors = await Promise.all(getAllRules().map((rule) => rule.create({ workspace, logger })));
+
+    const astVisitor = createRootApiFileAstVisitorForRules({
+        relativeFilepath: ROOT_API_FILENAME,
+        contents,
+        allRuleVisitors,
+        addViolations: (newViolations: ValidationViolation[]) => {
+            violations.push(...newViolations);
+        },
+    });
+    await visitFernRootApiFileYamlAst(contents, astVisitor);
 
     return violations;
 }

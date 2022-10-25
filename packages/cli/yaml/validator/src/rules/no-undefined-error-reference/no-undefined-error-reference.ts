@@ -1,7 +1,7 @@
 import { entries, RelativeFilePath } from "@fern-api/core-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
-import { visitFernYamlAst } from "@fern-api/yaml-schema";
+import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import { mapValues } from "lodash-es";
 import { Rule } from "../../Rule";
 
@@ -21,26 +21,28 @@ export const NoUndefinedErrorReferenceRule: Rule = {
         }
 
         return {
-            errorReference: (errorReference, { relativeFilepath, contents }) => {
-                const parsedReference = parseReferenceToTypeName({
-                    reference: errorReference,
-                    referencedIn: relativeFilepath,
-                    imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
-                });
+            serviceFile: {
+                errorReference: (errorReference, { relativeFilepath, contents }) => {
+                    const parsedReference = parseReferenceToTypeName({
+                        reference: errorReference,
+                        referencedIn: relativeFilepath,
+                        imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
+                    });
 
-                if (
-                    parsedReference != null &&
-                    doesErrorExist(parsedReference.typeName, parsedReference.relativeFilepath)
-                ) {
-                    return [];
-                }
+                    if (
+                        parsedReference != null &&
+                        doesErrorExist(parsedReference.typeName, parsedReference.relativeFilepath)
+                    ) {
+                        return [];
+                    }
 
-                return [
-                    {
-                        severity: "error",
-                        message: "Error is not defined.",
-                    },
-                ];
+                    return [
+                        {
+                            severity: "error",
+                            message: "Error is not defined.",
+                        },
+                    ];
+                },
             },
         };
     },
@@ -53,7 +55,7 @@ async function getErrorsByFilepath(workspace: Workspace) {
         const errorsForFile = new Set<ErrorName>();
         erorrsByFilepath[relativeFilepath] = errorsForFile;
 
-        await visitFernYamlAst(file, {
+        await visitFernServiceFileYamlAst(file, {
             errorDeclaration: ({ errorName }) => {
                 errorsForFile.add(errorName);
             },

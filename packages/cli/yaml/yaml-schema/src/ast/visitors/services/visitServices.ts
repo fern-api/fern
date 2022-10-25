@@ -1,6 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { ServicesSchema } from "../../../schemas";
-import { FernAstVisitor } from "../../FernAstVisitor";
+import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { visitHttpService } from "./visitHttpService";
 
@@ -10,7 +10,7 @@ export async function visitServices({
     nodePath,
 }: {
     services: ServicesSchema | undefined;
-    visitor: Partial<FernAstVisitor>;
+    visitor: Partial<FernServiceFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (services == null) {

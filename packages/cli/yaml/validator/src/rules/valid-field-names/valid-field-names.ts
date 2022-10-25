@@ -7,13 +7,15 @@ export const ValidFieldNamesRule: Rule = {
     name: "valid-field-names",
     create: () => {
         return {
-            typeDeclaration: ({ declaration }) => {
-                return visitRawTypeDeclaration<RuleViolation[]>(declaration, {
-                    alias: () => [],
-                    enum: validateEnumNames,
-                    object: () => [],
-                    union: validateUnionNames,
-                });
+            serviceFile: {
+                typeDeclaration: ({ declaration }) => {
+                    return visitRawTypeDeclaration<RuleViolation[]>(declaration, {
+                        alias: () => [],
+                        enum: validateEnumNames,
+                        object: () => [],
+                        union: validateUnionNames,
+                    });
+                },
             },
         };
     },

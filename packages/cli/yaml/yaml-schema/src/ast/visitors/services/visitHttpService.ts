@@ -1,6 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { HttpEndpointSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
-import { FernAstVisitor } from "../../FernAstVisitor";
+import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
 
@@ -10,7 +10,7 @@ export async function visitHttpService({
     nodePathForService,
 }: {
     service: HttpServiceSchema;
-    visitor: Partial<FernAstVisitor>;
+    visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForService: NodePath;
 }): Promise<void> {
     await visitObject(service, {
@@ -61,7 +61,7 @@ async function visitEndpoint({
     nodePathForEndpoint,
 }: {
     endpoint: HttpEndpointSchema;
-    visitor: Partial<FernAstVisitor>;
+    visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
     await visitObject(endpoint, {
@@ -164,7 +164,7 @@ async function visitPathParameters({
     nodePath,
 }: {
     pathParameters: Record<string, HttpPathParameterSchema> | undefined;
-    visitor: Partial<FernAstVisitor>;
+    visitor: Partial<FernServiceFileAstVisitor>;
     nodePath: NodePath;
 }) {
     if (pathParameters == null) {
