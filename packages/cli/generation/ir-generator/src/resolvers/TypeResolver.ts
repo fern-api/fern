@@ -1,6 +1,6 @@
 import { Workspace } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -135,6 +135,14 @@ export class TypeResolverImpl implements TypeResolver {
                           ),
                       }
                     : undefined,
+            literal: (literalValue) => ({
+                _type: "container",
+                container: {
+                    _type: "literal",
+                    literal: Literal.string(literalValue),
+                },
+                originalTypeReference: TypeReference.container(ContainerType.literal(Literal.string(literalValue))),
+            }),
             named: (referenceToNamedType) =>
                 this.resolveNamedType({
                     referenceToNamedType,

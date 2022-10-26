@@ -326,6 +326,88 @@ exports[`ir simple 1`] = `
             "name": {
                 "fernFilepath": [
                     {
+                        "originalValue": "director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
+                    }
+                ],
+                "fernFilepathV2": [
+                    {
+                        "unsafeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        },
+                        "safeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    }
+                ],
+                "name": "LiteralString",
+                "nameV2": {
+                    "originalValue": "LiteralString",
+                    "camelCase": "literalString",
+                    "snakeCase": "literal_string",
+                    "pascalCase": "LiteralString",
+                    "screamingSnakeCase": "LITERAL_STRING"
+                },
+                "nameV3": {
+                    "unsafeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    },
+                    "safeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
+                },
+                "resolvedType": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
                         "originalValue": "imdb",
                         "camelCase": "imdb",
                         "snakeCase": "imdb",
@@ -3180,6 +3262,88 @@ exports[`ir simple 2`] = `
                 "resolvedType": {
                     "primitive": "INTEGER",
                     "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalValue": "director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
+                    }
+                ],
+                "fernFilepathV2": [
+                    {
+                        "unsafeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        },
+                        "safeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    }
+                ],
+                "name": "LiteralString",
+                "nameV2": {
+                    "originalValue": "LiteralString",
+                    "camelCase": "literalString",
+                    "snakeCase": "literal_string",
+                    "pascalCase": "LiteralString",
+                    "screamingSnakeCase": "LITERAL_STRING"
+                },
+                "nameV3": {
+                    "unsafeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    },
+                    "safeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
+                },
+                "resolvedType": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
                 },
                 "_type": "alias"
             },
@@ -6058,6 +6222,88 @@ exports[`ir simple 3`] = `
             "name": {
                 "fernFilepath": [
                     {
+                        "originalValue": "director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
+                    }
+                ],
+                "fernFilepathV2": [
+                    {
+                        "unsafeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        },
+                        "safeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    }
+                ],
+                "name": "LiteralString",
+                "nameV2": {
+                    "originalValue": "LiteralString",
+                    "camelCase": "literalString",
+                    "snakeCase": "literal_string",
+                    "pascalCase": "LiteralString",
+                    "screamingSnakeCase": "LITERAL_STRING"
+                },
+                "nameV3": {
+                    "unsafeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    },
+                    "safeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
+                },
+                "resolvedType": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
                         "originalValue": "imdb",
                         "camelCase": "imdb",
                         "snakeCase": "imdb",
@@ -8912,6 +9158,88 @@ exports[`ir simple 4`] = `
                 "resolvedType": {
                     "primitive": "INTEGER",
                     "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalValue": "director",
+                        "camelCase": "director",
+                        "snakeCase": "director",
+                        "pascalCase": "Director",
+                        "screamingSnakeCase": "DIRECTOR"
+                    }
+                ],
+                "fernFilepathV2": [
+                    {
+                        "unsafeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        },
+                        "safeName": {
+                            "originalValue": "director",
+                            "camelCase": "director",
+                            "snakeCase": "director",
+                            "pascalCase": "Director",
+                            "screamingSnakeCase": "DIRECTOR"
+                        }
+                    }
+                ],
+                "name": "LiteralString",
+                "nameV2": {
+                    "originalValue": "LiteralString",
+                    "camelCase": "literalString",
+                    "snakeCase": "literal_string",
+                    "pascalCase": "LiteralString",
+                    "screamingSnakeCase": "LITERAL_STRING"
+                },
+                "nameV3": {
+                    "unsafeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    },
+                    "safeName": {
+                        "originalValue": "LiteralString",
+                        "camelCase": "literalString",
+                        "snakeCase": "literal_string",
+                        "pascalCase": "LiteralString",
+                        "screamingSnakeCase": "LITERAL_STRING"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
+                },
+                "resolvedType": {
+                    "container": {
+                        "literal": {
+                            "string": "hello",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
                 },
                 "_type": "alias"
             },

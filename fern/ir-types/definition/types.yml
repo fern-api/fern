@@ -159,6 +159,7 @@ types:
       set:
         type: TypeReference
         key: set
+      literal: Literal
   MapType:
     properties:
       keyType: TypeReference
@@ -173,3 +174,6 @@ types:
         docs: "Within the range -2^53 to 2^53"
       - DATE_TIME
       - UUID
+  Literal:
+    union:
+      string: string
