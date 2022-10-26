@@ -4,3 +4,4 @@ types:
       name: string
       age: Age
   Age: integer
+  LiteralString: literal<"hello">

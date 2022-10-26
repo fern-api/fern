@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { DeclaredTypeName, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
 
 export declare type ResolvedType =
     | ResolvedType.Container
@@ -47,7 +47,8 @@ export declare type ResolvedContainerType =
     | ResolvedContainerType.Map
     | ResolvedContainerType.List
     | ResolvedContainerType.Optional
-    | ResolvedContainerType.Set;
+    | ResolvedContainerType.Set
+    | ResolvedContainerType.Literal;
 
 export declare namespace ResolvedContainerType {
     interface Map {
@@ -69,5 +70,10 @@ export declare namespace ResolvedContainerType {
     interface Set {
         _type: "set";
         itemType: ResolvedType;
+    }
+
+    interface Literal {
+        _type: "literal";
+        literal: IrLiteral;
     }
 }

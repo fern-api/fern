@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../FernFileContext";
 import { parseTypeName } from "./parseTypeName";
 
@@ -19,6 +19,7 @@ export function parseInlineType({ type, file }: parseInlineType.Args): TypeRefer
         list: (valueType) => TypeReference.container(ContainerType.list(valueType)),
         set: (valueType) => TypeReference.container(ContainerType.set(valueType)),
         optional: (valueType) => TypeReference.container(ContainerType.optional(valueType)),
+        literal: (literalValue) => TypeReference.container(ContainerType.literal(Literal.string(literalValue))),
         named: (namedType) =>
             TypeReference.named(
                 parseTypeName({

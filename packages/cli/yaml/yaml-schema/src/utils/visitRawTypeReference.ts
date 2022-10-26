@@ -5,6 +5,7 @@ const MAP_REGEX = /^map<\s*(.*)\s*,\s*(.*)\s*>$/;
 const LIST_REGEX = /^list<\s*(.*)\s*>$/;
 const SET_REGEX = /^set<\s*(.*)\s*>$/;
 const OPTIONAL_REGEX = /^optional<\s*(.*)\s*>$/;
+const LITERAL_REGEX = /^literal<\s*"(.*)"\s*>$/;
 
 export interface RawTypeReferenceVisitor<R> {
     primitive: (primitive: PrimitiveType) => R;
@@ -12,6 +13,7 @@ export interface RawTypeReferenceVisitor<R> {
     list: (valueType: R) => R;
     set: (valueType: R) => R;
     optional: (valueType: R) => R;
+    literal: (literalValue: string) => R;
     named: (named: string) => R;
     unknown: () => R;
     void: () => R;
@@ -60,6 +62,11 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
     const optionalMatch = type.match(OPTIONAL_REGEX);
     if (optionalMatch?.[1] != null) {
         return visitor.optional(visitRawTypeReference(optionalMatch[1], visitor));
+    }
+
+    const literalMatch = type.match(LITERAL_REGEX);
+    if (literalMatch?.[1] != null) {
+        return visitor.literal(literalMatch[1]);
     }
 
     return visitor.named(type);
