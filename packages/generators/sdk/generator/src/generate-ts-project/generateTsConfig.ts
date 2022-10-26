@@ -1,6 +1,5 @@
 import { Volume } from "memfs/lib/volume";
 import { CompilerOptions, ModuleResolutionKind, ScriptTarget } from "ts-morph";
-import { OUTPUT_DIRECTORY } from "./constants";
 import { getPathToProjectFile } from "./utils";
 
 const COMPILER_OPTIONS: CompilerOptions = {
@@ -15,7 +14,7 @@ const COMPILER_OPTIONS: CompilerOptions = {
     noUncheckedIndexedAccess: true,
     noUnusedLocals: true,
     noUnusedParameters: true,
-    declarationDir: OUTPUT_DIRECTORY,
+    declarationDir: ".",
     rootDir: "src",
 };
 
@@ -25,6 +24,8 @@ export async function generateTsConfig(volume: Volume): Promise<void> {
         JSON.stringify(
             {
                 compilerOptions: COMPILER_OPTIONS,
+                include: ["src"],
+                exclude: [],
             },
             undefined,
             4

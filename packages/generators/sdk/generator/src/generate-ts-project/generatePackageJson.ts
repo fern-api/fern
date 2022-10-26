@@ -3,7 +3,6 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { OUTPUT_DIRECTORY, SRC_DIRECTORY } from "./constants";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
@@ -46,20 +45,21 @@ export async function generatePackageJson({
         ...packageJson,
         version: packageVersion,
         repository: repositoryUrl,
-        files: [`./${OUTPUT_DIRECTORY}`, "./index.d.ts"],
-        main: `./${OUTPUT_DIRECTORY}/index.js`,
+        files: ["core", "resources", "serialization", "client", "*.{js,js.map,d.ts}"],
+        main: "./index.js",
         types: "./index.d.ts",
         exports: {
             ".": {
-                require: `./${OUTPUT_DIRECTORY}/index.js`,
-                import: `./${OUTPUT_DIRECTORY}/index.js`,
+                require: "./index.js",
+                import: "./index.js",
                 types: "./index.d.ts",
             },
         },
         scripts: {
-            [PackageJsonScript.FORMAT]: `prettier --write --print-width 120 '${SRC_DIRECTORY}/**/*.ts'`,
+            [PackageJsonScript.FORMAT]: "prettier --write --print-width 120 'src/**/*.ts'",
             [PackageJsonScript.BUILD]: [
-                `esbuild $(find ${SRC_DIRECTORY} -name '*.ts') --format=cjs --sourcemap --outdir=${OUTPUT_DIRECTORY}`,
+                // esbuild first so we don't transpile the .d.ts files
+                "esbuild $(find src -name '*.ts') --format=cjs --sourcemap --outdir=.",
                 "tsc",
             ].join(" && "),
         },
