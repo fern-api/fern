@@ -1,0 +1,5 @@
+name: test-api
+default-environment: prod
+environments: 
+  prod: https://buildwithfern.com
+  dev: https://dev.buildwithfern.com

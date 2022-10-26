@@ -1,551 +1,239 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`convertToOpenApi all-auth 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {
-      "BlogAuthor": Object {
-        "description": undefined,
-        "properties": Object {
-          "name": Object {
-            "description": undefined,
-            "type": "string",
-          },
-        },
-        "required": Array [
-          "name",
-        ],
-        "type": "object",
-      },
-      "BlogBlogPost": Object {
-        "description": "A blog post",
-        "properties": Object {
-          "author": Object {
-            "$ref": "#/components/schemas/BlogAuthor",
-            "description": undefined,
-          },
-          "content": Object {
-            "description": undefined,
-            "type": "string",
-          },
-          "id": Object {
-            "$ref": "#/components/schemas/BlogPostId",
-            "description": undefined,
-          },
-          "title": Object {
-            "description": undefined,
-            "type": "string",
-          },
-        },
-        "required": Array [
-          "id",
-          "title",
-          "author",
-          "content",
-        ],
-        "type": "object",
-      },
-      "BlogPostId": Object {
-        "description": undefined,
-        "type": "string",
-      },
-    },
-    "securitySchemes": Object {
-      "BasicAuth": Object {
-        "scheme": "basic",
-        "type": "http",
-      },
-      "BearerAuth": Object {
-        "scheme": "bearer",
-        "type": "http",
-      },
-      "MyHeaderAuth": Object {
-        "in": "header",
-        "name": "My-Header",
-        "type": "apiKey",
-      },
-    },
-  },
-  "info": Object {
-    "title": "BlogPost API",
-    "version": "0.0.0",
-  },
-  "openapi": "3.0.1",
-  "paths": Object {
-    "/create": Object {
-      "post": Object {
-        "description": undefined,
-        "operationId": "PostsService.createPost",
-        "parameters": Array [],
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
-                "$ref": "#/components/schemas/BlogBlogPost",
-              },
-            },
-          },
-          "description": undefined,
-          "required": true,
-        },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "$ref": "#/components/schemas/BlogPostId",
-                },
-              },
-            },
-            "description": "",
-          },
-        },
-        "security": Array [
-          Object {
-            "BasicAuth": Array [],
-            "BearerAuth": Array [],
-            "MyHeaderAuth": Array [],
-          },
-        ],
-        "tags": Array [
-          "PostsService",
-        ],
-      },
-    },
-    "/{postId}": Object {
-      "get": Object {
-        "description": undefined,
-        "operationId": "PostsService.getPost",
-        "parameters": Array [
-          Object {
-            "description": undefined,
-            "in": "path",
-            "name": "postId",
-            "required": true,
-            "schema": Object {
-              "$ref": "#/components/schemas/BlogPostId",
-            },
-          },
-        ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "$ref": "#/components/schemas/BlogBlogPost",
-                },
-              },
-            },
-            "description": "",
-          },
-        },
-        "tags": Array [
-          "PostsService",
-        ],
-      },
-    },
-  },
-}
-`;
-
 exports[`convertToOpenApi any-auth 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {
-      "BlogAuthor": Object {
-        "description": undefined,
-        "properties": Object {
-          "name": Object {
-            "description": undefined,
-            "type": "string",
-          },
-        },
-        "required": Array [
-          "name",
-        ],
-        "type": "object",
-      },
-      "BlogBlogPost": Object {
-        "description": "A blog post",
-        "properties": Object {
-          "author": Object {
-            "$ref": "#/components/schemas/BlogAuthor",
-            "description": undefined,
-          },
-          "content": Object {
-            "description": undefined,
-            "type": "string",
-          },
-          "id": Object {
-            "$ref": "#/components/schemas/BlogPostId",
-            "description": undefined,
-          },
-          "title": Object {
-            "description": undefined,
-            "type": "string",
-          },
-        },
-        "required": Array [
-          "id",
-          "title",
-          "author",
-          "content",
-        ],
-        "type": "object",
-      },
-      "BlogPostId": Object {
-        "description": undefined,
-        "type": "string",
-      },
-    },
-    "securitySchemes": Object {
-      "BasicAuth": Object {
-        "scheme": "basic",
-        "type": "http",
-      },
-      "BearerAuth": Object {
-        "scheme": "bearer",
-        "type": "http",
-      },
-      "MyHeaderAuth": Object {
-        "in": "header",
-        "name": "My-Header",
-        "type": "apiKey",
-      },
-    },
-  },
-  "info": Object {
-    "title": "BlogPost API",
-    "version": "0.0.0",
-  },
-  "openapi": "3.0.1",
-  "paths": Object {
-    "/create": Object {
-      "post": Object {
-        "description": undefined,
-        "operationId": "PostsService.createPost",
-        "parameters": Array [],
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
-                "$ref": "#/components/schemas/BlogBlogPost",
-              },
-            },
-          },
-          "description": undefined,
-          "required": true,
-        },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "$ref": "#/components/schemas/BlogPostId",
-                },
-              },
-            },
-            "description": "",
-          },
-        },
-        "security": Array [
-          Object {
-            "BearerAuth": Array [],
-          },
-          Object {
-            "BasicAuth": Array [],
-          },
-          Object {
-            "MyHeaderAuth": Array [],
-          },
-        ],
-        "tags": Array [
-          "PostsService",
-        ],
-      },
-    },
-    "/{postId}": Object {
-      "get": Object {
-        "description": undefined,
-        "operationId": "PostsService.getPost",
-        "parameters": Array [
-          Object {
-            "description": undefined,
-            "in": "path",
-            "name": "postId",
-            "required": true,
-            "schema": Object {
-              "$ref": "#/components/schemas/BlogPostId",
-            },
-          },
-        ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "$ref": "#/components/schemas/BlogBlogPost",
-                },
-              },
-            },
-            "description": "",
-          },
-        },
-        "tags": Array [
-          "PostsService",
-        ],
-      },
-    },
-  },
-}
+"openapi: 3.0.1
+info:
+  title: fern
+  version: ''
+paths:
+  /create:
+    post:
+      operationId: PostsService.createPost
+      tags:
+        - PostsService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPostId'
+      security:
+        - BearerAuth: []
+        - BasicAuth: []
+        - MyHeaderAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogBlogPost'
+  /{postId}:
+    get:
+      operationId: PostsService.getPost
+      tags:
+        - PostsService
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BlogPostId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogBlogPost'
+components:
+  schemas:
+    BlogPostId:
+      type: string
+    BlogBlogPost:
+      type: object
+      description: A blog post
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostId'
+        title:
+          type: string
+        author:
+          $ref: '#/components/schemas/BlogAuthor'
+        content:
+          type: string
+      required:
+        - id
+        - title
+        - author
+        - content
+    BlogAuthor:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+    BasicAuth:
+      type: http
+      scheme: basic
+    MyHeaderAuth:
+      type: apiKey
+      in: header
+      name: My-Header
+servers: []
+"
 `;
 
 exports[`convertToOpenApi test-api 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {
-      "BlogAuthor": Object {
-        "description": undefined,
-        "oneOf": Array [
-          Object {
-            "properties": Object {
-              "type": Object {},
-            },
-            "type": "object",
-          },
-          Object {
-            "properties": Object {
-              "type": Object {
-                "type": "string",
-              },
-            },
-            "type": "object",
-          },
-          Object {
-            "allOf": Array [
-              Object {
-                "$ref": "#/components/schemas/BlogPostType",
-              },
-              Object {
-                "properties": Object {
-                  "type": Object {
-                    "enum": Array [
-                      "type",
-                    ],
-                    "type": "string",
-                  },
-                },
-                "type": "object",
-              },
-            ],
-            "type": "object",
-          },
-        ],
-      },
-      "BlogBlogPost": Object {
-        "description": "A blog post",
-        "properties": Object {
-          "author": Object {
-            "$ref": "#/components/schemas/BlogAuthor",
-            "description": undefined,
-          },
-          "content": Object {
-            "description": undefined,
-            "type": "string",
-          },
-          "id": Object {
-            "$ref": "#/components/schemas/BlogPostId",
-            "description": undefined,
-          },
-          "title": Object {
-            "description": undefined,
-            "type": "string",
-          },
-          "type": Object {
-            "$ref": "#/components/schemas/BlogPostType",
-            "description": undefined,
-          },
-        },
-        "required": Array [
-          "id",
-          "type",
-          "title",
-          "author",
-          "content",
-        ],
-        "type": "object",
-      },
-      "BlogCreatePostRequest": Object {
-        "description": undefined,
-        "properties": Object {
-          "author": Object {
-            "$ref": "#/components/schemas/BlogAuthor",
-            "description": "Author is the writer.",
-          },
-          "content": Object {
-            "description": undefined,
-            "type": "string",
-          },
-          "postType": Object {
-            "$ref": "#/components/schemas/BlogPostType",
-            "description": undefined,
-          },
-          "title": Object {
-            "description": undefined,
-            "type": "string",
-          },
-        },
-        "required": Array [
-          "title",
-          "author",
-          "content",
-          "postType",
-        ],
-        "type": "object",
-      },
-      "BlogPostId": Object {
-        "description": undefined,
-        "type": "string",
-      },
-      "BlogPostNotFoundError": Object {
-        "description": undefined,
-        "properties": Object {
-          "id": Object {
-            "$ref": "#/components/schemas/BlogPostId",
-            "description": undefined,
-          },
-        },
-        "required": Array [
-          "id",
-        ],
-        "type": "object",
-      },
-      "BlogPostType": Object {
-        "description": undefined,
-        "enum": Array [
-          "LONG",
-          "SHORT",
-        ],
-        "type": "string",
-      },
-    },
-    "securitySchemes": Object {},
-  },
-  "info": Object {
-    "title": "BlogPost API",
-    "version": "0.0.0",
-  },
-  "openapi": "3.0.1",
-  "paths": Object {
-    "/create": Object {
-      "post": Object {
-        "description": "Creates a blog post and returns blog post id.",
-        "operationId": "PostsService.createPost",
-        "parameters": Array [
-          Object {
-            "description": "I'm a header!",
-            "in": "header",
-            "name": "x-endpoint-header",
-            "required": true,
-            "schema": Object {
-              "type": "string",
-            },
-          },
-        ],
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
-                "$ref": "#/components/schemas/BlogCreatePostRequest",
-              },
-            },
-          },
-          "description": undefined,
-          "required": true,
-        },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "$ref": "#/components/schemas/BlogPostId",
-                },
-              },
-            },
-            "description": "",
-          },
-        },
-        "security": Array [
-          Object {},
-        ],
-        "tags": Array [
-          "PostsService",
-        ],
-      },
-    },
-    "/{postId}": Object {
-      "get": Object {
-        "description": "Gets a blog post.",
-        "operationId": "PostsService.getPost",
-        "parameters": Array [
-          Object {
-            "description": undefined,
-            "in": "path",
-            "name": "postId",
-            "required": true,
-            "schema": Object {
-              "$ref": "#/components/schemas/BlogPostId",
-            },
-          },
-        ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "$ref": "#/components/schemas/BlogBlogPost",
-                },
-              },
-            },
-            "description": "",
-          },
-          "400": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "oneOf": Array [
-                    Object {
-                      "allOf": Array [
-                        Object {
-                          "properties": Object {
-                            "_error": Object {
-                              "enum": Array [
-                                "PostNotFoundError",
-                              ],
-                              "type": "string",
-                            },
-                          },
-                          "type": "object",
-                        },
-                        Object {
-                          "$ref": "#/components/schemas/BlogPostNotFoundError",
-                        },
-                      ],
-                      "description": undefined,
-                      "type": "object",
-                    },
-                  ],
-                },
-              },
-            },
-            "description": "",
-          },
-        },
-        "tags": Array [
-          "PostsService",
-        ],
-      },
-    },
-  },
-}
+"openapi: 3.0.1
+info:
+  title: fern
+  version: ''
+paths:
+  /create:
+    post:
+      description: Creates a blog post and returns blog post id.
+      operationId: PostsService.createPost
+      tags:
+        - PostsService
+      parameters:
+        - name: x-endpoint-header
+          in: header
+          description: I'm a header!
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPostId'
+      security:
+        - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogCreatePostRequest'
+  /{postId}:
+    get:
+      description: Gets a blog post.
+      operationId: PostsService.getPost
+      tags:
+        - PostsService
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BlogPostId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogBlogPost'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    allOf:
+                      - type: object
+                        properties:
+                          _error:
+                            type: string
+                            enum:
+                              - PostNotFoundError
+                      - $ref: '#/components/schemas/BlogPostNotFoundError'
+components:
+  schemas:
+    BlogPostId:
+      type: string
+    BlogBlogPost:
+      type: object
+      description: A blog post
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostId'
+        type:
+          $ref: '#/components/schemas/BlogPostType'
+        title:
+          type: string
+        author:
+          $ref: '#/components/schemas/BlogAuthor'
+        content:
+          type: string
+      required:
+        - id
+        - type
+        - title
+        - author
+        - content
+    BlogPostType:
+      type: string
+      enum:
+        - LONG
+        - SHORT
+    BlogAuthor:
+      oneOf:
+        - type: object
+          properties:
+            type: {}
+        - type: object
+          properties:
+            type:
+              type: string
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/BlogPostType'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - type
+    BlogCreatePostRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          $ref: '#/components/schemas/BlogAuthor'
+          description: Author is the writer.
+        content:
+          type: string
+        postType:
+          $ref: '#/components/schemas/BlogPostType'
+      required:
+        - title
+        - author
+        - content
+        - postType
+    BlogPostNotFoundErrorBody:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostId'
+      required:
+        - id
+    BlogPostNotFoundError:
+      $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
+  securitySchemes: {}
+servers:
+  - url: https://buildwithfern.com
+  - url: https://dev.buildwithfern.com
+"
 `;

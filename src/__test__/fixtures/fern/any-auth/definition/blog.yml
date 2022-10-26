@@ -1,6 +1,5 @@
-ids:
-  - PostId
 types:
+  PostId: string
   BlogPost:
     docs: A blog post
     properties:

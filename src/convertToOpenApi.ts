@@ -56,6 +56,12 @@ export function convertToOpenApi({
             schemas,
             securitySchemes: constructSecuritySchemes(ir.auth),
         },
+        servers: ir.environments.map((environment) => {
+            return {
+                url: environment.url,
+                docs: environment.docs,
+            };
+        }),
     };
 }
 

@@ -1,33 +1,41 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { loadWorkspace } from "@fern-api/workspace-loader";
-import { mkdir, writeFile } from "fs/promises";
+import { GeneratorConfig, GeneratorEnvironment } from "@fern-fern/generator-exec-client/model/config";
+import { execa } from "execa";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import { convertToOpenApi } from "../convertToOpenApi";
+import tmp from "tmp-promise";
+import { writeOpenApi } from "../../src/writeOpenApi";
 
-const FIXTURES = ["test-api", "all-auth", "any-auth"];
+const FIXTURES = ["test-api", "any-auth"];
 
 describe("convertToOpenApi", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
+        const fixtureDir = path.join(__dirname, "fixtures");
         it(fixture, async () => {
-            const fixtureDir = path.join(__dirname, "fixtures", fixture);
-            const maybeLoadedWorkspace = await loadWorkspace({
-                absolutePathToWorkspace: AbsoluteFilePath.of(fixtureDir),
-            });
-            if (!maybeLoadedWorkspace.didSucceed) {
-                throw new Error(JSON.stringify(maybeLoadedWorkspace.failures));
-            }
-            const intermediateRepresentation = await generateIntermediateRepresentation(maybeLoadedWorkspace.workspace);
-            const openApi = convertToOpenApi({
-                apiName: "BlogPost API",
-                apiVersion: "0.0.0",
-                ir: intermediateRepresentation,
+            const tmpDir = await tmp.dir();
+            const openapiPath = path.join(tmpDir.path, "openapi.yml");
+            const confgPath = path.join(tmpDir.path, "config.json");
+            const irPath = path.join(tmpDir.path, "ir.json");
+
+            const generatorConfig: GeneratorConfig = {
+                irFilepath: irPath,
+                output: tmpDir,
+                publish: undefined,
+                workspaceName: "fern",
+                organization: "fern",
+                customConfig: undefined,
+                environment: GeneratorEnvironment.local(),
+            };
+
+            await writeFile(confgPath, JSON.stringify(generatorConfig, undefined, 4));
+
+            await execa("fern", ["ir", irPath, "--api", fixture], {
+                cwd: fixtureDir,
             });
 
-            const generatedDir = path.join(fixtureDir, "generated");
-            await mkdir(generatedDir, { recursive: true });
-            await writeFile(path.join(generatedDir, "openapi.json"), JSON.stringify(openApi, undefined, 4));
+            await writeOpenApi(confgPath);
+
+            const openApi = (await readFile(openapiPath)).toString();
 
             expect(openApi).toMatchSnapshot();
         });
