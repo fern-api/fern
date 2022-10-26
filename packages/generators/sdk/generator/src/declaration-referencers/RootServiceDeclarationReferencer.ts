@@ -31,7 +31,7 @@ export class RootServiceDeclarationReferencer extends AbstractDeclarationReferen
     }
 
     public getFilename(): string {
-        return `${this.getExportedName()}.ts`;
+        return "Client.ts";
     }
 
     public getExportedName(): string {

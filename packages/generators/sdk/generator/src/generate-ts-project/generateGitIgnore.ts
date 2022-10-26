@@ -7,9 +7,8 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
         [
             "node_modules",
             ".DS_Store",
-            "*.d.ts",
-            "*.js",
-            "*.js.map",
+            "dist",
+            "index.d.ts",
             "",
             "# yarn berry",
             ".pnp.*",
@@ -19,13 +18,6 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
             "!.yarn/releases",
             "!.yarn/sdks",
             "!.yarn/versions",
-            "",
-            "# these are needed to override '*.js' above",
-            "!.yarn/patches/**",
-            "!.yarn/plugins/**",
-            "!.yarn/releases/**",
-            "!.yarn/sdks/**",
-            "!.yarn/versions/**",
         ].join("\n")
     );
 }

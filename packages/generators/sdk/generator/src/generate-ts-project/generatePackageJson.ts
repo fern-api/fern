@@ -3,7 +3,7 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { ESBUILD_OUTPUT_DIRECTORY, SRC_DIRECTORY, TYPE_DECLARATIONS_DIRECTORY } from "./constants";
+import { OUTPUT_DIRECTORY, SRC_DIRECTORY } from "./constants";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
@@ -46,14 +46,20 @@ export async function generatePackageJson({
         ...packageJson,
         version: packageVersion,
         repository: repositoryUrl,
-        main: `./${ESBUILD_OUTPUT_DIRECTORY}/index.js`,
-        types: "./types/index.d.ts",
-        files: [`./${ESBUILD_OUTPUT_DIRECTORY}`, `./${TYPE_DECLARATIONS_DIRECTORY}`],
-        exports: `./${ESBUILD_OUTPUT_DIRECTORY}`,
+        files: [`./${OUTPUT_DIRECTORY}`, "./index.d.ts"],
+        main: `./${OUTPUT_DIRECTORY}/index.js`,
+        types: "./index.d.ts",
+        exports: {
+            ".": {
+                require: `./${OUTPUT_DIRECTORY}/index.js`,
+                import: `./${OUTPUT_DIRECTORY}/index.js`,
+                types: "./index.d.ts",
+            },
+        },
         scripts: {
             [PackageJsonScript.FORMAT]: `prettier --write --print-width 120 '${SRC_DIRECTORY}/**/*.ts'`,
             [PackageJsonScript.BUILD]: [
-                `esbuild $(find ${SRC_DIRECTORY} -name '*.ts') --format=cjs --sourcemap --outdir=${ESBUILD_OUTPUT_DIRECTORY}`,
+                `esbuild $(find ${SRC_DIRECTORY} -name '*.ts') --format=cjs --sourcemap --outdir=${OUTPUT_DIRECTORY}`,
                 "tsc",
             ].join(" && "),
         },
