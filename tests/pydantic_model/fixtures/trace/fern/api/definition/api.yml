@@ -1,3 +1,5 @@
 name: my-api
 
 auth: bearer
+
+error-discriminant: error

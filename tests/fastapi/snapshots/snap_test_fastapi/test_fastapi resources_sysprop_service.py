@@ -29,7 +29,7 @@ class AbstractSysPropCrudService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_num_warm_instances(self) -> typing.Dict[Language, int]:
+    def get_num_warm_instances(self, *, dummy: typing.Optional[typing.List[str]]) -> typing.Dict[Language, int]:
         ...
 
     """
@@ -85,6 +85,8 @@ class AbstractSysPropCrudService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "dummy":
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
