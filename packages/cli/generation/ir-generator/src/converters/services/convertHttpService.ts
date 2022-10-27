@@ -86,6 +86,10 @@ export function convertHttpService({
                                               : parameterName,
                                   }),
                                   valueType,
+                                  allowMultiple:
+                                      typeof parameter !== "string" && parameter["allow-multiple"] != null
+                                          ? parameter["allow-multiple"]
+                                          : false,
                               };
                           })
                         : [],
