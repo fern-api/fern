@@ -93,6 +93,7 @@ async function visitEndpoint({
                         type: async (type) => {
                             await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
                         },
+                        "allow-multiple": noop,
                     });
                 }
             }

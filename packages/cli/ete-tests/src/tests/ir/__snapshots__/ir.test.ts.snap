@@ -2422,7 +2422,45 @@ exports[`ir simple 1`] = `
                                 }
                             }
                         ],
-                        "queryParameters": [],
+                        "queryParameters": [
+                            {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
+                                "name": {
+                                    "originalValue": "movieName",
+                                    "camelCase": "movieName",
+                                    "snakeCase": "movie_name",
+                                    "pascalCase": "MovieName",
+                                    "screamingSnakeCase": "MOVIE_NAME",
+                                    "wireValue": "movieName"
+                                },
+                                "nameV2": {
+                                    "name": {
+                                        "unsafeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        },
+                                        "safeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        }
+                                    },
+                                    "wireValue": "movieName"
+                                },
+                                "valueType": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "allowMultiple": true
+                            }
+                        ],
                         "headers": [],
                         "request": {
                             "type": {
@@ -5370,7 +5408,45 @@ exports[`ir simple 2`] = `
                                 }
                             }
                         ],
-                        "queryParameters": [],
+                        "queryParameters": [
+                            {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
+                                "name": {
+                                    "originalValue": "movieName",
+                                    "camelCase": "movieName",
+                                    "snakeCase": "movie_name",
+                                    "pascalCase": "MovieName",
+                                    "screamingSnakeCase": "MOVIE_NAME",
+                                    "wireValue": "movieName"
+                                },
+                                "nameV2": {
+                                    "name": {
+                                        "unsafeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        },
+                                        "safeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        }
+                                    },
+                                    "wireValue": "movieName"
+                                },
+                                "valueType": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "allowMultiple": true
+                            }
+                        ],
                         "headers": [],
                         "request": {
                             "type": {
@@ -8318,7 +8394,45 @@ exports[`ir simple 3`] = `
                                 }
                             }
                         ],
-                        "queryParameters": [],
+                        "queryParameters": [
+                            {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
+                                "name": {
+                                    "originalValue": "movieName",
+                                    "camelCase": "movieName",
+                                    "snakeCase": "movie_name",
+                                    "pascalCase": "MovieName",
+                                    "screamingSnakeCase": "MOVIE_NAME",
+                                    "wireValue": "movieName"
+                                },
+                                "nameV2": {
+                                    "name": {
+                                        "unsafeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        },
+                                        "safeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        }
+                                    },
+                                    "wireValue": "movieName"
+                                },
+                                "valueType": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "allowMultiple": true
+                            }
+                        ],
                         "headers": [],
                         "request": {
                             "type": {
@@ -11266,7 +11380,45 @@ exports[`ir simple 4`] = `
                                 }
                             }
                         ],
-                        "queryParameters": [],
+                        "queryParameters": [
+                            {
+                                "availability": {
+                                    "status": "GENERAL_AVAILABILITY"
+                                },
+                                "name": {
+                                    "originalValue": "movieName",
+                                    "camelCase": "movieName",
+                                    "snakeCase": "movie_name",
+                                    "pascalCase": "MovieName",
+                                    "screamingSnakeCase": "MOVIE_NAME",
+                                    "wireValue": "movieName"
+                                },
+                                "nameV2": {
+                                    "name": {
+                                        "unsafeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        },
+                                        "safeName": {
+                                            "originalValue": "movieName",
+                                            "camelCase": "movieName",
+                                            "snakeCase": "movie_name",
+                                            "pascalCase": "MovieName",
+                                            "screamingSnakeCase": "MOVIE_NAME"
+                                        }
+                                    },
+                                    "wireValue": "movieName"
+                                },
+                                "valueType": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "allowMultiple": true
+                            }
+                        ],
                         "headers": [],
                         "request": {
                             "type": {

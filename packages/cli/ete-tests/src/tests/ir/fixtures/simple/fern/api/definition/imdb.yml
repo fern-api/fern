@@ -41,6 +41,10 @@ services:
           path: /{movieId}
           path-parameters:
             movieId: MovieId
+          query-parameters:
+            movieName:
+              type: string
+              allow-multiple: true
           response: Movie
           errors:
             - NotFoundError
