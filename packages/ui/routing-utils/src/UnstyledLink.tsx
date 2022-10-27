@@ -20,9 +20,12 @@ export const UnstyledLink: React.FC<UnstyledLink.Props> = ({
     return (
         <Link
             className={classNames(styles.link, className, {
-                [styles.showUnderline ?? "_"]: showUnderline,
-                [styles.muted ?? "_"]: muted,
-                [styles.hoverState ?? "_"]: !noHoverState,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [styles.showUnderline!]: showUnderline,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [styles.muted!]: muted,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [styles.hoverState!]: !noHoverState,
             })}
             {...linkProps}
         />

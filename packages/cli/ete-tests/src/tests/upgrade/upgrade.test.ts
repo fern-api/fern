@@ -1,4 +1,4 @@
-import { join } from "@fern-api/core-utils";
+import { join } from "@fern-api/fs-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { readFile, writeFile } from "fs/promises";

@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath, FernFilepathV2 } from "@fern-fern/ir-model/commons";
 import path from "path";
 import { CasingsGenerator } from "../casings/CasingsGenerator";

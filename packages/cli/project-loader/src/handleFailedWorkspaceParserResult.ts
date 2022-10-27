@@ -1,4 +1,5 @@
-import { assertNever, entries, RelativeFilePath } from "@fern-api/core-utils";
+import { assertNever, entries } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { formatLog, Logger } from "@fern-api/logger";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/workspace-loader";
 import chalk from "chalk";

@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, noop } from "@fern-api/core-utils";
+import { noop } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { InteractiveTaskContext } from "@fern-api/task-context";

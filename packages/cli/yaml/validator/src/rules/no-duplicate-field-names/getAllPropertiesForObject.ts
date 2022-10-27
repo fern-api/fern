@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, getPropertyName, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";

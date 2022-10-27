@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
 

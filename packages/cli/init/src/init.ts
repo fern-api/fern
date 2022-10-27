@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import { FERN_DIRECTORY, ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";

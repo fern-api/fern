@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 import { getAllRules } from "../getAllRules";
 import { Rule } from "../Rule";

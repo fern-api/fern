@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoMissingErrorDiscriminantRule } from "../no-missing-error-discriminant";
 

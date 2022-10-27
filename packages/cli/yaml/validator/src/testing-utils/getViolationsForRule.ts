@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, entries } from "@fern-api/core-utils";
+import { entries } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";

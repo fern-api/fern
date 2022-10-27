@@ -3,5 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../cli/yaml/yaml-schema" }, { "path": "../commons/core-utils" }]
+  "references": [
+    { "path": "../cli/yaml/yaml-schema" },
+    { "path": "../commons/core-utils" },
+    { "path": "../commons/fs-utils" }
+  ]
 }

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 

@@ -32,11 +32,12 @@
     "preview": "yarn compile && vite preview"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.6.1",
+    "@blueprintjs/core": "^4.11.5",
     "@blueprintjs/icons": "^4.4.0",
-    "@blueprintjs/popover2": "^1.4.2",
+    "@blueprintjs/popover2": "^1.8.0",
     "@blueprintjs/select": "^4.4.2",
     "@fern-ui/app": "workspace:*",
+    "@fern-ui/split-view": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
@@ -52,13 +53,13 @@
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.23.1",
+    "eslint": "^8.26.0",
     "jest": "^29.0.3",
     "prettier": "^2.7.1",
     "sass": "^1.54.0",
-    "stylelint": "^14.11.0",
+    "stylelint": "^14.14.0",
     "typescript": "4.6.4",
-    "vite": "^3.0.3",
+    "vite": "3.0.3",
     "vite-plugin-checker": "^0.4.9"
   }
 }

@@ -25,6 +25,7 @@
     { "path": "../cli/yaml/validator" },
     { "path": "../cli/yaml/yaml-schema" },
     { "path": "../commons/core-utils" },
+    { "path": "../commons/fs-utils" },
     { "path": "../commons/loadable" },
     { "path": "../docs" },
     { "path": "../openapi-converter" },
@@ -36,6 +37,7 @@
     { "path": "../ui/react-commons" },
     { "path": "../ui/react-query-utils" },
     { "path": "../ui/routing-utils" },
+    { "path": "../ui/split-view" },
     { "path": "../ui/theme" },
     { "path": "../ui/toaster" }
   ]

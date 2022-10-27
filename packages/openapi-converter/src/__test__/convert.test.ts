@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";

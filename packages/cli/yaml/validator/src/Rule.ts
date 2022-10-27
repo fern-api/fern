@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernRootApiFileAstNodeTypes, FernServiceFileAstNodeTypes, ServiceFileSchema } from "@fern-api/yaml-schema";

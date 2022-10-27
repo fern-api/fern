@@ -1,0 +1,27 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+}
+
+.errorStatusCode {
+    flex-shrink: 0;
+}
+
+:global(.#{$ns}-dark) {
+    .titleRow {
+        &:hover {
+            background-color: $dark-gray3;
+        }
+
+        .collapseIcon:hover {
+            background-color: $dark-gray2;
+        }
+    }
+}

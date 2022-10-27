@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { writeFernJsonSchema } from "@fern-api/json-schema";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";

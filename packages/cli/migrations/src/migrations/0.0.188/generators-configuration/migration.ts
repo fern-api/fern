@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";

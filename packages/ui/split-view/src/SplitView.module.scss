@@ -1,0 +1,12 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+
+    &.vertical {
+        flex-direction: column;
+    }
+}
