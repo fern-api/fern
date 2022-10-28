@@ -4,6 +4,7 @@ types:
   Api:
     properties:
       apiId: commons.ApiId
+      apiName: string
       packages: list<Package>
   Package:
     properties:
@@ -24,15 +25,31 @@ types:
       errorName: string
       statusCode: string
 
+  CreateApiRequest:
+    properties:
+      apiName: string
+
 services:
   http:
-    ApiLoadService:
+    ApiCrudService:
       auth: false
       base-path: /{apiId}
       path-parameters:
         apiId: commons.ApiId
       endpoints:
+        create:
+          method: POST
+          path: /
+          request: CreateApiRequest
+          response: commons.ApiId
         get:
           method: GET
           path: /
           response: Api
+        update:
+          method: PUT
+          path: /
+          request: Api
+        delete:
+          method: DELETE
+          path: /
