@@ -15,7 +15,7 @@ export class ErrorDeclarationReferencer extends AbstractDeclarationReferencer<De
             directories: [
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
-                    fernFilepath: errorName.fernFilepath,
+                    fernFilepath: errorName.fernFilepathV2,
                     subExports: {
                         [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                             exportAll: true,

@@ -14,7 +14,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
             directories: [
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
-                    fernFilepath: typeName.fernFilepath,
+                    fernFilepath: typeName.fernFilepathV2,
                     subExports: {
                         [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
                             exportAll: true,

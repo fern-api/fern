@@ -24,6 +24,11 @@ const FIXTURES: FixtureInfo[] = [
         outputMode: "publish",
     },
     {
+        path: "reserved-keywords",
+        orgName: "fern",
+        outputMode: "publish",
+    },
+    {
         path: "nursery",
         orgName: "fern",
         outputMode: "github",

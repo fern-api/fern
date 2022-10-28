@@ -1,4 +1,4 @@
-import { FernFilepath, StringWithAllCasings } from "@fern-fern/ir-model/commons";
+import { FernFilepathV2, Name } from "@fern-fern/ir-model/commons";
 import { ExportedDirectory } from "../../exports-manager/ExportedFilePath";
 import { ExportDeclaration } from "../../exports-manager/ExportsManager";
 
@@ -6,7 +6,7 @@ export function getExportedDirectoriesForFernFilepath({
     fernFilepath,
     subExports,
 }: {
-    fernFilepath: FernFilepath;
+    fernFilepath: FernFilepathV2;
     subExports?: Record<string, ExportDeclaration>;
 }): ExportedDirectory[] {
     return fernFilepath.flatMap((fernFilepathPart, index) => {
@@ -26,22 +26,19 @@ export function getExportedDirectoriesForFernFilepath({
     });
 }
 
-export function createExportForFernFilepathDirectory(fernFilepathPart: StringWithAllCasings): ExportedDirectory {
+export function createExportForFernFilepathDirectory(fernFilepathPart: Name): ExportedDirectory {
     return {
-        nameOnDisk: fernFilepathPart.originalValue,
-        exportDeclaration: { namespaceExport: fernFilepathPart.camelCase },
+        nameOnDisk: fernFilepathPart.unsafeName.camelCase,
+        exportDeclaration: { namespaceExport: fernFilepathPart.safeName.camelCase },
     };
 }
 
 export function createExportForFernFilepathFile(
-    fernFilepathPart: StringWithAllCasings,
+    fernFilepathPart: Name,
     subExports?: Record<string, ExportDeclaration>
 ): ExportedDirectory {
     return {
-        nameOnDisk: fernFilepathPart.originalValue,
-        exportDeclaration: {
-            namespaceExport: fernFilepathPart.camelCase,
-        },
+        ...createExportForFernFilepathDirectory(fernFilepathPart),
         subExports,
     };
 }

@@ -1,0 +1,4 @@
+types:
+  Package:
+    properties:
+      name: string

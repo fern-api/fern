@@ -13,7 +13,7 @@ export abstract class AbstractServiceDeclarationReferencer<Name> extends Abstrac
         return [
             ...this.containingDirectory,
             ...getExportedDirectoriesForFernFilepath({
-                fernFilepath: serviceName.fernFilepath,
+                fernFilepath: serviceName.fernFilepathV2,
             }),
             AbstractServiceDeclarationReferencer.EXPORTED_CLIENT_DIRECTORY,
         ];
