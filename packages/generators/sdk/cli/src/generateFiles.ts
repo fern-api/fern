@@ -20,7 +20,7 @@ export async function generateFiles({
     npmPackage: NpmPackage;
     logger: Logger;
     runYarnCommand: YarnRunner;
-}): Promise<{ writtenTo: AbsoluteFilePath; exportDeclaration: string }> {
+}): Promise<{ writtenTo: AbsoluteFilePath }> {
     const directoyOnDiskToWriteTo = AbsoluteFilePath.of(config.output.path);
     const generatorContext = new GeneratorContextImpl(logger);
     const volume = new Volume();
@@ -56,7 +56,7 @@ export async function generateFiles({
     await runYarnCommand(["run", PackageJsonScript.FORMAT]);
     await runYarnCommand(["dlx", "@yarnpkg/sdks", "vscode"]);
 
-    return { writtenTo: directoyOnDiskToWriteTo, exportDeclaration: apiName };
+    return { writtenTo: directoyOnDiskToWriteTo };
 }
 
 class GeneratorContextImpl implements GeneratorContext {

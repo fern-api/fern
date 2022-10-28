@@ -8,7 +8,6 @@ import { constructNpmPackage } from "./npm-package/constructNpmPackage";
 import { publishPackage } from "./publishPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
-import { writeSampleApp } from "./writeSampleApp";
 import { createYarnRunner } from "./yarnRunner";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -46,7 +45,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
 
         const runYarnCommand = createYarnRunner(logger, AbsoluteFilePath.of(config.output.path));
 
-        const { writtenTo: pathToPackageOnDisk, exportDeclaration } = await generateFiles({
+        const { writtenTo: pathToPackageOnDisk } = await generateFiles({
             config,
             logger,
             npmPackage,
@@ -72,7 +71,6 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                     config,
                     githubOutputMode,
                 });
-                await writeSampleApp({ config, logger, npmPackage, exportDeclaration });
             },
             downloadFiles: () => {
                 throw new Error("download-files output mode is not implemented");
