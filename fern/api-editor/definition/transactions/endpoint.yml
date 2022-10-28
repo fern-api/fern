@@ -1,0 +1,23 @@
+imports:
+  commons: ../commons.yml
+  transactionCommons: commons.yml
+types:
+  BaseEndpointTransaction:
+    extends: transactionCommons.BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+      commons.EndpointId: commons.EndpointId
+
+  CreateEndpointTransaction:
+    extends: BaseEndpointTransaction
+    properties:
+      endpointName: string
+
+  RenameEndpointTransaction:
+    extends: BaseEndpointTransaction
+    properties:
+      newEndpointName: string
+
+  DeleteEndpointTransaction:
+    extends: BaseEndpointTransaction
+    properties: {}

@@ -1,0 +1,23 @@
+imports:
+  commons: ../commons.yml
+  transactionCommons: commons.yml
+types:
+  BaseErrorTransaction:
+    extends: transactionCommons.BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+      commons.ErrorId: commons.ErrorId
+
+  CreateErrorTransaction:
+    extends: BaseErrorTransaction
+    properties:
+      errorName: string
+
+  RenameErrorTransaction:
+    extends: BaseErrorTransaction
+    properties:
+      newErrorName: string
+
+  DeleteErrorTransaction:
+    extends: BaseErrorTransaction
+    properties: {}

@@ -8033,7 +8033,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.279"],\
             ["@types/boxen", "npm:3.0.1"],\
-            ["@types/inquirer", "npm:9.0.1"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -8052,7 +8051,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["execa", "npm:5.1.1"],\
             ["immer", "npm:9.0.15"],\
-            ["inquirer", "npm:9.1.0"],\
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -8297,11 +8295,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
+            ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
+            ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
+            ["inquirer", "npm:9.1.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
