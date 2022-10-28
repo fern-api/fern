@@ -4,7 +4,8 @@ import { generateModelProject } from "../generateModelProject";
 
 const FIXTURES_DIR = RelativeFilePath.of("fixtures");
 
-describe("generateModelProject", () => {
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("generateModelProject", () => {
     itFernETE("posts", {
         testFile: AbsoluteFilePath.of(__filename),
         pathToFixture: join(FIXTURES_DIR, RelativeFilePath.of("posts")),
