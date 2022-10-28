@@ -1,6 +1,10 @@
 import { join } from "@fern-api/core-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
+import {
+    DEFAULT_WORSPACE_FOLDER_NAME,
+    FERN_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+} from "@fern-api/project-configuration";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { runFernCli } from "../../utils/runFernCli";
@@ -42,7 +46,7 @@ describe("fern upgrade", () => {
         const generatorsConfigurationFilepath = join(
             directory,
             FERN_DIRECTORY,
-            "api",
+            DEFAULT_WORSPACE_FOLDER_NAME,
             GENERATORS_CONFIGURATION_FILENAME
         );
         // make sure the file exists

@@ -5,7 +5,6 @@ import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
-import inquirer, { InputQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -144,26 +143,15 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 description: "Organization name",
             }),
         async (argv) => {
-            const organization = argv.organization ?? (await askForOrganization());
             await cliContext.runTask(async (context) =>
                 initialize({
-                    organization,
+                    organization: argv.organization,
                     versionOfCli: await getLatestVersionOfCli(cliContext.environment),
                     context,
                 })
             );
         }
     );
-}
-
-async function askForOrganization() {
-    const organizationQuestion: InputQuestion<{ organization: string }> = {
-        type: "input",
-        name: "organization",
-        message: "What's the name of your organization?",
-    };
-    const answers = await inquirer.prompt(organizationQuestion);
-    return answers.organization;
 }
 
 function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
