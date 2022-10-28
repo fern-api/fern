@@ -1,5 +1,5 @@
+import { isFailed, isLoaded, Loadable } from "@fern-api/loadable";
 import React from "react";
-import { isFailed, isLoaded, Loadable } from "./Loadable";
 
 export declare namespace LoadableElement {
     export interface Props<T> {

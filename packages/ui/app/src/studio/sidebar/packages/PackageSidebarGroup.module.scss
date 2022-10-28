@@ -5,15 +5,6 @@
     flex-direction: column;
 }
 
-.sections {
-    display: flex;
-    flex-direction: column;
-}
-
-.errorStatusCode {
-    flex-shrink: 0;
-}
-
 :global(.#{$ns}-dark) {
     .titleRow {
         &:hover {

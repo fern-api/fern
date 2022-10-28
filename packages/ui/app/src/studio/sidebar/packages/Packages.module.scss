@@ -1,14 +1,13 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-.container {
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-
 .packages {
     display: flex;
     flex-direction: column;
     min-height: 0;
     overflow: auto;
+    padding: 5px;
+}
+
+.divider {
+    margin-bottom: 0;
 }

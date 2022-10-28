@@ -1,18 +1,22 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-.wrapper {
-    margin-top: 20px;
-    margin-bottom: 20px;
+body {
+    overscroll-behavior-y: none;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ol {
+        margin: 0;
+    }
 }
 
 .app {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.apiCards {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    height: 100vh;
 }
