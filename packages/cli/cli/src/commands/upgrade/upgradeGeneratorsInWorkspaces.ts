@@ -2,6 +2,7 @@ import { upgradeGenerators } from "@fern-api/manage-generator";
 import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { isEmpty } from "lodash-es";
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function upgradeGeneratorsInWorkspaces(project: Project, cliContext: CliContext): Promise<void> {
@@ -14,7 +15,8 @@ export async function upgradeGeneratorsInWorkspaces(project: Project, cliContext
                 });
                 await writeFile(
                     workspace.generatorsConfiguration.absolutePathToConfiguration,
-                    yaml.dump(updatedGeneratorsConfiguration)
+                    // yaml.dump returns an empty string for empty dictionaries
+                    isEmpty(updatedGeneratorsConfiguration) ? "{}" : yaml.dump(updatedGeneratorsConfiguration)
                 );
             })
         )

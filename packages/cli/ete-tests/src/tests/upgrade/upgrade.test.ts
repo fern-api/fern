@@ -62,4 +62,24 @@ describe("fern upgrade", () => {
         const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
         expect(generatorsConfiguration).toMatchSnapshot();
     });
+
+    it("doesn't modify empty generators.yml", async () => {
+        const directory = await init();
+        const generatorsConfigurationFilepath = join(
+            directory,
+            FERN_DIRECTORY,
+            DEFAULT_WORSPACE_FOLDER_NAME,
+            GENERATORS_CONFIGURATION_FILENAME
+        );
+        await writeFile(generatorsConfigurationFilepath, "{}");
+        await runFernCli(["upgrade"], {
+            cwd: directory,
+            env: {
+                // this env var needs to be defined so the CLI thinks we're mid-upgrade
+                FERN_PRE_UPGRADE_VERSION: "0.0.0",
+            },
+        });
+        const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
+        expect(generatorsConfiguration).toEqual("{}");
+    });
 });
