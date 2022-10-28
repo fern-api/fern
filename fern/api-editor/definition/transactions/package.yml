@@ -1,0 +1,38 @@
+imports:
+  commons: ../commons.yml
+  transactionCommons: commons.yml
+
+types:
+  BasePackageTransaction:
+    extends: transactionCommons.BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+
+  CreatePackageTransaction:
+    extends: BasePackageTransaction
+    properties:
+      packageName: string
+
+  RenamePackageTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newPackageName: string
+
+  DeletePackageTransaction:
+    extends: BasePackageTransaction
+    properties: {}
+
+  ReorderEndpointsTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.EndpointId>
+
+  ReorderTypesTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.TypeId>
+
+  ReorderErrorsTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.ErrorId>

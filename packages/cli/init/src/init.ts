@@ -1,7 +1,15 @@
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
-import { FERN_DIRECTORY, ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
+import {
+    DEFAULT_WORSPACE_FOLDER_NAME,
+    FERN_DIRECTORY,
+    ProjectConfigSchema,
+    PROJECT_CONFIG_FILENAME,
+} from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
+import inquirer, { InputQuestion } from "inquirer";
+import path from "path";
 import { createWorkspace } from "./createWorkspace";
 
 export async function initialize({
@@ -9,25 +17,32 @@ export async function initialize({
     versionOfCli,
     context,
 }: {
-    organization: string;
+    organization: string | undefined;
     versionOfCli: string;
     context: TaskContext;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
-    if (await doesPathExist(pathToFernDirectory)) {
-        context.failAndThrow("Directory already exists: " + pathToFernDirectory);
+
+    if (!(await doesPathExist(pathToFernDirectory))) {
+        if (organization == null) {
+            await context.takeOverTerminal(async () => {
+                organization = await askForOrganization();
+            });
+        }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const castedOrganization = organization!;
+
+        await mkdir(FERN_DIRECTORY);
+        await writeProjectConfig({
+            filepath: join(pathToFernDirectory, PROJECT_CONFIG_FILENAME),
+            organization: castedOrganization,
+            versionOfCli,
+        });
     }
 
-    const fernDirectory = join(cwd(), FERN_DIRECTORY);
-    await mkdir(FERN_DIRECTORY);
-    await writeProjectConfig({
-        filepath: join(fernDirectory, PROJECT_CONFIG_FILENAME),
-        organization,
-        versionOfCli,
-    });
-    await createWorkspace({
-        directoryOfWorkspace: join(fernDirectory, "api"),
-    });
+    const directoryOfWorkspace = await getDirectoryOfNewWorkspace({ pathToFernDirectory });
+    await createWorkspace({ directoryOfWorkspace });
+    context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
 
 async function writeProjectConfig({
@@ -44,4 +59,25 @@ async function writeProjectConfig({
         version: versionOfCli,
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
+}
+
+async function askForOrganization() {
+    const organizationQuestion: InputQuestion<{ organization: string }> = {
+        type: "input",
+        name: "organization",
+        message: "What's the name of your organization?",
+    };
+    const answers = await inquirer.prompt(organizationQuestion);
+    return answers.organization;
+}
+
+async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
+    let pathToWorkspaceDirectory: AbsoluteFilePath = join(pathToFernDirectory, DEFAULT_WORSPACE_FOLDER_NAME);
+
+    let attemptCount = 0;
+    while (await doesPathExist(pathToWorkspaceDirectory)) {
+        pathToWorkspaceDirectory = join(pathToFernDirectory, `${DEFAULT_WORSPACE_FOLDER_NAME}${++attemptCount}`);
+    }
+
+    return pathToWorkspaceDirectory;
 }

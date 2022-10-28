@@ -1,0 +1,60 @@
+imports:
+  commons: commons.yml
+types:
+  Api:
+    properties:
+      apiId: commons.ApiId
+      apiName: string
+      packages: list<Package>
+  Package:
+    properties:
+      packageId: commons.PackageId
+      name: string
+      endpoints: list<Endpoint>
+  Endpoint:
+    properties:
+      endpointId: commons.EndpointId
+      endpointName: string
+  Type:
+    properties:
+      typeId: commons.TypeId
+      typeName: string
+  Error:
+    properties:
+      errorId: commons.ErrorId
+      errorName: string
+      statusCode: string
+
+  CreateApiRequest:
+    properties:
+      apiName: string
+
+  UpdateApiRequest:
+    properties:
+      apiName: string
+      packages: list<Package>
+
+services:
+  http:
+    ApiCrudService:
+      auth: false
+      base-path: /{apiId}
+      path-parameters:
+        apiId: commons.ApiId
+      endpoints:
+        create:
+          method: POST
+          path: /
+          request: CreateApiRequest
+          response: commons.ApiId
+        get:
+          method: GET
+          path: /
+          response: Api
+        update:
+          method: PUT
+          path: /
+          request: UpdateApiRequest
+        delete:
+          method: DELETE
+          path: /
