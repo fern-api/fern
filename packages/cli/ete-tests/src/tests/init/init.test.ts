@@ -19,6 +19,6 @@ describe("fern init", () => {
         // add new api
         await init();
 
-        expect(await doesPathExist(join(pathOfDirectory, FERN_DIRECTORY, "my-new-api"))).toBe(true);
+        expect(await doesPathExist(join(pathOfDirectory, FERN_DIRECTORY, "api1"))).toBe(true);
     }, 60_000);
 });

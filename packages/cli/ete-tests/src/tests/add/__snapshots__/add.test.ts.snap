@@ -94,7 +94,7 @@ release: []
             "type": "file",
           },
         ],
-        "name": "my-new-api",
+        "name": "api",
         "type": "directory",
       },
     ],

@@ -1,5 +1,10 @@
-import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/core-utils";
-import { FERN_DIRECTORY, ProjectConfigSchema, PROJECT_CONFIG_FILENAME } from "@fern-api/project-configuration";
+import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/core-utils";
+import {
+    DEFAULT_WORKSAPCE_FOLDER_NAME,
+    FERN_DIRECTORY,
+    ProjectConfigSchema,
+    PROJECT_CONFIG_FILENAME,
+} from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
@@ -17,10 +22,6 @@ export async function initialize({
     context: TaskContext;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
-    const directoryOfWorkspace = join(pathToFernDirectory, "my-new-api");
-    if (await doesPathExist(directoryOfWorkspace)) {
-        context.failAndThrow("Directory already exists: " + pathToFernDirectory);
-    }
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
@@ -39,6 +40,7 @@ export async function initialize({
         });
     }
 
+    const directoryOfWorkspace = await getDirectoryOfNewWorkspace({ pathToFernDirectory });
     await createWorkspace({ directoryOfWorkspace });
     context.logger.info(chalk.green("Create new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
@@ -67,4 +69,17 @@ async function askForOrganization() {
     };
     const answers = await inquirer.prompt(organizationQuestion);
     return answers.organization;
+}
+
+async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
+    let folderName: RelativeFilePath = DEFAULT_WORKSAPCE_FOLDER_NAME;
+    let pathToWorkspaceDirectory: AbsoluteFilePath = join(pathToFernDirectory, folderName);
+
+    let attemptCount = 0;
+    while (await doesPathExist(pathToWorkspaceDirectory)) {
+        folderName = `${DEFAULT_WORKSAPCE_FOLDER_NAME}${++attemptCount}`;
+        pathToWorkspaceDirectory = join(pathToFernDirectory, folderName);
+    }
+
+    return pathToWorkspaceDirectory;
 }
