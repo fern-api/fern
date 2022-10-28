@@ -1,5 +1,5 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";

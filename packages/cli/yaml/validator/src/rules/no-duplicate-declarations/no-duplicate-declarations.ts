@@ -1,4 +1,5 @@
-import { entries, RelativeFilePath } from "@fern-api/core-utils";
+import { entries } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import path from "path";

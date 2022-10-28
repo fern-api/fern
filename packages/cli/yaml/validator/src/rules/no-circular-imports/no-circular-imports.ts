@@ -1,4 +1,5 @@
-import { keys, RelativeFilePath } from "@fern-api/core-utils";
+import { keys } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { getResolvedPathOfImportedFile } from "@fern-api/ir-generator";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Rule } from "../../Rule";

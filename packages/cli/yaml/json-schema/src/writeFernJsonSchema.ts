@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { writeFile } from "fs/promises";
 import prettier from "prettier";

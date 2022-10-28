@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
     DEFINITION_DIRECTORY,

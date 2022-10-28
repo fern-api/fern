@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { FernFilepath, FernFilepathV2 } from "@fern-fern/ir-model/commons";
 import { TypeReference } from "@fern-fern/ir-model/types";

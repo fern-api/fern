@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { Language } from "@fern-api/ir-generator";
 import { readFile, rm } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";

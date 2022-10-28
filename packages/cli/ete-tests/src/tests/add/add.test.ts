@@ -1,4 +1,4 @@
-import { getDirectoryContents } from "@fern-api/core-utils";
+import { getDirectoryContents } from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 

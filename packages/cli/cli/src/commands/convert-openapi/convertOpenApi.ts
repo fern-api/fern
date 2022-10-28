@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertOpenApi, OpenApiConversionFailure } from "@fern-api/openapi-converter";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";

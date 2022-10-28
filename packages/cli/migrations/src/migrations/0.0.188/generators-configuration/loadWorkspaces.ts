@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { findUp } from "find-up";
 import { readdir } from "fs/promises";

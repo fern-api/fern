@@ -2,7 +2,6 @@ export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
-export * from "./fs-utils";
 export { identity } from "./identity";
 export { noop } from "./noop";
 export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";

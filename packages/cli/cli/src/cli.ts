@@ -1,4 +1,5 @@
-import { cwd, noop, resolve } from "@fern-api/core-utils";
+import { noop } from "@fern-api/core-utils";
+import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";

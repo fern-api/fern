@@ -1,4 +1,5 @@
-import { entries, RelativeFilePath } from "@fern-api/core-utils";
+import { entries } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { Workspace } from "@fern-api/workspace-loader";

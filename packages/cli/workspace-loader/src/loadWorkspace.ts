@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";

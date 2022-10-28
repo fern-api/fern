@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -52,7 +53,7 @@
     "@types/node": "^18.7.18",
     "@types/terminal-link": "^1.2.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.23.1",
+    "eslint": "^8.26.0",
     "jest": "^29.0.3",
     "lodash-es": "^4.17.21",
     "prettier": "^2.7.1",

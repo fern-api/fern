@@ -48,7 +48,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                 </defs>
                 <g transform="matrix(1.25,0,0,-1.25,0,45)" id="g10">
                     <g id="g12">
-                        <g clip-path="url(#clipPath16)" id="g14">
+                        <g clipPath="url(#clipPath16)" id="g14">
                             <g transform="translate(20.917,13.498)" id="g20">
                                 <path
                                     id="path22"
@@ -87,7 +87,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                         </g>
                     </g>
                     <g id="g40">
-                        <g clip-path="url(#clipPath44)" id="g42">
+                        <g clipPath="url(#clipPath44)" id="g42">
                             <g transform="translate(14.8281,20.9917)" id="g48">
                                 <path
                                     id="path50"
@@ -98,7 +98,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                         </g>
                     </g>
                     <g id="g52">
-                        <g clip-path="url(#clipPath56)" id="g54">
+                        <g clipPath="url(#clipPath56)" id="g54">
                             <g transform="translate(2.3218,22.8179)" id="g60">
                                 <path
                                     id="path62"
@@ -109,7 +109,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                         </g>
                     </g>
                     <g id="g64">
-                        <g clip-path="url(#clipPath68)" id="g66">
+                        <g clipPath="url(#clipPath68)" id="g66">
                             <g transform="translate(15.0264,18.748)" id="g72">
                                 <path
                                     id="path74"
@@ -120,7 +120,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                         </g>
                     </g>
                     <g id="g76">
-                        <g clip-path="url(#clipPath80)" id="g78">
+                        <g clipPath="url(#clipPath80)" id="g78">
                             <g transform="translate(8.1113,9.0088)" id="g84">
                                 <path
                                     id="path86"
@@ -131,7 +131,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                         </g>
                     </g>
                     <g id="g88">
-                        <g clip-path="url(#clipPath92)" id="g90">
+                        <g clipPath="url(#clipPath92)" id="g90">
                             <g transform="translate(22.2637,26.7651)" id="g96">
                                 <path
                                     id="path98"
@@ -142,7 +142,7 @@ export const FernLogo: React.FC<FernLogo.Props> = ({ size }) => {
                         </g>
                     </g>
                     <g id="g100">
-                        <g clip-path="url(#clipPath104)" id="g102">
+                        <g clipPath="url(#clipPath104)" id="g102">
                             <g transform="translate(4.751,0.9395)" id="g108">
                                 <path
                                     id="path110"

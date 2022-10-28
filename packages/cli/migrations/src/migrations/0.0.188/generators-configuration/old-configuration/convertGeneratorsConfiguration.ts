@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 

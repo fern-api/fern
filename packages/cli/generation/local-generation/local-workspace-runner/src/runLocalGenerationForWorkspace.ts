@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { cp, readFile } from "fs/promises";
 import tmp from "tmp-promise";

@@ -1,4 +1,4 @@
-import { dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/core-utils";
+import { dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 

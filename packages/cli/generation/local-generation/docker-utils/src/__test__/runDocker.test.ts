@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { exec } from "child_process";
 import { mkdir, rm } from "fs/promises";
 import path from "path";

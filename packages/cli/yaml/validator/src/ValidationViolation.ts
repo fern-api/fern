@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { NodePath } from "@fern-api/yaml-schema";
 
 export interface ValidationViolation {

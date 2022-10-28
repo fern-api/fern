@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
     FERN_DIRECTORY,

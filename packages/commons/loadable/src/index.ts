@@ -9,7 +9,6 @@ export {
     notStartedLoading,
 } from "./Loadable";
 export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable";
-export { LoadableElement } from "./LoadableElement";
 export {
     flatMapLoadable,
     getLoadableValue,

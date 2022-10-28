@@ -1,4 +1,4 @@
-import { doesPathExist, getDirectoryContents, join } from "@fern-api/core-utils";
+import { doesPathExist, getDirectoryContents, join } from "@fern-api/fs-utils";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";

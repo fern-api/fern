@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import yaml from "js-yaml";
 import { FernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
