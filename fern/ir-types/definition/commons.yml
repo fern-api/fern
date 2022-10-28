@@ -5,7 +5,7 @@ types:
     properties:
       docs: optional<string>
   FernFilepath:
-    alias: list<StringWithAllCasings>
+    type: list<StringWithAllCasings>
     docs: this is deprecated. Use FernFilepathV2
   FernFilepathV2: list<Name>
   Name:
