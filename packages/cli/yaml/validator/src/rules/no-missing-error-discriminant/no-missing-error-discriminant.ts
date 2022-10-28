@@ -17,11 +17,10 @@ export const NoMissingErrorDiscriminantRule: Rule = {
                     }
 
                     return [
-                        // TODO: uncomment when errorDiscriminant is actually supported
-                        // {
-                        //     severity: "error",
-                        //     message: "Error discriminant is required because this API includes error declarations.",
-                        // },
+                        {
+                            severity: "error",
+                            message: "Error discriminant is required because this API includes error declarations.",
+                        },
                     ];
                 },
             },

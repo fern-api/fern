@@ -1,0 +1,10 @@
+types:
+  a: string
+  b:
+    alias: boolean
+  c:
+    properties:
+      foo: string
+  d:
+    docs: hello world
+    alias: c
