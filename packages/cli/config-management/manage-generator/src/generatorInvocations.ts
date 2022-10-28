@@ -8,7 +8,7 @@ export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
 
 export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
     name: "fernapi/fern-typescript-sdk",
-    version: "0.0.219",
+    version: "0.0.224",
     mode: "publish",
 };
 

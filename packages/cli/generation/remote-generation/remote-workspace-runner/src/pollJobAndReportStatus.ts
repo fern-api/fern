@@ -38,8 +38,7 @@ export function pollJobAndReportStatus({
             if (taskStatus == null) {
                 numConsecutiveFailed++;
                 if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                    context.failWithoutThrowing(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
-                    return resolve();
+                    context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
                 }
             } else {
                 numConsecutiveFailed = 0;

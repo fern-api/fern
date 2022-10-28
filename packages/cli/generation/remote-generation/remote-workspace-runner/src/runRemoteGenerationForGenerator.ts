@@ -36,7 +36,7 @@ export async function runRemoteGenerationForGenerator({
 
     const taskId = job.taskIds[0];
     if (taskId == null) {
-        interactiveTaskContext.failWithoutThrowing("Did not receive a task ID.");
+        interactiveTaskContext.failAndThrow("Did not receive a task ID.");
         return;
     }
     interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
