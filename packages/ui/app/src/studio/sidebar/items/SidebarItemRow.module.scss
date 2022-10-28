@@ -12,16 +12,19 @@ $padding-left: 5px;
     padding-top: 2px;
     padding-bottom: 2px;
     cursor: pointer;
+    min-width: 0;
 }
 
 .container {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     padding-left: $padding-left;
     padding-right: 3px;
     height: 30px;
     border-radius: $pt-border-radius;
+    min-width: 0;
+    gap: 5px;
 
     &.hover {
         background-color: $light-gray3;
@@ -55,13 +58,27 @@ $padding-left: 5px;
 .left {
     flex: 1;
 
-    :not(.label) {
+    * {
         flex-shrink: 0;
+    }
+
+    .labelSection {
+        &,
+        * {
+            flex-shrink: 1;
+        }
+
+        display: flex;
+        min-width: 0;
     }
 }
 
 .label {
     user-select: none;
+}
+
+.editableLabel {
+    min-width: 0;
 }
 
 .container.selected .label {

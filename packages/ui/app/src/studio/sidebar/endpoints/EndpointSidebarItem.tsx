@@ -18,6 +18,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ light
             icon={<Tag minimal intent={Intent.PRIMARY} icon={IconNames.EXCHANGE} />}
             label={lightweightEndpoint.name}
             onDelete={noop}
+            onRename={noop}
         />
     );
 };

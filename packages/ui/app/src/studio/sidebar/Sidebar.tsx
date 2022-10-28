@@ -21,7 +21,7 @@ export const Sidebar: React.FC = () => {
                     disabled={!isLoaded(lightweightApi)}
                 />
                 <SidebarItemRow itemId="xyz" icon={IconNames.COG} label="API Configuration" />
-                <SidebarItemRow itemId="xyz" icon={IconNames.CODE_BLOCK} label="SDKs" />
+                <SidebarItemRow itemId="xyz1113" icon={IconNames.CODE_BLOCK} label="SDKs" />
             </div>
             <div className={styles.sidebarItems}>
                 <Divider className={styles.divider} />

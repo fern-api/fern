@@ -1,4 +1,4 @@
-import { Icon, Intent, Menu, MenuItem, Text } from "@blueprintjs/core";
+import { EditableText, Icon, Intent, Menu, MenuItem, Text } from "@blueprintjs/core";
 import { IconName, IconNames } from "@blueprintjs/icons";
 import { ContextMenu2, ContextMenu2Props } from "@blueprintjs/popover2";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
@@ -20,6 +20,7 @@ export declare namespace SidebarItemRow {
         icon?: JSX.Element | IconName;
         onClickAdd?: () => void;
         onDelete?: () => void;
+        onRename?: (newLabel: string) => void;
     }
 }
 
@@ -30,6 +31,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     icon,
     onClickAdd,
     onDelete,
+    onRename,
 }) => {
     const { value: isMouseDown, setTrue: onMouseDown, setFalse: onMouseUp } = useBooleanState(false);
     const handleMouseDown = useCallback(
@@ -70,9 +72,26 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         onDelete?.();
     }, [isSelected, onDelete, sidebarContext]);
 
+    const [localLabel, setLocalLabel] = useState(label);
+    useEffect(() => {
+        setLocalLabel(label);
+    }, [label]);
+    const { value: isRenaming, setValue: setIsRenaming, setTrue: onStartRenaming } = useBooleanState(false);
+
+    const onCancelRename = useCallback(() => {
+        setLocalLabel(label);
+        setIsRenaming(false);
+    }, [label, setIsRenaming]);
+
+    const onConfirmRename = useCallback(() => {
+        setIsRenaming(false);
+        onRename?.(localLabel);
+    }, [localLabel, onRename, setIsRenaming]);
+
     const ellipsisMenu = (
         <Menu>
             <MenuItem text="Copy" icon={IconNames.CLIPBOARD} />
+            {onRename != null && <MenuItem text="Rename" icon={IconNames.EDIT} onClick={onStartRenaming} />}
             {onDelete != null && (
                 <MenuItem text="Delete..." icon={IconNames.TRASH} intent={Intent.DANGER} onClick={handleDelete} />
             )}
@@ -121,9 +140,22 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                     <div className={styles.left}>
                         {leftElement}
                         {icon != null && (typeof icon === "string" ? <Icon icon={icon} /> : icon)}
-                        <Text className={styles.label} ellipsize>
-                            {label}
-                        </Text>
+                        <div className={styles.labelSection}>
+                            {isRenaming ? (
+                                <EditableText
+                                    className={styles.editableLabel}
+                                    value={localLabel}
+                                    onChange={setLocalLabel}
+                                    onCancel={onCancelRename}
+                                    onConfirm={onConfirmRename}
+                                    isEditing={true}
+                                />
+                            ) : (
+                                <Text className={styles.label} ellipsize>
+                                    {localLabel}
+                                </Text>
+                            )}
+                        </div>
                     </div>
                     {shouldRenderRightActions && (
                         <div className={styles.right}>
