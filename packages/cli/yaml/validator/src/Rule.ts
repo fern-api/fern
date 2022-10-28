@@ -5,6 +5,7 @@ import { FernRootApiFileAstNodeTypes, FernServiceFileAstNodeTypes, ServiceFileSc
 
 export interface Rule {
     name: string;
+    disabled?: boolean;
     create: (context: RuleContext) => MaybePromise<RuleVisitors>;
 }
 
