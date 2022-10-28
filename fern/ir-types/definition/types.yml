@@ -33,7 +33,7 @@ types:
       value: _type
       name: type
     union:
-      type: AliasTypeDeclaration
+      alias: AliasTypeDeclaration
       enum: EnumTypeDeclaration
       object: ObjectTypeDeclaration
       union: UnionTypeDeclaration
