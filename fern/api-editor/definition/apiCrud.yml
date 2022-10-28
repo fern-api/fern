@@ -29,6 +29,11 @@ types:
     properties:
       apiName: string
 
+  UpdateApiRequest:
+    properties:
+      apiName: string
+      packages: list<Package>
+
 services:
   http:
     ApiCrudService:
@@ -49,7 +54,7 @@ services:
         update:
           method: PUT
           path: /
-          request: Api
+          request: UpdateApiRequest
         delete:
           method: DELETE
           path: /
