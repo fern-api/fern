@@ -5,14 +5,6 @@ exports[`fern add 1`] = `
   {
     "contents": [
       {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
-        "type": "file",
-      },
-      {
         "contents": [
           {
             "contents": [
@@ -96,6 +88,14 @@ release: []
         ],
         "name": "api",
         "type": "directory",
+      },
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
       },
     ],
     "name": "fern",

@@ -1,6 +1,6 @@
-import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/core-utils";
 import {
-    DEFAULT_WORKSAPCE_FOLDER_NAME,
+    DEFAULT_WORSPACE_FOLDER_NAME,
     FERN_DIRECTORY,
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
@@ -42,7 +42,7 @@ export async function initialize({
 
     const directoryOfWorkspace = await getDirectoryOfNewWorkspace({ pathToFernDirectory });
     await createWorkspace({ directoryOfWorkspace });
-    context.logger.info(chalk.green("Create new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
+    context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
 
 async function writeProjectConfig({
@@ -72,13 +72,11 @@ async function askForOrganization() {
 }
 
 async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
-    let folderName: RelativeFilePath = DEFAULT_WORKSAPCE_FOLDER_NAME;
-    let pathToWorkspaceDirectory: AbsoluteFilePath = join(pathToFernDirectory, folderName);
+    let pathToWorkspaceDirectory: AbsoluteFilePath = join(pathToFernDirectory, DEFAULT_WORSPACE_FOLDER_NAME);
 
     let attemptCount = 0;
     while (await doesPathExist(pathToWorkspaceDirectory)) {
-        folderName = `${DEFAULT_WORKSAPCE_FOLDER_NAME}${++attemptCount}`;
-        pathToWorkspaceDirectory = join(pathToFernDirectory, folderName);
+        pathToWorkspaceDirectory = join(pathToFernDirectory, `${DEFAULT_WORSPACE_FOLDER_NAME}${++attemptCount}`);
     }
 
     return pathToWorkspaceDirectory;
