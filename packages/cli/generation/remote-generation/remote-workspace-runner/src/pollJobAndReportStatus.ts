@@ -25,7 +25,7 @@ export function pollJobAndReportStatus({
         if (response.ok) {
             return response.body[taskId];
         } else {
-            context.logger.warn("Failed to get job status.", response.error.content);
+            context.logger.debug("Failed to get job status.", response.error.content);
             return undefined;
         }
     };
@@ -38,12 +38,11 @@ export function pollJobAndReportStatus({
             if (taskStatus == null) {
                 numConsecutiveFailed++;
                 if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                    context.failWithoutThrowing(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
-                    return resolve();
+                    context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
                 }
             } else {
                 numConsecutiveFailed = 0;
-                taskHandler.processUpdate(taskStatus);
+                await taskHandler.processUpdate(taskStatus);
                 if (taskHandler.isFinished) {
                     return resolve();
                 }
