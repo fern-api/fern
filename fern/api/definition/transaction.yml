@@ -34,6 +34,7 @@ types:
   BaseTransaction:
     properties:
       transactionId: TransactionId
+      createdAt: datetime
 
   TransactionId: string
 
