@@ -1,0 +1,53 @@
+imports:
+  commons: ../commons.yml
+  api: api.yml
+  package: package.yml
+  endpoint: endpoint.yml
+  type: type.yml
+  error: error.yml
+
+types:
+  Transaction:
+    union:
+      # api-level transactions
+      reorderPackages: api.ReorderPackagesTransaction
+
+      # package-specific transactions
+      createPackage: package.CreatePackageTransaction
+      renamePackage: package.RenamePackageTransaction
+      deletePackage: package.DeletePackageTransaction
+      reorderEndpoints: package.ReorderEndpointsTransaction
+      reorderTypes: package.ReorderTypesTransaction
+      reorderErrors: package.ReorderErrorsTransaction
+
+      # endpoint-specific transactions
+      createEndpoint: endpoint.CreateEndpointTransaction
+      renameEndpoint: endpoint.RenameEndpointTransaction
+      deleteEndpoint: endpoint.DeleteEndpointTransaction
+
+      # type-specific transactions
+      createType: type.CreateTypeTransaction
+      renameType: type.RenameTypeTransaction
+      deleteType: type.DeleteTypeTransaction
+
+      # error-specific transactions
+      createError: error.CreateErrorTransaction
+      renameError: error.RenameErrorTransaction
+      deleteError: error.DeleteErrorTransaction
+
+  AddTransactionsRequest:
+    properties:
+      transactions: list<Transaction>
+
+services:
+  http:
+    TransactionService:
+      auth: false
+      base-path: /{apiId}/transactions
+      path-parameters:
+        apiId: commons.ApiId
+      endpoints:
+        add:
+          method: POST
+          path: /
+          request: AddTransactionsRequest

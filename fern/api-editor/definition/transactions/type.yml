@@ -1,0 +1,23 @@
+imports:
+  commons: ../commons.yml
+  transactionCommons: commons.yml
+types:
+  BaseTypeTransaction:
+    extends: transactionCommons.BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+      commons.TypeId: commons.TypeId
+
+  CreateTypeTransaction:
+    extends: BaseTypeTransaction
+    properties:
+      typeName: string
+
+  RenameTypeTransaction:
+    extends: BaseTypeTransaction
+    properties:
+      newTypeName: string
+
+  DeleteTypeTransaction:
+    extends: BaseTypeTransaction
+    properties: {}
