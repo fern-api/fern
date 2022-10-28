@@ -1,0 +1,6 @@
+types:
+  ApiId: string
+  EndpointId: string
+  PackageId: string
+  TypeId: string
+  ErrorId: string

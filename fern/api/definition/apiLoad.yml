@@ -1,0 +1,38 @@
+imports:
+  commons: commons.yml
+types:
+  Api:
+    properties:
+      apiId: commons.ApiId
+      packages: list<Package>
+  Package:
+    properties:
+      packageId: commons.PackageId
+      name: string
+      endpoints: list<Endpoint>
+  Endpoint:
+    properties:
+      endpointId: commons.EndpointId
+      endpointName: string
+  Type:
+    properties:
+      typeId: commons.TypeId
+      typeName: string
+  Error:
+    properties:
+      errorId: commons.ErrorId
+      errorName: string
+      statusCode: string
+
+services:
+  http:
+    ApiLoadService:
+      auth: false
+      base-path: /{apiId}
+      path-parameters:
+        apiId: commons.ApiId
+      endpoints:
+        get:
+          method: GET
+          path: /
+          response: Api

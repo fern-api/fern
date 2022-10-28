@@ -1,0 +1,172 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+types:
+  Transaction:
+    union:
+      reorderPackages: ReorderPackagesTransaction
+
+      # package-specific transactions
+      createPackage: CreatePackageTransaction
+      renamePackage: RenamePackageTransaction
+      deletePackage: DeletePackageTransaction
+      reorderEndpoints: ReorderEndpointsTransaction
+      reorderTypes: ReorderTypesTransaction
+      reorderErrors: ReorderErrorsTransaction
+
+      # endpoint-specific transactions
+      createEndpoint: CreateEndpointTransaction
+      renameEndpoint: RenameEndpointTransaction
+      deleteEndpoint: DeleteEndpointTransaction
+
+      # type-specific transactions
+      createType: CreateTypeTransaction
+      renameType: RenameTypeTransaction
+      deleteType: DeleteTypeTransaction
+
+      # error-specific transactions
+      createError: CreateErrorTransaction
+      renameError: RenameErrorTransaction
+      deleteError: DeleteErrorTransaction
+
+  BaseTransaction:
+    properties:
+      transactionId: TransactionId
+
+  TransactionId: string
+
+  ReorderPackagesTransaction:
+    extends: BaseTransaction
+    properties:
+      newOrder: list<commons.PackageId>
+
+  #####################################
+  #   Package-specific transactions   #
+  #####################################
+
+  BasePackageTransaction:
+    extends: BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+
+  CreatePackageTransaction:
+    extends: BasePackageTransaction
+    properties:
+      packageName: string
+
+  RenamePackageTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newPackageName: string
+
+  DeletePackageTransaction:
+    extends: BasePackageTransaction
+    properties: {}
+
+  ReorderEndpointsTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.EndpointId>
+
+  ReorderTypesTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.TypeId>
+
+  ReorderErrorsTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.ErrorId>
+
+  ######################################
+  #   Endpoint-specific transactions   #
+  ######################################
+
+  BaseEndpointTransaction:
+    extends: BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+      commons.EndpointId: commons.EndpointId
+
+  CreateEndpointTransaction:
+    extends: BaseEndpointTransaction
+    properties:
+      endpointName: string
+
+  RenameEndpointTransaction:
+    extends: BaseEndpointTransaction
+    properties:
+      newEndpointName: string
+
+  DeleteEndpointTransaction:
+    extends: BaseEndpointTransaction
+    properties: {}
+
+  ##################################
+  #   Type-specific transactions   #
+  ##################################
+
+  BaseTypeTransaction:
+    extends: BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+      commons.TypeId: commons.TypeId
+
+  CreateTypeTransaction:
+    extends: BaseTypeTransaction
+    properties:
+      typeName: string
+
+  RenameTypeTransaction:
+    extends: BaseTypeTransaction
+    properties:
+      newTypeName: string
+
+  DeleteTypeTransaction:
+    extends: BaseTypeTransaction
+    properties: {}
+
+  ###################################
+  #   Error-specific transactions   #
+  ###################################
+
+  BaseErrorTransaction:
+    extends: BaseTransaction
+    properties:
+      commons.PackageId: commons.PackageId
+      commons.ErrorId: commons.ErrorId
+
+  CreateErrorTransaction:
+    extends: BaseErrorTransaction
+    properties:
+      errorName: string
+
+  RenameErrorTransaction:
+    extends: BaseErrorTransaction
+    properties:
+      newErrorName: string
+
+  DeleteErrorTransaction:
+    extends: BaseErrorTransaction
+    properties: {}
+
+  ###################################
+
+  AddTransactionsRequest:
+    properties:
+      transactions: list<Transaction>
+
+services:
+  http:
+    TransactionService:
+      auth: false
+      base-path: /{apiId}/transactions
+      path-parameters:
+        apiId: commons.ApiId
+      endpoints:
+        add:
+          method: POST
+          path: /
+          request: AddTransactionsRequest
