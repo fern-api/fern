@@ -43,8 +43,7 @@ export function showToast(
         {
             ...toastProps,
             className: classNames(toastProps.className, styles.toast, {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.hideCloseButton!]: preventDismiss,
+                [styles.hideCloseButton ?? "_"]: preventDismiss,
             }),
             message,
         },

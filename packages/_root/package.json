@@ -60,7 +60,6 @@
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/react-query-utils": "workspace:*",
     "@fern-ui/routing-utils": "workspace:*",
-    "@fern-ui/split-view": "workspace:*",
     "@fern-ui/theme": "workspace:*",
     "@fern-ui/toaster": "workspace:*"
   },

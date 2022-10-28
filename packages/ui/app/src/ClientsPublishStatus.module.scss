@@ -2,7 +2,10 @@
 
 .container {
     display: flex;
+    align-items: center;
+    gap: 5px;
+}
 
-    // for absolute positioning of handle
-    position: relative;
+.versionTag {
+    user-select: all;
 }

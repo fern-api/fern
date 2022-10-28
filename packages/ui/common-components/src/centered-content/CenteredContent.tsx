@@ -30,18 +30,15 @@ export const CenteredContent: React.FC<CenteredContent.Props> = ({
     return (
         <div
             className={classNames(containerClassName, styles.container, {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.fill!]: fill,
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.scrollable!]: scrollable,
+                [styles.fill ?? "_"]: fill,
+                [styles.scrollable ?? "_"]: scrollable,
             })}
         >
             <div className={classNames(wrapperClassName, styles.wrapper)}>
                 <div className={styles.content}>
                     <div
                         className={classNames(className, styles.inner, {
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            [styles.withVerticalPadding!]: withVerticalPadding,
+                            [styles.withVerticalPadding ?? "_"]: withVerticalPadding,
                         })}
                     >
                         {children}

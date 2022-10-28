@@ -17,10 +17,8 @@ export const UnstyledA: React.FC<UnstyledA.Props> = ({
     return (
         <a
             className={classNames(styles.link, className, {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.showUnderline!]: showUnderline,
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.muted!]: muted,
+                [styles.showUnderline ?? "_"]: showUnderline,
+                [styles.muted ?? "_"]: muted,
             })}
             {...linkProps}
         />
