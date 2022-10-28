@@ -49,7 +49,11 @@ async function validateServiceFile({
     logger: Logger;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const allRuleVisitors = await Promise.all(getAllRules().map((rule) => rule.create({ workspace, logger })));
+    const allRuleVisitors = await Promise.all(
+        getAllRules()
+            .filter(({ disabled = false }) => !disabled)
+            .map((rule) => rule.create({ workspace, logger }))
+    );
 
     const astVisitor = createServiceFileAstVisitorForRules({
         relativeFilepath,
