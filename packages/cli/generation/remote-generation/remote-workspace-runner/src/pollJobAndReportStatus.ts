@@ -42,7 +42,7 @@ export function pollJobAndReportStatus({
                 }
             } else {
                 numConsecutiveFailed = 0;
-                taskHandler.processUpdate(taskStatus);
+                await taskHandler.processUpdate(taskStatus);
                 if (taskHandler.isFinished) {
                     return resolve();
                 }

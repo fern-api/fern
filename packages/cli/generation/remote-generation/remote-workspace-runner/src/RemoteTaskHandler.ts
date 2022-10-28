@@ -31,7 +31,7 @@ export class RemoteTaskHandler {
         this.generatorInvocation = generatorInvocation;
     }
 
-    public processUpdate(remoteTask: FernFiddle.remoteGen.Task | undefined): void {
+    public async processUpdate(remoteTask: FernFiddle.remoteGen.Task | undefined): Promise<void> {
         if (remoteTask == null) {
             this.context.failAndThrow("Task is missing on job status");
         }
@@ -73,7 +73,7 @@ export class RemoteTaskHandler {
             );
         };
 
-        remoteTask.status._visit({
+        await remoteTask.status._visit<void | Promise<void>>({
             notStarted: noop,
             running: noop,
             failed: ({ message, s3PreSignedReadUrl }) => {
