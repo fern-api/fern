@@ -42,7 +42,7 @@ describe("fern upgrade", () => {
         const generatorsConfigurationFilepath = join(
             directory,
             FERN_DIRECTORY,
-            "api",
+            "my-new-api",
             GENERATORS_CONFIGURATION_FILENAME
         );
         // make sure the file exists

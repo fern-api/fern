@@ -17,6 +17,10 @@ export async function initialize({
     context: TaskContext;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
+    const directoryOfWorkspace = join(pathToFernDirectory, "my-new-api");
+    if (await doesPathExist(directoryOfWorkspace)) {
+        context.failAndThrow("Directory already exists: " + pathToFernDirectory);
+    }
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
@@ -35,7 +39,6 @@ export async function initialize({
         });
     }
 
-    const directoryOfWorkspace = join(pathToFernDirectory, "your-new-api");
     await createWorkspace({ directoryOfWorkspace });
     context.logger.info(chalk.green("Create new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }

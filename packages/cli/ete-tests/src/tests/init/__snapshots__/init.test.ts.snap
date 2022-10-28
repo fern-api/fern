@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern init 1`] = `
+exports[`fern init no existing fern directory 1`] = `
 [
+  {
+    "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+    "name": "fern.config.json",
+    "type": "file",
+  },
   {
     "contents": [
       {
@@ -68,16 +76,8 @@ release: []
         "type": "file",
       },
     ],
-    "name": "api",
+    "name": "my-new-api",
     "type": "directory",
-  },
-  {
-    "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-    "name": "fern.config.json",
-    "type": "file",
   },
 ]
 `;
