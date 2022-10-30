@@ -125,6 +125,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/docs"\
       },\
       {\
+        "name": "@fern-api/transaction-resolver",\
+        "reference": "workspace:packages/editor/transaction-resolver"\
+      },\
+      {\
         "name": "@fern-api/openapi-converter",\
         "reference": "workspace:packages/openapi-converter"\
       },\
@@ -197,6 +201,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/scripts", ["workspace:packages/scripts"]],\
       ["@fern-api/semver-utils", ["workspace:packages/cli/semver-utils"]],\
       ["@fern-api/task-context", ["workspace:packages/cli/task-context"]],\
+      ["@fern-api/transaction-resolver", ["workspace:packages/editor/transaction-resolver"]],\
       ["@fern-api/validator", ["workspace:packages/cli/yaml/validator"]],\
       ["@fern-api/workspace-loader", ["workspace:packages/cli/workspace-loader"]],\
       ["@fern-api/yaml-schema", ["workspace:packages/cli/yaml/yaml-schema"]],\
@@ -7959,6 +7964,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/scripts", "workspace:packages/scripts"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
@@ -8556,6 +8562,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/transaction-resolver", [\
+        ["workspace:packages/editor/transaction-resolver", {\
+          "packageLocation": "./packages/editor/transaction-resolver/",\
+          "packageDependencies": [\
+            ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.6"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/uuid", "npm:8.3.4"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["immer", "npm:9.0.15"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["uuid", "npm:9.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/validator", [\
         ["workspace:packages/cli/yaml/validator", {\
           "packageLocation": "./packages/cli/yaml/validator/",\
@@ -8638,6 +8667,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["zod", "npm:3.16.0"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-fern/api-editor-sdk", [\
+        ["npm:0.0.6", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-api-editor-sdk-npm-0.0.6-b63be73efc-24d8f36c4c.zip/node_modules/@fern-fern/api-editor-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.6"],\
+            ["@types/url-join", "npm:4.0.1"],\
+            ["axios", "npm:0.27.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-fern/fiddle-client", [\
@@ -11146,6 +11187,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-url-join-npm-4.0.1-996120d4f1-29444b90e1.zip/node_modules/@types/url-join/",\
           "packageDependencies": [\
             ["@types/url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/uuid", [\
+        ["npm:8.3.4", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.4-7547f4402c-6f11f3ff70.zip/node_modules/@types/uuid/",\
+          "packageDependencies": [\
+            ["@types/uuid", "npm:8.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -28203,6 +28253,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",\
           "packageDependencies": [\
             ["uuid", "npm:8.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.0.0", {\
+          "packageLocation": "./.yarn/cache/uuid-npm-9.0.0-46c41e3e43-8dd2c83c43.zip/node_modules/uuid/",\
+          "packageDependencies": [\
+            ["uuid", "npm:9.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

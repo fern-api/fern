@@ -28,6 +28,7 @@
     { "path": "../commons/fs-utils" },
     { "path": "../commons/loadable" },
     { "path": "../docs" },
+    { "path": "../editor/transaction-resolver" },
     { "path": "../openapi-converter" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
