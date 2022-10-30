@@ -5,8 +5,8 @@ types:
   BaseEndpointTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      commons.PackageId: commons.PackageId
-      commons.EndpointId: commons.EndpointId
+      PackageId: commons.PackageId
+      EndpointId: commons.EndpointId
 
   CreateEndpointTransaction:
     extends: BaseEndpointTransaction

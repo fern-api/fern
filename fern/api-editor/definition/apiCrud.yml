@@ -9,8 +9,10 @@ types:
   Package:
     properties:
       packageId: commons.PackageId
-      name: string
+      packageName: string
       endpoints: list<Endpoint>
+      types: list<Type>
+      errors: list<Error>
   Endpoint:
     properties:
       endpointId: commons.EndpointId
