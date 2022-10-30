@@ -3342,6 +3342,7 @@ __metadata:
     "@fern-api/scripts": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/transaction-resolver": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
@@ -3894,7 +3895,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver":
+"@fern-api/transaction-resolver@workspace:*, @fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver":
   version: 0.0.0-use.local
   resolution: "@fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver"
   dependencies:
