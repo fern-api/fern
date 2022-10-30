@@ -3894,6 +3894,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/api-editor-sdk": 0.0.6
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.7.18
+    "@types/uuid": ^8.3.4
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    immer: ^9.0.15
+    jest: ^29.0.3
+    lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    uuid: ^9.0.0
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/validator@workspace:*, @fern-api/validator@workspace:packages/cli/yaml/validator":
   version: 0.0.0-use.local
   resolution: "@fern-api/validator@workspace:packages/cli/yaml/validator"
@@ -3971,6 +3994,17 @@ __metadata:
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
+
+"@fern-fern/api-editor-sdk@npm:0.0.6":
+  version: 0.0.6
+  resolution: "@fern-fern/api-editor-sdk@npm:0.0.6"
+  dependencies:
+    "@types/url-join": 4.0.1
+    axios: ^0.27.2
+    url-join: 4.0.1
+  checksum: 24d8f36c4c75686839bec25160b2f5c69c2867ac8b323ffb5f79f18e7dfde50e5fe5956d32ac9cbb0e5b7e110916cacb1b686ca36f4df68b8c60ea45bad6c547
+  languageName: node
+  linkType: hard
 
 "@fern-fern/fiddle-client@npm:^0.0.56":
   version: 0.0.56
@@ -5972,6 +6006,13 @@ __metadata:
   version: 4.0.1
   resolution: "@types/url-join@npm:4.0.1"
   checksum: 29444b90e165b3970c8ad3fcef1e2de092e72b67e1f3aaff3016eea1697f98a01a28fb4f71f8044e3338a95bd2262327e9299be416efe5297018658760a331b4
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
   languageName: node
   linkType: hard
 
@@ -19309,6 +19350,15 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "uuid@npm:9.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
   languageName: node
   linkType: hard
 
