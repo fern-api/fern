@@ -50,6 +50,7 @@
     "@fern-api/scripts": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/transaction-resolver": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
