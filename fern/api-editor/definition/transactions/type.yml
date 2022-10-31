@@ -5,8 +5,8 @@ types:
   BaseTypeTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      commons.PackageId: commons.PackageId
-      commons.TypeId: commons.TypeId
+      PackageId: commons.PackageId
+      TypeId: commons.TypeId
 
   CreateTypeTransaction:
     extends: BaseTypeTransaction

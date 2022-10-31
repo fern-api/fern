@@ -2186,7 +2186,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.10.3, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.10.3, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -2410,7 +2410,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/popover2@npm:^1.4.2":
+"@blueprintjs/popover2@npm:^1.4.3":
+  version: 1.4.3
+  resolution: "@blueprintjs/popover2@npm:1.4.3"
+  dependencies:
+    "@blueprintjs/core": ^4.6.1
+    "@juggle/resize-observer": ^3.3.1
+    "@popperjs/core": ^2.5.4
+    classnames: ^2.2
+    dom4: ^2.1.5
+    react-popper: ^2.2.4
+    tslib: ~2.3.1
+  peerDependencies:
+    react: ^16.8 || 17 || 18
+    react-dom: ^16.8 || 17 || 18
+  checksum: 285bdda43cc6803552003b70e79215943a134510d6c76116d7cf5cb901ff83bd73da3a4d7486b5580e72eb18d62d488778248156faf1af4d9ffe43618a537b9c
+  languageName: node
+  linkType: hard
+
+"@blueprintjs/popover2@npm:^1.8.0":
   version: 1.8.0
   resolution: "@blueprintjs/popover2@npm:1.8.0"
   dependencies:
@@ -2429,24 +2447,6 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 59635cbd75549d6bfdbd62e6de48b3e5b2874ecefd5d4efa3127f85532bf50fe84eb82972d324dcfd194a428f83416613381d8a74a35b4e5cdd8911a060b1a0b
-  languageName: node
-  linkType: hard
-
-"@blueprintjs/popover2@npm:^1.4.3":
-  version: 1.4.3
-  resolution: "@blueprintjs/popover2@npm:1.4.3"
-  dependencies:
-    "@blueprintjs/core": ^4.6.1
-    "@juggle/resize-observer": ^3.3.1
-    "@popperjs/core": ^2.5.4
-    classnames: ^2.2
-    dom4: ^2.1.5
-    react-popper: ^2.2.4
-    tslib: ~2.3.1
-  peerDependencies:
-    react: ^16.8 || 17 || 18
-    react-dom: ^16.8 || 17 || 18
-  checksum: 285bdda43cc6803552003b70e79215943a134510d6c76116d7cf5cb901ff83bd73da3a4d7486b5580e72eb18d62d488778248156faf1af4d9ffe43618a537b9c
   languageName: node
   linkType: hard
 
@@ -3353,6 +3353,7 @@ __metadata:
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/react-query-utils": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"
+    "@fern-ui/split-view": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@fern-ui/toaster": "workspace:*"
     "@types/jest": ^29.0.3
@@ -4047,21 +4048,52 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-ui/app@workspace:*, @fern-ui/app@workspace:packages/ui/app":
+"@fern-ui/app@workspace:*, @fern-ui/app@workspace:packages/editor/ui/app":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/app@workspace:packages/ui/app"
+  resolution: "@fern-ui/app@workspace:packages/editor/ui/app"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
+    "@blueprintjs/core": ^4.11.5
     "@blueprintjs/icons": ^4.4.0
+    "@blueprintjs/popover2": ^1.8.0
+    "@blueprintjs/select": ^4.4.2
     "@emotion/react": ^11.9.3
     "@emotion/styled": ^11.9.3
-    "@fern-ui/common-components": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
-    "@mui/icons-material": ^5.8.4
-    "@mui/material": ^5.9.2
+    "@fern-ui/react-query-utils": "workspace:*"
+    "@fern-ui/split-view": "workspace:*"
+    "@fern-ui/theme": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    normalize.css: ^8.0.1
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-query: ^3.34.12
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-ui/common-components@workspace:*, @fern-ui/common-components@workspace:packages/editor/ui/common-components":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/common-components@workspace:packages/editor/ui/common-components"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@fern-api/loadable": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -4072,45 +4104,20 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.54.0
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
-"@fern-ui/common-components@workspace:*, @fern-ui/common-components@workspace:packages/ui/common-components":
+"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/editor/ui/contexted-dialog":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/common-components@workspace:packages/ui/common-components"
+  resolution: "@fern-ui/contexted-dialog@workspace:packages/editor/ui/contexted-dialog"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.11.0
-    typescript: 4.6.4
-    vite: ^3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/ui/contexted-dialog":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/contexted-dialog@workspace:packages/ui/contexted-dialog"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
+    "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/theme": "workspace:*"
@@ -4125,25 +4132,20 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
-"@fern-ui/fe-bundle@workspace:*, @fern-ui/fe-bundle@workspace:packages/ui/fe-bundle":
+"@fern-ui/fe-bundle@workspace:*, @fern-ui/fe-bundle@workspace:packages/editor/ui/fe-bundle":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/fe-bundle@workspace:packages/ui/fe-bundle"
+  resolution: "@fern-ui/fe-bundle@workspace:packages/editor/ui/fe-bundle"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
-    "@blueprintjs/icons": ^4.4.0
-    "@blueprintjs/popover2": ^1.4.2
-    "@blueprintjs/select": ^4.4.2
     "@fern-ui/app": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -4152,21 +4154,20 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.0.3
-    normalize.css: ^8.0.1
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.54.0
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
     vite-plugin-checker: ^0.4.9
   languageName: unknown
   linkType: soft
 
-"@fern-ui/react-commons@workspace:*, @fern-ui/react-commons@workspace:packages/ui/react-commons":
+"@fern-ui/react-commons@workspace:*, @fern-ui/react-commons@workspace:packages/editor/ui/react-commons":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/react-commons@workspace:packages/ui/react-commons"
+  resolution: "@fern-ui/react-commons@workspace:packages/editor/ui/react-commons"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4179,15 +4180,15 @@ __metadata:
     jest: ^29.0.3
     prettier: ^2.7.1
     react: ^18.2.0
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
-"@fern-ui/react-query-utils@workspace:*, @fern-ui/react-query-utils@workspace:packages/ui/react-query-utils":
+"@fern-ui/react-query-utils@workspace:*, @fern-ui/react-query-utils@workspace:packages/editor/ui/react-query-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/react-query-utils@workspace:packages/ui/react-query-utils"
+  resolution: "@fern-ui/react-query-utils@workspace:packages/editor/ui/react-query-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4202,20 +4203,20 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-query: ^3.34.12
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
-"@fern-ui/routing-utils@workspace:*, @fern-ui/routing-utils@workspace:packages/ui/routing-utils":
+"@fern-ui/routing-utils@workspace:*, @fern-ui/routing-utils@workspace:packages/editor/ui/routing-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/routing-utils@workspace:packages/ui/routing-utils"
+  resolution: "@fern-ui/routing-utils@workspace:packages/editor/ui/routing-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
+    "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -4227,20 +4228,49 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-router-dom: ^6.2.1
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
-"@fern-ui/theme@workspace:*, @fern-ui/theme@workspace:packages/ui/theme":
+"@fern-ui/split-view@workspace:*, @fern-ui/split-view@workspace:packages/editor/ui/split-view":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/theme@workspace:packages/ui/theme"
+  resolution: "@fern-ui/split-view@workspace:packages/editor/ui/split-view"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
+    "@blueprintjs/core": ^4.11.5
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-ui/react-commons": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-draggable: ^4.4.5
+    sass: ^1.54.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-ui/theme@workspace:*, @fern-ui/theme@workspace:packages/editor/ui/theme":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/theme@workspace:packages/editor/ui/theme"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -4251,20 +4281,20 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
-"@fern-ui/toaster@workspace:*, @fern-ui/toaster@workspace:packages/ui/toaster":
+"@fern-ui/toaster@workspace:*, @fern-ui/toaster@workspace:packages/editor/ui/toaster":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/toaster@workspace:packages/ui/toaster"
+  resolution: "@fern-ui/toaster@workspace:packages/editor/ui/toaster"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.6.1
+    "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     classnames: ^2.3.1
@@ -4274,9 +4304,9 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    stylelint: ^14.11.0
+    stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^3.0.3
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
@@ -4774,170 +4804,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/base@npm:5.0.0-alpha.91":
-  version: 5.0.0-alpha.91
-  resolution: "@mui/base@npm:5.0.0-alpha.91"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-    "@emotion/is-prop-valid": ^1.1.3
-    "@mui/types": ^7.1.5
-    "@mui/utils": ^5.9.1
-    "@popperjs/core": ^2.11.5
-    clsx: ^1.2.1
-    prop-types: ^15.8.1
-    react-is: ^18.2.0
-  peerDependencies:
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 12c6b398f32725de8b2a1944dd893c9412f090bd3173e67f20edfce0888c7de9ce2cc81923440a23f46ea37ef77f21088be88a7d222d95ca5063cbf4846cf256
-  languageName: node
-  linkType: hard
-
-"@mui/icons-material@npm:^5.8.4":
-  version: 5.8.4
-  resolution: "@mui/icons-material@npm:5.8.4"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-  peerDependencies:
-    "@mui/material": ^5.0.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 1df0ffb08670628968b803c7048fc645df5e2870860759626d80a355fdef62498e60e4ebed2d47ca8b3600e6ecb6db1829bec5acf3a766ff41e518007c7e2f5b
-  languageName: node
-  linkType: hard
-
-"@mui/material@npm:^5.9.2":
-  version: 5.9.2
-  resolution: "@mui/material@npm:5.9.2"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-    "@mui/base": 5.0.0-alpha.91
-    "@mui/system": ^5.9.2
-    "@mui/types": ^7.1.5
-    "@mui/utils": ^5.9.1
-    "@types/react-transition-group": ^4.4.5
-    clsx: ^1.2.1
-    csstype: ^3.1.0
-    prop-types: ^15.8.1
-    react-is: ^18.2.0
-    react-transition-group: ^4.4.2
-  peerDependencies:
-    "@emotion/react": ^11.5.0
-    "@emotion/styled": ^11.3.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    "@emotion/styled":
-      optional: true
-    "@types/react":
-      optional: true
-  checksum: 50c21c730e3da9f1ba544b3c75747e8b3cb4726b22950043106ecc9aabd1f9e3e137fac5ea90c46c358207755385d9f9f6754cf2512544b332dd9cac982d6da3
-  languageName: node
-  linkType: hard
-
-"@mui/private-theming@npm:^5.9.1":
-  version: 5.9.1
-  resolution: "@mui/private-theming@npm:5.9.1"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-    "@mui/utils": ^5.9.1
-    prop-types: ^15.8.1
-  peerDependencies:
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 98684e5992dcd915f1f518d07dc61e8d4b4b442be3838e87c246da38959e613e2dbf07c4316f21600738aa2b4cc97a1cca591b2680a2c601ef2972161810af28
-  languageName: node
-  linkType: hard
-
-"@mui/styled-engine@npm:^5.8.7":
-  version: 5.8.7
-  resolution: "@mui/styled-engine@npm:5.8.7"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-    "@emotion/cache": ^11.9.3
-    csstype: ^3.1.0
-    prop-types: ^15.8.1
-  peerDependencies:
-    "@emotion/react": ^11.4.1
-    "@emotion/styled": ^11.3.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    "@emotion/styled":
-      optional: true
-  checksum: b350758d8a117b37eb109c9d81e2aa0f2ca38269ca7e22744ea7f85aa6dda1139792b9ec1223a5ee2fa54f4897a093a63b8bb3db190824a5887678babe7bc898
-  languageName: node
-  linkType: hard
-
-"@mui/system@npm:^5.9.2":
-  version: 5.9.2
-  resolution: "@mui/system@npm:5.9.2"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-    "@mui/private-theming": ^5.9.1
-    "@mui/styled-engine": ^5.8.7
-    "@mui/types": ^7.1.5
-    "@mui/utils": ^5.9.1
-    clsx: ^1.2.1
-    csstype: ^3.1.0
-    prop-types: ^15.8.1
-  peerDependencies:
-    "@emotion/react": ^11.5.0
-    "@emotion/styled": ^11.3.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    "@emotion/styled":
-      optional: true
-    "@types/react":
-      optional: true
-  checksum: 9d0ebb98bf0023ba38a18331d73d2b518d6f0b85decbe94afbd508435db2ab86c2fc5b4df61261465078e6a0ac3dcbb975c2af8c998886b9201e27fa76ef2d1c
-  languageName: node
-  linkType: hard
-
-"@mui/types@npm:^7.1.5":
-  version: 7.1.5
-  resolution: "@mui/types@npm:7.1.5"
-  peerDependencies:
-    "@types/react": "*"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: ce866083bfaef7c2231077b7d5db3db20e2a9b17758e4337aeac12bbae2063ea15b95f8384661dd4f260c51e6dfb098a0f768bf26daaad91e7e1233f794191f0
-  languageName: node
-  linkType: hard
-
-"@mui/utils@npm:^5.9.1":
-  version: 5.9.1
-  resolution: "@mui/utils@npm:5.9.1"
-  dependencies:
-    "@babel/runtime": ^7.17.2
-    "@types/prop-types": ^15.7.5
-    "@types/react-is": ^16.7.1 || ^17.0.0
-    prop-types: ^15.8.1
-    react-is: ^18.2.0
-  peerDependencies:
-    react: ^17.0.0 || ^18.0.0
-  checksum: efd604249ab19a3203df0677ab6f2781de747dcd7d09097a32c20bee08a9b70a8f97834dc6e1e1cf49178b1cfd2a83c5ae030d0c2ec33d200d5ea2b509069bbb
-  languageName: node
-  linkType: hard
-
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -5011,17 +4877,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.5, @popperjs/core@npm:^2.5.4":
-  version: 2.11.5
-  resolution: "@popperjs/core@npm:2.11.5"
-  checksum: fd7f9dca3fb716d7426332b6ee283f88d2724c0ab342fb678865a640bad403dfb9eeebd8204a406986162f7e2b33394f104320008b74d0e9066d7322f70ea35d
-  languageName: node
-  linkType: hard
-
 "@popperjs/core@npm:^2.11.6":
   version: 2.11.6
   resolution: "@popperjs/core@npm:2.11.6"
   checksum: 47fb328cec1924559d759b48235c78574f2d71a8a6c4c03edb6de5d7074078371633b91e39bbf3f901b32aa8af9b9d8f82834856d2f5737a23475036b16817f0
+  languageName: node
+  linkType: hard
+
+"@popperjs/core@npm:^2.5.4":
+  version: 2.11.5
+  resolution: "@popperjs/core@npm:2.11.5"
+  checksum: fd7f9dca3fb716d7426332b6ee283f88d2724c0ab342fb678865a640bad403dfb9eeebd8204a406986162f7e2b33394f104320008b74d0e9066d7322f70ea35d
   languageName: node
   linkType: hard
 
@@ -5777,7 +5643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.5":
+"@types/prop-types@npm:*":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
@@ -5804,15 +5670,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
-  languageName: node
-  linkType: hard
-
-"@types/react-is@npm:^16.7.1 || ^17.0.0":
-  version: 17.0.3
-  resolution: "@types/react-is@npm:17.0.3"
-  dependencies:
-    "@types/react": "*"
-  checksum: 6abb7c47d54f012272650df8a962a28bd82f219291e5ef8b4dfa7fe0bb98ae243b060bf9fbe8ceff6213141794855a006db194b490b00ffd15842ae19d0ce1f0
   languageName: node
   linkType: hard
 
@@ -5845,15 +5702,6 @@ __metadata:
     "@types/history": ^4.7.11
     "@types/react": "*"
   checksum: f08b37ee822f9f9ff904ffd0778fe2bb7c717ed3ee311610382ee024d02a35169bd3301ecde863cac21aae8fdee919501e8ea22bad0260c02c10cfbdba5c71be
-  languageName: node
-  linkType: hard
-
-"@types/react-transition-group@npm:^4.4.5":
-  version: 4.4.5
-  resolution: "@types/react-transition-group@npm:4.4.5"
-  dependencies:
-    "@types/react": "*"
-  checksum: 265f1c74061556708ffe8d15559e35c60d6c11478c9950d3735575d2c116ca69f461d85effa06d73a613eb8b73c84fd32682feb57cf7c5f9e4284021dbca25b0
   languageName: node
   linkType: hard
 
@@ -8166,7 +8014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.2.1":
+"clsx@npm:^1.1.1, clsx@npm:^1.2.1":
   version: 1.2.1
   resolution: "clsx@npm:1.2.1"
   checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
@@ -8833,7 +8681,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2, csstype@npm:^3.1.0":
+"csstype@npm:^3.0.2":
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
@@ -10730,6 +10578,19 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"fast-glob@npm:^3.2.12":
+  version: 3.2.12
+  resolution: "fast-glob@npm:3.2.12"
+  dependencies:
+    "@nodelib/fs.stat": ^2.0.2
+    "@nodelib/fs.walk": ^1.2.3
+    glob-parent: ^5.1.2
+    merge2: ^1.3.0
+    micromatch: ^4.0.4
+  checksum: 0b1990f6ce831c7e28c4d505edcdaad8e27e88ab9fa65eedadb730438cfc7cde4910d6c975d6b7b8dc8a73da4773702ebcfcd6e3518e73938bb1383badfe01c2
+  languageName: node
+  linkType: hard
+
 "fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
@@ -10867,9 +10728,10 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^29.0.3
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.103
+    mrlint: ^0.0.104
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    react: ^18.2.0
     stylelint: ^14.11.0
     stylelint-config-prettier-scss: ^0.0.1
     stylelint-config-standard-scss: ^5.0.0
@@ -14429,12 +14291,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.103":
-  version: 0.0.103
-  resolution: "mrlint@npm:0.0.103"
+"mrlint@npm:^0.0.104":
+  version: 0.0.104
+  resolution: "mrlint@npm:0.0.104"
   bin:
     mrlint: cli.cjs
-  checksum: 4ea8e0914153457912984df0602971c14290c65a17d0921d43140883780e9439fb4e5b57878f85691d0fafc0f36050989ab8b3bad67c7ca87d061cb2f10a2dc2
+  checksum: 501a1b63e57a9d7845bf7c8b98abcc1671242bd4ff9537b4b00e8a214b603c573ae8556bf8d02b8857030542ca6a865635a51dd03d48b31f11b53e095e8be026
   languageName: node
   linkType: hard
 
@@ -15957,7 +15819,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.18":
+"postcss@npm:^8.4.17, postcss@npm:^8.4.18":
   version: 8.4.18
   resolution: "postcss@npm:8.4.18"
   dependencies:
@@ -16324,6 +16186,19 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"react-draggable@npm:^4.4.5":
+  version: 4.4.5
+  resolution: "react-draggable@npm:4.4.5"
+  dependencies:
+    clsx: ^1.1.1
+    prop-types: ^15.8.1
+  peerDependencies:
+    react: ">= 16.3.0"
+    react-dom: ">= 16.3.0"
+  checksum: 21c3775db086e13020967627c20acd41d1ddbc7c7d7fca51491a5bbb54a0aa7e1730a4bc9af17141eb50a4954e547a5e25b2368f5f54b70db6f2686a897bacf2
+  languageName: node
+  linkType: hard
+
 "react-error-overlay@npm:^6.0.11":
   version: 6.0.11
   resolution: "react-error-overlay@npm:6.0.11"
@@ -16361,7 +16236,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-is@npm:^18.0.0, react-is@npm:^18.2.0":
+"react-is@npm:^18.0.0":
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
@@ -16544,7 +16419,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:^4.4.1, react-transition-group@npm:^4.4.2":
+"react-transition-group@npm:^4.4.1":
   version: 4.4.2
   resolution: "react-transition-group@npm:4.4.2"
   dependencies:
@@ -18282,6 +18157,54 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"stylelint@npm:^14.14.0":
+  version: 14.14.0
+  resolution: "stylelint@npm:14.14.0"
+  dependencies:
+    "@csstools/selector-specificity": ^2.0.2
+    balanced-match: ^2.0.0
+    colord: ^2.9.3
+    cosmiconfig: ^7.0.1
+    css-functions-list: ^3.1.0
+    debug: ^4.3.4
+    fast-glob: ^3.2.12
+    fastest-levenshtein: ^1.0.16
+    file-entry-cache: ^6.0.1
+    global-modules: ^2.0.0
+    globby: ^11.1.0
+    globjoin: ^0.1.4
+    html-tags: ^3.2.0
+    ignore: ^5.2.0
+    import-lazy: ^4.0.0
+    imurmurhash: ^0.1.4
+    is-plain-object: ^5.0.0
+    known-css-properties: ^0.25.0
+    mathml-tag-names: ^2.1.3
+    meow: ^9.0.0
+    micromatch: ^4.0.5
+    normalize-path: ^3.0.0
+    picocolors: ^1.0.0
+    postcss: ^8.4.17
+    postcss-media-query-parser: ^0.2.3
+    postcss-resolve-nested-selector: ^0.1.1
+    postcss-safe-parser: ^6.0.0
+    postcss-selector-parser: ^6.0.10
+    postcss-value-parser: ^4.2.0
+    resolve-from: ^5.0.0
+    string-width: ^4.2.3
+    strip-ansi: ^6.0.1
+    style-search: ^0.1.0
+    supports-hyperlinks: ^2.3.0
+    svg-tags: ^1.0.0
+    table: ^6.8.0
+    v8-compile-cache: ^2.3.0
+    write-file-atomic: ^4.0.2
+  bin:
+    stylelint: bin/stylelint.js
+  checksum: 3196f5992262d82f3c8dea1d710a3dda1b6c890697eba7df58a3bc8fcd681d509449fa4be3f03e91155f5014df82973b57266ddbc34f41130aa27cc046113b8b
+  languageName: node
+  linkType: hard
+
 "stylis@npm:4.0.13":
   version: 4.0.13
   resolution: "stylis@npm:4.0.13"
@@ -18330,6 +18253,16 @@ env-cmd@toddbluhm/env-cmd:
     has-flag: "npm:^4.0.0"
     supports-color: "npm:^7.0.0"
   checksum: aef04fb41f4a67f1bc128f7c3e88a81b6cf2794c800fccf137006efe5bafde281da3e42e72bf9206c2fcf42e6438f37e3a820a389214d0a88613ca1f2d36076a
+  languageName: node
+  linkType: hard
+
+"supports-hyperlinks@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "supports-hyperlinks@npm:2.3.0"
+  dependencies:
+    has-flag: ^4.0.0
+    supports-color: ^7.0.0
+  checksum: 9ee0de3c8ce919d453511b2b1588a8205bd429d98af94a01df87411391010fe22ca463f268c84b2ce2abad019dfff8452aa02806eeb5c905a8d7ad5c4f4c52b8
   languageName: node
   linkType: hard
 
@@ -19475,9 +19408,9 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.3":
-  version: 3.2.1
-  resolution: "vite@npm:3.2.1"
+"vite@npm:3.0.3":
+  version: 3.0.3
+  resolution: "vite@npm:3.0.3"
   dependencies:
     esbuild: ^0.15.9
     fsevents: ~2.3.2
@@ -19506,7 +19439,7 @@ env-cmd@toddbluhm/env-cmd:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: d33f6f4c80f85f327cf74c56d2189f1ba1d808987501eae9455c65bbb1ba5ea96af0f68647e18fe0c61e82126ea91f10480c1e80964a6836a751502647a42f2b
+  checksum: 0b15d6bb062ab56dd8a0d47262344dcb48423d658c153c88a8a41f9301a70f32dd0fa2c037fa39a0a7888be1005cb763aad94235f82439441a13cef5103c29c4
   languageName: node
   linkType: hard
 

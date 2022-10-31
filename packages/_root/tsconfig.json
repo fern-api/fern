@@ -29,16 +29,17 @@
     { "path": "../commons/loadable" },
     { "path": "../docs" },
     { "path": "../editor/transaction-resolver" },
+    { "path": "../editor/ui/app" },
+    { "path": "../editor/ui/common-components" },
+    { "path": "../editor/ui/contexted-dialog" },
+    { "path": "../editor/ui/fe-bundle" },
+    { "path": "../editor/ui/react-commons" },
+    { "path": "../editor/ui/react-query-utils" },
+    { "path": "../editor/ui/routing-utils" },
+    { "path": "../editor/ui/split-view" },
+    { "path": "../editor/ui/theme" },
+    { "path": "../editor/ui/toaster" },
     { "path": "../openapi-converter" },
-    { "path": "../scripts" },
-    { "path": "../ui/app" },
-    { "path": "../ui/common-components" },
-    { "path": "../ui/contexted-dialog" },
-    { "path": "../ui/fe-bundle" },
-    { "path": "../ui/react-commons" },
-    { "path": "../ui/react-query-utils" },
-    { "path": "../ui/routing-utils" },
-    { "path": "../ui/theme" },
-    { "path": "../ui/toaster" }
+    { "path": "../scripts" }
   ]
 }

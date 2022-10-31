@@ -5,8 +5,8 @@ types:
   BaseErrorTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      commons.PackageId: commons.PackageId
-      commons.ErrorId: commons.ErrorId
+      PackageId: commons.PackageId
+      ErrorId: commons.ErrorId
 
   CreateErrorTransaction:
     extends: BaseErrorTransaction
