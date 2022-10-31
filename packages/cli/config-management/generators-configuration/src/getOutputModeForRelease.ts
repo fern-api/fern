@@ -3,6 +3,7 @@ import { FernFiddle } from "@fern-fern/fiddle-client";
 import { GeneratorPublishingSchema } from "./schemas/GeneratorPublishingSchema";
 import { MavenPublishingSchema } from "./schemas/MavenPublishingSchema";
 import { NpmPublishingSchema } from "./schemas/NpmPublishingSchema";
+import { PostmanPublishingSchema } from "./schemas/PostmanPublishingSchema";
 import { ReleaseGeneratorInvocationSchema } from "./schemas/ReleaseGeneratorInvocationSchema";
 
 export function getOutputModeForRelease(generatorInvocation: ReleaseGeneratorInvocationSchema): FernFiddle.OutputMode {
@@ -18,27 +19,34 @@ export function getOutputModeForRelease(generatorInvocation: ReleaseGeneratorInv
                     : undefined,
         });
     } else if (generatorInvocation.publishing != null) {
-        return FernFiddle.OutputMode.publish({
-            registryOverrides: {
-                npm: isNpmPublishing(generatorInvocation.publishing)
-                    ? {
-                          registryUrl: generatorInvocation.publishing.npm.url ?? "https://registry.npmjs.org",
-                          packageName: generatorInvocation.publishing.npm["package-name"],
-                          token: generatorInvocation.publishing.npm.token ?? "",
-                      }
-                    : undefined,
-                maven: isMavenPublishing(generatorInvocation.publishing)
-                    ? {
-                          registryUrl:
-                              generatorInvocation.publishing.maven.url ??
-                              "https://s01.oss.sonatype.org/content/repositories/releases/",
-                          username: generatorInvocation.publishing.maven.username ?? "",
-                          password: generatorInvocation.publishing.maven.password ?? "",
-                          coordinate: generatorInvocation.publishing.maven.coordinate,
-                      }
-                    : undefined,
-            },
-        });
+        if (isNpmPublishing(generatorInvocation.publishing)) {
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                    registryUrl: generatorInvocation.publishing.npm.url ?? "https://registry.npmjs.org",
+                    packageName: generatorInvocation.publishing.npm["package-name"],
+                    token: generatorInvocation.publishing.npm.token ?? "",
+                })
+            );
+        } else if (isMavenPublishing(generatorInvocation.publishing)) {
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
+                    registryUrl:
+                        generatorInvocation.publishing.maven.url ??
+                        "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    username: generatorInvocation.publishing.maven.username ?? "",
+                    password: generatorInvocation.publishing.maven.password ?? "",
+                    coordinate: generatorInvocation.publishing.maven.coordinate,
+                })
+            );
+        } else if (isPostmanPublishing(generatorInvocation.publishing)) {
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.postman({
+                    apiKey: generatorInvocation.publishing.postman["api-key"],
+                    workspaceId: generatorInvocation.publishing.postman["workspace-id"],
+                })
+            );
+        }
+        assertNever(generatorInvocation.publishing);
     } else {
         // TODO(dsinghvi): Need to validate that either you are in GitHub mode or publishing is supported
         throw new Error(
@@ -70,6 +78,13 @@ function getGitHubPublishingInfo(publishing: GeneratorPublishingSchema): FernFid
         });
     }
 
+    if (isPostmanPublishing(publishing)) {
+        return FernFiddle.GithubPublishInfo.postman({
+            apiKey: publishing.postman["api-key"],
+            workspaceId: publishing.postman["workspace-id"],
+        });
+    }
+
     assertNever(publishing);
 }
 
@@ -83,4 +98,11 @@ function isMavenPublishing(
 ): rawPublishingSchema is MavenPublishingSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawPublishingSchema as MavenPublishingSchema).maven != null;
+}
+
+function isPostmanPublishing(
+    rawPublishingSchema: GeneratorPublishingSchema
+): rawPublishingSchema is PostmanPublishingSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (rawPublishingSchema as PostmanPublishingSchema).postman != null;
 }
