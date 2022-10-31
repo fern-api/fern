@@ -14,81 +14,86 @@ import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 export const COLLECTION_OUTPUT_FILENAME = "collection.json";
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
-    console.log("Starting generator...");
-    const configStr = await readFile(pathToConfig);
-    const config = JSON.parse(configStr.toString()) as GeneratorConfig;
-    console.log(`Read ${pathToConfig}`);
-
-    const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
-
-    const generatorLoggingClient = new GeneratorLoggingWrapper(config);
-
     try {
-        await generatorLoggingClient.sendUpdate(
-            GeneratorUpdate.init({
-                packagesToPublish: [],
-            })
-        );
+        console.log("Starting generator...");
+        const configStr = await readFile(pathToConfig);
+        const config = JSON.parse(configStr.toString()) as GeneratorConfig;
+        console.log(`Read ${pathToConfig}`);
 
-        const ir = await loadIntermediateRepresentation(config.irFilepath);
-        const collectionDefinition = convertToPostmanCollection(ir);
-        await writeFile(
-            path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
-            JSON.stringify(collectionDefinition, undefined, 4)
-        );
-        await generatorLoggingClient.sendUpdate(
-            GeneratorUpdate.log({
-                level: LogLevel.Debug,
-                message: "Generated collection.json",
-            })
-        );
+        const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
 
-        const outputMode = config.output.mode;
-        if (outputMode.type === "publish" && outputMode.publishTarget != null) {
-            if (outputMode.publishTarget.type !== "postman") {
-                await generatorLoggingClient.sendUpdate(
-                    GeneratorUpdate.log({
-                        level: LogLevel.Error,
-                        message: `Received incorrect publish config (type is ${outputMode.type})`,
-                    })
-                );
-                throw new Error("Received incorrect publish config!");
+        const generatorLoggingClient = new GeneratorLoggingWrapper(config);
+
+        try {
+            await generatorLoggingClient.sendUpdate(
+                GeneratorUpdate.init({
+                    packagesToPublish: [],
+                })
+            );
+
+            const ir = await loadIntermediateRepresentation(config.irFilepath);
+            const collectionDefinition = convertToPostmanCollection(ir);
+            await writeFile(
+                path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
+                JSON.stringify(collectionDefinition, undefined, 4)
+            );
+            await generatorLoggingClient.sendUpdate(
+                GeneratorUpdate.log({
+                    level: LogLevel.Debug,
+                    message: "Generated collection.json",
+                })
+            );
+
+            const outputMode = config.output.mode;
+            if (outputMode.type === "publish" && outputMode.publishTarget != null) {
+                if (outputMode.publishTarget.type !== "postman") {
+                    await generatorLoggingClient.sendUpdate(
+                        GeneratorUpdate.log({
+                            level: LogLevel.Error,
+                            message: `Received incorrect publish config (type is ${outputMode.type})`,
+                        })
+                    );
+                    throw new Error("Received incorrect publish config!");
+                }
+                await publishCollection({
+                    publishConfig: {
+                        apiKey: outputMode.publishTarget.apiKey,
+                        workspaceId: outputMode.publishTarget.workspaceId,
+                    },
+                    collectionDefinition: {
+                        ...collectionDefinition,
+                        auth: collectionDefinition.auth ?? undefined,
+                    },
+                });
+            } else if (outputMode.type === "github") {
+                await writePostmanGithubWorkflows({
+                    config,
+                    githubOutputMode: outputMode,
+                });
+            } else if (postmanGeneratorConfig?.publishing != null) {
+                await publishCollection({
+                    publishConfig: postmanGeneratorConfig.publishing,
+                    collectionDefinition: {
+                        ...collectionDefinition,
+                        auth: collectionDefinition.auth ?? undefined,
+                    },
+                });
             }
-            await publishCollection({
-                publishConfig: {
-                    apiKey: outputMode.publishTarget.apiKey,
-                    workspaceId: outputMode.publishTarget.workspaceId,
-                },
-                collectionDefinition: {
-                    ...collectionDefinition,
-                    auth: collectionDefinition.auth ?? undefined,
-                },
-            });
-        } else if (outputMode.type === "github") {
-            await writePostmanGithubWorkflows({
-                config,
-                githubOutputMode: outputMode,
-            });
-        } else if (postmanGeneratorConfig?.publishing != null) {
-            await publishCollection({
-                publishConfig: postmanGeneratorConfig.publishing,
-                collectionDefinition: {
-                    ...collectionDefinition,
-                    auth: collectionDefinition.auth ?? undefined,
-                },
-            });
-        }
 
-        await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+            await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+        } catch (e) {
+            console.error("Encountered error", e);
+            await generatorLoggingClient.sendUpdate(
+                GeneratorUpdate.exitStatusUpdate(
+                    ExitStatusUpdate.error({
+                        message: e instanceof Error ? e.message : "Encountered error",
+                    })
+                )
+            );
+        }
     } catch (e) {
         console.error("Encountered error", e);
-        await generatorLoggingClient.sendUpdate(
-            GeneratorUpdate.exitStatusUpdate(
-                ExitStatusUpdate.error({
-                    message: e instanceof Error ? e.message : "Encountered error",
-                })
-            )
-        );
+        throw e;
     }
 }
 
