@@ -33,7 +33,7 @@ export async function writePostmanGithubWorkflows({
             uses: actions/checkout@v3
           
           - name: Publish Postman Collection
-            uses: fern-api/action-postman-sync@v1
+            uses: fern-api/action-postman-sync@v1.1
             with:
               api-key: \${{ secrets.${githubOutputMode.publishInfo.apiKeyEnvironmentVariable} }}
               workspace-id: \${{ secrets.${githubOutputMode.publishInfo.workspaceIdEnvironmentVariable} }}
