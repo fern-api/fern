@@ -60,6 +60,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             const outputMode = config.output.mode;
             if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
+                    console.log(`Received incorrect publish config (type is ${outputMode.type}`);
                     await generatorLoggingClient.sendUpdate(
                         GeneratorUpdate.log({
                             level: LogLevel.Error,
@@ -79,11 +80,13 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     },
                 });
             } else if (outputMode.type === "github") {
+                console.log("Writing GithubWorkflows...");
                 await writePostmanGithubWorkflows({
                     config,
                     githubOutputMode: outputMode,
                 });
             } else if (postmanGeneratorConfig?.publishing != null) {
+                console.log("Publishing postman collection via legacy custom config...");
                 await publishCollection({
                     publishConfig: postmanGeneratorConfig.publishing,
                     collectionDefinition: {
@@ -119,6 +122,7 @@ async function publishCollection({
     publishConfig: PublishConfigSchema;
     collectionDefinition: CollectionDefinition;
 }) {
+    console.log("Publishing postman collection...");
     const collectionService = new CollectionService({
         origin: "https://api.getpostman.com",
         headers: {
