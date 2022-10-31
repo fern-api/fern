@@ -6,6 +6,9 @@ export class GeneratorNotificationService {
 
     constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
         if (generatorConfig.environment.type === "remote") {
+            console.log(
+                `generatorConfig.environment.type is remote. Origin is ${generatorConfig.environment.coordinatorUrlV2}`
+            );
             const generatorExecClient = new FernGeneratorExec.Client({
                 _origin: generatorConfig.environment.coordinatorUrlV2,
             });
@@ -18,6 +21,7 @@ export class GeneratorNotificationService {
             };
         } else {
             // no-op
+            console.log("generatorConfig.environment.type is local.");
             this.sendUpdate = () => Promise.resolve();
         }
     }
