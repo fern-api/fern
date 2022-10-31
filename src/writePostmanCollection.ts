@@ -36,11 +36,20 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             const ir = await loadIntermediateRepresentation(config.irFilepath);
             console.log(`Loaded intermediate representation from ${config.irFilepath}`);
 
+            await generatorLoggingClient.sendUpdate(
+                GeneratorUpdate.log({
+                    level: LogLevel.Debug,
+                    message: "Generating collection.json",
+                })
+            );
             const collectionDefinition = convertToPostmanCollection(ir);
+            console.log("Converted ir to postman collection");
+
             await writeFile(
                 path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
                 JSON.stringify(collectionDefinition, undefined, 4)
             );
+            console.log(`Wrote postman collection to ${COLLECTION_OUTPUT_FILENAME}`);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.log({
                     level: LogLevel.Debug,
@@ -82,6 +91,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                         auth: collectionDefinition.auth ?? undefined,
                     },
                 });
+            } else {
+                console.log("Did not publish to postman or github");
             }
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
