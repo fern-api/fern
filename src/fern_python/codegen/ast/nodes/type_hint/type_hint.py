@@ -41,6 +41,10 @@ class TypeHint(AstNode):
         return TypeHint(type=get_reference_to_built_in_primitive("int"))
 
     @staticmethod
+    def datetime() -> TypeHint:
+        return TypeHint(type=get_reference_to_datetime_import("datetime"))
+
+    @staticmethod
     def float_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("float"))
 
@@ -176,6 +180,13 @@ def get_reference_to_typing_import(name: str) -> ClassReference:
         import_=ReferenceImport(
             module=Module.built_in("typing"),
         ),
+        qualified_name_excluding_import=(name,),
+    )
+
+
+def get_reference_to_datetime_import(name: str) -> ClassReference:
+    return ClassReference(
+        import_=ReferenceImport(module=Module.built_in("datetime"), alias="dt"),
         qualified_name_excluding_import=(name,),
     )
 

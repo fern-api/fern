@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -12,13 +13,13 @@ from .submission_type_state import SubmissionTypeState
 
 
 class GetSubmissionStateResponse(pydantic.BaseModel):
-    time_submitted: typing.Optional[str] = pydantic.Field(alias="timeSubmitted")
+    time_submitted: typing.Optional[dt.datetime] = pydantic.Field(alias="timeSubmitted")
     submission: str
     language: Language
     submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
 
     class Partial(typing_extensions.TypedDict):
-        time_submitted: typing_extensions.NotRequired[typing.Optional[str]]
+        time_submitted: typing_extensions.NotRequired[typing.Optional[dt.datetime]]
         submission: typing_extensions.NotRequired[str]
         language: typing_extensions.NotRequired[Language]
         submission_type_state: typing_extensions.NotRequired[SubmissionTypeState]
@@ -32,7 +33,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
                 ...
 
             @GetSubmissionStateResponse.Validators.field("time_submitted")
-            def validate_time_submitted(v: typing.Optional[str], values: GetSubmissionStateResponse.Partial) -> typing.Optional[str]:
+            def validate_time_submitted(v: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial) -> typing.Optional[dt.datetime]:
                 ...
 
             @GetSubmissionStateResponse.Validators.field("submission")
@@ -126,8 +127,8 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
 
         class TimeSubmittedValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[str], *, values: GetSubmissionStateResponse.Partial
-            ) -> typing.Optional[str]:
+                self, v: typing.Optional[dt.datetime], *, values: GetSubmissionStateResponse.Partial
+            ) -> typing.Optional[dt.datetime]:
                 ...
 
         class SubmissionValidator(typing_extensions.Protocol):
@@ -152,8 +153,8 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
 
     @pydantic.validator("time_submitted")
     def _validate_time_submitted(
-        cls, v: typing.Optional[str], values: GetSubmissionStateResponse.Partial
-    ) -> typing.Optional[str]:
+        cls, v: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial
+    ) -> typing.Optional[dt.datetime]:
         for validator in GetSubmissionStateResponse.Validators._time_submitted_validators:
             v = validator(v, values=values)
         return v

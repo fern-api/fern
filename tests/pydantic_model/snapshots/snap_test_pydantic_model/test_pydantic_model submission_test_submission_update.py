@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -11,11 +12,11 @@ from .test_submission_update_info import TestSubmissionUpdateInfo
 
 
 class TestSubmissionUpdate(pydantic.BaseModel):
-    update_time: str = pydantic.Field(alias="updateTime")
+    update_time: dt.datetime = pydantic.Field(alias="updateTime")
     update_info: TestSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
 
     class Partial(typing_extensions.TypedDict):
-        update_time: typing_extensions.NotRequired[str]
+        update_time: typing_extensions.NotRequired[dt.datetime]
         update_info: typing_extensions.NotRequired[TestSubmissionUpdateInfo]
 
     class Validators:
@@ -27,7 +28,7 @@ class TestSubmissionUpdate(pydantic.BaseModel):
                 ...
 
             @TestSubmissionUpdate.Validators.field("update_time")
-            def validate_update_time(v: str, values: TestSubmissionUpdate.Partial) -> str:
+            def validate_update_time(v: dt.datetime, values: TestSubmissionUpdate.Partial) -> dt.datetime:
                 ...
 
             @TestSubmissionUpdate.Validators.field("update_info")
@@ -78,7 +79,7 @@ class TestSubmissionUpdate(pydantic.BaseModel):
             return decorator
 
         class UpdateTimeValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: TestSubmissionUpdate.Partial) -> str:
+            def __call__(self, v: dt.datetime, *, values: TestSubmissionUpdate.Partial) -> dt.datetime:
                 ...
 
         class UpdateInfoValidator(typing_extensions.Protocol):
@@ -94,7 +95,7 @@ class TestSubmissionUpdate(pydantic.BaseModel):
         return values
 
     @pydantic.validator("update_time")
-    def _validate_update_time(cls, v: str, values: TestSubmissionUpdate.Partial) -> str:
+    def _validate_update_time(cls, v: dt.datetime, values: TestSubmissionUpdate.Partial) -> dt.datetime:
         for validator in TestSubmissionUpdate.Validators._update_time_validators:
             v = validator(v, values=values)
         return v
