@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Publish fern-postman docker
           command: |
-            projectVersion=$(git tag --points-at HEAD)
+            projectVersion="$(./scripts/git-version.sh)"
             yarn dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fern-postman:"$projectVersion" fernapi/fern-postman:"$projectVersion"
@@ -63,7 +63,7 @@ workflows:
       - publish:
           filters:
             branches:
-              ignore: /.*/
+              only: main
             tags:
               only: /.*/
           requires:
