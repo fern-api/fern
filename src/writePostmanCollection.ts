@@ -21,8 +21,10 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         console.log(`Read ${pathToConfig}`);
 
         const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
+        console.log("Validated custom config");
 
         const generatorLoggingClient = new GeneratorLoggingWrapper(config);
+        console.log("Initialized generator logging client");
 
         try {
             await generatorLoggingClient.sendUpdate(
@@ -32,6 +34,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
+            console.log(`Loaded intermediate representation from ${config.irFilepath}`);
+
             const collectionDefinition = convertToPostmanCollection(ir);
             await writeFile(
                 path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
@@ -82,7 +86,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (e) {
-            console.error("Encountered error", e);
+            console.log("Encountered error", e);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
@@ -92,7 +96,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
         }
     } catch (e) {
-        console.error("Encountered error", e);
+        console.log("Encountered error", e);
         throw e;
     }
 }
@@ -128,7 +132,7 @@ async function publishCollection({
             body: { collection: new Collection(collectionDefinition) },
         });
     } else {
-        await collectionsToUpdate.forEach(async (collectionMetadata) => {
+        collectionsToUpdate.forEach(async (collectionMetadata) => {
             console.log("Updating postman collection!");
             await collectionService.updateCollection({
                 collectionId: collectionMetadata.uid,
