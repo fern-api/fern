@@ -23,7 +23,9 @@ jobs:
           command: yarn compile
       - run:
           name: Run tests
-          command: yarn test --ci
+          command: | 
+            npm install -g fern-api
+            yarn test --ci
       - run:
           name: Build docker
           command: yarn dockerTagLocal

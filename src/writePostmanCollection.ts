@@ -1,6 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
-import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
+import { ExitStatusUpdate, GeneratorConfig, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-client/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { CollectionService } from "@fern-fern/postman-collection-api-client/services/collection";
 import { readFile, writeFile } from "fs/promises";
@@ -10,8 +9,9 @@ import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorC
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
 import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
+import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
-const COLLECTION_OUTPUT_FILENAME = "collection.json";
+export const COLLECTION_OUTPUT_FILENAME = "collection.json";
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
@@ -35,7 +35,33 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             JSON.stringify(collectionDefinition, undefined, 4)
         );
 
-        if (postmanGeneratorConfig?.publishing != null) {
+        const outputMode = config.output.mode;
+        if (outputMode.type === "publish" && outputMode.publishTarget != null) {
+            if (outputMode.publishTarget.type !== "postman") {
+                await generatorLoggingClient.sendUpdate(
+                    GeneratorUpdate.log({
+                        level: LogLevel.Error,
+                        message: `Received incorrect publish config (type is ${outputMode.type})`,
+                    })
+                );
+                throw new Error("Received incorrect publish config!");
+            }
+            await publishCollection({
+                publishConfig: {
+                    apiKey: outputMode.publishTarget.apiKey,
+                    workspaceId: outputMode.publishTarget.workspaceId,
+                },
+                collectionDefinition: {
+                    ...collectionDefinition,
+                    auth: collectionDefinition.auth ?? undefined,
+                },
+            });
+        } else if (outputMode.type === "github") {
+            await writePostmanGithubWorkflows({
+                config,
+                githubOutputMode: outputMode,
+            });
+        } else if (postmanGeneratorConfig?.publishing != null) {
             await publishCollection({
                 publishConfig: postmanGeneratorConfig.publishing,
                 collectionDefinition: {

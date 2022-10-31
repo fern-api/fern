@@ -1,6 +1,5 @@
-ids:
-  - PostId
 types:
+  PostId: string
   BlogPost:
     docs: A blog post
     properties:
@@ -25,13 +24,13 @@ types:
         docs: Author is the writer.
       content: string
       postType: PostType
+  PostNotFoundErrorBody: 
+    properties:
+      id: PostId
 errors:
   PostNotFoundError:
-    http:
-      statusCode: 400
-    type:
-      properties:
-        id: PostId
+    status-code: 400
+    type: PostNotFoundErrorBody
 services:
   http:
     PostsService:

@@ -1,0 +1,20 @@
+services:
+  http:
+    WorkspaceService:
+      auth: true
+      base-path: /workspaces
+      endpoints: 
+        getWorkspace:
+          method: GET
+          path: /{workspaceId}
+          path-parameters:
+            workspaceId: WorkspaceId
+          response: Workspace
+
+types: 
+  WorkspaceId: string
+
+  Workspace: 
+    properties: 
+      id: WorkspaceId
+      name: string

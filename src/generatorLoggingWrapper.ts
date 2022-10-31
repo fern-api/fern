@@ -1,6 +1,5 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
-import { GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
-import { GeneratorLoggingService } from "@fern-fern/generator-exec-client/services/logging";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { GeneratorConfig, GeneratorUpdate } from "@fern-fern/generator-exec-client/api";
 
 export class GeneratorLoggingWrapper {
     private maybeSendUpdates = async (_updates: GeneratorUpdate[]) => {
@@ -8,15 +7,15 @@ export class GeneratorLoggingWrapper {
     };
 
     constructor(generatorConfig: GeneratorConfig) {
-        if (generatorConfig.environment._type === "remote") {
-            const generatorLoggingClient = new GeneratorLoggingService({
-                origin: generatorConfig.environment.coordinatorUrl,
+        if (generatorConfig.environment.type === "remote") {
+            const generatorLoggingClient = new FernGeneratorExec.Client({
+                _origin: generatorConfig.environment.coordinatorUrl,
             });
             const taskId = generatorConfig.environment.id;
             this.maybeSendUpdates = async (updates) => {
-                await generatorLoggingClient.sendUpdate({
+                await generatorLoggingClient.logging.sendUpdate({
                     taskId,
-                    body: updates,
+                    _body: updates,
                 });
             };
         }

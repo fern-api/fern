@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-ids:
-  - CollectionId
-  - WorkspaceId
+imports: 
+  workspace: workspace.yml
 
 types:
+  CollectionId: string
+
   PostmanCollectionSchema:
     properties:
       info: PostmanCollectionInfo
@@ -59,8 +59,12 @@ types:
   PostmanRequestAuth:
     discriminant: type
     union:
-      basic: list<PostmanAuthParam>
-      bearer: list<PostmanAuthParam>
+      basic:
+        type: list<PostmanAuthParam>
+        key: basic
+      bearer:
+        type: list<PostmanAuthParam>
+        key: bearer
 
   PostmanAuthParam:
     properties:
@@ -142,16 +146,14 @@ types:
 services:
   http:
     CollectionService:
-      auth: false
-      headers:
-        X-API-Key: string
+      auth: true
       base-path: /collections
       endpoints:
         createCollection:
           method: POST
           path: /
           query-parameters:
-            workspace: optional<WorkspaceId>
+            workspace: optional<workspace.WorkspaceId>
           request: PostmanCollection
 
         getCollection:
@@ -165,7 +167,7 @@ services:
           method: GET
           path: /
           query-parameters:
-            workspace: optional<WorkspaceId>
+            workspace: optional<workspace.WorkspaceId>
           response: GetAllCollectionMetadataResponse
 
         updateCollection:

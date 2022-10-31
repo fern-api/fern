@@ -1,0 +1,4 @@
+draft:
+  - name: fernapi/fern-typescript-sdk
+    version: 0.0.226
+    mode: publish

@@ -1,34 +1,60 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { loadWorkspace } from "@fern-api/workspace-loader";
-import { mkdir, writeFile } from "fs/promises";
+/* eslint-disable jest/valid-title */
+import {
+    GeneratorConfig,
+    GeneratorEnvironment,
+    GithubPublishInfo,
+    OutputMode,
+} from "@fern-fern/generator-exec-client/api";
+import { execa } from "execa";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import { convertToPostmanCollection } from "../convertToPostmanCollection";
+import tmp from "tmp-promise";
+import { COLLECTION_OUTPUT_FILENAME, writePostmanCollection } from "../writePostmanCollection";
 
-const FIXTURES = ["test-api", "all-auth", "any-auth"];
+const FIXTURES = ["test-api", "any-auth"];
 
-describe("convertToOpenApi", () => {
+describe("convertToPostman", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
+        const fixtureDir = path.join(__dirname, "fixtures");
         it(fixture, async () => {
-            const fixtureDir = path.join(__dirname, "fixtures", fixture);
-            const maybeLoadedWorkspace = await loadWorkspace({
-                absolutePathToWorkspace: AbsoluteFilePath.of(fixtureDir),
+            const tmpDir = await tmp.dir();
+            const openapiPath = path.join(tmpDir.path, COLLECTION_OUTPUT_FILENAME);
+            const confgPath = path.join(tmpDir.path, "config.json");
+            const irPath = path.join(tmpDir.path, "ir.json");
+
+            const generatorConfig: GeneratorConfig = {
+                dryRun: true,
+                irFilepath: irPath,
+                output: {
+                    path: tmpDir.path,
+                    mode: OutputMode.github({
+                        repoUrl: "fern-api/fake",
+                        version: "0.0.0",
+                        publishInfo: GithubPublishInfo.postman({
+                            apiKeyEnvironmentVariable: "API_KEY",
+                            workspaceIdEnvironmentVariable: "WORKSPACE_ID",
+                        }),
+                    }),
+                },
+                publish: undefined,
+                workspaceName: "fern",
+                organization: "fern",
+                customConfig: undefined,
+                environment: GeneratorEnvironment.local(),
+            };
+
+            await writeFile(confgPath, JSON.stringify(generatorConfig, undefined, 4));
+
+            await execa("fern", ["ir", irPath, "--api", fixture], {
+                cwd: fixtureDir,
             });
-            if (!maybeLoadedWorkspace.didSucceed) {
-                throw new Error(JSON.stringify(maybeLoadedWorkspace.failures));
-            }
-            const intermediateRepresentation = await generateIntermediateRepresentation(maybeLoadedWorkspace.workspace);
-            const postmanCollection = convertToPostmanCollection(intermediateRepresentation);
 
-            const generatedDir = path.join(fixtureDir, "generated");
-            await mkdir(generatedDir, { recursive: true });
-            await writeFile(
-                path.join(generatedDir, "collection.json"),
-                JSON.stringify(postmanCollection, undefined, 4)
-            );
+            await writePostmanCollection(confgPath);
 
-            expect(postmanCollection).toMatchSnapshot();
+            const openApi = (await readFile(openapiPath)).toString();
+
+            expect(openApi).toMatchSnapshot();
         });
     }
 });
