@@ -18,6 +18,10 @@ module.exports = async (_env, { mode = "production" }) => {
                 {
                     test: /\.ts$/,
                     loader: "ts-loader",
+                    options: {
+                        projectReferences: true,
+                        transpileOnly: true,
+                    },
                     exclude: /node_modules/,
                 },
             ],

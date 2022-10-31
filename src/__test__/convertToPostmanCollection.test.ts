@@ -4,7 +4,7 @@ import {
     GeneratorEnvironment,
     GithubPublishInfo,
     OutputMode,
-} from "@fern-fern/generator-exec-client/api";
+} from "@fern-fern/generator-exec-sdk/resources";
 import { execa } from "execa";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";

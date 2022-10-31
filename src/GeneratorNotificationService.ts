@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
 
 export class GeneratorNotificationService {
     // implementation defined in constructor
@@ -7,8 +7,8 @@ export class GeneratorNotificationService {
     constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
         console.log(`Generator config environment is ${generatorConfig.environment.type}`);
         if (generatorConfig.environment.type === "remote") {
-            const generatorExecClient = new FernGeneratorExec.Client({
-                _origin: generatorConfig.environment.coordinatorUrlV2,
+            const generatorExecClient = new FernGeneratorExecClient({
+                environment: generatorConfig.environment.coordinatorUrlV2,
             });
             const taskId = generatorConfig.environment.id;
             this.sendUpdate = async (update) => {
