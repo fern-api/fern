@@ -9,7 +9,7 @@ export class GeneratorLoggingWrapper {
     constructor(generatorConfig: GeneratorConfig) {
         if (generatorConfig.environment.type === "remote") {
             const generatorLoggingClient = new FernGeneratorExec.Client({
-                _origin: generatorConfig.environment.coordinatorUrl,
+                _origin: generatorConfig.environment.coordinatorUrlV2,
             });
             const taskId = generatorConfig.environment.id;
             this.maybeSendUpdates = async (updates) => {
