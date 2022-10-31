@@ -5,7 +5,6 @@
   "references": [
     { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/loadable" },
-    { "path": "../common-components" },
     { "path": "../react-commons" },
     { "path": "../react-query-utils" },
     { "path": "../split-view" },
