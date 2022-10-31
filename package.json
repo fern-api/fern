@@ -70,6 +70,7 @@
     "mrlint": "^0.0.104",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
+    "react": "^18.2.0",
     "stylelint": "^14.11.0",
     "stylelint-config-prettier-scss": "^0.0.1",
     "stylelint-config-standard-scss": "^5.0.0",
