@@ -30,25 +30,30 @@ export function pollJobAndReportStatus({
         }
     };
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         void pollForStatus();
 
         async function pollForStatus() {
-            const taskStatus = await fetchTaskStatus();
-            if (taskStatus == null) {
-                numConsecutiveFailed++;
-                if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                    context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
+            try {
+                const taskStatus = await fetchTaskStatus();
+                if (taskStatus == null) {
+                    numConsecutiveFailed++;
+                    if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
+                        context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
+                    }
+                    setTimeout(pollForStatus, 2_000 + 1_000 * numConsecutiveFailed);
+                } else {
+                    numConsecutiveFailed = 0;
+                    await taskHandler.processUpdate(taskStatus);
+                    if (taskHandler.isFinished) {
+                        resolve();
+                    } else {
+                        setTimeout(pollForStatus, 2_000);
+                    }
                 }
-            } else {
-                numConsecutiveFailed = 0;
-                await taskHandler.processUpdate(taskStatus);
-                if (taskHandler.isFinished) {
-                    return resolve();
-                }
+            } catch (error) {
+                reject(error);
             }
-
-            setTimeout(pollForStatus, 2_000);
         }
     });
 }
