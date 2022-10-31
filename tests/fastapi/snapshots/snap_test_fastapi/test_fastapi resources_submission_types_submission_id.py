@@ -3,18 +3,19 @@
 from __future__ import annotations
 
 import typing
+import uuid
 
 import pydantic
 
 
 class SubmissionId(pydantic.BaseModel):
-    __root__: str
+    __root__: uuid.UUID
 
-    def get_as_str(self) -> str:
+    def get_as_uuid(self) -> uuid.UUID:
         return self.__root__
 
     @staticmethod
-    def from_str(value: str) -> SubmissionId:
+    def from_uuid(value: uuid.UUID) -> SubmissionId:
         return SubmissionId(__root__=value)
 
     class Validators:
@@ -22,19 +23,19 @@ class SubmissionId(pydantic.BaseModel):
         Use this class to add validators to the Pydantic model.
 
             @SubmissionId.Validators.validate
-            def validate(value: str) -> str:
+            def validate(value: uuid.UUID) -> uuid.UUID:
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[str], str]]] = []
+        _validators: typing.ClassVar[typing.List[typing.Callable[[uuid.UUID], uuid.UUID]]] = []
 
         @classmethod
-        def validate(cls, validator: typing.Callable[[str], str]) -> None:
+        def validate(cls, validator: typing.Callable[[uuid.UUID], uuid.UUID]) -> None:
             cls._validators.append(validator)
 
     @pydantic.root_validator
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        value = typing.cast(str, values.get("__root__"))
+        value = typing.cast(uuid.UUID, values.get("__root__"))
         for validator in SubmissionId.Validators._validators:
             value = validator(value)
         return {**values, "__root__": value}

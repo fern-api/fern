@@ -45,6 +45,10 @@ class TypeHint(AstNode):
         return TypeHint(type=get_reference_to_datetime_import("datetime"))
 
     @staticmethod
+    def uuid() -> TypeHint:
+        return TypeHint(type=get_reference_to_uuid_import("UUID"))
+
+    @staticmethod
     def float_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("float"))
 
@@ -180,6 +184,13 @@ def get_reference_to_typing_import(name: str) -> ClassReference:
         import_=ReferenceImport(
             module=Module.built_in("typing"),
         ),
+        qualified_name_excluding_import=(name,),
+    )
+
+
+def get_reference_to_uuid_import(name: str) -> ClassReference:
+    return ClassReference(
+        import_=ReferenceImport(module=Module.built_in("uuid")),
         qualified_name_excluding_import=(name,),
     )
 

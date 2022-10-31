@@ -5,6 +5,7 @@ import functools
 import inspect
 import logging
 import typing
+import uuid
 
 import fastapi
 
@@ -31,39 +32,39 @@ class AbstractAdminService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def update_test_submission_status(self, *, body: TestSubmissionStatus, submission_id: str) -> None:
+    def update_test_submission_status(self, *, body: TestSubmissionStatus, submission_id: uuid.UUID) -> None:
         ...
 
     @abc.abstractmethod
-    def send_test_submission_update(self, *, body: TestSubmissionUpdate, submission_id: str) -> None:
+    def send_test_submission_update(self, *, body: TestSubmissionUpdate, submission_id: uuid.UUID) -> None:
         ...
 
     @abc.abstractmethod
-    def update_workspace_submission_status(self, *, body: WorkspaceSubmissionStatus, submission_id: str) -> None:
+    def update_workspace_submission_status(self, *, body: WorkspaceSubmissionStatus, submission_id: uuid.UUID) -> None:
         ...
 
     @abc.abstractmethod
-    def send_workspace_submission_update(self, *, body: WorkspaceSubmissionUpdate, submission_id: str) -> None:
+    def send_workspace_submission_update(self, *, body: WorkspaceSubmissionUpdate, submission_id: uuid.UUID) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_test_case(
-        self, *, body: StoreTracedTestCaseRequest, submission_id: str, test_case_id: str
+        self, *, body: StoreTracedTestCaseRequest, submission_id: uuid.UUID, test_case_id: str
     ) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_test_case_v_2(
-        self, *, body: typing.List[TraceResponseV2], submission_id: str, test_case_id: str
+        self, *, body: typing.List[TraceResponseV2], submission_id: uuid.UUID, test_case_id: str
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def store_traced_workspace(self, *, body: StoreTracedWorkspaceRequest, submission_id: str) -> None:
+    def store_traced_workspace(self, *, body: StoreTracedWorkspaceRequest, submission_id: uuid.UUID) -> None:
         ...
 
     @abc.abstractmethod
-    def store_traced_workspace_v_2(self, *, body: typing.List[TraceResponseV2], submission_id: str) -> None:
+    def store_traced_workspace_v_2(self, *, body: typing.List[TraceResponseV2], submission_id: uuid.UUID) -> None:
         ...
 
     """

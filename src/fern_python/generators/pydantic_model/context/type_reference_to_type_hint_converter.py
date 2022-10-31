@@ -90,6 +90,6 @@ class TypeReferenceToTypeHintConverter:
             boolean=AST.TypeHint.bool_,
             long=AST.TypeHint.int_,
             date_time=AST.TypeHint.datetime,
-            uuid=AST.TypeHint.str_,
+            uuid=AST.TypeHint.uuid,
         )
         return to_return

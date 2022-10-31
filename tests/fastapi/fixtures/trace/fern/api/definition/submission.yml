@@ -3,7 +3,7 @@ imports:
   problemV2: ./v2/problem.yml
 types:
   SubmissionId:
-    type: string
+    type: uuid
   ShareId:
     type: string
   SubmissionRequest:
