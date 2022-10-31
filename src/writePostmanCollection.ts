@@ -1,5 +1,6 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { ExitStatusUpdate, GeneratorConfig, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-client/api";
+import { ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-client/api";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-client/schemas";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { CollectionService } from "@fern-fern/postman-collection-api-client/services/collection";
 import { readFile, writeFile } from "fs/promises";
@@ -17,8 +18,10 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
     try {
         console.log("Starting generator...");
         const configStr = await readFile(pathToConfig);
-        const config = JSON.parse(configStr.toString()) as GeneratorConfig;
         console.log(`Read ${pathToConfig}`);
+        const rawConfig = JSON.parse(configStr.toString());
+        const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig);
+        console.log(`Config is ${configStr}`);
 
         const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
         console.log("Validated custom config");
