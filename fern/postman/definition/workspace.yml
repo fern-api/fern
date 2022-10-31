@@ -9,10 +9,14 @@ services:
           path: /{workspaceId}
           path-parameters:
             workspaceId: WorkspaceId
-          response: Workspace
+          response: GetWorkspaceResponse
 
 types: 
   WorkspaceId: string
+
+  GetWorkspaceResponse: 
+    properties: 
+      workspace: Workspace
 
   Workspace: 
     properties: 
