@@ -11,7 +11,7 @@ import {
 } from "@fern-api/yaml-schema";
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
 import { createServiceFileAstVisitorForRules } from "./createServiceFileAstVisitorForRules";
-import { getAllRules } from "./getAllRules";
+import { getAllEnabledRules } from "./getAllRules";
 import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateWorkspace(workspace: Workspace, logger: Logger): Promise<ValidationViolation[]> {
@@ -49,11 +49,7 @@ async function validateServiceFile({
     logger: Logger;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const allRuleVisitors = await Promise.all(
-        getAllRules()
-            .filter(({ disabled = false }) => !disabled)
-            .map((rule) => rule.create({ workspace, logger }))
-    );
+    const allRuleVisitors = await Promise.all(getAllEnabledRules().map((rule) => rule.create({ workspace, logger })));
 
     const astVisitor = createServiceFileAstVisitorForRules({
         relativeFilepath,
@@ -78,7 +74,7 @@ async function validateRootApiFile({
     logger: Logger;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const allRuleVisitors = await Promise.all(getAllRules().map((rule) => rule.create({ workspace, logger })));
+    const allRuleVisitors = await Promise.all(getAllEnabledRules().map((rule) => rule.create({ workspace, logger })));
 
     const astVisitor = createRootApiFileAstVisitorForRules({
         relativeFilepath: ROOT_API_FILENAME,
