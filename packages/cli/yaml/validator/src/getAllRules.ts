@@ -32,3 +32,7 @@ export function getAllRules(): Rule[] {
         NoMissingErrorDiscriminant,
     ];
 }
+
+export function getAllEnabledRules(): Rule[] {
+    return getAllRules().filter(({ disabled = false }) => !disabled);
+}
