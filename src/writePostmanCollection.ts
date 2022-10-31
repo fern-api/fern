@@ -8,7 +8,7 @@ import { Collection, CollectionDefinition } from "postman-collection";
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
+import { GeneratorNotificationService } from "./GeneratorNotificationService";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
 export const COLLECTION_OUTPUT_FILENAME = "collection.json";
@@ -23,7 +23,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
         console.log("Validated custom config");
 
-        const generatorLoggingClient = new GeneratorLoggingWrapper(config);
+        const generatorLoggingClient = new GeneratorNotificationService(config);
         console.log("Initialized generator logging client");
 
         try {
