@@ -34,6 +34,12 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
             JSON.stringify(collectionDefinition, undefined, 4)
         );
+        await generatorLoggingClient.sendUpdate(
+            GeneratorUpdate.log({
+                level: LogLevel.Debug,
+                message: "Generated collection.json",
+            })
+        );
 
         const outputMode = config.output.mode;
         if (outputMode.type === "publish" && outputMode.publishTarget != null) {
@@ -73,6 +79,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
         await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
     } catch (e) {
+        console.error("Encountered error", e);
         await generatorLoggingClient.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
