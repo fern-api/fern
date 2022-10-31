@@ -82,7 +82,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     },
                 });
             } else if (outputMode.type === "github") {
-                console.log("Writing GithubWorkflows...");
+                console.log("Writing Github workflows...");
                 await writePostmanGithubWorkflows({
                     config,
                     githubOutputMode: outputMode,

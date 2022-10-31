@@ -1360,14 +1360,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:^0.0.40":
-  version: 0.0.40
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.40"
+"@fern-fern/generator-exec-sdk@npm:^0.0.42":
+  version: 0.0.42
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.42"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: f09edb8dc24c105e009f06c752e6e327085935e4447d22898080ecbfbacd96eab7c0bf9e9d291afc4009ccd222f9fdc477fbeff91bdfbe45113fea1572b8f5cb
+  checksum: 94be9e3a821f67f1b8f08f124a5798ce36996530354210508aa635f5227fa640d6250477935a03b3fbf3cbdbf76b0c861f45e18bf3ffd1e91ccf6e3f3e197393
   languageName: node
   linkType: hard
 
@@ -3801,7 +3801,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/config-management-commons": 0.0.188-13-g68e2f408
-    "@fern-fern/generator-exec-sdk": ^0.0.40
+    "@fern-fern/generator-exec-sdk": ^0.0.42
     "@fern-fern/ir-model": ^0.0.184
     "@fern-fern/postman-collection-api-client": 0.0.16
     "@types/jest": ^27.5.0

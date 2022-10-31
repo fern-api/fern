@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@fern-api/config-management-commons": "0.0.188-13-g68e2f408",
-    "@fern-fern/generator-exec-sdk": "^0.0.40",
+    "@fern-fern/generator-exec-sdk": "^0.0.42",
     "@fern-fern/ir-model": "^0.0.184",
     "@fern-fern/postman-collection-api-client": "0.0.16",
     "@types/lodash": "^4.14.182",
