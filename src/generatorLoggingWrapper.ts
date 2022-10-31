@@ -13,10 +13,14 @@ export class GeneratorLoggingWrapper {
             });
             const taskId = generatorConfig.environment.id;
             this.maybeSendUpdates = async (updates) => {
-                await generatorLoggingClient.logging.sendUpdate({
+                const sendUpdateResponse = await generatorLoggingClient.logging.sendUpdate({
                     taskId,
                     _body: updates,
                 });
+                if (!sendUpdateResponse.ok) {
+                    console.log(`Failed to send update to generator.
+                        ${JSON.stringify(sendUpdateResponse.error)}`);
+                }
             };
         }
     }
