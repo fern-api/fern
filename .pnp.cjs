@@ -8867,6 +8867,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/app", "workspace:packages/editor/ui/app"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["@vitejs/plugin-react", "virtual:01daca754e8a5ce7cfa94a170a7ea31a71d19401370078ac777bef3119889ed1f82daa2ab3a0b79783935ac9ff1c03910b892d993b0f13256b0fa78a5ed30aea#npm:2.0.0"],\
             ["depcheck", "npm:1.4.3"],\
@@ -8874,7 +8875,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:0e22bec6c31cba292c2eafee712a4f44efcd205a5eb5fbdc172d86a58b90ce9b75aa9e0501b2352bc64f19c96f31b32a2f53ed4481651620596bea7157fbd2e0#npm:18.2.0"],\
+            ["react-dom", "virtual:50363b4c64bf95d032d0fa60244ee24db11b324d7963beb702ba9dabada5a5c0c23b2dd1a42ad2e2590c5fd97906e2e6c5307f1fefe37663f06af5532d1adfb4#npm:18.2.0"],\
             ["sass", "npm:1.54.0"],\
             ["stylelint", "npm:14.14.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
