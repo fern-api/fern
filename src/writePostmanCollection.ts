@@ -14,8 +14,10 @@ import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 export const COLLECTION_OUTPUT_FILENAME = "collection.json";
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
+    console.log("Starting generator...");
     const configStr = await readFile(pathToConfig);
     const config = JSON.parse(configStr.toString()) as GeneratorConfig;
+    console.log(`Read ${pathToConfig}`);
 
     const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
 
