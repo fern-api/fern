@@ -26,3 +26,5 @@ generated
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+docker/webpack.config.d.ts

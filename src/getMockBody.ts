@@ -62,7 +62,7 @@ export function getMockBodyFromTypeReference({
 function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
     return Type._visit(type, {
         object: (objectDeclaration) => {
-            const object = {};
+            const object: any = {};
             for (const objectProperty of objectDeclaration.properties) {
                 object[objectProperty.name.wireValue] = getMockBodyFromTypeReference({
                     typeReference: objectProperty.valueType,

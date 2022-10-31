@@ -29,9 +29,9 @@ jobs:
       - run:
           name: Build docker
           command: yarn dockerTagLocal
-      - run:
-          name: Ensure no changes to git-tracked files
-          command: git --no-pager diff
+      # - run:
+      #     name: Ensure no changes to git-tracked files
+      #     command: git --no-pager diff
   publish:
     machine:
       image: ubuntu-2004:current

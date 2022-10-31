@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
 
 module.exports = async (_env, { mode = "production" }) => {

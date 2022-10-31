@@ -6,7 +6,8 @@
     "lint-staged",
     "webpack",
     "webpack-cli",
-    "ts-loader"
+    "ts-loader", 
+    "simple-progress-webpack-plugin"
   ],
   "ignore-patterns": ["lib"]
 }

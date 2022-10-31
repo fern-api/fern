@@ -21,7 +21,6 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         console.log(`Read ${pathToConfig}`);
         const rawConfig = JSON.parse(configStr.toString());
         const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig);
-        console.log(`Config is ${configStr}`);
 
         const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
         console.log("Validated custom config");
