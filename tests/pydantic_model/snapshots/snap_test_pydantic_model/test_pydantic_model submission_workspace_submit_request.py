@@ -33,19 +33,19 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
                 ...
 
             @WorkspaceSubmitRequest.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
                 ...
 
             @WorkspaceSubmitRequest.Validators.field("language")
-            def validate_language(v: Language, values: WorkspaceSubmitRequest.Partial) -> Language:
+            def validate_language(language: Language, values: WorkspaceSubmitRequest.Partial) -> Language:
                 ...
 
             @WorkspaceSubmitRequest.Validators.field("submission_files")
-            def validate_submission_files(v: typing.List[SubmissionFileInfo], values: WorkspaceSubmitRequest.Partial) -> typing.List[SubmissionFileInfo]:
+            def validate_submission_files(submission_files: typing.List[SubmissionFileInfo], values: WorkspaceSubmitRequest.Partial) -> typing.List[SubmissionFileInfo]:
                 ...
 
             @WorkspaceSubmitRequest.Validators.field("user_id")
-            def validate_user_id(v: typing.Optional[str], values: WorkspaceSubmitRequest.Partial) -> typing.Optional[str]:
+            def validate_user_id(user_id: typing.Optional[str], values: WorkspaceSubmitRequest.Partial) -> typing.Optional[str]:
                 ...
         """
 
@@ -122,22 +122,22 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
                 ...
 
         class LanguageValidator(typing_extensions.Protocol):
-            def __call__(self, v: Language, *, values: WorkspaceSubmitRequest.Partial) -> Language:
+            def __call__(self, __v: Language, __values: WorkspaceSubmitRequest.Partial) -> Language:
                 ...
 
         class SubmissionFilesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[SubmissionFileInfo], *, values: WorkspaceSubmitRequest.Partial
+                self, __v: typing.List[SubmissionFileInfo], __values: WorkspaceSubmitRequest.Partial
             ) -> typing.List[SubmissionFileInfo]:
                 ...
 
         class UserIdValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[str], *, values: WorkspaceSubmitRequest.Partial
+                self, __v: typing.Optional[str], __values: WorkspaceSubmitRequest.Partial
             ) -> typing.Optional[str]:
                 ...
 
@@ -150,13 +150,13 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
         for validator in WorkspaceSubmitRequest.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("language")
     def _validate_language(cls, v: Language, values: WorkspaceSubmitRequest.Partial) -> Language:
         for validator in WorkspaceSubmitRequest.Validators._language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("submission_files")
@@ -164,13 +164,13 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         cls, v: typing.List[SubmissionFileInfo], values: WorkspaceSubmitRequest.Partial
     ) -> typing.List[SubmissionFileInfo]:
         for validator in WorkspaceSubmitRequest.Validators._submission_files_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("user_id")
     def _validate_user_id(cls, v: typing.Optional[str], values: WorkspaceSubmitRequest.Partial) -> typing.Optional[str]:
         for validator in WorkspaceSubmitRequest.Validators._user_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

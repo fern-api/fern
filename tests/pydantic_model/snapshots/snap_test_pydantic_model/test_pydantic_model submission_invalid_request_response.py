@@ -28,11 +28,11 @@ class InvalidRequestResponse(pydantic.BaseModel):
                 ...
 
             @InvalidRequestResponse.Validators.field("request")
-            def validate_request(v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
+            def validate_request(request: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
                 ...
 
             @InvalidRequestResponse.Validators.field("cause")
-            def validate_cause(v: InvalidRequestCause, values: InvalidRequestResponse.Partial) -> InvalidRequestCause:
+            def validate_cause(cause: InvalidRequestCause, values: InvalidRequestResponse.Partial) -> InvalidRequestCause:
                 ...
         """
 
@@ -79,12 +79,12 @@ class InvalidRequestResponse(pydantic.BaseModel):
             return decorator
 
         class RequestValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionRequest, *, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
+            def __call__(self, __v: SubmissionRequest, __values: InvalidRequestResponse.Partial) -> SubmissionRequest:
                 ...
 
         class CauseValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: InvalidRequestCause, *, values: InvalidRequestResponse.Partial
+                self, __v: InvalidRequestCause, __values: InvalidRequestResponse.Partial
             ) -> InvalidRequestCause:
                 ...
 
@@ -97,13 +97,13 @@ class InvalidRequestResponse(pydantic.BaseModel):
     @pydantic.validator("request")
     def _validate_request(cls, v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
         for validator in InvalidRequestResponse.Validators._request_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("cause")
     def _validate_cause(cls, v: InvalidRequestCause, values: InvalidRequestResponse.Partial) -> InvalidRequestCause:
         for validator in InvalidRequestResponse.Validators._cause_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

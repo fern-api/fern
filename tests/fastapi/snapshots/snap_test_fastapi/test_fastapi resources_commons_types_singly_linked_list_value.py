@@ -28,11 +28,11 @@ class SinglyLinkedListValue(pydantic.BaseModel):
                 ...
 
             @SinglyLinkedListValue.Validators.field("head")
-            def validate_head(v: typing.Optional[NodeId], values: SinglyLinkedListValue.Partial) -> typing.Optional[NodeId]:
+            def validate_head(head: typing.Optional[NodeId], values: SinglyLinkedListValue.Partial) -> typing.Optional[NodeId]:
                 ...
 
             @SinglyLinkedListValue.Validators.field("nodes")
-            def validate_nodes(v: typing.Dict[NodeId, SinglyLinkedListNodeValue], values: SinglyLinkedListValue.Partial) -> typing.Dict[NodeId, SinglyLinkedListNodeValue]:
+            def validate_nodes(nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue], values: SinglyLinkedListValue.Partial) -> typing.Dict[NodeId, SinglyLinkedListNodeValue]:
                 ...
         """
 
@@ -80,13 +80,13 @@ class SinglyLinkedListValue(pydantic.BaseModel):
 
         class HeadValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[NodeId], *, values: SinglyLinkedListValue.Partial
+                self, __v: typing.Optional[NodeId], __values: SinglyLinkedListValue.Partial
             ) -> typing.Optional[NodeId]:
                 ...
 
         class NodesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[NodeId, SinglyLinkedListNodeValue], *, values: SinglyLinkedListValue.Partial
+                self, __v: typing.Dict[NodeId, SinglyLinkedListNodeValue], __values: SinglyLinkedListValue.Partial
             ) -> typing.Dict[NodeId, SinglyLinkedListNodeValue]:
                 ...
 
@@ -101,7 +101,7 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         cls, v: typing.Optional[NodeId], values: SinglyLinkedListValue.Partial
     ) -> typing.Optional[NodeId]:
         for validator in SinglyLinkedListValue.Validators._head_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("nodes")
@@ -109,7 +109,7 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         cls, v: typing.Dict[NodeId, SinglyLinkedListNodeValue], values: SinglyLinkedListValue.Partial
     ) -> typing.Dict[NodeId, SinglyLinkedListNodeValue]:
         for validator in SinglyLinkedListValue.Validators._nodes_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

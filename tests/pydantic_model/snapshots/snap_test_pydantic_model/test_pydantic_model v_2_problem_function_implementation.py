@@ -25,11 +25,11 @@ class FunctionImplementation(pydantic.BaseModel):
                 ...
 
             @FunctionImplementation.Validators.field("impl")
-            def validate_impl(v: str, values: FunctionImplementation.Partial) -> str:
+            def validate_impl(impl: str, values: FunctionImplementation.Partial) -> str:
                 ...
 
             @FunctionImplementation.Validators.field("imports")
-            def validate_imports(v: typing.Optional[str], values: FunctionImplementation.Partial) -> typing.Optional[str]:
+            def validate_imports(imports: typing.Optional[str], values: FunctionImplementation.Partial) -> typing.Optional[str]:
                 ...
         """
 
@@ -76,12 +76,12 @@ class FunctionImplementation(pydantic.BaseModel):
             return decorator
 
         class ImplValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: FunctionImplementation.Partial) -> str:
+            def __call__(self, __v: str, __values: FunctionImplementation.Partial) -> str:
                 ...
 
         class ImportsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[str], *, values: FunctionImplementation.Partial
+                self, __v: typing.Optional[str], __values: FunctionImplementation.Partial
             ) -> typing.Optional[str]:
                 ...
 
@@ -94,13 +94,13 @@ class FunctionImplementation(pydantic.BaseModel):
     @pydantic.validator("impl")
     def _validate_impl(cls, v: str, values: FunctionImplementation.Partial) -> str:
         for validator in FunctionImplementation.Validators._impl_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("imports")
     def _validate_imports(cls, v: typing.Optional[str], values: FunctionImplementation.Partial) -> typing.Optional[str]:
         for validator in FunctionImplementation.Validators._imports_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

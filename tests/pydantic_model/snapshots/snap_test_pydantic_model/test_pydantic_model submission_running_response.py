@@ -28,11 +28,11 @@ class RunningResponse(pydantic.BaseModel):
                 ...
 
             @RunningResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
                 ...
 
             @RunningResponse.Validators.field("state")
-            def validate_state(v: RunningSubmissionState, values: RunningResponse.Partial) -> RunningSubmissionState:
+            def validate_state(state: RunningSubmissionState, values: RunningResponse.Partial) -> RunningSubmissionState:
                 ...
         """
 
@@ -77,11 +77,13 @@ class RunningResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: RunningResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: RunningResponse.Partial) -> SubmissionId:
                 ...
 
         class StateValidator(typing_extensions.Protocol):
-            def __call__(self, v: RunningSubmissionState, *, values: RunningResponse.Partial) -> RunningSubmissionState:
+            def __call__(
+                self, __v: RunningSubmissionState, __values: RunningResponse.Partial
+            ) -> RunningSubmissionState:
                 ...
 
     @pydantic.root_validator
@@ -93,13 +95,13 @@ class RunningResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
         for validator in RunningResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("state")
     def _validate_state(cls, v: RunningSubmissionState, values: RunningResponse.Partial) -> RunningSubmissionState:
         for validator in RunningResponse.Validators._state_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

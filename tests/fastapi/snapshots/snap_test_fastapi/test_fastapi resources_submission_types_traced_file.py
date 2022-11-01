@@ -25,11 +25,11 @@ class TracedFile(pydantic.BaseModel):
                 ...
 
             @TracedFile.Validators.field("filename")
-            def validate_filename(v: str, values: TracedFile.Partial) -> str:
+            def validate_filename(filename: str, values: TracedFile.Partial) -> str:
                 ...
 
             @TracedFile.Validators.field("directory")
-            def validate_directory(v: str, values: TracedFile.Partial) -> str:
+            def validate_directory(directory: str, values: TracedFile.Partial) -> str:
                 ...
         """
 
@@ -70,11 +70,11 @@ class TracedFile(pydantic.BaseModel):
             return decorator
 
         class FilenameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: TracedFile.Partial) -> str:
+            def __call__(self, __v: str, __values: TracedFile.Partial) -> str:
                 ...
 
         class DirectoryValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: TracedFile.Partial) -> str:
+            def __call__(self, __v: str, __values: TracedFile.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -86,13 +86,13 @@ class TracedFile(pydantic.BaseModel):
     @pydantic.validator("filename")
     def _validate_filename(cls, v: str, values: TracedFile.Partial) -> str:
         for validator in TracedFile.Validators._filename_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("directory")
     def _validate_directory(cls, v: str, values: TracedFile.Partial) -> str:
         for validator in TracedFile.Validators._directory_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -28,11 +28,11 @@ class WorkspaceRanResponse(pydantic.BaseModel):
                 ...
 
             @WorkspaceRanResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
                 ...
 
             @WorkspaceRanResponse.Validators.field("run_details")
-            def validate_run_details(v: WorkspaceRunDetails, values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
+            def validate_run_details(run_details: WorkspaceRunDetails, values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
                 ...
         """
 
@@ -82,11 +82,11 @@ class WorkspaceRanResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: WorkspaceRanResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: WorkspaceRanResponse.Partial) -> SubmissionId:
                 ...
 
         class RunDetailsValidator(typing_extensions.Protocol):
-            def __call__(self, v: WorkspaceRunDetails, *, values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
+            def __call__(self, __v: WorkspaceRunDetails, __values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
                 ...
 
     @pydantic.root_validator
@@ -98,13 +98,13 @@ class WorkspaceRanResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
         for validator in WorkspaceRanResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("run_details")
     def _validate_run_details(cls, v: WorkspaceRunDetails, values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
         for validator in WorkspaceRanResponse.Validators._run_details_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

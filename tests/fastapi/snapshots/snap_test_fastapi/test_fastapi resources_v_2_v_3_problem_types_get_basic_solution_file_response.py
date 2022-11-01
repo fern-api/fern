@@ -26,7 +26,7 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
                 ...
 
             @GetBasicSolutionFileResponse.Validators.field("solution_file_by_language")
-            def validate_solution_file_by_language(v: typing.Dict[Language, FileInfoV2], values: GetBasicSolutionFileResponse.Partial) -> typing.Dict[Language, FileInfoV2]:
+            def validate_solution_file_by_language(solution_file_by_language: typing.Dict[Language, FileInfoV2], values: GetBasicSolutionFileResponse.Partial) -> typing.Dict[Language, FileInfoV2]:
                 ...
         """
 
@@ -66,7 +66,7 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
 
         class SolutionFileByLanguageValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[Language, FileInfoV2], *, values: GetBasicSolutionFileResponse.Partial
+                self, __v: typing.Dict[Language, FileInfoV2], __values: GetBasicSolutionFileResponse.Partial
             ) -> typing.Dict[Language, FileInfoV2]:
                 ...
 
@@ -81,7 +81,7 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         cls, v: typing.Dict[Language, FileInfoV2], values: GetBasicSolutionFileResponse.Partial
     ) -> typing.Dict[Language, FileInfoV2]:
         for validator in GetBasicSolutionFileResponse.Validators._solution_file_by_language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

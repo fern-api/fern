@@ -27,11 +27,11 @@ class WorkspaceFiles(pydantic.BaseModel):
                 ...
 
             @WorkspaceFiles.Validators.field("main_file")
-            def validate_main_file(v: FileInfo, values: WorkspaceFiles.Partial) -> FileInfo:
+            def validate_main_file(main_file: FileInfo, values: WorkspaceFiles.Partial) -> FileInfo:
                 ...
 
             @WorkspaceFiles.Validators.field("read_only_files")
-            def validate_read_only_files(v: typing.List[FileInfo], values: WorkspaceFiles.Partial) -> typing.List[FileInfo]:
+            def validate_read_only_files(read_only_files: typing.List[FileInfo], values: WorkspaceFiles.Partial) -> typing.List[FileInfo]:
                 ...
         """
 
@@ -78,11 +78,11 @@ class WorkspaceFiles(pydantic.BaseModel):
             return decorator
 
         class MainFileValidator(typing_extensions.Protocol):
-            def __call__(self, v: FileInfo, *, values: WorkspaceFiles.Partial) -> FileInfo:
+            def __call__(self, __v: FileInfo, __values: WorkspaceFiles.Partial) -> FileInfo:
                 ...
 
         class ReadOnlyFilesValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.List[FileInfo], *, values: WorkspaceFiles.Partial) -> typing.List[FileInfo]:
+            def __call__(self, __v: typing.List[FileInfo], __values: WorkspaceFiles.Partial) -> typing.List[FileInfo]:
                 ...
 
     @pydantic.root_validator
@@ -94,7 +94,7 @@ class WorkspaceFiles(pydantic.BaseModel):
     @pydantic.validator("main_file")
     def _validate_main_file(cls, v: FileInfo, values: WorkspaceFiles.Partial) -> FileInfo:
         for validator in WorkspaceFiles.Validators._main_file_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("read_only_files")
@@ -102,7 +102,7 @@ class WorkspaceFiles(pydantic.BaseModel):
         cls, v: typing.List[FileInfo], values: WorkspaceFiles.Partial
     ) -> typing.List[FileInfo]:
         for validator in WorkspaceFiles.Validators._read_only_files_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

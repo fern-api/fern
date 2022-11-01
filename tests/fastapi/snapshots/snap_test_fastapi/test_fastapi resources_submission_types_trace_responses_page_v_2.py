@@ -27,11 +27,11 @@ class TraceResponsesPageV2(pydantic.BaseModel):
                 ...
 
             @TraceResponsesPageV2.Validators.field("offset")
-            def validate_offset(v: typing.Optional[int], values: TraceResponsesPageV2.Partial) -> typing.Optional[int]:
+            def validate_offset(offset: typing.Optional[int], values: TraceResponsesPageV2.Partial) -> typing.Optional[int]:
                 ...
 
             @TraceResponsesPageV2.Validators.field("trace_responses")
-            def validate_trace_responses(v: typing.List[TraceResponseV2], values: TraceResponsesPageV2.Partial) -> typing.List[TraceResponseV2]:
+            def validate_trace_responses(trace_responses: typing.List[TraceResponseV2], values: TraceResponsesPageV2.Partial) -> typing.List[TraceResponseV2]:
                 ...
         """
 
@@ -82,13 +82,13 @@ class TraceResponsesPageV2(pydantic.BaseModel):
 
         class OffsetValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[int], *, values: TraceResponsesPageV2.Partial
+                self, __v: typing.Optional[int], __values: TraceResponsesPageV2.Partial
             ) -> typing.Optional[int]:
                 ...
 
         class TraceResponsesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TraceResponseV2], *, values: TraceResponsesPageV2.Partial
+                self, __v: typing.List[TraceResponseV2], __values: TraceResponsesPageV2.Partial
             ) -> typing.List[TraceResponseV2]:
                 ...
 
@@ -101,7 +101,7 @@ class TraceResponsesPageV2(pydantic.BaseModel):
     @pydantic.validator("offset")
     def _validate_offset(cls, v: typing.Optional[int], values: TraceResponsesPageV2.Partial) -> typing.Optional[int]:
         for validator in TraceResponsesPageV2.Validators._offset_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("trace_responses")
@@ -109,7 +109,7 @@ class TraceResponsesPageV2(pydantic.BaseModel):
         cls, v: typing.List[TraceResponseV2], values: TraceResponsesPageV2.Partial
     ) -> typing.List[TraceResponseV2]:
         for validator in TraceResponsesPageV2.Validators._trace_responses_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -28,11 +28,11 @@ class TestCaseImplementation(pydantic.BaseModel):
                 ...
 
             @TestCaseImplementation.Validators.field("description")
-            def validate_description(v: TestCaseImplementationDescription, values: TestCaseImplementation.Partial) -> TestCaseImplementationDescription:
+            def validate_description(description: TestCaseImplementationDescription, values: TestCaseImplementation.Partial) -> TestCaseImplementationDescription:
                 ...
 
             @TestCaseImplementation.Validators.field("function")
-            def validate_function(v: TestCaseFunction, values: TestCaseImplementation.Partial) -> TestCaseFunction:
+            def validate_function(function: TestCaseFunction, values: TestCaseImplementation.Partial) -> TestCaseFunction:
                 ...
         """
 
@@ -83,12 +83,12 @@ class TestCaseImplementation(pydantic.BaseModel):
 
         class DescriptionValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: TestCaseImplementationDescription, *, values: TestCaseImplementation.Partial
+                self, __v: TestCaseImplementationDescription, __values: TestCaseImplementation.Partial
             ) -> TestCaseImplementationDescription:
                 ...
 
         class FunctionValidator(typing_extensions.Protocol):
-            def __call__(self, v: TestCaseFunction, *, values: TestCaseImplementation.Partial) -> TestCaseFunction:
+            def __call__(self, __v: TestCaseFunction, __values: TestCaseImplementation.Partial) -> TestCaseFunction:
                 ...
 
     @pydantic.root_validator
@@ -102,13 +102,13 @@ class TestCaseImplementation(pydantic.BaseModel):
         cls, v: TestCaseImplementationDescription, values: TestCaseImplementation.Partial
     ) -> TestCaseImplementationDescription:
         for validator in TestCaseImplementation.Validators._description_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("function")
     def _validate_function(cls, v: TestCaseFunction, values: TestCaseImplementation.Partial) -> TestCaseFunction:
         for validator in TestCaseImplementation.Validators._function_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

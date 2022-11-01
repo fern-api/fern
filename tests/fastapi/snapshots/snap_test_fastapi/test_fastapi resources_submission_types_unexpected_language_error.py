@@ -27,11 +27,11 @@ class UnexpectedLanguageError(pydantic.BaseModel):
                 ...
 
             @UnexpectedLanguageError.Validators.field("expected_language")
-            def validate_expected_language(v: Language, values: UnexpectedLanguageError.Partial) -> Language:
+            def validate_expected_language(expected_language: Language, values: UnexpectedLanguageError.Partial) -> Language:
                 ...
 
             @UnexpectedLanguageError.Validators.field("actual_language")
-            def validate_actual_language(v: Language, values: UnexpectedLanguageError.Partial) -> Language:
+            def validate_actual_language(actual_language: Language, values: UnexpectedLanguageError.Partial) -> Language:
                 ...
         """
 
@@ -84,11 +84,11 @@ class UnexpectedLanguageError(pydantic.BaseModel):
             return decorator
 
         class ExpectedLanguageValidator(typing_extensions.Protocol):
-            def __call__(self, v: Language, *, values: UnexpectedLanguageError.Partial) -> Language:
+            def __call__(self, __v: Language, __values: UnexpectedLanguageError.Partial) -> Language:
                 ...
 
         class ActualLanguageValidator(typing_extensions.Protocol):
-            def __call__(self, v: Language, *, values: UnexpectedLanguageError.Partial) -> Language:
+            def __call__(self, __v: Language, __values: UnexpectedLanguageError.Partial) -> Language:
                 ...
 
     @pydantic.root_validator
@@ -100,13 +100,13 @@ class UnexpectedLanguageError(pydantic.BaseModel):
     @pydantic.validator("expected_language")
     def _validate_expected_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
         for validator in UnexpectedLanguageError.Validators._expected_language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("actual_language")
     def _validate_actual_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
         for validator in UnexpectedLanguageError.Validators._actual_language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

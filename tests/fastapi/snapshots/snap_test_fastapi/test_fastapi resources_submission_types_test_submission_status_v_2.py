@@ -33,19 +33,19 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
                 ...
 
             @TestSubmissionStatusV2.Validators.field("updates")
-            def validate_updates(v: typing.List[TestSubmissionUpdate], values: TestSubmissionStatusV2.Partial) -> typing.List[TestSubmissionUpdate]:
+            def validate_updates(updates: typing.List[TestSubmissionUpdate], values: TestSubmissionStatusV2.Partial) -> typing.List[TestSubmissionUpdate]:
                 ...
 
             @TestSubmissionStatusV2.Validators.field("problem_id")
-            def validate_problem_id(v: ProblemId, values: TestSubmissionStatusV2.Partial) -> ProblemId:
+            def validate_problem_id(problem_id: ProblemId, values: TestSubmissionStatusV2.Partial) -> ProblemId:
                 ...
 
             @TestSubmissionStatusV2.Validators.field("problem_version")
-            def validate_problem_version(v: int, values: TestSubmissionStatusV2.Partial) -> int:
+            def validate_problem_version(problem_version: int, values: TestSubmissionStatusV2.Partial) -> int:
                 ...
 
             @TestSubmissionStatusV2.Validators.field("problem_info")
-            def validate_problem_info(v: ProblemInfoV2, values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
+            def validate_problem_info(problem_info: ProblemInfoV2, values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
                 ...
         """
 
@@ -123,20 +123,20 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
 
         class UpdatesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TestSubmissionUpdate], *, values: TestSubmissionStatusV2.Partial
+                self, __v: typing.List[TestSubmissionUpdate], __values: TestSubmissionStatusV2.Partial
             ) -> typing.List[TestSubmissionUpdate]:
                 ...
 
         class ProblemIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: ProblemId, *, values: TestSubmissionStatusV2.Partial) -> ProblemId:
+            def __call__(self, __v: ProblemId, __values: TestSubmissionStatusV2.Partial) -> ProblemId:
                 ...
 
         class ProblemVersionValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: TestSubmissionStatusV2.Partial) -> int:
+            def __call__(self, __v: int, __values: TestSubmissionStatusV2.Partial) -> int:
                 ...
 
         class ProblemInfoValidator(typing_extensions.Protocol):
-            def __call__(self, v: ProblemInfoV2, *, values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
+            def __call__(self, __v: ProblemInfoV2, __values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
                 ...
 
     @pydantic.root_validator
@@ -150,25 +150,25 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         cls, v: typing.List[TestSubmissionUpdate], values: TestSubmissionStatusV2.Partial
     ) -> typing.List[TestSubmissionUpdate]:
         for validator in TestSubmissionStatusV2.Validators._updates_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: TestSubmissionStatusV2.Partial) -> ProblemId:
         for validator in TestSubmissionStatusV2.Validators._problem_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problem_version")
     def _validate_problem_version(cls, v: int, values: TestSubmissionStatusV2.Partial) -> int:
         for validator in TestSubmissionStatusV2.Validators._problem_version_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problem_info")
     def _validate_problem_info(cls, v: ProblemInfoV2, values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
         for validator in TestSubmissionStatusV2.Validators._problem_info_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

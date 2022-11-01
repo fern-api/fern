@@ -28,11 +28,11 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
                 ...
 
             @VoidFunctionSignatureThatTakesActualResult.Validators.field("parameters")
-            def validate_parameters(v: typing.List[Parameter], values: VoidFunctionSignatureThatTakesActualResult.Partial) -> typing.List[Parameter]:
+            def validate_parameters(parameters: typing.List[Parameter], values: VoidFunctionSignatureThatTakesActualResult.Partial) -> typing.List[Parameter]:
                 ...
 
             @VoidFunctionSignatureThatTakesActualResult.Validators.field("actual_result_type")
-            def validate_actual_result_type(v: VariableType, values: VoidFunctionSignatureThatTakesActualResult.Partial) -> VariableType:
+            def validate_actual_result_type(actual_result_type: VariableType, values: VoidFunctionSignatureThatTakesActualResult.Partial) -> VariableType:
                 ...
         """
 
@@ -96,13 +96,13 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
 
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[Parameter], *, values: VoidFunctionSignatureThatTakesActualResult.Partial
+                self, __v: typing.List[Parameter], __values: VoidFunctionSignatureThatTakesActualResult.Partial
             ) -> typing.List[Parameter]:
                 ...
 
         class ActualResultTypeValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: VariableType, *, values: VoidFunctionSignatureThatTakesActualResult.Partial
+                self, __v: VariableType, __values: VoidFunctionSignatureThatTakesActualResult.Partial
             ) -> VariableType:
                 ...
 
@@ -119,7 +119,7 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         cls, v: typing.List[Parameter], values: VoidFunctionSignatureThatTakesActualResult.Partial
     ) -> typing.List[Parameter]:
         for validator in VoidFunctionSignatureThatTakesActualResult.Validators._parameters_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("actual_result_type")
@@ -127,7 +127,7 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         cls, v: VariableType, values: VoidFunctionSignatureThatTakesActualResult.Partial
     ) -> VariableType:
         for validator in VoidFunctionSignatureThatTakesActualResult.Validators._actual_result_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

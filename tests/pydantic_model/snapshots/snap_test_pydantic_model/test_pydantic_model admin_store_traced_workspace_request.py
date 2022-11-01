@@ -28,11 +28,11 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
                 ...
 
             @StoreTracedWorkspaceRequest.Validators.field("workspace_run_details")
-            def validate_workspace_run_details(v: WorkspaceRunDetails, values: StoreTracedWorkspaceRequest.Partial) -> WorkspaceRunDetails:
+            def validate_workspace_run_details(workspace_run_details: WorkspaceRunDetails, values: StoreTracedWorkspaceRequest.Partial) -> WorkspaceRunDetails:
                 ...
 
             @StoreTracedWorkspaceRequest.Validators.field("trace_responses")
-            def validate_trace_responses(v: typing.List[TraceResponse], values: StoreTracedWorkspaceRequest.Partial) -> typing.List[TraceResponse]:
+            def validate_trace_responses(trace_responses: typing.List[TraceResponse], values: StoreTracedWorkspaceRequest.Partial) -> typing.List[TraceResponse]:
                 ...
         """
 
@@ -86,13 +86,13 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
 
         class WorkspaceRunDetailsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: WorkspaceRunDetails, *, values: StoreTracedWorkspaceRequest.Partial
+                self, __v: WorkspaceRunDetails, __values: StoreTracedWorkspaceRequest.Partial
             ) -> WorkspaceRunDetails:
                 ...
 
         class TraceResponsesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TraceResponse], *, values: StoreTracedWorkspaceRequest.Partial
+                self, __v: typing.List[TraceResponse], __values: StoreTracedWorkspaceRequest.Partial
             ) -> typing.List[TraceResponse]:
                 ...
 
@@ -107,7 +107,7 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         cls, v: WorkspaceRunDetails, values: StoreTracedWorkspaceRequest.Partial
     ) -> WorkspaceRunDetails:
         for validator in StoreTracedWorkspaceRequest.Validators._workspace_run_details_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("trace_responses")
@@ -115,7 +115,7 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         cls, v: typing.List[TraceResponse], values: StoreTracedWorkspaceRequest.Partial
     ) -> typing.List[TraceResponse]:
         for validator in StoreTracedWorkspaceRequest.Validators._trace_responses_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -28,11 +28,11 @@ class BuildingExecutorResponse(pydantic.BaseModel):
                 ...
 
             @BuildingExecutorResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: BuildingExecutorResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: BuildingExecutorResponse.Partial) -> SubmissionId:
                 ...
 
             @BuildingExecutorResponse.Validators.field("status")
-            def validate_status(v: ExecutionSessionStatus, values: BuildingExecutorResponse.Partial) -> ExecutionSessionStatus:
+            def validate_status(status: ExecutionSessionStatus, values: BuildingExecutorResponse.Partial) -> ExecutionSessionStatus:
                 ...
         """
 
@@ -82,12 +82,12 @@ class BuildingExecutorResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: BuildingExecutorResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: BuildingExecutorResponse.Partial) -> SubmissionId:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: ExecutionSessionStatus, *, values: BuildingExecutorResponse.Partial
+                self, __v: ExecutionSessionStatus, __values: BuildingExecutorResponse.Partial
             ) -> ExecutionSessionStatus:
                 ...
 
@@ -100,7 +100,7 @@ class BuildingExecutorResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: BuildingExecutorResponse.Partial) -> SubmissionId:
         for validator in BuildingExecutorResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("status")
@@ -108,7 +108,7 @@ class BuildingExecutorResponse(pydantic.BaseModel):
         cls, v: ExecutionSessionStatus, values: BuildingExecutorResponse.Partial
     ) -> ExecutionSessionStatus:
         for validator in BuildingExecutorResponse.Validators._status_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

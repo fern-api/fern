@@ -28,11 +28,11 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
                 ...
 
             @BinaryTreeNodeAndTreeValue.Validators.field("node_id")
-            def validate_node_id(v: NodeId, values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:
+            def validate_node_id(node_id: NodeId, values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:
                 ...
 
             @BinaryTreeNodeAndTreeValue.Validators.field("full_tree")
-            def validate_full_tree(v: BinaryTreeValue, values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeValue:
+            def validate_full_tree(full_tree: BinaryTreeValue, values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeValue:
                 ...
         """
 
@@ -83,11 +83,11 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
             return decorator
 
         class NodeIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: NodeId, *, values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:
+            def __call__(self, __v: NodeId, __values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:
                 ...
 
         class FullTreeValidator(typing_extensions.Protocol):
-            def __call__(self, v: BinaryTreeValue, *, values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeValue:
+            def __call__(self, __v: BinaryTreeValue, __values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeValue:
                 ...
 
     @pydantic.root_validator
@@ -99,13 +99,13 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: BinaryTreeNodeAndTreeValue.Partial) -> NodeId:
         for validator in BinaryTreeNodeAndTreeValue.Validators._node_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("full_tree")
     def _validate_full_tree(cls, v: BinaryTreeValue, values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeValue:
         for validator in BinaryTreeNodeAndTreeValue.Validators._full_tree_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

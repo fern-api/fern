@@ -32,19 +32,19 @@ class ExecutionSessionResponse(pydantic.BaseModel):
                 ...
 
             @ExecutionSessionResponse.Validators.field("session_id")
-            def validate_session_id(v: str, values: ExecutionSessionResponse.Partial) -> str:
+            def validate_session_id(session_id: str, values: ExecutionSessionResponse.Partial) -> str:
                 ...
 
             @ExecutionSessionResponse.Validators.field("execution_session_url")
-            def validate_execution_session_url(v: typing.Optional[str], values: ExecutionSessionResponse.Partial) -> typing.Optional[str]:
+            def validate_execution_session_url(execution_session_url: typing.Optional[str], values: ExecutionSessionResponse.Partial) -> typing.Optional[str]:
                 ...
 
             @ExecutionSessionResponse.Validators.field("language")
-            def validate_language(v: Language, values: ExecutionSessionResponse.Partial) -> Language:
+            def validate_language(language: Language, values: ExecutionSessionResponse.Partial) -> Language:
                 ...
 
             @ExecutionSessionResponse.Validators.field("status")
-            def validate_status(v: ExecutionSessionStatus, values: ExecutionSessionResponse.Partial) -> ExecutionSessionStatus:
+            def validate_status(status: ExecutionSessionStatus, values: ExecutionSessionResponse.Partial) -> ExecutionSessionStatus:
                 ...
         """
 
@@ -122,22 +122,22 @@ class ExecutionSessionResponse(pydantic.BaseModel):
             return decorator
 
         class SessionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: ExecutionSessionResponse.Partial) -> str:
+            def __call__(self, __v: str, __values: ExecutionSessionResponse.Partial) -> str:
                 ...
 
         class ExecutionSessionUrlValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[str], *, values: ExecutionSessionResponse.Partial
+                self, __v: typing.Optional[str], __values: ExecutionSessionResponse.Partial
             ) -> typing.Optional[str]:
                 ...
 
         class LanguageValidator(typing_extensions.Protocol):
-            def __call__(self, v: Language, *, values: ExecutionSessionResponse.Partial) -> Language:
+            def __call__(self, __v: Language, __values: ExecutionSessionResponse.Partial) -> Language:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: ExecutionSessionStatus, *, values: ExecutionSessionResponse.Partial
+                self, __v: ExecutionSessionStatus, __values: ExecutionSessionResponse.Partial
             ) -> ExecutionSessionStatus:
                 ...
 
@@ -150,7 +150,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
     @pydantic.validator("session_id")
     def _validate_session_id(cls, v: str, values: ExecutionSessionResponse.Partial) -> str:
         for validator in ExecutionSessionResponse.Validators._session_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("execution_session_url")
@@ -158,13 +158,13 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         cls, v: typing.Optional[str], values: ExecutionSessionResponse.Partial
     ) -> typing.Optional[str]:
         for validator in ExecutionSessionResponse.Validators._execution_session_url_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("language")
     def _validate_language(cls, v: Language, values: ExecutionSessionResponse.Partial) -> Language:
         for validator in ExecutionSessionResponse.Validators._language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("status")
@@ -172,7 +172,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         cls, v: ExecutionSessionStatus, values: ExecutionSessionResponse.Partial
     ) -> ExecutionSessionStatus:
         for validator in ExecutionSessionResponse.Validators._status_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

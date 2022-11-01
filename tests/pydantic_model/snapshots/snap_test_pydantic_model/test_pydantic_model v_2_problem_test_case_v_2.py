@@ -35,19 +35,19 @@ class TestCaseV2(pydantic.BaseModel):
                 ...
 
             @TestCaseV2.Validators.field("metadata")
-            def validate_metadata(v: TestCaseMetadata, values: TestCaseV2.Partial) -> TestCaseMetadata:
+            def validate_metadata(metadata: TestCaseMetadata, values: TestCaseV2.Partial) -> TestCaseMetadata:
                 ...
 
             @TestCaseV2.Validators.field("implementation")
-            def validate_implementation(v: TestCaseImplementationReference, values: TestCaseV2.Partial) -> TestCaseImplementationReference:
+            def validate_implementation(implementation: TestCaseImplementationReference, values: TestCaseV2.Partial) -> TestCaseImplementationReference:
                 ...
 
             @TestCaseV2.Validators.field("arguments")
-            def validate_arguments(v: typing.Dict[ParameterId, VariableValue], values: TestCaseV2.Partial) -> typing.Dict[ParameterId, VariableValue]:
+            def validate_arguments(arguments: typing.Dict[ParameterId, VariableValue], values: TestCaseV2.Partial) -> typing.Dict[ParameterId, VariableValue]:
                 ...
 
             @TestCaseV2.Validators.field("expects")
-            def validate_expects(v: typing.Optional[TestCaseExpects], values: TestCaseV2.Partial) -> typing.Optional[TestCaseExpects]:
+            def validate_expects(expects: typing.Optional[TestCaseExpects], values: TestCaseV2.Partial) -> typing.Optional[TestCaseExpects]:
                 ...
         """
 
@@ -110,24 +110,24 @@ class TestCaseV2(pydantic.BaseModel):
             return decorator
 
         class MetadataValidator(typing_extensions.Protocol):
-            def __call__(self, v: TestCaseMetadata, *, values: TestCaseV2.Partial) -> TestCaseMetadata:
+            def __call__(self, __v: TestCaseMetadata, __values: TestCaseV2.Partial) -> TestCaseMetadata:
                 ...
 
         class ImplementationValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: TestCaseImplementationReference, *, values: TestCaseV2.Partial
+                self, __v: TestCaseImplementationReference, __values: TestCaseV2.Partial
             ) -> TestCaseImplementationReference:
                 ...
 
         class ArgumentsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[ParameterId, VariableValue], *, values: TestCaseV2.Partial
+                self, __v: typing.Dict[ParameterId, VariableValue], __values: TestCaseV2.Partial
             ) -> typing.Dict[ParameterId, VariableValue]:
                 ...
 
         class ExpectsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[TestCaseExpects], *, values: TestCaseV2.Partial
+                self, __v: typing.Optional[TestCaseExpects], __values: TestCaseV2.Partial
             ) -> typing.Optional[TestCaseExpects]:
                 ...
 
@@ -140,7 +140,7 @@ class TestCaseV2(pydantic.BaseModel):
     @pydantic.validator("metadata")
     def _validate_metadata(cls, v: TestCaseMetadata, values: TestCaseV2.Partial) -> TestCaseMetadata:
         for validator in TestCaseV2.Validators._metadata_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("implementation")
@@ -148,7 +148,7 @@ class TestCaseV2(pydantic.BaseModel):
         cls, v: TestCaseImplementationReference, values: TestCaseV2.Partial
     ) -> TestCaseImplementationReference:
         for validator in TestCaseV2.Validators._implementation_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("arguments")
@@ -156,7 +156,7 @@ class TestCaseV2(pydantic.BaseModel):
         cls, v: typing.Dict[ParameterId, VariableValue], values: TestCaseV2.Partial
     ) -> typing.Dict[ParameterId, VariableValue]:
         for validator in TestCaseV2.Validators._arguments_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("expects")
@@ -164,7 +164,7 @@ class TestCaseV2(pydantic.BaseModel):
         cls, v: typing.Optional[TestCaseExpects], values: TestCaseV2.Partial
     ) -> typing.Optional[TestCaseExpects]:
         for validator in TestCaseV2.Validators._expects_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

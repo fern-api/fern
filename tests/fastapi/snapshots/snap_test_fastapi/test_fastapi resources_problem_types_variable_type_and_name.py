@@ -27,11 +27,11 @@ class VariableTypeAndName(pydantic.BaseModel):
                 ...
 
             @VariableTypeAndName.Validators.field("variable_type")
-            def validate_variable_type(v: VariableType, values: VariableTypeAndName.Partial) -> VariableType:
+            def validate_variable_type(variable_type: VariableType, values: VariableTypeAndName.Partial) -> VariableType:
                 ...
 
             @VariableTypeAndName.Validators.field("name")
-            def validate_name(v: str, values: VariableTypeAndName.Partial) -> str:
+            def validate_name(name: str, values: VariableTypeAndName.Partial) -> str:
                 ...
         """
 
@@ -80,11 +80,11 @@ class VariableTypeAndName(pydantic.BaseModel):
             return decorator
 
         class VariableTypeValidator(typing_extensions.Protocol):
-            def __call__(self, v: VariableType, *, values: VariableTypeAndName.Partial) -> VariableType:
+            def __call__(self, __v: VariableType, __values: VariableTypeAndName.Partial) -> VariableType:
                 ...
 
         class NameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: VariableTypeAndName.Partial) -> str:
+            def __call__(self, __v: str, __values: VariableTypeAndName.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -96,13 +96,13 @@ class VariableTypeAndName(pydantic.BaseModel):
     @pydantic.validator("variable_type")
     def _validate_variable_type(cls, v: VariableType, values: VariableTypeAndName.Partial) -> VariableType:
         for validator in VariableTypeAndName.Validators._variable_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: VariableTypeAndName.Partial) -> str:
         for validator in VariableTypeAndName.Validators._name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

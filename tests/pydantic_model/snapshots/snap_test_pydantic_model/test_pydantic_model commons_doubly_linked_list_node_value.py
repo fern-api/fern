@@ -31,19 +31,19 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
                 ...
 
             @DoublyLinkedListNodeValue.Validators.field("node_id")
-            def validate_node_id(v: NodeId, values: DoublyLinkedListNodeValue.Partial) -> NodeId:
+            def validate_node_id(node_id: NodeId, values: DoublyLinkedListNodeValue.Partial) -> NodeId:
                 ...
 
             @DoublyLinkedListNodeValue.Validators.field("val")
-            def validate_val(v: float, values: DoublyLinkedListNodeValue.Partial) -> float:
+            def validate_val(val: float, values: DoublyLinkedListNodeValue.Partial) -> float:
                 ...
 
             @DoublyLinkedListNodeValue.Validators.field("next")
-            def validate_next(v: typing.Optional[NodeId], values: DoublyLinkedListNodeValue.Partial) -> typing.Optional[NodeId]:
+            def validate_next(next: typing.Optional[NodeId], values: DoublyLinkedListNodeValue.Partial) -> typing.Optional[NodeId]:
                 ...
 
             @DoublyLinkedListNodeValue.Validators.field("prev")
-            def validate_prev(v: typing.Optional[NodeId], values: DoublyLinkedListNodeValue.Partial) -> typing.Optional[NodeId]:
+            def validate_prev(prev: typing.Optional[NodeId], values: DoublyLinkedListNodeValue.Partial) -> typing.Optional[NodeId]:
                 ...
         """
 
@@ -114,22 +114,22 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
             return decorator
 
         class NodeIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: NodeId, *, values: DoublyLinkedListNodeValue.Partial) -> NodeId:
+            def __call__(self, __v: NodeId, __values: DoublyLinkedListNodeValue.Partial) -> NodeId:
                 ...
 
         class ValValidator(typing_extensions.Protocol):
-            def __call__(self, v: float, *, values: DoublyLinkedListNodeValue.Partial) -> float:
+            def __call__(self, __v: float, __values: DoublyLinkedListNodeValue.Partial) -> float:
                 ...
 
         class NextValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[NodeId], *, values: DoublyLinkedListNodeValue.Partial
+                self, __v: typing.Optional[NodeId], __values: DoublyLinkedListNodeValue.Partial
             ) -> typing.Optional[NodeId]:
                 ...
 
         class PrevValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[NodeId], *, values: DoublyLinkedListNodeValue.Partial
+                self, __v: typing.Optional[NodeId], __values: DoublyLinkedListNodeValue.Partial
             ) -> typing.Optional[NodeId]:
                 ...
 
@@ -142,13 +142,13 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: DoublyLinkedListNodeValue.Partial) -> NodeId:
         for validator in DoublyLinkedListNodeValue.Validators._node_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("val")
     def _validate_val(cls, v: float, values: DoublyLinkedListNodeValue.Partial) -> float:
         for validator in DoublyLinkedListNodeValue.Validators._val_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("next")
@@ -156,7 +156,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         cls, v: typing.Optional[NodeId], values: DoublyLinkedListNodeValue.Partial
     ) -> typing.Optional[NodeId]:
         for validator in DoublyLinkedListNodeValue.Validators._next_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("prev")
@@ -164,7 +164,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         cls, v: typing.Optional[NodeId], values: DoublyLinkedListNodeValue.Partial
     ) -> typing.Optional[NodeId]:
         for validator in DoublyLinkedListNodeValue.Validators._prev_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

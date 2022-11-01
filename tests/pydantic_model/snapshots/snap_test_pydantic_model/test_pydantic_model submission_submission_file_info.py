@@ -27,15 +27,15 @@ class SubmissionFileInfo(pydantic.BaseModel):
                 ...
 
             @SubmissionFileInfo.Validators.field("directory")
-            def validate_directory(v: str, values: SubmissionFileInfo.Partial) -> str:
+            def validate_directory(directory: str, values: SubmissionFileInfo.Partial) -> str:
                 ...
 
             @SubmissionFileInfo.Validators.field("filename")
-            def validate_filename(v: str, values: SubmissionFileInfo.Partial) -> str:
+            def validate_filename(filename: str, values: SubmissionFileInfo.Partial) -> str:
                 ...
 
             @SubmissionFileInfo.Validators.field("contents")
-            def validate_contents(v: str, values: SubmissionFileInfo.Partial) -> str:
+            def validate_contents(contents: str, values: SubmissionFileInfo.Partial) -> str:
                 ...
         """
 
@@ -94,15 +94,15 @@ class SubmissionFileInfo(pydantic.BaseModel):
             return decorator
 
         class DirectoryValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: SubmissionFileInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: SubmissionFileInfo.Partial) -> str:
                 ...
 
         class FilenameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: SubmissionFileInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: SubmissionFileInfo.Partial) -> str:
                 ...
 
         class ContentsValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: SubmissionFileInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: SubmissionFileInfo.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -114,19 +114,19 @@ class SubmissionFileInfo(pydantic.BaseModel):
     @pydantic.validator("directory")
     def _validate_directory(cls, v: str, values: SubmissionFileInfo.Partial) -> str:
         for validator in SubmissionFileInfo.Validators._directory_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("filename")
     def _validate_filename(cls, v: str, values: SubmissionFileInfo.Partial) -> str:
         for validator in SubmissionFileInfo.Validators._filename_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("contents")
     def _validate_contents(cls, v: str, values: SubmissionFileInfo.Partial) -> str:
         for validator in SubmissionFileInfo.Validators._contents_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

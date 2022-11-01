@@ -25,7 +25,7 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
                 ...
 
             @GetFunctionSignatureResponse.Validators.field("function_by_language")
-            def validate_function_by_language(v: typing.Dict[Language, str], values: GetFunctionSignatureResponse.Partial) -> typing.Dict[Language, str]:
+            def validate_function_by_language(function_by_language: typing.Dict[Language, str], values: GetFunctionSignatureResponse.Partial) -> typing.Dict[Language, str]:
                 ...
         """
 
@@ -65,7 +65,7 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
 
         class FunctionByLanguageValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[Language, str], *, values: GetFunctionSignatureResponse.Partial
+                self, __v: typing.Dict[Language, str], __values: GetFunctionSignatureResponse.Partial
             ) -> typing.Dict[Language, str]:
                 ...
 
@@ -80,7 +80,7 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
         cls, v: typing.Dict[Language, str], values: GetFunctionSignatureResponse.Partial
     ) -> typing.Dict[Language, str]:
         for validator in GetFunctionSignatureResponse.Validators._function_by_language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

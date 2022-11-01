@@ -25,7 +25,7 @@ class FinishedResponse(pydantic.BaseModel):
                 ...
 
             @FinishedResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: FinishedResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: FinishedResponse.Partial) -> SubmissionId:
                 ...
         """
 
@@ -60,7 +60,7 @@ class FinishedResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: FinishedResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: FinishedResponse.Partial) -> SubmissionId:
                 ...
 
     @pydantic.root_validator
@@ -72,7 +72,7 @@ class FinishedResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: FinishedResponse.Partial) -> SubmissionId:
         for validator in FinishedResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

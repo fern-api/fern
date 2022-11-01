@@ -25,7 +25,7 @@ class InternalError(pydantic.BaseModel):
                 ...
 
             @InternalError.Validators.field("exception_info")
-            def validate_exception_info(v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
+            def validate_exception_info(exception_info: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
                 ...
         """
 
@@ -58,7 +58,7 @@ class InternalError(pydantic.BaseModel):
             return decorator
 
         class ExceptionInfoValidator(typing_extensions.Protocol):
-            def __call__(self, v: ExceptionInfo, *, values: InternalError.Partial) -> ExceptionInfo:
+            def __call__(self, __v: ExceptionInfo, __values: InternalError.Partial) -> ExceptionInfo:
                 ...
 
     @pydantic.root_validator
@@ -70,7 +70,7 @@ class InternalError(pydantic.BaseModel):
     @pydantic.validator("exception_info")
     def _validate_exception_info(cls, v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
         for validator in InternalError.Validators._exception_info_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

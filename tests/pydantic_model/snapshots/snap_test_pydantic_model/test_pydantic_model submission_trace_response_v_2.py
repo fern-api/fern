@@ -41,31 +41,31 @@ class TraceResponseV2(pydantic.BaseModel):
                 ...
 
             @TraceResponseV2.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: TraceResponseV2.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: TraceResponseV2.Partial) -> SubmissionId:
                 ...
 
             @TraceResponseV2.Validators.field("line_number")
-            def validate_line_number(v: int, values: TraceResponseV2.Partial) -> int:
+            def validate_line_number(line_number: int, values: TraceResponseV2.Partial) -> int:
                 ...
 
             @TraceResponseV2.Validators.field("file")
-            def validate_file(v: TracedFile, values: TraceResponseV2.Partial) -> TracedFile:
+            def validate_file(file: TracedFile, values: TraceResponseV2.Partial) -> TracedFile:
                 ...
 
             @TraceResponseV2.Validators.field("return_value")
-            def validate_return_value(v: typing.Optional[DebugVariableValue], values: TraceResponseV2.Partial) -> typing.Optional[DebugVariableValue]:
+            def validate_return_value(return_value: typing.Optional[DebugVariableValue], values: TraceResponseV2.Partial) -> typing.Optional[DebugVariableValue]:
                 ...
 
             @TraceResponseV2.Validators.field("expression_location")
-            def validate_expression_location(v: typing.Optional[ExpressionLocation], values: TraceResponseV2.Partial) -> typing.Optional[ExpressionLocation]:
+            def validate_expression_location(expression_location: typing.Optional[ExpressionLocation], values: TraceResponseV2.Partial) -> typing.Optional[ExpressionLocation]:
                 ...
 
             @TraceResponseV2.Validators.field("stack")
-            def validate_stack(v: StackInformation, values: TraceResponseV2.Partial) -> StackInformation:
+            def validate_stack(stack: StackInformation, values: TraceResponseV2.Partial) -> StackInformation:
                 ...
 
             @TraceResponseV2.Validators.field("stdout")
-            def validate_stdout(v: typing.Optional[str], values: TraceResponseV2.Partial) -> typing.Optional[str]:
+            def validate_stdout(stdout: typing.Optional[str], values: TraceResponseV2.Partial) -> typing.Optional[str]:
                 ...
         """
 
@@ -169,35 +169,35 @@ class TraceResponseV2(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: TraceResponseV2.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: TraceResponseV2.Partial) -> SubmissionId:
                 ...
 
         class LineNumberValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: TraceResponseV2.Partial) -> int:
+            def __call__(self, __v: int, __values: TraceResponseV2.Partial) -> int:
                 ...
 
         class FileValidator(typing_extensions.Protocol):
-            def __call__(self, v: TracedFile, *, values: TraceResponseV2.Partial) -> TracedFile:
+            def __call__(self, __v: TracedFile, __values: TraceResponseV2.Partial) -> TracedFile:
                 ...
 
         class ReturnValueValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[DebugVariableValue], *, values: TraceResponseV2.Partial
+                self, __v: typing.Optional[DebugVariableValue], __values: TraceResponseV2.Partial
             ) -> typing.Optional[DebugVariableValue]:
                 ...
 
         class ExpressionLocationValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[ExpressionLocation], *, values: TraceResponseV2.Partial
+                self, __v: typing.Optional[ExpressionLocation], __values: TraceResponseV2.Partial
             ) -> typing.Optional[ExpressionLocation]:
                 ...
 
         class StackValidator(typing_extensions.Protocol):
-            def __call__(self, v: StackInformation, *, values: TraceResponseV2.Partial) -> StackInformation:
+            def __call__(self, __v: StackInformation, __values: TraceResponseV2.Partial) -> StackInformation:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.Optional[str], *, values: TraceResponseV2.Partial) -> typing.Optional[str]:
+            def __call__(self, __v: typing.Optional[str], __values: TraceResponseV2.Partial) -> typing.Optional[str]:
                 ...
 
     @pydantic.root_validator
@@ -209,19 +209,19 @@ class TraceResponseV2(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: TraceResponseV2.Partial) -> SubmissionId:
         for validator in TraceResponseV2.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("line_number")
     def _validate_line_number(cls, v: int, values: TraceResponseV2.Partial) -> int:
         for validator in TraceResponseV2.Validators._line_number_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("file")
     def _validate_file(cls, v: TracedFile, values: TraceResponseV2.Partial) -> TracedFile:
         for validator in TraceResponseV2.Validators._file_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("return_value")
@@ -229,7 +229,7 @@ class TraceResponseV2(pydantic.BaseModel):
         cls, v: typing.Optional[DebugVariableValue], values: TraceResponseV2.Partial
     ) -> typing.Optional[DebugVariableValue]:
         for validator in TraceResponseV2.Validators._return_value_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("expression_location")
@@ -237,19 +237,19 @@ class TraceResponseV2(pydantic.BaseModel):
         cls, v: typing.Optional[ExpressionLocation], values: TraceResponseV2.Partial
     ) -> typing.Optional[ExpressionLocation]:
         for validator in TraceResponseV2.Validators._expression_location_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stack")
     def _validate_stack(cls, v: StackInformation, values: TraceResponseV2.Partial) -> StackInformation:
         for validator in TraceResponseV2.Validators._stack_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stdout")
     def _validate_stdout(cls, v: typing.Optional[str], values: TraceResponseV2.Partial) -> typing.Optional[str]:
         for validator in TraceResponseV2.Validators._stdout_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -27,11 +27,11 @@ class StdoutResponse(pydantic.BaseModel):
                 ...
 
             @StdoutResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: StdoutResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: StdoutResponse.Partial) -> SubmissionId:
                 ...
 
             @StdoutResponse.Validators.field("stdout")
-            def validate_stdout(v: str, values: StdoutResponse.Partial) -> str:
+            def validate_stdout(stdout: str, values: StdoutResponse.Partial) -> str:
                 ...
         """
 
@@ -76,11 +76,11 @@ class StdoutResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: StdoutResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: StdoutResponse.Partial) -> SubmissionId:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: StdoutResponse.Partial) -> str:
+            def __call__(self, __v: str, __values: StdoutResponse.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -92,13 +92,13 @@ class StdoutResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: StdoutResponse.Partial) -> SubmissionId:
         for validator in StdoutResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stdout")
     def _validate_stdout(cls, v: str, values: StdoutResponse.Partial) -> str:
         for validator in StdoutResponse.Validators._stdout_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

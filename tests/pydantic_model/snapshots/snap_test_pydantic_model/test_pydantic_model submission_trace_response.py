@@ -38,27 +38,27 @@ class TraceResponse(pydantic.BaseModel):
                 ...
 
             @TraceResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
                 ...
 
             @TraceResponse.Validators.field("line_number")
-            def validate_line_number(v: int, values: TraceResponse.Partial) -> int:
+            def validate_line_number(line_number: int, values: TraceResponse.Partial) -> int:
                 ...
 
             @TraceResponse.Validators.field("return_value")
-            def validate_return_value(v: typing.Optional[DebugVariableValue], values: TraceResponse.Partial) -> typing.Optional[DebugVariableValue]:
+            def validate_return_value(return_value: typing.Optional[DebugVariableValue], values: TraceResponse.Partial) -> typing.Optional[DebugVariableValue]:
                 ...
 
             @TraceResponse.Validators.field("expression_location")
-            def validate_expression_location(v: typing.Optional[ExpressionLocation], values: TraceResponse.Partial) -> typing.Optional[ExpressionLocation]:
+            def validate_expression_location(expression_location: typing.Optional[ExpressionLocation], values: TraceResponse.Partial) -> typing.Optional[ExpressionLocation]:
                 ...
 
             @TraceResponse.Validators.field("stack")
-            def validate_stack(v: StackInformation, values: TraceResponse.Partial) -> StackInformation:
+            def validate_stack(stack: StackInformation, values: TraceResponse.Partial) -> StackInformation:
                 ...
 
             @TraceResponse.Validators.field("stdout")
-            def validate_stdout(v: typing.Optional[str], values: TraceResponse.Partial) -> typing.Optional[str]:
+            def validate_stdout(stdout: typing.Optional[str], values: TraceResponse.Partial) -> typing.Optional[str]:
                 ...
         """
 
@@ -149,31 +149,31 @@ class TraceResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: TraceResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: TraceResponse.Partial) -> SubmissionId:
                 ...
 
         class LineNumberValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: TraceResponse.Partial) -> int:
+            def __call__(self, __v: int, __values: TraceResponse.Partial) -> int:
                 ...
 
         class ReturnValueValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[DebugVariableValue], *, values: TraceResponse.Partial
+                self, __v: typing.Optional[DebugVariableValue], __values: TraceResponse.Partial
             ) -> typing.Optional[DebugVariableValue]:
                 ...
 
         class ExpressionLocationValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[ExpressionLocation], *, values: TraceResponse.Partial
+                self, __v: typing.Optional[ExpressionLocation], __values: TraceResponse.Partial
             ) -> typing.Optional[ExpressionLocation]:
                 ...
 
         class StackValidator(typing_extensions.Protocol):
-            def __call__(self, v: StackInformation, *, values: TraceResponse.Partial) -> StackInformation:
+            def __call__(self, __v: StackInformation, __values: TraceResponse.Partial) -> StackInformation:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.Optional[str], *, values: TraceResponse.Partial) -> typing.Optional[str]:
+            def __call__(self, __v: typing.Optional[str], __values: TraceResponse.Partial) -> typing.Optional[str]:
                 ...
 
     @pydantic.root_validator
@@ -185,13 +185,13 @@ class TraceResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
         for validator in TraceResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("line_number")
     def _validate_line_number(cls, v: int, values: TraceResponse.Partial) -> int:
         for validator in TraceResponse.Validators._line_number_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("return_value")
@@ -199,7 +199,7 @@ class TraceResponse(pydantic.BaseModel):
         cls, v: typing.Optional[DebugVariableValue], values: TraceResponse.Partial
     ) -> typing.Optional[DebugVariableValue]:
         for validator in TraceResponse.Validators._return_value_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("expression_location")
@@ -207,19 +207,19 @@ class TraceResponse(pydantic.BaseModel):
         cls, v: typing.Optional[ExpressionLocation], values: TraceResponse.Partial
     ) -> typing.Optional[ExpressionLocation]:
         for validator in TraceResponse.Validators._expression_location_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stack")
     def _validate_stack(cls, v: StackInformation, values: TraceResponse.Partial) -> StackInformation:
         for validator in TraceResponse.Validators._stack_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stdout")
     def _validate_stdout(cls, v: typing.Optional[str], values: TraceResponse.Partial) -> typing.Optional[str]:
         for validator in TraceResponse.Validators._stdout_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

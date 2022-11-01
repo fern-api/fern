@@ -25,7 +25,7 @@ class StopRequest(pydantic.BaseModel):
                 ...
 
             @StopRequest.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: StopRequest.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: StopRequest.Partial) -> SubmissionId:
                 ...
         """
 
@@ -58,7 +58,7 @@ class StopRequest(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: StopRequest.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: StopRequest.Partial) -> SubmissionId:
                 ...
 
     @pydantic.root_validator
@@ -70,7 +70,7 @@ class StopRequest(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: StopRequest.Partial) -> SubmissionId:
         for validator in StopRequest.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

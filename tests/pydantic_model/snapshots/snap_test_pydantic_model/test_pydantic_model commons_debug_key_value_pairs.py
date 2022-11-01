@@ -25,11 +25,11 @@ class DebugKeyValuePairs(pydantic.BaseModel):
                 ...
 
             @DebugKeyValuePairs.Validators.field("key")
-            def validate_key(v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+            def validate_key(key: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
                 ...
 
             @DebugKeyValuePairs.Validators.field("value")
-            def validate_value(v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+            def validate_value(value: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
                 ...
         """
 
@@ -74,11 +74,11 @@ class DebugKeyValuePairs(pydantic.BaseModel):
             return decorator
 
         class KeyValidator(typing_extensions.Protocol):
-            def __call__(self, v: DebugVariableValue, *, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+            def __call__(self, __v: DebugVariableValue, __values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
                 ...
 
         class ValueValidator(typing_extensions.Protocol):
-            def __call__(self, v: DebugVariableValue, *, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+            def __call__(self, __v: DebugVariableValue, __values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
                 ...
 
     @pydantic.root_validator
@@ -90,13 +90,13 @@ class DebugKeyValuePairs(pydantic.BaseModel):
     @pydantic.validator("key")
     def _validate_key(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
         for validator in DebugKeyValuePairs.Validators._key_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("value")
     def _validate_value(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
         for validator in DebugKeyValuePairs.Validators._value_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

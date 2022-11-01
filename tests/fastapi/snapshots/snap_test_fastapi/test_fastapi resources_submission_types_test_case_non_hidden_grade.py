@@ -32,19 +32,19 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
                 ...
 
             @TestCaseNonHiddenGrade.Validators.field("passed")
-            def validate_passed(v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
+            def validate_passed(passed: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
                 ...
 
             @TestCaseNonHiddenGrade.Validators.field("actual_result")
-            def validate_actual_result(v: typing.Optional[VariableValue], values: TestCaseNonHiddenGrade.Partial) -> typing.Optional[VariableValue]:
+            def validate_actual_result(actual_result: typing.Optional[VariableValue], values: TestCaseNonHiddenGrade.Partial) -> typing.Optional[VariableValue]:
                 ...
 
             @TestCaseNonHiddenGrade.Validators.field("exception")
-            def validate_exception(v: typing.Optional[ExceptionV2], values: TestCaseNonHiddenGrade.Partial) -> typing.Optional[ExceptionV2]:
+            def validate_exception(exception: typing.Optional[ExceptionV2], values: TestCaseNonHiddenGrade.Partial) -> typing.Optional[ExceptionV2]:
                 ...
 
             @TestCaseNonHiddenGrade.Validators.field("stdout")
-            def validate_stdout(v: str, values: TestCaseNonHiddenGrade.Partial) -> str:
+            def validate_stdout(stdout: str, values: TestCaseNonHiddenGrade.Partial) -> str:
                 ...
         """
 
@@ -118,23 +118,23 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
             return decorator
 
         class PassedValidator(typing_extensions.Protocol):
-            def __call__(self, v: bool, *, values: TestCaseNonHiddenGrade.Partial) -> bool:
+            def __call__(self, __v: bool, __values: TestCaseNonHiddenGrade.Partial) -> bool:
                 ...
 
         class ActualResultValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[VariableValue], *, values: TestCaseNonHiddenGrade.Partial
+                self, __v: typing.Optional[VariableValue], __values: TestCaseNonHiddenGrade.Partial
             ) -> typing.Optional[VariableValue]:
                 ...
 
         class ExceptionValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[ExceptionV2], *, values: TestCaseNonHiddenGrade.Partial
+                self, __v: typing.Optional[ExceptionV2], __values: TestCaseNonHiddenGrade.Partial
             ) -> typing.Optional[ExceptionV2]:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: TestCaseNonHiddenGrade.Partial) -> str:
+            def __call__(self, __v: str, __values: TestCaseNonHiddenGrade.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -146,7 +146,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
     @pydantic.validator("passed")
     def _validate_passed(cls, v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
         for validator in TestCaseNonHiddenGrade.Validators._passed_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("actual_result")
@@ -154,7 +154,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         cls, v: typing.Optional[VariableValue], values: TestCaseNonHiddenGrade.Partial
     ) -> typing.Optional[VariableValue]:
         for validator in TestCaseNonHiddenGrade.Validators._actual_result_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("exception")
@@ -162,13 +162,13 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         cls, v: typing.Optional[ExceptionV2], values: TestCaseNonHiddenGrade.Partial
     ) -> typing.Optional[ExceptionV2]:
         for validator in TestCaseNonHiddenGrade.Validators._exception_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stdout")
     def _validate_stdout(cls, v: str, values: TestCaseNonHiddenGrade.Partial) -> str:
         for validator in TestCaseNonHiddenGrade.Validators._stdout_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

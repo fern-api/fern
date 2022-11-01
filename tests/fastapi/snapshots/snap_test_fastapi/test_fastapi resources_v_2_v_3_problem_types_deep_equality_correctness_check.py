@@ -25,7 +25,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
                 ...
 
             @DeepEqualityCorrectnessCheck.Validators.field("expected_value_parameter_id")
-            def validate_expected_value_parameter_id(v: ParameterId, values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
+            def validate_expected_value_parameter_id(expected_value_parameter_id: ParameterId, values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
                 ...
         """
 
@@ -64,7 +64,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
             return decorator
 
         class ExpectedValueParameterIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: ParameterId, *, values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
+            def __call__(self, __v: ParameterId, __values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
                 ...
 
     @pydantic.root_validator
@@ -78,7 +78,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         cls, v: ParameterId, values: DeepEqualityCorrectnessCheck.Partial
     ) -> ParameterId:
         for validator in DeepEqualityCorrectnessCheck.Validators._expected_value_parameter_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

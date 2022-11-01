@@ -41,31 +41,31 @@ class CreateProblemRequestV2(pydantic.BaseModel):
                 ...
 
             @CreateProblemRequestV2.Validators.field("problem_name")
-            def validate_problem_name(v: str, values: CreateProblemRequestV2.Partial) -> str:
+            def validate_problem_name(problem_name: str, values: CreateProblemRequestV2.Partial) -> str:
                 ...
 
             @CreateProblemRequestV2.Validators.field("problem_description")
-            def validate_problem_description(v: ProblemDescription, values: CreateProblemRequestV2.Partial) -> ProblemDescription:
+            def validate_problem_description(problem_description: ProblemDescription, values: CreateProblemRequestV2.Partial) -> ProblemDescription:
                 ...
 
             @CreateProblemRequestV2.Validators.field("custom_files")
-            def validate_custom_files(v: CustomFiles, values: CreateProblemRequestV2.Partial) -> CustomFiles:
+            def validate_custom_files(custom_files: CustomFiles, values: CreateProblemRequestV2.Partial) -> CustomFiles:
                 ...
 
             @CreateProblemRequestV2.Validators.field("custom_test_case_templates")
-            def validate_custom_test_case_templates(v: typing.List[TestCaseTemplate], values: CreateProblemRequestV2.Partial) -> typing.List[TestCaseTemplate]:
+            def validate_custom_test_case_templates(custom_test_case_templates: typing.List[TestCaseTemplate], values: CreateProblemRequestV2.Partial) -> typing.List[TestCaseTemplate]:
                 ...
 
             @CreateProblemRequestV2.Validators.field("testcases")
-            def validate_testcases(v: typing.List[TestCaseV2], values: CreateProblemRequestV2.Partial) -> typing.List[TestCaseV2]:
+            def validate_testcases(testcases: typing.List[TestCaseV2], values: CreateProblemRequestV2.Partial) -> typing.List[TestCaseV2]:
                 ...
 
             @CreateProblemRequestV2.Validators.field("supported_languages")
-            def validate_supported_languages(v: typing.List[Language], values: CreateProblemRequestV2.Partial) -> typing.List[Language]:
+            def validate_supported_languages(supported_languages: typing.List[Language], values: CreateProblemRequestV2.Partial) -> typing.List[Language]:
                 ...
 
             @CreateProblemRequestV2.Validators.field("is_public")
-            def validate_is_public(v: bool, values: CreateProblemRequestV2.Partial) -> bool:
+            def validate_is_public(is_public: bool, values: CreateProblemRequestV2.Partial) -> bool:
                 ...
         """
 
@@ -187,37 +187,37 @@ class CreateProblemRequestV2(pydantic.BaseModel):
             return decorator
 
         class ProblemNameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: CreateProblemRequestV2.Partial) -> str:
+            def __call__(self, __v: str, __values: CreateProblemRequestV2.Partial) -> str:
                 ...
 
         class ProblemDescriptionValidator(typing_extensions.Protocol):
-            def __call__(self, v: ProblemDescription, *, values: CreateProblemRequestV2.Partial) -> ProblemDescription:
+            def __call__(self, __v: ProblemDescription, __values: CreateProblemRequestV2.Partial) -> ProblemDescription:
                 ...
 
         class CustomFilesValidator(typing_extensions.Protocol):
-            def __call__(self, v: CustomFiles, *, values: CreateProblemRequestV2.Partial) -> CustomFiles:
+            def __call__(self, __v: CustomFiles, __values: CreateProblemRequestV2.Partial) -> CustomFiles:
                 ...
 
         class CustomTestCaseTemplatesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TestCaseTemplate], *, values: CreateProblemRequestV2.Partial
+                self, __v: typing.List[TestCaseTemplate], __values: CreateProblemRequestV2.Partial
             ) -> typing.List[TestCaseTemplate]:
                 ...
 
         class TestcasesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TestCaseV2], *, values: CreateProblemRequestV2.Partial
+                self, __v: typing.List[TestCaseV2], __values: CreateProblemRequestV2.Partial
             ) -> typing.List[TestCaseV2]:
                 ...
 
         class SupportedLanguagesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[Language], *, values: CreateProblemRequestV2.Partial
+                self, __v: typing.List[Language], __values: CreateProblemRequestV2.Partial
             ) -> typing.List[Language]:
                 ...
 
         class IsPublicValidator(typing_extensions.Protocol):
-            def __call__(self, v: bool, *, values: CreateProblemRequestV2.Partial) -> bool:
+            def __call__(self, __v: bool, __values: CreateProblemRequestV2.Partial) -> bool:
                 ...
 
     @pydantic.root_validator
@@ -229,7 +229,7 @@ class CreateProblemRequestV2(pydantic.BaseModel):
     @pydantic.validator("problem_name")
     def _validate_problem_name(cls, v: str, values: CreateProblemRequestV2.Partial) -> str:
         for validator in CreateProblemRequestV2.Validators._problem_name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problem_description")
@@ -237,13 +237,13 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         cls, v: ProblemDescription, values: CreateProblemRequestV2.Partial
     ) -> ProblemDescription:
         for validator in CreateProblemRequestV2.Validators._problem_description_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("custom_files")
     def _validate_custom_files(cls, v: CustomFiles, values: CreateProblemRequestV2.Partial) -> CustomFiles:
         for validator in CreateProblemRequestV2.Validators._custom_files_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("custom_test_case_templates")
@@ -251,7 +251,7 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         cls, v: typing.List[TestCaseTemplate], values: CreateProblemRequestV2.Partial
     ) -> typing.List[TestCaseTemplate]:
         for validator in CreateProblemRequestV2.Validators._custom_test_case_templates_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("testcases")
@@ -259,7 +259,7 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         cls, v: typing.List[TestCaseV2], values: CreateProblemRequestV2.Partial
     ) -> typing.List[TestCaseV2]:
         for validator in CreateProblemRequestV2.Validators._testcases_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("supported_languages")
@@ -267,13 +267,13 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         cls, v: typing.List[Language], values: CreateProblemRequestV2.Partial
     ) -> typing.List[Language]:
         for validator in CreateProblemRequestV2.Validators._supported_languages_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("is_public")
     def _validate_is_public(cls, v: bool, values: CreateProblemRequestV2.Partial) -> bool:
         for validator in CreateProblemRequestV2.Validators._is_public_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

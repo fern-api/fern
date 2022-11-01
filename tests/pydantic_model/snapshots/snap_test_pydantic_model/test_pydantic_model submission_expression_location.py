@@ -25,11 +25,11 @@ class ExpressionLocation(pydantic.BaseModel):
                 ...
 
             @ExpressionLocation.Validators.field("start")
-            def validate_start(v: int, values: ExpressionLocation.Partial) -> int:
+            def validate_start(start: int, values: ExpressionLocation.Partial) -> int:
                 ...
 
             @ExpressionLocation.Validators.field("offset")
-            def validate_offset(v: int, values: ExpressionLocation.Partial) -> int:
+            def validate_offset(offset: int, values: ExpressionLocation.Partial) -> int:
                 ...
         """
 
@@ -76,11 +76,11 @@ class ExpressionLocation(pydantic.BaseModel):
             return decorator
 
         class StartValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: ExpressionLocation.Partial) -> int:
+            def __call__(self, __v: int, __values: ExpressionLocation.Partial) -> int:
                 ...
 
         class OffsetValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: ExpressionLocation.Partial) -> int:
+            def __call__(self, __v: int, __values: ExpressionLocation.Partial) -> int:
                 ...
 
     @pydantic.root_validator
@@ -92,13 +92,13 @@ class ExpressionLocation(pydantic.BaseModel):
     @pydantic.validator("start")
     def _validate_start(cls, v: int, values: ExpressionLocation.Partial) -> int:
         for validator in ExpressionLocation.Validators._start_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("offset")
     def _validate_offset(cls, v: int, values: ExpressionLocation.Partial) -> int:
         for validator in ExpressionLocation.Validators._offset_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

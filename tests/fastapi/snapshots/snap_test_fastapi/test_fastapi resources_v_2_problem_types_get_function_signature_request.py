@@ -25,7 +25,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
                 ...
 
             @GetFunctionSignatureRequest.Validators.field("function_signature")
-            def validate_function_signature(v: FunctionSignature, values: GetFunctionSignatureRequest.Partial) -> FunctionSignature:
+            def validate_function_signature(function_signature: FunctionSignature, values: GetFunctionSignatureRequest.Partial) -> FunctionSignature:
                 ...
         """
 
@@ -64,7 +64,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
 
         class FunctionSignatureValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: FunctionSignature, *, values: GetFunctionSignatureRequest.Partial
+                self, __v: FunctionSignature, __values: GetFunctionSignatureRequest.Partial
             ) -> FunctionSignature:
                 ...
 
@@ -79,7 +79,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         cls, v: FunctionSignature, values: GetFunctionSignatureRequest.Partial
     ) -> FunctionSignature:
         for validator in GetFunctionSignatureRequest.Validators._function_signature_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

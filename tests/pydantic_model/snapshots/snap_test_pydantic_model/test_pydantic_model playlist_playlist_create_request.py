@@ -27,11 +27,11 @@ class PlaylistCreateRequest(pydantic.BaseModel):
                 ...
 
             @PlaylistCreateRequest.Validators.field("name")
-            def validate_name(v: str, values: PlaylistCreateRequest.Partial) -> str:
+            def validate_name(name: str, values: PlaylistCreateRequest.Partial) -> str:
                 ...
 
             @PlaylistCreateRequest.Validators.field("problems")
-            def validate_problems(v: typing.List[ProblemId], values: PlaylistCreateRequest.Partial) -> typing.List[ProblemId]:
+            def validate_problems(problems: typing.List[ProblemId], values: PlaylistCreateRequest.Partial) -> typing.List[ProblemId]:
                 ...
         """
 
@@ -78,12 +78,12 @@ class PlaylistCreateRequest(pydantic.BaseModel):
             return decorator
 
         class NameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: PlaylistCreateRequest.Partial) -> str:
+            def __call__(self, __v: str, __values: PlaylistCreateRequest.Partial) -> str:
                 ...
 
         class ProblemsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[ProblemId], *, values: PlaylistCreateRequest.Partial
+                self, __v: typing.List[ProblemId], __values: PlaylistCreateRequest.Partial
             ) -> typing.List[ProblemId]:
                 ...
 
@@ -96,7 +96,7 @@ class PlaylistCreateRequest(pydantic.BaseModel):
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: PlaylistCreateRequest.Partial) -> str:
         for validator in PlaylistCreateRequest.Validators._name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problems")
@@ -104,7 +104,7 @@ class PlaylistCreateRequest(pydantic.BaseModel):
         cls, v: typing.List[ProblemId], values: PlaylistCreateRequest.Partial
     ) -> typing.List[ProblemId]:
         for validator in PlaylistCreateRequest.Validators._problems_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

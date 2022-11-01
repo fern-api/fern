@@ -36,27 +36,27 @@ class ExecutionSessionState(pydantic.BaseModel):
                 ...
 
             @ExecutionSessionState.Validators.field("last_time_contacted")
-            def validate_last_time_contacted(v: typing.Optional[str], values: ExecutionSessionState.Partial) -> typing.Optional[str]:
+            def validate_last_time_contacted(last_time_contacted: typing.Optional[str], values: ExecutionSessionState.Partial) -> typing.Optional[str]:
                 ...
 
             @ExecutionSessionState.Validators.field("session_id")
-            def validate_session_id(v: str, values: ExecutionSessionState.Partial) -> str:
+            def validate_session_id(session_id: str, values: ExecutionSessionState.Partial) -> str:
                 ...
 
             @ExecutionSessionState.Validators.field("is_warm_instance")
-            def validate_is_warm_instance(v: bool, values: ExecutionSessionState.Partial) -> bool:
+            def validate_is_warm_instance(is_warm_instance: bool, values: ExecutionSessionState.Partial) -> bool:
                 ...
 
             @ExecutionSessionState.Validators.field("aws_task_id")
-            def validate_aws_task_id(v: typing.Optional[str], values: ExecutionSessionState.Partial) -> typing.Optional[str]:
+            def validate_aws_task_id(aws_task_id: typing.Optional[str], values: ExecutionSessionState.Partial) -> typing.Optional[str]:
                 ...
 
             @ExecutionSessionState.Validators.field("language")
-            def validate_language(v: Language, values: ExecutionSessionState.Partial) -> Language:
+            def validate_language(language: Language, values: ExecutionSessionState.Partial) -> Language:
                 ...
 
             @ExecutionSessionState.Validators.field("status")
-            def validate_status(v: ExecutionSessionStatus, values: ExecutionSessionState.Partial) -> ExecutionSessionStatus:
+            def validate_status(status: ExecutionSessionStatus, values: ExecutionSessionState.Partial) -> ExecutionSessionStatus:
                 ...
         """
 
@@ -158,31 +158,31 @@ class ExecutionSessionState(pydantic.BaseModel):
 
         class LastTimeContactedValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[str], *, values: ExecutionSessionState.Partial
+                self, __v: typing.Optional[str], __values: ExecutionSessionState.Partial
             ) -> typing.Optional[str]:
                 ...
 
         class SessionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: ExecutionSessionState.Partial) -> str:
+            def __call__(self, __v: str, __values: ExecutionSessionState.Partial) -> str:
                 ...
 
         class IsWarmInstanceValidator(typing_extensions.Protocol):
-            def __call__(self, v: bool, *, values: ExecutionSessionState.Partial) -> bool:
+            def __call__(self, __v: bool, __values: ExecutionSessionState.Partial) -> bool:
                 ...
 
         class AwsTaskIdValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[str], *, values: ExecutionSessionState.Partial
+                self, __v: typing.Optional[str], __values: ExecutionSessionState.Partial
             ) -> typing.Optional[str]:
                 ...
 
         class LanguageValidator(typing_extensions.Protocol):
-            def __call__(self, v: Language, *, values: ExecutionSessionState.Partial) -> Language:
+            def __call__(self, __v: Language, __values: ExecutionSessionState.Partial) -> Language:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: ExecutionSessionStatus, *, values: ExecutionSessionState.Partial
+                self, __v: ExecutionSessionStatus, __values: ExecutionSessionState.Partial
             ) -> ExecutionSessionStatus:
                 ...
 
@@ -197,19 +197,19 @@ class ExecutionSessionState(pydantic.BaseModel):
         cls, v: typing.Optional[str], values: ExecutionSessionState.Partial
     ) -> typing.Optional[str]:
         for validator in ExecutionSessionState.Validators._last_time_contacted_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("session_id")
     def _validate_session_id(cls, v: str, values: ExecutionSessionState.Partial) -> str:
         for validator in ExecutionSessionState.Validators._session_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("is_warm_instance")
     def _validate_is_warm_instance(cls, v: bool, values: ExecutionSessionState.Partial) -> bool:
         for validator in ExecutionSessionState.Validators._is_warm_instance_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("aws_task_id")
@@ -217,13 +217,13 @@ class ExecutionSessionState(pydantic.BaseModel):
         cls, v: typing.Optional[str], values: ExecutionSessionState.Partial
     ) -> typing.Optional[str]:
         for validator in ExecutionSessionState.Validators._aws_task_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("language")
     def _validate_language(cls, v: Language, values: ExecutionSessionState.Partial) -> Language:
         for validator in ExecutionSessionState.Validators._language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("status")
@@ -231,7 +231,7 @@ class ExecutionSessionState(pydantic.BaseModel):
         cls, v: ExecutionSessionStatus, values: ExecutionSessionState.Partial
     ) -> ExecutionSessionStatus:
         for validator in ExecutionSessionState.Validators._status_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

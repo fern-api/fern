@@ -23,7 +23,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
                 ...
 
             @GetTraceResponsesPageRequest.Validators.field("offset")
-            def validate_offset(v: typing.Optional[int], values: GetTraceResponsesPageRequest.Partial) -> typing.Optional[int]:
+            def validate_offset(offset: typing.Optional[int], values: GetTraceResponsesPageRequest.Partial) -> typing.Optional[int]:
                 ...
         """
 
@@ -61,7 +61,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
 
         class OffsetValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[int], *, values: GetTraceResponsesPageRequest.Partial
+                self, __v: typing.Optional[int], __values: GetTraceResponsesPageRequest.Partial
             ) -> typing.Optional[int]:
                 ...
 
@@ -76,7 +76,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         cls, v: typing.Optional[int], values: GetTraceResponsesPageRequest.Partial
     ) -> typing.Optional[int]:
         for validator in GetTraceResponsesPageRequest.Validators._offset_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

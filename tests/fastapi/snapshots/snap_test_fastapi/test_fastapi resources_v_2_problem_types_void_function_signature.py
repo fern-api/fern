@@ -25,7 +25,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
                 ...
 
             @VoidFunctionSignature.Validators.field("parameters")
-            def validate_parameters(v: typing.List[Parameter], values: VoidFunctionSignature.Partial) -> typing.List[Parameter]:
+            def validate_parameters(parameters: typing.List[Parameter], values: VoidFunctionSignature.Partial) -> typing.List[Parameter]:
                 ...
         """
 
@@ -61,7 +61,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
 
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[Parameter], *, values: VoidFunctionSignature.Partial
+                self, __v: typing.List[Parameter], __values: VoidFunctionSignature.Partial
             ) -> typing.List[Parameter]:
                 ...
 
@@ -76,7 +76,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
         cls, v: typing.List[Parameter], values: VoidFunctionSignature.Partial
     ) -> typing.List[Parameter]:
         for validator in VoidFunctionSignature.Validators._parameters_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

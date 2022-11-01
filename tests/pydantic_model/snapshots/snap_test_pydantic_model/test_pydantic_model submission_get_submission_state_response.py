@@ -33,19 +33,19 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
                 ...
 
             @GetSubmissionStateResponse.Validators.field("time_submitted")
-            def validate_time_submitted(v: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial) -> typing.Optional[dt.datetime]:
+            def validate_time_submitted(time_submitted: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial) -> typing.Optional[dt.datetime]:
                 ...
 
             @GetSubmissionStateResponse.Validators.field("submission")
-            def validate_submission(v: str, values: GetSubmissionStateResponse.Partial) -> str:
+            def validate_submission(submission: str, values: GetSubmissionStateResponse.Partial) -> str:
                 ...
 
             @GetSubmissionStateResponse.Validators.field("language")
-            def validate_language(v: Language, values: GetSubmissionStateResponse.Partial) -> Language:
+            def validate_language(language: Language, values: GetSubmissionStateResponse.Partial) -> Language:
                 ...
 
             @GetSubmissionStateResponse.Validators.field("submission_type_state")
-            def validate_submission_type_state(v: SubmissionTypeState, values: GetSubmissionStateResponse.Partial) -> SubmissionTypeState:
+            def validate_submission_type_state(submission_type_state: SubmissionTypeState, values: GetSubmissionStateResponse.Partial) -> SubmissionTypeState:
                 ...
         """
 
@@ -127,21 +127,21 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
 
         class TimeSubmittedValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[dt.datetime], *, values: GetSubmissionStateResponse.Partial
+                self, __v: typing.Optional[dt.datetime], __values: GetSubmissionStateResponse.Partial
             ) -> typing.Optional[dt.datetime]:
                 ...
 
         class SubmissionValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: GetSubmissionStateResponse.Partial) -> str:
+            def __call__(self, __v: str, __values: GetSubmissionStateResponse.Partial) -> str:
                 ...
 
         class LanguageValidator(typing_extensions.Protocol):
-            def __call__(self, v: Language, *, values: GetSubmissionStateResponse.Partial) -> Language:
+            def __call__(self, __v: Language, __values: GetSubmissionStateResponse.Partial) -> Language:
                 ...
 
         class SubmissionTypeStateValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: SubmissionTypeState, *, values: GetSubmissionStateResponse.Partial
+                self, __v: SubmissionTypeState, __values: GetSubmissionStateResponse.Partial
             ) -> SubmissionTypeState:
                 ...
 
@@ -156,19 +156,19 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         cls, v: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial
     ) -> typing.Optional[dt.datetime]:
         for validator in GetSubmissionStateResponse.Validators._time_submitted_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("submission")
     def _validate_submission(cls, v: str, values: GetSubmissionStateResponse.Partial) -> str:
         for validator in GetSubmissionStateResponse.Validators._submission_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("language")
     def _validate_language(cls, v: Language, values: GetSubmissionStateResponse.Partial) -> Language:
         for validator in GetSubmissionStateResponse.Validators._language_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("submission_type_state")
@@ -176,7 +176,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         cls, v: SubmissionTypeState, values: GetSubmissionStateResponse.Partial
     ) -> SubmissionTypeState:
         for validator in GetSubmissionStateResponse.Validators._submission_type_state_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

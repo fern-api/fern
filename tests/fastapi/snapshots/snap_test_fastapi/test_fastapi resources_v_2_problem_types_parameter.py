@@ -30,15 +30,15 @@ class Parameter(pydantic.BaseModel):
                 ...
 
             @Parameter.Validators.field("parameter_id")
-            def validate_parameter_id(v: ParameterId, values: Parameter.Partial) -> ParameterId:
+            def validate_parameter_id(parameter_id: ParameterId, values: Parameter.Partial) -> ParameterId:
                 ...
 
             @Parameter.Validators.field("name")
-            def validate_name(v: str, values: Parameter.Partial) -> str:
+            def validate_name(name: str, values: Parameter.Partial) -> str:
                 ...
 
             @Parameter.Validators.field("variable_type")
-            def validate_variable_type(v: VariableType, values: Parameter.Partial) -> VariableType:
+            def validate_variable_type(variable_type: VariableType, values: Parameter.Partial) -> VariableType:
                 ...
         """
 
@@ -89,15 +89,15 @@ class Parameter(pydantic.BaseModel):
             return decorator
 
         class ParameterIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: ParameterId, *, values: Parameter.Partial) -> ParameterId:
+            def __call__(self, __v: ParameterId, __values: Parameter.Partial) -> ParameterId:
                 ...
 
         class NameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: Parameter.Partial) -> str:
+            def __call__(self, __v: str, __values: Parameter.Partial) -> str:
                 ...
 
         class VariableTypeValidator(typing_extensions.Protocol):
-            def __call__(self, v: VariableType, *, values: Parameter.Partial) -> VariableType:
+            def __call__(self, __v: VariableType, __values: Parameter.Partial) -> VariableType:
                 ...
 
     @pydantic.root_validator
@@ -109,19 +109,19 @@ class Parameter(pydantic.BaseModel):
     @pydantic.validator("parameter_id")
     def _validate_parameter_id(cls, v: ParameterId, values: Parameter.Partial) -> ParameterId:
         for validator in Parameter.Validators._parameter_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: Parameter.Partial) -> str:
         for validator in Parameter.Validators._name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("variable_type")
     def _validate_variable_type(cls, v: VariableType, values: Parameter.Partial) -> VariableType:
         for validator in Parameter.Validators._variable_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

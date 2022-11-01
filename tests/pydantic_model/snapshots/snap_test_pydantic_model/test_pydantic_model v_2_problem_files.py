@@ -25,7 +25,7 @@ class Files(pydantic.BaseModel):
                 ...
 
             @Files.Validators.field("files")
-            def validate_files(v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
+            def validate_files(files: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
                 ...
         """
 
@@ -56,7 +56,7 @@ class Files(pydantic.BaseModel):
             return decorator
 
         class FilesValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.List[FileInfoV2], *, values: Files.Partial) -> typing.List[FileInfoV2]:
+            def __call__(self, __v: typing.List[FileInfoV2], __values: Files.Partial) -> typing.List[FileInfoV2]:
                 ...
 
     @pydantic.root_validator
@@ -68,7 +68,7 @@ class Files(pydantic.BaseModel):
     @pydantic.validator("files")
     def _validate_files(cls, v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
         for validator in Files.Validators._files_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

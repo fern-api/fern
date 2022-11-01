@@ -23,7 +23,7 @@ class DebugMapValue(pydantic.BaseModel):
                 ...
 
             @DebugMapValue.Validators.field("key_value_pairs")
-            def validate_key_value_pairs(v: typing.List[DebugKeyValuePairs], values: DebugMapValue.Partial) -> typing.List[DebugKeyValuePairs]:
+            def validate_key_value_pairs(key_value_pairs: typing.List[DebugKeyValuePairs], values: DebugMapValue.Partial) -> typing.List[DebugKeyValuePairs]:
                 ...
         """
 
@@ -57,7 +57,7 @@ class DebugMapValue(pydantic.BaseModel):
 
         class KeyValuePairsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[DebugKeyValuePairs], *, values: DebugMapValue.Partial
+                self, __v: typing.List[DebugKeyValuePairs], __values: DebugMapValue.Partial
             ) -> typing.List[DebugKeyValuePairs]:
                 ...
 
@@ -72,7 +72,7 @@ class DebugMapValue(pydantic.BaseModel):
         cls, v: typing.List[DebugKeyValuePairs], values: DebugMapValue.Partial
     ) -> typing.List[DebugKeyValuePairs]:
         for validator in DebugMapValue.Validators._key_value_pairs_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

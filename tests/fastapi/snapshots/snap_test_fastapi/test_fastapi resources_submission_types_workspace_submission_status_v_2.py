@@ -25,7 +25,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
                 ...
 
             @WorkspaceSubmissionStatusV2.Validators.field("updates")
-            def validate_updates(v: typing.List[WorkspaceSubmissionUpdate], values: WorkspaceSubmissionStatusV2.Partial) -> typing.List[WorkspaceSubmissionUpdate]:
+            def validate_updates(updates: typing.List[WorkspaceSubmissionUpdate], values: WorkspaceSubmissionStatusV2.Partial) -> typing.List[WorkspaceSubmissionUpdate]:
                 ...
         """
 
@@ -62,7 +62,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
 
         class UpdatesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[WorkspaceSubmissionUpdate], *, values: WorkspaceSubmissionStatusV2.Partial
+                self, __v: typing.List[WorkspaceSubmissionUpdate], __values: WorkspaceSubmissionStatusV2.Partial
             ) -> typing.List[WorkspaceSubmissionUpdate]:
                 ...
 
@@ -77,7 +77,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
         cls, v: typing.List[WorkspaceSubmissionUpdate], values: WorkspaceSubmissionStatusV2.Partial
     ) -> typing.List[WorkspaceSubmissionUpdate]:
         for validator in WorkspaceSubmissionStatusV2.Validators._updates_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

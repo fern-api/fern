@@ -23,7 +23,7 @@ class TestCaseExpects(pydantic.BaseModel):
                 ...
 
             @TestCaseExpects.Validators.field("expected_stdout")
-            def validate_expected_stdout(v: typing.Optional[str], values: TestCaseExpects.Partial) -> typing.Optional[str]:
+            def validate_expected_stdout(expected_stdout: typing.Optional[str], values: TestCaseExpects.Partial) -> typing.Optional[str]:
                 ...
         """
 
@@ -60,7 +60,7 @@ class TestCaseExpects(pydantic.BaseModel):
             return decorator
 
         class ExpectedStdoutValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.Optional[str], *, values: TestCaseExpects.Partial) -> typing.Optional[str]:
+            def __call__(self, __v: typing.Optional[str], __values: TestCaseExpects.Partial) -> typing.Optional[str]:
                 ...
 
     @pydantic.root_validator
@@ -74,7 +74,7 @@ class TestCaseExpects(pydantic.BaseModel):
         cls, v: typing.Optional[str], values: TestCaseExpects.Partial
     ) -> typing.Optional[str]:
         for validator in TestCaseExpects.Validators._expected_stdout_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

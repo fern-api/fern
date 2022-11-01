@@ -28,11 +28,11 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
                 ...
 
             @CustomTestCasesUnsupported.Validators.field("problem_id")
-            def validate_problem_id(v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
+            def validate_problem_id(problem_id: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
                 ...
 
             @CustomTestCasesUnsupported.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
                 ...
         """
 
@@ -85,11 +85,11 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
             return decorator
 
         class ProblemIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: ProblemId, *, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
+            def __call__(self, __v: ProblemId, __values: CustomTestCasesUnsupported.Partial) -> ProblemId:
                 ...
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
                 ...
 
     @pydantic.root_validator
@@ -101,13 +101,13 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
         for validator in CustomTestCasesUnsupported.Validators._problem_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
         for validator in CustomTestCasesUnsupported.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -23,7 +23,7 @@ class CompileError(pydantic.BaseModel):
                 ...
 
             @CompileError.Validators.field("message")
-            def validate_message(v: str, values: CompileError.Partial) -> str:
+            def validate_message(message: str, values: CompileError.Partial) -> str:
                 ...
         """
 
@@ -54,7 +54,7 @@ class CompileError(pydantic.BaseModel):
             return decorator
 
         class MessageValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: CompileError.Partial) -> str:
+            def __call__(self, __v: str, __values: CompileError.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -66,7 +66,7 @@ class CompileError(pydantic.BaseModel):
     @pydantic.validator("message")
     def _validate_message(cls, v: str, values: CompileError.Partial) -> str:
         for validator in CompileError.Validators._message_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

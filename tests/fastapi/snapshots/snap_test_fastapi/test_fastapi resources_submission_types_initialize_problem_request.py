@@ -27,11 +27,11 @@ class InitializeProblemRequest(pydantic.BaseModel):
                 ...
 
             @InitializeProblemRequest.Validators.field("problem_id")
-            def validate_problem_id(v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
+            def validate_problem_id(problem_id: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
                 ...
 
             @InitializeProblemRequest.Validators.field("problem_version")
-            def validate_problem_version(v: typing.Optional[int], values: InitializeProblemRequest.Partial) -> typing.Optional[int]:
+            def validate_problem_version(problem_version: typing.Optional[int], values: InitializeProblemRequest.Partial) -> typing.Optional[int]:
                 ...
         """
 
@@ -84,12 +84,12 @@ class InitializeProblemRequest(pydantic.BaseModel):
             return decorator
 
         class ProblemIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: ProblemId, *, values: InitializeProblemRequest.Partial) -> ProblemId:
+            def __call__(self, __v: ProblemId, __values: InitializeProblemRequest.Partial) -> ProblemId:
                 ...
 
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[int], *, values: InitializeProblemRequest.Partial
+                self, __v: typing.Optional[int], __values: InitializeProblemRequest.Partial
             ) -> typing.Optional[int]:
                 ...
 
@@ -102,7 +102,7 @@ class InitializeProblemRequest(pydantic.BaseModel):
     @pydantic.validator("problem_id")
     def _validate_problem_id(cls, v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
         for validator in InitializeProblemRequest.Validators._problem_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problem_version")
@@ -110,7 +110,7 @@ class InitializeProblemRequest(pydantic.BaseModel):
         cls, v: typing.Optional[int], values: InitializeProblemRequest.Partial
     ) -> typing.Optional[int]:
         for validator in InitializeProblemRequest.Validators._problem_version_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

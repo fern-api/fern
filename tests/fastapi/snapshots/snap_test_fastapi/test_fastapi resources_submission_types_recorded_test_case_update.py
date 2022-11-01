@@ -27,11 +27,11 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
                 ...
 
             @RecordedTestCaseUpdate.Validators.field("test_case_id")
-            def validate_test_case_id(v: TestCaseId, values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
+            def validate_test_case_id(test_case_id: TestCaseId, values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
                 ...
 
             @RecordedTestCaseUpdate.Validators.field("trace_responses_size")
-            def validate_trace_responses_size(v: int, values: RecordedTestCaseUpdate.Partial) -> int:
+            def validate_trace_responses_size(trace_responses_size: int, values: RecordedTestCaseUpdate.Partial) -> int:
                 ...
         """
 
@@ -84,11 +84,11 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
             return decorator
 
         class TestCaseIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: TestCaseId, *, values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
+            def __call__(self, __v: TestCaseId, __values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
                 ...
 
         class TraceResponsesSizeValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: RecordedTestCaseUpdate.Partial) -> int:
+            def __call__(self, __v: int, __values: RecordedTestCaseUpdate.Partial) -> int:
                 ...
 
     @pydantic.root_validator
@@ -100,13 +100,13 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
     @pydantic.validator("test_case_id")
     def _validate_test_case_id(cls, v: TestCaseId, values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
         for validator in RecordedTestCaseUpdate.Validators._test_case_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("trace_responses_size")
     def _validate_trace_responses_size(cls, v: int, values: RecordedTestCaseUpdate.Partial) -> int:
         for validator in RecordedTestCaseUpdate.Validators._trace_responses_size_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

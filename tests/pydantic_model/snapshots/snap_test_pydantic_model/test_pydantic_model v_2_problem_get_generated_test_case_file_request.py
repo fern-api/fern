@@ -28,11 +28,11 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
                 ...
 
             @GetGeneratedTestCaseFileRequest.Validators.field("template")
-            def validate_template(v: typing.Optional[TestCaseTemplate], values: GetGeneratedTestCaseFileRequest.Partial) -> typing.Optional[TestCaseTemplate]:
+            def validate_template(template: typing.Optional[TestCaseTemplate], values: GetGeneratedTestCaseFileRequest.Partial) -> typing.Optional[TestCaseTemplate]:
                 ...
 
             @GetGeneratedTestCaseFileRequest.Validators.field("test_case")
-            def validate_test_case(v: TestCaseV2, values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
+            def validate_test_case(test_case: TestCaseV2, values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
                 ...
         """
 
@@ -91,12 +91,12 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
 
         class TemplateValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[TestCaseTemplate], *, values: GetGeneratedTestCaseFileRequest.Partial
+                self, __v: typing.Optional[TestCaseTemplate], __values: GetGeneratedTestCaseFileRequest.Partial
             ) -> typing.Optional[TestCaseTemplate]:
                 ...
 
         class TestCaseValidator(typing_extensions.Protocol):
-            def __call__(self, v: TestCaseV2, *, values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
+            def __call__(self, __v: TestCaseV2, __values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
                 ...
 
     @pydantic.root_validator
@@ -110,13 +110,13 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         cls, v: typing.Optional[TestCaseTemplate], values: GetGeneratedTestCaseFileRequest.Partial
     ) -> typing.Optional[TestCaseTemplate]:
         for validator in GetGeneratedTestCaseFileRequest.Validators._template_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("test_case")
     def _validate_test_case(cls, v: TestCaseV2, values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
         for validator in GetGeneratedTestCaseFileRequest.Validators._test_case_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

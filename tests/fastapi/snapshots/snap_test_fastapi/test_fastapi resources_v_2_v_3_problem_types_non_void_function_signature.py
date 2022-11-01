@@ -28,11 +28,11 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
                 ...
 
             @NonVoidFunctionSignature.Validators.field("parameters")
-            def validate_parameters(v: typing.List[Parameter], values: NonVoidFunctionSignature.Partial) -> typing.List[Parameter]:
+            def validate_parameters(parameters: typing.List[Parameter], values: NonVoidFunctionSignature.Partial) -> typing.List[Parameter]:
                 ...
 
             @NonVoidFunctionSignature.Validators.field("return_type")
-            def validate_return_type(v: VariableType, values: NonVoidFunctionSignature.Partial) -> VariableType:
+            def validate_return_type(return_type: VariableType, values: NonVoidFunctionSignature.Partial) -> VariableType:
                 ...
         """
 
@@ -86,12 +86,12 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
 
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[Parameter], *, values: NonVoidFunctionSignature.Partial
+                self, __v: typing.List[Parameter], __values: NonVoidFunctionSignature.Partial
             ) -> typing.List[Parameter]:
                 ...
 
         class ReturnTypeValidator(typing_extensions.Protocol):
-            def __call__(self, v: VariableType, *, values: NonVoidFunctionSignature.Partial) -> VariableType:
+            def __call__(self, __v: VariableType, __values: NonVoidFunctionSignature.Partial) -> VariableType:
                 ...
 
     @pydantic.root_validator
@@ -105,13 +105,13 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         cls, v: typing.List[Parameter], values: NonVoidFunctionSignature.Partial
     ) -> typing.List[Parameter]:
         for validator in NonVoidFunctionSignature.Validators._parameters_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("return_type")
     def _validate_return_type(cls, v: VariableType, values: NonVoidFunctionSignature.Partial) -> VariableType:
         for validator in NonVoidFunctionSignature.Validators._return_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -7,6 +7,9 @@ from .validator_generator import ValidatorGenerator
 
 
 class FieldValidatorGenerator(ValidatorGenerator):
+    # Adding this prefix allows users to customize parameter names
+    _CALLABLE_PARAMETER_PREFIX = "__"
+
     _DECORATOR_FIELD_NAME_ARGUMENT = "field_name"
     _VALIDATOR_PARAMETER_NAME = "validator"
 
@@ -41,12 +44,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
                     ),
                     args=[
                         AST.Expression(field_value_parameter_name),
-                    ],
-                    kwargs=[
-                        (
-                            PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
-                            AST.Expression(PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME),
-                        )
+                        AST.Expression(PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME),
                     ],
                 )
             )
@@ -96,9 +94,14 @@ class FieldValidatorGenerator(ValidatorGenerator):
             writer.write(".".join(reference_to_decorator))
             writer.write_line(f'("{field_name}")')
 
-            writer.write(f"def validate_{field_name}({PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME}: ")
+            writer.write(f"def validate_{field_name}({field_name}: ")
             writer.write_node(field_type)
-            writer.write(f", {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}: ")
+            values_parameter_name = (
+                PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME
+                if field_name != PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME
+                else "other_fields"
+            )
+            writer.write(f", {values_parameter_name}: ")
             writer.write_node(AST.ReferenceNode(self._model.get_reference_to_partial_class()))
 
             writer.write(") -> ")
@@ -125,13 +128,13 @@ class FieldValidatorGenerator(ValidatorGenerator):
                 signature=AST.FunctionSignature(
                     parameters=[
                         AST.FunctionParameter(
-                            name=PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
+                            name=FieldValidatorGenerator._CALLABLE_PARAMETER_PREFIX
+                            + PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
                             type_hint=self.field.type_hint,
                         ),
-                    ],
-                    named_parameters=[
                         AST.FunctionParameter(
-                            name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
+                            name=FieldValidatorGenerator._CALLABLE_PARAMETER_PREFIX
+                            + PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
                             type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
                         ),
                     ],

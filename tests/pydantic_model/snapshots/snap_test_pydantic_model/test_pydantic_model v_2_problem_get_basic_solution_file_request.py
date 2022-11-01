@@ -27,11 +27,11 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
                 ...
 
             @GetBasicSolutionFileRequest.Validators.field("method_name")
-            def validate_method_name(v: str, values: GetBasicSolutionFileRequest.Partial) -> str:
+            def validate_method_name(method_name: str, values: GetBasicSolutionFileRequest.Partial) -> str:
                 ...
 
             @GetBasicSolutionFileRequest.Validators.field("signature")
-            def validate_signature(v: NonVoidFunctionSignature, values: GetBasicSolutionFileRequest.Partial) -> NonVoidFunctionSignature:
+            def validate_signature(signature: NonVoidFunctionSignature, values: GetBasicSolutionFileRequest.Partial) -> NonVoidFunctionSignature:
                 ...
         """
 
@@ -84,12 +84,12 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
             return decorator
 
         class MethodNameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: GetBasicSolutionFileRequest.Partial) -> str:
+            def __call__(self, __v: str, __values: GetBasicSolutionFileRequest.Partial) -> str:
                 ...
 
         class SignatureValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: NonVoidFunctionSignature, *, values: GetBasicSolutionFileRequest.Partial
+                self, __v: NonVoidFunctionSignature, __values: GetBasicSolutionFileRequest.Partial
             ) -> NonVoidFunctionSignature:
                 ...
 
@@ -102,7 +102,7 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
     @pydantic.validator("method_name")
     def _validate_method_name(cls, v: str, values: GetBasicSolutionFileRequest.Partial) -> str:
         for validator in GetBasicSolutionFileRequest.Validators._method_name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("signature")
@@ -110,7 +110,7 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         cls, v: NonVoidFunctionSignature, values: GetBasicSolutionFileRequest.Partial
     ) -> NonVoidFunctionSignature:
         for validator in GetBasicSolutionFileRequest.Validators._signature_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

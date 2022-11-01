@@ -25,7 +25,7 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
                 ...
 
             @TestCaseImplementationDescription.Validators.field("boards")
-            def validate_boards(v: typing.List[TestCaseImplementationDescriptionBoard], values: TestCaseImplementationDescription.Partial) -> typing.List[TestCaseImplementationDescriptionBoard]:
+            def validate_boards(boards: typing.List[TestCaseImplementationDescriptionBoard], values: TestCaseImplementationDescription.Partial) -> typing.List[TestCaseImplementationDescriptionBoard]:
                 ...
         """
 
@@ -70,9 +70,8 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         class BoardsValidator(typing_extensions.Protocol):
             def __call__(
                 self,
-                v: typing.List[TestCaseImplementationDescriptionBoard],
-                *,
-                values: TestCaseImplementationDescription.Partial,
+                __v: typing.List[TestCaseImplementationDescriptionBoard],
+                __values: TestCaseImplementationDescription.Partial,
             ) -> typing.List[TestCaseImplementationDescriptionBoard]:
                 ...
 
@@ -87,7 +86,7 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         cls, v: typing.List[TestCaseImplementationDescriptionBoard], values: TestCaseImplementationDescription.Partial
     ) -> typing.List[TestCaseImplementationDescriptionBoard]:
         for validator in TestCaseImplementationDescription.Validators._boards_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

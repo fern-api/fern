@@ -28,11 +28,11 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
                 ...
 
             @VoidFunctionDefinitionThatTakesActualResult.Validators.field("additional_parameters")
-            def validate_additional_parameters(v: typing.List[Parameter], values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> typing.List[Parameter]:
+            def validate_additional_parameters(additional_parameters: typing.List[Parameter], values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> typing.List[Parameter]:
                 ...
 
             @VoidFunctionDefinitionThatTakesActualResult.Validators.field("code")
-            def validate_code(v: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> FunctionImplementationForMultipleLanguages:
+            def validate_code(code: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> FunctionImplementationForMultipleLanguages:
                 ...
         """
 
@@ -97,16 +97,15 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
 
         class AdditionalParametersValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[Parameter], *, values: VoidFunctionDefinitionThatTakesActualResult.Partial
+                self, __v: typing.List[Parameter], __values: VoidFunctionDefinitionThatTakesActualResult.Partial
             ) -> typing.List[Parameter]:
                 ...
 
         class CodeValidator(typing_extensions.Protocol):
             def __call__(
                 self,
-                v: FunctionImplementationForMultipleLanguages,
-                *,
-                values: VoidFunctionDefinitionThatTakesActualResult.Partial,
+                __v: FunctionImplementationForMultipleLanguages,
+                __values: VoidFunctionDefinitionThatTakesActualResult.Partial,
             ) -> FunctionImplementationForMultipleLanguages:
                 ...
 
@@ -123,7 +122,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         cls, v: typing.List[Parameter], values: VoidFunctionDefinitionThatTakesActualResult.Partial
     ) -> typing.List[Parameter]:
         for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._additional_parameters_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("code")
@@ -131,7 +130,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         cls, v: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinitionThatTakesActualResult.Partial
     ) -> FunctionImplementationForMultipleLanguages:
         for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._code_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

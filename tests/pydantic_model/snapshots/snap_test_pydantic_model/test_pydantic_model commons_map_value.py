@@ -23,7 +23,7 @@ class MapValue(pydantic.BaseModel):
                 ...
 
             @MapValue.Validators.field("key_value_pairs")
-            def validate_key_value_pairs(v: typing.List[KeyValuePair], values: MapValue.Partial) -> typing.List[KeyValuePair]:
+            def validate_key_value_pairs(key_value_pairs: typing.List[KeyValuePair], values: MapValue.Partial) -> typing.List[KeyValuePair]:
                 ...
         """
 
@@ -54,7 +54,7 @@ class MapValue(pydantic.BaseModel):
             return decorator
 
         class KeyValuePairsValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.List[KeyValuePair], *, values: MapValue.Partial) -> typing.List[KeyValuePair]:
+            def __call__(self, __v: typing.List[KeyValuePair], __values: MapValue.Partial) -> typing.List[KeyValuePair]:
                 ...
 
     @pydantic.root_validator
@@ -68,7 +68,7 @@ class MapValue(pydantic.BaseModel):
         cls, v: typing.List[KeyValuePair], values: MapValue.Partial
     ) -> typing.List[KeyValuePair]:
         for validator in MapValue.Validators._key_value_pairs_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

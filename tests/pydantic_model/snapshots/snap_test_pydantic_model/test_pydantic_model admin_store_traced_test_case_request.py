@@ -28,11 +28,11 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
                 ...
 
             @StoreTracedTestCaseRequest.Validators.field("result")
-            def validate_result(v: TestCaseResultWithStdout, values: StoreTracedTestCaseRequest.Partial) -> TestCaseResultWithStdout:
+            def validate_result(result: TestCaseResultWithStdout, values: StoreTracedTestCaseRequest.Partial) -> TestCaseResultWithStdout:
                 ...
 
             @StoreTracedTestCaseRequest.Validators.field("trace_responses")
-            def validate_trace_responses(v: typing.List[TraceResponse], values: StoreTracedTestCaseRequest.Partial) -> typing.List[TraceResponse]:
+            def validate_trace_responses(trace_responses: typing.List[TraceResponse], values: StoreTracedTestCaseRequest.Partial) -> typing.List[TraceResponse]:
                 ...
         """
 
@@ -84,13 +84,13 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
 
         class ResultValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: TestCaseResultWithStdout, *, values: StoreTracedTestCaseRequest.Partial
+                self, __v: TestCaseResultWithStdout, __values: StoreTracedTestCaseRequest.Partial
             ) -> TestCaseResultWithStdout:
                 ...
 
         class TraceResponsesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TraceResponse], *, values: StoreTracedTestCaseRequest.Partial
+                self, __v: typing.List[TraceResponse], __values: StoreTracedTestCaseRequest.Partial
             ) -> typing.List[TraceResponse]:
                 ...
 
@@ -105,7 +105,7 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         cls, v: TestCaseResultWithStdout, values: StoreTracedTestCaseRequest.Partial
     ) -> TestCaseResultWithStdout:
         for validator in StoreTracedTestCaseRequest.Validators._result_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("trace_responses")
@@ -113,7 +113,7 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         cls, v: typing.List[TraceResponse], values: StoreTracedTestCaseRequest.Partial
     ) -> typing.List[TraceResponse]:
         for validator in StoreTracedTestCaseRequest.Validators._trace_responses_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

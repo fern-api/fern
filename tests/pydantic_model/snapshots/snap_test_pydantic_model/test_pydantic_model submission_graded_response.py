@@ -28,11 +28,11 @@ class GradedResponse(pydantic.BaseModel):
                 ...
 
             @GradedResponse.Validators.field("submission_id")
-            def validate_submission_id(v: SubmissionId, values: GradedResponse.Partial) -> SubmissionId:
+            def validate_submission_id(submission_id: SubmissionId, values: GradedResponse.Partial) -> SubmissionId:
                 ...
 
             @GradedResponse.Validators.field("test_cases")
-            def validate_test_cases(v: typing.Dict[str, TestCaseResultWithStdout], values: GradedResponse.Partial) -> typing.Dict[str, TestCaseResultWithStdout]:
+            def validate_test_cases(test_cases: typing.Dict[str, TestCaseResultWithStdout], values: GradedResponse.Partial) -> typing.Dict[str, TestCaseResultWithStdout]:
                 ...
         """
 
@@ -79,12 +79,12 @@ class GradedResponse(pydantic.BaseModel):
             return decorator
 
         class SubmissionIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: SubmissionId, *, values: GradedResponse.Partial) -> SubmissionId:
+            def __call__(self, __v: SubmissionId, __values: GradedResponse.Partial) -> SubmissionId:
                 ...
 
         class TestCasesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[str, TestCaseResultWithStdout], *, values: GradedResponse.Partial
+                self, __v: typing.Dict[str, TestCaseResultWithStdout], __values: GradedResponse.Partial
             ) -> typing.Dict[str, TestCaseResultWithStdout]:
                 ...
 
@@ -97,7 +97,7 @@ class GradedResponse(pydantic.BaseModel):
     @pydantic.validator("submission_id")
     def _validate_submission_id(cls, v: SubmissionId, values: GradedResponse.Partial) -> SubmissionId:
         for validator in GradedResponse.Validators._submission_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("test_cases")
@@ -105,7 +105,7 @@ class GradedResponse(pydantic.BaseModel):
         cls, v: typing.Dict[str, TestCaseResultWithStdout], values: GradedResponse.Partial
     ) -> typing.Dict[str, TestCaseResultWithStdout]:
         for validator in GradedResponse.Validators._test_cases_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

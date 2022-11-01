@@ -27,11 +27,11 @@ class StackInformation(pydantic.BaseModel):
                 ...
 
             @StackInformation.Validators.field("num_stack_frames")
-            def validate_num_stack_frames(v: int, values: StackInformation.Partial) -> int:
+            def validate_num_stack_frames(num_stack_frames: int, values: StackInformation.Partial) -> int:
                 ...
 
             @StackInformation.Validators.field("top_stack_frame")
-            def validate_top_stack_frame(v: typing.Optional[StackFrame], values: StackInformation.Partial) -> typing.Optional[StackFrame]:
+            def validate_top_stack_frame(top_stack_frame: typing.Optional[StackFrame], values: StackInformation.Partial) -> typing.Optional[StackFrame]:
                 ...
         """
 
@@ -82,12 +82,12 @@ class StackInformation(pydantic.BaseModel):
             return decorator
 
         class NumStackFramesValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: StackInformation.Partial) -> int:
+            def __call__(self, __v: int, __values: StackInformation.Partial) -> int:
                 ...
 
         class TopStackFrameValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[StackFrame], *, values: StackInformation.Partial
+                self, __v: typing.Optional[StackFrame], __values: StackInformation.Partial
             ) -> typing.Optional[StackFrame]:
                 ...
 
@@ -100,7 +100,7 @@ class StackInformation(pydantic.BaseModel):
     @pydantic.validator("num_stack_frames")
     def _validate_num_stack_frames(cls, v: int, values: StackInformation.Partial) -> int:
         for validator in StackInformation.Validators._num_stack_frames_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("top_stack_frame")
@@ -108,7 +108,7 @@ class StackInformation(pydantic.BaseModel):
         cls, v: typing.Optional[StackFrame], values: StackInformation.Partial
     ) -> typing.Optional[StackFrame]:
         for validator in StackInformation.Validators._top_stack_frame_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

@@ -26,7 +26,7 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
                 ...
 
             @WorkspaceStarterFilesResponse.Validators.field("files")
-            def validate_files(v: typing.Dict[Language, WorkspaceFiles], values: WorkspaceStarterFilesResponse.Partial) -> typing.Dict[Language, WorkspaceFiles]:
+            def validate_files(files: typing.Dict[Language, WorkspaceFiles], values: WorkspaceStarterFilesResponse.Partial) -> typing.Dict[Language, WorkspaceFiles]:
                 ...
         """
 
@@ -64,7 +64,7 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
 
         class FilesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[Language, WorkspaceFiles], *, values: WorkspaceStarterFilesResponse.Partial
+                self, __v: typing.Dict[Language, WorkspaceFiles], __values: WorkspaceStarterFilesResponse.Partial
             ) -> typing.Dict[Language, WorkspaceFiles]:
                 ...
 
@@ -79,7 +79,7 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
         cls, v: typing.Dict[Language, WorkspaceFiles], values: WorkspaceStarterFilesResponse.Partial
     ) -> typing.Dict[Language, WorkspaceFiles]:
         for validator in WorkspaceStarterFilesResponse.Validators._files_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

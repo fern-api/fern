@@ -31,19 +31,19 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
                 ...
 
             @BinaryTreeNodeValue.Validators.field("node_id")
-            def validate_node_id(v: NodeId, values: BinaryTreeNodeValue.Partial) -> NodeId:
+            def validate_node_id(node_id: NodeId, values: BinaryTreeNodeValue.Partial) -> NodeId:
                 ...
 
             @BinaryTreeNodeValue.Validators.field("val")
-            def validate_val(v: float, values: BinaryTreeNodeValue.Partial) -> float:
+            def validate_val(val: float, values: BinaryTreeNodeValue.Partial) -> float:
                 ...
 
             @BinaryTreeNodeValue.Validators.field("right")
-            def validate_right(v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial) -> typing.Optional[NodeId]:
+            def validate_right(right: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial) -> typing.Optional[NodeId]:
                 ...
 
             @BinaryTreeNodeValue.Validators.field("left")
-            def validate_left(v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial) -> typing.Optional[NodeId]:
+            def validate_left(left: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial) -> typing.Optional[NodeId]:
                 ...
         """
 
@@ -114,22 +114,22 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
             return decorator
 
         class NodeIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: NodeId, *, values: BinaryTreeNodeValue.Partial) -> NodeId:
+            def __call__(self, __v: NodeId, __values: BinaryTreeNodeValue.Partial) -> NodeId:
                 ...
 
         class ValValidator(typing_extensions.Protocol):
-            def __call__(self, v: float, *, values: BinaryTreeNodeValue.Partial) -> float:
+            def __call__(self, __v: float, __values: BinaryTreeNodeValue.Partial) -> float:
                 ...
 
         class RightValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[NodeId], *, values: BinaryTreeNodeValue.Partial
+                self, __v: typing.Optional[NodeId], __values: BinaryTreeNodeValue.Partial
             ) -> typing.Optional[NodeId]:
                 ...
 
         class LeftValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[NodeId], *, values: BinaryTreeNodeValue.Partial
+                self, __v: typing.Optional[NodeId], __values: BinaryTreeNodeValue.Partial
             ) -> typing.Optional[NodeId]:
                 ...
 
@@ -142,13 +142,13 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
     @pydantic.validator("node_id")
     def _validate_node_id(cls, v: NodeId, values: BinaryTreeNodeValue.Partial) -> NodeId:
         for validator in BinaryTreeNodeValue.Validators._node_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("val")
     def _validate_val(cls, v: float, values: BinaryTreeNodeValue.Partial) -> float:
         for validator in BinaryTreeNodeValue.Validators._val_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("right")
@@ -156,13 +156,13 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial
     ) -> typing.Optional[NodeId]:
         for validator in BinaryTreeNodeValue.Validators._right_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("left")
     def _validate_left(cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial) -> typing.Optional[NodeId]:
         for validator in BinaryTreeNodeValue.Validators._left_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

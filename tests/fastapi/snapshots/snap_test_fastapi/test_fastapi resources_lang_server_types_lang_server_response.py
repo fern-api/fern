@@ -23,7 +23,7 @@ class LangServerResponse(pydantic.BaseModel):
                 ...
 
             @LangServerResponse.Validators.field("response")
-            def validate_response(v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
+            def validate_response(response: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
                 ...
         """
 
@@ -58,7 +58,7 @@ class LangServerResponse(pydantic.BaseModel):
             return decorator
 
         class ResponseValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.Any, *, values: LangServerResponse.Partial) -> typing.Any:
+            def __call__(self, __v: typing.Any, __values: LangServerResponse.Partial) -> typing.Any:
                 ...
 
     @pydantic.root_validator
@@ -70,7 +70,7 @@ class LangServerResponse(pydantic.BaseModel):
     @pydantic.validator("response")
     def _validate_response(cls, v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
         for validator in LangServerResponse.Validators._response_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

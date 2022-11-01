@@ -42,31 +42,31 @@ class CreateProblemRequest(pydantic.BaseModel):
                 ...
 
             @CreateProblemRequest.Validators.field("problem_name")
-            def validate_problem_name(v: str, values: CreateProblemRequest.Partial) -> str:
+            def validate_problem_name(problem_name: str, values: CreateProblemRequest.Partial) -> str:
                 ...
 
             @CreateProblemRequest.Validators.field("problem_description")
-            def validate_problem_description(v: ProblemDescription, values: CreateProblemRequest.Partial) -> ProblemDescription:
+            def validate_problem_description(problem_description: ProblemDescription, values: CreateProblemRequest.Partial) -> ProblemDescription:
                 ...
 
             @CreateProblemRequest.Validators.field("files")
-            def validate_files(v: typing.Dict[Language, ProblemFiles], values: CreateProblemRequest.Partial) -> typing.Dict[Language, ProblemFiles]:
+            def validate_files(files: typing.Dict[Language, ProblemFiles], values: CreateProblemRequest.Partial) -> typing.Dict[Language, ProblemFiles]:
                 ...
 
             @CreateProblemRequest.Validators.field("input_params")
-            def validate_input_params(v: typing.List[VariableTypeAndName], values: CreateProblemRequest.Partial) -> typing.List[VariableTypeAndName]:
+            def validate_input_params(input_params: typing.List[VariableTypeAndName], values: CreateProblemRequest.Partial) -> typing.List[VariableTypeAndName]:
                 ...
 
             @CreateProblemRequest.Validators.field("output_type")
-            def validate_output_type(v: VariableType, values: CreateProblemRequest.Partial) -> VariableType:
+            def validate_output_type(output_type: VariableType, values: CreateProblemRequest.Partial) -> VariableType:
                 ...
 
             @CreateProblemRequest.Validators.field("testcases")
-            def validate_testcases(v: typing.List[TestCaseWithExpectedResult], values: CreateProblemRequest.Partial) -> typing.List[TestCaseWithExpectedResult]:
+            def validate_testcases(testcases: typing.List[TestCaseWithExpectedResult], values: CreateProblemRequest.Partial) -> typing.List[TestCaseWithExpectedResult]:
                 ...
 
             @CreateProblemRequest.Validators.field("method_name")
-            def validate_method_name(v: str, values: CreateProblemRequest.Partial) -> str:
+            def validate_method_name(method_name: str, values: CreateProblemRequest.Partial) -> str:
                 ...
         """
 
@@ -180,37 +180,37 @@ class CreateProblemRequest(pydantic.BaseModel):
             return decorator
 
         class ProblemNameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: CreateProblemRequest.Partial) -> str:
+            def __call__(self, __v: str, __values: CreateProblemRequest.Partial) -> str:
                 ...
 
         class ProblemDescriptionValidator(typing_extensions.Protocol):
-            def __call__(self, v: ProblemDescription, *, values: CreateProblemRequest.Partial) -> ProblemDescription:
+            def __call__(self, __v: ProblemDescription, __values: CreateProblemRequest.Partial) -> ProblemDescription:
                 ...
 
         class FilesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[Language, ProblemFiles], *, values: CreateProblemRequest.Partial
+                self, __v: typing.Dict[Language, ProblemFiles], __values: CreateProblemRequest.Partial
             ) -> typing.Dict[Language, ProblemFiles]:
                 ...
 
         class InputParamsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[VariableTypeAndName], *, values: CreateProblemRequest.Partial
+                self, __v: typing.List[VariableTypeAndName], __values: CreateProblemRequest.Partial
             ) -> typing.List[VariableTypeAndName]:
                 ...
 
         class OutputTypeValidator(typing_extensions.Protocol):
-            def __call__(self, v: VariableType, *, values: CreateProblemRequest.Partial) -> VariableType:
+            def __call__(self, __v: VariableType, __values: CreateProblemRequest.Partial) -> VariableType:
                 ...
 
         class TestcasesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[TestCaseWithExpectedResult], *, values: CreateProblemRequest.Partial
+                self, __v: typing.List[TestCaseWithExpectedResult], __values: CreateProblemRequest.Partial
             ) -> typing.List[TestCaseWithExpectedResult]:
                 ...
 
         class MethodNameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: CreateProblemRequest.Partial) -> str:
+            def __call__(self, __v: str, __values: CreateProblemRequest.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -222,7 +222,7 @@ class CreateProblemRequest(pydantic.BaseModel):
     @pydantic.validator("problem_name")
     def _validate_problem_name(cls, v: str, values: CreateProblemRequest.Partial) -> str:
         for validator in CreateProblemRequest.Validators._problem_name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("problem_description")
@@ -230,7 +230,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         cls, v: ProblemDescription, values: CreateProblemRequest.Partial
     ) -> ProblemDescription:
         for validator in CreateProblemRequest.Validators._problem_description_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("files")
@@ -238,7 +238,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         cls, v: typing.Dict[Language, ProblemFiles], values: CreateProblemRequest.Partial
     ) -> typing.Dict[Language, ProblemFiles]:
         for validator in CreateProblemRequest.Validators._files_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("input_params")
@@ -246,13 +246,13 @@ class CreateProblemRequest(pydantic.BaseModel):
         cls, v: typing.List[VariableTypeAndName], values: CreateProblemRequest.Partial
     ) -> typing.List[VariableTypeAndName]:
         for validator in CreateProblemRequest.Validators._input_params_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("output_type")
     def _validate_output_type(cls, v: VariableType, values: CreateProblemRequest.Partial) -> VariableType:
         for validator in CreateProblemRequest.Validators._output_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("testcases")
@@ -260,13 +260,13 @@ class CreateProblemRequest(pydantic.BaseModel):
         cls, v: typing.List[TestCaseWithExpectedResult], values: CreateProblemRequest.Partial
     ) -> typing.List[TestCaseWithExpectedResult]:
         for validator in CreateProblemRequest.Validators._testcases_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("method_name")
     def _validate_method_name(cls, v: str, values: CreateProblemRequest.Partial) -> str:
         for validator in CreateProblemRequest.Validators._method_name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

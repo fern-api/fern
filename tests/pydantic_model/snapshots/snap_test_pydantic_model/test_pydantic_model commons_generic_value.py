@@ -25,11 +25,11 @@ class GenericValue(pydantic.BaseModel):
                 ...
 
             @GenericValue.Validators.field("stringified_type")
-            def validate_stringified_type(v: typing.Optional[str], values: GenericValue.Partial) -> typing.Optional[str]:
+            def validate_stringified_type(stringified_type: typing.Optional[str], values: GenericValue.Partial) -> typing.Optional[str]:
                 ...
 
             @GenericValue.Validators.field("stringified_value")
-            def validate_stringified_value(v: str, values: GenericValue.Partial) -> str:
+            def validate_stringified_value(stringified_value: str, values: GenericValue.Partial) -> str:
                 ...
         """
 
@@ -78,11 +78,11 @@ class GenericValue(pydantic.BaseModel):
             return decorator
 
         class StringifiedTypeValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.Optional[str], *, values: GenericValue.Partial) -> typing.Optional[str]:
+            def __call__(self, __v: typing.Optional[str], __values: GenericValue.Partial) -> typing.Optional[str]:
                 ...
 
         class StringifiedValueValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: GenericValue.Partial) -> str:
+            def __call__(self, __v: str, __values: GenericValue.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -94,13 +94,13 @@ class GenericValue(pydantic.BaseModel):
     @pydantic.validator("stringified_type")
     def _validate_stringified_type(cls, v: typing.Optional[str], values: GenericValue.Partial) -> typing.Optional[str]:
         for validator in GenericValue.Validators._stringified_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stringified_value")
     def _validate_stringified_value(cls, v: str, values: GenericValue.Partial) -> str:
         for validator in GenericValue.Validators._stringified_value_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

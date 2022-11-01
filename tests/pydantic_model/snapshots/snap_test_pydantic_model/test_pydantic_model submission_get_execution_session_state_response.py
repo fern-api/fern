@@ -29,15 +29,15 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 ...
 
             @GetExecutionSessionStateResponse.Validators.field("states")
-            def validate_states(v: typing.Dict[str, ExecutionSessionState], values: GetExecutionSessionStateResponse.Partial) -> typing.Dict[str, ExecutionSessionState]:
+            def validate_states(states: typing.Dict[str, ExecutionSessionState], values: GetExecutionSessionStateResponse.Partial) -> typing.Dict[str, ExecutionSessionState]:
                 ...
 
             @GetExecutionSessionStateResponse.Validators.field("num_warming_instances")
-            def validate_num_warming_instances(v: typing.Optional[int], values: GetExecutionSessionStateResponse.Partial) -> typing.Optional[int]:
+            def validate_num_warming_instances(num_warming_instances: typing.Optional[int], values: GetExecutionSessionStateResponse.Partial) -> typing.Optional[int]:
                 ...
 
             @GetExecutionSessionStateResponse.Validators.field("warming_session_ids")
-            def validate_warming_session_ids(v: typing.List[str], values: GetExecutionSessionStateResponse.Partial) -> typing.List[str]:
+            def validate_warming_session_ids(warming_session_ids: typing.List[str], values: GetExecutionSessionStateResponse.Partial) -> typing.List[str]:
                 ...
         """
 
@@ -111,19 +111,19 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
 
         class StatesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Dict[str, ExecutionSessionState], *, values: GetExecutionSessionStateResponse.Partial
+                self, __v: typing.Dict[str, ExecutionSessionState], __values: GetExecutionSessionStateResponse.Partial
             ) -> typing.Dict[str, ExecutionSessionState]:
                 ...
 
         class NumWarmingInstancesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.Optional[int], *, values: GetExecutionSessionStateResponse.Partial
+                self, __v: typing.Optional[int], __values: GetExecutionSessionStateResponse.Partial
             ) -> typing.Optional[int]:
                 ...
 
         class WarmingSessionIdsValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[str], *, values: GetExecutionSessionStateResponse.Partial
+                self, __v: typing.List[str], __values: GetExecutionSessionStateResponse.Partial
             ) -> typing.List[str]:
                 ...
 
@@ -138,7 +138,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         cls, v: typing.Dict[str, ExecutionSessionState], values: GetExecutionSessionStateResponse.Partial
     ) -> typing.Dict[str, ExecutionSessionState]:
         for validator in GetExecutionSessionStateResponse.Validators._states_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("num_warming_instances")
@@ -146,7 +146,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         cls, v: typing.Optional[int], values: GetExecutionSessionStateResponse.Partial
     ) -> typing.Optional[int]:
         for validator in GetExecutionSessionStateResponse.Validators._num_warming_instances_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("warming_session_ids")
@@ -154,7 +154,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         cls, v: typing.List[str], values: GetExecutionSessionStateResponse.Partial
     ) -> typing.List[str]:
         for validator in GetExecutionSessionStateResponse.Validators._warming_session_ids_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

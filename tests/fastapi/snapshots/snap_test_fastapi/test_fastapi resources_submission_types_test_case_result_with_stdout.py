@@ -27,11 +27,11 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
                 ...
 
             @TestCaseResultWithStdout.Validators.field("result")
-            def validate_result(v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
+            def validate_result(result: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
                 ...
 
             @TestCaseResultWithStdout.Validators.field("stdout")
-            def validate_stdout(v: str, values: TestCaseResultWithStdout.Partial) -> str:
+            def validate_stdout(stdout: str, values: TestCaseResultWithStdout.Partial) -> str:
                 ...
         """
 
@@ -78,11 +78,11 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
             return decorator
 
         class ResultValidator(typing_extensions.Protocol):
-            def __call__(self, v: TestCaseResult, *, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
+            def __call__(self, __v: TestCaseResult, __values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: TestCaseResultWithStdout.Partial) -> str:
+            def __call__(self, __v: str, __values: TestCaseResultWithStdout.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -94,13 +94,13 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
     @pydantic.validator("result")
     def _validate_result(cls, v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
         for validator in TestCaseResultWithStdout.Validators._result_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("stdout")
     def _validate_stdout(cls, v: str, values: TestCaseResultWithStdout.Partial) -> str:
         for validator in TestCaseResultWithStdout.Validators._stdout_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

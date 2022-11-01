@@ -29,15 +29,15 @@ class StackFrame(pydantic.BaseModel):
                 ...
 
             @StackFrame.Validators.field("method_name")
-            def validate_method_name(v: str, values: StackFrame.Partial) -> str:
+            def validate_method_name(method_name: str, values: StackFrame.Partial) -> str:
                 ...
 
             @StackFrame.Validators.field("line_number")
-            def validate_line_number(v: int, values: StackFrame.Partial) -> int:
+            def validate_line_number(line_number: int, values: StackFrame.Partial) -> int:
                 ...
 
             @StackFrame.Validators.field("scopes")
-            def validate_scopes(v: typing.List[Scope], values: StackFrame.Partial) -> typing.List[Scope]:
+            def validate_scopes(scopes: typing.List[Scope], values: StackFrame.Partial) -> typing.List[Scope]:
                 ...
         """
 
@@ -88,15 +88,15 @@ class StackFrame(pydantic.BaseModel):
             return decorator
 
         class MethodNameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: StackFrame.Partial) -> str:
+            def __call__(self, __v: str, __values: StackFrame.Partial) -> str:
                 ...
 
         class LineNumberValidator(typing_extensions.Protocol):
-            def __call__(self, v: int, *, values: StackFrame.Partial) -> int:
+            def __call__(self, __v: int, __values: StackFrame.Partial) -> int:
                 ...
 
         class ScopesValidator(typing_extensions.Protocol):
-            def __call__(self, v: typing.List[Scope], *, values: StackFrame.Partial) -> typing.List[Scope]:
+            def __call__(self, __v: typing.List[Scope], __values: StackFrame.Partial) -> typing.List[Scope]:
                 ...
 
     @pydantic.root_validator
@@ -108,19 +108,19 @@ class StackFrame(pydantic.BaseModel):
     @pydantic.validator("method_name")
     def _validate_method_name(cls, v: str, values: StackFrame.Partial) -> str:
         for validator in StackFrame.Validators._method_name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("line_number")
     def _validate_line_number(cls, v: int, values: StackFrame.Partial) -> int:
         for validator in StackFrame.Validators._line_number_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("scopes")
     def _validate_scopes(cls, v: typing.List[Scope], values: StackFrame.Partial) -> typing.List[Scope]:
         for validator in StackFrame.Validators._scopes_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

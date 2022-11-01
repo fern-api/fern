@@ -28,11 +28,11 @@ class DefaultProvidedFile(pydantic.BaseModel):
                 ...
 
             @DefaultProvidedFile.Validators.field("file")
-            def validate_file(v: FileInfoV2, values: DefaultProvidedFile.Partial) -> FileInfoV2:
+            def validate_file(file: FileInfoV2, values: DefaultProvidedFile.Partial) -> FileInfoV2:
                 ...
 
             @DefaultProvidedFile.Validators.field("related_types")
-            def validate_related_types(v: typing.List[VariableType], values: DefaultProvidedFile.Partial) -> typing.List[VariableType]:
+            def validate_related_types(related_types: typing.List[VariableType], values: DefaultProvidedFile.Partial) -> typing.List[VariableType]:
                 ...
         """
 
@@ -81,12 +81,12 @@ class DefaultProvidedFile(pydantic.BaseModel):
             return decorator
 
         class FileValidator(typing_extensions.Protocol):
-            def __call__(self, v: FileInfoV2, *, values: DefaultProvidedFile.Partial) -> FileInfoV2:
+            def __call__(self, __v: FileInfoV2, __values: DefaultProvidedFile.Partial) -> FileInfoV2:
                 ...
 
         class RelatedTypesValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: typing.List[VariableType], *, values: DefaultProvidedFile.Partial
+                self, __v: typing.List[VariableType], __values: DefaultProvidedFile.Partial
             ) -> typing.List[VariableType]:
                 ...
 
@@ -99,7 +99,7 @@ class DefaultProvidedFile(pydantic.BaseModel):
     @pydantic.validator("file")
     def _validate_file(cls, v: FileInfoV2, values: DefaultProvidedFile.Partial) -> FileInfoV2:
         for validator in DefaultProvidedFile.Validators._file_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("related_types")
@@ -107,7 +107,7 @@ class DefaultProvidedFile(pydantic.BaseModel):
         cls, v: typing.List[VariableType], values: DefaultProvidedFile.Partial
     ) -> typing.List[VariableType]:
         for validator in DefaultProvidedFile.Validators._related_types_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

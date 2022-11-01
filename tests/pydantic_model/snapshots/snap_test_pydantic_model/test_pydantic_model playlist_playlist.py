@@ -29,11 +29,11 @@ class Playlist(PlaylistCreateRequest):
                 ...
 
             @Playlist.Validators.field("playlist_id")
-            def validate_playlist_id(v: PlaylistId, values: Playlist.Partial) -> PlaylistId:
+            def validate_playlist_id(playlist_id: PlaylistId, values: Playlist.Partial) -> PlaylistId:
                 ...
 
             @Playlist.Validators.field("owner_id")
-            def validate_owner_id(v: UserId, values: Playlist.Partial) -> UserId:
+            def validate_owner_id(owner_id: UserId, values: Playlist.Partial) -> UserId:
                 ...
         """
 
@@ -74,11 +74,11 @@ class Playlist(PlaylistCreateRequest):
             return decorator
 
         class PlaylistIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: PlaylistId, *, values: Playlist.Partial) -> PlaylistId:
+            def __call__(self, __v: PlaylistId, __values: Playlist.Partial) -> PlaylistId:
                 ...
 
         class OwnerIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: UserId, *, values: Playlist.Partial) -> UserId:
+            def __call__(self, __v: UserId, __values: Playlist.Partial) -> UserId:
                 ...
 
     @pydantic.root_validator
@@ -90,13 +90,13 @@ class Playlist(PlaylistCreateRequest):
     @pydantic.validator("playlist_id")
     def _validate_playlist_id(cls, v: PlaylistId, values: Playlist.Partial) -> PlaylistId:
         for validator in Playlist.Validators._playlist_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("owner_id")
     def _validate_owner_id(cls, v: UserId, values: Playlist.Partial) -> UserId:
         for validator in Playlist.Validators._owner_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

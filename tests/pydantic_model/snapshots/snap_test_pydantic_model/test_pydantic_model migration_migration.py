@@ -27,11 +27,11 @@ class Migration(pydantic.BaseModel):
                 ...
 
             @Migration.Validators.field("name")
-            def validate_name(v: str, values: Migration.Partial) -> str:
+            def validate_name(name: str, values: Migration.Partial) -> str:
                 ...
 
             @Migration.Validators.field("status")
-            def validate_status(v: MigrationStatus, values: Migration.Partial) -> MigrationStatus:
+            def validate_status(status: MigrationStatus, values: Migration.Partial) -> MigrationStatus:
                 ...
         """
 
@@ -72,11 +72,11 @@ class Migration(pydantic.BaseModel):
             return decorator
 
         class NameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: Migration.Partial) -> str:
+            def __call__(self, __v: str, __values: Migration.Partial) -> str:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):
-            def __call__(self, v: MigrationStatus, *, values: Migration.Partial) -> MigrationStatus:
+            def __call__(self, __v: MigrationStatus, __values: Migration.Partial) -> MigrationStatus:
                 ...
 
     @pydantic.root_validator
@@ -88,13 +88,13 @@ class Migration(pydantic.BaseModel):
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: Migration.Partial) -> str:
         for validator in Migration.Validators._name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("status")
     def _validate_status(cls, v: MigrationStatus, values: Migration.Partial) -> MigrationStatus:
         for validator in Migration.Validators._status_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

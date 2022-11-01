@@ -25,7 +25,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
                 ...
 
             @GetGeneratedTestCaseTemplateFileRequest.Validators.field("template")
-            def validate_template(v: TestCaseTemplate, values: GetGeneratedTestCaseTemplateFileRequest.Partial) -> TestCaseTemplate:
+            def validate_template(template: TestCaseTemplate, values: GetGeneratedTestCaseTemplateFileRequest.Partial) -> TestCaseTemplate:
                 ...
         """
 
@@ -73,7 +73,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
 
         class TemplateValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: TestCaseTemplate, *, values: GetGeneratedTestCaseTemplateFileRequest.Partial
+                self, __v: TestCaseTemplate, __values: GetGeneratedTestCaseTemplateFileRequest.Partial
             ) -> TestCaseTemplate:
                 ...
 
@@ -90,7 +90,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         cls, v: TestCaseTemplate, values: GetGeneratedTestCaseTemplateFileRequest.Partial
     ) -> TestCaseTemplate:
         for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._template_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

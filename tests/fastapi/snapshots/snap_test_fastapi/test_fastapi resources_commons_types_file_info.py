@@ -25,11 +25,11 @@ class FileInfo(pydantic.BaseModel):
                 ...
 
             @FileInfo.Validators.field("filename")
-            def validate_filename(v: str, values: FileInfo.Partial) -> str:
+            def validate_filename(filename: str, values: FileInfo.Partial) -> str:
                 ...
 
             @FileInfo.Validators.field("contents")
-            def validate_contents(v: str, values: FileInfo.Partial) -> str:
+            def validate_contents(contents: str, values: FileInfo.Partial) -> str:
                 ...
         """
 
@@ -70,11 +70,11 @@ class FileInfo(pydantic.BaseModel):
             return decorator
 
         class FilenameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: FileInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: FileInfo.Partial) -> str:
                 ...
 
         class ContentsValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: FileInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: FileInfo.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -86,13 +86,13 @@ class FileInfo(pydantic.BaseModel):
     @pydantic.validator("filename")
     def _validate_filename(cls, v: str, values: FileInfo.Partial) -> str:
         for validator in FileInfo.Validators._filename_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("contents")
     def _validate_contents(cls, v: str, values: FileInfo.Partial) -> str:
         for validator in FileInfo.Validators._contents_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

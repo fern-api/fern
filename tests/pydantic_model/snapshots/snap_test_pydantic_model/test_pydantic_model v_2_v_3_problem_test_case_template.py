@@ -30,15 +30,15 @@ class TestCaseTemplate(pydantic.BaseModel):
                 ...
 
             @TestCaseTemplate.Validators.field("template_id")
-            def validate_template_id(v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
+            def validate_template_id(template_id: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
                 ...
 
             @TestCaseTemplate.Validators.field("name")
-            def validate_name(v: str, values: TestCaseTemplate.Partial) -> str:
+            def validate_name(name: str, values: TestCaseTemplate.Partial) -> str:
                 ...
 
             @TestCaseTemplate.Validators.field("implementation")
-            def validate_implementation(v: TestCaseImplementation, values: TestCaseTemplate.Partial) -> TestCaseImplementation:
+            def validate_implementation(implementation: TestCaseImplementation, values: TestCaseTemplate.Partial) -> TestCaseImplementation:
                 ...
         """
 
@@ -97,16 +97,16 @@ class TestCaseTemplate(pydantic.BaseModel):
             return decorator
 
         class TemplateIdValidator(typing_extensions.Protocol):
-            def __call__(self, v: TestCaseTemplateId, *, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
+            def __call__(self, __v: TestCaseTemplateId, __values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
                 ...
 
         class NameValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: TestCaseTemplate.Partial) -> str:
+            def __call__(self, __v: str, __values: TestCaseTemplate.Partial) -> str:
                 ...
 
         class ImplementationValidator(typing_extensions.Protocol):
             def __call__(
-                self, v: TestCaseImplementation, *, values: TestCaseTemplate.Partial
+                self, __v: TestCaseImplementation, __values: TestCaseTemplate.Partial
             ) -> TestCaseImplementation:
                 ...
 
@@ -119,13 +119,13 @@ class TestCaseTemplate(pydantic.BaseModel):
     @pydantic.validator("template_id")
     def _validate_template_id(cls, v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
         for validator in TestCaseTemplate.Validators._template_id_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("name")
     def _validate_name(cls, v: str, values: TestCaseTemplate.Partial) -> str:
         for validator in TestCaseTemplate.Validators._name_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("implementation")
@@ -133,7 +133,7 @@ class TestCaseTemplate(pydantic.BaseModel):
         cls, v: TestCaseImplementation, values: TestCaseTemplate.Partial
     ) -> TestCaseImplementation:
         for validator in TestCaseTemplate.Validators._implementation_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:

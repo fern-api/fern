@@ -27,15 +27,15 @@ class ExceptionInfo(pydantic.BaseModel):
                 ...
 
             @ExceptionInfo.Validators.field("exception_type")
-            def validate_exception_type(v: str, values: ExceptionInfo.Partial) -> str:
+            def validate_exception_type(exception_type: str, values: ExceptionInfo.Partial) -> str:
                 ...
 
             @ExceptionInfo.Validators.field("exception_message")
-            def validate_exception_message(v: str, values: ExceptionInfo.Partial) -> str:
+            def validate_exception_message(exception_message: str, values: ExceptionInfo.Partial) -> str:
                 ...
 
             @ExceptionInfo.Validators.field("exception_stacktrace")
-            def validate_exception_stacktrace(v: str, values: ExceptionInfo.Partial) -> str:
+            def validate_exception_stacktrace(exception_stacktrace: str, values: ExceptionInfo.Partial) -> str:
                 ...
         """
 
@@ -97,15 +97,15 @@ class ExceptionInfo(pydantic.BaseModel):
             return decorator
 
         class ExceptionTypeValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: ExceptionInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: ExceptionInfo.Partial) -> str:
                 ...
 
         class ExceptionMessageValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: ExceptionInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: ExceptionInfo.Partial) -> str:
                 ...
 
         class ExceptionStacktraceValidator(typing_extensions.Protocol):
-            def __call__(self, v: str, *, values: ExceptionInfo.Partial) -> str:
+            def __call__(self, __v: str, __values: ExceptionInfo.Partial) -> str:
                 ...
 
     @pydantic.root_validator
@@ -117,19 +117,19 @@ class ExceptionInfo(pydantic.BaseModel):
     @pydantic.validator("exception_type")
     def _validate_exception_type(cls, v: str, values: ExceptionInfo.Partial) -> str:
         for validator in ExceptionInfo.Validators._exception_type_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("exception_message")
     def _validate_exception_message(cls, v: str, values: ExceptionInfo.Partial) -> str:
         for validator in ExceptionInfo.Validators._exception_message_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     @pydantic.validator("exception_stacktrace")
     def _validate_exception_stacktrace(cls, v: str, values: ExceptionInfo.Partial) -> str:
         for validator in ExceptionInfo.Validators._exception_stacktrace_validators:
-            v = validator(v, values=values)
+            v = validator(v, values)
         return v
 
     def json(self, **kwargs: typing.Any) -> str:
