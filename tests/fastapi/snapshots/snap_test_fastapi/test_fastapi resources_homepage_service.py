@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.exceptions.fern_http_exception import FernHTTPException
@@ -104,4 +105,8 @@ class AbstractHomepageProblemService(AbstractFernService):
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.set_homepage_problems.__globals__)
 
-        router.post(path="/homepage-problems/", **get_route_args(cls.set_homepage_problems))(wrapper)
+        router.post(
+            path="/homepage-problems/",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            **get_route_args(cls.set_homepage_problems),
+        )(wrapper)

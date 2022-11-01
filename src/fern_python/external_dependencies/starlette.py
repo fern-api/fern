@@ -20,3 +20,5 @@ class Starlette:
 
     HTTPException_STATUS_CODE_MEMBER = "status_code"
     HTTPException_DETAIL_MEMBER = "detail"
+
+    HTTP_204_NO_CONTENT = _export("status", "HTTP_204_NO_CONTENT")

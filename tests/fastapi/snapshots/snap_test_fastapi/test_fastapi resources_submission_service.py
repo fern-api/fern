@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.exceptions.fern_http_exception import FernHTTPException
@@ -153,7 +154,11 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.stop_execution_session.__globals__)
 
-        router.delete(path="/sessions/stop/{session_id}", **get_route_args(cls.stop_execution_session))(wrapper)
+        router.delete(
+            path="/sessions/stop/{session_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            **get_route_args(cls.stop_execution_session),
+        )(wrapper)
 
     @classmethod
     def __init_get_execution_sessions_state(cls, router: fastapi.APIRouter) -> None:

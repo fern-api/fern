@@ -8,6 +8,7 @@ import typing
 import uuid
 
 import fastapi
+import starlette
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.exceptions.fern_http_exception import FernHTTPException
@@ -118,6 +119,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-submission-status/{submission_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.update_test_submission_status),
         )(wrapper)
 
@@ -154,6 +156,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-submission-status-v2/{submission_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.send_test_submission_update),
         )(wrapper)
 
@@ -194,6 +197,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-submission-status/{submission_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.update_workspace_submission_status),
         )(wrapper)
 
@@ -232,6 +236,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.send_workspace_submission_update),
         )(wrapper)
 
@@ -270,6 +275,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.store_traced_test_case),
         )(wrapper)
 
@@ -308,6 +314,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.store_traced_test_case_v_2),
         )(wrapper)
 
@@ -343,7 +350,9 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.store_traced_workspace.__globals__)
 
         router.post(
-            path="/admin/store-workspace-trace/submission/{submission_id}", **get_route_args(cls.store_traced_workspace)
+            path="/admin/store-workspace-trace/submission/{submission_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            **get_route_args(cls.store_traced_workspace),
         )(wrapper)
 
     @classmethod
@@ -379,5 +388,6 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.store_traced_workspace_v_2),
         )(wrapper)

@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.exceptions.fern_http_exception import FernHTTPException
@@ -259,4 +260,8 @@ class AbstractPlaylistCrudService(AbstractFernService):
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.delete_playlist.__globals__)
 
-        router.delete(path="/v2/playlist/{service_param}/{playlist_id}", **get_route_args(cls.delete_playlist))(wrapper)
+        router.delete(
+            path="/v2/playlist/{service_param}/{playlist_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            **get_route_args(cls.delete_playlist),
+        )(wrapper)

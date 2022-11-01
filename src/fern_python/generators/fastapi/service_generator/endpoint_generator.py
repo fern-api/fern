@@ -4,6 +4,7 @@ import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
+from fern_python.external_dependencies.starlette import Starlette
 
 from ..context import FastApiGeneratorContext
 from .endpoint_parameters import (
@@ -148,6 +149,10 @@ class EndpointGenerator:
             if self._endpoint.response.type_v_2 is not None:
                 writer.write("response_model=")
                 writer.write_node(self._get_return_type())
+                writer.write_line(",")
+            else:
+                writer.write("status_code=")
+                writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
                 writer.write_line(",")
             writer.write("**")
             writer.write_node(self._context.core_utilities.get_route_args(AST.Expression(method_on_cls)))

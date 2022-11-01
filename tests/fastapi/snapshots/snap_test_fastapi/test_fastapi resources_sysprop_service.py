@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.exceptions.fern_http_exception import FernHTTPException
@@ -75,6 +76,7 @@ class AbstractSysPropCrudService(AbstractFernService):
 
         router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.set_num_warm_instances),
         )(wrapper)
 

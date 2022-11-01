@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 
 from ...core.abstract_fern_service import AbstractFernService
 from ...core.exceptions.fern_http_exception import FernHTTPException
@@ -155,7 +156,11 @@ class AbstractProblemCrudService(AbstractFernService):
         # https://github.com/tiangolo/fastapi/pull/5077
         wrapper.__globals__.update(cls.delete_problem.__globals__)
 
-        router.delete(path="/problem-crud/delete/{problem_id}", **get_route_args(cls.delete_problem))(wrapper)
+        router.delete(
+            path="/problem-crud/delete/{problem_id}",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            **get_route_args(cls.delete_problem),
+        )(wrapper)
 
     @classmethod
     def __init_get_default_starter_files(cls, router: fastapi.APIRouter) -> None:
