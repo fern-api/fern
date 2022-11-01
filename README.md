@@ -14,9 +14,9 @@ Fern keeps your docs and SDKs in sync with your API.
 
 **Fern** allows you to maintain a single source of truth for your API so that you can:
 
-1. **Generate idiomatic SDKs** in the most popular languages: TypeScript/JavaScript, Python, Java, Go. Fern also handles publishing to registries.
+1. **Generate idiomatic SDKs** in the most popular languages: TypeScript/JavaScript, Python, Java, Go, Ruby. Fern also handles publishing to registries.
 2. **Serve your API accurately**. Fern integrates with popular frameworks like Express, FastAPI, and Spring to add compile-time and run-time checks.
-3. **Auto-update** your API documentation, Postman collection, and OpenAPI spec any time your API changes.
+3. **Auto-update** your API documentation, Postman collection, and OpenAPI description any time your API changes.
 
 We’re in private beta with a handful of customers. If you’re interested in using Fern, [**reach out**](mailto:hey@buildwithfern.com?subject=%5BPrivate%20beta%5D%20Interest%20in%20joining).
 
