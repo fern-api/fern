@@ -8840,7 +8840,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
             ["@fern-fern/api-editor-sdk", "npm:0.0.11"],\
             ["@fern-ui/react-commons", "workspace:packages/editor/ui/react-commons"],\
-            ["@fern-ui/react-query-utils", "workspace:packages/editor/ui/react-query-utils"],\
             ["@fern-ui/split-view", "workspace:packages/editor/ui/split-view"],\
             ["@fern-ui/theme", "workspace:packages/editor/ui/theme"],\
             ["@types/jest", "npm:29.0.3"],\

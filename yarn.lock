@@ -4112,7 +4112,6 @@ __metadata:
     "@fern-api/transaction-resolver": "workspace:*"
     "@fern-fern/api-editor-sdk": 0.0.11
     "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/react-query-utils": "workspace:*"
     "@fern-ui/split-view": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@types/jest": ^29.0.3
