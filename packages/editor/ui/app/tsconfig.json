@@ -5,8 +5,10 @@
   "references": [
     { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/loadable" },
+    { "path": "../../id-generator" },
+    { "path": "../../transaction-generator" },
+    { "path": "../../transaction-resolver" },
     { "path": "../react-commons" },
-    { "path": "../react-query-utils" },
     { "path": "../split-view" },
     { "path": "../theme" }
   ]

@@ -1,15 +1,20 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { AbstractTransactionHandler } from "../AbstractTransactionHandler";
+import { AbstractCreateTransactionHander } from "../AbstractCreateTransactionHander";
 
-export class CreateTypeTransactionHandler extends AbstractTransactionHandler<FernApiEditor.transactions.CreateTypeTransaction> {
-    public applyTransaction(
-        api: FernApiEditor.Api,
-        transaction: FernApiEditor.transactions.CreateTypeTransaction
-    ): void {
-        const package_ = this.getPackageOrThrow(api, transaction.packageId);
-        package_.types.push({
+export class CreateTypeTransactionHandler extends AbstractCreateTransactionHander<FernApiEditor.transactions.CreateTypeTransaction> {
+    protected addToDefinition(transaction: FernApiEditor.transactions.CreateTypeTransaction): void {
+        this.definition.types[transaction.typeId] = {
             typeId: transaction.typeId,
             typeName: transaction.typeName,
-        });
+        };
+    }
+
+    protected addToParent(transaction: FernApiEditor.transactions.CreateTypeTransaction): void {
+        const parent = this.getPackageOrThrow(transaction.parent);
+        parent.types.push(transaction.typeId);
+    }
+
+    protected addToGraph(transaction: FernApiEditor.transactions.CreateTypeTransaction): void {
+        this.graph.createType(transaction.typeId, { parent: transaction.parent });
     }
 }

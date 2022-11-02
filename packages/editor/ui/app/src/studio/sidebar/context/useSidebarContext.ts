@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { SidebarContext, SidebarContextValue, SidebarItemId, SidebarItemState } from "./SidebarContext";
+import { SidebarItemId } from "../ids/SidebarItemId";
+import { SidebarContext, SidebarContextValue, SidebarItemState } from "./SidebarContext";
 
 export function useSidebarContext(): SidebarContextValue {
     return useContext(SidebarContext)();

@@ -5,12 +5,12 @@ types:
   BaseTypeTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      PackageId: commons.PackageId
       TypeId: commons.TypeId
 
   CreateTypeTransaction:
     extends: BaseTypeTransaction
     properties:
+      parent: commons.PackageId
       typeName: string
 
   RenameTypeTransaction:

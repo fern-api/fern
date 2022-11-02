@@ -1,8 +1,7 @@
+import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
-import { generateTypeId } from "../../../testing-utils/ids";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { CreateTypeTransactionHandler } from "../CreateTypeTransactionHandler";
 
 describe("CreateTypeTransactionHandler", () => {
     it("correctly adds type", () => {
@@ -11,37 +10,34 @@ describe("CreateTypeTransactionHandler", () => {
         package_.addType();
         package_.addType();
 
-        const typeId = generateTypeId();
+        const typeId = EditorItemIdGenerator.type();
 
-        const transaction: FernApiEditor.transactions.CreateTypeTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.createType({
+            parent: package_.packageId,
             typeId,
             typeName: "My new type",
-        };
-
-        new CreateTypeTransactionHandler().applyTransaction(api, transaction);
+        });
+        api.applyTransaction(transaction);
 
         const expectedNewType: FernApiEditor.Type = {
             typeId,
             typeName: "My new type",
         };
 
-        expect(package_.types[2]).toEqual(expectedNewType);
+        expect(api.definition.types[typeId]).toEqual(expectedNewType);
     });
 
-    it("throws when package does not exist", () => {
+    it("throws when parent does not exist", () => {
         const api = new MockApi();
         api.addPackage();
         api.addPackage();
 
-        const transaction: FernApiEditor.transactions.CreateTypeTransaction = {
-            ...createBaseTransaction(),
-            packageId: "made-up-id",
-            typeId: generateTypeId(),
+        const transaction = TransactionGenerator.createType({
+            parent: "made-up-id",
+            typeId: EditorItemIdGenerator.type(),
             typeName: "My new type",
-        };
+        });
 
-        expect(() => new CreateTypeTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

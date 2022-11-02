@@ -1,1 +1,1 @@
-export {};
+export { TransactionResolver } from "./TransactionResolver";

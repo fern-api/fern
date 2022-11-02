@@ -1,7 +1,5 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { RenamePackageTransactionHandler } from "../RenamePackageTransactionHandler";
 
 describe("RenamePackageTransactionHandler", () => {
     it("correctly renames package", () => {
@@ -9,15 +7,13 @@ describe("RenamePackageTransactionHandler", () => {
         const first = api.addPackage();
         api.addPackage();
 
-        const transaction: FernApiEditor.transactions.RenamePackageTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.renamePackage({
             packageId: first.packageId,
             newPackageName: "New package name",
-        };
+        });
+        api.applyTransaction(transaction);
 
-        new RenamePackageTransactionHandler().applyTransaction(api, transaction);
-
-        expect(api.packages[0]?.packageName).toEqual("New package name");
+        expect(api.definition.packages[first.packageId]?.packageName).toEqual("New package name");
     });
 
     it("throws when package does not exist", () => {
@@ -25,12 +21,11 @@ describe("RenamePackageTransactionHandler", () => {
         api.addPackage();
         api.addPackage();
 
-        const transaction: FernApiEditor.transactions.RenamePackageTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.renamePackage({
             packageId: "made-up-id",
             newPackageName: "New package name",
-        };
+        });
 
-        expect(() => new RenamePackageTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

@@ -5,14 +5,21 @@ types:
     properties:
       apiId: commons.ApiId
       apiName: string
-      packages: list<Package>
+      rootPackages: list<commons.PackageId>
+
+      packages: map<commons.PackageId, Package>
+      endpoints: map<commons.EndpointId, Endpoint>
+      types: map<commons.TypeId, Type>
+      errors: map<commons.ErrorId, Error>
+
   Package:
     properties:
       packageId: commons.PackageId
       packageName: string
-      endpoints: list<Endpoint>
-      types: list<Type>
-      errors: list<Error>
+      packages: list<commons.PackageId>
+      endpoints: list<commons.EndpointId>
+      types: list<commons.TypeId>
+      errors: list<commons.ErrorId>
   Endpoint:
     properties:
       endpointId: commons.EndpointId

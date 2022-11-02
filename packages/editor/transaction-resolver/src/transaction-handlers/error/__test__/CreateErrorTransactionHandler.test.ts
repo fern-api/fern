@@ -1,8 +1,7 @@
+import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
-import { generateErrorId } from "../../../testing-utils/ids";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { CreateErrorTransactionHandler } from "../CreateErrorTransactionHandler";
 
 describe("CreateErrorTransactionHandler", () => {
     it("correctly adds error", () => {
@@ -11,16 +10,14 @@ describe("CreateErrorTransactionHandler", () => {
         package_.addError();
         package_.addError();
 
-        const errorId = generateErrorId();
+        const errorId = EditorItemIdGenerator.error();
 
-        const transaction: FernApiEditor.transactions.CreateErrorTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.createError({
+            parent: package_.packageId,
             errorId,
             errorName: "My new error",
-        };
-
-        new CreateErrorTransactionHandler().applyTransaction(api, transaction);
+        });
+        api.applyTransaction(transaction);
 
         const expectedNewError: FernApiEditor.Error = {
             errorId,
@@ -28,21 +25,20 @@ describe("CreateErrorTransactionHandler", () => {
             statusCode: expect.any(String),
         };
 
-        expect(package_.errors[2]).toEqual(expectedNewError);
+        expect(api.definition.errors[errorId]).toEqual(expectedNewError);
     });
 
-    it("throws when package does not exist", () => {
+    it("throws when parent does not exist", () => {
         const api = new MockApi();
         api.addPackage();
         api.addPackage();
 
-        const transaction: FernApiEditor.transactions.CreateErrorTransaction = {
-            ...createBaseTransaction(),
-            packageId: "made-up-id",
-            errorId: generateErrorId(),
+        const transaction = TransactionGenerator.createError({
+            parent: "made-up-id",
+            errorId: EditorItemIdGenerator.error(),
             errorName: "My new error",
-        };
+        });
 
-        expect(() => new CreateErrorTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

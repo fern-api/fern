@@ -1,12 +1,5 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-$padding-left: 5px;
-
-:export {
-    /* stylelint-disable-next-line property-no-unknown */
-    paddingLeft: $padding-left;
-}
-
 .wrapper {
     display: flex;
     padding-top: 2px;
@@ -19,7 +12,7 @@ $padding-left: 5px;
     flex: 1;
     display: flex;
     align-items: stretch;
-    padding-left: $padding-left;
+    padding-left: 5px;
     padding-right: 3px;
     height: 30px;
     border-radius: $pt-border-radius;

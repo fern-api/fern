@@ -1,16 +1,23 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { AbstractTransactionHandler } from "../AbstractTransactionHandler";
+import { AbstractDeleteTransactionHander } from "../AbstractDeleteTransactionHander";
 
-export class DeleteEndpointTransactionHandler extends AbstractTransactionHandler<FernApiEditor.transactions.DeleteEndpointTransaction> {
-    public applyTransaction(
-        api: FernApiEditor.Api,
-        transaction: FernApiEditor.transactions.DeleteEndpointTransaction
-    ): void {
-        const package_ = this.getPackageOrThrow(api, transaction.packageId);
-        const indexToDelete = package_.endpoints.findIndex((e) => e.endpointId === transaction.endpointId);
-        if (indexToDelete === -1) {
-            throw new Error(`Endpoint ${transaction.endpointId} does not exist`);
+export class DeleteEndpointTransactionHandler extends AbstractDeleteTransactionHander<FernApiEditor.transactions.DeleteEndpointTransaction> {
+    protected removeDefinition(transaction: FernApiEditor.transactions.DeleteEndpointTransaction): void {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete this.definition.endpoints[transaction.endpointId];
+    }
+
+    protected removeFromParent(transaction: FernApiEditor.transactions.DeleteEndpointTransaction): void {
+        const parentId = this.graph.getEndpointParent(transaction.endpointId);
+        const parent = this.getPackageOrThrow(parentId);
+        const indexOfEndpoint = parent.endpoints.indexOf(transaction.endpointId);
+        if (indexOfEndpoint === -1) {
+            throw new Error(`Endpoint ${transaction.endpointId} does not exist in parent ${parentId}`);
         }
-        package_.endpoints.splice(indexToDelete, 1);
+        parent.endpoints.splice(indexOfEndpoint, 1);
+    }
+
+    protected removeFromGraph(transaction: FernApiEditor.transactions.DeleteEndpointTransaction): void {
+        this.graph.deleteEndpoint(transaction.endpointId);
     }
 }

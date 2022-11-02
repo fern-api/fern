@@ -20,7 +20,7 @@ export async function getFernCliUpgradeMessage({
 
     return boxen(message, {
         padding: 1,
-        margin: 1,
+        float: "center",
         textAlignment: "center",
         borderColor: "yellow",
         borderStyle: "round",

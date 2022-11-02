@@ -1,7 +1,5 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { ReorderTypesTransactionHandler } from "../ReorderTypesTransactionHandler";
 
 describe("ReorderTypesTransactionHandler", () => {
     it("correctly re-orders types", () => {
@@ -11,13 +9,13 @@ describe("ReorderTypesTransactionHandler", () => {
         const second = package_.addType();
         const third = package_.addType();
         const newOrder = [second.typeId, first.typeId, third.typeId];
-        const transaction: FernApiEditor.transactions.ReorderTypesTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderTypes({
             packageId: package_.packageId,
             newOrder,
-        };
-        new ReorderTypesTransactionHandler().applyTransaction(api, transaction);
-        expect(package_.types.map((p) => p.typeId)).toEqual(newOrder);
+        });
+        api.applyTransaction(transaction);
+
+        expect(api.definition.packages[package_.packageId]?.types).toEqual(newOrder);
     });
 
     it("throws when new order's length is incorrect", () => {
@@ -27,12 +25,11 @@ describe("ReorderTypesTransactionHandler", () => {
         const second = package_.addType();
         package_.addType();
         const newOrder = [second.typeId, first.typeId];
-        const transaction: FernApiEditor.transactions.ReorderTypesTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderTypes({
             packageId: package_.packageId,
             newOrder,
-        };
-        expect(() => new ReorderTypesTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        });
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 
     it("throws when new order contains duplicates", () => {
@@ -42,12 +39,11 @@ describe("ReorderTypesTransactionHandler", () => {
         const second = package_.addType();
         package_.addType();
         const newOrder = [second.typeId, first.typeId, first.typeId];
-        const transaction: FernApiEditor.transactions.ReorderTypesTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderTypes({
             packageId: package_.packageId,
             newOrder,
-        };
-        expect(() => new ReorderTypesTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        });
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 
     it("throws when new order contains non-existent package", () => {
@@ -57,11 +53,10 @@ describe("ReorderTypesTransactionHandler", () => {
         const second = package_.addType();
         package_.addType();
         const newOrder = [second.typeId, first.typeId, "made-up-id"];
-        const transaction: FernApiEditor.transactions.ReorderTypesTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderTypes({
             packageId: package_.packageId,
             newOrder,
-        };
-        expect(() => new ReorderTypesTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        });
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

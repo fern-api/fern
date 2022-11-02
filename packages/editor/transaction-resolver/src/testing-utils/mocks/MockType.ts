@@ -1,14 +1,19 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { generateTypeId } from "../ids";
-import { Mock } from "./Mock";
+import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
+import { MockDefinitionItem } from "./MockDefinitionItem";
 
-export class MockType extends Mock implements FernApiEditor.Type {
+export declare namespace MockType {
+    export interface Init extends MockDefinitionItem.Init {
+        name?: string;
+    }
+}
+
+export class MockType extends MockDefinitionItem {
     public typeId: string;
     public typeName: string;
 
-    constructor(name = "Mock Type") {
-        super();
-        this.typeId = generateTypeId();
+    constructor({ name = "Mock Type", ...superInit }: MockType.Init) {
+        super(superInit);
+        this.typeId = EditorItemIdGenerator.type();
         this.typeName = name;
     }
 }

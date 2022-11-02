@@ -1,7 +1,5 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { ReorderEndpointsTransactionHandler } from "../ReorderEndpointsTransactionHandler";
 
 describe("ReorderEndpointsTransactionHandler", () => {
     it("correctly re-orders endpoints", () => {
@@ -11,13 +9,13 @@ describe("ReorderEndpointsTransactionHandler", () => {
         const second = package_.addEndpoint();
         const third = package_.addEndpoint();
         const newOrder = [second.endpointId, first.endpointId, third.endpointId];
-        const transaction: FernApiEditor.transactions.ReorderEndpointsTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderEndpoints({
             packageId: package_.packageId,
             newOrder,
-        };
-        new ReorderEndpointsTransactionHandler().applyTransaction(api, transaction);
-        expect(package_.endpoints.map((p) => p.endpointId)).toEqual(newOrder);
+        });
+        api.applyTransaction(transaction);
+
+        expect(api.definition.packages[package_.packageId]?.endpoints).toEqual(newOrder);
     });
 
     it("throws when new order's length is incorrect", () => {
@@ -27,12 +25,11 @@ describe("ReorderEndpointsTransactionHandler", () => {
         const second = package_.addEndpoint();
         package_.addEndpoint();
         const newOrder = [second.endpointId, first.endpointId];
-        const transaction: FernApiEditor.transactions.ReorderEndpointsTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderEndpoints({
             packageId: package_.packageId,
             newOrder,
-        };
-        expect(() => new ReorderEndpointsTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        });
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 
     it("throws when new order contains duplicates", () => {
@@ -42,12 +39,11 @@ describe("ReorderEndpointsTransactionHandler", () => {
         const second = package_.addEndpoint();
         package_.addEndpoint();
         const newOrder = [second.endpointId, first.endpointId, first.endpointId];
-        const transaction: FernApiEditor.transactions.ReorderEndpointsTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderEndpoints({
             packageId: package_.packageId,
             newOrder,
-        };
-        expect(() => new ReorderEndpointsTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        });
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 
     it("throws when new order contains non-existent package", () => {
@@ -57,11 +53,10 @@ describe("ReorderEndpointsTransactionHandler", () => {
         const second = package_.addEndpoint();
         package_.addEndpoint();
         const newOrder = [second.endpointId, first.endpointId, "made-up-id"];
-        const transaction: FernApiEditor.transactions.ReorderEndpointsTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.reorderEndpoints({
             packageId: package_.packageId,
             newOrder,
-        };
-        expect(() => new ReorderEndpointsTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        });
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

@@ -10,12 +10,13 @@ types:
   Transaction:
     union:
       # api-level transactions
-      reorderPackages: api.ReorderPackagesTransaction
+      reorderRootPackages: api.ReorderRootPackagesTransaction
 
       # package-specific transactions
       createPackage: package.CreatePackageTransaction
       renamePackage: package.RenamePackageTransaction
       deletePackage: package.DeletePackageTransaction
+      reorderPackages: package.ReorderPackagesTransaction
       reorderEndpoints: package.ReorderEndpointsTransaction
       reorderTypes: package.ReorderTypesTransaction
       reorderErrors: package.ReorderErrorsTransaction
