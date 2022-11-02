@@ -2,11 +2,8 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { AbstractTransactionHandler } from "../AbstractTransactionHandler";
 
 export class ReorderErrorsTransactionHandler extends AbstractTransactionHandler<FernApiEditor.transactions.ReorderErrorsTransaction> {
-    public applyTransaction(
-        api: FernApiEditor.Api,
-        transaction: FernApiEditor.transactions.ReorderErrorsTransaction
-    ): void {
-        const package_ = this.getPackageOrThrow(api, transaction.packageId);
+    public applyTransaction(transaction: FernApiEditor.transactions.ReorderErrorsTransaction): void {
+        const package_ = this.getPackageOrThrow(transaction.packageId);
         if (package_.errors.length !== transaction.newOrder.length) {
             throw new Error(
                 `Cannot re-order errors in package ${transaction.packageId} because new order has length ${transaction.newOrder.length} and existing errors have length ${package_.errors.length}`
@@ -20,8 +17,6 @@ export class ReorderErrorsTransactionHandler extends AbstractTransactionHandler<
             );
         }
 
-        package_.errors = transaction.newOrder.map((errorId) =>
-            this.getErrorOrThrow(api, transaction.packageId, errorId)
-        );
+        package_.errors = transaction.newOrder.map((errorId) => this.getErrorOrThrow(errorId).errorId);
     }
 }

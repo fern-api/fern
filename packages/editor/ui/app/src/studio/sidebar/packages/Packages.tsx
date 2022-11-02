@@ -1,18 +1,14 @@
-import { isLoaded } from "@fern-api/loadable";
 import React from "react";
-import { useLightweightAPI } from "../../queries/useLightweightApi";
+import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import styles from "./Packages.module.scss";
 import { PackageSidebarGroup } from "./PackageSidebarGroup";
 
 export const Packages: React.FC = () => {
-    const lightweightApi = useLightweightAPI();
-    if (!isLoaded(lightweightApi)) {
-        return null;
-    }
+    const { definition } = useApiEditorContext();
     return (
         <div className={styles.packages}>
-            {lightweightApi.value.packages.map((lightweightPackage) => (
-                <PackageSidebarGroup key={lightweightPackage.packageId} lightweightPackage={lightweightPackage} />
+            {definition.rootPackages.map((packageId) => (
+                <PackageSidebarGroup key={packageId} packageId={packageId} />
             ))}
         </div>
     );

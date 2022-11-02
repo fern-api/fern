@@ -5,12 +5,12 @@ types:
   BaseErrorTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      PackageId: commons.PackageId
       ErrorId: commons.ErrorId
 
   CreateErrorTransaction:
     extends: BaseErrorTransaction
     properties:
+      parent: commons.PackageId
       errorName: string
 
   RenameErrorTransaction:

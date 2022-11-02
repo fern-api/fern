@@ -11,6 +11,7 @@ types:
   CreatePackageTransaction:
     extends: BasePackageTransaction
     properties:
+      parent: optional<commons.PackageId>
       packageName: string
 
   RenamePackageTransaction:
@@ -21,6 +22,11 @@ types:
   DeletePackageTransaction:
     extends: BasePackageTransaction
     properties: {}
+
+  ReorderPackagesTransaction:
+    extends: BasePackageTransaction
+    properties:
+      newOrder: list<commons.PackageId>
 
   ReorderEndpointsTransaction:
     extends: BasePackageTransaction

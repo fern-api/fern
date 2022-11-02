@@ -29,6 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "react": "^18.2.0"
   },
   "devDependencies": {

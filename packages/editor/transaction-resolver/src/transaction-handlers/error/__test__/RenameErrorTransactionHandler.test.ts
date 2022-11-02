@@ -1,7 +1,5 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { RenameErrorTransactionHandler } from "../RenameErrorTransactionHandler";
 
 describe("RenameErrorTransactionHandler", () => {
     it("correctly renames error", () => {
@@ -10,32 +8,14 @@ describe("RenameErrorTransactionHandler", () => {
         const first = package_.addError();
         package_.addError();
 
-        const transaction: FernApiEditor.transactions.RenameErrorTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.renameError({
             errorId: first.errorId,
             newErrorName: "New error name",
-        };
+        });
 
-        new RenameErrorTransactionHandler().applyTransaction(api, transaction);
+        api.applyTransaction(transaction);
 
-        expect(package_.errors[0]?.errorName).toEqual("New error name");
-    });
-
-    it("throws when package does not exist", () => {
-        const api = new MockApi();
-        const package_ = api.addPackage();
-        const first = package_.addError();
-        package_.addError();
-
-        const transaction: FernApiEditor.transactions.RenameErrorTransaction = {
-            ...createBaseTransaction(),
-            packageId: "made-up-id",
-            errorId: first.errorId,
-            newErrorName: "New error name",
-        };
-
-        expect(() => new RenameErrorTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(api.definition.errors[first.errorId]?.errorName).toEqual("New error name");
     });
 
     it("throws when error does not exist", () => {
@@ -44,13 +24,11 @@ describe("RenameErrorTransactionHandler", () => {
         package_.addError();
         package_.addError();
 
-        const transaction: FernApiEditor.transactions.RenameErrorTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.renameError({
             errorId: "made-up-id",
             newErrorName: "New error name",
-        };
+        });
 
-        expect(() => new RenameErrorTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

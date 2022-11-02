@@ -2,7 +2,7 @@ imports:
   commons: ../commons.yml
   transactionCommons: commons.yml
 types:
-  ReorderPackagesTransaction:
+  ReorderRootPackagesTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
       newOrder: list<commons.PackageId>

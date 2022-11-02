@@ -1,33 +1,28 @@
+import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
-import { generatePackageId } from "../../../testing-utils/ids";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { CreatePackageTransactionHandler } from "../CreatePackageTransactionHandler";
 
 describe("CreatePackageTransactionHandler", () => {
     it("correctly adds package", () => {
         const api = new MockApi();
-        api.addPackage();
-        api.addPackage();
+        const packageId = EditorItemIdGenerator.package();
 
-        const packageId = generatePackageId();
-
-        const transaction: FernApiEditor.transactions.CreatePackageTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.createPackage({
             packageId,
             packageName: "My new package",
-        };
-
-        new CreatePackageTransactionHandler().applyTransaction(api, transaction);
+        });
+        api.applyTransaction(transaction);
 
         const expectedNewPackage: FernApiEditor.Package = {
             packageId,
             packageName: "My new package",
+            packages: [],
             endpoints: [],
             types: [],
             errors: [],
         };
 
-        expect(api.packages[2]).toEqual(expectedNewPackage);
+        expect(api.definition.packages[packageId]).toEqual(expectedNewPackage);
     });
 });

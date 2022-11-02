@@ -1,7 +1,5 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { DeleteEndpointTransactionHandler } from "../DeleteEndpointTransactionHandler";
 
 describe("DeleteEndpointTransactionHandler", () => {
     it("correctly delete endpoint", () => {
@@ -10,30 +8,12 @@ describe("DeleteEndpointTransactionHandler", () => {
         const first = package_.addEndpoint();
         const second = package_.addEndpoint();
 
-        const transaction: FernApiEditor.transactions.DeleteEndpointTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.deleteEndpoint({
             endpointId: first.endpointId,
-        };
+        });
+        api.applyTransaction(transaction);
 
-        new DeleteEndpointTransactionHandler().applyTransaction(api, transaction);
-
-        expect(package_.endpoints).toEqual([second]);
-    });
-
-    it("throws when package does not exist", () => {
-        const api = new MockApi();
-        const package_ = api.addPackage();
-        const first = package_.addEndpoint();
-        package_.addEndpoint();
-
-        const transaction: FernApiEditor.transactions.DeleteEndpointTransaction = {
-            ...createBaseTransaction(),
-            packageId: "made-up-id",
-            endpointId: first.endpointId,
-        };
-
-        expect(() => new DeleteEndpointTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(Object.keys(api.definition.endpoints)).toEqual([second.endpointId]);
     });
 
     it("throws when endpoint does not exist", () => {
@@ -42,12 +22,10 @@ describe("DeleteEndpointTransactionHandler", () => {
         package_.addEndpoint();
         package_.addEndpoint();
 
-        const transaction: FernApiEditor.transactions.DeleteEndpointTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.deleteEndpoint({
             endpointId: "made-up-id",
-        };
+        });
 
-        expect(() => new DeleteEndpointTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

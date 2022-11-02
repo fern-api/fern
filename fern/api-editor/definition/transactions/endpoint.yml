@@ -5,12 +5,12 @@ types:
   BaseEndpointTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      PackageId: commons.PackageId
       EndpointId: commons.EndpointId
 
   CreateEndpointTransaction:
     extends: BaseEndpointTransaction
     properties:
+      parent: commons.PackageId
       endpointName: string
 
   RenameEndpointTransaction:

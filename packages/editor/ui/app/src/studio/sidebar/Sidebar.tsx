@@ -1,14 +1,25 @@
 import { Button, Divider, Intent } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { isLoaded } from "@fern-api/loadable";
-import React from "react";
-import { useLightweightAPI } from "../queries/useLightweightApi";
+import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
+import React, { useCallback } from "react";
+import { useApiEditorContext } from "../../api-editor-context/ApiEditorContext";
+import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
 import { SidebarItemRow } from "./items/SidebarItemRow";
 import { Packages } from "./packages/Packages";
 import styles from "./Sidebar.module.scss";
 
 export const Sidebar: React.FC = () => {
-    const lightweightApi = useLightweightAPI();
+    const { submitTransaction } = useApiEditorContext();
+
+    const onClickAddPackage = useCallback(() => {
+        submitTransaction(
+            TransactionGenerator.createPackage({
+                packageId: EditorItemIdGenerator.package(),
+                packageName: "my package",
+            })
+        );
+    }, [submitTransaction]);
 
     return (
         <div className={styles.sidebar}>
@@ -18,10 +29,14 @@ export const Sidebar: React.FC = () => {
                     intent={Intent.PRIMARY}
                     icon={IconNames.BOX}
                     text="Add package"
-                    disabled={!isLoaded(lightweightApi)}
+                    onClick={onClickAddPackage}
                 />
-                <SidebarItemRow itemId="xyz" icon={IconNames.COG} label="API Configuration" />
-                <SidebarItemRow itemId="xyz1113" icon={IconNames.CODE_BLOCK} label="SDKs" />
+                <SidebarItemRow
+                    itemId={SidebarItemIdGenerator.API_CONFIGURATION}
+                    icon={IconNames.COG}
+                    label="API Configuration"
+                />
+                <SidebarItemRow itemId={SidebarItemIdGenerator.SDKs} icon={IconNames.CODE_BLOCK} label="SDKs" />
             </div>
             <div className={styles.sidebarItems}>
                 <Divider className={styles.divider} />

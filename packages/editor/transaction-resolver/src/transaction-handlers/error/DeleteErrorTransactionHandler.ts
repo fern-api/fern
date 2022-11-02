@@ -1,16 +1,23 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { AbstractTransactionHandler } from "../AbstractTransactionHandler";
+import { AbstractDeleteTransactionHander } from "../AbstractDeleteTransactionHander";
 
-export class DeleteErrorTransactionHandler extends AbstractTransactionHandler<FernApiEditor.transactions.DeleteErrorTransaction> {
-    public applyTransaction(
-        api: FernApiEditor.Api,
-        transaction: FernApiEditor.transactions.DeleteErrorTransaction
-    ): void {
-        const package_ = this.getPackageOrThrow(api, transaction.packageId);
-        const indexToDelete = package_.errors.findIndex((e) => e.errorId === transaction.errorId);
-        if (indexToDelete === -1) {
-            throw new Error(`Error ${transaction.errorId} does not exist`);
+export class DeleteErrorTransactionHandler extends AbstractDeleteTransactionHander<FernApiEditor.transactions.DeleteErrorTransaction> {
+    protected removeDefinition(transaction: FernApiEditor.transactions.DeleteErrorTransaction): void {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete this.definition.errors[transaction.errorId];
+    }
+
+    protected removeFromParent(transaction: FernApiEditor.transactions.DeleteErrorTransaction): void {
+        const parentId = this.graph.getErrorParent(transaction.errorId);
+        const parent = this.getPackageOrThrow(parentId);
+        const indexOfError = parent.errors.indexOf(transaction.errorId);
+        if (indexOfError === -1) {
+            throw new Error(`Error ${transaction.errorId} does not exist in parent ${parentId}`);
         }
-        package_.errors.splice(indexToDelete, 1);
+        parent.errors.splice(indexOfError, 1);
+    }
+
+    protected removeFromGraph(transaction: FernApiEditor.transactions.DeleteErrorTransaction): void {
+        this.graph.deleteError(transaction.errorId);
     }
 }

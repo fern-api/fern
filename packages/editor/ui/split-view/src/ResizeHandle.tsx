@@ -84,7 +84,7 @@ export const ResizeHandle: React.FC<ResizeHandle.Props> = ({
         [dragStart, onResize]
     );
 
-    const { isHovering, onMouseEnter, onMouseLeave } = useIsHovering();
+    const { isHovering, onMouseOver, onMouseLeave, onMouseMove } = useIsHovering();
 
     const isResizingElsewhere = contextValue != null && contextValue.isResizing && dragStart == null;
 
@@ -100,8 +100,9 @@ export const ResizeHandle: React.FC<ResizeHandle.Props> = ({
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     [styles.isDragging!]: dragStart != null,
                 })}
-                onMouseEnter={onMouseEnter}
+                onMouseOver={onMouseOver}
                 onMouseLeave={onMouseLeave}
+                onMouseMove={onMouseMove}
             >
                 <div className={styles.resizeHandleInner} />
             </div>

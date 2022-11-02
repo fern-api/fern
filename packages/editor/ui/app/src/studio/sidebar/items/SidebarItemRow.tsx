@@ -1,16 +1,20 @@
-import { EditableText, Icon, Intent, Menu, MenuItem, Text } from "@blueprintjs/core";
+import { EditableText, Icon, Intent, Menu, Text } from "@blueprintjs/core";
 import { IconName, IconNames } from "@blueprintjs/icons";
-import { ContextMenu2, ContextMenu2Props } from "@blueprintjs/popover2";
-import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
+import { ContextMenu2 } from "@blueprintjs/popover2";
+import { useBooleanState } from "@fern-ui/react-commons";
 import { useIsResizing } from "@fern-ui/split-view";
 import classNames from "classnames";
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { SidebarItemId } from "../context/SidebarContext";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useSidebarContext } from "../context/useSidebarContext";
+import { SidebarItemId } from "../ids/SidebarItemId";
+import { SidebarItemMenuItem } from "./SidebarItemMenuItem";
 import styles from "./SidebarItemRow.module.scss";
-import { SidebarItemRowButton, SIDEBAR_ITEM_ROW_BUTTON_PROPERTY } from "./SidebarItemRowButton";
+import { SidebarItemRowButton } from "./SidebarItemRowButton";
 import { SidebarItemRowContext } from "./SidebarItemRowContext";
 import { SidebarItemRowEllipsisPopover } from "./SidebarItemRowEllipsisPopover";
+import { useIsEffectivelyHovering } from "./useIsEffectivelyHovering";
+import { useLocalLabel } from "./useLocalLabel";
+import { isEventSelectionPreventing } from "./useSelectionPreventingEventHander";
 
 export declare namespace SidebarItemRow {
     export interface Props {
@@ -36,7 +40,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     const { value: isMouseDown, setTrue: onMouseDown, setFalse: onMouseUp } = useBooleanState(false);
     const handleMouseDown = useCallback(
         (event: React.MouseEvent) => {
-            if (!isEventFromButton(event)) {
+            if (!isEventSelectionPreventing(event)) {
                 onMouseDown();
             }
         },
@@ -55,7 +59,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     const sidebarContext = useSidebarContext();
     const onClick = useCallback(
         (event: React.MouseEvent) => {
-            if (!isEventFromButton(event)) {
+            if (!isEventSelectionPreventing(event)) {
                 sidebarContext.setSelectedItem(itemId);
             }
         },
@@ -72,56 +76,39 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         onDelete?.();
     }, [isSelected, onDelete, sidebarContext]);
 
-    const [localLabel, setLocalLabel] = useState(label);
-    useEffect(() => {
-        setLocalLabel(label);
-    }, [label]);
-    const { value: isRenaming, setValue: setIsRenaming, setTrue: onStartRenaming } = useBooleanState(false);
-
-    const onCancelRename = useCallback(() => {
-        setLocalLabel(label);
-        setIsRenaming(false);
-    }, [label, setIsRenaming]);
-
-    const onConfirmRename = useCallback(() => {
-        setIsRenaming(false);
-        onRename?.(localLabel);
-    }, [localLabel, onRename, setIsRenaming]);
+    const { localLabel, setLocalLabel, isRenaming, onStartRenaming, onCancelRename, onConfirmRename } = useLocalLabel({
+        label,
+        onRename,
+    });
 
     const ellipsisMenu = (
         <Menu>
-            <MenuItem text="Copy" icon={IconNames.CLIPBOARD} />
-            {onRename != null && <MenuItem text="Rename" icon={IconNames.EDIT} onClick={onStartRenaming} />}
+            <SidebarItemMenuItem text="Copy" icon={IconNames.CLIPBOARD} />
+            {onRename != null && <SidebarItemMenuItem text="Rename" icon={IconNames.EDIT} onClick={onStartRenaming} />}
             {onDelete != null && (
-                <MenuItem text="Delete..." icon={IconNames.TRASH} intent={Intent.DANGER} onClick={handleDelete} />
+                <SidebarItemMenuItem
+                    text="Delete..."
+                    icon={IconNames.TRASH}
+                    intent={Intent.DANGER}
+                    onClick={handleDelete}
+                />
             )}
         </Menu>
     );
 
-    const [popoverState, setPopoverState] = useState<"open" | "closing" | "closed">("closed");
-    const popoverProps = useMemo(
-        (): ContextMenu2Props["popoverProps"] => ({
-            onOpening: () => setPopoverState("open"),
-            onClosing: () => setPopoverState("closing"),
-            onClosed: () => setPopoverState("closed"),
-        }),
-        []
-    );
-
-    const { isHovering, onMouseEnter, onMouseLeave } = useIsHovering();
-    const isEffectivelyHovering = popoverState === "open" || (isHovering && !isResizing);
-
-    // render the right actions (which can contain the popover) while the popover is opening or closing
-    const shouldRenderRightActions = isEffectivelyHovering || popoverState !== "closed";
+    const { isHovering, popoverState, popoverProps, onMouseOver, onMouseLeave, onMouseMove } =
+        useIsEffectivelyHovering();
+    const shouldRenderRightActions = isHovering || popoverState !== "closed";
 
     return (
         <ContextMenu2 content={ellipsisMenu} popoverProps={popoverProps}>
             <div
                 className={styles.wrapper}
-                onMouseEnter={onMouseEnter}
+                onMouseOver={onMouseOver}
                 onMouseLeave={onMouseLeave}
                 onMouseDown={handleMouseDown}
                 onMouseUp={onMouseUp}
+                onMouseMove={onMouseMove}
                 onClick={onClick}
             >
                 <div
@@ -129,15 +116,13 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         [styles.active!]: isMouseDown && !isResizing,
                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        [styles.hover!]: isEffectivelyHovering,
+                        [styles.hover!]: isHovering,
                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         [styles.selected!]: isSelected,
                     })}
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    style={{ paddingLeft: getDefaultPaddingLeft() + indent }}
                     tabIndex={0}
                 >
-                    <div className={styles.left}>
+                    <div className={styles.left} style={{ paddingLeft: indent }}>
                         {leftElement}
                         {icon != null && (typeof icon === "string" ? <Icon icon={icon} /> : icon)}
                         <div className={styles.labelSection}>
@@ -159,12 +144,12 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                     </div>
                     {shouldRenderRightActions && (
                         <div className={styles.right}>
+                            {onClickAdd != null && <SidebarItemRowButton icon={IconNames.PLUS} onClick={onClickAdd} />}
                             <SidebarItemRowEllipsisPopover
                                 menu={ellipsisMenu}
                                 popoverProps={popoverProps}
                                 hidden={popoverState === "closing"}
                             />
-                            {onClickAdd != null && <SidebarItemRowButton icon={IconNames.PLUS} onClick={onClickAdd} />}
                         </div>
                     )}
                 </div>
@@ -172,25 +157,3 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         </ContextMenu2>
     );
 };
-
-const PX_REGEX = /(.*)px/;
-function getDefaultPaddingLeft(): number {
-    const defaultPaddingLeftString = styles.paddingLeft;
-    if (defaultPaddingLeftString == null) {
-        return 0;
-    }
-    const defaultPaddingLeftWithoutPx = defaultPaddingLeftString.match(PX_REGEX);
-    if (defaultPaddingLeftWithoutPx == null) {
-        return 0;
-    }
-    const defaultPaddingLeft = Number(defaultPaddingLeftWithoutPx[1]);
-    if (isNaN(defaultPaddingLeft)) {
-        return 0;
-    }
-    return defaultPaddingLeft;
-}
-
-function isEventFromButton(event: React.MouseEvent) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (event as any)[SIDEBAR_ITEM_ROW_BUTTON_PROPERTY] != null;
-}

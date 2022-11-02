@@ -1,5 +1,6 @@
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React from "react";
-import { LightweightPackage } from "../../../mock-backend/MockBackend";
+import { usePackage } from "../context/usePackage";
 import { EndpointSidebarItem } from "../endpoints/EndpointSidebarItem";
 import { ErrorsSidebarGroup } from "../errors/ErrorsSidebarGroup";
 import { TypesSidebarGroup } from "../types/TypesSidebarGroup";
@@ -8,22 +9,21 @@ import { PackageSidebarItem } from "./PackageSidebarItem";
 
 export declare namespace PackageSidebarGroup {
     export interface Props {
-        lightweightPackage: LightweightPackage;
+        packageId: FernApiEditor.PackageId;
     }
 }
 
-export const PackageSidebarGroup: React.FC<PackageSidebarGroup.Props> = ({ lightweightPackage }) => {
+export const PackageSidebarGroup: React.FC<PackageSidebarGroup.Props> = ({ packageId }) => {
+    const package_ = usePackage(packageId);
+
     return (
         <div className={styles.container}>
-            <PackageSidebarItem lightweightPackage={lightweightPackage}>
-                {lightweightPackage.endpoints.map((lightweightEndpoint) => (
-                    <EndpointSidebarItem
-                        key={lightweightEndpoint.endpointId}
-                        lightweightEndpoint={lightweightEndpoint}
-                    />
+            <PackageSidebarItem package_={package_}>
+                {package_.endpoints.map((endpointId) => (
+                    <EndpointSidebarItem key={endpointId} endpointId={endpointId} />
                 ))}
-                <TypesSidebarGroup lightweightPackage={lightweightPackage} />
-                <ErrorsSidebarGroup lightweightPackage={lightweightPackage} />
+                <TypesSidebarGroup package_={package_} />
+                <ErrorsSidebarGroup package_={package_} />
             </PackageSidebarItem>
         </div>
     );

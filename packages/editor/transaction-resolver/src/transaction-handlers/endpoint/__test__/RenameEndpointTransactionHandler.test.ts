@@ -1,7 +1,5 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { RenameEndpointTransactionHandler } from "../RenameEndpointTransactionHandler";
 
 describe("RenameEndpointTransactionHandler", () => {
     it("correctly renames endpoint", () => {
@@ -10,32 +8,13 @@ describe("RenameEndpointTransactionHandler", () => {
         const first = package_.addEndpoint();
         package_.addEndpoint();
 
-        const transaction: FernApiEditor.transactions.RenameEndpointTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.renameEndpoint({
             endpointId: first.endpointId,
             newEndpointName: "New endpoint name",
-        };
+        });
+        api.applyTransaction(transaction);
 
-        new RenameEndpointTransactionHandler().applyTransaction(api, transaction);
-
-        expect(package_.endpoints[0]?.endpointName).toEqual("New endpoint name");
-    });
-
-    it("throws when package does not exist", () => {
-        const api = new MockApi();
-        const package_ = api.addPackage();
-        const first = package_.addEndpoint();
-        package_.addEndpoint();
-
-        const transaction: FernApiEditor.transactions.RenameEndpointTransaction = {
-            ...createBaseTransaction(),
-            packageId: "made-up-id",
-            endpointId: first.endpointId,
-            newEndpointName: "New endpoint name",
-        };
-
-        expect(() => new RenameEndpointTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(api.definition.endpoints[first.endpointId]?.endpointName).toEqual("New endpoint name");
     });
 
     it("throws when endpoint does not exist", () => {
@@ -44,13 +23,11 @@ describe("RenameEndpointTransactionHandler", () => {
         package_.addEndpoint();
         package_.addEndpoint();
 
-        const transaction: FernApiEditor.transactions.RenameEndpointTransaction = {
-            ...createBaseTransaction(),
-            packageId: package_.packageId,
+        const transaction = TransactionGenerator.renameEndpoint({
             endpointId: "made-up-id",
             newEndpointName: "New endpoint name",
-        };
+        });
 
-        expect(() => new RenameEndpointTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });

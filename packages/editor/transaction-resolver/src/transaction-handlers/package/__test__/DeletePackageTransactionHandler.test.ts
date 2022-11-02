@@ -1,36 +1,47 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { createBaseTransaction } from "../../../testing-utils/createBaseTransaction";
+import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
-import { DeletePackageTransactionHandler } from "../DeletePackageTransactionHandler";
 
 describe("DeletePackageTransactionHandler", () => {
-    it("correctly delete package", () => {
+    it("correctly deletes root package", () => {
         const api = new MockApi();
         const first = api.addPackage();
         const second = api.addPackage();
         const third = api.addPackage();
 
-        const transaction: FernApiEditor.transactions.DeletePackageTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.deletePackage({
             packageId: second.packageId,
-        };
+        });
+        api.applyTransaction(transaction);
 
-        new DeletePackageTransactionHandler().applyTransaction(api, transaction);
-
-        expect(api.packages).toEqual([first, third]);
+        expect(api.definition.rootPackages).toEqual([first.packageId, third.packageId]);
+        expect(Object.keys(api.definition.packages)).toEqual([first.packageId, third.packageId]);
     });
 
-    it("throws when package does not exist", () => {
+    it("correctly deletes non-root package", () => {
+        const api = new MockApi();
+        const package_ = api.addPackage();
+        const first = package_.addPackage();
+        const second = package_.addPackage();
+        const third = package_.addPackage();
+
+        const transaction = TransactionGenerator.deletePackage({
+            packageId: second.packageId,
+        });
+        api.applyTransaction(transaction);
+
+        expect(api.definition.packages[package_.packageId]?.packages).toEqual([first.packageId, third.packageId]);
+    });
+
+    it("throws when parent does not exist", () => {
         const api = new MockApi();
         api.addPackage();
         api.addPackage();
         api.addPackage();
 
-        const transaction: FernApiEditor.transactions.DeletePackageTransaction = {
-            ...createBaseTransaction(),
+        const transaction = TransactionGenerator.deletePackage({
             packageId: "made-up-id",
-        };
+        });
 
-        expect(() => new DeletePackageTransactionHandler().applyTransaction(api, transaction)).toThrow();
+        expect(() => api.applyTransaction(transaction)).toThrow();
     });
 });
