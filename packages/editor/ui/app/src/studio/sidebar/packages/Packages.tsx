@@ -8,7 +8,7 @@ export const Packages: React.FC = () => {
     return (
         <div className={styles.packages}>
             {definition.rootPackages.map((packageId) => (
-                <PackageSidebarGroup key={packageId} packageId={packageId} />
+                <PackageSidebarGroup key={packageId} packageId={packageId} isRootPackage={true} />
             ))}
         </div>
     );

@@ -14,13 +14,13 @@ export interface SidebarItemIdGenerator {
 }
 
 export const SidebarItemIdGenerator: SidebarItemIdGenerator = {
-    API_CONFIGURATION: "apiConfiguration" as SidebarItemId,
-    SDKs: "sdks" as SidebarItemId,
-    package: (packageId) => `package:${packageId}` as SidebarItemId,
-    endpoints: (packageId) => `${SidebarItemIdGenerator.package(packageId)}:endpoints` as SidebarItemId,
-    endpoint: (endpointId) => `endpoint:${endpointId}` as SidebarItemId,
-    types: (packageId) => `${SidebarItemIdGenerator.package(packageId)}:types` as SidebarItemId,
-    type: (typeId) => `type:${typeId}` as SidebarItemId,
-    errors: (packageId) => `${SidebarItemIdGenerator.package(packageId)}:errors` as SidebarItemId,
-    error: (errorId) => `error:${errorId}` as SidebarItemId,
+    API_CONFIGURATION: SidebarItemId.of("apiConfiguration"),
+    SDKs: SidebarItemId.of("sdks"),
+    package: (packageId) => SidebarItemId.of(`package.${packageId}`),
+    endpoints: (packageId) => SidebarItemId.of(`${SidebarItemIdGenerator.package(packageId)}.endpoints`),
+    endpoint: (endpointId) => SidebarItemId.of(`endpoint.${endpointId}`),
+    types: (packageId) => SidebarItemId.of(`${SidebarItemIdGenerator.package(packageId)}.types`),
+    type: (typeId) => SidebarItemId.of(`type.${typeId}`),
+    errors: (packageId) => SidebarItemId.of(`${SidebarItemIdGenerator.package(packageId)}.errors`),
+    error: (errorId) => SidebarItemId.of(`error.${errorId}`),
 };

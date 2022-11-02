@@ -1,6 +1,6 @@
 import { TransactionResolver } from "@fern-api/transaction-resolver";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ApiEditorContext, ApiEditorContextValue } from "./ApiEditorContext";
 
 export declare namespace ApiEditorContextProvider {
@@ -11,16 +11,19 @@ export declare namespace ApiEditorContextProvider {
 
 export const ApiEditorContextProvider: React.FC<ApiEditorContextProvider.Props> = ({ initialApi, children }) => {
     const [definition, setDefinition] = useState<FernApiEditor.Api>(initialApi);
-    const transactionResolver = useRef(new TransactionResolver({ definition }));
+    const [transactionResolver] = useState(() => new TransactionResolver({ definition }));
 
     useEffect(() => {
-        const cleanup = transactionResolver.current.watch(setDefinition);
+        const cleanup = transactionResolver.watch(setDefinition);
         return cleanup;
-    }, []);
+    }, [transactionResolver]);
 
-    const submitTransaction = useCallback((transaction: FernApiEditor.transactions.Transaction) => {
-        transactionResolver.current.applyTransaction(transaction);
-    }, []);
+    const submitTransaction = useCallback(
+        (transaction: FernApiEditor.transactions.Transaction) => {
+            transactionResolver.applyTransaction(transaction);
+        },
+        [transactionResolver]
+    );
 
     const value = useCallback(
         (): ApiEditorContextValue => ({
