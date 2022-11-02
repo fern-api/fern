@@ -4112,6 +4112,7 @@ __metadata:
     "@fern-api/transaction-resolver": "workspace:*"
     "@fern-fern/api-editor-sdk": 0.0.11
     "@fern-ui/react-commons": "workspace:*"
+    "@fern-ui/routing-utils": "workspace:*"
     "@fern-ui/split-view": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@types/jest": ^29.0.3
@@ -4126,6 +4127,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-query: ^3.34.12
+    react-router-dom: ^6.2.1
     stylelint: ^14.14.0
     typescript: 4.6.4
     vite: 3.0.3

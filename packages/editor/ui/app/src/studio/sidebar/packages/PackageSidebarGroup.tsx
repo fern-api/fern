@@ -10,15 +10,19 @@ import { PackageSidebarItem } from "./PackageSidebarItem";
 export declare namespace PackageSidebarGroup {
     export interface Props {
         packageId: FernApiEditor.PackageId;
+        isRootPackage: boolean;
     }
 }
 
-export const PackageSidebarGroup: React.FC<PackageSidebarGroup.Props> = ({ packageId }) => {
+export const PackageSidebarGroup: React.FC<PackageSidebarGroup.Props> = ({ packageId, isRootPackage }) => {
     const package_ = usePackage(packageId);
 
     return (
         <div className={styles.container}>
-            <PackageSidebarItem package_={package_}>
+            <PackageSidebarItem package_={package_} isRootPackage={isRootPackage}>
+                {package_.packages.map((subPackageId) => (
+                    <PackageSidebarGroup key={subPackageId} packageId={subPackageId} isRootPackage={false} />
+                ))}
                 {package_.endpoints.map((endpointId) => (
                     <EndpointSidebarItem key={endpointId} endpointId={endpointId} />
                 ))}

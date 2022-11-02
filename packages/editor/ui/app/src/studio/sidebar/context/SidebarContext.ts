@@ -6,8 +6,6 @@ export const SidebarContext = createContext<() => SidebarContextValue>(() => {
 });
 
 export interface SidebarContextValue {
-    selectedItem: SidebarItemId | undefined;
-    setSelectedItem: (itemId: SidebarItemId | undefined) => void;
     states: Record<SidebarItemId, SidebarItemState>;
     setState: (itemId: SidebarItemId, state: SidebarItemState) => void;
 }

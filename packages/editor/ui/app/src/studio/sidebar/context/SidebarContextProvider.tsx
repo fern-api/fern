@@ -4,7 +4,6 @@ import { SidebarContext, SidebarContextValue, SidebarItemState } from "./Sidebar
 
 export const SidebarContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [states, setStates] = useState<Record<SidebarItemId, SidebarItemState>>({});
-    const [selectedItem, setSelectedItem] = useState<SidebarItemId>();
 
     const setState = useCallback(
         (itemId: SidebarItemId, state: SidebarItemState) => {
@@ -18,12 +17,10 @@ export const SidebarContextProvider: React.FC<React.PropsWithChildren> = ({ chil
 
     const value = useCallback((): SidebarContextValue => {
         return {
-            selectedItem,
-            setSelectedItem,
             states,
             setState,
         };
-    }, [selectedItem, setState, states]);
+    }, [setState, states]);
 
     return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 };

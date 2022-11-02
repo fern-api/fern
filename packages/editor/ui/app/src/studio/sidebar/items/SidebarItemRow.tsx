@@ -5,7 +5,7 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import { useIsResizing } from "@fern-ui/split-view";
 import classNames from "classnames";
 import React, { useCallback, useContext, useEffect } from "react";
-import { useSidebarContext } from "../context/useSidebarContext";
+import { useSelectedSidebarItemId } from "../../routes/useSelectedSidebarItemId";
 import { SidebarItemId } from "../ids/SidebarItemId";
 import { SidebarItemMenuItem } from "./SidebarItemMenuItem";
 import styles from "./SidebarItemRow.module.scss";
@@ -56,25 +56,25 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         };
     }, [onMouseUp]);
 
-    const sidebarContext = useSidebarContext();
+    const [selectedSidebarItemId, setSelectedSidebarItemId] = useSelectedSidebarItemId();
     const onClick = useCallback(
         (event: React.MouseEvent) => {
             if (!isEventSelectionPreventing(event)) {
-                sidebarContext.setSelectedItem(itemId);
+                setSelectedSidebarItemId(itemId);
             }
         },
-        [itemId, sidebarContext]
+        [itemId, setSelectedSidebarItemId]
     );
-    const isSelected = sidebarContext.selectedItem === itemId;
+    const isSelected = selectedSidebarItemId === itemId;
 
     const { indent } = useContext(SidebarItemRowContext);
 
     const handleDelete = useCallback(() => {
         if (isSelected) {
-            sidebarContext.setSelectedItem(undefined);
+            setSelectedSidebarItemId(undefined);
         }
         onDelete?.();
-    }, [isSelected, onDelete, sidebarContext]);
+    }, [isSelected, onDelete, setSelectedSidebarItemId]);
 
     const { localLabel, setLocalLabel, isRenaming, onStartRenaming, onCancelRename, onConfirmRename } = useLocalLabel({
         label,
