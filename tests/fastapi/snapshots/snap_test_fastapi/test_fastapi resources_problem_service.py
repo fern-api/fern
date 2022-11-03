@@ -45,6 +45,10 @@ class AbstractProblemCrudService(AbstractFernService):
     def get_default_starter_files(self, *, body: GetDefaultStarterFilesRequest) -> GetDefaultStarterFilesResponse:
         ...
 
+    @abc.abstractmethod
+    def get_all(self) -> None:
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -56,6 +60,7 @@ class AbstractProblemCrudService(AbstractFernService):
         cls.__init_update_problem(router=router)
         cls.__init_delete_problem(router=router)
         cls.__init_get_default_starter_files(router=router)
+        cls.__init_get_all(router=router)
 
     @classmethod
     def __init_create_problem(cls, router: fastapi.APIRouter) -> None:
@@ -195,4 +200,35 @@ class AbstractProblemCrudService(AbstractFernService):
             path="/problem-crud/default-starter-files",
             response_model=GetDefaultStarterFilesResponse,
             **get_route_args(cls.get_default_starter_files),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_all(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_all)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_all, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_all)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.get_all(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_all' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_all.__globals__)
+
+        router.get(
+            path="/problem-crud", status_code=starlette.status.HTTP_204_NO_CONTENT, **get_route_args(cls.get_all)
         )(wrapper)

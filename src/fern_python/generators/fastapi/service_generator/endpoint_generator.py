@@ -81,9 +81,11 @@ class EndpointGenerator:
             service_part = service_part[:-1]
         if endpoint_part.startswith("/"):
             endpoint_part = endpoint_part[1:]
-        if endpoint_part.endswith("/"):
-            endpoint_part = endpoint_part[:-1]
-        return f"{service_part}/{endpoint_part}"
+
+        endpoint_path = f"{service_part}/{endpoint_part}"
+        if endpoint_path.endswith("/"):
+            endpoint_path = endpoint_path[:-1]
+        return endpoint_path
 
     def _get_path_parameter_part_as_str(self, path_parameter: ir_types.services.PathParameter, tail: str) -> str:
         path = ""

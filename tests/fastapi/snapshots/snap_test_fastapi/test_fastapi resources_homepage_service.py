@@ -71,7 +71,7 @@ class AbstractHomepageProblemService(AbstractFernService):
         wrapper.__globals__.update(cls.get_homepage_problems.__globals__)
 
         router.get(
-            path="/homepage-problems/",
+            path="/homepage-problems",
             response_model=typing.List[ProblemId],
             **get_route_args(cls.get_homepage_problems),
         )(wrapper)
@@ -106,7 +106,7 @@ class AbstractHomepageProblemService(AbstractFernService):
         wrapper.__globals__.update(cls.set_homepage_problems.__globals__)
 
         router.post(
-            path="/homepage-problems/",
+            path="/homepage-problems",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             **get_route_args(cls.set_homepage_problems),
         )(wrapper)

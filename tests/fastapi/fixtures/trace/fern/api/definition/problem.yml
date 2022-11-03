@@ -106,3 +106,7 @@ services:
           path: /default-starter-files
           request: GetDefaultStarterFilesRequest
           response: GetDefaultStarterFilesResponse
+
+        getAll:
+          method: GET
+          path: ""
