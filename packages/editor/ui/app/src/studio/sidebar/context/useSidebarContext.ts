@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { SidebarItemId } from "../ids/parseSidebarItemId";
+import { SidebarItemId } from "../ids/SidebarItemId";
+import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
 import { SidebarContext, SidebarContextValue, SidebarItemState } from "./SidebarContext";
 
 export function useSidebarContext(): SidebarContextValue {
@@ -18,5 +19,8 @@ export function useSidebarItemState(
     defaultState?: SidebarItemState
 ): [SidebarItemState | undefined, (newState: SidebarItemState) => void] {
     const { states, setState } = useSidebarContext();
-    return [states[itemId] ?? defaultState, (newState) => setState(itemId, newState)];
+    return [
+        states[StringifiedSidebarItemId.stringify(itemId)] ?? defaultState,
+        (newState) => setState(itemId, newState),
+    ];
 }

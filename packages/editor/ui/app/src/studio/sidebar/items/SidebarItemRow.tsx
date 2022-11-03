@@ -6,7 +6,8 @@ import { useIsResizing } from "@fern-ui/split-view";
 import classNames from "classnames";
 import React, { useCallback, useContext, useEffect } from "react";
 import { useSelectedSidebarItemId } from "../../routes/useSelectedSidebarItemId";
-import { SidebarItemId } from "../ids/parseSidebarItemId";
+import { SidebarItemId } from "../ids/SidebarItemId";
+import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
 import { SidebarItemMenuItem } from "./SidebarItemMenuItem";
 import styles from "./SidebarItemRow.module.scss";
 import { SidebarItemRowButton } from "./SidebarItemRowButton";
@@ -65,7 +66,9 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         },
         [itemId, setSelectedSidebarItemId]
     );
-    const isSelected = selectedSidebarItemId === itemId;
+    const isSelected =
+        selectedSidebarItemId != null &&
+        StringifiedSidebarItemId.stringify(selectedSidebarItemId) === StringifiedSidebarItemId.stringify(itemId);
 
     const { indent } = useContext(SidebarItemRowContext);
 
