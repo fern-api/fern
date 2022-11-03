@@ -73,11 +73,8 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     const { indent } = useContext(SidebarItemRowContext);
 
     const handleDelete = useCallback(() => {
-        if (isSelected) {
-            setSelectedSidebarItemId(undefined);
-        }
         onDelete?.();
-    }, [isSelected, onDelete, setSelectedSidebarItemId]);
+    }, [onDelete]);
 
     const { localLabel, setLocalLabel, isRenaming, onStartRenaming, onCancelRename, onConfirmRename } = useLocalLabel({
         label,

@@ -1,7 +1,7 @@
 import { Intent, Tag } from "@blueprintjs/core";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { useError } from "../context/useError";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
@@ -38,9 +38,11 @@ export const ErrorSidebarItem: React.FC<ErrorSidebarItem.Props> = ({ errorId }) 
         [submitTransaction, errorId]
     );
 
+    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.error(error), [error]);
+
     return (
         <SidebarItemRow
-            itemId={SidebarItemIdGenerator.error(errorId)}
+            itemId={sidebarItemId}
             label={error.errorName}
             icon={
                 <Tag className={styles.tag} intent={Intent.DANGER} minimal>

@@ -2,7 +2,7 @@ import { IconNames } from "@blueprintjs/icons";
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
@@ -40,13 +40,24 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
         [package_.packageId, submitTransaction]
     );
 
+    const onDelete = useCallback(() => {
+        submitTransaction(
+            TransactionGenerator.deletePackage({
+                packageId: package_.packageId,
+            })
+        );
+    }, [package_.packageId, submitTransaction]);
+
+    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.package(package_), [package_]);
+
     return (
         <CollapsibleSidebarItemRow
-            itemId={SidebarItemIdGenerator.package(package_.packageId)}
+            itemId={sidebarItemId}
             label={package_.packageName}
             icon={IconNames.BOX}
             onClickAdd={onClickAdd}
             onRename={onRename}
+            onDelete={onDelete}
             defaultIsCollapsed={!isRootPackage}
         >
             {children}

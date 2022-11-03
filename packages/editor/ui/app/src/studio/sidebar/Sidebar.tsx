@@ -8,9 +8,12 @@ import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
 import { SidebarItemRow } from "./items/SidebarItemRow";
 import { Packages } from "./packages/Packages";
 import styles from "./Sidebar.module.scss";
+import { useSelectionReset } from "./useSelectionReset";
 
 export const Sidebar: React.FC = () => {
     const { submitTransaction } = useApiEditorContext();
+
+    useSelectionReset();
 
     const onClickAddPackage = useCallback(() => {
         submitTransaction(

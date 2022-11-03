@@ -4,21 +4,25 @@ import { SidebarItemId } from "./SidebarItemId";
 export interface SidebarItemIdGenerator {
     readonly API_CONFIGURATION: SidebarItemId;
     readonly SDKs: SidebarItemId;
-    readonly package: (packageId: FernApiEditor.PackageId) => SidebarItemId;
-    readonly endpoint: (endpointId: FernApiEditor.EndpointId) => SidebarItemId;
-    readonly types: (packageId: FernApiEditor.PackageId) => SidebarItemId;
-    readonly type: (typeId: FernApiEditor.TypeId) => SidebarItemId;
-    readonly errors: (packageId: FernApiEditor.PackageId) => SidebarItemId;
-    readonly error: (errorId: FernApiEditor.ErrorId) => SidebarItemId;
+    readonly package: (package_: FernApiEditor.Package) => SidebarItemId;
+    readonly endpoint: (endpoint: FernApiEditor.Endpoint) => SidebarItemId;
+    readonly type: (type: FernApiEditor.Type) => SidebarItemId;
+    readonly error: (error: FernApiEditor.Error) => SidebarItemId;
+    readonly types: (package_: FernApiEditor.Package) => SidebarItemId;
+    readonly errors: (package_: FernApiEditor.Package) => SidebarItemId;
 }
 
 export const SidebarItemIdGenerator: SidebarItemIdGenerator = {
     API_CONFIGURATION: { type: "apiConfiguration" },
     SDKs: { type: "sdkConfiguration" },
-    package: (packageId) => ({ type: "editorItem", editorItemId: packageId }),
-    endpoint: (endpointId) => ({ type: "editorItem", editorItemId: endpointId }),
-    types: (packageId) => ({ type: "editorTypesGroup", packageId }),
-    type: (typeId) => ({ type: "editorItem", editorItemId: typeId }),
-    errors: (packageId) => ({ type: "editorErrorsGroup", packageId }),
-    error: (errorId) => ({ type: "editorItem", editorItemId: errorId }),
+    package: (package_) => ({ type: "package", packageName: package_.packageName, packageId: package_.packageId }),
+    endpoint: (endpoint) => ({
+        type: "endpoint",
+        endpointName: endpoint.endpointName,
+        endpointId: endpoint.endpointId,
+    }),
+    type: (type) => ({ type: "type", typeName: type.typeName, typeId: type.typeId }),
+    error: (error) => ({ type: "error", errorName: error.errorName, errorId: error.errorId }),
+    types: (package_) => ({ type: "typesGroup", packageName: package_.packageName, packageId: package_.packageId }),
+    errors: (package_) => ({ type: "errorsGroup", packageName: package_.packageName, packageId: package_.packageId }),
 };

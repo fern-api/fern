@@ -11,11 +11,16 @@ export const StringifiedSidebarItemId = {
             case "apiConfiguration":
             case "sdkConfiguration":
                 return sidebarItemId.type as StringifiedSidebarItemId;
-            case "editorItem":
-                return `${sidebarItemId.type}.${sidebarItemId.editorItemId}` as StringifiedSidebarItemId;
-            case "editorTypesGroup":
-            case "editorErrorsGroup":
+            case "package":
+            case "typesGroup":
+            case "errorsGroup":
                 return `${sidebarItemId.type}.${sidebarItemId.packageId}` as StringifiedSidebarItemId;
+            case "endpoint":
+                return `${sidebarItemId.type}.${sidebarItemId.endpointId}` as StringifiedSidebarItemId;
+            case "type":
+                return `${sidebarItemId.type}.${sidebarItemId.typeId}` as StringifiedSidebarItemId;
+            case "error":
+                return `${sidebarItemId.type}.${sidebarItemId.errorId}` as StringifiedSidebarItemId;
             default:
                 assertNever(sidebarItemId);
         }
