@@ -1,7 +1,7 @@
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { useSidebarItemState } from "../context/useSidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
@@ -15,7 +15,8 @@ export declare namespace TypesSidebarGroup {
 }
 
 export const TypesSidebarGroup: React.FC<TypesSidebarGroup.Props> = ({ package_ }) => {
-    const sidebarItemId = SidebarItemIdGenerator.types(package_.packageId);
+    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.types(package_), [package_]);
+
     const [, setSidebarItemState] = useSidebarItemState(sidebarItemId);
 
     const { submitTransaction } = useApiEditorContext();

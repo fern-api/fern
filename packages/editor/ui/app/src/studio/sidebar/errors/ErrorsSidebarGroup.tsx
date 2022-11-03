@@ -1,7 +1,7 @@
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
@@ -26,9 +26,11 @@ export const ErrorsSidebarGroup: React.FC<ErrorsSidebarGroup.Props> = ({ package
         );
     }, [package_.packageId, submitTransaction]);
 
+    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.errors(package_), [package_]);
+
     return (
         <CollapsibleSidebarItemRow
-            itemId={SidebarItemIdGenerator.errors(package_.packageId)}
+            itemId={sidebarItemId}
             label="Errors"
             onClickAdd={onClickAdd}
             defaultIsCollapsed={true}
