@@ -1,12 +1,11 @@
-import { Colors, Icon } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { useType } from "../context/useType";
+import { SidebarIcon } from "../icons/SidebarIcon";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { SidebarItemRow } from "../items/SidebarItemRow";
+import { SelectableSidebarItemRow } from "../items/SelectableSidebarItemRow";
 
 export declare namespace TypeSidebarItem {
     export interface Props {
@@ -41,10 +40,10 @@ export const TypeSidebarItem: React.FC<TypeSidebarItem.Props> = ({ typeId }) => 
     const sidebarItemId = useMemo(() => SidebarItemIdGenerator.type(type), [type]);
 
     return (
-        <SidebarItemRow
+        <SelectableSidebarItemRow
             itemId={sidebarItemId}
             label={type.typeName}
-            icon={<Icon icon={IconNames.CUBE} color={Colors.TURQUOISE3} />}
+            icon={SidebarIcon.TYPE}
             onDelete={onClickDelete}
             onRename={onRename}
         />

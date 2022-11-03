@@ -2,12 +2,12 @@ import { IconNames } from "@blueprintjs/icons";
 import React, { useCallback, useContext, useMemo } from "react";
 import { useSidebarItemState } from "../context/useSidebarContext";
 import styles from "./CollapsibleSidebarItemRow.module.scss";
-import { SidebarItemRow } from "./SidebarItemRow";
+import { SelectableSidebarItemRow } from "./SelectableSidebarItemRow";
 import { SidebarItemRowButton } from "./SidebarItemRowButton";
 import { SidebarItemRowContext, SidebarItemRowContextValue } from "./SidebarItemRowContext";
 
 export declare namespace CollapsibleSidebarItemRow {
-    export interface Props extends Omit<SidebarItemRow.Props, "labelTagContent" | "leftElement"> {
+    export interface Props extends Omit<SelectableSidebarItemRow.Props, "labelTagContent" | "leftElement"> {
         defaultIsCollapsed: boolean;
         children: React.ReactNode;
     }
@@ -48,7 +48,7 @@ export const CollapsibleSidebarItemRow: React.FC<CollapsibleSidebarItemRow.Props
     return (
         <>
             <SidebarItemRowContext.Provider value={rowContext}>
-                <SidebarItemRow
+                <SelectableSidebarItemRow
                     {...rowProps}
                     leftElement={
                         <SidebarItemRowButton

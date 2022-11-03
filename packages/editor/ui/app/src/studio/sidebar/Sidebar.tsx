@@ -5,7 +5,7 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import React, { useCallback } from "react";
 import { useApiEditorContext } from "../../api-editor-context/ApiEditorContext";
 import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
-import { SidebarItemRow } from "./items/SidebarItemRow";
+import { SelectableSidebarItemRow } from "./items/SelectableSidebarItemRow";
 import { Packages } from "./packages/Packages";
 import styles from "./Sidebar.module.scss";
 import { useSelectionReset } from "./useSelectionReset";
@@ -34,12 +34,16 @@ export const Sidebar: React.FC = () => {
                     text="Add package"
                     onClick={onClickAddPackage}
                 />
-                <SidebarItemRow
+                <SelectableSidebarItemRow
                     itemId={SidebarItemIdGenerator.API_CONFIGURATION}
                     icon={IconNames.COG}
                     label="API Configuration"
                 />
-                <SidebarItemRow itemId={SidebarItemIdGenerator.SDKs} icon={IconNames.CODE_BLOCK} label="SDKs" />
+                <SelectableSidebarItemRow
+                    itemId={SidebarItemIdGenerator.SDKs}
+                    icon={IconNames.CODE_BLOCK}
+                    label="SDKs"
+                />
             </div>
             <div className={styles.sidebarItems}>
                 <Divider className={styles.divider} />

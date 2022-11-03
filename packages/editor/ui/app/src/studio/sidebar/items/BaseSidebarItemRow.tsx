@@ -5,11 +5,8 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import { useIsResizing } from "@fern-ui/split-view";
 import classNames from "classnames";
 import React, { useCallback, useContext, useEffect } from "react";
-import { useSelectedSidebarItemId } from "../../routes/useSelectedSidebarItemId";
-import { SidebarItemId } from "../ids/SidebarItemId";
-import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
+import styles from "./BaseSidebarItemRow.module.scss";
 import { SidebarItemMenuItem } from "./SidebarItemMenuItem";
-import styles from "./SidebarItemRow.module.scss";
 import { SidebarItemRowButton } from "./SidebarItemRowButton";
 import { SidebarItemRowContext } from "./SidebarItemRowContext";
 import { SidebarItemRowEllipsisPopover } from "./SidebarItemRowEllipsisPopover";
@@ -17,26 +14,31 @@ import { useIsEffectivelyHovering } from "./useIsEffectivelyHovering";
 import { useLocalLabel } from "./useLocalLabel";
 import { isEventSelectionPreventing } from "./useSelectionPreventingEventHander";
 
-export declare namespace SidebarItemRow {
+export declare namespace BaseSidebarItemRow {
     export interface Props {
-        itemId: SidebarItemId;
-        label: string;
+        // if not defined, label is always in the "editing" state
+        label: string | undefined;
+        isSelected: boolean;
         leftElement?: JSX.Element;
         icon?: JSX.Element | IconName;
+        onClick?: () => void;
         onClickAdd?: () => void;
         onDelete?: () => void;
         onRename?: (newLabel: string) => void;
+        onCancelRename?: () => void;
     }
 }
 
-export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
-    itemId,
+export const BaseSidebarItemRow: React.FC<BaseSidebarItemRow.Props> = ({
     leftElement,
+    isSelected,
     label,
     icon,
+    onClick,
     onClickAdd,
     onDelete,
     onRename,
+    onCancelRename,
 }) => {
     const { value: isMouseDown, setTrue: onMouseDown, setFalse: onMouseUp } = useBooleanState(false);
     const handleMouseDown = useCallback(
@@ -57,18 +59,14 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         };
     }, [onMouseUp]);
 
-    const [selectedSidebarItemId, setSelectedSidebarItemId] = useSelectedSidebarItemId();
-    const onClick = useCallback(
+    const handleClick = useCallback(
         (event: React.MouseEvent) => {
             if (!isEventSelectionPreventing(event)) {
-                setSelectedSidebarItemId(itemId);
+                onClick?.();
             }
         },
-        [itemId, setSelectedSidebarItemId]
+        [onClick]
     );
-    const isSelected =
-        selectedSidebarItemId != null &&
-        StringifiedSidebarItemId.stringify(selectedSidebarItemId) === StringifiedSidebarItemId.stringify(itemId);
 
     const { indent } = useContext(SidebarItemRowContext);
 
@@ -76,15 +74,18 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         onDelete?.();
     }, [onDelete]);
 
-    const { localLabel, setLocalLabel, isRenaming, onStartRenaming, onCancelRename, onConfirmRename } = useLocalLabel({
+    const localLabel = useLocalLabel({
         label,
         onRename,
+        onCancelRename,
     });
 
     const ellipsisMenu = (
         <Menu>
             <SidebarItemMenuItem text="Copy" icon={IconNames.CLIPBOARD} />
-            {onRename != null && <SidebarItemMenuItem text="Rename" icon={IconNames.EDIT} onClick={onStartRenaming} />}
+            {onRename != null && (
+                <SidebarItemMenuItem text="Rename" icon={IconNames.EDIT} onClick={localLabel.onStartRenaming} />
+            )}
             {onDelete != null && (
                 <SidebarItemMenuItem
                     text="Delete..."
@@ -109,7 +110,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                 onMouseDown={handleMouseDown}
                 onMouseUp={onMouseUp}
                 onMouseMove={onMouseMove}
-                onClick={onClick}
+                onClick={handleClick}
             >
                 <div
                     className={classNames(styles.container, {
@@ -124,20 +125,21 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                 >
                     <div className={styles.left} style={{ paddingLeft: indent }}>
                         {leftElement}
-                        {icon != null && (typeof icon === "string" ? <Icon icon={icon} /> : icon)}
+                        {icon != null &&
+                            (typeof icon === "string" ? <Icon className={styles.icon} icon={icon} /> : icon)}
                         <div className={styles.labelSection}>
-                            {isRenaming ? (
+                            {localLabel.isRenaming ? (
                                 <EditableText
                                     className={styles.editableLabel}
-                                    value={localLabel}
-                                    onChange={setLocalLabel}
-                                    onCancel={onCancelRename}
-                                    onConfirm={onConfirmRename}
+                                    value={localLabel.value}
+                                    onChange={localLabel.set}
+                                    onCancel={localLabel.onCancelRename}
+                                    onConfirm={localLabel.onConfirmRename}
                                     isEditing={true}
                                 />
                             ) : (
                                 <Text className={styles.label} ellipsize>
-                                    {localLabel}
+                                    {localLabel.value}
                                 </Text>
                             )}
                         </div>

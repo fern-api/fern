@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { SidebarItemId } from "../ids/SidebarItemId";
 import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
-import { SidebarContext, SidebarContextValue, SidebarItemState } from "./SidebarContext";
+import { DraftSidebarItem, SidebarContext, SidebarContextValue, SidebarItemState } from "./SidebarContext";
 
 export const SidebarContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [states, setStates] = useState<Record<StringifiedSidebarItemId, SidebarItemState>>({});
@@ -16,12 +16,16 @@ export const SidebarContextProvider: React.FC<React.PropsWithChildren> = ({ chil
         [states]
     );
 
+    const [draft, setDraft] = useState<DraftSidebarItem>();
+
     const value = useCallback((): SidebarContextValue => {
         return {
             states,
             setState,
+            draft,
+            setDraft,
         };
-    }, [setState, states]);
+    }, [draft, setState, states]);
 
     return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 };
