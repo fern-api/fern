@@ -1,7 +1,31 @@
-export type SidebarItemId = string & {
-    __sidebarItem: void;
-};
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 
-export const SidebarItemId = {
-    of: (id: string): SidebarItemId => id as SidebarItemId,
-};
+export type SidebarItemId =
+    | ApiConfigurationSidebarItemId
+    | SdkConfigurationSidebarItemId
+    | EditorItemSidebarItemId
+    | EditorTypesGroupSidebarItemId
+    | EditorErrorsGroupSidebarItemId;
+
+export interface ApiConfigurationSidebarItemId {
+    type: "apiConfiguration";
+}
+
+export interface SdkConfigurationSidebarItemId {
+    type: "sdkConfiguration";
+}
+
+export interface EditorItemSidebarItemId {
+    type: "editorItem";
+    editorItemId: FernApiEditor.PackageId | FernApiEditor.EndpointId | FernApiEditor.TypeId | FernApiEditor.ErrorId;
+}
+
+export interface EditorTypesGroupSidebarItemId {
+    type: "editorTypesGroup";
+    packageId: FernApiEditor.PackageId;
+}
+
+export interface EditorErrorsGroupSidebarItemId {
+    type: "editorErrorsGroup";
+    packageId: FernApiEditor.PackageId;
+}
