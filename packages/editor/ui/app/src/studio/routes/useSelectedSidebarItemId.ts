@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { generatePath, useMatch, useNavigate } from "react-router-dom";
 import { StudioRoutes } from ".";
-import { SidebarItemId } from "../sidebar/ids/SidebarItemId";
+import { SidebarItemId } from "../sidebar/ids/parseSidebarItemId";
 
 export function useSelectedSidebarItemId(): [
     SidebarItemId | undefined,

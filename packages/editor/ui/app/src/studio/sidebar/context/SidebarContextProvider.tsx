@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { SidebarItemId } from "../ids/SidebarItemId";
+import { SidebarItemId } from "../ids/parseSidebarItemId";
 import { SidebarContext, SidebarContextValue, SidebarItemState } from "./SidebarContext";
 
 export const SidebarContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {

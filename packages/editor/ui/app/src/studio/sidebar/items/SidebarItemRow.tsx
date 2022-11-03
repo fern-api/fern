@@ -6,7 +6,7 @@ import { useIsResizing } from "@fern-ui/split-view";
 import classNames from "classnames";
 import React, { useCallback, useContext, useEffect } from "react";
 import { useSelectedSidebarItemId } from "../../routes/useSelectedSidebarItemId";
-import { SidebarItemId } from "../ids/SidebarItemId";
+import { SidebarItemId } from "../ids/parseSidebarItemId";
 import { SidebarItemMenuItem } from "./SidebarItemMenuItem";
 import styles from "./SidebarItemRow.module.scss";
 import { SidebarItemRowButton } from "./SidebarItemRowButton";

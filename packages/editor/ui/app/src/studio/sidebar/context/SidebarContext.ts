@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { SidebarItemId } from "../ids/SidebarItemId";
+import { SidebarItemId } from "../ids/parseSidebarItemId";
 
 export const SidebarContext = createContext<() => SidebarContextValue>(() => {
     throw new Error("SidebarContext not found in tree.");
