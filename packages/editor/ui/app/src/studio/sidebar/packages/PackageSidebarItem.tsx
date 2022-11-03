@@ -2,10 +2,9 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { useSidebarContext } from "../context/useSidebarContext";
-import { SidebarIcon } from "../icons/SidebarIcon";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
+import { BasePackageSidebarItem } from "./BasePackageSidebarItem";
 
 export declare namespace PackageSidebarItem {
     export interface Props {
@@ -17,14 +16,6 @@ export declare namespace PackageSidebarItem {
 
 export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package_, isRootPackage, children }) => {
     const { submitTransaction } = useApiEditorContext();
-    const { setDraft } = useSidebarContext();
-
-    const onClickAdd = useCallback(() => {
-        setDraft({
-            type: "package",
-            parent: package_.packageId,
-        });
-    }, [package_.packageId, setDraft]);
 
     const onRename = useCallback(
         (newPackageName: string) => {
@@ -49,16 +40,15 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
     const sidebarItemId = useMemo(() => SidebarItemIdGenerator.package(package_), [package_]);
 
     return (
-        <CollapsibleSidebarItemRow
-            itemId={sidebarItemId}
-            label={package_.packageName}
-            icon={SidebarIcon.PACKAGE}
-            onClickAdd={onClickAdd}
+        <BasePackageSidebarItem
+            packageId={package_.packageId}
+            packageName={package_.packageName}
+            sidebarItemId={sidebarItemId}
+            isRootPackage={isRootPackage}
             onRename={onRename}
             onDelete={onDelete}
-            defaultIsCollapsed={!isRootPackage}
         >
             {children}
-        </CollapsibleSidebarItemRow>
+        </BasePackageSidebarItem>
     );
 };

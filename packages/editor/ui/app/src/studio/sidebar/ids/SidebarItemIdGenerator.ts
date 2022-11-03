@@ -1,15 +1,24 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { SidebarItemId } from "./SidebarItemId";
+import {
+    ApiConfigurationSidebarItemId,
+    EndpointSidebarItemId,
+    ErrorsGroupSidebarItemId,
+    ErrorSidebarItemId,
+    PackageSidebarItemId,
+    SdkConfigurationSidebarItemId,
+    TypesGroupSidebarItemId,
+    TypeSidebarItemId,
+} from "./SidebarItemId";
 
 export interface SidebarItemIdGenerator {
-    readonly API_CONFIGURATION: SidebarItemId;
-    readonly SDKs: SidebarItemId;
-    readonly package: (package_: FernApiEditor.Package) => SidebarItemId;
-    readonly endpoint: (endpoint: FernApiEditor.Endpoint) => SidebarItemId;
-    readonly type: (type: FernApiEditor.Type) => SidebarItemId;
-    readonly error: (error: FernApiEditor.Error) => SidebarItemId;
-    readonly types: (package_: FernApiEditor.Package) => SidebarItemId;
-    readonly errors: (package_: FernApiEditor.Package) => SidebarItemId;
+    readonly API_CONFIGURATION: ApiConfigurationSidebarItemId;
+    readonly SDKs: SdkConfigurationSidebarItemId;
+    readonly package: (package_: FernApiEditor.Package) => PackageSidebarItemId;
+    readonly endpoint: (endpoint: FernApiEditor.Endpoint) => EndpointSidebarItemId;
+    readonly type: (type: FernApiEditor.Type) => TypeSidebarItemId;
+    readonly error: (error: FernApiEditor.Error) => ErrorSidebarItemId;
+    readonly types: (package_: FernApiEditor.Package) => TypesGroupSidebarItemId;
+    readonly errors: (package_: FernApiEditor.Package) => ErrorsGroupSidebarItemId;
 }
 
 export const SidebarItemIdGenerator: SidebarItemIdGenerator = {

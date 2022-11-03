@@ -1,6 +1,12 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { createContext } from "react";
-import { SidebarItemId } from "../ids/SidebarItemId";
+import {
+    EndpointSidebarItemId,
+    ErrorSidebarItemId,
+    PackageSidebarItemId,
+    SidebarItemId,
+    TypeSidebarItemId,
+} from "../ids/SidebarItemId";
 import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
 
 export const SidebarContext = createContext<() => SidebarContextValue>(() => {
@@ -19,27 +25,23 @@ export interface SidebarItemState {
 }
 
 export type DraftSidebarItem =
-    | DraftPackageSidebarItem
-    | DraftEndpointSidebarItem
-    | DraftTypeSidebarItem
-    | DraftErrorSidebarItem;
+    | DraftPackageSidebarItemId
+    | DraftEndpointSidebarItemId
+    | DraftTypeSidebarItemId
+    | DraftErrorSidebarItemId;
 
-export interface DraftPackageSidebarItem {
-    type: "package";
+export interface DraftPackageSidebarItemId extends PackageSidebarItemId {
     parent: FernApiEditor.PackageId | undefined;
 }
 
-export interface DraftEndpointSidebarItem {
-    type: "endpoint";
+export interface DraftEndpointSidebarItemId extends EndpointSidebarItemId {
     parent: FernApiEditor.PackageId;
 }
 
-export interface DraftTypeSidebarItem {
-    type: "type";
+export interface DraftTypeSidebarItemId extends TypeSidebarItemId {
     parent: FernApiEditor.PackageId;
 }
 
-export interface DraftErrorSidebarItem {
-    type: "error";
+export interface DraftErrorSidebarItemId extends ErrorSidebarItemId {
     parent: FernApiEditor.PackageId;
 }
