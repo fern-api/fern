@@ -65,15 +65,15 @@ function generatePathForStudioItemId(sidebarItemId: SidebarItemId): string {
             return StudioRoutes.SDK_CONFIGURATION.absolutePath;
         case "editorItem":
             return generatePath(StudioRoutes.API_EDITOR_ITEM.absolutePath, {
-                [StudioRoutes.API_EDITOR_ITEM.parameters.EDITOR_ITEM_ID]: sidebarItemId.editorItemId,
+                EDITOR_ITEM_ID: sidebarItemId.editorItemId,
             });
         case "editorTypesGroup":
             return generatePath(StudioRoutes.API_EDITOR_TYPES_GROUP.absolutePath, {
-                [StudioRoutes.API_EDITOR_TYPES_GROUP.parameters.EDITOR_ITEM_ID]: sidebarItemId.packageId,
+                EDITOR_ITEM_ID: sidebarItemId.packageId,
             });
         case "editorErrorsGroup":
             return generatePath(StudioRoutes.API_EDITOR_ERRORS_GROUP.absolutePath, {
-                [StudioRoutes.API_EDITOR_ERRORS_GROUP.parameters.EDITOR_ITEM_ID]: sidebarItemId.packageId,
+                EDITOR_ITEM_ID: sidebarItemId.packageId,
             });
         default:
             assertNever(sidebarItemId);
