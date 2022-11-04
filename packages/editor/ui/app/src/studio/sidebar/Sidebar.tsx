@@ -4,8 +4,8 @@ import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import React, { useCallback } from "react";
 import { useSidebarContext } from "./context/useSidebarContext";
 import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
-import { SidebarItemRow } from "./items/SidebarItemRow";
 import { Packages } from "./packages/Packages";
+import { SidebarItemRow } from "./row/SidebarItemRow";
 import styles from "./Sidebar.module.scss";
 import { useSelectionReset } from "./useSelectionReset";
 

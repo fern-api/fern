@@ -5,7 +5,7 @@ import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { useSidebarItemState } from "../context/useSidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
+import { CollapsibleSidebarItemRow } from "../row/CollapsibleSidebarItemRow";
 import { TypeSidebarItem } from "./TypeSidebarItem";
 
 export declare namespace TypesSidebarGroup {
