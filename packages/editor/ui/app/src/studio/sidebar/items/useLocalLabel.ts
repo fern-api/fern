@@ -1,45 +1,55 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 import { useCallback, useEffect, useState } from "react";
 
+export interface LocalLabel {
+    value: string;
+    set: (newLabel: string) => void;
+    isRenaming: boolean;
+    onStartRenaming: () => void;
+    onCancelRename: () => void;
+    onConfirmRename: (newLabel: string) => void;
+}
+
 export declare namespace useLocalLabel {
     export interface Args {
         label: string;
+        forceIsRenaming: boolean;
         onRename?: (newName: string) => void;
-    }
-
-    export interface Return {
-        localLabel: string;
-        setLocalLabel: (newLabel: string) => void;
-        isRenaming: boolean;
-        onStartRenaming: () => void;
-        onCancelRename: () => void;
-        onConfirmRename: () => void;
+        onCancelRename?: () => void;
     }
 }
 
-export function useLocalLabel({ label, onRename }: useLocalLabel.Args): useLocalLabel.Return {
+export function useLocalLabel({ label, forceIsRenaming, onRename, onCancelRename }: useLocalLabel.Args): LocalLabel {
     const [localLabel, setLocalLabel] = useState(label);
     useEffect(() => {
         setLocalLabel(label);
     }, [label]);
-    const { value: isRenaming, setValue: setIsRenaming, setTrue: onStartRenaming } = useBooleanState(false);
+    const { value: isRenaming, setValue: setIsRenaming, setTrue: onStartRenaming } = useBooleanState(forceIsRenaming);
 
-    const onCancelRename = useCallback(() => {
+    const handleCancelRename = useCallback(() => {
         setLocalLabel(label);
-        setIsRenaming(false);
-    }, [label, setIsRenaming]);
+        setIsRenaming(forceIsRenaming);
+        onCancelRename?.();
+    }, [forceIsRenaming, label, onCancelRename, setIsRenaming]);
 
-    const onConfirmRename = useCallback(() => {
-        setIsRenaming(false);
-        onRename?.(localLabel);
-    }, [localLabel, onRename, setIsRenaming]);
+    const handleConfirmRename = useCallback(
+        (newLabel: string) => {
+            setIsRenaming(forceIsRenaming);
+            if (newLabel.length === 0) {
+                handleCancelRename();
+            } else {
+                onRename?.(localLabel);
+            }
+        },
+        [forceIsRenaming, handleCancelRename, localLabel, onRename, setIsRenaming]
+    );
 
     return {
-        localLabel,
-        setLocalLabel,
+        value: localLabel,
+        set: setLocalLabel,
         isRenaming,
         onStartRenaming,
-        onCancelRename,
-        onConfirmRename,
+        onCancelRename: handleCancelRename,
+        onConfirmRename: handleConfirmRename,
     };
 }

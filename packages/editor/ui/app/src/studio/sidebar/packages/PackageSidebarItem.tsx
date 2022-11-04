@@ -22,6 +22,10 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
     const { draft, setDraft } = useSidebarContext();
     const isDraft = draft?.type === "package" && draft.packageId === package_.packageId;
 
+    const deleteDraft = useCallback(() => {
+        setDraft(undefined);
+    }, [setDraft]);
+
     const onClickAdd = useCallback(() => {
         setDraft({
             type: "package",
@@ -33,10 +37,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
     const onRename = useCallback(
         (newPackageName: string) => {
             if (isDraft) {
-                setDraft(undefined);
-            }
-            if (newPackageName.length === 0) {
-                return;
+                deleteDraft();
             }
             const transaction = isDraft
                 ? TransactionGenerator.createPackage({
@@ -50,7 +51,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
                   });
             submitTransaction(transaction);
         },
-        [draft, isDraft, package_.packageId, setDraft, submitTransaction]
+        [draft, isDraft, deleteDraft, package_.packageId, submitTransaction]
     );
 
     const onDelete = useCallback(() => {
@@ -73,6 +74,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
             onDelete={onDelete}
             defaultIsCollapsed={!isRootPackage}
             forceIsRenaming={isDraft}
+            onCancelRename={isDraft ? deleteDraft : undefined}
         >
             {children}
         </CollapsibleSidebarItemRow>

@@ -26,6 +26,7 @@ export declare namespace SidebarItemRow {
         onClickAdd?: () => void;
         onDelete?: () => void;
         onRename?: (newLabel: string) => void;
+        onCancelRename?: () => void;
         forceIsRenaming?: boolean;
     }
 }
@@ -38,6 +39,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     onClickAdd,
     onDelete,
     onRename,
+    onCancelRename,
     forceIsRenaming = false,
 }) => {
     const { value: isMouseDown, setTrue: onMouseDown, setFalse: onMouseUp } = useBooleanState(false);
@@ -78,15 +80,19 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         onDelete?.();
     }, [onDelete]);
 
-    const { localLabel, setLocalLabel, isRenaming, onStartRenaming, onCancelRename, onConfirmRename } = useLocalLabel({
+    const localLabel = useLocalLabel({
         label,
         onRename,
+        onCancelRename,
+        forceIsRenaming,
     });
 
     const ellipsisMenu = (
         <Menu>
             <SidebarItemMenuItem text="Copy" icon={IconNames.CLIPBOARD} />
-            {onRename != null && <SidebarItemMenuItem text="Rename" icon={IconNames.EDIT} onClick={onStartRenaming} />}
+            {onRename != null && (
+                <SidebarItemMenuItem text="Rename" icon={IconNames.EDIT} onClick={localLabel.onStartRenaming} />
+            )}
             {onDelete != null && (
                 <SidebarItemMenuItem
                     text="Delete..."
@@ -100,7 +106,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
 
     const { isHovering, popoverState, popoverProps, onMouseOver, onMouseLeave, onMouseMove } =
         useIsEffectivelyHovering();
-    const shouldRenderRightActions = isHovering || popoverState !== "closed";
+    const shouldRenderRightActions = !localLabel.isRenaming && (isHovering || popoverState !== "closed");
 
     return (
         <ContextMenu2 content={ellipsisMenu} popoverProps={popoverProps}>
@@ -130,32 +136,36 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                             <div className={styles.icon}>{typeof icon === "string" ? <Icon icon={icon} /> : icon}</div>
                         )}
                         <div className={styles.labelSection}>
-                            {isRenaming || forceIsRenaming ? (
+                            {localLabel.isRenaming ? (
                                 <EditableText
                                     className={styles.editableLabel}
-                                    value={localLabel}
-                                    onChange={setLocalLabel}
+                                    value={localLabel.value}
+                                    onChange={localLabel.set}
                                     onCancel={onCancelRename}
-                                    onConfirm={onConfirmRename}
+                                    onConfirm={localLabel.onConfirmRename}
                                     isEditing={true}
                                 />
                             ) : (
                                 <Text className={styles.label} ellipsize>
-                                    {localLabel}
+                                    {localLabel.value}
                                 </Text>
                             )}
                         </div>
                     </div>
-                    {shouldRenderRightActions && (
-                        <div className={styles.right}>
-                            {onClickAdd != null && <SidebarItemRowButton icon={IconNames.PLUS} onClick={onClickAdd} />}
-                            <SidebarItemRowEllipsisPopover
-                                menu={ellipsisMenu}
-                                popoverProps={popoverProps}
-                                hidden={popoverState === "closing"}
+                    <div className={styles.right}>
+                        {onClickAdd != null && (
+                            <SidebarItemRowButton
+                                icon={IconNames.PLUS}
+                                onClick={onClickAdd}
+                                hidden={!shouldRenderRightActions}
                             />
-                        </div>
-                    )}
+                        )}
+                        <SidebarItemRowEllipsisPopover
+                            menu={ellipsisMenu}
+                            popoverProps={popoverProps}
+                            hidden={!shouldRenderRightActions}
+                        />
+                    </div>
                 </div>
             </div>
         </ContextMenu2>
