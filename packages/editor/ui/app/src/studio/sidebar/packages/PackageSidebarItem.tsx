@@ -3,9 +3,10 @@ import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
-import { useSidebarContext, useSidebarItemState } from "../context/useSidebarContext";
+import { DraftPackageSidebarItemId } from "../context/SidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../row/CollapsibleSidebarItemRow";
+import { useAddDraft } from "../shared/useAddDraft";
 import { useEditableSidebarItem } from "../shared/useEditableSidebarItem";
 
 export declare namespace PackageSidebarItem {
@@ -29,18 +30,18 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
     const sidebarItemId = useMemo(() => SidebarItemIdGenerator.package(package_), [package_]);
     const isRootPackage = parent == null;
 
-    const { setDraft } = useSidebarContext();
-    const [, setSidebarItemState] = useSidebarItemState(sidebarItemId);
-    const onClickAdd = useCallback(() => {
-        setDraft({
+    const createDraft = useCallback((): DraftPackageSidebarItemId => {
+        return {
             type: "package",
-            parent: package_.packageId,
             packageId: EditorItemIdGenerator.package(),
-        });
-        setSidebarItemState({
-            isCollapsed: false,
-        });
-    }, [package_.packageId, setDraft, setSidebarItemState]);
+            parent: package_.packageId,
+        };
+    }, [package_.packageId]);
+
+    const { onClickAdd } = useAddDraft({
+        sidebarItemId,
+        createDraft,
+    });
 
     return (
         <CollapsibleSidebarItemRow

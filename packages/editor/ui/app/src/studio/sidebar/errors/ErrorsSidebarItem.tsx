@@ -1,9 +1,10 @@
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
-import { useSidebarContext, useSidebarItemState } from "../context/useSidebarContext";
+import { DraftErrorSidebarItemId } from "../context/SidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../row/CollapsibleSidebarItemRow";
+import { useAddDraft } from "../shared/useAddDraft";
 
 export declare namespace ErrorsSidebarItem {
     export interface Props {
@@ -14,19 +15,19 @@ export declare namespace ErrorsSidebarItem {
 
 export const ErrorsSidebarItem: React.FC<ErrorsSidebarItem.Props> = ({ package_, children }) => {
     const sidebarItemId = useMemo(() => SidebarItemIdGenerator.errors(package_), [package_]);
-    const [, setSidebarItemState] = useSidebarItemState(sidebarItemId);
-    const { setDraft } = useSidebarContext();
 
-    const onClickAdd = useCallback(() => {
-        setDraft({
+    const createDraft = useCallback((): DraftErrorSidebarItemId => {
+        return {
             type: "error",
             parent: package_.packageId,
             errorId: EditorItemIdGenerator.error(),
-        });
-        setSidebarItemState({
-            isCollapsed: false,
-        });
-    }, [package_.packageId, setDraft, setSidebarItemState]);
+        };
+    }, [package_.packageId]);
+
+    const { onClickAdd } = useAddDraft({
+        sidebarItemId,
+        createDraft,
+    });
 
     return (
         <CollapsibleSidebarItemRow
