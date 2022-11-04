@@ -126,7 +126,9 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                 >
                     <div className={styles.left} style={{ paddingLeft: indent }}>
                         {leftElement}
-                        {icon != null && (typeof icon === "string" ? <Icon icon={icon} /> : icon)}
+                        {icon != null && (
+                            <div className={styles.icon}>{typeof icon === "string" ? <Icon icon={icon} /> : icon}</div>
+                        )}
                         <div className={styles.labelSection}>
                             {isRenaming || forceIsRenaming ? (
                                 <EditableText
