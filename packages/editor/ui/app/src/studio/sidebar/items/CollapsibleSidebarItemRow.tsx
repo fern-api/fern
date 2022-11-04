@@ -52,6 +52,7 @@ export const CollapsibleSidebarItemRow: React.FC<CollapsibleSidebarItemRow.Props
                     {...rowProps}
                     leftElement={
                         <SidebarItemRowButton
+                            className={styles.collapseButton}
                             icon={state.isCollapsed ? IconNames.CHEVRON_RIGHT : IconNames.CHEVRON_DOWN}
                             onClick={toggleCollapsed}
                         />

@@ -4,19 +4,19 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { useSidebarContext } from "../context/useSidebarContext";
+import { useSidebarContext, useSidebarItemState } from "../context/useSidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
 
 export declare namespace PackageSidebarItem {
     export interface Props {
         package_: FernApiEditor.Package;
-        isRootPackage: boolean;
+        parent: FernApiEditor.PackageId | undefined;
         children: CollapsibleSidebarItemRow.Props["children"];
     }
 }
 
-export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package_, isRootPackage, children }) => {
+export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package_, parent, children }) => {
     const { submitTransaction } = useApiEditorContext();
 
     const { draft, setDraft } = useSidebarContext();
@@ -26,13 +26,19 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
         setDraft(undefined);
     }, [setDraft]);
 
+    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.package(package_), [package_]);
+    const [, setSidebarItemState] = useSidebarItemState(sidebarItemId);
+
     const onClickAdd = useCallback(() => {
         setDraft({
             type: "package",
             parent: package_.packageId,
             packageId: EditorItemIdGenerator.package(),
         });
-    }, [package_.packageId, setDraft]);
+        setSidebarItemState({
+            isCollapsed: false,
+        });
+    }, [package_.packageId, setDraft, setSidebarItemState]);
 
     const onRename = useCallback(
         (newPackageName: string) => {
@@ -41,9 +47,9 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
             }
             const transaction = isDraft
                 ? TransactionGenerator.createPackage({
-                      packageId: draft.packageId,
+                      packageId: package_.packageId,
                       packageName: newPackageName,
-                      parent: draft.parent,
+                      parent,
                   })
                 : TransactionGenerator.renamePackage({
                       packageId: package_.packageId,
@@ -51,7 +57,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
                   });
             submitTransaction(transaction);
         },
-        [draft, isDraft, deleteDraft, package_.packageId, submitTransaction]
+        [isDraft, package_.packageId, parent, submitTransaction, deleteDraft]
     );
 
     const onDelete = useCallback(() => {
@@ -62,7 +68,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
         );
     }, [package_.packageId, submitTransaction]);
 
-    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.package(package_), [package_]);
+    const isRootPackage = parent == null;
 
     return (
         <CollapsibleSidebarItemRow
@@ -73,8 +79,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
             onRename={onRename}
             onDelete={onDelete}
             defaultIsCollapsed={!isRootPackage}
-            forceIsRenaming={isDraft}
-            onCancelRename={isDraft ? deleteDraft : undefined}
+            isDraft={isDraft}
         >
             {children}
         </CollapsibleSidebarItemRow>

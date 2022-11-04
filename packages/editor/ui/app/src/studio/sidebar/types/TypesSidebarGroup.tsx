@@ -40,6 +40,7 @@ export const TypesSidebarGroup: React.FC<TypesSidebarGroup.Props> = ({ package_ 
             label="Types"
             onClickAdd={onClickAdd}
             defaultIsCollapsed={true}
+            isDraft={false}
         >
             {package_.types.map((typeId) => (
                 <TypeSidebarItem key={typeId} typeId={typeId} />

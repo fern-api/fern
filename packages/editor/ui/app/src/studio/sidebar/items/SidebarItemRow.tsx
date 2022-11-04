@@ -4,10 +4,12 @@ import { ContextMenu2 } from "@blueprintjs/popover2";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { useIsResizing } from "@fern-ui/split-view";
 import classNames from "classnames";
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import { useSelectedSidebarItemId } from "../../routes/useSelectedSidebarItemId";
+import { useSidebarContext } from "../context/useSidebarContext";
 import { SidebarItemId } from "../ids/SidebarItemId";
 import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
+import { isEventSelectionPreventing, markEventAsSelectionPreventing } from "./markEventAsSelectionPreventing";
 import { SidebarItemMenuItem } from "./SidebarItemMenuItem";
 import styles from "./SidebarItemRow.module.scss";
 import { SidebarItemRowButton } from "./SidebarItemRowButton";
@@ -15,7 +17,6 @@ import { SidebarItemRowContext } from "./SidebarItemRowContext";
 import { SidebarItemRowEllipsisPopover } from "./SidebarItemRowEllipsisPopover";
 import { useIsEffectivelyHovering } from "./useIsEffectivelyHovering";
 import { useLocalLabel } from "./useLocalLabel";
-import { isEventSelectionPreventing } from "./useSelectionPreventingEventHander";
 
 export declare namespace SidebarItemRow {
     export interface Props {
@@ -26,8 +27,7 @@ export declare namespace SidebarItemRow {
         onClickAdd?: () => void;
         onDelete?: () => void;
         onRename?: (newLabel: string) => void;
-        onCancelRename?: () => void;
-        forceIsRenaming?: boolean;
+        isDraft: boolean;
     }
 }
 
@@ -39,8 +39,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     onClickAdd,
     onDelete,
     onRename,
-    onCancelRename,
-    forceIsRenaming = false,
+    isDraft,
 }) => {
     const { value: isMouseDown, setTrue: onMouseDown, setFalse: onMouseUp } = useBooleanState(false);
     const handleMouseDown = useCallback(
@@ -80,94 +79,125 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
         onDelete?.();
     }, [onDelete]);
 
+    const { setDraft } = useSidebarContext();
+    const onCancelRename = useCallback(() => {
+        if (isDraft) {
+            setDraft(undefined);
+        }
+    }, [isDraft, setDraft]);
+
     const localLabel = useLocalLabel({
         label,
         onRename,
         onCancelRename,
-        forceIsRenaming,
+        forceIsRenaming: isDraft,
     });
 
-    const ellipsisMenu = (
-        <Menu>
-            <SidebarItemMenuItem text="Copy" icon={IconNames.CLIPBOARD} />
-            {onRename != null && (
-                <SidebarItemMenuItem text="Rename" icon={IconNames.EDIT} onClick={localLabel.onStartRenaming} />
-            )}
-            {onDelete != null && (
+    const ellipsisMenuItems = useMemo(() => {
+        const items: JSX.Element[] = [];
+        if (onRename != null) {
+            items.push(
                 <SidebarItemMenuItem
+                    key="rename"
+                    text="Rename"
+                    icon={IconNames.EDIT}
+                    onClick={localLabel.onStartRenaming}
+                />
+            );
+        }
+        if (onDelete != null) {
+            items.push(
+                <SidebarItemMenuItem
+                    key="delete"
                     text="Delete..."
                     icon={IconNames.TRASH}
                     intent={Intent.DANGER}
                     onClick={handleDelete}
                 />
-            )}
-        </Menu>
-    );
+            );
+        }
+        return items;
+    }, [handleDelete, localLabel.onStartRenaming, onDelete, onRename]);
+
+    const ellipsisMenu = ellipsisMenuItems.length > 0 ? <Menu>{ellipsisMenuItems}</Menu> : undefined;
 
     const { isHovering, popoverState, popoverProps, onMouseOver, onMouseLeave, onMouseMove } =
         useIsEffectivelyHovering();
     const shouldRenderRightActions = !localLabel.isRenaming && (isHovering || popoverState !== "closed");
 
-    return (
-        <ContextMenu2 content={ellipsisMenu} popoverProps={popoverProps}>
+    const rowElement = (
+        <div
+            className={styles.wrapper}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
+            onMouseDown={handleMouseDown}
+            onMouseUp={onMouseUp}
+            onMouseMove={onMouseMove}
+            onClick={onClick}
+        >
             <div
-                className={styles.wrapper}
-                onMouseOver={onMouseOver}
-                onMouseLeave={onMouseLeave}
-                onMouseDown={handleMouseDown}
-                onMouseUp={onMouseUp}
-                onMouseMove={onMouseMove}
-                onClick={onClick}
+                className={classNames(styles.container, {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    [styles.active!]: isMouseDown && !isResizing,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    [styles.hover!]: isHovering,
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    [styles.selected!]: isSelected,
+                })}
+                tabIndex={0}
             >
-                <div
-                    className={classNames(styles.container, {
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        [styles.active!]: isMouseDown && !isResizing,
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        [styles.hover!]: isHovering,
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        [styles.selected!]: isSelected,
-                    })}
-                    tabIndex={0}
-                >
-                    <div className={styles.left} style={{ paddingLeft: indent }}>
-                        {leftElement}
-                        {icon != null && (
-                            <div className={styles.icon}>{typeof icon === "string" ? <Icon icon={icon} /> : icon}</div>
-                        )}
-                        <div className={styles.labelSection}>
-                            {localLabel.isRenaming ? (
+                <div className={styles.left} style={{ paddingLeft: indent }}>
+                    {leftElement}
+                    {icon != null && (
+                        <div className={styles.icon}>{typeof icon === "string" ? <Icon icon={icon} /> : icon}</div>
+                    )}
+                    <div className={styles.labelSection}>
+                        {localLabel.shouldRenderEditableText ? (
+                            <div className={styles.editableLabelWrapper} onClick={markEventAsSelectionPreventing}>
                                 <EditableText
                                     className={styles.editableLabel}
                                     value={localLabel.value}
                                     onChange={localLabel.set}
-                                    onCancel={onCancelRename}
+                                    onCancel={localLabel.onCancelRename}
                                     onConfirm={localLabel.onConfirmRename}
-                                    isEditing={true}
+                                    isEditing={localLabel.isRenaming}
+                                    placeholder="Untitled"
                                 />
-                            ) : (
-                                <Text className={styles.label} ellipsize>
-                                    {localLabel.value}
-                                </Text>
-                            )}
-                        </div>
-                    </div>
-                    <div className={styles.right}>
-                        {onClickAdd != null && (
-                            <SidebarItemRowButton
-                                icon={IconNames.PLUS}
-                                onClick={onClickAdd}
-                                hidden={!shouldRenderRightActions}
-                            />
+                            </div>
+                        ) : (
+                            <Text className={styles.label} ellipsize>
+                                {localLabel.value}
+                            </Text>
                         )}
+                    </div>
+                </div>
+                <div className={styles.right}>
+                    {onClickAdd != null && (
+                        <SidebarItemRowButton
+                            icon={IconNames.PLUS}
+                            onClick={onClickAdd}
+                            hidden={!shouldRenderRightActions}
+                        />
+                    )}
+                    {ellipsisMenu != null && (
                         <SidebarItemRowEllipsisPopover
                             menu={ellipsisMenu}
                             popoverProps={popoverProps}
                             hidden={!shouldRenderRightActions}
                         />
-                    </div>
+                    )}
                 </div>
             </div>
+        </div>
+    );
+
+    if (ellipsisMenu == null) {
+        return rowElement;
+    }
+
+    return (
+        <ContextMenu2 content={ellipsisMenu} popoverProps={popoverProps}>
+            {rowElement}
         </ContextMenu2>
     );
 };

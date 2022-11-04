@@ -1,9 +1,8 @@
 import { Button, Divider, Intent } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
-import { TransactionGenerator } from "@fern-api/transaction-generator";
 import React, { useCallback } from "react";
-import { useApiEditorContext } from "../../api-editor-context/ApiEditorContext";
+import { useSidebarContext } from "./context/useSidebarContext";
 import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
 import { SidebarItemRow } from "./items/SidebarItemRow";
 import { Packages } from "./packages/Packages";
@@ -11,18 +10,17 @@ import styles from "./Sidebar.module.scss";
 import { useSelectionReset } from "./useSelectionReset";
 
 export const Sidebar: React.FC = () => {
-    const { submitTransaction } = useApiEditorContext();
+    const { setDraft } = useSidebarContext();
 
     useSelectionReset();
 
     const onClickAddPackage = useCallback(() => {
-        submitTransaction(
-            TransactionGenerator.createPackage({
-                packageId: EditorItemIdGenerator.package(),
-                packageName: "my package",
-            })
-        );
-    }, [submitTransaction]);
+        setDraft({
+            type: "package",
+            packageId: EditorItemIdGenerator.package(),
+            parent: undefined,
+        });
+    }, [setDraft]);
 
     return (
         <div className={styles.sidebar}>
@@ -38,8 +36,14 @@ export const Sidebar: React.FC = () => {
                     itemId={SidebarItemIdGenerator.API_CONFIGURATION}
                     icon={IconNames.COG}
                     label="API Configuration"
+                    isDraft={false}
                 />
-                <SidebarItemRow itemId={SidebarItemIdGenerator.SDKs} icon={IconNames.CODE_BLOCK} label="SDKs" />
+                <SidebarItemRow
+                    itemId={SidebarItemIdGenerator.SDKs}
+                    icon={IconNames.CODE_BLOCK}
+                    label="SDKs"
+                    isDraft={false}
+                />
             </div>
             <div className={styles.sidebarItems}>
                 <Divider className={styles.divider} />
