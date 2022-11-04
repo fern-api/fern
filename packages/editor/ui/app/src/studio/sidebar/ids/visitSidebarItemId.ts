@@ -1,6 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     ApiConfigurationSidebarItemId,
+    DraftEndpointSidebarItemId,
+    DraftErrorSidebarItemId,
+    DraftPackageSidebarItemId,
+    DraftTypeSidebarItemId,
     EndpointSidebarItemId,
     ErrorsGroupSidebarItemId,
     ErrorSidebarItemId,
@@ -14,10 +18,10 @@ import {
 export interface SidebarItemIdVisitor<R> {
     apiConfiguration: (sidebarItemId: ApiConfigurationSidebarItemId) => R;
     sdkConfiguration: (sidebarItemId: SdkConfigurationSidebarItemId) => R;
-    package: (sidebarItemId: PackageSidebarItemId) => R;
-    endpoint: (sidebarItemId: EndpointSidebarItemId) => R;
-    type: (sidebarItemId: TypeSidebarItemId) => R;
-    error: (sidebarItemId: ErrorSidebarItemId) => R;
+    package: (sidebarItemId: PackageSidebarItemId | DraftPackageSidebarItemId) => R;
+    endpoint: (sidebarItemId: EndpointSidebarItemId | DraftEndpointSidebarItemId) => R;
+    type: (sidebarItemId: TypeSidebarItemId | DraftTypeSidebarItemId) => R;
+    error: (sidebarItemId: ErrorSidebarItemId | DraftErrorSidebarItemId) => R;
     typesGroup: (sidebarItemId: TypesGroupSidebarItemId) => R;
     errorsGroup: (sidebarItemId: ErrorsGroupSidebarItemId) => R;
 }

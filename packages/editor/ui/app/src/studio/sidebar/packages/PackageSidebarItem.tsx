@@ -4,6 +4,7 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
+import { useSidebarContext } from "../context/useSidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
 
@@ -17,16 +18,16 @@ export declare namespace PackageSidebarItem {
 
 export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package_, isRootPackage, children }) => {
     const { submitTransaction } = useApiEditorContext();
+    const { setDraft } = useSidebarContext();
 
     const onClickAdd = useCallback(() => {
-        submitTransaction(
-            TransactionGenerator.createPackage({
-                packageId: EditorItemIdGenerator.package(),
-                packageName: "New sub-package",
-                parent: package_.packageId,
-            })
-        );
-    }, [package_.packageId, submitTransaction]);
+        setDraft({
+            type: "package",
+            isDraft: true,
+            packageId: EditorItemIdGenerator.package(),
+            parent: package_.packageId,
+        });
+    }, [package_.packageId, setDraft]);
 
     const onRename = useCallback(
         (newPackageName: string) => {

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { SidebarItemId } from "../ids/SidebarItemId";
+import { DraftId, SidebarItemId } from "../ids/SidebarItemId";
 import { StringifiedSidebarItemId } from "../ids/StringifiedSidebarItemId";
 
 export const SidebarContext = createContext<() => SidebarContextValue>(() => {
@@ -9,8 +9,12 @@ export const SidebarContext = createContext<() => SidebarContextValue>(() => {
 export interface SidebarContextValue {
     states: Record<StringifiedSidebarItemId, SidebarItemState>;
     setState: (itemId: SidebarItemId, state: SidebarItemState) => void;
+    draft: DraftSidebarItemId | undefined;
+    setDraft: (draft: DraftSidebarItemId | undefined) => void;
 }
 
 export interface SidebarItemState {
     isCollapsed: boolean;
 }
+
+export type DraftSidebarItemId = Extract<SidebarItemId, DraftId<unknown>>;
