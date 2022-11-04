@@ -17,7 +17,7 @@ class RouteArgs(typing_extensions.TypedDict):
 DEFAULT_ROUTE_ARGS = RouteArgs(openapi_extra=None, tags=None)
 
 
-def get_route_args(endpoint_function: typing.Callable[..., typing.Any], default_tag: str) -> RouteArgs:
+def get_route_args(endpoint_function: typing.Callable[..., typing.Any], *, default_tag: str) -> RouteArgs:
     unwrapped = inspect.unwrap(endpoint_function, stop=(lambda f: hasattr(f, FERN_CONFIG_KEY)))
     route_args = typing.cast(RouteArgs, getattr(unwrapped, FERN_CONFIG_KEY, DEFAULT_ROUTE_ARGS))
     if route_args["tags"] is None:

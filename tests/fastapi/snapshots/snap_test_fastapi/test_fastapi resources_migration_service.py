@@ -67,5 +67,5 @@ class AbstractMigrationInfoService(AbstractFernService):
         router.get(
             path="/migration-info/all",
             response_model=typing.List[Migration],
-            **get_route_args(cls.get_attempted_migrations, "migration"),
+            **get_route_args(cls.get_attempted_migrations, default_tag="migration"),
         )(wrapper)

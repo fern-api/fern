@@ -87,7 +87,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.post(
             path="/sessions/create-session/{language}",
             response_model=ExecutionSessionResponse,
-            **get_route_args(cls.create_execution_session, "submission"),
+            **get_route_args(cls.create_execution_session, default_tag="submission"),
         )(wrapper)
 
     @classmethod
@@ -122,7 +122,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.get(
             path="/sessions/{session_id}",
             response_model=typing.Optional[ExecutionSessionResponse],
-            **get_route_args(cls.get_execution_session, "submission"),
+            **get_route_args(cls.get_execution_session, default_tag="submission"),
         )(wrapper)
 
     @classmethod
@@ -157,7 +157,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.delete(
             path="/sessions/stop/{session_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            **get_route_args(cls.stop_execution_session, "submission"),
+            **get_route_args(cls.stop_execution_session, default_tag="submission"),
         )(wrapper)
 
     @classmethod
@@ -190,5 +190,5 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.get(
             path="/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
-            **get_route_args(cls.get_execution_sessions_state, "submission"),
+            **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),
         )(wrapper)
