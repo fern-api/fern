@@ -26,6 +26,7 @@ export declare namespace SidebarItemRow {
         onClickAdd?: () => void;
         onDelete?: () => void;
         onRename?: (newLabel: string) => void;
+        forceIsRenaming?: boolean;
     }
 }
 
@@ -37,6 +38,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
     onClickAdd,
     onDelete,
     onRename,
+    forceIsRenaming = false,
 }) => {
     const { value: isMouseDown, setTrue: onMouseDown, setFalse: onMouseUp } = useBooleanState(false);
     const handleMouseDown = useCallback(
@@ -126,7 +128,7 @@ export const SidebarItemRow: React.FC<SidebarItemRow.Props> = ({
                         {leftElement}
                         {icon != null && (typeof icon === "string" ? <Icon icon={icon} /> : icon)}
                         <div className={styles.labelSection}>
-                            {isRenaming ? (
+                            {isRenaming || forceIsRenaming ? (
                                 <EditableText
                                     className={styles.editableLabel}
                                     value={localLabel}

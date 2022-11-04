@@ -4,6 +4,7 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
+import { useSidebarContext } from "../context/useSidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
 
@@ -18,26 +19,38 @@ export declare namespace PackageSidebarItem {
 export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package_, isRootPackage, children }) => {
     const { submitTransaction } = useApiEditorContext();
 
+    const { draft, setDraft } = useSidebarContext();
+    const isDraft = draft?.type === "package" && draft.packageId === package_.packageId;
+
     const onClickAdd = useCallback(() => {
-        submitTransaction(
-            TransactionGenerator.createPackage({
-                packageId: EditorItemIdGenerator.package(),
-                packageName: "New sub-package",
-                parent: package_.packageId,
-            })
-        );
-    }, [package_.packageId, submitTransaction]);
+        setDraft({
+            type: "package",
+            parent: package_.packageId,
+            packageId: EditorItemIdGenerator.package(),
+        });
+    }, [package_.packageId, setDraft]);
 
     const onRename = useCallback(
         (newPackageName: string) => {
-            submitTransaction(
-                TransactionGenerator.renamePackage({
-                    packageId: package_.packageId,
-                    newPackageName,
-                })
-            );
+            if (isDraft) {
+                setDraft(undefined);
+            }
+            if (newPackageName.length === 0) {
+                return;
+            }
+            const transaction = isDraft
+                ? TransactionGenerator.createPackage({
+                      packageId: draft.packageId,
+                      packageName: newPackageName,
+                      parent: draft.parent,
+                  })
+                : TransactionGenerator.renamePackage({
+                      packageId: package_.packageId,
+                      newPackageName,
+                  });
+            submitTransaction(transaction);
         },
-        [package_.packageId, submitTransaction]
+        [draft, isDraft, package_.packageId, setDraft, submitTransaction]
     );
 
     const onDelete = useCallback(() => {
@@ -59,6 +72,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
             onRename={onRename}
             onDelete={onDelete}
             defaultIsCollapsed={!isRootPackage}
+            forceIsRenaming={isDraft}
         >
             {children}
         </CollapsibleSidebarItemRow>
