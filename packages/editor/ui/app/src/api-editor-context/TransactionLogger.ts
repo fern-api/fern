@@ -17,11 +17,11 @@ export interface TransactionLogger {
     }): void;
 }
 
-const ProdInkwellLogger: TransactionLogger = {
+const NoopTransactionLogger: TransactionLogger = {
     logStateChange: noop,
 };
 
-class DebugInkwellLogger implements TransactionLogger {
+class DebugTransactionLogger implements TransactionLogger {
     private isInsideGroup = false;
 
     public logStateChange({
@@ -50,7 +50,9 @@ class DebugInkwellLogger implements TransactionLogger {
 
     private beginGroup(transaction: FernApiEditor.transactions.Transaction) {
         if (this.isInsideGroup) {
-            throw new Error("[InkwellLogger] Cannot log group because a group has already been created.");
+            throw new Error(
+                `[${DebugTransactionLogger.name}] Cannot log group because a group has already been created.`
+            );
         }
         this.isInsideGroup = true;
         // eslint-disable-next-line no-console
@@ -59,7 +61,7 @@ class DebugInkwellLogger implements TransactionLogger {
 
     private endGroup() {
         if (!this.isInsideGroup) {
-            throw new Error("[InkwellLogger] Cannot end group because a group has not been created.");
+            throw new Error(`[${DebugTransactionLogger.name}] Cannot end group because a group has not been created.`);
         }
         this.isInsideGroup = false;
         // eslint-disable-next-line no-console
@@ -69,5 +71,5 @@ class DebugInkwellLogger implements TransactionLogger {
 
 export const TransactionLogger =
     process.env.NODE_ENV === "development" || LOGGER_CONFIG.useLoggerInProduction
-        ? new DebugInkwellLogger()
-        : ProdInkwellLogger;
+        ? new DebugTransactionLogger()
+        : NoopTransactionLogger;
