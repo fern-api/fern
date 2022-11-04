@@ -28,11 +28,11 @@ export class TransactionResolver {
         this.#definition = definition;
     }
 
-    public applyTransaction(transaction: FernApiEditor.transactions.Transaction): void {
-        this.applyTransactions([transaction]);
+    public applyTransaction(transaction: FernApiEditor.transactions.Transaction): FernApiEditor.Api {
+        return this.applyTransactions([transaction]);
     }
 
-    public applyTransactions(transactions: readonly FernApiEditor.transactions.Transaction[]): void {
+    public applyTransactions(transactions: readonly FernApiEditor.transactions.Transaction[]): FernApiEditor.Api {
         this.definition = produce(this.definition, (draft) => {
             for (const transaction of transactions) {
                 this.transactionHandler.applyTransaction(draft, transaction);
@@ -42,6 +42,8 @@ export class TransactionResolver {
         for (const listener of this.listeners.values()) {
             listener(this.definition);
         }
+
+        return this.definition;
     }
 
     public watch(listener: (api: FernApiEditor.Api) => void): () => void {
