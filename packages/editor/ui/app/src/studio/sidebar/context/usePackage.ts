@@ -15,7 +15,7 @@ export function usePackage(packageId: FernApiEditor.PackageId): FernApiEditor.Pa
         if (draft?.type === "package" && draft.packageId === packageId) {
             return {
                 packageId,
-                packageName: draft.packageName ?? "",
+                packageName: "",
                 packages: [],
                 endpoints: [],
                 types: [],

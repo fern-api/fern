@@ -1,11 +1,10 @@
-import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
-import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useCallback, useMemo } from "react";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
+import { ErrorId } from "@fern-fern/api-editor-sdk/resources";
+import React, { useCallback } from "react";
+import { DraftErrorSidebarItemId, DraftSidebarItemId } from "../context/SidebarContext";
+import { SidebarItemsList } from "../shared/SidebarItemsList";
 import { ErrorSidebarItem } from "./ErrorSidebarItem";
+import { ErrorsSidebarItem } from "./ErrorsSidebarItem";
 
 export declare namespace ErrorsSidebarGroup {
     export interface Props {
@@ -14,31 +13,38 @@ export declare namespace ErrorsSidebarGroup {
 }
 
 export const ErrorsSidebarGroup: React.FC<ErrorsSidebarGroup.Props> = ({ package_ }) => {
-    const { submitTransaction } = useApiEditorContext();
+    const renderErrorSidebarItem = useCallback(
+        (errorId: ErrorId) => <ErrorSidebarItem key={errorId} errorId={errorId} parent={package_.packageId} />,
+        [package_.packageId]
+    );
 
-    const onClickAdd = useCallback(() => {
-        submitTransaction(
-            TransactionGenerator.createError({
-                parent: package_.packageId,
-                errorId: EditorItemIdGenerator.error(),
-                errorName: "My new error",
-            })
-        );
-    }, [package_.packageId, submitTransaction]);
-
-    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.errors(package_), [package_]);
+    const isDraftInPackage = useCallback(
+        (draft: DraftErrorSidebarItemId) => {
+            return draft.parent === package_.packageId;
+        },
+        [package_.packageId]
+    );
 
     return (
-        <CollapsibleSidebarItemRow
-            itemId={sidebarItemId}
-            label="Errors"
-            onClickAdd={onClickAdd}
-            defaultIsCollapsed={true}
-            isDraft={false}
-        >
-            {package_.errors.map((errorId) => (
-                <ErrorSidebarItem key={errorId} errorId={errorId} />
-            ))}
-        </CollapsibleSidebarItemRow>
+        <ErrorsSidebarItem package_={package_}>
+            <SidebarItemsList
+                items={package_.errors}
+                renderItem={renderErrorSidebarItem}
+                convertDraftToItem={getErrorIdFromDraft}
+                doesDraftBelongInList={isDraftInPackage}
+                parseDraftId={parseErrorDraft}
+            />
+        </ErrorsSidebarItem>
     );
 };
+
+function parseErrorDraft(draft: DraftSidebarItemId): DraftErrorSidebarItemId | undefined {
+    if (draft.type === "error") {
+        return draft;
+    }
+    return undefined;
+}
+
+function getErrorIdFromDraft(draft: DraftErrorSidebarItemId): FernApiEditor.ErrorId {
+    return draft.errorId;
+}

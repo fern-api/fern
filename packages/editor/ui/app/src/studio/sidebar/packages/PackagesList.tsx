@@ -1,6 +1,7 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useMemo } from "react";
-import { useSidebarContext } from "../context/useSidebarContext";
+import React, { useCallback } from "react";
+import { DraftPackageSidebarItemId, DraftSidebarItemId } from "../context/SidebarContext";
+import { SidebarItemsList } from "../shared/SidebarItemsList";
 import { PackageSidebarGroup } from "./PackageSidebarGroup";
 
 export declare namespace PackagesList {
@@ -11,19 +12,38 @@ export declare namespace PackagesList {
 }
 
 export const PackagesList: React.FC<PackagesList.Props> = ({ packages, parent }) => {
-    const { draft } = useSidebarContext();
+    const renderPackageSidebarGroup = useCallback(
+        (packageId: FernApiEditor.PackageId) => (
+            <PackageSidebarGroup key={packageId} packageId={packageId} parent={parent} />
+        ),
+        [parent]
+    );
 
-    // we put the subpackages all in an array together, so that React gracefully
-    // handles when a packages turns from draft to persisted
-    const packagesList = useMemo(() => {
-        const elements = packages.map((subPackageId) => (
-            <PackageSidebarGroup key={subPackageId} packageId={subPackageId} parent={parent} />
-        ));
-        if (draft?.type === "package" && draft.parent === parent) {
-            elements.push(<PackageSidebarGroup key={draft.packageId} packageId={draft.packageId} parent={parent} />);
-        }
-        return elements;
-    }, [draft, packages, parent]);
+    const isDraftInParent = useCallback(
+        (draft: DraftPackageSidebarItemId) => {
+            return draft.parent === parent;
+        },
+        [parent]
+    );
 
-    return <>{packagesList}</>;
+    return (
+        <SidebarItemsList
+            items={packages}
+            renderItem={renderPackageSidebarGroup}
+            convertDraftToItem={gePackageIdFromDraft}
+            doesDraftBelongInList={isDraftInParent}
+            parseDraftId={parsePackageDraft}
+        />
+    );
 };
+
+function parsePackageDraft(draft: DraftSidebarItemId): DraftPackageSidebarItemId | undefined {
+    if (draft.type === "package") {
+        return draft;
+    }
+    return undefined;
+}
+
+function gePackageIdFromDraft(draft: DraftPackageSidebarItemId): FernApiEditor.PackageId {
+    return draft.packageId;
+}
