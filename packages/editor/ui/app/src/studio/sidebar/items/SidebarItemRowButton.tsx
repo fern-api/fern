@@ -1,8 +1,9 @@
 import { Button, IconName } from "@blueprintjs/core";
+import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback } from "react";
+import { markEventAsSelectionPreventing } from "./markEventAsSelectionPreventing";
 import styles from "./SidebarItemRowButton.module.scss";
-import { markEventAsSelectionPreventing } from "./useSelectionPreventingEventHander";
 
 export declare namespace SidebarItemRowButton {
     export interface Props {
@@ -27,17 +28,21 @@ export const SidebarItemRowButton: React.FC<SidebarItemRowButton.Props> = ({
         [onClick]
     );
 
+    const { value: isFocused, setTrue: onFocus, setFalse: onBlur } = useBooleanState(false);
+
     return (
         <Button
-            className={classNames(className, {
+            className={classNames(className, styles.button, {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.hidden!]: hidden,
+                [styles.hidden!]: hidden && !isFocused,
             })}
             small
             minimal
             icon={icon}
             onMouseDown={markEventAsSelectionPreventing}
             onClick={handleClick}
+            onFocus={onFocus}
+            onBlur={onBlur}
         />
     );
 };

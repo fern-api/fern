@@ -51,6 +51,7 @@ export const ErrorSidebarItem: React.FC<ErrorSidebarItem.Props> = ({ errorId }) 
             }
             onDelete={onClickDelete}
             onRename={onRename}
+            isDraft={false}
         />
     );
 };

@@ -1,15 +1,13 @@
 import React from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import styles from "./Packages.module.scss";
-import { PackageSidebarGroup } from "./PackageSidebarGroup";
+import { PackagesList } from "./PackagesList";
 
 export const Packages: React.FC = () => {
     const { definition } = useApiEditorContext();
     return (
         <div className={styles.packages}>
-            {definition.rootPackages.map((packageId) => (
-                <PackageSidebarGroup key={packageId} packageId={packageId} isRootPackage={true} />
-            ))}
+            <PackagesList packages={definition.rootPackages} parent={undefined} />
         </div>
     );
 };

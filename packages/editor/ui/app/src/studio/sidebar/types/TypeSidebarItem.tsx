@@ -47,6 +47,7 @@ export const TypeSidebarItem: React.FC<TypeSidebarItem.Props> = ({ typeId }) => 
             icon={<Icon icon={IconNames.CUBE} color={Colors.TURQUOISE3} />}
             onDelete={onClickDelete}
             onRename={onRename}
+            isDraft={false}
         />
     );
 };

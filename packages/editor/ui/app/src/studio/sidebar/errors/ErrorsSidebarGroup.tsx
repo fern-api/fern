@@ -34,6 +34,7 @@ export const ErrorsSidebarGroup: React.FC<ErrorsSidebarGroup.Props> = ({ package
             label="Errors"
             onClickAdd={onClickAdd}
             defaultIsCollapsed={true}
+            isDraft={false}
         >
             {package_.errors.map((errorId) => (
                 <ErrorSidebarItem key={errorId} errorId={errorId} />

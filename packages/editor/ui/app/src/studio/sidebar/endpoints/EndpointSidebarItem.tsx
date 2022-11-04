@@ -47,6 +47,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpo
             label={endpoint.endpointName}
             onDelete={onClickDelete}
             onRename={onRename}
+            isDraft={false}
         />
     );
 };

@@ -4121,6 +4121,7 @@ __metadata:
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
+    immer: ^9.0.15
     jest: ^29.0.3
     normalize.css: ^8.0.1
     prettier: ^2.7.1

@@ -1,5 +1,14 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-find packages -name 'lib' -exec /bin/rm -r {} \+
-find packages -name tsconfig.tsbuildinfo -exec /bin/rm {} \+
+# https://stackoverflow.com/questions/1011557/is-there-a-way-to-trigger-a-hook-after-a-new-branch-has-been-checked-out-in-git
+prevHEAD=$1                                                                      
+newHEAD=$2                                                                       
+checkoutType=$3                                                                  
+[[ "$checkoutType" == "1" ]] && checkoutType='branch' || checkoutType='file' ;      
+
+# only clean when switching to a branch with a different head
+if [[ "$checkoutType" == "branch" && "$prevHEAD" != "$newHEAD" ]]; then
+    find packages -name 'lib' -exec /bin/rm -r {} \+
+    find packages -name tsconfig.tsbuildinfo -exec /bin/rm {} \+
+fi
