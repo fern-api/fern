@@ -101,7 +101,9 @@ class AbstractPlaylistCrudService(AbstractFernService):
         wrapper.__globals__.update(cls.create_playlist.__globals__)
 
         router.post(
-            path="/v2/playlist/{service_param}/create", response_model=Playlist, **get_route_args(cls.create_playlist)
+            path="/v2/playlist/{service_param}/create",
+            response_model=Playlist,
+            **get_route_args(cls.create_playlist, "playlist"),
         )(wrapper)
 
     @classmethod
@@ -142,7 +144,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.get(
             path="/v2/playlist/{service_param}/all",
             response_model=typing.List[Playlist],
-            **get_route_args(cls.get_playlists),
+            **get_route_args(cls.get_playlists, "playlist"),
         )(wrapper)
 
     @classmethod
@@ -181,7 +183,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.get(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=Playlist,
-            **get_route_args(cls.get_playlist),
+            **get_route_args(cls.get_playlist, "playlist"),
         )(wrapper)
 
     @classmethod
@@ -224,7 +226,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.put(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=typing.Optional[Playlist],
-            **get_route_args(cls.update_playlist),
+            **get_route_args(cls.update_playlist, "playlist"),
         )(wrapper)
 
     @classmethod
@@ -263,5 +265,5 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.delete(
             path="/v2/playlist/{service_param}/{playlist_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            **get_route_args(cls.delete_playlist),
+            **get_route_args(cls.delete_playlist, "playlist"),
         )(wrapper)

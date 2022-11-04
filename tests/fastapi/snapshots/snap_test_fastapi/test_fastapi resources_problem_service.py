@@ -92,7 +92,9 @@ class AbstractProblemCrudService(AbstractFernService):
         wrapper.__globals__.update(cls.create_problem.__globals__)
 
         router.post(
-            path="/problem-crud/create", response_model=CreateProblemResponse, **get_route_args(cls.create_problem)
+            path="/problem-crud/create",
+            response_model=CreateProblemResponse,
+            **get_route_args(cls.create_problem, "problem"),
         )(wrapper)
 
     @classmethod
@@ -129,7 +131,7 @@ class AbstractProblemCrudService(AbstractFernService):
         router.post(
             path="/problem-crud/update/{problem_id}",
             response_model=UpdateProblemResponse,
-            **get_route_args(cls.update_problem),
+            **get_route_args(cls.update_problem, "problem"),
         )(wrapper)
 
     @classmethod
@@ -164,7 +166,7 @@ class AbstractProblemCrudService(AbstractFernService):
         router.delete(
             path="/problem-crud/delete/{problem_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            **get_route_args(cls.delete_problem),
+            **get_route_args(cls.delete_problem, "problem"),
         )(wrapper)
 
     @classmethod
@@ -199,7 +201,7 @@ class AbstractProblemCrudService(AbstractFernService):
         router.post(
             path="/problem-crud/default-starter-files",
             response_model=GetDefaultStarterFilesResponse,
-            **get_route_args(cls.get_default_starter_files),
+            **get_route_args(cls.get_default_starter_files, "problem"),
         )(wrapper)
 
     @classmethod
@@ -230,5 +232,7 @@ class AbstractProblemCrudService(AbstractFernService):
         wrapper.__globals__.update(cls.get_all.__globals__)
 
         router.get(
-            path="/problem-crud", status_code=starlette.status.HTTP_204_NO_CONTENT, **get_route_args(cls.get_all)
+            path="/problem-crud",
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            **get_route_args(cls.get_all, "problem"),
         )(wrapper)

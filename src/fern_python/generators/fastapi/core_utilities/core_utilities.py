@@ -180,7 +180,7 @@ class CoreUtilities:
 
     INIT_FERN_METHOD_NAME = "_init_fern"
 
-    def get_route_args(self, endpoint_method: AST.Expression) -> AST.Expression:
+    def get_route_args(self, endpoint_method: AST.Expression, service_tag: str) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -189,7 +189,7 @@ class CoreUtilities:
                         module=AST.Module.local(*self._module_path, "route_args"), named_import="get_route_args"
                     ),
                 ),
-                args=[endpoint_method],
+                args=[endpoint_method, AST.Expression(f'"{service_tag}"')],
             )
         )
 

@@ -159,7 +159,10 @@ class EndpointGenerator:
                 writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
                 writer.write_line(",")
             writer.write("**")
-            writer.write_node(self._context.core_utilities.get_route_args(AST.Expression(method_on_cls)))
+            default_tag = ".".join(
+                [package.unsafe_name.snake_case for package in self._service.name.fern_filepath_v_2.get_as_list()]
+            )
+            writer.write_node(self._context.core_utilities.get_route_args(AST.Expression(method_on_cls), default_tag))
             writer.write_line(",")
         writer.write(f")({_TRY_EXCEPT_WRAPPER_NAME})")
 

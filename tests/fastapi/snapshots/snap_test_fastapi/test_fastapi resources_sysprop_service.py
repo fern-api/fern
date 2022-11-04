@@ -77,7 +77,7 @@ class AbstractSysPropCrudService(AbstractFernService):
         router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            **get_route_args(cls.set_num_warm_instances),
+            **get_route_args(cls.set_num_warm_instances, "sysprop"),
         )(wrapper)
 
     @classmethod
@@ -112,5 +112,5 @@ class AbstractSysPropCrudService(AbstractFernService):
         router.get(
             path="/sysprop/num-warm-instances",
             response_model=typing.Dict[Language, int],
-            **get_route_args(cls.get_num_warm_instances),
+            **get_route_args(cls.get_num_warm_instances, "sysprop"),
         )(wrapper)
