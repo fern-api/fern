@@ -3,7 +3,7 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
 import { useSidebarContext, useSidebarItemState } from "../context/useSidebarContext";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { CollapsibleSidebarItemRow } from "../items/CollapsibleSidebarItemRow";
+import { CollapsibleSidebarItemRow } from "../row/CollapsibleSidebarItemRow";
 
 export declare namespace ErrorsSidebarItem {
     export interface Props {

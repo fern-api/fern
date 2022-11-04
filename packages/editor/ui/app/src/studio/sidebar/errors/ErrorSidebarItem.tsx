@@ -4,7 +4,7 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useMemo } from "react";
 import { useError } from "../context/useError";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { SidebarItemRow } from "../items/SidebarItemRow";
+import { SidebarItemRow } from "../row/SidebarItemRow";
 import { useEditableSidebarItem } from "../shared/useEditableSidebarItem";
 import styles from "./ErrorSidebarItem.module.scss";
 

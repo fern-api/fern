@@ -6,7 +6,7 @@ import { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
 import { useType } from "../context/useType";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { SidebarItemRow } from "../items/SidebarItemRow";
+import { SidebarItemRow } from "../row/SidebarItemRow";
 
 export declare namespace TypeSidebarItem {
     export interface Props {
