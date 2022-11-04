@@ -1,24 +1,32 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useMemo } from "react";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { useSidebarContext } from "./useSidebarContext";
+import { useCallback } from "react";
+import { DraftSidebarItemId } from "./SidebarContext";
+import { useDraftableItem } from "./useDraftableItem";
 
 export function useError(errorId: FernApiEditor.ErrorId): FernApiEditor.Error {
-    const { definition } = useApiEditorContext();
-    const { draft } = useSidebarContext();
+    const retrieveFromDefinition = useCallback(
+        (definition: FernApiEditor.Api) => definition.errors[errorId],
+        [errorId]
+    );
 
-    return useMemo((): FernApiEditor.Error => {
-        const persistedError = definition.errors[errorId];
-        if (persistedError != null) {
-            return persistedError;
-        }
-        if (draft?.type === "error" && draft.errorId === errorId) {
-            return {
-                errorId,
-                errorName: "",
-                statusCode: "400",
-            };
-        }
-        throw new Error("Error does not exist: " + errorId);
-    }, [definition.errors, draft, errorId]);
+    const convertFromDraft = useCallback(
+        (draft: DraftSidebarItemId): FernApiEditor.Error | undefined => {
+            if (draft.type === "error" && draft.errorId === errorId) {
+                return {
+                    errorId,
+                    errorName: "",
+                    statusCode: "400",
+                };
+            } else {
+                return undefined;
+            }
+        },
+        [errorId]
+    );
+
+    return useDraftableItem({
+        definitionId: errorId,
+        retrieveFromDefinition,
+        convertFromDraft,
+    });
 }

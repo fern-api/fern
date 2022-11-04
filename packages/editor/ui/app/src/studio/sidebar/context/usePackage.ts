@@ -1,27 +1,35 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useMemo } from "react";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { useSidebarContext } from "./useSidebarContext";
+import { useCallback } from "react";
+import { DraftSidebarItemId } from "./SidebarContext";
+import { useDraftableItem } from "./useDraftableItem";
 
 export function usePackage(packageId: FernApiEditor.PackageId): FernApiEditor.Package {
-    const { definition } = useApiEditorContext();
-    const { draft } = useSidebarContext();
+    const retrieveFromDefinition = useCallback(
+        (definition: FernApiEditor.Api) => definition.packages[packageId],
+        [packageId]
+    );
 
-    return useMemo((): FernApiEditor.Package => {
-        const persistedPackage = definition.packages[packageId];
-        if (persistedPackage != null) {
-            return persistedPackage;
-        }
-        if (draft?.type === "package" && draft.packageId === packageId) {
-            return {
-                packageId,
-                packageName: "",
-                packages: [],
-                endpoints: [],
-                types: [],
-                errors: [],
-            };
-        }
-        throw new Error("Package does not exist: " + packageId);
-    }, [definition.packages, draft, packageId]);
+    const convertFromDraft = useCallback(
+        (draft: DraftSidebarItemId): FernApiEditor.Package | undefined => {
+            if (draft.type === "package" && draft.packageId === packageId) {
+                return {
+                    packageId,
+                    packageName: "",
+                    packages: [],
+                    endpoints: [],
+                    types: [],
+                    errors: [],
+                };
+            } else {
+                return undefined;
+            }
+        },
+        [packageId]
+    );
+
+    return useDraftableItem({
+        definitionId: packageId,
+        retrieveFromDefinition,
+        convertFromDraft,
+    });
 }
