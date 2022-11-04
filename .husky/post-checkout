@@ -7,6 +7,7 @@ newHEAD=$2
 checkoutType=$3                                                                  
 [[ "$checkoutType" == "1" ]] && checkoutType='branch' || checkoutType='file' ;      
 
+# only clean when switching to a branch with a different head
 if [[ "$checkoutType" == "branch" && "$prevHEAD" != "$newHEAD" ]]; then
     find packages -name 'lib' -exec /bin/rm -r {} \+
     find packages -name tsconfig.tsbuildinfo -exec /bin/rm {} \+
