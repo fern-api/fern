@@ -6,7 +6,6 @@ export class CreateErrorTransactionHandler extends AbstractCreateTransactionHand
         this.definition.errors[transaction.errorId] = {
             errorId: transaction.errorId,
             errorName: transaction.errorName,
-            statusCode: "400",
         };
     }
 

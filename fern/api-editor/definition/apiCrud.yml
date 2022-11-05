@@ -32,7 +32,6 @@ types:
     properties:
       errorId: commons.ErrorId
       errorName: string
-      statusCode: string
 
   CreateApiRequest:
     properties:

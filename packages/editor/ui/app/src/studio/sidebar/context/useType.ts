@@ -1,11 +1,28 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
+import { useCallback } from "react";
+import { DraftSidebarItemId } from "./SidebarContext";
+import { useDraftableItem } from "./useDraftableItem";
 
 export function useType(typeId: FernApiEditor.TypeId): FernApiEditor.Type {
-    const { definition } = useApiEditorContext();
-    const type_ = definition.types[typeId];
-    if (type_ == null) {
-        throw new Error("Type does not exist: " + typeId);
-    }
-    return type_;
+    const retrieveFromDefinition = useCallback((definition: FernApiEditor.Api) => definition.types[typeId], [typeId]);
+
+    const convertFromDraft = useCallback(
+        (draft: DraftSidebarItemId): FernApiEditor.Type | undefined => {
+            if (draft.type === "type" && draft.typeId === typeId) {
+                return {
+                    typeId,
+                    typeName: "",
+                };
+            } else {
+                return undefined;
+            }
+        },
+        [typeId]
+    );
+
+    return useDraftableItem({
+        definitionId: typeId,
+        retrieveFromDefinition,
+        convertFromDraft,
+    });
 }

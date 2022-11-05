@@ -1,12 +1,10 @@
-import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
-import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import React, { useCallback, useMemo } from "react";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { useSidebarItemState } from "../context/useSidebarContext";
-import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { CollapsibleSidebarItemRow } from "../row/CollapsibleSidebarItemRow";
+import { TypeId } from "@fern-fern/api-editor-sdk/resources";
+import React, { useCallback } from "react";
+import { DraftSidebarItemId, DraftTypeSidebarItemId } from "../context/SidebarContext";
+import { SidebarItemsList } from "../shared/SidebarItemsList";
 import { TypeSidebarItem } from "./TypeSidebarItem";
+import { TypesSidebarItem } from "./TypesSidebarItem";
 
 export declare namespace TypesSidebarGroup {
     export interface Props {
@@ -15,36 +13,38 @@ export declare namespace TypesSidebarGroup {
 }
 
 export const TypesSidebarGroup: React.FC<TypesSidebarGroup.Props> = ({ package_ }) => {
-    const sidebarItemId = useMemo(() => SidebarItemIdGenerator.types(package_), [package_]);
+    const renderTypeSidebarItem = useCallback(
+        (typeId: TypeId) => <TypeSidebarItem key={typeId} typeId={typeId} parent={package_.packageId} />,
+        [package_.packageId]
+    );
 
-    const [, setSidebarItemState] = useSidebarItemState(sidebarItemId);
-
-    const { submitTransaction } = useApiEditorContext();
-
-    const onClickAdd = useCallback(() => {
-        submitTransaction(
-            TransactionGenerator.createType({
-                parent: package_.packageId,
-                typeId: EditorItemIdGenerator.type(),
-                typeName: "My new type",
-            })
-        );
-        setSidebarItemState({
-            isCollapsed: false,
-        });
-    }, [package_.packageId, setSidebarItemState, submitTransaction]);
+    const isDraftInPackage = useCallback(
+        (draft: DraftTypeSidebarItemId) => {
+            return draft.parent === package_.packageId;
+        },
+        [package_.packageId]
+    );
 
     return (
-        <CollapsibleSidebarItemRow
-            itemId={sidebarItemId}
-            label="Types"
-            onClickAdd={onClickAdd}
-            defaultIsCollapsed={true}
-            isDraft={false}
-        >
-            {package_.types.map((typeId) => (
-                <TypeSidebarItem key={typeId} typeId={typeId} />
-            ))}
-        </CollapsibleSidebarItemRow>
+        <TypesSidebarItem package_={package_}>
+            <SidebarItemsList
+                items={package_.types}
+                renderItem={renderTypeSidebarItem}
+                convertDraftToItem={getTypeIdFromDraft}
+                doesDraftBelongInList={isDraftInPackage}
+                parseDraftId={parseTypeDraft}
+            />
+        </TypesSidebarItem>
     );
 };
+
+function parseTypeDraft(draft: DraftSidebarItemId): DraftTypeSidebarItemId | undefined {
+    if (draft.type === "type") {
+        return draft;
+    }
+    return undefined;
+}
+
+function getTypeIdFromDraft(draft: DraftTypeSidebarItemId): FernApiEditor.TypeId {
+    return draft.typeId;
+}

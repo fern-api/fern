@@ -22,7 +22,6 @@ describe("CreateErrorTransactionHandler", () => {
         const expectedNewError: FernApiEditor.Error = {
             errorId,
             errorName: "My new error",
-            statusCode: expect.any(String),
         };
 
         expect(api.definition.errors[errorId]).toEqual(expectedNewError);

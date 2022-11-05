@@ -1,6 +1,6 @@
 import { MenuItem, MenuItemProps } from "@blueprintjs/core";
 import React, { useCallback } from "react";
-import { markEventAsSelectionPreventing } from "./markEventAsSelectionPreventing";
+import { markEventAsSelectionPreventing } from "../utils/markEventAsSelectionPreventing";
 
 export const SidebarItemMenuItem: React.FC<MenuItemProps> = (props) => {
     const onClick = useCallback(

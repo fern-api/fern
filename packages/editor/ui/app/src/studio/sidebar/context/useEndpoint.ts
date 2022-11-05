@@ -1,11 +1,31 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
+import { useCallback } from "react";
+import { DraftSidebarItemId } from "./SidebarContext";
+import { useDraftableItem } from "./useDraftableItem";
 
 export function useEndpoint(endpointId: FernApiEditor.EndpointId): FernApiEditor.Endpoint {
-    const { definition } = useApiEditorContext();
-    const endpoint_ = definition.endpoints[endpointId];
-    if (endpoint_ == null) {
-        throw new Error("Endpoint does not exist: " + endpointId);
-    }
-    return endpoint_;
+    const retrieveFromDefinition = useCallback(
+        (definition: FernApiEditor.Api) => definition.endpoints[endpointId],
+        [endpointId]
+    );
+
+    const convertFromDraft = useCallback(
+        (draft: DraftSidebarItemId): FernApiEditor.Endpoint | undefined => {
+            if (draft.type === "endpoint" && draft.endpointId === endpointId) {
+                return {
+                    endpointId,
+                    endpointName: "",
+                };
+            } else {
+                return undefined;
+            }
+        },
+        [endpointId]
+    );
+
+    return useDraftableItem({
+        definitionId: endpointId,
+        retrieveFromDefinition,
+        convertFromDraft,
+    });
 }

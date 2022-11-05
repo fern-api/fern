@@ -1,13 +1,18 @@
+import { MenuItemProps } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
-import { DraftPackageSidebarItemId } from "../context/SidebarContext";
+import { EndpointSidebarItemIcon } from "../endpoints/EndpointSidebarItemIcon";
+import { useCreateEndpointCallback } from "../endpoints/useCreateEndpointCallback";
+import { ErrorSidebarItemIcon } from "../errors/ErrorSidebarItemIcon";
+import { useCreateErrorCallback } from "../errors/useCreateErrorCallback";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { CollapsibleSidebarItemRow } from "../row/CollapsibleSidebarItemRow";
-import { useAddDraft } from "../shared/useAddDraft";
+import { CollapsibleSidebarItemRow } from "../row/collapsible/CollapsibleSidebarItemRow";
+import { EditableSidebarItemRow } from "../row/editable-row/EditableSidebarItemRow";
 import { useEditableSidebarItem } from "../shared/useEditableSidebarItem";
+import { TypeSidebarItemIcon } from "../types/TypeSidebarItemIcon";
+import { useCreateTypeCallback } from "../types/useCreateTypeCallback";
 
 export declare namespace PackageSidebarItem {
     export interface Props {
@@ -30,30 +35,39 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
     const sidebarItemId = useMemo(() => SidebarItemIdGenerator.package(package_), [package_]);
     const isRootPackage = parent == null;
 
-    const createDraft = useCallback((): DraftPackageSidebarItemId => {
-        return {
-            type: "package",
-            packageId: EditorItemIdGenerator.package(),
-            parent: package_.packageId,
-        };
-    }, [package_.packageId]);
+    const onClickAddEndpoint = useCreateEndpointCallback({ package_ });
+    const onClickAddType = useCreateTypeCallback({ package_ });
+    const onClickAddError = useCreateErrorCallback({ package_ });
+    const addMenuItems = useMemo(
+        (): MenuItemProps[] => [
+            { text: "Add endpoint", onClick: onClickAddEndpoint, icon: <EndpointSidebarItemIcon /> },
+            { text: "Add type", onClick: onClickAddType, icon: <TypeSidebarItemIcon /> },
+            { text: "Add error", onClick: onClickAddError, icon: <ErrorSidebarItemIcon /> },
+        ],
+        [onClickAddEndpoint, onClickAddError, onClickAddType]
+    );
 
-    const { onClickAdd } = useAddDraft({
-        sidebarItemId,
-        createDraft,
-    });
+    const renderRow = useCallback(
+        ({ leftElement }: { leftElement: JSX.Element }) => {
+            return (
+                <EditableSidebarItemRow
+                    itemId={sidebarItemId}
+                    leftElement={leftElement}
+                    label={package_.packageName}
+                    icon={IconNames.BOX}
+                    onClickAdd={addMenuItems}
+                    onRename={onRename}
+                    onDelete={onDelete}
+                    isDraft={isDraft}
+                    placeholder="Untitled package"
+                />
+            );
+        },
+        [addMenuItems, isDraft, onDelete, onRename, package_.packageName, sidebarItemId]
+    );
 
     return (
-        <CollapsibleSidebarItemRow
-            itemId={sidebarItemId}
-            label={package_.packageName}
-            icon={IconNames.BOX}
-            onClickAdd={onClickAdd}
-            onRename={onRename}
-            onDelete={onDelete}
-            defaultIsCollapsed={!isRootPackage}
-            isDraft={isDraft}
-        >
+        <CollapsibleSidebarItemRow itemId={sidebarItemId} defaultIsCollapsed={!isRootPackage} renderRow={renderRow}>
             {children}
         </CollapsibleSidebarItemRow>
     );
