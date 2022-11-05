@@ -2,7 +2,7 @@ import { Button, IconName } from "@blueprintjs/core";
 import { useBooleanState } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import React, { useCallback } from "react";
-import { markEventAsSelectionPreventing } from "./markEventAsSelectionPreventing";
+import { markEventAsSelectionPreventing } from "../utils/markEventAsSelectionPreventing";
 import styles from "./SidebarItemRowButton.module.scss";
 
 export declare namespace SidebarItemRowButton {

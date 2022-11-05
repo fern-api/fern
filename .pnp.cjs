@@ -8115,7 +8115,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/api-editor-sdk", "npm:0.0.11"],\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.12"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:8.3.4"],\
@@ -8628,7 +8628,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/api-editor-sdk", "npm:0.0.11"],\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.12"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:8.3.4"],\
@@ -8652,7 +8652,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/editor-item-id-generator", "workspace:packages/editor/id-generator"],\
             ["@fern-api/transaction-generator", "workspace:packages/editor/transaction-generator"],\
-            ["@fern-fern/api-editor-sdk", "npm:0.0.11"],\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.12"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:8.3.4"],\
@@ -8752,10 +8752,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/api-editor-sdk", [\
-        ["npm:0.0.11", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-api-editor-sdk-npm-0.0.11-4b748fe979-0bbe3583cc.zip/node_modules/@fern-fern/api-editor-sdk/",\
+        ["npm:0.0.12", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-api-editor-sdk-npm-0.0.12-4bd901fa5e-019d24c5ed.zip/node_modules/@fern-fern/api-editor-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/api-editor-sdk", "npm:0.0.11"],\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.12"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
@@ -8838,7 +8838,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-api/transaction-generator", "workspace:packages/editor/transaction-generator"],\
             ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
-            ["@fern-fern/api-editor-sdk", "npm:0.0.11"],\
+            ["@fern-fern/api-editor-sdk", "npm:0.0.12"],\
             ["@fern-ui/react-commons", "workspace:packages/editor/ui/react-commons"],\
             ["@fern-ui/routing-utils", "workspace:packages/editor/ui/routing-utils"],\
             ["@fern-ui/split-view", "workspace:packages/editor/ui/split-view"],\

@@ -1,12 +1,11 @@
-import { Intent, Tag } from "@blueprintjs/core";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useMemo } from "react";
 import { useError } from "../context/useError";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
-import { SidebarItemRow } from "../row/SidebarItemRow";
+import { EditableSidebarItemRow } from "../row/editable-row/EditableSidebarItemRow";
 import { useEditableSidebarItem } from "../shared/useEditableSidebarItem";
-import styles from "./ErrorSidebarItem.module.scss";
+import { ErrorSidebarItemIcon } from "./ErrorSidebarItemIcon";
 
 export declare namespace ErrorSidebarItem {
     export interface Props {
@@ -30,17 +29,14 @@ export const ErrorSidebarItem: React.FC<ErrorSidebarItem.Props> = ({ errorId, pa
     const sidebarItemId = useMemo(() => SidebarItemIdGenerator.error(error), [error]);
 
     return (
-        <SidebarItemRow
+        <EditableSidebarItemRow
             itemId={sidebarItemId}
             label={error.errorName}
-            icon={
-                <Tag className={styles.tag} intent={Intent.DANGER} minimal>
-                    {error.statusCode}
-                </Tag>
-            }
+            icon={<ErrorSidebarItemIcon />}
             onDelete={onDelete}
             onRename={onRename}
             isDraft={isDraft}
+            placeholder="Untitled error"
         />
     );
 };

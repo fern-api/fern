@@ -5,7 +5,7 @@ import React, { useCallback } from "react";
 import { useSidebarContext } from "./context/useSidebarContext";
 import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
 import { Packages } from "./packages/Packages";
-import { SidebarItemRow } from "./row/SidebarItemRow";
+import { NonEditableSidebarItemRow } from "./row/non-editable-row/NonEditableSidebarItemRow";
 import styles from "./Sidebar.module.scss";
 import { useSelectionReset } from "./useSelectionReset";
 
@@ -32,17 +32,15 @@ export const Sidebar: React.FC = () => {
                     text="Add package"
                     onClick={onClickAddPackage}
                 />
-                <SidebarItemRow
+                <NonEditableSidebarItemRow
                     itemId={SidebarItemIdGenerator.API_CONFIGURATION}
                     icon={IconNames.COG}
                     label="API Configuration"
-                    isDraft={false}
                 />
-                <SidebarItemRow
+                <NonEditableSidebarItemRow
                     itemId={SidebarItemIdGenerator.SDKs}
                     icon={IconNames.CODE_BLOCK}
                     label="SDKs"
-                    isDraft={false}
                 />
             </div>
             <div className={styles.sidebarItems}>

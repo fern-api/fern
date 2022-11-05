@@ -70,20 +70,6 @@
     margin-right: 8px;
 }
 
-.label {
-    user-select: none;
-}
-
-.editableLabelWrapper {
-    display: flex;
-    min-width: 0;
-    flex: 1;
-
-    .editableLabel {
-        flex: 1;
-    }
-}
-
 .container.selected .label {
     font-weight: 600;
 }

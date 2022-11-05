@@ -15,7 +15,6 @@ export function useError(errorId: FernApiEditor.ErrorId): FernApiEditor.Error {
                 return {
                     errorId,
                     errorName: "",
-                    statusCode: "400",
                 };
             } else {
                 return undefined;

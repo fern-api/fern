@@ -1,24 +1,27 @@
 import { IconNames } from "@blueprintjs/icons";
 import React, { useCallback, useContext, useMemo } from "react";
-import { useSidebarItemState } from "../context/useSidebarContext";
+import { useSidebarItemState } from "../../context/useSidebarContext";
+import { SidebarItemId } from "../../ids/SidebarItemId";
+import { SidebarItemRowButton } from "../button/SidebarItemRowButton";
 import styles from "./CollapsibleSidebarItemRow.module.scss";
-import { SidebarItemRow } from "./SidebarItemRow";
-import { SidebarItemRowButton } from "./SidebarItemRowButton";
-import { SidebarItemRowContext, SidebarItemRowContextValue } from "./SidebarItemRowContext";
+import { CollapsibleSidebarItemRowContext } from "./CollapsibleSidebarItemRowContext";
 
 export declare namespace CollapsibleSidebarItemRow {
-    export interface Props extends Omit<SidebarItemRow.Props, "labelTagContent" | "leftElement"> {
+    export interface Props {
+        itemId: SidebarItemId;
         defaultIsCollapsed: boolean;
+        renderRow: (args: { leftElement: JSX.Element }) => JSX.Element;
         children: React.ReactNode;
     }
 }
 
 export const CollapsibleSidebarItemRow: React.FC<CollapsibleSidebarItemRow.Props> = ({
+    itemId,
     defaultIsCollapsed,
+    renderRow,
     children,
-    ...rowProps
 }) => {
-    const [state, setState] = useSidebarItemState(rowProps.itemId, { isCollapsed: defaultIsCollapsed });
+    const [state, setState] = useSidebarItemState(itemId, { isCollapsed: defaultIsCollapsed });
 
     const toggleCollapsed = useCallback(() => {
         setState({
@@ -27,18 +30,18 @@ export const CollapsibleSidebarItemRow: React.FC<CollapsibleSidebarItemRow.Props
         });
     }, [setState, state]);
 
-    const inheritedRowContext = useContext(SidebarItemRowContext);
+    const inheritedContext = useContext(CollapsibleSidebarItemRowContext);
     const rowContext = useMemo(
-        (): SidebarItemRowContextValue => ({
-            ...inheritedRowContext,
+        (): CollapsibleSidebarItemRowContext => ({
+            ...inheritedContext,
             // so the caret lines up with other non-collapsible items
             // at the same level
-            indent: Math.max(0, inheritedRowContext.indent - 8),
+            indent: Math.max(0, inheritedContext.indent - 8),
         }),
-        [inheritedRowContext]
+        [inheritedContext]
     );
     const childrenRowContext = useMemo(
-        (): SidebarItemRowContextValue => ({
+        (): CollapsibleSidebarItemRowContext => ({
             ...rowContext,
             indent: rowContext.indent + 29,
         }),
@@ -47,21 +50,20 @@ export const CollapsibleSidebarItemRow: React.FC<CollapsibleSidebarItemRow.Props
 
     return (
         <>
-            <SidebarItemRowContext.Provider value={rowContext}>
-                <SidebarItemRow
-                    {...rowProps}
-                    leftElement={
+            <CollapsibleSidebarItemRowContext.Provider value={rowContext}>
+                {renderRow({
+                    leftElement: (
                         <SidebarItemRowButton
                             className={styles.collapseButton}
                             icon={state.isCollapsed ? IconNames.CHEVRON_RIGHT : IconNames.CHEVRON_DOWN}
                             onClick={toggleCollapsed}
                         />
-                    }
-                />
-            </SidebarItemRowContext.Provider>
-            <SidebarItemRowContext.Provider value={childrenRowContext}>
+                    ),
+                })}
+            </CollapsibleSidebarItemRowContext.Provider>
+            <CollapsibleSidebarItemRowContext.Provider value={childrenRowContext}>
                 {state.isCollapsed || <div className={styles.children}>{children}</div>}
-            </SidebarItemRowContext.Provider>
+            </CollapsibleSidebarItemRowContext.Provider>
         </>
     );
 };
