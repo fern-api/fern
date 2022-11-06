@@ -3,6 +3,7 @@ from typing import Optional, Sequence
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
+from ...docstring import Docstring
 from .function_signature import FunctionSignature
 
 OVERLOAD_DECORATOR = Reference(
@@ -22,12 +23,14 @@ class FunctionDeclaration(AstNode):
         body: CodeWriter,
         overloads: Sequence[FunctionSignature] = None,
         decorators: Sequence[AstNode] = None,
+        docstring: Docstring = None,
     ):
         self.name = name
         self.signature = signature
         self.overloads = overloads or []
         self.body = body
         self.decorators = decorators or []
+        self.docstring = docstring
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
@@ -40,6 +43,8 @@ class FunctionDeclaration(AstNode):
         metadata.update(self.body.get_metadata())
         for decorator in self.decorators:
             metadata.update(decorator.get_metadata())
+        if self.docstring is not None:
+            metadata.update(self.docstring.get_metadata())
         return metadata
 
     def write(self, writer: NodeWriter) -> None:
@@ -47,12 +52,7 @@ class FunctionDeclaration(AstNode):
             self._write(writer, signature=overload, body=None)
         self._write(writer, signature=self.signature, body=self.body)
 
-    def _write(
-        self,
-        writer: NodeWriter,
-        signature: FunctionSignature,
-        body: Optional[CodeWriter],
-    ) -> None:
+    def _write(self, writer: NodeWriter, signature: FunctionSignature, body: Optional[CodeWriter]) -> None:
         if body is None:
             writer.write("@")
             writer.write_reference(OVERLOAD_DECORATOR)
@@ -70,6 +70,12 @@ class FunctionDeclaration(AstNode):
         writer.write(f"def {self.name}")
         writer.write_node(signature)
         with writer.indent():
+            if self.docstring is not None:
+                writer.write_line('"""')
+                writer.write_node(self.docstring)
+                writer.write_newline_if_last_line_not()
+                writer.write_line('"""')
+
             if body is None:
                 writer.write("...")
             else:

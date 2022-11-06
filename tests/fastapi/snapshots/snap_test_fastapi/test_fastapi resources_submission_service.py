@@ -29,14 +29,23 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
 
     @abc.abstractmethod
     def create_execution_session(self, *, language: Language) -> ExecutionSessionResponse:
+        """
+        Returns sessionId and execution server URL for session. Spins up server.
+        """
         ...
 
     @abc.abstractmethod
     def get_execution_session(self, *, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
+        """
+        Returns execution server URL for session. Returns empty if session isn't registered.
+        """
         ...
 
     @abc.abstractmethod
     def stop_execution_session(self, *, session_id: str) -> None:
+        """
+        Stops execution session.
+        """
         ...
 
     @abc.abstractmethod
@@ -87,6 +96,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.post(
             path="/sessions/create-session/{language}",
             response_model=ExecutionSessionResponse,
+            description=cls.create_execution_session.__doc__,
             **get_route_args(cls.create_execution_session, default_tag="submission"),
         )(wrapper)
 
@@ -122,6 +132,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.get(
             path="/sessions/{session_id}",
             response_model=typing.Optional[ExecutionSessionResponse],
+            description=cls.get_execution_session.__doc__,
             **get_route_args(cls.get_execution_session, default_tag="submission"),
         )(wrapper)
 
@@ -157,6 +168,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.delete(
             path="/sessions/stop/{session_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=cls.stop_execution_session.__doc__,
             **get_route_args(cls.stop_execution_session, default_tag="submission"),
         )(wrapper)
 
@@ -190,5 +202,6 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.get(
             path="/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
+            description=cls.get_execution_sessions_state.__doc__,
             **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),
         )(wrapper)

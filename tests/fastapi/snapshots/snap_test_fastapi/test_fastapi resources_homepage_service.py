@@ -73,6 +73,7 @@ class AbstractHomepageProblemService(AbstractFernService):
         router.get(
             path="/homepage-problems",
             response_model=typing.List[ProblemId],
+            description=cls.get_homepage_problems.__doc__,
             **get_route_args(cls.get_homepage_problems, default_tag="homepage"),
         )(wrapper)
 
@@ -108,5 +109,6 @@ class AbstractHomepageProblemService(AbstractFernService):
         router.post(
             path="/homepage-problems",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=cls.set_homepage_problems.__doc__,
             **get_route_args(cls.set_homepage_problems, default_tag="homepage"),
         )(wrapper)

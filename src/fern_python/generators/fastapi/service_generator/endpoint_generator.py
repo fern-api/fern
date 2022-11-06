@@ -54,6 +54,7 @@ class EndpointGenerator:
                 named_parameters=[parameter.to_function_parameter() for parameter in self._parameters],
                 return_type=self._get_return_type(),
             ),
+            docstring=AST.Docstring(self._endpoint.docs) if self._endpoint.docs is not None else None,
         )
 
     def _get_return_type(self) -> AST.TypeHint:
@@ -158,6 +159,8 @@ class EndpointGenerator:
                 writer.write("status_code=")
                 writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
                 writer.write_line(",")
+            writer.write(f"description={method_on_cls}.__doc__")
+            writer.write_line(",")
             writer.write("**")
             default_tag = ".".join(
                 [package.unsafe_name.snake_case for package in self._service.name.fern_filepath_v_2.get_as_list()]
