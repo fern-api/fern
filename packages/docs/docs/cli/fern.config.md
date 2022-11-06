@@ -6,8 +6,8 @@ title: fern.config.json
 
 ```json
 {
-  "organization": "imdb", // your organization name
-  "version": "0.0.xxx" // version of the Fern CLI you're using
+  "organization": "my-organization",
+  "version": "0.0.xxx"
 }
 ```
 

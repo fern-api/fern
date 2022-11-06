@@ -20,12 +20,6 @@ Add the TypeScript SDK generator:
 fern add typescript
 ```
 
-Add the Java Spring server generator:
-
-```
-fern add java-spring-server
-```
-
 Add the Postman collection generator:
 
 ```
