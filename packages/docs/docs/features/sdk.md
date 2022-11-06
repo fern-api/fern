@@ -4,9 +4,11 @@ title: SDKs
 
 ## Languages supported
 
-- [JavaScript/TypeScript](../generators/supported.md#javascripttypescript)
-- [Java](../generators/supported.md#java)
-- [Python](../generators/supported.md#python)
+- [JavaScript/TypeScript](../generators/code-generators.md#javascripttypescript)
+- [Java](../generators/code-generators.md#java)
+- [Python](../generators/code-generators.md#python)
+- Ruby *(coming in 2023)*
+- Go *(coming in 2023)*
 
 ## Request another language or framework
 

@@ -28,4 +28,4 @@ fern add postman
 
 ## Options
 
-Here is [a list of code generators](../generators/supported.md) supported by Fern.
+Here is [a list of code generators](../generators/code-generators.md) supported by Fern.

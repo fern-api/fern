@@ -37,12 +37,12 @@ module.exports = {
         `getting-started`,
         {
             type: "category",
-            label: "What you get",
+            label: "Features",
             items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`, `features/openapi`],
         },
         {
             type: "category",
-            label: "Defining an API",
+            label: "Define your API",
             link: {
                 type: "doc",
                 id: "definition",
@@ -57,7 +57,7 @@ module.exports = {
         },
         {
             type: "category",
-            label: "Generators",
+            label: "Code generators",
             items: [`generators/supported`, `generators/generators`],
         },
         {
@@ -78,6 +78,7 @@ module.exports = {
             label: "Tutorials",
             items: [`tutorials/express`, `tutorials/fastapi`, `tutorials/spring`],
         },
+        `showcase`,
         {
             type: "link",
             label: "Join Discord",

@@ -24,30 +24,40 @@ release: []
 View an example using multiple generators [on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml) or here:
 
 ````yml title="/fern/api/generators.yml"
-draft: # Publishes the generated code to a private registry managed by Fern.
-  - name: fernapi/fern-typescript-sdk
-    version: 0.0.206
-    # in download-files mode, generated files will download to your computer
-    mode: download-files
-
-release: # Publishes the generated code to a public registry (e.g. maven, npm, pypi).
-  - name: fernapi/fern-java-sdk
-    version: 0.0.109
-    # in publish mode, generated files will publish to a registry
+draft:
+  - name: fernapi/fern-java
+    version: 0.0.115
     mode: publish
-    outputs:
+  - name: fernapi/fern-openapi
+    version: 0.0.8
+    config:
+      format: yaml
+    mode: download-files
+    output-path: ./generated-openapi
+    
+release:
+  - name: fernapi/fern-typescript-sdk
+    version: 0.0.215
+    publishing:
+      npm:
+        package-name: '@fern-api/example'
+        token: ${NPM_TOKEN}
+    github:
+      repository: fern-api/example-node
+  - name: fernapi/fern-java-sdk
+    version: 0.0.117
+    publishing:
       maven:
-        url: https://s01.oss.sonatype.org/content/repositories/releases/
-        coordinate: <maven-group:maven-artifact>
-        username: ${MAVEN_USERNAME} # .env variable
-        password: ${MAVEN_PASSWORD}
-
+        coordinate: 'io.github.fern-api:example'
+    github:
+      repository: fern-api/example-java-sdk
+```
 
 ## Draft
 
 Generators in the `draft` list will publish to a private registry managed by Fern. Use this when your API is a work-in-progress. By default, code generators you add will show up as a draft.
 
-[Add a generator](../cli/add.md) in the CLI. For example, when we add the `typescript` generator:
+[Add a generator](../cli/add.md) in the CLI. For example, when we add the `postman` generator:
 
 ```diff title="/fern/api/generators.yml"
 draft:
@@ -55,7 +65,7 @@ draft:
 +   version: 0.0.206
 +   mode: download-files
 release: []
-````
+```
 
 ## Release
 
@@ -73,6 +83,6 @@ release:
 +     maven:
 +       url: https://s01.oss.sonatype.org/content/repositories/releases/
 +       coordinate: <maven-group:maven-artifact>
-+       username: ${MAVEN_USERNAME} # .env variable
++       username: ${MAVEN_USERNAME}
 +       password: ${MAVEN_PASSWORD}
 ```
