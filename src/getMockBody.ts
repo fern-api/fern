@@ -1,6 +1,6 @@
 import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { isEqual, noop } from "lodash";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export function getMockBodyFromTypeReference({
     typeReference,
@@ -18,7 +18,7 @@ export function getMockBodyFromTypeReference({
                 boolean: () => true,
                 long: () => 10000000,
                 dateTime: () => new Date().toISOString(),
-                uuid: () => uuid.v4(),
+                uuid: () => uuidv4(),
                 _unknown: () => {
                     throw new Error("Encountered unknown primtiveType: " + primitive);
                 },

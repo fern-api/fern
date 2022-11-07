@@ -124,7 +124,7 @@ function convertResponse({
     allTypes: TypeDeclaration[];
     convertedRequest: PostmanRequest;
 }): PostmanExampleResponse {
-    const responseBody = getMockBodyFromTypeReference({ typeReference: httpEndpoint.response.type, allTypes });
+    const responseBody = { typeReference: httpEndpoint.response.type, allTypes };
     return {
         name: "Successful " + httpEndpoint.id,
         code: 200,
