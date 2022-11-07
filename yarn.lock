@@ -3450,7 +3450,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.12
+    "@fern-fern/api-editor-sdk": 0.0.13
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3925,7 +3925,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.12
+    "@fern-fern/api-editor-sdk": 0.0.13
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3947,7 +3947,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.12
+    "@fern-fern/api-editor-sdk": 0.0.13
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -4039,14 +4039,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/api-editor-sdk@npm:0.0.12":
-  version: 0.0.12
-  resolution: "@fern-fern/api-editor-sdk@npm:0.0.12"
+"@fern-fern/api-editor-sdk@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@fern-fern/api-editor-sdk@npm:0.0.13"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: 019d24c5ededa177f299ab705b7cc5559cc24efe7a5990623a15eaa4266f45e1eb6bcdfb3bf0e71ca1b06d8f3c63fba3630ed15828773ce79536e2eae74adc09
+  checksum: 1e2af20f7d86c6954f751276ff819d98a34c38ffed94070ec8c1b41d39710b905f88e70a5f8ba08c13c91132e567f6d6c4ae80cf08d86ec62df9c287afaed4c3
   languageName: node
   linkType: hard
 
@@ -4110,7 +4110,7 @@ __metadata:
     "@fern-api/loadable": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.12
+    "@fern-fern/api-editor-sdk": 0.0.13
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"
     "@fern-ui/split-view": "workspace:*"

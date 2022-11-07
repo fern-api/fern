@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { DraftSidebarItemId } from "../context/SidebarContext";
 import { useSidebarContext, useSidebarItemState } from "../context/useSidebarContext";
+import { DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { SidebarItemId } from "../ids/SidebarItemId";
 
 export declare namespace useAddDraft {

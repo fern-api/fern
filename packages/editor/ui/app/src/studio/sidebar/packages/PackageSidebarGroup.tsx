@@ -1,3 +1,4 @@
+import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React from "react";
 import { usePackage } from "../context/usePackage";
@@ -19,7 +20,7 @@ export const PackageSidebarGroup: React.FC<PackageSidebarGroup.Props> = ({ packa
 
     return (
         <PackageSidebarItem package_={package_} parent={parent}>
-            <PackagesList packages={package_.packages} parent={packageId} />
+            <PackagesList packages={package_.isDraft ? EMPTY_ARRAY : package_.packages} parent={packageId} />
             <EndpointsSidebarGroup package_={package_} />
             <TypesSidebarGroup package_={package_} />
             <ErrorsSidebarGroup package_={package_} />

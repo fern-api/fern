@@ -31,7 +31,7 @@ export const TypeSidebarItem: React.FC<TypeSidebarItem.Props> = ({ typeId, paren
     return (
         <EditableSidebarItemRow
             itemId={sidebarItemId}
-            label={type.typeName}
+            label={type.isDraft ? "" : type.typeName}
             icon={<TypeSidebarItemIcon />}
             onDelete={onDelete}
             onRename={onRename}

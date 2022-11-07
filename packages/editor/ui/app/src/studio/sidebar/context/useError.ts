@@ -1,31 +1,32 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
-import { DraftSidebarItemId } from "./SidebarContext";
+import { MaybeDraftError } from "../drafts/DraftableItem";
+import { DraftErrorSidebarItemId, DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { useDraftableItem } from "./useDraftableItem";
 
-export function useError(errorId: FernApiEditor.ErrorId): FernApiEditor.Error {
+export function useError(errorId: FernApiEditor.ErrorId): MaybeDraftError {
     const retrieveFromDefinition = useCallback(
         (definition: FernApiEditor.Api) => definition.errors[errorId],
         [errorId]
     );
-
-    const convertFromDraft = useCallback(
-        (draft: DraftSidebarItemId): FernApiEditor.Error | undefined => {
-            if (draft.type === "error" && draft.errorId === errorId) {
-                return {
-                    errorId,
-                    errorName: "",
-                };
-            } else {
-                return undefined;
-            }
-        },
-        [errorId]
-    );
-
     return useDraftableItem({
         definitionId: errorId,
         retrieveFromDefinition,
-        convertFromDraft,
+        narrowDraft,
+        isDraftForItem,
     });
+}
+
+function narrowDraft(draft: DraftSidebarItemId): DraftErrorSidebarItemId | undefined {
+    if (draft.type === "error") {
+        return draft;
+    }
+    return undefined;
+}
+
+function isDraftForItem({
+    definitionId: errorId,
+    draft,
+}: useDraftableItem.isDraftForItem.Args<FernApiEditor.ErrorId, DraftErrorSidebarItemId>): boolean {
+    return draft.errorId === errorId;
 }

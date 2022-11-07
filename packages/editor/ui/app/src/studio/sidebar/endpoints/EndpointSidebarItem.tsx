@@ -31,7 +31,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpo
     return (
         <EditableSidebarItemRow
             itemId={sidebarItemId}
-            label={endpoint.endpointName}
+            label={endpoint.isDraft ? "" : endpoint.endpointName}
             icon={<EndpointSidebarItemIcon />}
             onDelete={onDelete}
             onRename={onRename}

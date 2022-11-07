@@ -25,7 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/api-editor-sdk": "0.0.12",
+    "@fern-fern/api-editor-sdk": "0.0.13",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

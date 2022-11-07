@@ -3,6 +3,7 @@ import { IconNames } from "@blueprintjs/icons";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
+import { MaybeDraftPackage } from "../drafts/DraftableItem";
 import { EndpointSidebarItemIcon } from "../endpoints/EndpointSidebarItemIcon";
 import { useCreateEndpointCallback } from "../endpoints/useCreateEndpointCallback";
 import { ErrorSidebarItemIcon } from "../errors/ErrorSidebarItemIcon";
@@ -16,7 +17,7 @@ import { useCreateTypeCallback } from "../types/useCreateTypeCallback";
 
 export declare namespace PackageSidebarItem {
     export interface Props {
-        package_: FernApiEditor.Package;
+        package_: MaybeDraftPackage;
         parent: FernApiEditor.PackageId | undefined;
         children: CollapsibleSidebarItemRow.Props["children"];
     }
@@ -53,7 +54,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
                 <EditableSidebarItemRow
                     itemId={sidebarItemId}
                     leftElement={leftElement}
-                    label={package_.packageName}
+                    label={package_.isDraft ? "" : package_.packageName}
                     icon={IconNames.BOX}
                     onClickAdd={addMenuItems}
                     onRename={onRename}
@@ -63,7 +64,7 @@ export const PackageSidebarItem: React.FC<PackageSidebarItem.Props> = ({ package
                 />
             );
         },
-        [addMenuItems, isDraft, onDelete, onRename, package_.packageName, sidebarItemId]
+        [addMenuItems, isDraft, onDelete, onRename, package_, sidebarItemId]
     );
 
     return (

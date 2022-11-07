@@ -1,14 +1,16 @@
+import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { TypeId } from "@fern-fern/api-editor-sdk/resources";
 import React, { useCallback } from "react";
-import { DraftSidebarItemId, DraftTypeSidebarItemId } from "../context/SidebarContext";
+import { MaybeDraftPackage } from "../drafts/DraftableItem";
+import { DraftSidebarItemId, DraftTypeSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { SidebarItemsList } from "../shared/SidebarItemsList";
 import { TypeSidebarItem } from "./TypeSidebarItem";
 import { TypesSidebarItem } from "./TypesSidebarItem";
 
 export declare namespace TypesSidebarGroup {
     export interface Props {
-        package_: FernApiEditor.Package;
+        package_: MaybeDraftPackage;
     }
 }
 
@@ -28,7 +30,7 @@ export const TypesSidebarGroup: React.FC<TypesSidebarGroup.Props> = ({ package_ 
     return (
         <TypesSidebarItem package_={package_}>
             <SidebarItemsList
-                items={package_.types}
+                items={package_.isDraft ? EMPTY_ARRAY : package_.types}
                 renderItem={renderTypeSidebarItem}
                 convertDraftToItem={getTypeIdFromDraft}
                 doesDraftBelongInList={isDraftInPackage}

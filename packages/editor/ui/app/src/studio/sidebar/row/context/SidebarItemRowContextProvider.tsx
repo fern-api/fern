@@ -71,7 +71,7 @@ export const SidebarItemRowContextProvider: React.FC<SidebarItemRowContextProvid
         StringifiedSidebarItemId.stringify(selectedSidebarItemId) === StringifiedSidebarItemId.stringify(itemId);
 
     // when the SidebarItemId of the selected item changes, reset the URL in
-    // case it changed (e.g.  if the item was renamed)
+    // case it changed (e.g. if the item was renamed)
     useEffect(() => {
         if (isSelected) {
             setSelectedSidebarItemId(itemId, { replace: true });

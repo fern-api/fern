@@ -1,36 +1,46 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { DraftSidebarItemId } from "./SidebarContext";
+import { DraftableItem } from "../drafts/DraftableItem";
+import { DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { useSidebarContext } from "./useSidebarContext";
 
 export declare namespace useDraftableItem {
-    export interface Args<DefinitionId, DefinitionValue> {
+    export interface Args<DefinitionId, DefinitionValue, DraftId extends DraftSidebarItemId> {
         definitionId: DefinitionId;
         retrieveFromDefinition: (definition: FernApiEditor.Api) => DefinitionValue | undefined;
-        convertFromDraft: (draft: DraftSidebarItemId) => DefinitionValue | undefined;
+        narrowDraft: (draft: DraftSidebarItemId) => DraftId | undefined;
+        isDraftForItem: (args: isDraftForItem.Args<DefinitionId, DraftId>) => boolean;
+    }
+
+    export namespace isDraftForItem {
+        export interface Args<DefinitionId, DraftId extends DraftSidebarItemId> {
+            draft: DraftId;
+            definitionId: DefinitionId;
+        }
     }
 }
 
-export function useDraftableItem<DefinitionId, DefinitionValue>({
+export function useDraftableItem<DefinitionId, DefinitionValue, DraftId extends DraftSidebarItemId>({
     definitionId,
     retrieveFromDefinition,
-    convertFromDraft,
-}: useDraftableItem.Args<DefinitionId, DefinitionValue>): DefinitionValue {
+    narrowDraft,
+    isDraftForItem,
+}: useDraftableItem.Args<DefinitionId, DefinitionValue, DraftId>): DraftableItem<DefinitionValue, DraftId> {
     const { definition } = useApiEditorContext();
     const { draft } = useSidebarContext();
 
-    return useMemo((): DefinitionValue => {
+    return useMemo((): DraftableItem<DefinitionValue, DraftId> => {
         const definitionValue = retrieveFromDefinition(definition);
         if (definitionValue != null) {
-            return definitionValue;
+            return { ...definitionValue, isDraft: false };
         }
         if (draft != null) {
-            const draftValue = convertFromDraft(draft);
-            if (draftValue != null) {
-                return draftValue;
+            const narrowedDraft = narrowDraft(draft);
+            if (narrowedDraft != null && isDraftForItem({ draft: narrowedDraft, definitionId })) {
+                return { ...narrowedDraft, isDraft: true };
             }
         }
         throw new Error("Item does not exist: " + definitionId);
-    }, [convertFromDraft, definition, definitionId, draft, retrieveFromDefinition]);
+    }, [definition, definitionId, draft, isDraftForItem, narrowDraft, retrieveFromDefinition]);
 }
