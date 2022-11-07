@@ -285,6 +285,7 @@ def get_field_name_initializer(
             if len(lines) > 0:
                 writer.write_line("description=(")
                 for i, line in enumerate(lines):
+                    line = line.replace('"', '\\"')
                     if i == (len(lines) - 1):
                         # only add the last line if not empty
                         if line:

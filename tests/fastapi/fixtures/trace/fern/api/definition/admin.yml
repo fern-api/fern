@@ -11,7 +11,9 @@ types:
   StoreTracedWorkspaceRequest:
     properties:
       workspaceRunDetails: submission.WorkspaceRunDetails
-      traceResponses: list<submission.TraceResponse>
+      traceResponses:
+        type: list<submission.TraceResponse>
+        docs: the trace responses from the "server"
 
 services:
   http:
