@@ -20,12 +20,6 @@ Add the TypeScript SDK generator:
 fern add typescript
 ```
 
-Add the Java Spring server generator:
-
-```
-fern add java-spring-server
-```
-
 Add the Postman collection generator:
 
 ```
@@ -34,4 +28,4 @@ fern add postman
 
 ## Options
 
-Here is [a list of code generators](../generators/supported.md) supported by Fern.
+Here is [a list of code generators](../generators/code-generators.md) supported by Fern.

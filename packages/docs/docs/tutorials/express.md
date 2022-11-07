@@ -50,8 +50,8 @@ fern/
 └─ api/ # your API
   ├─ generators.yml # generators you're using
   └─ definition/
-    ├─ api.yml  # configuration for your API
-    └─ imdb.yml # a Service, which includes some endpoints
+    ├─ api.yml  # API-level configuration
+    └─ imdb.yml # endpoints, types, and errors
 ```
 
 ### Step 3: Add TypeScript code generator

@@ -33,15 +33,16 @@
 module.exports = {
     mySidebar: [
         `intro`,
+        `how`,
         `getting-started`,
         {
             type: "category",
-            label: "What you get",
+            label: "Features",
             items: [`features/sdk`, `features/api-docs`, `features/server`, `features/postman`, `features/openapi`],
         },
         {
             type: "category",
-            label: "Defining an API",
+            label: "Define your API",
             link: {
                 type: "doc",
                 id: "definition",
@@ -56,8 +57,8 @@ module.exports = {
         },
         {
             type: "category",
-            label: "Generators",
-            items: [`generators/supported`, `generators/generators`],
+            label: "Code generators",
+            items: [`generators/code-generators`, `generators/generators`],
         },
         {
             type: "category",

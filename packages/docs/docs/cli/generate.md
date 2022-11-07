@@ -14,11 +14,11 @@ fern generate
 
 ## Example
 
-If we have previously run `fern add typescript` and now run `fern generate`, the output will look similar to:
+If we have previously ran `fern add typescript` and now run `fern generate`:
 
 ```
 ┌─
 │ ✓  fernapi/fern-typescript-sdk
-│    ◦ @fern-examples-fern/imdb-client@0.0.1
+│    ◦ @fern-examples/client@0.0.1
 └─
 ```

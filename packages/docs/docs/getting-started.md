@@ -22,8 +22,8 @@ fern/
 └─ api/ # your API
   ├─ generators.yml # generators you're using
   └─ definition/
-    ├─ api.yml  # configuration for your API
-    └─ imdb.yml # a Service, which includes some endpoints
+    ├─ api.yml  # API-level configuration
+    └─ imdb.yml # endpoints, types, and errors
 ```
 
 ### Defining your API
@@ -32,9 +32,9 @@ Your **Fern Definition** is a set of YAML files that are the single source of tr
 
 Check out [an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml) on Github.
 
-:::tip Already have OpenAPI spec?
+:::tip Already have OpenAPI description?
 
-[Join our private beta](mailto:hey@buildwithfern.com?subject=%5BPrivate%20Beta%5D%20OpenAPI%20to%20Fern%20Definition%20converter) for access to our OpenAPI spec -> Fern Definition converter.
+[Use our openapi-to-fern converter](mailto:hey@buildwithfern.com?subject=OpenAPI%20to%20Fern&body=Hey-%20%0A%0AHere's%20an%20attachment%2Flink%20to%20my%20OpenAPI%20description.%20Can%20you%20convert%20it%20to%20a%20Fern%20Definition%3F).
 
 :::
 

@@ -2,7 +2,7 @@
 title: Code generators
 ---
 
-Fern makes it easy to code generate SDKs, server interfaces, a Postman collection, and an OpenAPI spec.
+Fern makes it easy to code generate SDKs, server interfaces, a Postman collection, and an OpenAPI description.
 
 ### Generate SDKs
 
@@ -36,9 +36,9 @@ Fern makes it easy to code generate SDKs, server interfaces, a Postman collectio
 
 `fernapi/fern-postman`: generates a [Postman Collection](https://www.postman.com/collection). If you'd like to use the Postman integration to auto-update your collection, [read on](../features/postman.md).
 
-### Generate an OpenAPI spec
+### Generate an OpenAPI description
 
-`fernapi/fern-openapi`: generates an [OpenAPI spec](https://swagger.io/resources/open-api/).
+`fernapi/fern-openapi`: generates an [OpenAPI description](https://swagger.io/resources/open-api/).
 
 ## Contributing
 
