@@ -6,6 +6,7 @@ export class CreateTypeTransactionHandler extends AbstractCreateTransactionHande
         this.definition.types[transaction.typeId] = {
             typeId: transaction.typeId,
             typeName: transaction.typeName,
+            shape: FernApiEditor.Shape.alias({}),
         };
     }
 

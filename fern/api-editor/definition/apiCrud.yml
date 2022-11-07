@@ -1,5 +1,8 @@
 imports:
   commons: commons.yml
+  endpoint: endpoint.yml
+  type: type.yml
+  error: error.yml
 types:
   Api:
     properties:
@@ -8,9 +11,9 @@ types:
       rootPackages: list<commons.PackageId>
 
       packages: map<commons.PackageId, Package>
-      endpoints: map<commons.EndpointId, Endpoint>
-      types: map<commons.TypeId, Type>
-      errors: map<commons.ErrorId, Error>
+      endpoints: map<commons.EndpointId, endpoint.Endpoint>
+      types: map<commons.TypeId, type.Type>
+      errors: map<commons.ErrorId, error.Error>
 
   Package:
     properties:
@@ -20,18 +23,6 @@ types:
       endpoints: list<commons.EndpointId>
       types: list<commons.TypeId>
       errors: list<commons.ErrorId>
-  Endpoint:
-    properties:
-      endpointId: commons.EndpointId
-      endpointName: string
-  Type:
-    properties:
-      typeId: commons.TypeId
-      typeName: string
-  Error:
-    properties:
-      errorId: commons.ErrorId
-      errorName: string
 
   CreateApiRequest:
     properties:

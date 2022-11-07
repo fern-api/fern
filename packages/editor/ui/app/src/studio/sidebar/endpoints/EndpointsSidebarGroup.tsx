@@ -1,13 +1,15 @@
+import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { EndpointId } from "@fern-fern/api-editor-sdk/resources";
 import React, { useCallback } from "react";
-import { DraftEndpointSidebarItemId, DraftSidebarItemId } from "../context/SidebarContext";
+import { MaybeDraftPackage } from "../drafts/DraftableItem";
+import { DraftEndpointSidebarItemId, DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { SidebarItemsList } from "../shared/SidebarItemsList";
 import { EndpointSidebarItem } from "./EndpointSidebarItem";
 
 export declare namespace EndpointsSidebarGroup {
     export interface Props {
-        package_: FernApiEditor.Package;
+        package_: MaybeDraftPackage;
     }
 }
 
@@ -28,7 +30,7 @@ export const EndpointsSidebarGroup: React.FC<EndpointsSidebarGroup.Props> = ({ p
 
     return (
         <SidebarItemsList
-            items={package_.endpoints}
+            items={package_.isDraft ? EMPTY_ARRAY : package_.endpoints}
             renderItem={renderEndpointSidebarItem}
             convertDraftToItem={getEndpointIdFromDraft}
             doesDraftBelongInList={isDraftInPackage}

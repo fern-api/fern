@@ -1,10 +1,10 @@
 import { ReactElement, useMemo } from "react";
-import { DraftSidebarItemId } from "../context/SidebarContext";
 import { useSidebarContext } from "../context/useSidebarContext";
+import { DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 
 export declare namespace SidebarItemsList {
     export interface Props<Item, DraftId extends DraftSidebarItemId> {
-        items: Item[];
+        items: readonly Item[];
         renderItem: (item: Item) => JSX.Element;
         parseDraftId: (draft: DraftSidebarItemId) => DraftId | undefined;
         doesDraftBelongInList: (draft: DraftId) => boolean;

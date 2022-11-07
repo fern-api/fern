@@ -1,13 +1,14 @@
-import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useMemo } from "react";
+import { MaybeDraftPackage } from "../drafts/DraftableItem";
 import { SidebarItemIdGenerator } from "../ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../row/collapsible/CollapsibleSidebarItemRow";
 import { NonEditableSidebarItemRow } from "../row/non-editable-row/NonEditableSidebarItemRow";
+import { shouldSectionBeDefaultCollapsed } from "../shared/shouldSectionBeDefaultCollapsed";
 import { useCreateTypeCallback } from "./useCreateTypeCallback";
 
 export declare namespace TypesSidebarItem {
     export interface Props {
-        package_: FernApiEditor.Package;
+        package_: MaybeDraftPackage;
         children: CollapsibleSidebarItemRow.Props["children"];
     }
 }
@@ -30,12 +31,13 @@ export const TypesSidebarItem: React.FC<TypesSidebarItem.Props> = ({ package_, c
         [onClickAdd, sidebarItemId]
     );
 
+    const defaultIsCollapsed = useMemo(
+        () => shouldSectionBeDefaultCollapsed({ parent: package_, getItems: (p) => p.types }),
+        [package_]
+    );
+
     return (
-        <CollapsibleSidebarItemRow
-            itemId={sidebarItemId}
-            defaultIsCollapsed={package_.types.length > 0}
-            renderRow={renderRow}
-        >
+        <CollapsibleSidebarItemRow itemId={sidebarItemId} defaultIsCollapsed={defaultIsCollapsed} renderRow={renderRow}>
             {children}
         </CollapsibleSidebarItemRow>
     );

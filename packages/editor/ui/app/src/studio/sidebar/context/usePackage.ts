@@ -1,35 +1,32 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
-import { DraftSidebarItemId } from "./SidebarContext";
+import { MaybeDraftPackage } from "../drafts/DraftableItem";
+import { DraftPackageSidebarItemId, DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { useDraftableItem } from "./useDraftableItem";
 
-export function usePackage(packageId: FernApiEditor.PackageId): FernApiEditor.Package {
+export function usePackage(packageId: FernApiEditor.PackageId): MaybeDraftPackage {
     const retrieveFromDefinition = useCallback(
         (definition: FernApiEditor.Api) => definition.packages[packageId],
         [packageId]
     );
-
-    const convertFromDraft = useCallback(
-        (draft: DraftSidebarItemId): FernApiEditor.Package | undefined => {
-            if (draft.type === "package" && draft.packageId === packageId) {
-                return {
-                    packageId,
-                    packageName: "",
-                    packages: [],
-                    endpoints: [],
-                    types: [],
-                    errors: [],
-                };
-            } else {
-                return undefined;
-            }
-        },
-        [packageId]
-    );
-
     return useDraftableItem({
         definitionId: packageId,
         retrieveFromDefinition,
-        convertFromDraft,
+        narrowDraft,
+        isDraftForItem,
     });
+}
+
+function narrowDraft(draft: DraftSidebarItemId): DraftPackageSidebarItemId | undefined {
+    if (draft.type === "package") {
+        return draft;
+    }
+    return undefined;
+}
+
+function isDraftForItem({
+    definitionId: packageId,
+    draft,
+}: useDraftableItem.isDraftForItem.Args<FernApiEditor.PackageId, DraftPackageSidebarItemId>): boolean {
+    return draft.packageId === packageId;
 }

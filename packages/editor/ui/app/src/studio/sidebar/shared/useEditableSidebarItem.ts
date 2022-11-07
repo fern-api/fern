@@ -1,8 +1,8 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback, useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { DraftSidebarItemId } from "../context/SidebarContext";
 import { useSidebarContext } from "../context/useSidebarContext";
+import { DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 
 export declare namespace useEditableSidebarItem {
     export interface Args<DefinitionId, ParentId = FernApiEditor.PackageId> {

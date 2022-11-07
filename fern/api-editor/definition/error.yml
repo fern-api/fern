@@ -1,0 +1,7 @@
+imports:
+  commons: commons.yml
+types:
+  Error:
+    properties:
+      errorId: commons.ErrorId
+      errorName: string

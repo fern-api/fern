@@ -1,0 +1,15 @@
+imports:
+  commons: commons.yml
+types:
+  Type:
+    properties:
+      typeId: commons.TypeId
+      typeName: string
+      description: optional<string>
+      shape: Shape
+  Shape:
+    union:
+      alias: AliasShape
+  AliasShape:
+    properties:
+      aliasOf: optional<commons.TypeId>

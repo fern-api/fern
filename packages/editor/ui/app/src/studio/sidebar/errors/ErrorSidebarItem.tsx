@@ -31,7 +31,7 @@ export const ErrorSidebarItem: React.FC<ErrorSidebarItem.Props> = ({ errorId, pa
     return (
         <EditableSidebarItemRow
             itemId={sidebarItemId}
-            label={error.errorName}
+            label={error.isDraft ? "" : error.errorName}
             icon={<ErrorSidebarItemIcon />}
             onDelete={onDelete}
             onRename={onRename}

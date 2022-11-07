@@ -1,31 +1,32 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
-import { DraftSidebarItemId } from "./SidebarContext";
+import { MaybeDraftEndpoint } from "../drafts/DraftableItem";
+import { DraftEndpointSidebarItemId, DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { useDraftableItem } from "./useDraftableItem";
 
-export function useEndpoint(endpointId: FernApiEditor.EndpointId): FernApiEditor.Endpoint {
+export function useEndpoint(endpointId: FernApiEditor.EndpointId): MaybeDraftEndpoint {
     const retrieveFromDefinition = useCallback(
         (definition: FernApiEditor.Api) => definition.endpoints[endpointId],
         [endpointId]
     );
-
-    const convertFromDraft = useCallback(
-        (draft: DraftSidebarItemId): FernApiEditor.Endpoint | undefined => {
-            if (draft.type === "endpoint" && draft.endpointId === endpointId) {
-                return {
-                    endpointId,
-                    endpointName: "",
-                };
-            } else {
-                return undefined;
-            }
-        },
-        [endpointId]
-    );
-
     return useDraftableItem({
         definitionId: endpointId,
         retrieveFromDefinition,
-        convertFromDraft,
+        narrowDraft,
+        isDraftForItem,
     });
+}
+
+function narrowDraft(draft: DraftSidebarItemId): DraftEndpointSidebarItemId | undefined {
+    if (draft.type === "endpoint") {
+        return draft;
+    }
+    return undefined;
+}
+
+function isDraftForItem({
+    definitionId: endpointId,
+    draft,
+}: useDraftableItem.isDraftForItem.Args<FernApiEditor.EndpointId, DraftEndpointSidebarItemId>): boolean {
+    return draft.endpointId === endpointId;
 }
