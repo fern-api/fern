@@ -19,10 +19,12 @@ package com.fern.java.client;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.CustomConfig;
 
 public final class ClientGeneratorContext extends AbstractGeneratorContext<ClientPoetClassNameFactory> {
 
-    public ClientGeneratorContext(IntermediateRepresentation ir, GeneratorConfig generatorConfig) {
-        super(ir, generatorConfig, new ClientPoetClassNameFactory(ir, generatorConfig.getOrganization()));
+    public ClientGeneratorContext(
+            IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {
+        super(ir, generatorConfig, customConfig, new ClientPoetClassNameFactory(ir, generatorConfig.getOrganization()));
     }
 }

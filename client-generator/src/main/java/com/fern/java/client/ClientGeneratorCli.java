@@ -23,6 +23,7 @@ import com.fern.ir.model.errors.DeclaredErrorName;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
+import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.client.generators.ClientErrorGenerator;
 import com.fern.java.client.generators.ClientWrapperGenerator;
@@ -54,7 +55,8 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
     public void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
-            IntermediateRepresentation ir) {
+            IntermediateRepresentation ir,
+            CustomConfig customConfig) {
         throw new RuntimeException("Download files mode is unsupported!");
     }
 
@@ -63,8 +65,9 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
+            CustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
-        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig);
+        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig, customConfig);
         GeneratedClientWrapper generatedClientWrapper = generateClient(context, ir);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
@@ -76,8 +79,9 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
+            CustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
-        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig);
+        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig, customConfig);
         generateClient(context, ir);
     }
 

@@ -21,6 +21,7 @@ import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
+import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
@@ -36,7 +37,8 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
     public void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
-            IntermediateRepresentation ir) {
+            IntermediateRepresentation ir,
+            CustomConfig customConfig) {
         throw new RuntimeException("Download files mode is unsupported!");
     }
 
@@ -45,8 +47,9 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
+            CustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
-        generateTypes(generatorConfig, ir);
+        generateTypes(generatorConfig, ir, customConfig);
     }
 
     @Override
@@ -54,12 +57,14 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
+            CustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
-        generateTypes(generatorConfig, ir);
+        generateTypes(generatorConfig, ir, customConfig);
     }
 
-    private void generateTypes(GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
-        ModelGeneratorContext context = new ModelGeneratorContext(ir, generatorConfig);
+    private void generateTypes(
+            GeneratorConfig generatorConfig, IntermediateRepresentation ir, CustomConfig customConfig) {
+        ModelGeneratorContext context = new ModelGeneratorContext(ir, generatorConfig, customConfig);
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);

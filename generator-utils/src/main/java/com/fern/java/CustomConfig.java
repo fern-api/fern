@@ -17,14 +17,22 @@
 package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import org.immutables.value.Value;
 
-public interface AbstractGeneratorConfig<T> {
+@Value.Immutable
+@StagedBuilderImmutablesStyle
+@JsonDeserialize(as = ImmutableCustomConfig.class)
+public interface CustomConfig {
 
-    GeneratorConfig generatorConfig();
+    @Value.Default
+    @JsonProperty("unknown-as-optional")
+    default Boolean unknownAsOptional() {
+        return false;
+    }
 
-    @JsonProperty("customConfig")
-    T customConfig();
-
-    String version();
+    static ImmutableCustomConfig.Builder builder() {
+        return ImmutableCustomConfig.builder();
+    }
 }

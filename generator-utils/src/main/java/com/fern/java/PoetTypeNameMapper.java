@@ -37,9 +37,11 @@ public final class PoetTypeNameMapper {
     private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
+    private final CustomConfig customConfig;
 
-    public PoetTypeNameMapper(AbstractPoetClassNameFactory poetClassNameFactory) {
+    public PoetTypeNameMapper(AbstractPoetClassNameFactory poetClassNameFactory, CustomConfig customConfig) {
         this.poetClassNameFactory = poetClassNameFactory;
+        this.customConfig = customConfig;
     }
 
     public TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
@@ -79,7 +81,10 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitUnknown() {
-            return ParameterizedTypeName.get(Optional.class, Object.class);
+            if (customConfig.unknownAsOptional()) {
+                return ParameterizedTypeName.get(Optional.class, Object.class);
+            }
+            return ClassName.get(Object.class);
         }
 
         @Override

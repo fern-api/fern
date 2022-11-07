@@ -35,12 +35,18 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName;
     private final Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName;
 
+    private final CustomConfig customConfig;
+
     public AbstractGeneratorContext(
-            IntermediateRepresentation ir, GeneratorConfig generatorConfig, T poetClassNameFactory) {
+            IntermediateRepresentation ir,
+            GeneratorConfig generatorConfig,
+            CustomConfig customConfig,
+            T poetClassNameFactory) {
         this.ir = ir;
         this.generatorConfig = generatorConfig;
+        this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
-        this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory);
+        this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig);
         this.typeDefinitionsByName = ir.getTypes().stream()
                 .collect(Collectors.toUnmodifiableMap(TypeDeclaration::getName, Function.identity()));
         this.errorDefinitionsByName = ir.getErrors().stream()
@@ -53,6 +59,10 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
 
     public final GeneratorConfig getGeneratorConfig() {
         return generatorConfig;
+    }
+
+    public final CustomConfig getCustomConfig() {
+        return customConfig;
     }
 
     public final T getPoetClassNameFactory() {

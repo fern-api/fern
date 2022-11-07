@@ -19,10 +19,12 @@ package com.fern.java.model;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.CustomConfig;
 
 public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetClassNameFactory> {
 
-    public ModelGeneratorContext(IntermediateRepresentation ir, GeneratorConfig generatorConfig) {
-        super(ir, generatorConfig, new ModelPoetClassNameFactory(ir, generatorConfig.getOrganization()));
+    public ModelGeneratorContext(
+            IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {
+        super(ir, generatorConfig, customConfig, new ModelPoetClassNameFactory(ir, generatorConfig.getOrganization()));
     }
 }
