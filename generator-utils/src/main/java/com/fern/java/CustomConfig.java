@@ -32,6 +32,12 @@ public interface CustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("wrapped-aliases")
+    default Boolean wrappedAliases() {
+        return false;
+    }
+
     static ImmutableCustomConfig.Builder builder() {
         return ImmutableCustomConfig.builder();
     }

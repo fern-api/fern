@@ -16,11 +16,15 @@
 
 package com.fern.java;
 
+import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.ResolvedNamedType;
+import com.fern.ir.model.types.ResolvedTypeReference;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -38,17 +42,23 @@ public final class PoetTypeNameMapper {
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
     private final CustomConfig customConfig;
+    private final Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName;
 
-    public PoetTypeNameMapper(AbstractPoetClassNameFactory poetClassNameFactory, CustomConfig customConfig) {
+    public PoetTypeNameMapper(
+            AbstractPoetClassNameFactory poetClassNameFactory,
+            CustomConfig customConfig,
+            Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName) {
         this.poetClassNameFactory = poetClassNameFactory;
         this.customConfig = customConfig;
+        this.typeDefinitionsByName = typeDefinitionsByName;
     }
 
     public TypeName convertToTypeName(boolean primitiveAllowed, TypeReference typeReference) {
         return typeReference.visit(new TypeReferenceToTypeNameConverter(primitiveAllowed));
     }
 
-    private final class TypeReferenceToTypeNameConverter implements TypeReference.Visitor<TypeName> {
+    private final class TypeReferenceToTypeNameConverter
+            implements TypeReference.Visitor<TypeName>, ResolvedTypeReference.Visitor<TypeName> {
 
         private final boolean primitiveAllowed;
 
@@ -58,7 +68,21 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitNamed(DeclaredTypeName declaredTypeName) {
+            if (!customConfig.wrappedAliases()) {
+                TypeDeclaration typeDeclaration = typeDefinitionsByName.get(declaredTypeName);
+                boolean isAlias = typeDeclaration.getShape().isAlias();
+                if (isAlias) {
+                    AliasTypeDeclaration aliasTypeDeclaration =
+                            typeDeclaration.getShape().getAlias().get();
+                    return aliasTypeDeclaration.getResolvedType().visit(this);
+                }
+            }
             return poetClassNameFactory.getTypeClassName(declaredTypeName);
+        }
+
+        @Override
+        public TypeName visitNamed(ResolvedNamedType named) {
+            return poetClassNameFactory.getTypeClassName(named.getName());
         }
 
         @Override

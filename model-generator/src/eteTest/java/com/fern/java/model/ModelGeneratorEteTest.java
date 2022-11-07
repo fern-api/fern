@@ -22,6 +22,8 @@ import com.fern.java.testing.SnapshotTestRunner;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -43,6 +45,7 @@ public class ModelGeneratorEteTest {
         Path eteTestDirectory = currentPath.endsWith("model-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest"))
                 : currentPath.resolve(Paths.get("model-generator/src/eteTest"));
-        SnapshotTestRunner.snapshotTest(eteTestDirectory, expect, "java-model:latest");
+        SnapshotTestRunner.snapshotTest(
+                eteTestDirectory, expect, "java-model:latest", Optional.of(Map.of("wrapped-aliases", true)));
     }
 }

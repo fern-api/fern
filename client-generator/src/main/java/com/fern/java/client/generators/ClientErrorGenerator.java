@@ -54,6 +54,8 @@ public final class ClientErrorGenerator extends AbstractFileGenerator {
                                 .nameV3(errorDeclaration.getName().getNameV3())
                                 .build(),
                         className,
-                        generatedInterfaces));
+                        generatedInterfaces,
+                        true))
+                .get();
     }
 }

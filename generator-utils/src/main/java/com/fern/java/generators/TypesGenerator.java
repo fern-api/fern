@@ -24,6 +24,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -47,14 +48,22 @@ public final class TypesGenerator {
     public Result generateFiles() {
         Map<DeclaredTypeName, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
         Map<DeclaredTypeName, GeneratedJavaFile> generatedTypes = typeDeclarations.stream()
-                .collect(Collectors.toMap(TypeDeclaration::getName, typeDeclaration -> {
+                .map(typeDeclaration -> {
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
-                    return typeDeclaration
+                    Optional<GeneratedJavaFile> maybeGeneratedJavaFile = typeDeclaration
                             .getShape()
                             .visit(new SingleTypeGenerator(
-                                    generatorContext, typeDeclaration.getName(), className, generatedInterfaces));
-                }));
+                                    generatorContext,
+                                    typeDeclaration.getName(),
+                                    className,
+                                    generatedInterfaces,
+                                    false));
+                    return new SimpleEntry<>(typeDeclaration, maybeGeneratedJavaFile);
+                })
+                .filter(entry -> entry.getValue().isPresent())
+                .collect(Collectors.toMap(entry -> entry.getKey().getName(), entry -> entry.getValue()
+                        .get()));
         return new Result(generatedInterfaces, generatedTypes);
     }
 

@@ -46,9 +46,9 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
-        this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig);
         this.typeDefinitionsByName = ir.getTypes().stream()
                 .collect(Collectors.toUnmodifiableMap(TypeDeclaration::getName, Function.identity()));
+        this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors().stream()
                 .collect(Collectors.toUnmodifiableMap(ErrorDeclaration::getName, Function.identity()));
     }

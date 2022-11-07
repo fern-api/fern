@@ -661,7 +661,6 @@ import com.fern.basic.client.blog.exceptions.CreatePostException;
 import com.fern.basic.client.blog.exceptions.GetPostException;
 import com.fern.basic.client.blog.types.BlogPost;
 import com.fern.basic.client.blog.types.CreatePostRequest;
-import com.fern.basic.client.blog.types.PostId;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -687,7 +686,7 @@ interface PostsService {
 
   @GET
   @Path("/{postId}")
-  BlogPost getPost(@PathParam("postId") PostId postId) throws GetPostException;
+  BlogPost getPost(@PathParam("postId") String postId) throws GetPostException;
 
   static PostsService getClient(String url) {
     return Feign.builder()
@@ -865,7 +864,6 @@ public final class CreatePost {
 basic[src/main/java/com/fern/basic/client/blog/endpoints/GetPost.java]=[
 package com.fern.basic.client.blog.endpoints;
 
-import com.fern.basic.client.blog.types.PostId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -876,15 +874,15 @@ public final class GetPost {
   }
 
   public static final class Request {
-    private final PostId postId;
+    private final String postId;
 
     private int _cachedHashCode;
 
-    Request(PostId postId) {
+    Request(String postId) {
       this.postId = postId;
     }
 
-    public PostId getPostId() {
+    public String getPostId() {
       return postId;
     }
 
@@ -916,7 +914,7 @@ public final class GetPost {
     }
 
     public interface PostIdStage {
-      _FinalStage postId(PostId postId);
+      _FinalStage postId(String postId);
 
       Builder from(Request other);
     }
@@ -926,7 +924,7 @@ public final class GetPost {
     }
 
     static final class Builder implements PostIdStage, _FinalStage {
-      private PostId postId;
+      private String postId;
 
       private Builder() {
       }
@@ -938,7 +936,7 @@ public final class GetPost {
       }
 
       @Override
-      public _FinalStage postId(PostId postId) {
+      public _FinalStage postId(String postId) {
         this.postId = postId;
         return this;
       }
@@ -1411,58 +1409,6 @@ public final class GetPostException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/Age.java]=[
-package com.fern.basic.client.blog.types;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Integer;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-
-public final class Age {
-  private final int value;
-
-  private Age(int value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  public int get() {
-    return this.value;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return this == other || (other instanceof Age && this.value == ((Age) other).value);
-  }
-
-  @Override
-  public int hashCode() {
-    return Integer.hashCode(value);
-  }
-
-  @Override
-  public String toString() {
-    return Integer.toString(value);
-  }
-
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static Age of(int value) {
-    return new Age(value);
-  }
-
-  public static Age valueOf(String value) {
-    return of(Integer.parseInt(value));
-  }
-}
-
-]
-
-
 basic[src/main/java/com/fern/basic/client/blog/types/Author.java]=[
 package com.fern.basic.client.blog.types;
 
@@ -1678,7 +1624,7 @@ import java.util.Objects;
     builder = BlogPost.Builder.class
 )
 public final class BlogPost {
-  private final PostId id;
+  private final String id;
 
   private final PostType type;
 
@@ -1690,7 +1636,7 @@ public final class BlogPost {
 
   private int _cachedHashCode;
 
-  BlogPost(PostId id, PostType type, String title, Author author, String content) {
+  BlogPost(String id, PostType type, String title, Author author, String content) {
     this.id = id;
     this.type = type;
     this.title = title;
@@ -1699,7 +1645,7 @@ public final class BlogPost {
   }
 
   @JsonProperty("id")
-  public PostId getId() {
+  public String getId() {
     return id;
   }
 
@@ -1751,7 +1697,7 @@ public final class BlogPost {
   }
 
   public interface IdStage {
-    TypeStage id(PostId id);
+    TypeStage id(String id);
 
     Builder from(BlogPost other);
   }
@@ -1780,7 +1726,7 @@ public final class BlogPost {
       ignoreUnknown = true
   )
   static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
-    private PostId id;
+    private String id;
 
     private PostType type;
 
@@ -1805,7 +1751,7 @@ public final class BlogPost {
 
     @Override
     @JsonSetter("id")
-    public TypeStage id(PostId id) {
+    public TypeStage id(String id) {
       this.id = id;
       return this;
     }
@@ -2199,57 +2145,6 @@ public final class GeneratorIdAndVersion {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/PostId.java]=[
-package com.fern.basic.client.blog.types;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-
-public final class PostId {
-  private final String value;
-
-  private PostId(String value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  public String get() {
-    return this.value;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return this == other || (other instanceof PostId && this.value.equals(((PostId) other).value));
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static PostId of(String value) {
-    return new PostId(value);
-  }
-
-  public static PostId valueOf(String value) {
-    return of(value);
-  }
-}
-
-]
-
-
 basic[src/main/java/com/fern/basic/client/blog/types/PostNotFoundErrorBody.java]=[
 package com.fern.basic.client.blog.types;
 
@@ -2266,16 +2161,16 @@ import java.util.Objects;
     builder = PostNotFoundErrorBody.Builder.class
 )
 public final class PostNotFoundErrorBody {
-  private final PostId id;
+  private final String id;
 
   private int _cachedHashCode;
 
-  PostNotFoundErrorBody(PostId id) {
+  PostNotFoundErrorBody(String id) {
     this.id = id;
   }
 
   @JsonProperty("id")
-  public PostId getId() {
+  public String getId() {
     return id;
   }
 
@@ -2307,7 +2202,7 @@ public final class PostNotFoundErrorBody {
   }
 
   public interface IdStage {
-    _FinalStage id(PostId id);
+    _FinalStage id(String id);
 
     Builder from(PostNotFoundErrorBody other);
   }
@@ -2320,7 +2215,7 @@ public final class PostNotFoundErrorBody {
       ignoreUnknown = true
   )
   static final class Builder implements IdStage, _FinalStage {
-    private PostId id;
+    private String id;
 
     private Builder() {
     }
@@ -2333,7 +2228,7 @@ public final class PostNotFoundErrorBody {
 
     @Override
     @JsonSetter("id")
-    public _FinalStage id(PostId id) {
+    public _FinalStage id(String id) {
       this.id = id;
       return this;
     }
@@ -2553,7 +2448,6 @@ package com.fern.basic.client.dummy.service;
 
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
 import com.fern.basic.client.dummy.service.exceptions.HealthException;
-import com.fern.basic.client.dummy.service.types.DummyId;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -2574,7 +2468,7 @@ import javax.ws.rs.core.MediaType;
 interface DummyService {
   @POST
   @Path("/")
-  void getDummy(DummyId body) throws GetDummyException;
+  void getDummy(String body) throws GetDummyException;
 
   @GET
   @Path("/health")
@@ -2662,7 +2556,6 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
 basic[src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
 package com.fern.basic.client.dummy.service.endpoints;
 
-import com.fern.basic.client.dummy.service.types.DummyId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -2673,15 +2566,15 @@ public final class GetDummy {
   }
 
   public static final class Request {
-    private final DummyId body;
+    private final String body;
 
     private int _cachedHashCode;
 
-    Request(DummyId body) {
+    Request(String body) {
       this.body = body;
     }
 
-    public DummyId getBody() {
+    public String getBody() {
       return body;
     }
 
@@ -2713,7 +2606,7 @@ public final class GetDummy {
     }
 
     public interface BodyStage {
-      _FinalStage body(DummyId body);
+      _FinalStage body(String body);
 
       Builder from(Request other);
     }
@@ -2723,7 +2616,7 @@ public final class GetDummy {
     }
 
     static final class Builder implements BodyStage, _FinalStage {
-      private DummyId body;
+      private String body;
 
       private Builder() {
       }
@@ -2735,7 +2628,7 @@ public final class GetDummy {
       }
 
       @Override
-      public _FinalStage body(DummyId body) {
+      public _FinalStage body(String body) {
         this.body = body;
         return this;
       }
@@ -2989,57 +2882,6 @@ public final class HealthException extends Exception {
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new HealthException(value, statusCode);
     }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/client/dummy/service/types/DummyId.java]=[
-package com.fern.basic.client.dummy.service.types;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-
-public final class DummyId {
-  private final String value;
-
-  private DummyId(String value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  public String get() {
-    return this.value;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return this == other || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
-  public static DummyId of(String value) {
-    return new DummyId(value);
-  }
-
-  public static DummyId valueOf(String value) {
-    return of(value);
   }
 }
 
