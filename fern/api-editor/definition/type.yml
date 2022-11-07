@@ -12,4 +12,4 @@ types:
       alias: AliasShape
   AliasShape:
     properties:
-      aliasOf: commons.TypeId
+      aliasOf: optional<commons.TypeId>
