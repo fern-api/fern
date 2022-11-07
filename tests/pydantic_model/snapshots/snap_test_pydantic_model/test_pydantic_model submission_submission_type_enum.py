@@ -7,6 +7,10 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class SubmissionTypeEnum(str, enum.Enum):
+    """
+    Keep in sync with SubmissionType.
+    """
+
     TEST = "TEST"
 
     def visit(self, test: typing.Callable[[], T_Result]) -> T_Result:

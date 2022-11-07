@@ -39,6 +39,7 @@ class UnionGenerator(AbstractTypeGenerator):
             context=self._context,
             custom_config=self._custom_config,
             source_file=self._source_file,
+            docstring=self._docs,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",

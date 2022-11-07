@@ -35,6 +35,7 @@ class EnumGenerator(AbstractTypeGenerator):
                     qualified_name_excluding_import=("Enum",),
                 ),
             ],
+            docstring=AST.Docstring(self._docs) if self._docs is not None else None,
         )
 
         self._source_file.add_class_declaration(enum_class)

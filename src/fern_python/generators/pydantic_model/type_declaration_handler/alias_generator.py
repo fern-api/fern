@@ -38,6 +38,7 @@ class AliasGenerator(AbstractTypeGenerator):
             context=self._context,
             custom_config=self._custom_config,
             source_file=self._source_file,
+            docstring=self._docs,
         ) as pydantic_model:
             pydantic_model.set_root_type(self._alias.alias_of)
             pydantic_model.add_method(
