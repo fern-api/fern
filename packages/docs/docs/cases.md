@@ -32,6 +32,7 @@ YC: ycombinator.com/companies/raven
 Candid Health automates insurance billing for healthcare providers. Companies use Candid API to submit insurance claims and get paid. As a scaling business, their API surface area is frequently expanded.
 
 "Anytime you can deleted 40,000 lines of hand-written code that's now auto-generated, you're saving yourself time in the future." - Steve Yaz, Head of Engineering at Candid Health
+
 ### Problem
 
 1. **Schema-first API development**: as an API company, technical and non-technical team members collaborate on API design. Their code-first approach in FastAPI excluded PMs and UX Designers from participating. In order to be schema-first, they needed to generate server interfaces for each endpoint.
