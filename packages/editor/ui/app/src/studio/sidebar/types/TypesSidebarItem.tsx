@@ -31,7 +31,11 @@ export const TypesSidebarItem: React.FC<TypesSidebarItem.Props> = ({ package_, c
     );
 
     return (
-        <CollapsibleSidebarItemRow itemId={sidebarItemId} defaultIsCollapsed={true} renderRow={renderRow}>
+        <CollapsibleSidebarItemRow
+            itemId={sidebarItemId}
+            defaultIsCollapsed={package_.types.length > 0}
+            renderRow={renderRow}
+        >
             {children}
         </CollapsibleSidebarItemRow>
     );

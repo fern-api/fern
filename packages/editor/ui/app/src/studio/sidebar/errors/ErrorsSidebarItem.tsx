@@ -31,7 +31,11 @@ export const ErrorsSidebarItem: React.FC<ErrorsSidebarItem.Props> = ({ package_,
     );
 
     return (
-        <CollapsibleSidebarItemRow itemId={sidebarItemId} defaultIsCollapsed={true} renderRow={renderRow}>
+        <CollapsibleSidebarItemRow
+            itemId={sidebarItemId}
+            defaultIsCollapsed={package_.errors.length > 0}
+            renderRow={renderRow}
+        >
             {children}
         </CollapsibleSidebarItemRow>
     );

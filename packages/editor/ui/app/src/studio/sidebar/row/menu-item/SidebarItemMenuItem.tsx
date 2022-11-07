@@ -11,5 +11,5 @@ export const SidebarItemMenuItem: React.FC<MenuItemProps> = (props) => {
         [props]
     );
 
-    return <MenuItem {...props} onClick={onClick} />;
+    return <MenuItem {...props} onClick={onClick} onMouseDown={markEventAsSelectionPreventing} />;
 };

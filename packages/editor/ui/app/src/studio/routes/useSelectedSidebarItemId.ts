@@ -8,16 +8,16 @@ import { addHumanReadablePrefixToId, removeHumanReadablePrefixFromId } from "./h
 
 export function useSelectedSidebarItemId(): [
     SidebarItemId | undefined,
-    (sidebarItemId: SidebarItemId | undefined) => void
+    (sidebarItemId: SidebarItemId | undefined, opts?: { replace?: boolean }) => void
 ] {
     const navigate = useNavigate();
     const setSidebarItemId = useCallback(
-        (newSidebarItemId: SidebarItemId | undefined) => {
+        (newSidebarItemId: SidebarItemId | undefined, { replace = false }: { replace?: boolean } = {}) => {
             const path =
                 newSidebarItemId != null
                     ? generatePathForStudioItemId(newSidebarItemId)
                     : generatePath(StudioRoutes.STUDIO.absolutePath);
-            navigate(path);
+            navigate(path, { replace });
         },
         [navigate]
     );

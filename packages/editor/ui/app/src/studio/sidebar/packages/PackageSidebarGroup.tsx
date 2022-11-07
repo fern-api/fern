@@ -1,7 +1,7 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React from "react";
 import { usePackage } from "../context/usePackage";
-import { EndpointsSidebarGroup } from "../endpoints/ErrorsSidebarGroup";
+import { EndpointsSidebarGroup } from "../endpoints/EndpointsSidebarGroup";
 import { ErrorsSidebarGroup } from "../errors/ErrorsSidebarGroup";
 import { TypesSidebarGroup } from "../types/TypesSidebarGroup";
 import { PackageSidebarItem } from "./PackageSidebarItem";
