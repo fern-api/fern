@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Install Fern
           command: |
-            npm install -g fern-api@0.0.220
+            npm install -g fern-api@0.0.229
       - run: ./gradlew --parallel --stacktrace --continue --max-workers=2 test
       - save_cache:
           key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}'
@@ -90,7 +90,7 @@ jobs:
       - run:
           name: Install Fern
           command: |
-            npm install -g fern-api@0.0.220
+            npm install -g fern-api@0.0.229
       - run: docker network prune -f
       - run: ./gradlew --parallel --stacktrace build -x test -x check
       - run:

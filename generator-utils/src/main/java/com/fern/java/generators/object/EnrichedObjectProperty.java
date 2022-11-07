@@ -17,7 +17,7 @@
 package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.ir.model.commons.WireStringWithAllCasings;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
@@ -73,14 +73,13 @@ public interface EnrichedObjectProperty {
         return ImmutableEnrichedObjectProperty.builder();
     }
 
-    static EnrichedObjectProperty of(
-            WireStringWithAllCasings wireStringWithAllCasings, boolean fromInterface, TypeName poetTypeName) {
+    static EnrichedObjectProperty of(NameAndWireValue nameAndWireValue, boolean fromInterface, TypeName poetTypeName) {
         return EnrichedObjectProperty.builder()
-                .camelCaseKey(wireStringWithAllCasings.getCamelCase())
-                .pascalCaseKey(wireStringWithAllCasings.getPascalCase())
+                .camelCaseKey(nameAndWireValue.getName().getSafeName().getCamelCase())
+                .pascalCaseKey(nameAndWireValue.getName().getSafeName().getPascalCase())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
-                .wireKey(wireStringWithAllCasings.getWireValue())
+                .wireKey(nameAndWireValue.getWireValue())
                 .build();
     }
 }

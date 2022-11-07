@@ -41,12 +41,14 @@ public abstract class AbstractPoetClassNameFactory {
 
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
-        return ClassName.get(packageName, declaredTypeName.getName());
+        return ClassName.get(
+                packageName, declaredTypeName.getNameV3().getSafeName().getPascalCase());
     }
 
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
-        return ClassName.get(packageName, "I" + declaredTypeName.getName());
+        return ClassName.get(
+                packageName, "I" + declaredTypeName.getNameV3().getSafeName().getPascalCase());
     }
 
     public final ClassName getTopLevelClassName(String className) {

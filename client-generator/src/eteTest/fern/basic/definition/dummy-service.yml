@@ -7,7 +7,7 @@ services:
       base-path: /dummy
       endpoints:
         getDummy:
-          method: GET
+          method: POST
           path: /
           request: DummyId
         health:

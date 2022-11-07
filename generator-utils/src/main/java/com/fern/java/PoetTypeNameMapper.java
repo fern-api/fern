@@ -18,6 +18,7 @@ package com.fern.java;
 
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.TypeReference;
@@ -173,6 +174,11 @@ public final class PoetTypeNameMapper {
         public TypeName visitSet(TypeReference typeReference) {
             return ParameterizedTypeName.get(
                     ClassName.get(Set.class), typeReference.visit(primitiveDisAllowedTypeReferenceConverter));
+        }
+
+        @Override
+        public TypeName visitLiteral(Literal literal) {
+            throw new RuntimeException("Literal is unsupported.");
         }
 
         @Override
