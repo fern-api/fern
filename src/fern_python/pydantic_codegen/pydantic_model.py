@@ -22,11 +22,13 @@ class PydanticModel:
         name: str,
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
+        docstring: Optional[str] = None,
     ):
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [Pydantic.BaseModel],
+            docstring=AST.Docstring(docstring) if docstring is not None else None,
         )
         self._base_models = base_models or []
         self._local_class_reference = (parent or source_file).add_class_declaration(declaration=self._class_declaration)
@@ -44,7 +46,9 @@ class PydanticModel:
             AST.Expression(
                 AST.CodeWriter(
                     get_field_name_initializer(
-                        json_field_name=field.json_field_name, default_factory=field.default_factory
+                        json_field_name=field.json_field_name,
+                        default_factory=field.default_factory,
+                        description=field.description,
                     )
                 )
             )
@@ -258,14 +262,31 @@ class PydanticModel:
 
 
 def get_field_name_initializer(
-    json_field_name: str, default_factory: Optional[AST.Expression]
+    json_field_name: Optional[str], default_factory: Optional[AST.Expression], description: Optional[str]
 ) -> AST.CodeWriterFunction:
     def write(writer: AST.NodeWriter) -> None:
         writer.write_reference(Pydantic.Field)
-        writer.write(f'(alias="{json_field_name}"')
+        writer.write("(")
+        arg_present = False
+        if json_field_name is not None:
+            arg_present = True
+            writer.write(f'alias="{json_field_name}"')
         if default_factory is not None:
-            writer.write(", default_factory=")
+            if arg_present:
+                writer.write(", ")
+            writer.write("default_factory=")
             writer.write_node(default_factory)
+        if description is not None:
+            if arg_present:
+                writer.write(", ")
+            is_multi_line = description.count("\n") > 1
+            if is_multi_line:
+                writer.write_line('description="""')
+                writer.write(f"{description}")
+                writer.write_newline_if_last_line_not()
+                writer.write_line('"""')
+            else:
+                writer.write(f'description="{description}"')
         writer.write(")")
 
     return write

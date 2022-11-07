@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 import fern.ir.pydantic as ir_types
 
@@ -15,11 +16,13 @@ class AbstractTypeGenerator(ABC):
         context: PydanticGeneratorContext,
         source_file: SourceFile,
         custom_config: CustomConfig,
+        docs: Optional[str],
     ):
         self._name = name
         self._context = context
         self._custom_config = custom_config
         self._source_file = source_file
+        self._docs = docs
 
     @abstractmethod
     def generate(self) -> None:

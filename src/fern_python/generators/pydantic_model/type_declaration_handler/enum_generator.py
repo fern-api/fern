@@ -1,3 +1,5 @@
+from typing import Optional
+
 import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, SourceFile
@@ -16,8 +18,9 @@ class EnumGenerator(AbstractTypeGenerator):
         context: PydanticGeneratorContext,
         source_file: SourceFile,
         custom_config: CustomConfig,
+        docs: Optional[str],
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file)
+        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file, docs=docs)
         self._enum = enum
 
     def generate(self) -> None:

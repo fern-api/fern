@@ -40,6 +40,7 @@ class FernAwarePydanticModel:
         custom_config: CustomConfig,
         type_name: ir_types.DeclaredTypeName,
         extends: Sequence[ir_types.DeclaredTypeName] = None,
+        docstring: Optional[str] = None,
     ):
         self._type_name = type_name
         self._context = context
@@ -51,6 +52,7 @@ class FernAwarePydanticModel:
             base_models=[context.get_class_reference_for_type_name(extended) for extended in extends]
             if extends is not None
             else None,
+            docstring=docstring,
         )
         self._model_contains_forward_refs = False
 
@@ -67,6 +69,7 @@ class FernAwarePydanticModel:
         pascal_case_field_name: str,
         json_field_name: str,
         type_reference: ir_types.TypeReference,
+        description: Optional[str] = None,
     ) -> PydanticField:
         field = PydanticField(
             name=name,
@@ -75,6 +78,7 @@ class FernAwarePydanticModel:
                 type_reference,
             ),
             json_field_name=json_field_name,
+            description=description,
         )
         self._pydantic_model.add_field(field)
         return field

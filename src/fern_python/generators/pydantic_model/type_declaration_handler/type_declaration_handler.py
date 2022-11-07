@@ -31,6 +31,7 @@ class TypeDeclarationHandler:
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,
+                docs=self._declaration.docs,
             ),
             enum=lambda enum: EnumGenerator(
                 name=self._declaration.name,
@@ -38,6 +39,7 @@ class TypeDeclarationHandler:
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,
+                docs=self._declaration.docs,
             ),
             object=lambda object: ObjectGenerator(
                 name=self._declaration.name,
@@ -45,6 +47,7 @@ class TypeDeclarationHandler:
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,
+                docs=self._declaration.docs,
             ),
             union=lambda union: UnionGenerator(
                 name=self._declaration.name,
@@ -52,6 +55,7 @@ class TypeDeclarationHandler:
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,
+                docs=self._declaration.docs,
             ),
         )
         generator.generate()

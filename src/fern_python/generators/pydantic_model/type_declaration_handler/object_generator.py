@@ -1,3 +1,5 @@
+from typing import Optional
+
 import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import SourceFile
@@ -16,8 +18,9 @@ class ObjectGenerator(AbstractTypeGenerator):
         context: PydanticGeneratorContext,
         source_file: SourceFile,
         custom_config: CustomConfig,
+        docs: Optional[str],
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file)
+        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file, docs=docs)
         self._object = object
 
     def generate(self) -> None:
@@ -27,6 +30,7 @@ class ObjectGenerator(AbstractTypeGenerator):
             context=self._context,
             custom_config=self._custom_config,
             source_file=self._source_file,
+            docstring=self._docs,
         ) as pydantic_model:
             for property in self._object.properties:
                 pydantic_model.add_field(
@@ -34,4 +38,5 @@ class ObjectGenerator(AbstractTypeGenerator):
                     pascal_case_field_name=property.name.pascal_case,
                     type_reference=property.value_type,
                     json_field_name=property.name.wire_value,
+                    description=property.docs,
                 )

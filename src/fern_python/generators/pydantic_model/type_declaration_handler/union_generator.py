@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import fern.ir.pydantic as ir_types
 from typing_extensions import Never
@@ -25,8 +25,9 @@ class UnionGenerator(AbstractTypeGenerator):
         context: PydanticGeneratorContext,
         source_file: SourceFile,
         custom_config: CustomConfig,
+        docs: Optional[str],
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file)
+        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file, docs=docs)
         self._union = union
 
     def generate(self) -> None:

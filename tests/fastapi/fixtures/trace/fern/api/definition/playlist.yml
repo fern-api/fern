@@ -16,7 +16,9 @@ types:
   UpdatePlaylistRequest:
     properties:
       name: string
-      problems: list<commons.ProblemId>
+      problems:
+        type: list<commons.ProblemId>
+        docs: The problems that make up the playlist.
   PlaylistIdNotFoundErrorBody:
     union:
       playlistId: PlaylistId

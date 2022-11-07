@@ -11,3 +11,4 @@ class PydanticField:
     type_hint: AST.TypeHint
     json_field_name: str
     default_factory: Optional[AST.Expression] = None
+    description: Optional[str] = None

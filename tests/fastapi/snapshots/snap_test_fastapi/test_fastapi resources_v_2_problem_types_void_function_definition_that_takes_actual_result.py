@@ -12,6 +12,10 @@ from .parameter import Parameter
 
 
 class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
+    """
+    The generated signature will include an additional param, actualResult
+    """
+
     additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 

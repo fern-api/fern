@@ -10,7 +10,10 @@ import typing_extensions
 
 class ListType(pydantic.BaseModel):
     value_type: VariableType = pydantic.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength")
+    is_fixed_length: typing.Optional[bool] = pydantic.Field(
+        alias="isFixedLength",
+        description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
+    )
 
     class Partial(typing_extensions.TypedDict):
         value_type: typing_extensions.NotRequired[VariableType]
