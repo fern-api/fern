@@ -12,10 +12,10 @@ from .trace_response_v_2 import TraceResponseV2
 
 class TraceResponsesPageV2(pydantic.BaseModel):
     offset: typing.Optional[int] = pydantic.Field(
-        description="""
-    If present, use this to load subseqent pages.
-    The offset is the id of the next trace response to load.
-    """
+        description=(
+            "If present, use this to load subseqent pages.\n"
+            "The offset is the id of the next trace response to load.\n"
+        )
     )
     trace_responses: typing.List[TraceResponseV2] = pydantic.Field(alias="traceResponses")
 
