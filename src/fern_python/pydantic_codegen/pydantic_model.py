@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import List, Optional, Sequence, Type
+from typing import List, Optional, Sequence, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
@@ -42,18 +42,16 @@ class PydanticModel:
         return self._local_class_reference
 
     def add_field(self, field: PydanticField) -> None:
+
+        is_aliased = field.json_field_name != field.name
+        field_name_initializer = get_field_name_initializer(
+            alias=field.json_field_name if is_aliased else None,
+            default_factory=field.default_factory,
+            description=field.description,
+        )
+
         initializer = (
-            AST.Expression(
-                AST.CodeWriter(
-                    get_field_name_initializer(
-                        json_field_name=field.json_field_name,
-                        default_factory=field.default_factory,
-                        description=field.description,
-                    )
-                )
-            )
-            if field.json_field_name != field.name
-            else None
+            AST.Expression(AST.CodeWriter(field_name_initializer)) if field_name_initializer is not None else None
         )
 
         if initializer is not None:
@@ -262,15 +260,19 @@ class PydanticModel:
 
 
 def get_field_name_initializer(
-    json_field_name: Optional[str], default_factory: Optional[AST.Expression], description: Optional[str]
-) -> AST.CodeWriterFunction:
+    alias: Optional[str], default_factory: Optional[AST.Expression], description: Optional[str]
+) -> Union[AST.CodeWriterFunction, None]:
+
+    if alias is None and default_factory is None and description is None:
+        return None
+
     def write(writer: AST.NodeWriter) -> None:
         writer.write_reference(Pydantic.Field)
         writer.write("(")
         arg_present = False
-        if json_field_name is not None:
+        if alias is not None:
             arg_present = True
-            writer.write(f'alias="{json_field_name}"')
+            writer.write(f'alias="{alias}"')
         if default_factory is not None:
             if arg_present:
                 writer.write(", ")
