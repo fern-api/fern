@@ -7,8 +7,8 @@ title: SDKs
 - [JavaScript/TypeScript](../generators/code-generators.md#javascripttypescript)
 - [Java](../generators/code-generators.md#java)
 - [Python](../generators/code-generators.md#python)
-- Ruby *(coming in 2023)*
-- Go *(coming in 2023)*
+- Ruby _(coming in 2023)_
+- Go _(coming in 2023)_
 
 ## Request another language or framework
 

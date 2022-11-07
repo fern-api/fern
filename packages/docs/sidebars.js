@@ -78,7 +78,6 @@ module.exports = {
             label: "Tutorials",
             items: [`tutorials/express`, `tutorials/fastapi`, `tutorials/spring`],
         },
-        `cases`,
         {
             type: "link",
             label: "Join Discord",

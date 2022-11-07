@@ -34,7 +34,7 @@ draft:
       format: yaml
     mode: download-files
     output-path: ./generated-openapi
-    
+
 release:
   - name: fernapi/fern-typescript-sdk
     version: 0.0.215
@@ -86,3 +86,4 @@ release:
 +       username: ${MAVEN_USERNAME}
 +       password: ${MAVEN_PASSWORD}
 ```
+````
