@@ -1,7 +1,7 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useMemo } from "react";
 import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { DraftableItem } from "../drafts/DraftableItem";
+import { DraftableItem, Persisted } from "../drafts/DraftableItem";
 import { DraftSidebarItemId } from "../drafts/DraftSidebarItemId";
 import { useSidebarContext } from "./useSidebarContext";
 
@@ -33,7 +33,10 @@ export function useDraftableItem<DefinitionId, DefinitionValue, DraftId extends 
     return useMemo((): DraftableItem<DefinitionValue, DraftId> => {
         const definitionValue = retrieveFromDefinition(definition);
         if (definitionValue != null) {
-            return { ...definitionValue, isDraft: false };
+            // for some reason, we need to assign to a separate variable.
+            // otherwise, the compiler doesn't complain if we just return { isDraft: false }
+            const persisted: Persisted<DefinitionValue> = { ...definitionValue, isDraft: false };
+            return persisted;
         }
         if (draft != null) {
             const narrowedDraft = narrowDraft(draft);

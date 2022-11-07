@@ -13,5 +13,8 @@ export type MaybeDraftType = DraftableItem<FernApiEditor.Type, DraftTypeSidebarI
 export type MaybeDraftError = DraftableItem<FernApiEditor.Error, DraftErrorSidebarItemId>;
 
 export type DraftableItem<DefinitionValue, DraftId extends DraftSidebarItemId> =
-    | ({ isDraft: false } & DefinitionValue)
-    | ({ isDraft: true } & DraftId);
+    | Draft<DraftId>
+    | Persisted<DefinitionValue>;
+
+export type Draft<DraftId extends DraftSidebarItemId> = { isDraft: true } & DraftId;
+export type Persisted<DefinitionValue> = { isDraft: false } & DefinitionValue;
