@@ -412,7 +412,11 @@ types:
   ExecutionSessionState:
     properties:
       lastTimeContacted: optional<string>
-      sessionId: string
+      sessionId:
+        type: string
+        docs: >
+          The auto-generated session id.
+          Formatted as a uuid.
       isWarmInstance: boolean
       awsTaskId: optional<string>
       language: commons.Language
