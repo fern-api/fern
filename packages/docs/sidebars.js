@@ -58,7 +58,7 @@ module.exports = {
         {
             type: "category",
             label: "Code generators",
-            items: [`generators/supported`, `generators/generators`],
+            items: [`generators/code-generators`, `generators/generators`],
         },
         {
             type: "category",
