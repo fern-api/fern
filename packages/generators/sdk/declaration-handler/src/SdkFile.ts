@@ -9,6 +9,7 @@ import { CoreUtilities } from "./core-utilities";
 import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { ParsedEnvironments } from "./ParsedEnvironments";
+import { ParsedGlobalHeaders } from "./ParsedGlobalHeaders";
 import { Reference } from "./Reference";
 
 export interface SdkFile {
@@ -48,5 +49,6 @@ export interface SdkFile {
     coreUtilities: CoreUtilities;
     authSchemes: ParsedAuthSchemes;
     environments: ParsedEnvironments | undefined;
+    globalHeaders: ParsedGlobalHeaders;
     fernConstants: FernConstants;
 }

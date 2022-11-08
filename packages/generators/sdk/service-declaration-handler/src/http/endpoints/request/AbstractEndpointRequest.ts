@@ -80,7 +80,7 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
             fetcherArgs: {
                 url: file.externalDependencies.urlJoin.invoke([referenceToOrigin, this.getUrlPath(file)]),
                 method: ts.factory.createStringLiteral(this.endpoint.method),
-                headers: [...Client.getAuthHeaders(file), ...this.getHeaders()],
+                headers: [...Client.getAuthHeaders(file), ...Client.getGlobalHeaders(file), ...this.getHeaders()],
                 queryParameters: queryParameters?.referenceToUrlParams,
                 body: this.hasRequestBody()
                     ? this.getReferenceToSchema(file).json(this.getReferenceToRequestBodyInsideEndpoint(file))

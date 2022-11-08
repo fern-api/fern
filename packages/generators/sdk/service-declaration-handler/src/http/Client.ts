@@ -60,6 +60,11 @@ export class Client {
             });
         }
 
+        const globalHeaderProperties = file.globalHeaders.getProperties();
+        for (const globalHeaderProperty of globalHeaderProperties) {
+            optionsInterface.addProperty(globalHeaderProperty);
+        }
+
         const serviceClass = file.sourceFile.addClass({
             name: this.serviceClassName,
             isExported: true,
@@ -98,6 +103,10 @@ export class Client {
 
     public static getAuthHeaders(file: SdkFile): ts.ObjectLiteralElementLike[] {
         return file.authSchemes.getHeaders(Client.getReferenceToAuthOption());
+    }
+
+    public static getGlobalHeaders(file: SdkFile): ts.ObjectLiteralElementLike[] {
+        return file.globalHeaders.getHeaders(Client.getReferenceToOptions());
     }
 
     public static getReferenceToOrigin(): ts.Expression {

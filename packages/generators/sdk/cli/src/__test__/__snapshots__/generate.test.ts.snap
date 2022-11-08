@@ -182,6 +182,7 @@ import { Client as TokenClient } from \\"./resources/token/client/Client\\";
 export declare namespace FernApiClient {
   interface Options {
     environment: string;
+    apiVersion: string;
   }
 }
 
@@ -1453,6 +1454,7 @@ import * as core from \\"../../../core\\";
 export declare namespace Client {
   interface Options {
     environment: string;
+    apiVersion: string;
   }
 }
 
@@ -1463,6 +1465,9 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(this.options.environment, \\"/owner/\\"),
       method: \\"POST\\",
+      headers: {
+        \\"X-API-Version\\": this.options?.apiVersion,
+      },
       body: serializers.owner.CreateOwnerRequest.json(request),
     });
     if (response.ok) {
@@ -1496,6 +1501,9 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(this.options.environment, \`/owner/\${request.ownerId}\`),
       method: \\"GET\\",
+      headers: {
+        \\"X-API-Version\\": this.options?.apiVersion,
+      },
     });
     if (response.ok) {
       return {
@@ -1528,6 +1536,9 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(this.options.environment, \`/owner/\${request.ownerId}\`),
       method: \\"PUT\\",
+      headers: {
+        \\"X-API-Version\\": this.options?.apiVersion,
+      },
       body: serializers.owner.UpdateOwnerRequest.json(request._body),
     });
     if (response.ok) {
@@ -1827,6 +1838,7 @@ import * as core from \\"../../../core\\";
 export declare namespace Client {
   interface Options {
     environment: string;
+    apiVersion: string;
   }
 }
 
@@ -1837,6 +1849,9 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(this.options.environment, \\"/tokens/create\\"),
       method: \\"POST\\",
+      headers: {
+        \\"X-API-Version\\": this.options?.apiVersion,
+      },
       body: serializers.token.CreateTokenRequest.json(request),
     });
     if (response.ok) {
@@ -1872,6 +1887,9 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(this.options.environment, \\"/tokens/metadata\\"),
       method: \\"POST\\",
+      headers: {
+        \\"X-API-Version\\": this.options?.apiVersion,
+      },
       body: serializers.token.GetTokenMetadataRequest.json(request),
     });
     if (response.ok) {
@@ -1909,6 +1927,9 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(this.options.environment, \`/tokens/owner/\${request.ownerId}\`),
       method: \\"GET\\",
+      headers: {
+        \\"X-API-Version\\": this.options?.apiVersion,
+      },
     });
     if (response.ok) {
       return {
