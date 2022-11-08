@@ -1,3 +1,6 @@
 name: my-api
-
+headers:
+  X-API-VERSION:
+    name: apiVersion
+    type: string
 error-discriminant: error
