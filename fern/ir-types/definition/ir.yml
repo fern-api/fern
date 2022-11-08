@@ -16,6 +16,9 @@ types:
     properties:
       apiName: string
       auth: auth.ApiAuth
+      headers:
+        docs: API Wide headers that are sent on every request
+        type: list<http.HttpHeader>
       types:
         docs: "The types described by this API"
         type: list<types.TypeDeclaration>

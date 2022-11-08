@@ -14,6 +14,7 @@ export async function visitFernRootApiFileYamlAst(
         "default-environment": async (defaultEnvironment) => {
             await visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
         },
+        headers: noop,
         environments: noop,
         "error-discriminant": async (errorDiscriminant) => {
             await visitor.errorDiscriminant?.(errorDiscriminant, ["error-discriminant"]);

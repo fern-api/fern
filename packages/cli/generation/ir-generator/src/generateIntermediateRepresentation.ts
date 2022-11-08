@@ -6,7 +6,7 @@ import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
-import { convertHttpService } from "./converters/services/convertHttpService";
+import { convertHttpHeader, convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { FERN_CONSTANTS, generateFernConstantsV2 } from "./FernConstants";
@@ -36,6 +36,12 @@ export async function generateIntermediateRepresentation({
             rawApiFileSchema: workspace.rootApiFile,
             file: rootApiFile,
         }),
+        headers:
+            workspace.rootApiFile.headers != null
+                ? Object.entries(workspace.rootApiFile.headers).map(([headerKey, header]) =>
+                      convertHttpHeader({ headerKey, header, file: rootApiFile })
+                  )
+                : [],
         types: [],
         errors: [],
         services: {

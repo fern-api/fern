@@ -7,6 +7,44 @@ exports[`ir simple 1`] = `
         "requirement": "ALL",
         "schemes": []
     },
+    "headers": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "originalValue": "apiVersion",
+                "camelCase": "apiVersion",
+                "snakeCase": "api_version",
+                "pascalCase": "ApiVersion",
+                "screamingSnakeCase": "API_VERSION",
+                "wireValue": "X-API-VERSION"
+            },
+            "nameV2": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    },
+                    "safeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    }
+                },
+                "wireValue": "X-API-VERSION"
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        }
+    ],
     "types": [
         {
             "availability": {
@@ -2993,6 +3031,44 @@ exports[`ir simple 2`] = `
         "requirement": "ALL",
         "schemes": []
     },
+    "headers": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "originalValue": "apiVersion",
+                "camelCase": "apiVersion",
+                "snakeCase": "api_version",
+                "pascalCase": "ApiVersion",
+                "screamingSnakeCase": "API_VERSION",
+                "wireValue": "X-API-VERSION"
+            },
+            "nameV2": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    },
+                    "safeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    }
+                },
+                "wireValue": "X-API-VERSION"
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        }
+    ],
     "types": [
         {
             "availability": {
@@ -5979,6 +6055,44 @@ exports[`ir simple 3`] = `
         "requirement": "ALL",
         "schemes": []
     },
+    "headers": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "originalValue": "apiVersion",
+                "camelCase": "apiVersion",
+                "snakeCase": "api_version",
+                "pascalCase": "ApiVersion",
+                "screamingSnakeCase": "API_VERSION",
+                "wireValue": "X-API-VERSION"
+            },
+            "nameV2": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    },
+                    "safeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    }
+                },
+                "wireValue": "X-API-VERSION"
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        }
+    ],
     "types": [
         {
             "availability": {
@@ -8965,6 +9079,44 @@ exports[`ir simple 4`] = `
         "requirement": "ALL",
         "schemes": []
     },
+    "headers": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "originalValue": "apiVersion",
+                "camelCase": "apiVersion",
+                "snakeCase": "api_version",
+                "pascalCase": "ApiVersion",
+                "screamingSnakeCase": "API_VERSION",
+                "wireValue": "X-API-VERSION"
+            },
+            "nameV2": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    },
+                    "safeName": {
+                        "originalValue": "apiVersion",
+                        "camelCase": "apiVersion",
+                        "snakeCase": "api_version",
+                        "pascalCase": "ApiVersion",
+                        "screamingSnakeCase": "API_VERSION"
+                    }
+                },
+                "wireValue": "X-API-VERSION"
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        }
+    ],
     "types": [
         {
             "availability": {
