@@ -12,7 +12,15 @@ export function addHumanReadablePrefixToId({
     if (humanReadablePrefix == null) {
         return id;
     }
-    return `${humanReadablePrefix.replaceAll(" ", "-").replaceAll(NON_URL_SAFE_CHARACTER_REGEX, "")}-${id}`;
+
+    const sanitizedHumanReadablePrefix = humanReadablePrefix
+        .replaceAll(" ", "-")
+        .replaceAll(NON_URL_SAFE_CHARACTER_REGEX, "");
+    if (sanitizedHumanReadablePrefix.length === 0) {
+        return id;
+    }
+
+    return `${sanitizedHumanReadablePrefix}-${id}`;
 }
 
 export function removeHumanReadablePrefixFromId(id: string): string {

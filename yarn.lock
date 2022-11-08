@@ -3450,7 +3450,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.17
+    "@fern-fern/api-editor-sdk": 0.0.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3925,7 +3925,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.17
+    "@fern-fern/api-editor-sdk": 0.0.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3947,7 +3947,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.17
+    "@fern-fern/api-editor-sdk": 0.0.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -4039,14 +4039,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/api-editor-sdk@npm:0.0.17":
-  version: 0.0.17
-  resolution: "@fern-fern/api-editor-sdk@npm:0.0.17"
+"@fern-fern/api-editor-sdk@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@fern-fern/api-editor-sdk@npm:0.0.20"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: fda8f0032525bfaaf7dbc0b00e8b0534ef15f7dc0571794221027c73135be780de4a78c78f8f43325eb6a2290684310ba722b5d2ad4947be198f8d377be66bac
+  checksum: e03a7163c6ac7d6d436a4d7532f097c0fb044c4f2826ba3b3d8940db6aa39ddec523e6b49d8bfde3ed26277547f50cc488f5497ad0a4155533ec84b6db42bd2f
   languageName: node
   linkType: hard
 
@@ -4110,7 +4110,8 @@ __metadata:
     "@fern-api/loadable": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.17
+    "@fern-fern/api-editor-sdk": 0.0.20
+    "@fern-ui/common-components": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"
     "@fern-ui/split-view": "workspace:*"

@@ -23,6 +23,18 @@ types:
     properties:
       description: optional<string>
 
+  SetTypeShapeTransaction:
+    extends: BaseTypeTransaction
+    properties:
+      shape: TypeShape
+
+  TypeShape:
+    enum:
+      - ALIAS
+      - OBJECT
+      - UNION
+      - ENUM
+
   DeleteTypeTransaction:
     extends: BaseTypeTransaction
     properties: {}
