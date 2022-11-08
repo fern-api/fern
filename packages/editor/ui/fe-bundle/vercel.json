@@ -1,0 +1,6 @@
+{
+  "github": {
+    "silent": true
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
