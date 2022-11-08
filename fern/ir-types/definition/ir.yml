@@ -33,6 +33,10 @@ types:
       defaultEnvironment: optional<environment.EnvironmentId>
       environments: list<environment.Environment>
       errorDiscriminant: optional<commons.Name>
+      sdkConfig: SdkConfig
+  SdkConfig:
+    properties:
+      isAuthMandatory: boolean
   Services:
     properties:
       http: list<http.HttpService>

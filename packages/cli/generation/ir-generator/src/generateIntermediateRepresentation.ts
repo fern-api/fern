@@ -30,7 +30,7 @@ export async function generateIntermediateRepresentation({
         casingsGenerator,
     });
 
-    const intermediateRepresentation: IntermediateRepresentation = {
+    const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig"> = {
         apiName: workspace.name,
         auth: convertApiAuth({
             rawApiFileSchema: workspace.rootApiFile,
@@ -134,5 +134,16 @@ export async function generateIntermediateRepresentation({
         });
     }
 
-    return intermediateRepresentation;
+    const isAuthMandatory =
+        workspace.rootApiFile.auth != null &&
+        intermediateRepresentation.services.http.some((service) => {
+            return service.endpoints.every((endpoint) => endpoint.auth);
+        });
+
+    return {
+        ...intermediateRepresentation,
+        sdkConfig: {
+            isAuthMandatory,
+        },
+    };
 }
