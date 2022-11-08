@@ -1,34 +1,38 @@
 import { Button, Divider, Intent } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
+import { PackageIcon } from "../editor-items/packages/package/PackageIcon";
+import { useCreateDraftPackage } from "../editor-items/packages/package/sidebar/useCreateDraftPackage";
+import { Packages } from "../editor-items/packages/packages-list/RootPackages";
+import { useSelectedSidebarItemId } from "../routes/useSelectedSidebarItemId";
 import { useSidebarContext } from "./context/useSidebarContext";
 import { SidebarItemIdGenerator } from "./ids/SidebarItemIdGenerator";
-import { Packages } from "./packages/Packages";
 import { NonEditableSidebarItemRow } from "./row/non-editable-row/NonEditableSidebarItemRow";
 import styles from "./Sidebar.module.scss";
-import { useSelectionReset } from "./useSelectionReset";
 
 export const Sidebar: React.FC = () => {
     const { setDraft } = useSidebarContext();
 
-    useSelectionReset();
+    const [selectedSidebarItemId, setSelectedSidebarItemId] = useSelectedSidebarItemId();
+    useEffect(() => {
+        if (selectedSidebarItemId?.type === "unknown") {
+            setSelectedSidebarItemId(undefined);
+        }
+    }, [selectedSidebarItemId?.type, setSelectedSidebarItemId]);
+
+    const createDraftPackage = useCreateDraftPackage({ parent: undefined });
 
     const onClickAddPackage = useCallback(() => {
-        setDraft({
-            type: "package",
-            packageId: EditorItemIdGenerator.package(),
-            parent: undefined,
-        });
-    }, [setDraft]);
+        setDraft(createDraftPackage());
+    }, [createDraftPackage, setDraft]);
 
     return (
         <div className={styles.sidebar}>
             <div className={styles.topSection}>
                 <Button
-                    className={styles.addResourceButton}
+                    className={styles.addPackageButton}
                     intent={Intent.PRIMARY}
-                    icon={IconNames.BOX}
+                    icon={<PackageIcon />}
                     text="Add package"
                     onClick={onClickAddPackage}
                 />

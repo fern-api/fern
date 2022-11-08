@@ -18,6 +18,7 @@ import { ReorderTypesTransactionHandler } from "./transaction-handlers/package/R
 import { CreateTypeTransactionHandler } from "./transaction-handlers/type/CreateTypeTransactionHandler";
 import { DeleteTypeTransactionHandler } from "./transaction-handlers/type/DeleteTypeTransactionHandler";
 import { RenameTypeTransactionHandler } from "./transaction-handlers/type/RenameTypeTransactionHandler";
+import { SetTypeDescriptionTransactionHandler } from "./transaction-handlers/type/SetTypeDescriptionTransactionHandler";
 
 export class TransactionHandler {
     public readonly graph: ApiGraph;
@@ -66,6 +67,9 @@ export class TransactionHandler {
             },
             renameType: (t) => {
                 new RenameTypeTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            setTypeDescription: (t) => {
+                new SetTypeDescriptionTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
             },
             deleteType: (t) => {
                 new DeleteTypeTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);

@@ -63,6 +63,10 @@ export function useSelectedSidebarItemId(): [
                     errorId: editorItemId,
                 };
             }
+            return {
+                type: "unknown",
+                uuidInUrl: editorItemId,
+            };
         }
         if (typesGroupMatch != null && typesGroupMatch.params.EDITOR_ITEM_ID != null) {
             return {
@@ -120,5 +124,6 @@ function generatePathForStudioItemId(sidebarItemId: SidebarItemId): string {
             generatePath(StudioRoutes.ERRORS_GROUP.absolutePath, {
                 EDITOR_ITEM_ID: addHumanReadablePrefixToId({ id: packageId, humanReadablePrefix: packageName }),
             }),
+        unknown: () => StudioRoutes.STUDIO.absolutePath,
     });
 }

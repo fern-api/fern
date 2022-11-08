@@ -77,8 +77,8 @@ export const BaseSidebarItemRow: React.FC<BaseSidebarItemRow.Props> = ({
                     <div className={styles.labelSection}>{label}</div>
                 </div>
                 <div className={styles.right}>
-                    {addButton}
                     {ellipsisMenu != null && <EllipsisPopover menu={ellipsisMenu} hidden={!shouldRenderRightActions} />}
+                    {addButton}
                 </div>
             </div>
         </div>

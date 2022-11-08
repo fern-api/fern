@@ -1,0 +1,18 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title {
+    margin-bottom: 0;
+}

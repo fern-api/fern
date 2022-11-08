@@ -8,7 +8,8 @@ export type SidebarItemId =
     | TypeSidebarItemId
     | ErrorSidebarItemId
     | TypesGroupSidebarItemId
-    | ErrorsGroupSidebarItemId;
+    | ErrorsGroupSidebarItemId
+    | UnknownSidebarItemId;
 
 export interface ApiConfigurationSidebarItemId {
     type: "apiConfiguration";
@@ -52,4 +53,9 @@ export interface ErrorsGroupSidebarItemId {
     type: "errorsGroup";
     packageName?: string;
     packageId: FernApiEditor.PackageId;
+}
+
+export interface UnknownSidebarItemId {
+    type: "unknown";
+    uuidInUrl: string;
 }

@@ -9,6 +9,9 @@ const LOGGER_CONFIG: LoggerConfig = {
     useLoggerInProduction: true,
 };
 
+const TRANSACTION_COLOR = "#4169e1";
+const FONT_WEIGHT = 700;
+
 export interface TransactionLogger {
     logStateChange(args: {
         transaction: FernApiEditor.transactions.Transaction;
@@ -35,9 +38,11 @@ class DebugTransactionLogger implements TransactionLogger {
     }) {
         this.logGroup(transaction, () => {
             // eslint-disable-next-line no-console
-            console.log("%cPrevious State:", "color: #9E9E9E; font-weight: 700;", oldState);
+            console.log("%cPrevious State:", `color: #9E9E9E; font-weight: ${FONT_WEIGHT};`, oldState);
             // eslint-disable-next-line no-console
-            console.log("%cNext State:", "color: #47B04B; font-weight: 700;", newState);
+            console.log("%cTransaction:", `color: ${TRANSACTION_COLOR}; font-weight: ${FONT_WEIGHT};`, transaction);
+            // eslint-disable-next-line no-console
+            console.log("%cNext State:", `color: #47B04B; font-weight: ${FONT_WEIGHT};`, newState);
         });
     }
 
@@ -56,7 +61,11 @@ class DebugTransactionLogger implements TransactionLogger {
         }
         this.isInsideGroup = true;
         // eslint-disable-next-line no-console
-        console.groupCollapsed("%cTransaction:", "color: #4169e1; font-weight: 700;", transaction);
+        console.groupCollapsed(
+            "%c[Transaction]",
+            `color: ${TRANSACTION_COLOR}; font-weight: ${FONT_WEIGHT};`,
+            getTransationSummary(transaction)
+        );
     }
 
     private endGroup() {
@@ -67,6 +76,30 @@ class DebugTransactionLogger implements TransactionLogger {
         // eslint-disable-next-line no-console
         console.groupEnd();
     }
+}
+
+function getTransationSummary(transaction: FernApiEditor.transactions.Transaction): string {
+    return transaction._visit({
+        reorderRootPackages: () => "Reorder root packages",
+        createPackage: () => "Create package",
+        renamePackage: () => "Rename package",
+        deletePackage: () => "Delete package",
+        reorderPackages: () => "Reorder packages",
+        reorderEndpoints: () => "Reorder endpoints",
+        reorderTypes: () => "Reorder types",
+        reorderErrors: () => "Reorder errors",
+        createEndpoint: () => "Create endpoint",
+        renameEndpoint: () => "Rename endpoint",
+        deleteEndpoint: () => "Delete endpoin",
+        createType: () => "Create type",
+        renameType: () => "Rename type",
+        setTypeDescription: () => "Set type description",
+        deleteType: () => "Delete type",
+        createError: () => "Create error",
+        renameError: () => "Rename error",
+        deleteError: () => "Delete error",
+        _other: ({ type }) => type,
+    });
 }
 
 export const TransactionLogger =

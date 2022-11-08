@@ -7,12 +7,12 @@ import {
     DraftTypeSidebarItemId,
 } from "./DraftSidebarItemId";
 
-export type MaybeDraftPackage = DraftableItem<FernApiEditor.Package, DraftPackageSidebarItemId>;
-export type MaybeDraftEndpoint = DraftableItem<FernApiEditor.Endpoint, DraftEndpointSidebarItemId>;
-export type MaybeDraftType = DraftableItem<FernApiEditor.Type, DraftTypeSidebarItemId>;
-export type MaybeDraftError = DraftableItem<FernApiEditor.Error, DraftErrorSidebarItemId>;
+export type MaybeDraftPackage = MaybeDraft<FernApiEditor.Package, DraftPackageSidebarItemId>;
+export type MaybeDraftEndpoint = MaybeDraft<FernApiEditor.Endpoint, DraftEndpointSidebarItemId>;
+export type MaybeDraftType = MaybeDraft<FernApiEditor.Type, DraftTypeSidebarItemId>;
+export type MaybeDraftError = MaybeDraft<FernApiEditor.Error, DraftErrorSidebarItemId>;
 
-export type DraftableItem<DefinitionValue, DraftId extends DraftSidebarItemId> =
+export type MaybeDraft<DefinitionValue, DraftId extends DraftSidebarItemId> =
     | Draft<DraftId>
     | Persisted<DefinitionValue>;
 
