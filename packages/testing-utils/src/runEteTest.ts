@@ -1,11 +1,11 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
-import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
-import { rm } from "fs/promises";
+import execa from "execa";
+import { readFile, rm } from "fs/promises";
 import { Volume } from "memfs/lib/volume";
+import path from "path";
+import tmp from "tmp-promise";
 import { installAndCompileGeneratedProject } from "./installAndCompileGeneratedProject";
 
 export declare namespace runEteTest {
@@ -36,17 +36,14 @@ export async function runEteTest({ testFile, pathToFixture, generateFiles }: run
     const pathToGenerated = join(absolutePathToFixture, RelativeFilePath.of("generated"));
     await deleteDirectory(pathToGenerated);
 
-    const parseWorkspaceResult = await loadWorkspace({
-        absolutePathToWorkspace: absolutePathToFixture,
-        context: createMockTaskContext(),
+    const tmpDir = await tmp.dir();
+    const irPath = path.join(tmpDir.path, "ir.json");
+
+    await execa("fern", ["ir", irPath, "--api", testDirectory, "--language", "typescript"], {
+        cwd: absolutePathToFixture,
     });
-    if (!parseWorkspaceResult.didSucceed) {
-        throw new Error(JSON.stringify(parseWorkspaceResult.failures));
-    }
-    const intermediateRepresentation = await generateIntermediateRepresentation({
-        workspace: parseWorkspaceResult.workspace,
-        generationLanguage: Language.TYPESCRIPT,
-    });
+
+    const intermediateRepresentation: IntermediateRepresentation = JSON.parse((await readFile(irPath)).toString());
 
     const volume = new Volume();
 

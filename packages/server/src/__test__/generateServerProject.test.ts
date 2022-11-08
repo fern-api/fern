@@ -10,7 +10,7 @@ describe.skip("generateServerProject", () => {
     for (const fixture of FIXTURES) {
         itFernETE(fixture, {
             testFile: AbsoluteFilePath.of(__filename),
-            pathToFixture: join(FIXTURES_DIR, fixture),
+            pathToFixture: join(FIXTURES_DIR, "fern", fixture),
             generateFiles: async ({ volume, intermediateRepresentation }) => {
                 await generateServerProject({
                     packageName: fixture,

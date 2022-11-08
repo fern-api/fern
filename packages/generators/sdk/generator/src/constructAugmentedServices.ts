@@ -12,6 +12,7 @@ export function constructAugmentedServices(intermediateRepresentation: Intermedi
             ...augmentedServices[stringifyFernFilepath(service.name.fernFilepath)],
             originalService: service,
             name: service.name,
+            apiWideHeaders: intermediateRepresentation.headers,
         };
         augmentedServices[stringifyFernFilepath(service.name.fernFilepath)] = leafService;
 
@@ -28,6 +29,7 @@ export function constructAugmentedServices(intermediateRepresentation: Intermedi
                 },
                 wrappedServices: [],
                 originalService: undefined,
+                apiWideHeaders: intermediateRepresentation.headers,
             });
             if (!wrapper.wrappedServices.some((wrapped) => isEqual(wrapped, lastDeclaredService.name))) {
                 wrapper.wrappedServices.push(lastDeclaredService.name);

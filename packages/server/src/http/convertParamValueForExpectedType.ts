@@ -67,6 +67,7 @@ export function convertParamValueForExpectedType({
                         undefined,
                         ts.factory.createIdentifier("undefined")
                     ),
+                literal: handleInvalidParamType,
                 map: handleInvalidParamType,
                 list: handleInvalidParamType,
                 set: handleInvalidParamType,

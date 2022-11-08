@@ -48,7 +48,9 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Run tests
-          command: yarn test --ci
+          command: |
+            npm install -g fern-api
+            yarn test --ci
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code

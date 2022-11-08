@@ -40,6 +40,9 @@ export abstract class AbstractTypeReferenceConverter<T> {
             list: this.list.bind(this),
             set: this.set.bind(this),
             optional: this.optional.bind(this),
+            literal: () => {
+                throw new Error("Literals are unsupported!");
+            },
             _unknown: () => {
                 throw new Error("Unexpected container type: " + container._type);
             },

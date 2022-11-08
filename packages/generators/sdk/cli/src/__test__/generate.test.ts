@@ -1,12 +1,8 @@
-import { validateWorkspaceAndLogIssues } from "@fern-api/cli";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
-import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import decompress from "decompress";
 import execa from "execa";
-import { rm, symlink, writeFile } from "fs/promises";
+import { lstat, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { runGenerator } from "../runGenerator";
@@ -15,6 +11,7 @@ interface FixtureInfo {
     path: string;
     orgName: string;
     outputMode: "github" | "publish";
+    apiName: string;
 }
 
 const FIXTURES: FixtureInfo[] = [
@@ -22,16 +19,19 @@ const FIXTURES: FixtureInfo[] = [
         path: "trace",
         orgName: "trace",
         outputMode: "publish",
+        apiName: "api",
     },
     {
         path: "reserved-keywords",
         orgName: "fern",
         outputMode: "publish",
+        apiName: "api",
     },
     {
         path: "nursery",
         orgName: "fern",
         outputMode: "github",
+        apiName: "api",
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
@@ -45,36 +45,21 @@ describe("runGenerator", () => {
             // eslint-disable-next-line jest/valid-title
             fixture.path,
             async () => {
-                const fixturePath = path.join(FIXTURES_PATH, fixture.path);
+                const fixturePath = path.join(FIXTURES_PATH, "fern", fixture.path);
                 const irPath = path.join(fixturePath, "ir.json");
                 const configJsonPath = path.join(fixturePath, "config.json");
-
-                const taskContext = createMockTaskContext();
-                const parseWorkspaceResult = await loadWorkspace({
-                    absolutePathToWorkspace: AbsoluteFilePath.of(fixturePath),
-                    context: taskContext,
-                });
-                if (!parseWorkspaceResult.didSucceed) {
-                    throw new Error(JSON.stringify(parseWorkspaceResult.failures));
-                }
-
-                await validateWorkspaceAndLogIssues(parseWorkspaceResult.workspace, taskContext);
-                if (taskContext.getResult() === TaskResult.Failure) {
-                    throw new Error("Failed to validate workspace");
-                }
-
-                const intermediateRepresentation = await generateIntermediateRepresentation({
-                    workspace: parseWorkspaceResult.workspace,
-                    generationLanguage: Language.TYPESCRIPT,
-                });
-
-                await writeFile(irPath, JSON.stringify(intermediateRepresentation, undefined, 4));
 
                 const { path: outputPath } = await tmp.dir();
 
                 // add symlink for easy access in VSCode
                 const generatedDir = path.join(fixturePath, "generated");
                 await rm(generatedDir, { force: true, recursive: true });
+                if (await doesPathExist(configJsonPath)) {
+                    await rm(configJsonPath);
+                }
+                if (await doesPathExist(irPath)) {
+                    await rm(irPath);
+                }
                 await symlink(outputPath, generatedDir, "dir");
 
                 const config: FernGeneratorExec.GeneratorConfig = {
@@ -82,19 +67,24 @@ describe("runGenerator", () => {
                     irFilepath: irPath,
                     output: {
                         path: outputPath,
-                        mode: generateOutputMode(
-                            fixture.orgName,
-                            intermediateRepresentation.apiName,
-                            fixture.outputMode
-                        ),
+                        mode: generateOutputMode(fixture.orgName, fixture.apiName, fixture.outputMode),
                     },
                     publish: undefined,
                     customConfig: undefined,
-                    workspaceName: intermediateRepresentation.apiName,
+                    workspaceName: fixture.apiName,
                     organization: fixture.orgName,
                     environment: FernGeneratorExec.GeneratorEnvironment.local(),
                 };
                 await writeFile(configJsonPath, JSON.stringify(config, undefined, 4));
+
+                const { stdout } = await execa("fern", ["--version"], {
+                    cwd: FIXTURES_PATH,
+                });
+                console.log(stdout);
+
+                await execa("fern", ["ir", irPath, "--api", fixture.path, "--language", "typescript"], {
+                    cwd: FIXTURES_PATH,
+                });
 
                 await runGenerator(configJsonPath);
 
@@ -117,6 +107,7 @@ describe("runGenerator", () => {
                 await rm(path.join(unzippedGitArchive, "yarn.lock"), { recursive: true });
                 const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(unzippedGitArchive));
                 expect(directoryContents).toMatchSnapshot();
+                expect([]).toEqual([]);
             },
             90_000
         );
@@ -171,5 +162,14 @@ function generateOutputMode(org: string, apiName: string, mode: "github" | "publ
                 },
                 version: "",
             });
+    }
+}
+
+async function doesPathExist(filepath: string): Promise<boolean> {
+    try {
+        await lstat(filepath);
+        return true;
+    } catch {
+        return false;
     }
 }

@@ -122,6 +122,9 @@ export class TypeContext extends BaseModelContext {
                             ts.factory.createLiteralTypeNode(ts.factory.createNull()),
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                         ]),
+                    literal: () => {
+                        throw new Error("Literal is not supported");
+                    },
                     _unknown: () => {
                         throw new Error("Unexpected container type: " + container._type);
                     },
