@@ -18,6 +18,11 @@ types:
     properties:
       newTypeName: string
 
+  SetTypeDescriptionTransaction:
+    extends: BaseTypeTransaction
+    properties:
+      description: optional<string>
+
   DeleteTypeTransaction:
     extends: BaseTypeTransaction
     properties: {}

@@ -29,6 +29,7 @@ types:
       # type-specific transactions
       createType: type.CreateTypeTransaction
       renameType: type.RenameTypeTransaction
+      setTypeDescription: type.SetTypeDescriptionTransaction
       deleteType: type.DeleteTypeTransaction
 
       # error-specific transactions

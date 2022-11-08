@@ -21,6 +21,8 @@ export const StringifiedSidebarItemId = {
                 return `${sidebarItemId.type}.${sidebarItemId.typeId}` as StringifiedSidebarItemId;
             case "error":
                 return `${sidebarItemId.type}.${sidebarItemId.errorId}` as StringifiedSidebarItemId;
+            case "unknown":
+                return `${sidebarItemId.type}.${sidebarItemId.uuidInUrl}` as StringifiedSidebarItemId;
             default:
                 assertNever(sidebarItemId);
         }

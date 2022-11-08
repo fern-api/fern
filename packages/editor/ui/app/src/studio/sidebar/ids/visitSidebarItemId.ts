@@ -9,6 +9,7 @@ import {
     SidebarItemId,
     TypesGroupSidebarItemId,
     TypeSidebarItemId,
+    UnknownSidebarItemId,
 } from "./SidebarItemId";
 
 export interface SidebarItemIdVisitor<R> {
@@ -20,6 +21,7 @@ export interface SidebarItemIdVisitor<R> {
     error: (sidebarItemId: ErrorSidebarItemId) => R;
     typesGroup: (sidebarItemId: TypesGroupSidebarItemId) => R;
     errorsGroup: (sidebarItemId: ErrorsGroupSidebarItemId) => R;
+    unknown: (sidebarItemId: UnknownSidebarItemId) => R;
 }
 
 export function visitSidebarItemId<R>(sidebarItemId: SidebarItemId, visitor: SidebarItemIdVisitor<R>): R {
@@ -40,6 +42,8 @@ export function visitSidebarItemId<R>(sidebarItemId: SidebarItemId, visitor: Sid
             return visitor.typesGroup(sidebarItemId);
         case "errorsGroup":
             return visitor.errorsGroup(sidebarItemId);
+        case "unknown":
+            return visitor.unknown(sidebarItemId);
         default:
             assertNever(sidebarItemId);
     }

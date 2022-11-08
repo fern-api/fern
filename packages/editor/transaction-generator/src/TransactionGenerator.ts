@@ -72,6 +72,11 @@ export const TransactionGenerator: TransactionGenerator = {
             ...generateBaseTransaction(),
             ...transaction,
         }),
+    setTypeDescription: (transaction: TransactionPayload<"setTypeDescription">) =>
+        FernApiEditor.transactions.Transaction.setTypeDescription({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
     deleteType: (transaction: TransactionPayload<"deleteType">) =>
         FernApiEditor.transactions.Transaction.deleteType({
             ...generateBaseTransaction(),
