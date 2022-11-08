@@ -1,16 +1,16 @@
 import { MaybeExistingTypePage } from "./editor-items/types/type/page/MaybeExistingTypePage";
 import { NothingSelectedPage } from "./NothingSelectedPage";
-import { useSelectedSidebarItemId } from "./routes/useSelectedSidebarItemId";
+import { SidebarItemId } from "./sidebar/ids/SidebarItemId";
 import { visitSidebarItemId } from "./sidebar/ids/visitSidebarItemId";
 
-export const StudioPage: React.FC = () => {
-    const [selectedSidebarItemId] = useSelectedSidebarItemId();
-
-    if (selectedSidebarItemId == null) {
-        return <NothingSelectedPage />;
+export declare namespace EditorItemPage {
+    export interface Props {
+        sidebarItemId: SidebarItemId;
     }
+}
 
-    return visitSidebarItemId(selectedSidebarItemId, {
+export const EditorItemPage: React.FC<EditorItemPage.Props> = ({ sidebarItemId }) => {
+    return visitSidebarItemId(sidebarItemId, {
         apiConfiguration: () => <div>api configuration</div>,
         sdkConfiguration: () => <div>sdk configuration</div>,
         package: () => <div>package_</div>,

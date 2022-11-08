@@ -1,9 +1,11 @@
 import { EditableText, H2 } from "@blueprintjs/core";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
+import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React from "react";
 import { TYPE_NAME_PLACEHOLDER } from "../placeholder";
 import { TypeIcon } from "../TypeIcon";
 import styles from "./TypePage.module.scss";
+import { TypeShapeChooser } from "./TypeShapeChooser";
 import { useLocalDescription } from "./useLocalDescription";
 import { useLocalTypeName } from "./useLocalTypeName";
 
@@ -25,7 +27,19 @@ export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
                     <EditableText {...localTypeName} placeholder={TYPE_NAME_PLACEHOLDER} />
                 </H2>
             </div>
-            <EditableText {...localDescription} placeholder="Enter a description..."></EditableText>
+            <TwoColumnTable>
+                <TwoColumnTableRow label="Description">
+                    <EditableText
+                        {...localDescription}
+                        className={styles.description}
+                        multiline
+                        placeholder="Enter a description..."
+                    ></EditableText>
+                </TwoColumnTableRow>
+                <TwoColumnTableRow label="Schema">
+                    <TypeShapeChooser type={type} />
+                </TwoColumnTableRow>
+            </TwoColumnTable>
         </div>
     );
 };

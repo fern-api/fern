@@ -5,9 +5,9 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { Pane, ResizeHandlePosition, SplitView } from "@fern-ui/split-view";
 import React, { useEffect, useState } from "react";
 import { ApiEditorContextProvider } from "../api-editor-context/ApiEditorContextProvider";
+import { MaybeSelectedEditorItemPage } from "./MaybeSelectedEditorItemPage";
 import { SidebarContextProvider } from "./sidebar/context/SidebarContextProvider";
 import { Sidebar } from "./sidebar/Sidebar";
-import { StudioPage } from "./StudioPage";
 
 export const Studio: React.FC = () => {
     const initialApi = useInitialApi();
@@ -30,7 +30,7 @@ export const Studio: React.FC = () => {
                     >
                         <Sidebar />
                     </Pane>
-                    <StudioPage />
+                    <MaybeSelectedEditorItemPage />
                 </SplitView>
             </SidebarContextProvider>
         </ApiEditorContextProvider>

@@ -19,6 +19,7 @@ import { CreateTypeTransactionHandler } from "./transaction-handlers/type/Create
 import { DeleteTypeTransactionHandler } from "./transaction-handlers/type/DeleteTypeTransactionHandler";
 import { RenameTypeTransactionHandler } from "./transaction-handlers/type/RenameTypeTransactionHandler";
 import { SetTypeDescriptionTransactionHandler } from "./transaction-handlers/type/SetTypeDescriptionTransactionHandler";
+import { SetTypeShapeTransactionHandler } from "./transaction-handlers/type/SetTypeShapeTransactionHandler";
 
 export class TransactionHandler {
     public readonly graph: ApiGraph;
@@ -70,6 +71,9 @@ export class TransactionHandler {
             },
             setTypeDescription: (t) => {
                 new SetTypeDescriptionTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            setTypeShape: (t) => {
+                new SetTypeShapeTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
             },
             deleteType: (t) => {
                 new DeleteTypeTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);

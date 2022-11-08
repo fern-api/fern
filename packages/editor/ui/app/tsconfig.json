@@ -8,6 +8,7 @@
     { "path": "../../id-generator" },
     { "path": "../../transaction-generator" },
     { "path": "../../transaction-resolver" },
+    { "path": "../common-components" },
     { "path": "../react-commons" },
     { "path": "../routing-utils" },
     { "path": "../split-view" },

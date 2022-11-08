@@ -10,6 +10,15 @@ types:
   Shape:
     union:
       alias: AliasShape
+      object: ObjectShape
+      union: UnionShape
+      enum: EnumShape
   AliasShape:
     properties:
       aliasOf: optional<commons.TypeId>
+  ObjectShape:
+    properties: {}
+  UnionShape:
+    properties: {}
+  EnumShape:
+    properties: {}

@@ -1,6 +1,7 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 .container {
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 30px;
@@ -15,4 +16,8 @@
 
 .title {
     margin-bottom: 0;
+}
+
+.description {
+    flex: 1;
 }

@@ -94,6 +94,7 @@ function getTransationSummary(transaction: FernApiEditor.transactions.Transactio
         createType: () => "Create type",
         renameType: () => "Rename type",
         setTypeDescription: () => "Set type description",
+        setTypeShape: () => "Set type shape",
         deleteType: () => "Delete type",
         createError: () => "Create error",
         renameError: () => "Rename error",
