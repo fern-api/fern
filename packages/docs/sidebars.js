@@ -33,7 +33,7 @@
 module.exports = {
     mySidebar: [
         `intro`,
-        `how`,
+        // `how`,
         `getting-started`,
         {
             type: "category",
