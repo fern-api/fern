@@ -136,7 +136,7 @@ export async function generateIntermediateRepresentation({
 
     const isAuthMandatory =
         workspace.rootApiFile.auth != null &&
-        intermediateRepresentation.services.http.some((service) => {
+        intermediateRepresentation.services.http.every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });
 

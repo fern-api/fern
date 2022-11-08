@@ -3020,6 +3020,9 @@ exports[`ir simple 1`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
     }
 }"
 `;
@@ -6044,6 +6047,9 @@ exports[`ir simple 2`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
     }
 }"
 `;
@@ -9068,6 +9074,9 @@ exports[`ir simple 3`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
     }
 }"
 `;
@@ -12092,6 +12101,9 @@ exports[`ir simple 4`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
     }
 }"
 `;
