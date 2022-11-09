@@ -38,6 +38,7 @@ import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.RawGeneratedFile;
 import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
 import java.io.File;
@@ -186,6 +187,7 @@ public abstract class AbstractGeneratorCli {
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
@@ -228,8 +230,17 @@ public abstract class AbstractGeneratorCli {
 
     private void addRootProjectFiles(MavenCoordinate mavenCoordinate) {
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
-                .addAllPluginIds(List.of(
-                        GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID, GeneratedBuildGradle.MAVEN_PUBLISH_PLUGIN_ID))
+                .addAllPlugins(List.of(
+                        GradlePlugin.builder()
+                                .pluginId(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID)
+                                .build(),
+                        GradlePlugin.builder()
+                                .pluginId(GeneratedBuildGradle.MAVEN_PUBLISH_PLUGIN_ID)
+                                .build(),
+                        GradlePlugin.builder()
+                                .pluginId("com.diffplug.spotless")
+                                .version("6.11.0")
+                                .build()))
                 .addCustomRepositories(GradleRepository.builder()
                         .url("https://s01.oss.sonatype.org/content/repositories/releases/")
                         .build())
@@ -239,6 +250,7 @@ public abstract class AbstractGeneratorCli {
                         .artifact(mavenCoordinate.getArtifact())
                         .build())
                 .addAllDependencies(getBuildGradleDependencies())
+                .addCustomBlocks("spotless {\n" + "    java {\n" + "        googleJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
                 .build();
         addGeneratedFile(buildGradle);

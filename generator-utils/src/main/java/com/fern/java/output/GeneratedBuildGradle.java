@@ -18,6 +18,7 @@ package com.fern.java.output;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.gradle.AbstractGradleDependency;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     public static final String JAVA_LIBRARY_PLUGIN_ID = "java-library";
     public static final String MAVEN_PUBLISH_PLUGIN_ID = "maven-publish";
 
-    public abstract List<String> pluginIds();
+    public abstract List<GradlePlugin> plugins();
 
     public abstract List<String> customBlocks();
 
@@ -54,10 +55,14 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     public final String getContents() {
         RawFileWriter writer = new RawFileWriter();
-        if (!pluginIds().isEmpty()) {
+        if (!plugins().isEmpty()) {
             writer.beginControlFlow("plugins");
-            for (String pluginId : pluginIds()) {
-                writer.addLine("id '" + pluginId + "'");
+            for (GradlePlugin gradlePlugin : plugins()) {
+                String pluginLine = "id '" + gradlePlugin.pluginId() + "'";
+                if (gradlePlugin.version().isPresent()) {
+                    pluginLine += " version '" + gradlePlugin.version().get() + "'";
+                }
+                writer.addLine(pluginLine);
             }
             writer.endControlFlow();
         }

@@ -20,6 +20,7 @@ import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
 import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
 import com.fern.java.output.gradle.RootProjectGradleDependency;
@@ -44,8 +45,13 @@ public class GeneratedBuildGradleTest {
                         .build(),
                 RootProjectGradleDependency.INSTANCE);
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
-                .addAllPluginIds(List.of(
-                        GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID, GeneratedBuildGradle.MAVEN_PUBLISH_PLUGIN_ID))
+                .addAllPlugins(List.of(
+                        GradlePlugin.builder()
+                                .pluginId(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID)
+                                .build(),
+                        GradlePlugin.builder()
+                                .pluginId(GeneratedBuildGradle.MAVEN_PUBLISH_PLUGIN_ID)
+                                .build()))
                 .addCustomRepositories(GradleRepository.builder()
                         .url("https://s01.oss.sonatype.org/content/repositories/releases/")
                         .build())

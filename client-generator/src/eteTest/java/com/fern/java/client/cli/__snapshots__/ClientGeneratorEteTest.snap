@@ -333,13 +333,13 @@ public final class FernFernClient {
 
   private static <T> Supplier<T> memoize(Supplier<T> delegate) {
     AtomicReference<T> value = new AtomicReference<>();
-    return () ->  {
+    return () -> {
       T val = value.get();
       if (val == null) {
         val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
       }
       return val;
-    } ;
+    };
   }
 }
 
@@ -357,7 +357,6 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
-import java.lang.String;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -378,7 +377,8 @@ interface AuthService {
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new AuthServiceErrorDecoder()).target(AuthService.class, url);
+        .errorDecoder(new AuthServiceErrorDecoder())
+        .target(AuthService.class, url);
   }
 }
 
@@ -391,8 +391,6 @@ package com.fern.basic.client.auth;
 import com.fern.basic.client.auth.endpoints.GetAuth;
 import com.fern.basic.client.auth.exceptions.GetAuthException;
 import com.fern.basic.core.BearerAuth;
-import java.lang.RuntimeException;
-import java.lang.String;
 import java.util.Optional;
 
 public final class AuthServiceClient {
@@ -411,7 +409,13 @@ public final class AuthServiceClient {
   }
 
   public void getAuth(GetAuth.Request request) throws GetAuthException {
-    BearerAuth authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getAuth")));
+    BearerAuth authValue =
+        request
+            .getAuthOverride()
+            .orElseGet(
+                () ->
+                    this.auth.orElseThrow(
+                        () -> new RuntimeException("Auth is required for getAuth")));
     this.service.getAuth(authValue);
   }
 }
@@ -427,11 +431,6 @@ import com.fern.basic.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
-import java.lang.Class;
-import java.lang.Exception;
-import java.lang.Override;
-import java.lang.RuntimeException;
-import java.lang.String;
 
 final class AuthServiceErrorDecoder implements ErrorDecoder {
   @Override
@@ -440,15 +439,21 @@ final class AuthServiceErrorDecoder implements ErrorDecoder {
       if (methodKey.contains("getAuth")) {
         return decodeException(response, GetAuthException.class);
       }
+    } catch (IOException e) {
     }
-    catch (IOException e) {
-    }
-    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+    return new RuntimeException(
+        "Failed to read response body. Received status "
+            + response.status()
+            + " for method "
+            + methodKey);
   }
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER
+        .reader()
+        .withAttribute("statusCode", response.status())
+        .readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -459,15 +464,11 @@ basic[src/main/java/com/fern/basic/client/auth/endpoints/GetAuth.java]=[
 package com.fern.basic.client.auth.endpoints;
 
 import com.fern.basic.core.BearerAuth;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class GetAuth {
-  private GetAuth() {
-  }
+  private GetAuth() {}
 
   public static final class Request {
     private final Optional<BearerAuth> authOverride;
@@ -512,8 +513,7 @@ public final class GetAuth {
     public static final class Builder {
       private Optional<BearerAuth> authOverride = Optional.empty();
 
-      private Builder() {
-      }
+      private Builder() {}
 
       public Builder from(Request other) {
         authOverride(other.getAuthOverride());
@@ -552,16 +552,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonDeserialize(
-    using = GetAuthException.Deserializer.class
-)
+@JsonDeserialize(using = GetAuthException.Deserializer.class)
 public final class GetAuthException extends Exception {
   private final Value value;
 
@@ -603,11 +597,8 @@ public final class GetAuthException extends Exception {
       use = JsonTypeInfo.Id.NAME,
       property = "_error",
       visible = true,
-      defaultImpl = UnknownErrorValue.class
-  )
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+      defaultImpl = UnknownErrorValue.class)
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
@@ -615,9 +606,7 @@ public final class GetAuthException extends Exception {
   private static final class UnknownErrorValue implements Value {
     private Object unknownValue;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.DELEGATING
-    )
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
       this.unknownValue = unknownValue;
     }
@@ -650,8 +639,8 @@ public final class GetAuthException extends Exception {
 
   static final class Deserializer extends JsonDeserializer<GetAuthException> {
     @Override
-    public GetAuthException deserialize(JsonParser p, DeserializationContext ctx) throws
-        IOException {
+    public GetAuthException deserialize(JsonParser p, DeserializationContext ctx)
+        throws IOException {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new GetAuthException(value, statusCode);
@@ -675,7 +664,6 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
-import java.lang.String;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -701,7 +689,8 @@ interface PostsService {
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new PostsServiceErrorDecoder()).target(PostsService.class, url);
+        .errorDecoder(new PostsServiceErrorDecoder())
+        .target(PostsService.class, url);
   }
 }
 
@@ -716,7 +705,6 @@ import com.fern.basic.client.blog.endpoints.GetPost;
 import com.fern.basic.client.blog.exceptions.CreatePostException;
 import com.fern.basic.client.blog.exceptions.GetPostException;
 import com.fern.basic.client.blog.types.BlogPost;
-import java.lang.String;
 
 public final class PostsServiceClient {
   private final PostsService service;
@@ -746,11 +734,6 @@ import com.fern.basic.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
-import java.lang.Class;
-import java.lang.Exception;
-import java.lang.Override;
-import java.lang.RuntimeException;
-import java.lang.String;
 
 final class PostsServiceErrorDecoder implements ErrorDecoder {
   @Override
@@ -762,15 +745,21 @@ final class PostsServiceErrorDecoder implements ErrorDecoder {
       if (methodKey.contains("getPost")) {
         return decodeException(response, GetPostException.class);
       }
+    } catch (IOException e) {
     }
-    catch (IOException e) {
-    }
-    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+    return new RuntimeException(
+        "Failed to read response body. Received status "
+            + response.status()
+            + " for method "
+            + methodKey);
   }
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER
+        .reader()
+        .withAttribute("statusCode", response.status())
+        .readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -781,14 +770,10 @@ basic[src/main/java/com/fern/basic/client/blog/endpoints/CreatePost.java]=[
 package com.fern.basic.client.blog.endpoints;
 
 import com.fern.basic.client.blog.types.CreatePostRequest;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
 public final class CreatePost {
-  private CreatePost() {
-  }
+  private CreatePost() {}
 
   public static final class Request {
     private final CreatePostRequest body;
@@ -843,8 +828,7 @@ public final class CreatePost {
     static final class Builder implements BodyStage, _FinalStage {
       private CreatePostRequest body;
 
-      private Builder() {
-      }
+      private Builder() {}
 
       @Override
       public Builder from(Request other) {
@@ -872,14 +856,10 @@ public final class CreatePost {
 basic[src/main/java/com/fern/basic/client/blog/endpoints/GetPost.java]=[
 package com.fern.basic.client.blog.endpoints;
 
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
 public final class GetPost {
-  private GetPost() {
-  }
+  private GetPost() {}
 
   public static final class Request {
     private final String postId;
@@ -934,8 +914,7 @@ public final class GetPost {
     static final class Builder implements PostIdStage, _FinalStage {
       private String postId;
 
-      private Builder() {
-      }
+      private Builder() {}
 
       @Override
       public Builder from(Request other) {
@@ -966,9 +945,6 @@ package com.fern.basic.client.blog.errors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.basic.client.blog.types.GeneratorIdAndVersion;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.List;
 
 public final class GeneratorsDoNotExistError {
@@ -985,7 +961,9 @@ public final class GeneratorsDoNotExistError {
 
   @Override
   public boolean equals(Object other) {
-    return this == other || (other instanceof GeneratorsDoNotExistError && this.value.equals(((GeneratorsDoNotExistError) other).value));
+    return this == other
+        || (other instanceof GeneratorsDoNotExistError
+            && this.value.equals(((GeneratorsDoNotExistError) other).value));
   }
 
   @Override
@@ -998,9 +976,7 @@ public final class GeneratorsDoNotExistError {
     return value.toString();
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static GeneratorsDoNotExistError of(List<GeneratorIdAndVersion> value) {
     return new GeneratorsDoNotExistError(value);
   }
@@ -1015,9 +991,6 @@ package com.fern.basic.client.blog.errors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.basic.client.blog.types.PostNotFoundErrorBody;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 
 public final class PostNotFoundError {
   private final PostNotFoundErrorBody value;
@@ -1033,7 +1006,9 @@ public final class PostNotFoundError {
 
   @Override
   public boolean equals(Object other) {
-    return this == other || (other instanceof PostNotFoundError && this.value.equals(((PostNotFoundError) other).value));
+    return this == other
+        || (other instanceof PostNotFoundError
+            && this.value.equals(((PostNotFoundError) other).value));
   }
 
   @Override
@@ -1046,9 +1021,7 @@ public final class PostNotFoundError {
     return value.toString();
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static PostNotFoundError of(PostNotFoundErrorBody value) {
     return new PostNotFoundError(value);
   }
@@ -1063,9 +1036,6 @@ package com.fern.basic.client.blog.errors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.basic.client.blog.types.UnauthorizedErrorBody;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 
 public final class UnauthorizedError {
   private final UnauthorizedErrorBody value;
@@ -1081,7 +1051,9 @@ public final class UnauthorizedError {
 
   @Override
   public boolean equals(Object other) {
-    return this == other || (other instanceof UnauthorizedError && this.value.equals(((UnauthorizedError) other).value));
+    return this == other
+        || (other instanceof UnauthorizedError
+            && this.value.equals(((UnauthorizedError) other).value));
   }
 
   @Override
@@ -1094,9 +1066,7 @@ public final class UnauthorizedError {
     return value.toString();
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static UnauthorizedError of(UnauthorizedErrorBody value) {
     return new UnauthorizedError(value);
   }
@@ -1117,16 +1087,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonDeserialize(
-    using = CreatePostException.Deserializer.class
-)
+@JsonDeserialize(using = CreatePostException.Deserializer.class)
 public final class CreatePostException extends Exception {
   private final Value value;
 
@@ -1168,11 +1132,8 @@ public final class CreatePostException extends Exception {
       use = JsonTypeInfo.Id.NAME,
       property = "_error",
       visible = true,
-      defaultImpl = UnknownErrorValue.class
-  )
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+      defaultImpl = UnknownErrorValue.class)
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
@@ -1180,9 +1141,7 @@ public final class CreatePostException extends Exception {
   private static final class UnknownErrorValue implements Value {
     private Object unknownValue;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.DELEGATING
-    )
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
       this.unknownValue = unknownValue;
     }
@@ -1215,8 +1174,8 @@ public final class CreatePostException extends Exception {
 
   static final class Deserializer extends JsonDeserializer<CreatePostException> {
     @Override
-    public CreatePostException deserialize(JsonParser p, DeserializationContext ctx) throws
-        IOException {
+    public CreatePostException deserialize(JsonParser p, DeserializationContext ctx)
+        throws IOException {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new CreatePostException(value, statusCode);
@@ -1242,17 +1201,11 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.basic.client.blog.errors.PostNotFoundError;
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonDeserialize(
-    using = GetPostException.Deserializer.class
-)
+@JsonDeserialize(using = GetPostException.Deserializer.class)
 public final class GetPostException extends Exception {
   private final Value value;
 
@@ -1311,12 +1264,9 @@ public final class GetPostException extends Exception {
       use = JsonTypeInfo.Id.NAME,
       property = "_error",
       visible = true,
-      defaultImpl = UnknownErrorValue.class
-  )
+      defaultImpl = UnknownErrorValue.class)
   @JsonSubTypes(@JsonSubTypes.Type(PostNotFoundErrorValue.class))
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
@@ -1327,10 +1277,9 @@ public final class GetPostException extends Exception {
 
     private String errorInstanceId;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private PostNotFoundErrorValue(@JsonProperty("value") PostNotFoundError value,
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    private PostNotFoundErrorValue(
+        @JsonProperty("value") PostNotFoundError value,
         @JsonProperty("_errorInstanceId") String errorInstanceId) {
       this.value = value;
       this.errorInstanceId = errorInstanceId;
@@ -1363,16 +1312,19 @@ public final class GetPostException extends Exception {
 
     @Override
     public String toString() {
-      return "GetPostException{" + "value: " + value + ", errorInstanceId: " + errorInstanceId + "}";
+      return "GetPostException{"
+          + "value: "
+          + value
+          + ", errorInstanceId: "
+          + errorInstanceId
+          + "}";
     }
   }
 
   private static final class UnknownErrorValue implements Value {
     private Object unknownValue;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.DELEGATING
-    )
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
       this.unknownValue = unknownValue;
     }
@@ -1405,8 +1357,8 @@ public final class GetPostException extends Exception {
 
   static final class Deserializer extends JsonDeserializer<GetPostException> {
     @Override
-    public GetPostException deserialize(JsonParser p, DeserializationContext ctx) throws
-        IOException {
+    public GetPostException deserialize(JsonParser p, DeserializationContext ctx)
+        throws IOException {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new GetPostException(value, statusCode);
@@ -1427,18 +1379,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class Author {
   private final Value value;
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   private Author(Value value) {
     this.value = value;
   }
@@ -1498,26 +1445,17 @@ public final class Author {
       use = JsonTypeInfo.Id.NAME,
       property = "type",
       visible = true,
-      defaultImpl = _UnknownValue.class
-  )
-  @JsonSubTypes({
-      @JsonSubTypes.Type(AnonymousValue.class),
-      @JsonSubTypes.Type(NameValue.class)
-  })
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+      defaultImpl = _UnknownValue.class)
+  @JsonSubTypes({@JsonSubTypes.Type(AnonymousValue.class), @JsonSubTypes.Type(NameValue.class)})
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
 
   @JsonTypeName("anonymous")
   private static final class AnonymousValue implements Value {
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private AnonymousValue() {
-    }
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    private AnonymousValue() {}
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
@@ -1541,9 +1479,7 @@ public final class Author {
     @JsonProperty("name")
     private String name;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     private NameValue(@JsonProperty("name") String name) {
       this.name = name;
     }
@@ -1577,14 +1513,10 @@ public final class Author {
   private static final class _UnknownValue implements Value {
     private String type;
 
-    @JsonValue
-    private Object value;
+    @JsonValue private Object value;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private _UnknownValue(@JsonProperty("value") Object value) {
-    }
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    private _UnknownValue(@JsonProperty("value") Object value) {}
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
@@ -1623,14 +1555,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = BlogPost.Builder.class
-)
+@JsonDeserialize(builder = BlogPost.Builder.class)
 public final class BlogPost {
   private final String id;
 
@@ -1684,7 +1611,11 @@ public final class BlogPost {
   }
 
   private boolean equalTo(BlogPost other) {
-    return id.equals(other.id) && type.equals(other.type) && title.equals(other.title) && author.equals(other.author) && content.equals(other.content);
+    return id.equals(other.id)
+        && type.equals(other.type)
+        && title.equals(other.title)
+        && author.equals(other.author)
+        && content.equals(other.content);
   }
 
   @Override
@@ -1697,7 +1628,18 @@ public final class BlogPost {
 
   @Override
   public String toString() {
-    return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author + ", content: " + content + "}";
+    return "BlogPost{"
+        + "id: "
+        + id
+        + ", type: "
+        + type
+        + ", title: "
+        + title
+        + ", author: "
+        + author
+        + ", content: "
+        + content
+        + "}";
   }
 
   public static IdStage builder() {
@@ -1730,10 +1672,9 @@ public final class BlogPost {
     BlogPost build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  static final class Builder
+      implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
     private String id;
 
     private PostType type;
@@ -1744,8 +1685,7 @@ public final class BlogPost {
 
     private String content;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(BlogPost other) {
@@ -1810,17 +1750,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Integer;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = CreatePostRequest.Builder.class
-)
+@JsonDeserialize(builder = CreatePostRequest.Builder.class)
 public final class CreatePostRequest {
   private final String title;
 
@@ -1836,7 +1770,12 @@ public final class CreatePostRequest {
 
   private int _cachedHashCode;
 
-  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch,
+  CreatePostRequest(
+      String title,
+      Author author,
+      String content,
+      PostType postType,
+      int _switch,
       Map<String, Integer> ratings) {
     this.title = title;
     this.author = author;
@@ -1883,20 +1822,40 @@ public final class CreatePostRequest {
   }
 
   private boolean equalTo(CreatePostRequest other) {
-    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch && ratings.equals(other.ratings);
+    return title.equals(other.title)
+        && author.equals(other.author)
+        && content.equals(other.content)
+        && postType.equals(other.postType)
+        && _switch == other._switch
+        && ratings.equals(other.ratings);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch, this.ratings);
+      _cachedHashCode =
+          Objects.hash(
+              this.title, this.author, this.content, this.postType, this._switch, this.ratings);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + ", ratings: " + ratings + "}";
+    return "CreatePostRequest{"
+        + "title: "
+        + title
+        + ", author: "
+        + author
+        + ", content: "
+        + content
+        + ", postType: "
+        + postType
+        + ", _switch: "
+        + _switch
+        + ", ratings: "
+        + ratings
+        + "}";
   }
 
   public static TitleStage builder() {
@@ -1935,10 +1894,9 @@ public final class CreatePostRequest {
     _FinalStage ratings(String key, Integer value);
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  static final class Builder
+      implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
     private String title;
 
     private Author author;
@@ -1951,8 +1909,7 @@ public final class CreatePostRequest {
 
     private Map<String, Integer> ratings = new LinkedHashMap<>();
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(CreatePostRequest other) {
@@ -2013,10 +1970,7 @@ public final class CreatePostRequest {
     }
 
     @Override
-    @JsonSetter(
-        value = "ratings",
-        nulls = Nulls.SKIP
-    )
+    @JsonSetter(value = "ratings", nulls = Nulls.SKIP)
     public _FinalStage ratings(Map<String, Integer> ratings) {
       this.ratings.clear();
       this.ratings.putAll(ratings);
@@ -2040,14 +1994,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = GeneratorIdAndVersion.Builder.class
-)
+@JsonDeserialize(builder = GeneratorIdAndVersion.Builder.class)
 public final class GeneratorIdAndVersion {
   private final String id;
 
@@ -2111,16 +2060,13 @@ public final class GeneratorIdAndVersion {
     GeneratorIdAndVersion build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static final class Builder implements IdStage, VersionStage, _FinalStage {
     private String id;
 
     private String version;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(GeneratorIdAndVersion other) {
@@ -2160,14 +2106,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = PostNotFoundErrorBody.Builder.class
-)
+@JsonDeserialize(builder = PostNotFoundErrorBody.Builder.class)
 public final class PostNotFoundErrorBody {
   private final String id;
 
@@ -2219,14 +2160,11 @@ public final class PostNotFoundErrorBody {
     PostNotFoundErrorBody build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static final class Builder implements IdStage, _FinalStage {
     private String id;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(PostNotFoundErrorBody other) {
@@ -2256,9 +2194,6 @@ package com.fern.basic.client.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Locale;
 
 public final class PostType {
@@ -2289,8 +2224,8 @@ public final class PostType {
 
   @Override
   public boolean equals(Object other) {
-    return (this == other) 
-      || (other instanceof PostType && this.string.equals(((PostType) other).string));
+    return (this == other)
+        || (other instanceof PostType && this.string.equals(((PostType) other).string));
   }
 
   @Override
@@ -2312,9 +2247,7 @@ public final class PostType {
     }
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
@@ -2360,14 +2293,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = UnauthorizedErrorBody.Builder.class
-)
+@JsonDeserialize(builder = UnauthorizedErrorBody.Builder.class)
 public final class UnauthorizedErrorBody {
   private final String reason;
 
@@ -2419,14 +2347,11 @@ public final class UnauthorizedErrorBody {
     UnauthorizedErrorBody build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static final class Builder implements ReasonStage, _FinalStage {
     private String reason;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(UnauthorizedErrorBody other) {
@@ -2462,7 +2387,6 @@ import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
-import java.lang.String;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -2487,7 +2411,8 @@ interface DummyService {
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new DummyServiceErrorDecoder()).target(DummyService.class, url);
+        .errorDecoder(new DummyServiceErrorDecoder())
+        .target(DummyService.class, url);
   }
 }
 
@@ -2500,7 +2425,6 @@ package com.fern.basic.client.dummy.service;
 import com.fern.basic.client.dummy.service.endpoints.GetDummy;
 import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
 import com.fern.basic.client.dummy.service.exceptions.HealthException;
-import java.lang.String;
 
 public final class DummyServiceClient {
   private final DummyService service;
@@ -2530,11 +2454,6 @@ import com.fern.basic.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
-import java.lang.Class;
-import java.lang.Exception;
-import java.lang.Override;
-import java.lang.RuntimeException;
-import java.lang.String;
 
 final class DummyServiceErrorDecoder implements ErrorDecoder {
   @Override
@@ -2546,15 +2465,21 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
       if (methodKey.contains("health")) {
         return decodeException(response, HealthException.class);
       }
+    } catch (IOException e) {
     }
-    catch (IOException e) {
-    }
-    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+    return new RuntimeException(
+        "Failed to read response body. Received status "
+            + response.status()
+            + " for method "
+            + methodKey);
   }
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER
+        .reader()
+        .withAttribute("statusCode", response.status())
+        .readValue(response.body().asInputStream(), clazz);
   }
 }
 
@@ -2564,14 +2489,10 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
 basic[src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
 package com.fern.basic.client.dummy.service.endpoints;
 
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
 public final class GetDummy {
-  private GetDummy() {
-  }
+  private GetDummy() {}
 
   public static final class Request {
     private final String body;
@@ -2626,8 +2547,7 @@ public final class GetDummy {
     static final class Builder implements BodyStage, _FinalStage {
       private String body;
 
-      private Builder() {
-      }
+      private Builder() {}
 
       @Override
       public Builder from(Request other) {
@@ -2664,16 +2584,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonDeserialize(
-    using = GetDummyException.Deserializer.class
-)
+@JsonDeserialize(using = GetDummyException.Deserializer.class)
 public final class GetDummyException extends Exception {
   private final Value value;
 
@@ -2715,11 +2629,8 @@ public final class GetDummyException extends Exception {
       use = JsonTypeInfo.Id.NAME,
       property = "_error",
       visible = true,
-      defaultImpl = UnknownErrorValue.class
-  )
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+      defaultImpl = UnknownErrorValue.class)
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
@@ -2727,9 +2638,7 @@ public final class GetDummyException extends Exception {
   private static final class UnknownErrorValue implements Value {
     private Object unknownValue;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.DELEGATING
-    )
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
       this.unknownValue = unknownValue;
     }
@@ -2762,8 +2671,8 @@ public final class GetDummyException extends Exception {
 
   static final class Deserializer extends JsonDeserializer<GetDummyException> {
     @Override
-    public GetDummyException deserialize(JsonParser p, DeserializationContext ctx) throws
-        IOException {
+    public GetDummyException deserialize(JsonParser p, DeserializationContext ctx)
+        throws IOException {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new GetDummyException(value, statusCode);
@@ -2786,16 +2695,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.IOException;
-import java.lang.Exception;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonDeserialize(
-    using = HealthException.Deserializer.class
-)
+@JsonDeserialize(using = HealthException.Deserializer.class)
 public final class HealthException extends Exception {
   private final Value value;
 
@@ -2837,11 +2740,8 @@ public final class HealthException extends Exception {
       use = JsonTypeInfo.Id.NAME,
       property = "_error",
       visible = true,
-      defaultImpl = UnknownErrorValue.class
-  )
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+      defaultImpl = UnknownErrorValue.class)
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
@@ -2849,9 +2749,7 @@ public final class HealthException extends Exception {
   private static final class UnknownErrorValue implements Value {
     private Object unknownValue;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.DELEGATING
-    )
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
       this.unknownValue = unknownValue;
     }
@@ -2884,8 +2782,8 @@ public final class HealthException extends Exception {
 
   static final class Deserializer extends JsonDeserializer<HealthException> {
     @Override
-    public HealthException deserialize(JsonParser p, DeserializationContext ctx) throws
-        IOException {
+    public HealthException deserialize(JsonParser p, DeserializationContext ctx)
+        throws IOException {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new HealthException(value, statusCode);
@@ -2900,8 +2798,6 @@ basic[src/main/java/com/fern/basic/core/BearerAuth.java]=[
 package com.fern.basic.core;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
-import java.lang.String;
 
 public final class BearerAuth {
   private final String token;
@@ -2930,8 +2826,6 @@ public final class BearerAuth {
 
 basic[src/main/java/com/fern/basic/core/Environment.java]=[
 package com.fern.basic.core;
-
-import java.lang.String;
 
 public final class Environment {
   public static final Environment PROD = new Environment("prod.com");
@@ -2965,13 +2859,13 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 public final class ObjectMappers {
-  public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
-    .addModule(new Jdk8Module())
-    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-    .build();
+  public static final ObjectMapper JSON_MAPPER =
+      JsonMapper.builder()
+          .addModule(new Jdk8Module())
+          .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+          .build();
 
-    private ObjectMappers() {
-    }
-  }
+  private ObjectMappers() {}
+}
 
 ]

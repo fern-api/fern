@@ -22,6 +22,7 @@ import com.fern.java.generators.AbstractFilesGenerator;
 import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradleRepository;
 import com.fern.java.output.gradle.RootProjectGradleDependency;
 import com.squareup.javapoet.ArrayTypeName;
@@ -48,7 +49,9 @@ public final class SampleAppGenerator extends AbstractFilesGenerator {
     public List<GeneratedFile> generateFiles() {
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
                 .directoryPrefix(SAMPLE_APP_DIRECTORY)
-                .addAllPluginIds(List.of(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID))
+                .addPlugins(GradlePlugin.builder()
+                        .pluginId(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID)
+                        .build())
                 .addCustomRepositories(GradleRepository.builder()
                         .url("https://s01.oss.sonatype.org/content/repositories/releases/")
                         .build())

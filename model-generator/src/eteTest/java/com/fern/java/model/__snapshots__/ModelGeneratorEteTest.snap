@@ -289,14 +289,14 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 public final class ObjectMappers {
-  public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
-    .addModule(new Jdk8Module())
-    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-    .build();
+  public static final ObjectMapper JSON_MAPPER =
+      JsonMapper.builder()
+          .addModule(new Jdk8Module())
+          .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+          .build();
 
-    private ObjectMappers() {
-    }
-  }
+  private ObjectMappers() {}
+}
 
 ]
 
@@ -306,10 +306,6 @@ package com.fern.basic.model.blog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Integer;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 
 public final class Age {
   private final int value;
@@ -338,9 +334,7 @@ public final class Age {
     return Integer.toString(value);
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static Age of(int value) {
     return new Age(value);
   }
@@ -363,18 +357,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class Author {
   private final Value value;
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   private Author(Value value) {
     this.value = value;
   }
@@ -434,26 +423,17 @@ public final class Author {
       use = JsonTypeInfo.Id.NAME,
       property = "type",
       visible = true,
-      defaultImpl = _UnknownValue.class
-  )
-  @JsonSubTypes({
-      @JsonSubTypes.Type(AnonymousValue.class),
-      @JsonSubTypes.Type(NameValue.class)
-  })
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+      defaultImpl = _UnknownValue.class)
+  @JsonSubTypes({@JsonSubTypes.Type(AnonymousValue.class), @JsonSubTypes.Type(NameValue.class)})
+  @JsonIgnoreProperties(ignoreUnknown = true)
   private interface Value {
     <T> T visit(Visitor<T> visitor);
   }
 
   @JsonTypeName("anonymous")
   private static final class AnonymousValue implements Value {
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private AnonymousValue() {
-    }
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    private AnonymousValue() {}
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
@@ -477,9 +457,7 @@ public final class Author {
     @JsonProperty("name")
     private String name;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     private NameValue(@JsonProperty("name") String name) {
       this.name = name;
     }
@@ -513,14 +491,10 @@ public final class Author {
   private static final class _UnknownValue implements Value {
     private String type;
 
-    @JsonValue
-    private Object value;
+    @JsonValue private Object value;
 
-    @JsonCreator(
-        mode = JsonCreator.Mode.PROPERTIES
-    )
-    private _UnknownValue(@JsonProperty("value") Object value) {
-    }
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    private _UnknownValue(@JsonProperty("value") Object value) {}
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
@@ -559,14 +533,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = BlogPost.Builder.class
-)
+@JsonDeserialize(builder = BlogPost.Builder.class)
 public final class BlogPost {
   private final PostId id;
 
@@ -620,7 +589,11 @@ public final class BlogPost {
   }
 
   private boolean equalTo(BlogPost other) {
-    return id.equals(other.id) && type.equals(other.type) && title.equals(other.title) && author.equals(other.author) && content.equals(other.content);
+    return id.equals(other.id)
+        && type.equals(other.type)
+        && title.equals(other.title)
+        && author.equals(other.author)
+        && content.equals(other.content);
   }
 
   @Override
@@ -633,7 +606,18 @@ public final class BlogPost {
 
   @Override
   public String toString() {
-    return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author + ", content: " + content + "}";
+    return "BlogPost{"
+        + "id: "
+        + id
+        + ", type: "
+        + type
+        + ", title: "
+        + title
+        + ", author: "
+        + author
+        + ", content: "
+        + content
+        + "}";
   }
 
   public static IdStage builder() {
@@ -666,10 +650,9 @@ public final class BlogPost {
     BlogPost build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  static final class Builder
+      implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
     private PostId id;
 
     private PostType type;
@@ -680,8 +663,7 @@ public final class BlogPost {
 
     private String content;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(BlogPost other) {
@@ -745,14 +727,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = CreatePostRequest.Builder.class
-)
+@JsonDeserialize(builder = CreatePostRequest.Builder.class)
 public final class CreatePostRequest {
   private final String title;
 
@@ -806,20 +783,36 @@ public final class CreatePostRequest {
   }
 
   private boolean equalTo(CreatePostRequest other) {
-    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch;
+    return title.equals(other.title)
+        && author.equals(other.author)
+        && content.equals(other.content)
+        && postType.equals(other.postType)
+        && _switch == other._switch;
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch);
+      _cachedHashCode =
+          Objects.hash(this.title, this.author, this.content, this.postType, this._switch);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + "}";
+    return "CreatePostRequest{"
+        + "title: "
+        + title
+        + ", author: "
+        + author
+        + ", content: "
+        + content
+        + ", postType: "
+        + postType
+        + ", _switch: "
+        + _switch
+        + "}";
   }
 
   public static TitleStage builder() {
@@ -852,10 +845,9 @@ public final class CreatePostRequest {
     CreatePostRequest build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  static final class Builder
+      implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
     private String title;
 
     private Author author;
@@ -866,8 +858,7 @@ public final class CreatePostRequest {
 
     private int _switch;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(CreatePostRequest other) {
@@ -931,14 +922,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = GeneratorIdAndVersion.Builder.class
-)
+@JsonDeserialize(builder = GeneratorIdAndVersion.Builder.class)
 public final class GeneratorIdAndVersion {
   private final String id;
 
@@ -1002,16 +988,13 @@ public final class GeneratorIdAndVersion {
     GeneratorIdAndVersion build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static final class Builder implements IdStage, VersionStage, _FinalStage {
     private String id;
 
     private String version;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(GeneratorIdAndVersion other) {
@@ -1049,9 +1032,6 @@ package com.fern.basic.model.blog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 
 public final class PostId {
   private final String value;
@@ -1080,9 +1060,7 @@ public final class PostId {
     return value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static PostId of(String value) {
     return new PostId(value);
   }
@@ -1102,14 +1080,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = PostNotFoundErrorBody.Builder.class
-)
+@JsonDeserialize(builder = PostNotFoundErrorBody.Builder.class)
 public final class PostNotFoundErrorBody {
   private final PostId id;
 
@@ -1161,14 +1134,11 @@ public final class PostNotFoundErrorBody {
     PostNotFoundErrorBody build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static final class Builder implements IdStage, _FinalStage {
     private PostId id;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(PostNotFoundErrorBody other) {
@@ -1198,9 +1168,6 @@ package com.fern.basic.model.blog;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Locale;
 
 public final class PostType {
@@ -1231,8 +1198,8 @@ public final class PostType {
 
   @Override
   public boolean equals(Object other) {
-    return (this == other) 
-      || (other instanceof PostType && this.string.equals(((PostType) other).string));
+    return (this == other)
+        || (other instanceof PostType && this.string.equals(((PostType) other).string));
   }
 
   @Override
@@ -1254,9 +1221,7 @@ public final class PostType {
     }
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
@@ -1302,14 +1267,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Objects;
 
-@JsonDeserialize(
-    builder = UnauthorizedErrorBody.Builder.class
-)
+@JsonDeserialize(builder = UnauthorizedErrorBody.Builder.class)
 public final class UnauthorizedErrorBody {
   private final String reason;
 
@@ -1361,14 +1321,11 @@ public final class UnauthorizedErrorBody {
     UnauthorizedErrorBody build();
   }
 
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
+  @JsonIgnoreProperties(ignoreUnknown = true)
   static final class Builder implements ReasonStage, _FinalStage {
     private String reason;
 
-    private Builder() {
-    }
+    private Builder() {}
 
     @Override
     public Builder from(UnauthorizedErrorBody other) {
@@ -1398,9 +1355,6 @@ package com.fern.basic.model.dummy.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 
 public final class DummyId {
   private final String value;
@@ -1416,7 +1370,8 @@ public final class DummyId {
 
   @Override
   public boolean equals(Object other) {
-    return this == other || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
+    return this == other
+        || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
   }
 
   @Override
@@ -1429,9 +1384,7 @@ public final class DummyId {
     return value;
   }
 
-  @JsonCreator(
-      mode = JsonCreator.Mode.DELEGATING
-  )
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
   public static DummyId of(String value) {
     return new DummyId(value);
   }
