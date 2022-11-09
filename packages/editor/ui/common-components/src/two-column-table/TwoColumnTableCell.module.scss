@@ -1,5 +1,8 @@
 .cell {
     display: flex;
-    align-items: center;
     font-size: 16px;
+
+    &.verticalAlignCenter {
+        align-items: center;
+    }
 }

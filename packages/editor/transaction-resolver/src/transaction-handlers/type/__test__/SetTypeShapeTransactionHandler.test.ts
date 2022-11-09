@@ -2,6 +2,10 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
+const ALIAS_OF_STRING_SHAPE = FernApiEditor.Shape.alias({
+    aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+});
+
 describe("SetTypeDescriptionTransactionHandler", () => {
     it("correctly sets alias type", () => {
         const api = new MockApi();
@@ -11,11 +15,11 @@ describe("SetTypeDescriptionTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: FernApiEditor.transactions.TypeShape.Alias,
+            shape: ALIAS_OF_STRING_SHAPE,
         });
         api.applyTransaction(transaction);
 
-        expect(api.definition.types[first.typeId]?.shape).toEqual(FernApiEditor.Shape.alias({}));
+        expect(api.definition.types[first.typeId]?.shape).toEqual(ALIAS_OF_STRING_SHAPE);
     });
 
     it("correctly sets object type", () => {
@@ -26,7 +30,7 @@ describe("SetTypeDescriptionTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: FernApiEditor.transactions.TypeShape.Object,
+            shape: ALIAS_OF_STRING_SHAPE,
         });
         api.applyTransaction(transaction);
 
@@ -41,7 +45,7 @@ describe("SetTypeDescriptionTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: FernApiEditor.transactions.TypeShape.Union,
+            shape: ALIAS_OF_STRING_SHAPE,
         });
         api.applyTransaction(transaction);
 
@@ -56,7 +60,7 @@ describe("SetTypeDescriptionTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: FernApiEditor.transactions.TypeShape.Enum,
+            shape: ALIAS_OF_STRING_SHAPE,
         });
         api.applyTransaction(transaction);
 
@@ -69,9 +73,9 @@ describe("SetTypeDescriptionTransactionHandler", () => {
         package_.addType();
         package_.addType();
 
-        const transaction = TransactionGenerator.setTypeDescription({
+        const transaction = TransactionGenerator.setTypeShape({
             typeId: "made-up-id",
-            description: "New type name",
+            shape: ALIAS_OF_STRING_SHAPE,
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

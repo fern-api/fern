@@ -4,6 +4,7 @@ import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React from "react";
 import { TYPE_NAME_PLACEHOLDER } from "../placeholder";
 import { TypeIcon } from "../TypeIcon";
+import { AliasOf } from "./AliasOf";
 import styles from "./TypePage.module.scss";
 import { TypeShapeChooser } from "./TypeShapeChooser";
 import { useLocalDescription } from "./useLocalDescription";
@@ -27,17 +28,21 @@ export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
                     <EditableText {...localTypeName} placeholder={TYPE_NAME_PLACEHOLDER} />
                 </H2>
             </div>
+            <EditableText {...localDescription} multiline placeholder="Enter a description..."></EditableText>
             <TwoColumnTable>
-                <TwoColumnTableRow label="Description">
-                    <EditableText
-                        {...localDescription}
-                        className={styles.description}
-                        multiline
-                        placeholder="Enter a description..."
-                    ></EditableText>
-                </TwoColumnTableRow>
-                <TwoColumnTableRow label="Schema">
-                    <TypeShapeChooser type={type} />
+                <TwoColumnTableRow label="Schema" verticallyCenterLabel>
+                    <div className={styles.schema}>
+                        <TypeShapeChooser type={type} />
+                        {type.shape._visit({
+                            alias: (shape) => <AliasOf shape={shape} typeId={type.typeId} />,
+                            enum: () => <div>enum</div>,
+                            object: () => <div>object</div>,
+                            union: () => <div>union</div>,
+                            _other: ({ type }) => {
+                                throw new Error("Unknown shape type: " + type);
+                            },
+                        })}
+                    </div>
                 </TwoColumnTableRow>
             </TwoColumnTable>
         </div>

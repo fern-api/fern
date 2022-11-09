@@ -25,7 +25,6 @@ export declare namespace TypeShapeChooser {
 
 export const TypeShapeChooser: React.FC<TypeShapeChooser.Props> = ({ type }) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
     const popoverProps = useMemo(
         (): SelectPopoverProps["popoverProps"] => ({
             isOpen: isPopoverOpen,
@@ -55,13 +54,16 @@ export const TypeShapeChooser: React.FC<TypeShapeChooser.Props> = ({ type }) => 
         [type.shape]
     );
 
+    const [activeItem, setActiveItem] = useState<TypeShape | null>(typeShape);
+
     const { submitTransaction } = useApiEditorContext();
     const setTypeShape = useCallback(
         (newShape: TypeShape) => {
+            setIsPopoverOpen(false);
             submitTransaction(
                 TransactionGenerator.setTypeShape({
                     typeId: type.typeId,
-                    shape: convertShapeForTransaction(newShape),
+                    shape: getDefaultShape(newShape),
                 })
             );
         },
@@ -75,6 +77,8 @@ export const TypeShapeChooser: React.FC<TypeShapeChooser.Props> = ({ type }) => 
             itemRenderer={renderShapeOption}
             filterable={false}
             popoverProps={popoverProps}
+            activeItem={activeItem}
+            onActiveItemChange={setActiveItem}
         >
             <div
                 className={classNames(styles.container, {
@@ -130,16 +134,18 @@ function getLabelForTypeShape(shape: TypeShape): string {
     }
 }
 
-function convertShapeForTransaction(shape: TypeShape): FernApiEditor.transactions.TypeShape {
+function getDefaultShape(shape: TypeShape): FernApiEditor.Shape {
     switch (shape) {
         case TypeShape.ALIAS:
-            return FernApiEditor.transactions.TypeShape.Alias;
+            return FernApiEditor.Shape.alias({
+                aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+            });
         case TypeShape.OBJECT:
-            return FernApiEditor.transactions.TypeShape.Object;
+            return FernApiEditor.Shape.object({});
         case TypeShape.UNION:
-            return FernApiEditor.transactions.TypeShape.Union;
+            return FernApiEditor.Shape.union({});
         case TypeShape.ENUM:
-            return FernApiEditor.transactions.TypeShape.Enum;
+            return FernApiEditor.Shape.enum({});
         default:
             assertNever(shape);
     }

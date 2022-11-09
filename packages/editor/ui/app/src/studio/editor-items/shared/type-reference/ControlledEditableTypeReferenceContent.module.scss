@@ -1,0 +1,37 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    align-items: center;
+    border-radius: $pt-border-radius;
+    cursor: default;
+    padding-left: 1px;
+    padding-right: 1px;
+
+    &.horizontalPadding {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    &.selected {
+        background-color: $gray5;
+    }
+
+    &.clickable {
+        cursor: pointer;
+
+        &.hovered {
+            background-color: $light-gray3;
+        }
+
+        &.active {
+            background-color: $gray3;
+        }
+
+        &.selected {
+            &.hovered {
+                background-color: $gray4;
+            }
+        }
+    }
+}

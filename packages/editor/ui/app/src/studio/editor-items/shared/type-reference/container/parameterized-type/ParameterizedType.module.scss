@@ -1,0 +1,13 @@
+@use "sass:math";
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.typeParameters {
+    display: flex;
+    align-items: center;
+    border-radius: $pt-border-radius;
+
+    &.withVerticalMargin {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+}

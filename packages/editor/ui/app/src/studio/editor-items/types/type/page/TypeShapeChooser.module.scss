@@ -6,8 +6,8 @@ $transition-time: 500ms;
 
 .container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
     padding: 3px 5px;
     border-width: 1px;
     border-color: transparent;
@@ -16,6 +16,7 @@ $transition-time: 500ms;
     border-radius: $pt-border-radius;
     transition: border-color $transition-time;
     cursor: pointer;
+    width: 90px;
 
     .icon {
         opacity: 0.5;

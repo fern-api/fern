@@ -22,7 +22,9 @@ describe("CreateTypeTransactionHandler", () => {
         const expectedNewType: FernApiEditor.Type = {
             typeId,
             typeName: "My new type",
-            shape: FernApiEditor.Shape.alias({}),
+            shape: FernApiEditor.Shape.alias({
+                aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+            }),
         };
 
         expect(api.definition.types[typeId]).toEqual(expectedNewType);
