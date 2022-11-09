@@ -27,6 +27,7 @@ import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.client.generators.ClientErrorGenerator;
 import com.fern.java.client.generators.ClientWrapperGenerator;
+import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.HttpServiceClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.generators.AuthGenerator;
@@ -92,6 +93,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
         GeneratedJavaFile objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
 
+        EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
+        Optional<GeneratedEnvironmentsClass> generatedEnvironmentsClass = environmentGenerator.generateFile();
+        generatedEnvironmentsClass.ifPresent(this::addGeneratedFile);
+
         // auth
         AuthGenerator authGenerator = new AuthGenerator(context);
         Optional<GeneratedAuthFiles> maybeAuth = authGenerator.generate();
@@ -136,7 +141,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
 
         // client wrapper
         ClientWrapperGenerator clientWrapperGenerator =
-                new ClientWrapperGenerator(context, generatedServiceClients, maybeAuth);
+                new ClientWrapperGenerator(context, generatedServiceClients, generatedEnvironmentsClass, maybeAuth);
         GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generateFile();
         this.addGeneratedFile(generatedClientWrapper);
         generatedClientWrapper.nestedClients().forEach(this::addGeneratedFile);

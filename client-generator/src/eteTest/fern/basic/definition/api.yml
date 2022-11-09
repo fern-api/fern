@@ -1,2 +1,6 @@
 name: basic
 auth: bearer
+environments:
+  prod: prod.com
+  staging: staging.com
+default-environment: prod

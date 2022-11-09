@@ -287,7 +287,7 @@ import com.fern.basic.client.auth.AuthServiceClient;
 import com.fern.basic.client.blog.PostsServiceClient;
 import com.fern.basic.client.dummy.service.DummyServiceClient;
 import com.fern.basic.core.BearerAuth;
-import java.lang.String;
+import com.fern.basic.core.Environment;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -299,16 +299,24 @@ public final class FernFernClient {
 
   private final Supplier<DummyServiceClient> dummyServiceClient;
 
-  public FernFernClient(String url) {
-    this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
-    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
-    this.authServiceClient = memoize(() -> new AuthServiceClient(url));
+  public FernFernClient() {
+    this(Environment.PROD);
   }
 
-  public FernFernClient(String url, BearerAuth auth) {
-    this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
-    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
-    this.authServiceClient = memoize(() -> new AuthServiceClient(url, auth));
+  public FernFernClient(BearerAuth auth) {
+    this(Environment.PROD, auth);
+  }
+
+  public FernFernClient(Environment environment) {
+    this.postsServiceClient = memoize(() -> new PostsServiceClient(environment.getUrl()));
+    this.dummyServiceClient = memoize(() -> new DummyServiceClient(environment.getUrl()));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl()));
+  }
+
+  public FernFernClient(Environment environment, BearerAuth auth) {
+    this.postsServiceClient = memoize(() -> new PostsServiceClient(environment.getUrl()));
+    this.dummyServiceClient = memoize(() -> new DummyServiceClient(environment.getUrl()));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl(), auth));
   }
 
   public final AuthServiceClient auth() {
@@ -2914,6 +2922,34 @@ public final class BearerAuth {
 
   public static BearerAuth of(String token) {
     return new BearerAuth(token.startsWith("Bearer ") ? token.substring(7) : token);
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/core/Environment.java]=[
+package com.fern.basic.core;
+
+import java.lang.String;
+
+public final class Environment {
+  public static final Environment PROD = new Environment("prod.com");
+
+  public static final Environment STAGING = new Environment("staging.com");
+
+  private final String url;
+
+  private Environment(String url) {
+    this.url = url;
+  }
+
+  public String getUrl() {
+    return this.url;
+  }
+
+  public static Environment custom(String url) {
+    return new Environment(url);
   }
 }
 
