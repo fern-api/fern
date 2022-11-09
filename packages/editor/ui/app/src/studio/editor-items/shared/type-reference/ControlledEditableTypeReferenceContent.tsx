@@ -8,20 +8,16 @@ export declare namespace ControlledEditableTypeReferenceContent {
     export type Props = React.PropsWithChildren<{
         isHovering: boolean;
         isPopoverOpen: boolean;
-        onMouseOver: () => void;
-        onMouseLeave: () => void;
-        onMouseMove: () => void;
-        onClick?: () => void;
+        onMouseOver: (event: React.MouseEvent) => void;
+        onMouseOut: () => void;
     }>;
 }
 
 export const ControlledEditableTypeReferenceContent: React.FC<ControlledEditableTypeReferenceContent.Props> = ({
     isHovering,
     isPopoverOpen,
-    onMouseLeave,
-    onMouseMove,
+    onMouseOut,
     onMouseOver,
-    onClick,
     children,
 }) => {
     const {
@@ -54,11 +50,9 @@ export const ControlledEditableTypeReferenceContent: React.FC<ControlledEditable
     return (
         <TypeReferenceContext.Provider value={contextValue}>
             <div
-                onMouseLeave={onMouseLeave}
-                onMouseMove={onMouseMove}
-                onMouseOver={onMouseOver}
+                onMouseOut={onMouseOut}
                 onMouseDown={onMouseDown}
-                onClick={onClick}
+                onMouseOver={onMouseOver}
                 className={classNames(styles.container, {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     [styles.horizontalPadding!]: isOutermostTypeReference,

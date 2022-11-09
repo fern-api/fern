@@ -19,7 +19,7 @@ export function useIsHovering(): useIsHovering.Return {
                 case "mouseleave":
                     return "outside";
                 case "mousemove":
-                    return "hovering";
+                    return previousState === "inside" ? "hovering" : previousState;
                 default:
                     assertNever(action);
             }

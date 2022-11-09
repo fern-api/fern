@@ -1,4 +1,3 @@
-import { Position } from "@blueprintjs/core";
 import { Popover2 } from "@blueprintjs/popover2";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { ChangeTypeReferencePopoverContent } from "./ChangeTypeReferencePopoverContent";
@@ -22,7 +21,7 @@ export const ChangeTypeReferencePopover: React.FC<ChangeTypeReferencePopover.Pro
             isOpen={isOpen}
             onInteraction={onInteraction}
             content={<ChangeTypeReferencePopoverContent onChange={onChange} />}
-            position={Position.BOTTOM}
+            placement="bottom-start"
         >
             {children}
         </Popover2>

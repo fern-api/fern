@@ -1,14 +1,12 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { EditableTypeReferenceContent } from "../EditableTypeReferenceContent";
 
 export declare namespace Primitive {
     export interface Props {
         primitive: FernApiEditor.PrimitiveType;
-        onChange: (typeReference: FernApiEditor.TypeReference) => void;
     }
 }
 
-export const Primitive: React.FC<Primitive.Props> = ({ primitive, onChange }) => {
+export const Primitive: React.FC<Primitive.Props> = ({ primitive }) => {
     const textContent = primitive.visit({
         string: () => "string",
         integer: () => "integer",
@@ -22,9 +20,5 @@ export const Primitive: React.FC<Primitive.Props> = ({ primitive, onChange }) =>
         },
     });
 
-    return (
-        <EditableTypeReferenceContent onChange={onChange}>
-            <>{textContent}</>
-        </EditableTypeReferenceContent>
-    );
+    return <>{textContent}</>;
 };

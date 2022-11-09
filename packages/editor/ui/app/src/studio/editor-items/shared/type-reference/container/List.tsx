@@ -22,5 +22,5 @@ export const List: React.FC<List.Props> = ({ itemType, onChange }) => {
         [itemType, onChange]
     );
 
-    return <ParameterizedType typeName="list" typeParameters={typeParameters} onChange={onChange} />;
+    return <ParameterizedType typeName="list" typeParameters={typeParameters} />;
 };

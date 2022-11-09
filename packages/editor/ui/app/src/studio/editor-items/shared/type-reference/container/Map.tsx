@@ -37,5 +37,5 @@ export const Map: React.FC<Map.Props> = ({ keyType, valueType, onChange }) => {
         [keyType, onChange, valueType]
     );
 
-    return <ParameterizedType typeName="map" typeParameters={typeParameters} onChange={onChange} />;
+    return <ParameterizedType typeName="map" typeParameters={typeParameters} />;
 };
