@@ -165,9 +165,14 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
     private List<MethodSpec> getConstructors(
             Map<String, GeneratedServiceClient> supplierFields, Map<String, ClassName> nestedClientFields) {
         List<MethodSpec> constuctors = new ArrayList<>();
-        createNoAuthAndDefaultEnvironmentConstructor().ifPresent(constuctors::add);
+        boolean authIsMandatory = generatorContext.getIr().getSdkConfig().getIsAuthMandatory();
+        if (!authIsMandatory) {
+            createNoAuthAndDefaultEnvironmentConstructor().ifPresent(constuctors::add);
+        }
         createAuthAndDefaultEnvironmentConstructor().ifPresent(constuctors::add);
-        constuctors.add(createNoAuthAndEnvironmentConstructor(supplierFields, nestedClientFields));
+        if (!authIsMandatory) {
+            constuctors.add(createNoAuthAndEnvironmentConstructor(supplierFields, nestedClientFields));
+        }
         createAuthAndEnvironmentConstructor(supplierFields, nestedClientFields).ifPresent(constuctors::add);
         return constuctors;
     }
