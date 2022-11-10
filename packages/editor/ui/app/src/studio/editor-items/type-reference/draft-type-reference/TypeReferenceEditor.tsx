@@ -18,7 +18,7 @@ export const TypeReferenceEditor: React.FC<TypeReferenceEditor.Props> = ({ typeR
             <DraftTypeReferenceContext.Consumer>
                 {(contextValue) => (
                     <DraftTypeReferencePopover>
-                        <DraftTypeReferenceContent nodeId={contextValue().root} />
+                        <DraftTypeReferenceContent nodeId={contextValue().tree.root} />
                     </DraftTypeReferencePopover>
                 )}
             </DraftTypeReferenceContext.Consumer>

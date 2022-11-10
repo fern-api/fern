@@ -84,7 +84,7 @@ export const DraftTypeReferenceContextProvider: React.FC<DraftTypeReferenceConte
 
     const draftContextValue = useCallback(
         (): DraftTypeReferenceContextValue => ({
-            root: state.tree.root,
+            tree: state.tree,
             selectedNode,
             invalidNodeId: state.invalidNodeId,
             setSelectedNodeId,
@@ -96,7 +96,7 @@ export const DraftTypeReferenceContextProvider: React.FC<DraftTypeReferenceConte
             onClickCancel: onCancel,
         }),
         [
-            state.tree.root,
+            state.tree,
             state.invalidNodeId,
             selectedNode,
             setSelectedNodeId,

@@ -72,6 +72,20 @@ export const DraftTypeReferenceTree = {
                 assertNever(node);
         }
     },
+
+    subtree: (tree: DraftTypeReferenceTree, nodeId: DraftTypeReferenceNodeId): DraftTypeReferenceTree => {
+        const children = DraftTypeReferenceTree.getAllChildren(tree, nodeId);
+        return {
+            root: nodeId,
+            nodes: {
+                ...pickBy(tree.nodes, (_, existingNodeId) => children.has(existingNodeId as DraftTypeReferenceNodeId)),
+                [nodeId]: {
+                    ...DraftTypeReferenceTree.get(tree, nodeId),
+                    parent: undefined,
+                },
+            },
+        };
+    },
 };
 
 function preOrderTraverse(tree: DraftTypeReferenceTree, nodeId: DraftTypeReferenceNodeId): DraftTypeReferenceNodeId[] {

@@ -13,7 +13,7 @@ export declare namespace ParameterizedType {
 export const ParameterizedType: React.FC<ParameterizedType.Props> = ({ typeName, typeParameters }) => {
     return (
         <div className={styles.container}>
-            <div>{`${typeName}[`}</div>
+            <div>{`${typeName}<`}</div>
             <div className={styles.typeParameters}>
                 {typeParameters.map((typeParameter, index) => (
                     <React.Fragment key={index}>
@@ -22,7 +22,7 @@ export const ParameterizedType: React.FC<ParameterizedType.Props> = ({ typeName,
                     </React.Fragment>
                 ))}
             </div>
-            <div>{"]"}</div>
+            <div>{">"}</div>
         </div>
     );
 };

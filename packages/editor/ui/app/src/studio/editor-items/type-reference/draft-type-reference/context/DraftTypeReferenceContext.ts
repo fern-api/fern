@@ -8,7 +8,7 @@ export const DraftTypeReferenceContext = createContext<() => DraftTypeReferenceC
 });
 
 export interface DraftTypeReferenceContextValue {
-    root: DraftTypeReferenceNodeId;
+    tree: DraftTypeReferenceTree;
     selectedNode: DraftTypeReference;
     invalidNodeId: DraftTypeReferenceNodeId | undefined;
 

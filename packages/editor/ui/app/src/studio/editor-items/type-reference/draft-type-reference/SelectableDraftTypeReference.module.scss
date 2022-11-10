@@ -1,5 +1,8 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
+$primitive-border-color: $gray3;
+$selected-color: $blue3;
+
 .container {
     display: flex;
     align-items: center;
@@ -11,7 +14,7 @@
     margin-right: 2px;
 
     &.primitive {
-        border: 1px dashed $gray3;
+        border: 1px dashed $primitive-border-color;
         background-color: $light-gray3;
         min-width: 50px;
         margin-top: 2px;
@@ -36,12 +39,12 @@
         &,
         &.primitive,
         .primitive {
-            background-color: $blue3;
+            background-color: $selected-color;
         }
 
         &.primitive,
         .primitive {
-            border-color: $gray3;
+            border-color: $primitive-border-color;
         }
 
         .hovering {
@@ -59,6 +62,30 @@
             &.primitive {
                 border-color: $dark-gray3;
             }
+        }
+    }
+}
+
+:global(.#{$ns}-dark) {
+    .primitive {
+        border: 1px dashed $gray3;
+        background-color: $dark-gray3;
+    }
+
+    .hovering {
+        background-color: $dark-gray4;
+
+        &.primitive,
+        .primitive {
+            background-color: $dark-gray5;
+        }
+    }
+
+    .selected {
+        &,
+        &.primitive,
+        .primitive {
+            background-color: $selected-color;
         }
     }
 }

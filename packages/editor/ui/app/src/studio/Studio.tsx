@@ -69,16 +69,7 @@ function useInitialApi(): Loadable<FernApiEditor.Api> {
                             shape: FernApiEditor.Shape.alias({
                                 aliasOf: FernApiEditor.TypeReference.container(
                                     FernApiEditor.ContainerType.list(
-                                        FernApiEditor.TypeReference.container(
-                                            FernApiEditor.ContainerType.map({
-                                                keyType: FernApiEditor.TypeReference.primitive(
-                                                    FernApiEditor.PrimitiveType.String
-                                                ),
-                                                valueType: FernApiEditor.TypeReference.primitive(
-                                                    FernApiEditor.PrimitiveType.String
-                                                ),
-                                            })
-                                        )
+                                        FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String)
                                     )
                                 ),
                             }),
