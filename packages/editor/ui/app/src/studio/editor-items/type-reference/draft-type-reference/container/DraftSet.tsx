@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import { DraftParameterizedType, DraftTypeParameter } from "./parameterized-type/DraftParameterizedType";
 
 export declare namespace DraftSet {
     export interface Props {
-        node: DraftTypeReference.SetType;
+        node: DraftTypeReferenceNode.SetType;
     }
 }
 

@@ -2,14 +2,14 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { DraftTypeReferenceNodeId } from "./DraftTypeReferenceNodeId";
 import { DraftTypeReferenceTree } from "./DraftTypeReferenceTree";
 
-export type DraftTypeReference =
-    | DraftTypeReference.NamedType
-    | DraftTypeReference.ContainerType
-    | DraftTypeReference.PrimitiveType
-    | DraftTypeReference.UnknownType
-    | DraftTypeReference.Placeholder;
+export type DraftTypeReferenceNode =
+    | DraftTypeReferenceNode.NamedType
+    | DraftTypeReferenceNode.ContainerType
+    | DraftTypeReferenceNode.PrimitiveType
+    | DraftTypeReferenceNode.UnknownType
+    | DraftTypeReferenceNode.Placeholder;
 
-export declare namespace DraftTypeReference {
+export declare namespace DraftTypeReferenceNode {
     export interface NamedType extends BaseDraftTypeReference {
         type: "named";
         typeId: FernApiEditor.TypeId;
@@ -63,18 +63,18 @@ export interface BaseDraftTypeReference {
     parent: DraftTypeReferenceNodeId | undefined;
 }
 
-export const DraftTypeReference = {
+export const DraftTypeReferenceNode = {
     map: (): DraftTypeReferenceTree => {
         const mapId = DraftTypeReferenceNodeId.generate();
 
-        const keyType: DraftTypeReference.Placeholder = {
+        const keyType: DraftTypeReferenceNode.Placeholder = {
             type: "placeholder",
             label: "key",
             id: DraftTypeReferenceNodeId.generate(),
             parent: mapId,
         };
 
-        const valueType: DraftTypeReference.Placeholder = {
+        const valueType: DraftTypeReferenceNode.Placeholder = {
             type: "placeholder",
             label: "value",
             id: DraftTypeReferenceNodeId.generate(),
@@ -100,7 +100,7 @@ export const DraftTypeReference = {
     list: (): DraftTypeReferenceTree => {
         const listId = DraftTypeReferenceNodeId.generate();
 
-        const itemType: DraftTypeReference.Placeholder = {
+        const itemType: DraftTypeReferenceNode.Placeholder = {
             type: "placeholder",
             label: "item",
             id: DraftTypeReferenceNodeId.generate(),
@@ -124,7 +124,7 @@ export const DraftTypeReference = {
     set: (): DraftTypeReferenceTree => {
         const setId = DraftTypeReferenceNodeId.generate();
 
-        const itemType: DraftTypeReference.Placeholder = {
+        const itemType: DraftTypeReferenceNode.Placeholder = {
             type: "placeholder",
             label: "item",
             id: DraftTypeReferenceNodeId.generate(),
@@ -148,7 +148,7 @@ export const DraftTypeReference = {
     optional: (): DraftTypeReferenceTree => {
         const optionalId = DraftTypeReferenceNodeId.generate();
 
-        const itemType: DraftTypeReference.Placeholder = {
+        const itemType: DraftTypeReferenceNode.Placeholder = {
             type: "placeholder",
             label: "item",
             id: DraftTypeReferenceNodeId.generate(),
@@ -170,7 +170,7 @@ export const DraftTypeReference = {
     },
 
     primitive: (primitive: FernApiEditor.PrimitiveType): DraftTypeReferenceTree => {
-        const node: DraftTypeReference.PrimitiveType = {
+        const node: DraftTypeReferenceNode.PrimitiveType = {
             type: "primitive",
             id: DraftTypeReferenceNodeId.generate(),
             primitive,
@@ -185,7 +185,7 @@ export const DraftTypeReference = {
     },
 
     named: (typeId: FernApiEditor.TypeId): DraftTypeReferenceTree => {
-        const node: DraftTypeReference.NamedType = {
+        const node: DraftTypeReferenceNode.NamedType = {
             type: "named",
             id: DraftTypeReferenceNodeId.generate(),
             typeId,
@@ -200,7 +200,7 @@ export const DraftTypeReference = {
     },
 
     unknown: (): DraftTypeReferenceTree => {
-        const node: DraftTypeReference.UnknownType = {
+        const node: DraftTypeReferenceNode.UnknownType = {
             type: "unknown",
             id: DraftTypeReferenceNodeId.generate(),
             parent: undefined,

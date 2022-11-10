@@ -1,10 +1,10 @@
 import React from "react";
 import { SelectableDraftTypeReference } from "../SelectableDraftTypeReference";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 
 export declare namespace DraftLiteral {
     export interface Props {
-        node: DraftTypeReference.LiteralType;
+        node: DraftTypeReferenceNode.LiteralType;
     }
 }
 

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import { DraftTypeReferenceNodeId } from "../tree/DraftTypeReferenceNodeId";
 import { DraftTypeReferenceTree } from "../tree/DraftTypeReferenceTree";
 
@@ -9,12 +9,12 @@ export const DraftTypeReferenceContext = createContext<() => DraftTypeReferenceC
 
 export interface DraftTypeReferenceContextValue {
     tree: DraftTypeReferenceTree;
-    selectedNode: DraftTypeReference;
+    selectedNode: DraftTypeReferenceNode;
     invalidNodeId: DraftTypeReferenceNodeId | undefined;
 
     setSelectedNodeId: (nodeId: DraftTypeReferenceNodeId) => void;
     replaceSelectedNode: (newTree: DraftTypeReferenceTree) => void;
-    getNode: (nodeId: DraftTypeReferenceNodeId) => DraftTypeReference;
+    getNode: (nodeId: DraftTypeReferenceNodeId) => DraftTypeReferenceNode;
     onClickNext: (() => void) | undefined;
     onClickPrevious: (() => void) | undefined;
     onClickSave: () => void;

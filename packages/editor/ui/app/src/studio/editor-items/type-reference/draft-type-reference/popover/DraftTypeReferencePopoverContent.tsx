@@ -5,7 +5,7 @@ import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React, { useCallback } from "react";
 import { TypeIcon } from "../../../types/type/TypeIcon";
 import { useDraftTypeReferenceContext } from "../context/DraftTypeReferenceContext";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import styles from "./DraftTypeReferencePopoverContent.module.scss";
 import { ListTag } from "./ListTag";
 import { MapTag } from "./MapTag";
@@ -21,7 +21,7 @@ export const DraftTypeReferencePopoverContent: React.FC = () => {
 
     const onSelectNamedType = useCallback(
         ({ typeId }: FernApiEditor.Type) => {
-            replaceSelectedNode(DraftTypeReference.named(typeId));
+            replaceSelectedNode(DraftTypeReferenceNode.named(typeId));
         },
         [replaceSelectedNode]
     );

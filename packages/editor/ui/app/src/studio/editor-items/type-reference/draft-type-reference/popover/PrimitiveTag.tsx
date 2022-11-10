@@ -1,7 +1,7 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
 import { useDraftTypeReferenceContext } from "../context/DraftTypeReferenceContext";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import { ChangeTypeTag } from "./ChangeTypeTag";
 
 export declare namespace PrimitiveTag {
@@ -15,7 +15,7 @@ export const PrimitiveTag: React.FC<PrimitiveTag.Props> = ({ primitiveType }) =>
     const isSelected = selectedNode.type === "primitive" && selectedNode.primitive === primitiveType;
 
     const generateTree = useCallback(() => {
-        return DraftTypeReference.primitive(primitiveType);
+        return DraftTypeReferenceNode.primitive(primitiveType);
     }, [primitiveType]);
 
     return (

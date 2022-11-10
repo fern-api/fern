@@ -1,11 +1,11 @@
 import React from "react";
 import { SelectableDraftTypeReference } from "../SelectableDraftTypeReference";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import styles from "./DraftPlaceholder.module.scss";
 
 export declare namespace DraftPlaceholder {
     export interface Props {
-        node: DraftTypeReference.Placeholder;
+        node: DraftTypeReferenceNode.Placeholder;
     }
 }
 

@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { pickBy } from "lodash-es";
-import { DraftTypeReference } from "./DraftTypeReference";
+import { DraftTypeReferenceNode } from "./DraftTypeReferenceNode";
 import { DraftTypeReferenceNodeId } from "./DraftTypeReferenceNodeId";
 
 export interface DraftTypeReferenceTree {
     root: DraftTypeReferenceNodeId;
-    nodes: Record<DraftTypeReferenceNodeId, DraftTypeReference>;
+    nodes: Record<DraftTypeReferenceNodeId, DraftTypeReferenceNode>;
 }
 
 export const DraftTypeReferenceTree = {
@@ -30,7 +30,7 @@ export const DraftTypeReferenceTree = {
                     tree.nodes,
                     (_, existingNodeId) => !oldChildren.has(existingNodeId as DraftTypeReferenceNodeId)
                 ),
-                ...pickBy(newTree.nodes, (_, existingNodeId) => existingNodeId !== newTree.root),
+                ...pickBy(newTree.nodes, (_, newNodeId) => newNodeId !== newTree.root),
                 [nodeId]: {
                     ...DraftTypeReferenceTree.get(newTree, newTree.root),
                     id: nodeId,
@@ -40,7 +40,7 @@ export const DraftTypeReferenceTree = {
         };
     },
 
-    get: (tree: DraftTypeReferenceTree, nodeId: DraftTypeReferenceNodeId): DraftTypeReference => {
+    get: (tree: DraftTypeReferenceTree, nodeId: DraftTypeReferenceNodeId): DraftTypeReferenceNode => {
         const node = tree.nodes[nodeId];
         if (node == null) {
             throw new Error("Node does not exist: " + nodeId);

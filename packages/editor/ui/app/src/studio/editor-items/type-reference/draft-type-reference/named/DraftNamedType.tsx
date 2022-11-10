@@ -1,11 +1,11 @@
 import React from "react";
 import { useApiEditorContext } from "../../../../../api-editor-context/ApiEditorContext";
 import { SelectableDraftTypeReference } from "../SelectableDraftTypeReference";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 
 export declare namespace DraftNamed {
     export interface Props {
-        node: DraftTypeReference.NamedType;
+        node: DraftTypeReferenceNode.NamedType;
     }
 }
 

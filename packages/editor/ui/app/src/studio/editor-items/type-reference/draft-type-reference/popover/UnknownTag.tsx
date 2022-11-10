@@ -1,6 +1,6 @@
 import { Intent } from "@blueprintjs/core";
 import { useDraftTypeReferenceContext } from "../context/DraftTypeReferenceContext";
-import { DraftTypeReference } from "../tree/DraftTypeReference";
+import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import { ChangeTypeTag } from "./ChangeTypeTag";
 
 export const UnknownTag: React.FC = () => {
@@ -11,7 +11,7 @@ export const UnknownTag: React.FC = () => {
         <ChangeTypeTag
             label="unknown"
             isSelected={isSelected}
-            generateTree={DraftTypeReference.unknown}
+            generateTree={DraftTypeReferenceNode.unknown}
             intent={Intent.WARNING}
         />
     );
