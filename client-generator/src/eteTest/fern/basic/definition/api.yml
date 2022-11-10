@@ -4,3 +4,7 @@ environments:
   prod: prod.com
   staging: staging.com
 default-environment: prod
+headers:
+  API-VERSION:
+    name: apiVersion
+    type: string

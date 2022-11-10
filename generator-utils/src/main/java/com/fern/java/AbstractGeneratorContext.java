@@ -34,7 +34,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final PoetTypeNameMapper poetTypeNameMapper;
     private final Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName;
     private final Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName;
-
+    private final GlobalHeaders globalHeaders;
     private final CustomConfig customConfig;
 
     public AbstractGeneratorContext(
@@ -51,6 +51,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors().stream()
                 .collect(Collectors.toUnmodifiableMap(ErrorDeclaration::getName, Function.identity()));
+        this.globalHeaders = new GlobalHeaders(ir, poetTypeNameMapper);
     }
 
     public final IntermediateRepresentation getIr() {
@@ -79,5 +80,9 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
 
     public final Map<DeclaredErrorName, ErrorDeclaration> getErrorDefinitionsByName() {
         return errorDefinitionsByName;
+    }
+
+    public final GlobalHeaders getGlobalHeaders() {
+        return globalHeaders;
     }
 }

@@ -299,24 +299,29 @@ public final class FernFernClient {
 
   private final Supplier<DummyServiceClient> dummyServiceClient;
 
-  public FernFernClient() {
-    this(Environment.PROD);
+  public FernFernClient(String apiVersion) {
+    this(Environment.PROD, apiVersion);
   }
 
-  public FernFernClient(BearerAuth auth) {
-    this(Environment.PROD, auth);
+  public FernFernClient(BearerAuth auth, String apiVersion) {
+    this(Environment.PROD, auth, apiVersion);
   }
 
-  public FernFernClient(Environment environment) {
-    this.postsServiceClient = memoize(() -> new PostsServiceClient(environment.getUrl()));
-    this.dummyServiceClient = memoize(() -> new DummyServiceClient(environment.getUrl()));
-    this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl()));
+  public FernFernClient(Environment environment, String apiVersion) {
+    this.postsServiceClient =
+        memoize(() -> new PostsServiceClient(environment.getUrl(), apiVersion));
+    this.dummyServiceClient =
+        memoize(() -> new DummyServiceClient(environment.getUrl(), apiVersion));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl(), apiVersion));
   }
 
-  public FernFernClient(Environment environment, BearerAuth auth) {
-    this.postsServiceClient = memoize(() -> new PostsServiceClient(environment.getUrl()));
-    this.dummyServiceClient = memoize(() -> new DummyServiceClient(environment.getUrl()));
-    this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl(), auth));
+  public FernFernClient(Environment environment, BearerAuth auth, String apiVersion) {
+    this.postsServiceClient =
+        memoize(() -> new PostsServiceClient(environment.getUrl(), apiVersion));
+    this.dummyServiceClient =
+        memoize(() -> new DummyServiceClient(environment.getUrl(), apiVersion));
+    this.authServiceClient =
+        memoize(() -> new AuthServiceClient(environment.getUrl(), auth, apiVersion));
   }
 
   public final AuthServiceClient auth() {
@@ -370,7 +375,9 @@ import javax.ws.rs.core.MediaType;
 interface AuthService {
   @GET
   @Path("/")
-  void getAuth(@HeaderParam("Authorization") BearerAuth auth) throws GetAuthException;
+  void getAuth(
+      @HeaderParam("Authorization") BearerAuth auth, @HeaderParam("API-VERSION") String apiVersion)
+      throws GetAuthException;
 
   static AuthService getClient(String url) {
     return Feign.builder()
@@ -396,27 +403,28 @@ import java.util.Optional;
 public final class AuthServiceClient {
   private final AuthService service;
 
+  private final String apiVersion;
+
   private final Optional<BearerAuth> auth;
 
-  public AuthServiceClient(String url) {
+  public AuthServiceClient(String url, String apiVersion) {
     this.service = AuthService.getClient(url);
+    this.apiVersion = apiVersion;
     this.auth = Optional.empty();
   }
 
-  public AuthServiceClient(String url, BearerAuth auth) {
+  public AuthServiceClient(String url, BearerAuth auth, String apiVersion) {
     this.service = AuthService.getClient(url);
     this.auth = Optional.of(auth);
+    this.apiVersion = apiVersion;
   }
 
   public void getAuth(GetAuth.Request request) throws GetAuthException {
     BearerAuth authValue =
         request
             .getAuthOverride()
-            .orElseGet(
-                () ->
-                    this.auth.orElseThrow(
-                        () -> new RuntimeException("Auth is required for getAuth")));
-    this.service.getAuth(authValue);
+            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    this.service.getAuth(authValue, apiVersion);
   }
 }
 
@@ -666,6 +674,7 @@ import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -678,11 +687,14 @@ import javax.ws.rs.core.MediaType;
 interface PostsService {
   @POST
   @Path("/create")
-  void createPost(CreatePostRequest body) throws CreatePostException;
+  void createPost(@HeaderParam("API-VERSION") String apiVersion, CreatePostRequest body)
+      throws CreatePostException;
 
   @GET
   @Path("/{postId}")
-  BlogPost getPost(@PathParam("postId") String postId) throws GetPostException;
+  BlogPost getPost(
+      @HeaderParam("API-VERSION") String apiVersion, @PathParam("postId") String postId)
+      throws GetPostException;
 
   static PostsService getClient(String url) {
     return Feign.builder()
@@ -709,16 +721,19 @@ import com.fern.basic.client.blog.types.BlogPost;
 public final class PostsServiceClient {
   private final PostsService service;
 
-  public PostsServiceClient(String url) {
+  private final String apiVersion;
+
+  public PostsServiceClient(String url, String apiVersion) {
     this.service = PostsService.getClient(url);
+    this.apiVersion = apiVersion;
   }
 
   public void createPost(CreatePost.Request request) throws CreatePostException {
-    this.service.createPost(request.getBody());
+    this.service.createPost(apiVersion, request.getBody());
   }
 
   public BlogPost getPost(GetPost.Request request) throws GetPostException {
-    return this.service.getPost(request.getPostId());
+    return this.service.getPost(apiVersion, request.getPostId());
   }
 }
 
@@ -770,7 +785,9 @@ basic[src/main/java/com/fern/basic/client/blog/endpoints/CreatePost.java]=[
 package com.fern.basic.client.blog.endpoints;
 
 import com.fern.basic.client.blog.types.CreatePostRequest;
+import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class CreatePost {
   private CreatePost() {}
@@ -778,14 +795,21 @@ public final class CreatePost {
   public static final class Request {
     private final CreatePostRequest body;
 
+    private final Optional<BearerAuth> authOverride;
+
     private int _cachedHashCode;
 
-    Request(CreatePostRequest body) {
+    Request(CreatePostRequest body, Optional<BearerAuth> authOverride) {
       this.body = body;
+      this.authOverride = authOverride;
     }
 
     public CreatePostRequest getBody() {
       return body;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
     }
 
     @Override
@@ -795,20 +819,20 @@ public final class CreatePost {
     }
 
     private boolean equalTo(Request other) {
-      return body.equals(other.body);
+      return body.equals(other.body) && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.body);
+        _cachedHashCode = Objects.hash(this.body, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "CreatePost.Request{" + "body: " + body + "}";
+      return "CreatePost.Request{" + "body: " + body + ", authOverride: " + authOverride + "}";
     }
 
     public static BodyStage builder() {
@@ -823,16 +847,23 @@ public final class CreatePost {
 
     public interface _FinalStage {
       Request build();
+
+      _FinalStage authOverride(Optional<BearerAuth> authOverride);
+
+      _FinalStage authOverride(BearerAuth authOverride);
     }
 
     static final class Builder implements BodyStage, _FinalStage {
       private CreatePostRequest body;
+
+      private Optional<BearerAuth> authOverride = Optional.empty();
 
       private Builder() {}
 
       @Override
       public Builder from(Request other) {
         body(other.getBody());
+        authOverride(other.getAuthOverride());
         return this;
       }
 
@@ -843,8 +874,20 @@ public final class CreatePost {
       }
 
       @Override
+      public _FinalStage authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      @Override
+      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      @Override
       public Request build() {
-        return new Request(body);
+        return new Request(body, authOverride);
       }
     }
   }
@@ -856,7 +899,9 @@ public final class CreatePost {
 basic[src/main/java/com/fern/basic/client/blog/endpoints/GetPost.java]=[
 package com.fern.basic.client.blog.endpoints;
 
+import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class GetPost {
   private GetPost() {}
@@ -864,14 +909,21 @@ public final class GetPost {
   public static final class Request {
     private final String postId;
 
+    private final Optional<BearerAuth> authOverride;
+
     private int _cachedHashCode;
 
-    Request(String postId) {
+    Request(String postId, Optional<BearerAuth> authOverride) {
       this.postId = postId;
+      this.authOverride = authOverride;
     }
 
     public String getPostId() {
       return postId;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
     }
 
     @Override
@@ -881,20 +933,20 @@ public final class GetPost {
     }
 
     private boolean equalTo(Request other) {
-      return postId.equals(other.postId);
+      return postId.equals(other.postId) && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.postId);
+        _cachedHashCode = Objects.hash(this.postId, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "GetPost.Request{" + "postId: " + postId + "}";
+      return "GetPost.Request{" + "postId: " + postId + ", authOverride: " + authOverride + "}";
     }
 
     public static PostIdStage builder() {
@@ -909,16 +961,23 @@ public final class GetPost {
 
     public interface _FinalStage {
       Request build();
+
+      _FinalStage authOverride(Optional<BearerAuth> authOverride);
+
+      _FinalStage authOverride(BearerAuth authOverride);
     }
 
     static final class Builder implements PostIdStage, _FinalStage {
       private String postId;
+
+      private Optional<BearerAuth> authOverride = Optional.empty();
 
       private Builder() {}
 
       @Override
       public Builder from(Request other) {
         postId(other.getPostId());
+        authOverride(other.getAuthOverride());
         return this;
       }
 
@@ -929,8 +988,20 @@ public final class GetPost {
       }
 
       @Override
+      public _FinalStage authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      @Override
+      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      @Override
       public Request build() {
-        return new Request(postId);
+        return new Request(postId, authOverride);
       }
     }
   }
@@ -2389,6 +2460,7 @@ import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -2400,11 +2472,12 @@ import javax.ws.rs.core.MediaType;
 interface DummyService {
   @POST
   @Path("/")
-  void getDummy(String body) throws GetDummyException;
+  void getDummy(@HeaderParam("API-VERSION") String apiVersion, String body)
+      throws GetDummyException;
 
   @GET
   @Path("/health")
-  void health() throws HealthException;
+  void health(@HeaderParam("API-VERSION") String apiVersion) throws HealthException;
 
   static DummyService getClient(String url) {
     return Feign.builder()
@@ -2429,16 +2502,19 @@ import com.fern.basic.client.dummy.service.exceptions.HealthException;
 public final class DummyServiceClient {
   private final DummyService service;
 
-  public DummyServiceClient(String url) {
+  private final String apiVersion;
+
+  public DummyServiceClient(String url, String apiVersion) {
     this.service = DummyService.getClient(url);
+    this.apiVersion = apiVersion;
   }
 
   public void getDummy(GetDummy.Request request) throws GetDummyException {
-    this.service.getDummy(request.getBody());
+    this.service.getDummy(apiVersion, request.getBody());
   }
 
   public void health() throws HealthException {
-    this.service.health();
+    this.service.health(apiVersion);
   }
 }
 
@@ -2489,7 +2565,9 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
 basic[src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
 package com.fern.basic.client.dummy.service.endpoints;
 
+import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class GetDummy {
   private GetDummy() {}
@@ -2497,14 +2575,21 @@ public final class GetDummy {
   public static final class Request {
     private final String body;
 
+    private final Optional<BearerAuth> authOverride;
+
     private int _cachedHashCode;
 
-    Request(String body) {
+    Request(String body, Optional<BearerAuth> authOverride) {
       this.body = body;
+      this.authOverride = authOverride;
     }
 
     public String getBody() {
       return body;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
     }
 
     @Override
@@ -2514,20 +2599,20 @@ public final class GetDummy {
     }
 
     private boolean equalTo(Request other) {
-      return body.equals(other.body);
+      return body.equals(other.body) && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.body);
+        _cachedHashCode = Objects.hash(this.body, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "GetDummy.Request{" + "body: " + body + "}";
+      return "GetDummy.Request{" + "body: " + body + ", authOverride: " + authOverride + "}";
     }
 
     public static BodyStage builder() {
@@ -2542,16 +2627,23 @@ public final class GetDummy {
 
     public interface _FinalStage {
       Request build();
+
+      _FinalStage authOverride(Optional<BearerAuth> authOverride);
+
+      _FinalStage authOverride(BearerAuth authOverride);
     }
 
     static final class Builder implements BodyStage, _FinalStage {
       private String body;
+
+      private Optional<BearerAuth> authOverride = Optional.empty();
 
       private Builder() {}
 
       @Override
       public Builder from(Request other) {
         body(other.getBody());
+        authOverride(other.getAuthOverride());
         return this;
       }
 
@@ -2562,8 +2654,20 @@ public final class GetDummy {
       }
 
       @Override
+      public _FinalStage authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      @Override
+      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      @Override
       public Request build() {
-        return new Request(body);
+        return new Request(body, authOverride);
       }
     }
   }

@@ -18,6 +18,8 @@ package com.fern.java.client.generators;
 
 import com.fern.ir.model.commons.FernFilepath;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.GlobalHeaders;
+import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedClientWrapper;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedServiceClient;
@@ -61,12 +63,14 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
     private final ClientConfig rootClientConfig;
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final Optional<GeneratedEnvironmentsClass> maybeGeneratedEnvironmentsClass;
+    private final Optional<GeneratedClientOptions> generatedClientOptionsClass;
 
     public ClientWrapperGenerator(
             AbstractGeneratorContext<?> generatorContext,
             List<GeneratedServiceClient> generatedHttpServiceClients,
             Optional<GeneratedEnvironmentsClass> maybeGeneratedEnvironmentsClass,
-            Optional<GeneratedAuthFiles> maybeAuth) {
+            Optional<GeneratedAuthFiles> maybeAuth,
+            Optional<GeneratedClientOptions> generatedClientOptionsClass) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -88,6 +92,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
         this.rootClientConfig = createClientConfig(clientsOrderedByDepth, 1, className);
         this.maybeAuth = maybeAuth;
         this.maybeGeneratedEnvironmentsClass = maybeGeneratedEnvironmentsClass;
+        this.generatedClientOptionsClass = generatedClientOptionsClass;
     }
 
     @Override
@@ -162,104 +167,228 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     private List<MethodSpec> getConstructors(
             Map<String, GeneratedServiceClient> supplierFields, Map<String, ClassName> nestedClientFields) {
-        List<MethodSpec> constuctors = new ArrayList<>();
-        boolean authIsMandatory = generatorContext.getIr().getSdkConfig().getIsAuthMandatory();
-        if (!authIsMandatory) {
-            createNoAuthAndDefaultEnvironmentConstructor().ifPresent(constuctors::add);
-        }
-        createAuthAndDefaultEnvironmentConstructor().ifPresent(constuctors::add);
-        if (!authIsMandatory) {
-            constuctors.add(createNoAuthAndEnvironmentConstructor(supplierFields, nestedClientFields));
-        }
-        createAuthAndEnvironmentConstructor(supplierFields, nestedClientFields).ifPresent(constuctors::add);
-        return constuctors;
-    }
+        List<MethodSpec> constructors = new ArrayList<>();
 
-    private Optional<MethodSpec> createNoAuthAndDefaultEnvironmentConstructor() {
-        if (maybeGeneratedEnvironmentsClass.isEmpty()
-                || maybeGeneratedEnvironmentsClass
+        GlobalHeaders globalHeaders = generatorContext.getGlobalHeaders();
+        EnvironmentConstructorParam environmentConstructorParam = getEnvironmentConstructorParam();
+        boolean isEnvironmentPresent = maybeGeneratedEnvironmentsClass.isPresent();
+        boolean isDefaultEnvironmentPresent = isEnvironmentPresent
+                && maybeGeneratedEnvironmentsClass
                         .get()
                         .defaultEnvironmentConstant()
-                        .isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addStatement(
-                        "this($T.$L)",
-                        maybeGeneratedEnvironmentsClass.get().getClassName(),
-                        maybeGeneratedEnvironmentsClass
-                                .get()
-                                .defaultEnvironmentConstant()
-                                .get())
-                .build());
-    }
+                        .isPresent();
+        boolean isAuthPresent = maybeAuth.isPresent();
+        boolean isAuthMandatory =
+                isAuthPresent && generatorContext.getIr().getSdkConfig().getIsAuthMandatory();
+        boolean isClientOptionsPresent = generatedClientOptionsClass.isPresent();
 
-    private Optional<MethodSpec> createAuthAndDefaultEnvironmentConstructor() {
-        if (maybeGeneratedEnvironmentsClass.isEmpty()
-                || maybeGeneratedEnvironmentsClass
+        // Add auth constructors
+        if (isAuthPresent) {
+            if (isDefaultEnvironmentPresent) {
+                String defaultEnvironmentConstant = maybeGeneratedEnvironmentsClass
                         .get()
                         .defaultEnvironmentConstant()
-                        .isEmpty()
-                || maybeAuth.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(maybeAuth.get().getClassName(), AUTH_PARAMETER_NAME)
-                .addStatement(
-                        "this($T.$L, $L)",
+                        .get();
+                constructors.add(createDefaultEnvironmentAuthConstructor(
                         maybeGeneratedEnvironmentsClass.get().getClassName(),
-                        maybeGeneratedEnvironmentsClass
-                                .get()
-                                .defaultEnvironmentConstant()
-                                .get(),
+                        defaultEnvironmentConstant,
+                        maybeAuth.get(),
+                        globalHeaders));
+                if (isClientOptionsPresent) {
+                    constructors.add(createDefaultEnvironmentAuthOptionsConstructor(
+                            maybeGeneratedEnvironmentsClass.get().getClassName(),
+                            defaultEnvironmentConstant,
+                            maybeAuth.get(),
+                            globalHeaders,
+                            generatedClientOptionsClass.get()));
+                }
+            }
+            constructors.add(createEnvironmentAuthConstructor(
+                    environmentConstructorParam, maybeAuth.get(), globalHeaders, supplierFields, nestedClientFields));
+            if (isClientOptionsPresent) {
+                constructors.add(createEnvironmentAuthOptionsConstructor(
+                        environmentConstructorParam,
+                        maybeAuth.get(),
+                        generatedClientOptionsClass.get(),
+                        globalHeaders,
+                        supplierFields,
+                        nestedClientFields));
+            }
+        }
+        if (isAuthMandatory) {
+            return constructors;
+        }
+        // Add no auth constructors
+        if (isDefaultEnvironmentPresent) {
+            String defaultEnvironmentConstant = maybeGeneratedEnvironmentsClass
+                    .get()
+                    .defaultEnvironmentConstant()
+                    .get();
+            constructors.add(createDefaultEnvironmentNoAuthConstructor(
+                    maybeGeneratedEnvironmentsClass.get(), defaultEnvironmentConstant, globalHeaders));
+            if (isClientOptionsPresent) {
+                constructors.add(createDefaultEnvironmentNoAuthOptionsConstructor(
+                        maybeGeneratedEnvironmentsClass.get(),
+                        defaultEnvironmentConstant,
+                        globalHeaders,
+                        generatedClientOptionsClass.get()));
+            }
+        }
+        constructors.add(createEnvironmentNoAuthConstructor(
+                environmentConstructorParam, globalHeaders, supplierFields, nestedClientFields));
+        if (isClientOptionsPresent) {
+            constructors.add(createEnvironmentNoAuthOptionsConstructor(
+                    environmentConstructorParam,
+                    generatedClientOptionsClass.get(),
+                    globalHeaders,
+                    supplierFields,
+                    nestedClientFields));
+        }
+
+        constructors.sort(Comparator.comparingInt(methodSpec -> methodSpec.parameters.size()));
+
+        return constructors;
+    }
+
+    private static MethodSpec createDefaultEnvironmentNoAuthConstructor(
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            String defaultEnvironmentConstant,
+            GlobalHeaders globalHeaders) {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters())
+                .addStatement(
+                        "this(" + globalHeaders.suffixRequiredGlobalHeaderParams("$T.$L") + ")",
+                        generatedEnvironmentsClass.getClassName(),
+                        defaultEnvironmentConstant)
+                .build();
+    }
+
+    private static MethodSpec createDefaultEnvironmentNoAuthOptionsConstructor(
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            String defaultEnvironmentConstant,
+            GlobalHeaders globalHeaders,
+            GeneratedClientOptions generatedClientOptions) {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters())
+                .addParameter(generatedClientOptions.getClassName(), "options")
+                .addStatement(
+                        "this(" + globalHeaders.suffixRequiredGlobalHeaderParams("$T.$L, options") + ")",
+                        generatedEnvironmentsClass.getClassName(),
+                        defaultEnvironmentConstant)
+                .build();
+    }
+
+    private static MethodSpec createDefaultEnvironmentAuthConstructor(
+            ClassName generatedEnvironmentsClass,
+            String defaultEnvironmentConstant,
+            GeneratedAuthFiles generatedAuth,
+            GlobalHeaders globalHeaders) {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(generatedAuth.getClassName(), AUTH_PARAMETER_NAME)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters())
+                .addStatement(
+                        "this(" + globalHeaders.suffixRequiredGlobalHeaderParams("$T.$L, $L") + ")",
+                        generatedEnvironmentsClass,
+                        defaultEnvironmentConstant,
                         AUTH_PARAMETER_NAME)
-                .build());
+                .build();
     }
 
-    private MethodSpec createNoAuthAndEnvironmentConstructor(
-            Map<String, GeneratedServiceClient> supplierFields, Map<String, ClassName> nestedClientFields) {
-        EnvironmentConstructorParam environmentConstructorParam = getEnvironmentConstructorParam();
-        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+    private static MethodSpec createDefaultEnvironmentAuthOptionsConstructor(
+            ClassName generatedEnvironmentsClass,
+            String defaultEnvironmentConstant,
+            GeneratedAuthFiles generatedAuth,
+            GlobalHeaders globalHeaders,
+            GeneratedClientOptions generatedClientOptions) {
+        return MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(environmentConstructorParam.paramType, environmentConstructorParam.paramName);
-        KeyedStream.stream(supplierFields).forEach((fieldName, httpClient) -> {
-            constructorBuilder.addStatement(
-                    "this.$L = $L(() -> new $T($L))",
-                    fieldName,
-                    MEMOIZE_METHOD_NAME,
-                    httpClient.getClassName(),
-                    environmentConstructorParam.urlGetterCodeBlock);
-        });
-        KeyedStream.stream(nestedClientFields).forEach((fieldName, nestedClientCLassName) -> {
-            constructorBuilder.addStatement(
-                    "this.$L = new $T($L)",
-                    fieldName,
-                    nestedClientCLassName,
-                    environmentConstructorParam.urlGetterCodeBlock);
-        });
-        return constructorBuilder.build();
+                .addParameter(generatedAuth.getClassName(), AUTH_PARAMETER_NAME)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters())
+                .addParameter(generatedClientOptions.getClassName(), "options")
+                .addStatement(
+                        "this(" + globalHeaders.suffixRequiredGlobalHeaderParams("$T.$L, $L, options") + ")",
+                        generatedEnvironmentsClass,
+                        defaultEnvironmentConstant,
+                        AUTH_PARAMETER_NAME)
+                .build();
     }
 
-    private Optional<MethodSpec> createAuthAndEnvironmentConstructor(
-            Map<String, GeneratedServiceClient> supplierFields, Map<String, ClassName> nestedClientFields) {
-        if (maybeAuth.isEmpty()) {
-            return Optional.empty();
-        }
-        EnvironmentConstructorParam environmentConstructorParam = getEnvironmentConstructorParam();
+    private static MethodSpec createEnvironmentNoAuthConstructor(
+            EnvironmentConstructorParam environmentConstructorParam,
+            GlobalHeaders globalHeaders,
+            Map<String, GeneratedServiceClient> supplierFields,
+            Map<String, ClassName> nestedClientFields) {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(environmentConstructorParam.paramType, environmentConstructorParam.paramName)
-                .addParameter(maybeAuth.get().getClassName(), AUTH_PARAMETER_NAME);
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters());
+        KeyedStream.stream(supplierFields)
+                .forEach((fieldName, httpClient) -> constructorBuilder.addStatement(
+                        "this.$L = $L(() -> new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L") + "))",
+                        fieldName,
+                        MEMOIZE_METHOD_NAME,
+                        httpClient.getClassName(),
+                        environmentConstructorParam.urlGetterCodeBlock));
+        KeyedStream.stream(nestedClientFields)
+                .forEach((fieldName, nestedClientCLassName) -> constructorBuilder.addStatement(
+                        "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L") + ")",
+                        fieldName,
+                        nestedClientCLassName,
+                        environmentConstructorParam.urlGetterCodeBlock));
+        return constructorBuilder.build();
+    }
+
+    private static MethodSpec createEnvironmentNoAuthOptionsConstructor(
+            EnvironmentConstructorParam environmentConstructorParam,
+            GeneratedClientOptions generatedClientOptions,
+            GlobalHeaders globalHeaders,
+            Map<String, GeneratedServiceClient> supplierFields,
+            Map<String, ClassName> nestedClientFields) {
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(environmentConstructorParam.paramType, environmentConstructorParam.paramName)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters())
+                .addParameter(generatedClientOptions.getClassName(), "options");
+        KeyedStream.stream(supplierFields)
+                .forEach((fieldName, httpClient) -> constructorBuilder.addStatement(
+                        "this.$L = $L(() -> new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L")
+                                + ", options))",
+                        fieldName,
+                        MEMOIZE_METHOD_NAME,
+                        httpClient.getClassName(),
+                        environmentConstructorParam.urlGetterCodeBlock));
+        KeyedStream.stream(nestedClientFields)
+                .forEach((fieldName, nestedClientCLassName) -> constructorBuilder.addStatement(
+                        "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L") + ", options)",
+                        fieldName,
+                        nestedClientCLassName,
+                        environmentConstructorParam.urlGetterCodeBlock));
+        return constructorBuilder.build();
+    }
+
+    private static MethodSpec createEnvironmentAuthConstructor(
+            EnvironmentConstructorParam environmentConstructorParam,
+            GeneratedAuthFiles generatedAuth,
+            GlobalHeaders globalHeaders,
+            Map<String, GeneratedServiceClient> supplierFields,
+            Map<String, ClassName> nestedClientFields) {
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(environmentConstructorParam.paramType, environmentConstructorParam.paramName)
+                .addParameter(generatedAuth.getClassName(), AUTH_PARAMETER_NAME)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters());
         KeyedStream.stream(supplierFields).forEach((fieldName, httpClient) -> {
             boolean hasAuthParameter = httpClient.javaFile().typeSpec.fieldSpecs.stream()
                     .anyMatch(fieldSpec -> fieldSpec.name.equals(AUTH_PARAMETER_NAME));
             if (hasAuthParameter) {
                 constructorBuilder.addStatement(
-                        "this.$L = $L(() -> new $T($L, $L))",
+                        "this.$L = $L(() -> new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, $L") + "))",
                         fieldName,
                         MEMOIZE_METHOD_NAME,
                         httpClient.getClassName(),
@@ -267,7 +396,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                         AUTH_PARAMETER_NAME);
             } else {
                 constructorBuilder.addStatement(
-                        "this.$L = $L(() -> new $T($L))",
+                        "this.$L = $L(() -> new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L") + "))",
                         fieldName,
                         MEMOIZE_METHOD_NAME,
                         httpClient.getClassName(),
@@ -276,13 +405,59 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
         });
         KeyedStream.stream(nestedClientFields).forEach((fieldName, nestedClientCLassName) -> {
             constructorBuilder.addStatement(
-                    "this.$L = new $T($L, $L)",
+                    "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, $L") + ")",
                     fieldName,
                     nestedClientCLassName,
                     environmentConstructorParam.urlGetterCodeBlock,
                     AUTH_PARAMETER_NAME);
         });
-        return Optional.of(constructorBuilder.build());
+        return constructorBuilder.build();
+    }
+
+    private static MethodSpec createEnvironmentAuthOptionsConstructor(
+            EnvironmentConstructorParam environmentConstructorParam,
+            GeneratedAuthFiles generatedAuth,
+            GeneratedClientOptions generatedClientOptions,
+            GlobalHeaders globalHeaders,
+            Map<String, GeneratedServiceClient> supplierFields,
+            Map<String, ClassName> nestedClientFields) {
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(environmentConstructorParam.paramType, environmentConstructorParam.paramName)
+                .addParameter(generatedAuth.getClassName(), AUTH_PARAMETER_NAME)
+                .addParameters(globalHeaders.getRequiredGlobalHeaderParameters())
+                .addParameter(generatedClientOptions.getClassName(), "options");
+        KeyedStream.stream(supplierFields).forEach((fieldName, httpClient) -> {
+            boolean hasAuthParameter = httpClient.javaFile().typeSpec.fieldSpecs.stream()
+                    .anyMatch(fieldSpec -> fieldSpec.name.equals(AUTH_PARAMETER_NAME));
+            if (hasAuthParameter) {
+                constructorBuilder.addStatement(
+                        "this.$L = $L(() -> new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, $L, options")
+                                + "))",
+                        fieldName,
+                        MEMOIZE_METHOD_NAME,
+                        httpClient.getClassName(),
+                        environmentConstructorParam.urlGetterCodeBlock,
+                        AUTH_PARAMETER_NAME);
+            } else {
+                constructorBuilder.addStatement(
+                        "this.$L = $L(() -> new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, options")
+                                + "))",
+                        fieldName,
+                        MEMOIZE_METHOD_NAME,
+                        httpClient.getClassName(),
+                        environmentConstructorParam.urlGetterCodeBlock);
+            }
+        });
+        KeyedStream.stream(nestedClientFields).forEach((fieldName, nestedClientCLassName) -> {
+            constructorBuilder.addStatement(
+                    "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, $L, options") + ")",
+                    fieldName,
+                    nestedClientCLassName,
+                    environmentConstructorParam.urlGetterCodeBlock,
+                    AUTH_PARAMETER_NAME);
+        });
+        return constructorBuilder.build();
     }
 
     private EnvironmentConstructorParam getEnvironmentConstructorParam() {

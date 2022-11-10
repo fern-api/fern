@@ -161,6 +161,12 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
         });
 
         // headers
+        generatorContext.getGlobalHeaders().getRequiredGlobalHeaders().stream()
+                .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
+                .forEach(parameters::add);
+        generatorContext.getGlobalHeaders().getOptionalGlobalHeaders().stream()
+                .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
+                .forEach(parameters::add);
         httpService.getHeaders().stream()
                 .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
                 .forEach(parameters::add);

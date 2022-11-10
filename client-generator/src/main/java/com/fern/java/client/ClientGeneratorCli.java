@@ -26,6 +26,7 @@ import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.client.generators.ClientErrorGenerator;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.ClientWrapperGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.HttpServiceClientGenerator;
@@ -97,6 +98,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
         Optional<GeneratedEnvironmentsClass> generatedEnvironmentsClass = environmentGenerator.generateFile();
         generatedEnvironmentsClass.ifPresent(this::addGeneratedFile);
 
+        ClientOptionsGenerator clientOptionsGenerator = new ClientOptionsGenerator(context);
+        Optional<GeneratedClientOptions> generatedClientOptionsClass = clientOptionsGenerator.generateFile();
+        generatedClientOptionsClass.ifPresent(this::addGeneratedFile);
+
         // auth
         AuthGenerator authGenerator = new AuthGenerator(context);
         Optional<GeneratedAuthFiles> maybeAuth = authGenerator.generate();
@@ -120,8 +125,8 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
         // services
         List<GeneratedServiceClient> generatedServiceClients = ir.getServices().getHttp().stream()
                 .map(httpService -> {
-                    HttpServiceClientGenerator httpServiceClientGenerator =
-                            new HttpServiceClientGenerator(context, httpService, errors, maybeAuth, objectMapper);
+                    HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
+                            context, httpService, errors, maybeAuth, generatedClientOptionsClass, objectMapper);
                     return httpServiceClientGenerator.generateFile();
                 })
                 .collect(Collectors.toList());
@@ -140,8 +145,8 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
         });
 
         // client wrapper
-        ClientWrapperGenerator clientWrapperGenerator =
-                new ClientWrapperGenerator(context, generatedServiceClients, generatedEnvironmentsClass, maybeAuth);
+        ClientWrapperGenerator clientWrapperGenerator = new ClientWrapperGenerator(
+                context, generatedServiceClients, generatedEnvironmentsClass, maybeAuth, generatedClientOptionsClass);
         GeneratedClientWrapper generatedClientWrapper = clientWrapperGenerator.generateFile();
         this.addGeneratedFile(generatedClientWrapper);
         generatedClientWrapper.nestedClients().forEach(this::addGeneratedFile);
