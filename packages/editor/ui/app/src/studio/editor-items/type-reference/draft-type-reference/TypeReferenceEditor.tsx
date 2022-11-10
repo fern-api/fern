@@ -4,15 +4,17 @@ import { DraftTypeReferenceContextProvider } from "./context/DraftTypeReferenceC
 import { DraftTypeReferenceContent } from "./DraftTypeReferenceContent";
 import { DraftTypeReferencePopover } from "./popover/DraftTypeReferencePopover";
 
-export declare namespace EditableTypeReference {
+export declare namespace TypeReferenceEditor {
     export interface Props {
         typeReference: FernApiEditor.TypeReference;
+        onSave: (typeReference: FernApiEditor.TypeReference) => void;
+        onCancel: () => void;
     }
 }
 
-export const EditableTypeReference: React.FC<EditableTypeReference.Props> = ({ typeReference }) => {
+export const TypeReferenceEditor: React.FC<TypeReferenceEditor.Props> = ({ typeReference, onSave, onCancel }) => {
     return (
-        <DraftTypeReferenceContextProvider typeReference={typeReference}>
+        <DraftTypeReferenceContextProvider typeReference={typeReference} onSave={onSave} onCancel={onCancel}>
             <DraftTypeReferenceContext.Consumer>
                 {(contextValue) => (
                     <DraftTypeReferencePopover>

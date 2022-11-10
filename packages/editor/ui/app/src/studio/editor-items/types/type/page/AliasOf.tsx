@@ -2,7 +2,7 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
 import { useApiEditorContext } from "../../../../../api-editor-context/ApiEditorContext";
-import { EditableTypeReference } from "../../../shared/draft-type-reference/EditableTypeReference";
+import { EditableTypeReference } from "../../../type-reference/EditableTypeReference";
 import styles from "./AliasOf.module.scss";
 
 export declare namespace AliasOf {
@@ -14,7 +14,8 @@ export declare namespace AliasOf {
 
 export const AliasOf: React.FC<AliasOf.Props> = ({ shape, typeId }) => {
     const { submitTransaction } = useApiEditorContext();
-    useCallback(
+
+    const onChange = useCallback(
         (typeReference: FernApiEditor.TypeReference) => {
             submitTransaction(
                 TransactionGenerator.setTypeShape({
@@ -32,7 +33,7 @@ export const AliasOf: React.FC<AliasOf.Props> = ({ shape, typeId }) => {
         <div className={styles.container}>
             <div>of</div>
             <div className={styles.typeReference}>
-                <EditableTypeReference typeReference={shape.aliasOf} />
+                <EditableTypeReference typeReference={shape.aliasOf} onChange={onChange} />
             </div>
         </div>
     );

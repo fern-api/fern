@@ -3,17 +3,22 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { PropsWithChildren, useCallback, useMemo, useReducer } from "react";
 import { DraftTypeReferenceNodeId } from "../tree/DraftTypeReferenceNodeId";
 import { DraftTypeReferenceTree } from "../tree/DraftTypeReferenceTree";
+import { convertDraftNodeToTypeReference } from "./convertDraftTreeToTypeReference";
 import { convertTypeReferenceToDraftTree } from "./convertTypeReferenceToDraftTree";
 import { DraftTypeReferenceContext, DraftTypeReferenceContextValue } from "./DraftTypeReferenceContext";
 
 export declare namespace DraftTypeReferenceContextProvider {
     export type Props = PropsWithChildren<{
         typeReference: FernApiEditor.TypeReference;
+        onSave: (typeReference: FernApiEditor.TypeReference) => void;
+        onCancel: () => void;
     }>;
 }
 
 export const DraftTypeReferenceContextProvider: React.FC<DraftTypeReferenceContextProvider.Props> = ({
     typeReference,
+    onSave,
+    onCancel,
     children,
 }) => {
     const [state, dispatch] = useReducer(reducer, undefined, (): State => {
@@ -72,12 +77,10 @@ export const DraftTypeReferenceContextProvider: React.FC<DraftTypeReferenceConte
                 type: "setInvalidNode",
                 nodeId: firstPlaceholderNode.nodeId,
             });
+        } else {
+            onSave(convertDraftNodeToTypeReference(state.tree.root, state.tree));
         }
-    }, [state.nodesInOrder, state.tree]);
-
-    const onClickCancel = useCallback(() => {
-        // TODO
-    }, []);
+    }, [onSave, state.nodesInOrder, state.tree]);
 
     const draftContextValue = useCallback(
         (): DraftTypeReferenceContextValue => ({
@@ -90,7 +93,7 @@ export const DraftTypeReferenceContextProvider: React.FC<DraftTypeReferenceConte
             onClickPrevious,
             getNode,
             onClickSave,
-            onClickCancel,
+            onClickCancel: onCancel,
         }),
         [
             state.tree.root,
@@ -102,7 +105,7 @@ export const DraftTypeReferenceContextProvider: React.FC<DraftTypeReferenceConte
             onClickPrevious,
             getNode,
             onClickSave,
-            onClickCancel,
+            onCancel,
         ]
     );
 

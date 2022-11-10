@@ -1,23 +1,43 @@
-import React, { useCallback, useState } from "react";
+import { assertNever } from "@fern-api/core-utils";
+import React, { useCallback, useReducer } from "react";
 
 export declare namespace useIsDirectlyHovering {
     export interface Return {
         isHovering: boolean;
         onMouseOver: (event: React.MouseEvent) => void;
         onMouseOut: () => void;
+        onMouseMove: () => void;
     }
 }
 
 export function useIsDirectlyHovering(): useIsDirectlyHovering.Return {
-    const [isHovering, setIsHovering] = useState(false);
+    const [state, dispatch] = useReducer(
+        (previousState: "inside" | "outside" | "hovering", action: "mouseover" | "mouseout" | "mousemove") => {
+            switch (action) {
+                case "mouseover":
+                    return previousState === "hovering" ? previousState : "inside";
+                case "mouseout":
+                    return "outside";
+                case "mousemove":
+                    return previousState === "inside" ? "hovering" : previousState;
+                default:
+                    assertNever(action);
+            }
+        },
+        "outside"
+    );
+
     return {
-        isHovering,
+        isHovering: state === "hovering",
         onMouseOver: useCallback((event: React.MouseEvent) => {
-            setIsHovering(true);
+            dispatch("mouseover");
             event.stopPropagation();
         }, []),
         onMouseOut: useCallback(() => {
-            setIsHovering(false);
+            dispatch("mouseout");
+        }, []),
+        onMouseMove: useCallback(() => {
+            dispatch("mousemove");
         }, []),
     };
 }

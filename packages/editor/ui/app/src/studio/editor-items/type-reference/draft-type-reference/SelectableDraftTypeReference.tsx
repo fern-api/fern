@@ -23,7 +23,7 @@ export const SelectableDraftTypeReference: React.FC<SelectableDraftTypeReference
     const { selectedNode, setSelectedNodeId, invalidNodeId } = useDraftTypeReferenceContext();
     const isSelected = selectedNode.id === nodeId;
     const isInvalid = invalidNodeId === nodeId;
-    const { isHovering, onMouseOut, onMouseOver } = useIsDirectlyHovering();
+    const { isHovering, onMouseOut, onMouseOver, onMouseMove } = useIsDirectlyHovering();
 
     const onClick = useCallback(
         (event: React.MouseEvent) => {
@@ -49,6 +49,7 @@ export const SelectableDraftTypeReference: React.FC<SelectableDraftTypeReference
             onClick={onClick}
             onMouseOut={onMouseOut}
             onMouseOver={onMouseOver}
+            onMouseMove={onMouseMove}
         >
             {children}
         </div>

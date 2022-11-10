@@ -16,7 +16,7 @@ import { TypeNameSuggest } from "./TypeNameSuggest";
 import { UnknownTag } from "./UnknownTag";
 
 export const DraftTypeReferencePopoverContent: React.FC = () => {
-    const { selectedNode, replaceSelectedNode, onClickNext, onClickPrevious, onClickSave } =
+    const { selectedNode, replaceSelectedNode, onClickNext, onClickPrevious, onClickSave, onClickCancel } =
         useDraftTypeReferenceContext();
 
     const onSelectNamedType = useCallback(
@@ -70,7 +70,7 @@ export const DraftTypeReferencePopoverContent: React.FC = () => {
                     <Button minimal icon={IconNames.ARROW_RIGHT} onClick={onClickNext} disabled={onClickNext == null} />
                 </div>
                 <div className={styles.footerButtons}>
-                    <Button text="Cancel" minimal />
+                    <Button text="Cancel" minimal onClick={onClickCancel} />
                     <Button text="Save" intent={Intent.PRIMARY} onClick={onClickSave} />
                 </div>
             </div>
