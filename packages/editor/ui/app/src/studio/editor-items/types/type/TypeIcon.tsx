@@ -10,5 +10,5 @@ export declare namespace TypeIcon {
 }
 
 export const TypeIcon: React.FC<TypeIcon.Props> = ({ large = false }) => {
-    return <EditorItemIcon icon={IconNames.CUBE} color={Colors.TURQUOISE3} large={large} />;
+    return <EditorItemIcon icon={IconNames.CUBE} color={Colors.TURQUOISE4} large={large} />;
 };

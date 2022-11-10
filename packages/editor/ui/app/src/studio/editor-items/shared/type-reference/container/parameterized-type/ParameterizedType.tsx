@@ -1,5 +1,4 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { STOP_PROPAGATION } from "@fern-ui/react-commons";
 import React from "react";
 import { TypeReference } from "../../TypeReference";
 import styles from "./ParameterizedType.module.scss";
@@ -20,11 +19,7 @@ export const ParameterizedType: React.FC<ParameterizedType.Props> = ({ typeName,
     return (
         <div className={styles.container}>
             <div>{`${typeName}[`}</div>
-            <div
-                className={styles.typeParameters}
-                // so clicking on a type parameter doesn't open outer popovers
-                onClick={STOP_PROPAGATION}
-            >
+            <div className={styles.typeParameters}>
                 {typeParameters.map((typeParameter, index) => (
                     <React.Fragment key={index}>
                         {index > 0 && <div>,</div>}

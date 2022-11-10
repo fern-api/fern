@@ -5,7 +5,7 @@ import { ChangeTypeReferencePopoverContent } from "./ChangeTypeReferencePopoverC
 export declare namespace ChangeTypeReferencePopover {
     export type Props = React.PropsWithChildren<{
         isOpen: boolean;
-        onInteraction: (isOpen: boolean) => void;
+        onInteraction: (isOpen: boolean, event?: React.SyntheticEvent<HTMLElement>) => void;
         onChange: (typeReference: FernApiEditor.TypeReference) => void;
     }>;
 }

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^4.11.5",
+    "@blueprintjs/icons": "^4.4.0",
     "@fern-api/loadable": "workspace:*",
     "classnames": "^2.3.1",
     "react": "^18.2.0",

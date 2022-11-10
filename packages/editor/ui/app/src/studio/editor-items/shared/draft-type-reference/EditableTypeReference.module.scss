@@ -1,0 +1,8 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+$horizontal-padding: 5px;
+
+.container {
+    padding-left: $horizontal-padding;
+    padding-right: $horizontal-padding;
+}

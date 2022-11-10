@@ -30,7 +30,7 @@ export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
             </div>
             <EditableText {...localDescription} multiline placeholder="Enter a description..."></EditableText>
             <TwoColumnTable>
-                <TwoColumnTableRow label="Schema" verticallyCenterLabel>
+                <TwoColumnTableRow label="Schema" verticallyCenterLabel labelClassName={styles.schemaLabel}>
                     <div className={styles.schema}>
                         <TypeShapeChooser type={type} />
                         {type.shape._visit({
