@@ -8012,6 +8012,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/common-components", "workspace:packages/editor/ui/common-components"],\
             ["@fern-ui/contexted-dialog", "workspace:packages/editor/ui/contexted-dialog"],\
             ["@fern-ui/fe-bundle", "workspace:packages/editor/ui/fe-bundle"],\
+            ["@fern-ui/fonts", "workspace:packages/editor/ui/fonts"],\
             ["@fern-ui/react-commons", "workspace:packages/editor/ui/react-commons"],\
             ["@fern-ui/react-query-utils", "workspace:packages/editor/ui/react-query-utils"],\
             ["@fern-ui/routing-utils", "workspace:packages/editor/ui/routing-utils"],\

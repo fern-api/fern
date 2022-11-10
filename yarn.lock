@@ -3352,6 +3352,7 @@ __metadata:
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/contexted-dialog": "workspace:*"
     "@fern-ui/fe-bundle": "workspace:*"
+    "@fern-ui/fonts": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/react-query-utils": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"
