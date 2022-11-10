@@ -153,6 +153,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/editor/ui/fe-bundle"\
       },\
       {\
+        "name": "@fern-ui/fonts",\
+        "reference": "workspace:packages/editor/ui/fonts"\
+      },\
+      {\
         "name": "@fern-ui/react-commons",\
         "reference": "workspace:packages/editor/ui/react-commons"\
       },\
@@ -223,6 +227,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-ui/common-components", ["workspace:packages/editor/ui/common-components"]],\
       ["@fern-ui/contexted-dialog", ["workspace:packages/editor/ui/contexted-dialog"]],\
       ["@fern-ui/fe-bundle", ["workspace:packages/editor/ui/fe-bundle"]],\
+      ["@fern-ui/fonts", ["workspace:packages/editor/ui/fonts"]],\
       ["@fern-ui/react-commons", ["workspace:packages/editor/ui/react-commons"]],\
       ["@fern-ui/react-query-utils", ["workspace:packages/editor/ui/react-query-utils"]],\
       ["@fern-ui/routing-utils", ["workspace:packages/editor/ui/routing-utils"]],\
@@ -8840,10 +8845,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
             ["@fern-fern/api-editor-sdk", "npm:0.0.22"],\
             ["@fern-ui/common-components", "workspace:packages/editor/ui/common-components"],\
+            ["@fern-ui/fonts", "workspace:packages/editor/ui/fonts"],\
             ["@fern-ui/react-commons", "workspace:packages/editor/ui/react-commons"],\
             ["@fern-ui/routing-utils", "workspace:packages/editor/ui/routing-utils"],\
             ["@fern-ui/split-view", "workspace:packages/editor/ui/split-view"],\
             ["@fern-ui/theme", "workspace:packages/editor/ui/theme"],\
+            ["@fontsource/actor", "npm:4.5.9"],\
+            ["@fontsource/roboto-mono", "npm:4.5.8"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -8951,6 +8959,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
             ["vite", "virtual:7569531fc555fba6fdf078846923d5e531932a9871d1e89764d0d19b99c944b5af835a73aa52ab7903e013e175b515824c075f848833126416faae2c572ea81b#npm:3.0.3"],\
             ["vite-plugin-checker", "virtual:01daca754e8a5ce7cfa94a170a7ea31a71d19401370078ac777bef3119889ed1f82daa2ab3a0b79783935ac9ff1c03910b892d993b0f13256b0fa78a5ed30aea#npm:0.4.9"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-ui/fonts", [\
+        ["workspace:packages/editor/ui/fonts", {\
+          "packageLocation": "./packages/editor/ui/fonts/",\
+          "packageDependencies": [\
+            ["@fern-ui/fonts", "workspace:packages/editor/ui/fonts"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["react", "npm:18.2.0"],\
+            ["stylelint", "npm:14.14.0"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["vite", "virtual:5bccdcb693dc31093c7ab4f1ceb532a94451e14c74729864ff804ce61154b2bb188c1cd7fb9f4a553b5f9e6c8f056faa092025c4211a584c5f6abf7597dd2fee#npm:3.0.3"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -9113,6 +9144,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:5bccdcb693dc31093c7ab4f1ceb532a94451e14c74729864ff804ce61154b2bb188c1cd7fb9f4a553b5f9e6c8f056faa092025c4211a584c5f6abf7597dd2fee#npm:3.0.3"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fontsource/actor", [\
+        ["npm:4.5.9", {\
+          "packageLocation": "./.yarn/cache/@fontsource-actor-npm-4.5.9-498cd61231-f4e263d58d.zip/node_modules/@fontsource/actor/",\
+          "packageDependencies": [\
+            ["@fontsource/actor", "npm:4.5.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fontsource/roboto-mono", [\
+        ["npm:4.5.8", {\
+          "packageLocation": "./.yarn/cache/@fontsource-roboto-mono-npm-4.5.8-d2377505cc-0912b468ae.zip/node_modules/@fontsource/roboto-mono/",\
+          "packageDependencies": [\
+            ["@fontsource/roboto-mono", "npm:4.5.8"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@gar/promisify", [\

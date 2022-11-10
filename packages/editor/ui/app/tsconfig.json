@@ -9,6 +9,7 @@
     { "path": "../../transaction-generator" },
     { "path": "../../transaction-resolver" },
     { "path": "../common-components" },
+    { "path": "../fonts" },
     { "path": "../react-commons" },
     { "path": "../routing-utils" },
     { "path": "../split-view" },

@@ -8,30 +8,35 @@ import { ApiEditorContextProvider } from "../api-editor-context/ApiEditorContext
 import { MaybeSelectedEditorItemPage } from "./MaybeSelectedEditorItemPage";
 import { SidebarContextProvider } from "./sidebar/context/SidebarContextProvider";
 import { Sidebar } from "./sidebar/Sidebar";
+import styles from "./Studio.module.scss";
+import { useAreStudioFontsReady } from "./useAreStudioFontsReady";
 
 export const Studio: React.FC = () => {
     const initialApi = useInitialApi();
+    const areFontsReady = useAreStudioFontsReady();
 
     // TODO if we cascade the loading state it's easier to show skeletons,
     // but more annoying to constantly have not-yet-loaded wrappers of each component
-    if (!isLoaded(initialApi)) {
+    if (!areFontsReady || !isLoaded(initialApi)) {
         return <NonIdealState title={<Spinner />} />;
     }
 
     return (
         <ApiEditorContextProvider initialApi={initialApi.value}>
             <SidebarContextProvider>
-                <SplitView orientation="horizontal">
-                    <Pane
-                        defaultSize="350px"
-                        minimumSize="200px"
-                        maximumSize="50%"
-                        resizeHandlePosition={ResizeHandlePosition.RIGHT}
-                    >
-                        <Sidebar />
-                    </Pane>
-                    <MaybeSelectedEditorItemPage />
-                </SplitView>
+                <div className={styles.container}>
+                    <SplitView orientation="horizontal">
+                        <Pane
+                            defaultSize="350px"
+                            minimumSize="200px"
+                            maximumSize="50%"
+                            resizeHandlePosition={ResizeHandlePosition.RIGHT}
+                        >
+                            <Sidebar />
+                        </Pane>
+                        <MaybeSelectedEditorItemPage />
+                    </SplitView>
+                </div>
             </SidebarContextProvider>
         </ApiEditorContextProvider>
     );

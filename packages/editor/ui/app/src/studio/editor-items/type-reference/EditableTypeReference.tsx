@@ -5,6 +5,7 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
 import { TypeReferenceEditor } from "./draft-type-reference/TypeReferenceEditor";
 import styles from "./EditableTypeReference.module.scss";
+import { MonospaceText } from "./MonospaceText";
 import { TypeReferencePreview } from "./type-reference-preview/TypeReferencePreview";
 
 export declare namespace EditableTypeReference {
@@ -25,12 +26,16 @@ export const EditableTypeReference: React.FC<EditableTypeReference.Props> = ({ t
         [onChange, onDoneEditing]
     );
 
-    return isEditing ? (
-        <TypeReferenceEditor typeReference={typeReference} onSave={onSave} onCancel={onDoneEditing} />
-    ) : (
-        <div className={styles.preview}>
-            <TypeReferencePreview typeReference={typeReference} />
-            <Button minimal icon={IconNames.EDIT} onClick={onClickEdit} />
-        </div>
+    return (
+        <MonospaceText>
+            {isEditing ? (
+                <TypeReferenceEditor typeReference={typeReference} onSave={onSave} onCancel={onDoneEditing} />
+            ) : (
+                <div className={styles.preview}>
+                    <TypeReferencePreview typeReference={typeReference} />
+                    <Button minimal icon={IconNames.EDIT} onClick={onClickEdit} />
+                </div>
+            )}
+        </MonospaceText>
     );
 };
