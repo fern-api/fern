@@ -2,24 +2,24 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
-const ALIAS_OF_STRING_SHAPE = FernApiEditor.Shape.alias({
-    aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
-});
-
-describe("SetTypeDescriptionTransactionHandler", () => {
+describe("SetTypeShapeTransactionHandler", () => {
     it("correctly sets alias type", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
         const first = package_.addType();
         package_.addType();
 
+        const shape = FernApiEditor.Shape.alias({
+            aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+        });
+
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: ALIAS_OF_STRING_SHAPE,
+            shape,
         });
         api.applyTransaction(transaction);
 
-        expect(api.definition.types[first.typeId]?.shape).toEqual(ALIAS_OF_STRING_SHAPE);
+        expect(api.definition.types[first.typeId]?.shape).toEqual(shape);
     });
 
     it("correctly sets object type", () => {
@@ -28,13 +28,15 @@ describe("SetTypeDescriptionTransactionHandler", () => {
         const first = package_.addType();
         package_.addType();
 
+        const shape = FernApiEditor.Shape.object({});
+
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: ALIAS_OF_STRING_SHAPE,
+            shape,
         });
         api.applyTransaction(transaction);
 
-        expect(api.definition.types[first.typeId]?.shape).toEqual(FernApiEditor.Shape.object({}));
+        expect(api.definition.types[first.typeId]?.shape).toEqual(shape);
     });
 
     it("correctly sets union type", () => {
@@ -43,13 +45,15 @@ describe("SetTypeDescriptionTransactionHandler", () => {
         const first = package_.addType();
         package_.addType();
 
+        const shape = FernApiEditor.Shape.union({});
+
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: ALIAS_OF_STRING_SHAPE,
+            shape,
         });
         api.applyTransaction(transaction);
 
-        expect(api.definition.types[first.typeId]?.shape).toEqual(FernApiEditor.Shape.union({}));
+        expect(api.definition.types[first.typeId]?.shape).toEqual(shape);
     });
 
     it("correctly sets enum type", () => {
@@ -58,13 +62,15 @@ describe("SetTypeDescriptionTransactionHandler", () => {
         const first = package_.addType();
         package_.addType();
 
+        const shape = FernApiEditor.Shape.enum({});
+
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,
-            shape: ALIAS_OF_STRING_SHAPE,
+            shape,
         });
         api.applyTransaction(transaction);
 
-        expect(api.definition.types[first.typeId]?.shape).toEqual(FernApiEditor.Shape.enum({}));
+        expect(api.definition.types[first.typeId]?.shape).toEqual(shape);
     });
 
     it("throws when type does not exist", () => {
@@ -75,7 +81,7 @@ describe("SetTypeDescriptionTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setTypeShape({
             typeId: "made-up-id",
-            shape: ALIAS_OF_STRING_SHAPE,
+            shape: FernApiEditor.Shape.enum({}),
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();
