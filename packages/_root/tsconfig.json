@@ -35,6 +35,7 @@
     { "path": "../editor/ui/common-components" },
     { "path": "../editor/ui/contexted-dialog" },
     { "path": "../editor/ui/fe-bundle" },
+    { "path": "../editor/ui/fonts" },
     { "path": "../editor/ui/react-commons" },
     { "path": "../editor/ui/react-query-utils" },
     { "path": "../editor/ui/routing-utils" },

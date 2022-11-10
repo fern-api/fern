@@ -1,5 +1,6 @@
 import { Intent, Tag } from "@blueprintjs/core";
 import { useMemo } from "react";
+import { MonospaceText } from "../../MonospaceText";
 import { useDraftTypeReferenceContext } from "../context/DraftTypeReferenceContext";
 import { DraftTypeReferenceTree } from "../tree/DraftTypeReferenceTree";
 
@@ -32,7 +33,7 @@ export const ChangeTypeTag: React.FC<ChangeTypeTag.Props> = ({ label, isSelected
             intent={intent ?? (isSelected ? Intent.PRIMARY : undefined)}
             large
         >
-            {label}
+            <MonospaceText>{label}</MonospaceText>
         </Tag>
     );
 };
