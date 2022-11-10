@@ -1,0 +1,11 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.typeReference {
+    display: flex;
+}

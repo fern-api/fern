@@ -3450,7 +3450,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.20
+    "@fern-fern/api-editor-sdk": 0.0.22
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3925,7 +3925,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.20
+    "@fern-fern/api-editor-sdk": 0.0.22
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3947,7 +3947,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.20
+    "@fern-fern/api-editor-sdk": 0.0.22
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -4039,14 +4039,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/api-editor-sdk@npm:0.0.20":
-  version: 0.0.20
-  resolution: "@fern-fern/api-editor-sdk@npm:0.0.20"
+"@fern-fern/api-editor-sdk@npm:0.0.22":
+  version: 0.0.22
+  resolution: "@fern-fern/api-editor-sdk@npm:0.0.22"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: e03a7163c6ac7d6d436a4d7532f097c0fb044c4f2826ba3b3d8940db6aa39ddec523e6b49d8bfde3ed26277547f50cc488f5497ad0a4155533ec84b6db42bd2f
+  checksum: e87a63cb9643c8213d6b8fe869f5f16302ff2151e7c3eadeef7295bdd992e4f88d385a0c6d9d4361ce43cb54f63500f7af6d71943895c2957e01e3754ba48fac
   languageName: node
   linkType: hard
 
@@ -4110,19 +4110,22 @@ __metadata:
     "@fern-api/loadable": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.20
+    "@fern-fern/api-editor-sdk": 0.0.22
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/routing-utils": "workspace:*"
     "@fern-ui/split-view": "workspace:*"
     "@fern-ui/theme": "workspace:*"
     "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
+    "@types/uuid": ^8.3.4
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.0.3
+    lodash-es: ^4.17.21
     normalize.css: ^8.0.1
     prettier: ^2.7.1
     react: ^18.2.0
@@ -4131,6 +4134,7 @@ __metadata:
     react-router-dom: ^6.4.3
     stylelint: ^14.14.0
     typescript: 4.6.4
+    uuid: ^9.0.0
     vite: 3.0.3
   languageName: unknown
   linkType: soft
@@ -4143,6 +4147,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
+    "@blueprintjs/icons": ^4.4.0
     "@fern-api/loadable": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -10788,7 +10793,7 @@ env-cmd@toddbluhm/env-cmd:
     jest: ^29.0.3
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.104
+    mrlint: ^0.0.105
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -14342,12 +14347,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.104":
-  version: 0.0.104
-  resolution: "mrlint@npm:0.0.104"
+"mrlint@npm:^0.0.105":
+  version: 0.0.105
+  resolution: "mrlint@npm:0.0.105"
   bin:
     mrlint: cli.cjs
-  checksum: 501a1b63e57a9d7845bf7c8b98abcc1671242bd4ff9537b4b00e8a214b603c573ae8556bf8d02b8857030542ca6a865635a51dd03d48b31f11b53e095e8be026
+  checksum: f1cdff7cd5557da9d934720e02039b614a89668b739e0e6489673933c9d91ee61406718889cfc6230b26c64548f08139a157c0eb44f20b92cfcad7d59da9f078
   languageName: node
   linkType: hard
 

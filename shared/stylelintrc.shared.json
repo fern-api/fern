@@ -15,6 +15,12 @@
         "ignorePseudoClasses": ["global", "export"]
       }
     ],
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreSelectors": [":export"]
+      }
+    ],
     "font-family-no-missing-generic-family-keyword": null,
     "color-function-notation": null
   }

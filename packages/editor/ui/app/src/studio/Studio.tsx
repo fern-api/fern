@@ -66,13 +66,21 @@ function useInitialApi(): Loadable<FernApiEditor.Api> {
                         "43ea24dd-591f-4a1f-aad4-0c7f2795eca4": {
                             typeId: "43ea24dd-591f-4a1f-aad4-0c7f2795eca4",
                             typeName: "My type",
-                            shape: FernApiEditor.Shape.alias({}),
+                            shape: FernApiEditor.Shape.alias({
+                                aliasOf: FernApiEditor.TypeReference.container(
+                                    FernApiEditor.ContainerType.list(
+                                        FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String)
+                                    )
+                                ),
+                            }),
                             description: "My description",
                         },
                         "3f4e1908-52e9-45fd-a9ce-eac9472bee6e": {
                             typeId: "3f4e1908-52e9-45fd-a9ce-eac9472bee6e",
                             typeName: "",
-                            shape: FernApiEditor.Shape.alias({}),
+                            shape: FernApiEditor.Shape.alias({
+                                aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+                            }),
                         },
                     },
                     errors: {},

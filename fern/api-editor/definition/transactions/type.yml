@@ -1,6 +1,7 @@
 imports:
   commons: ../commons.yml
   transactionCommons: commons.yml
+  type: ../type.yml
 types:
   BaseTypeTransaction:
     extends: transactionCommons.BaseTransaction
@@ -26,14 +27,7 @@ types:
   SetTypeShapeTransaction:
     extends: BaseTypeTransaction
     properties:
-      shape: TypeShape
-
-  TypeShape:
-    enum:
-      - ALIAS
-      - OBJECT
-      - UNION
-      - ENUM
+      shape: type.Shape
 
   DeleteTypeTransaction:
     extends: BaseTypeTransaction
