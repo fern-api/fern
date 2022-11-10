@@ -15,8 +15,6 @@ export const Studio: React.FC = () => {
     const initialApi = useInitialApi();
     const areFontsReady = useAreStudioFontsReady();
 
-    // TODO if we cascade the loading state it's easier to show skeletons,
-    // but more annoying to constantly have not-yet-loaded wrappers of each component
     if (!areFontsReady || !isLoaded(initialApi)) {
         return <NonIdealState title={<Spinner />} />;
     }
