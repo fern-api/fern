@@ -111,9 +111,9 @@ export function convertTypeReferenceToDraftTree(
                     throw new Error("Unknown container type: " + type);
                 },
             }),
-        named: DraftTypeReferenceNode.named,
-        primitive: DraftTypeReferenceNode.primitive,
-        unknown: DraftTypeReferenceNode.unknown,
+        named: (typeId) => DraftTypeReferenceNode.named(typeId, { parent }),
+        primitive: (primitive) => DraftTypeReferenceNode.primitive(primitive, { parent }),
+        unknown: () => DraftTypeReferenceNode.unknown({ parent }),
         _other: ({ type }) => {
             throw new Error("Unknown TypeReference type: " + type);
         },

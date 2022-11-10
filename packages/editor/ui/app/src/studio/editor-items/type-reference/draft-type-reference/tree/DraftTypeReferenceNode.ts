@@ -169,12 +169,15 @@ export const DraftTypeReferenceNode = {
         };
     },
 
-    primitive: (primitive: FernApiEditor.PrimitiveType): DraftTypeReferenceTree => {
+    primitive: (
+        primitive: FernApiEditor.PrimitiveType,
+        { parent }: { parent?: DraftTypeReferenceNodeId } = {}
+    ): DraftTypeReferenceTree => {
         const node: DraftTypeReferenceNode.PrimitiveType = {
             type: "primitive",
             id: DraftTypeReferenceNodeId.generate(),
             primitive,
-            parent: undefined,
+            parent,
         };
         return {
             root: node.id,
@@ -184,12 +187,15 @@ export const DraftTypeReferenceNode = {
         };
     },
 
-    named: (typeId: FernApiEditor.TypeId): DraftTypeReferenceTree => {
+    named: (
+        typeId: FernApiEditor.TypeId,
+        { parent }: { parent?: DraftTypeReferenceNodeId } = {}
+    ): DraftTypeReferenceTree => {
         const node: DraftTypeReferenceNode.NamedType = {
             type: "named",
             id: DraftTypeReferenceNodeId.generate(),
             typeId,
-            parent: undefined,
+            parent,
         };
         return {
             root: node.id,
@@ -199,11 +205,11 @@ export const DraftTypeReferenceNode = {
         };
     },
 
-    unknown: (): DraftTypeReferenceTree => {
+    unknown: ({ parent }: { parent?: DraftTypeReferenceNodeId } = {}): DraftTypeReferenceTree => {
         const node: DraftTypeReferenceNode.UnknownType = {
             type: "unknown",
             id: DraftTypeReferenceNodeId.generate(),
-            parent: undefined,
+            parent,
         };
         return {
             root: node.id,
