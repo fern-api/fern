@@ -136,7 +136,7 @@ function convertResponse({
                 ? JSON.stringify(
                       getMockBodyFromTypeReference({ typeReference: httpEndpoint.response.type, allTypes }),
                       undefined,
-                      4
+                      2
                   )
                 : "",
         postmanPreviewlanguage: "json",
@@ -186,7 +186,7 @@ function convertRequest({
                       raw: JSON.stringify(
                           getMockBodyFromTypeReference({ typeReference: httpEndpoint.request.type, allTypes }),
                           undefined,
-                          4
+                          2
                       ),
                       options: {
                           raw: {

@@ -51,7 +51,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
             await writeFile(
                 path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
-                JSON.stringify(rawCollectionDefinition, undefined, 4)
+                JSON.stringify(rawCollectionDefinition, undefined, 2)
             );
             console.log(`Wrote postman collection to ${COLLECTION_OUTPUT_FILENAME}`);
             await generatorLoggingClient.sendUpdate(

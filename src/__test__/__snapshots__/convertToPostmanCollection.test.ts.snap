@@ -2,174 +2,174 @@
 
 exports[`convertToPostman any-auth 1`] = `
 "{
-    \\"info\\": {
-        \\"name\\": \\"any-auth\\",
-        \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
+  \\"info\\": {
+    \\"name\\": \\"any-auth\\",
+    \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
+  },
+  \\"variable\\": [
+    {
+      \\"key\\": \\"origin\\",
+      \\"value\\": \\"http://localhost:8080\\",
+      \\"type\\": \\"string\\"
     },
-    \\"variable\\": [
-        {
-            \\"key\\": \\"origin\\",
-            \\"value\\": \\"http://localhost:8080\\",
-            \\"type\\": \\"string\\"
-        },
-        {
-            \\"key\\": \\"username\\",
-            \\"value\\": \\"\\",
-            \\"type\\": \\"string\\"
-        },
-        {
-            \\"key\\": \\"password\\",
-            \\"value\\": \\"\\",
-            \\"type\\": \\"string\\"
-        },
-        {
-            \\"key\\": \\"My-Header\\",
-            \\"value\\": \\"\\",
-            \\"type\\": \\"string\\"
-        }
+    {
+      \\"key\\": \\"username\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"password\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"My-Header\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    }
+  ],
+  \\"auth\\": {
+    \\"basic\\": [
+      {
+        \\"key\\": \\"username\\",
+        \\"value\\": \\"{{username}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"password\\",
+        \\"value\\": \\"{{password}}\\",
+        \\"type\\": \\"string\\"
+      }
     ],
-    \\"auth\\": {
-        \\"basic\\": [
-            {
-                \\"key\\": \\"username\\",
-                \\"value\\": \\"{{username}}\\",
-                \\"type\\": \\"string\\"
-            },
-            {
-                \\"key\\": \\"password\\",
-                \\"value\\": \\"{{password}}\\",
-                \\"type\\": \\"string\\"
-            }
-        ],
-        \\"type\\": \\"basic\\"
-    },
-    \\"item\\": [
+    \\"type\\": \\"basic\\"
+  },
+  \\"item\\": [
+    {
+      \\"name\\": \\"PostsService\\",
+      \\"item\\": [
         {
-            \\"name\\": \\"PostsService\\",
-            \\"item\\": [
-                {
-                    \\"name\\": \\"createPost\\",
-                    \\"request\\": {
-                        \\"url\\": {
-                            \\"raw\\": \\"{{origin}}/create\\",
-                            \\"host\\": [
-                                \\"{{origin}}\\"
-                            ],
-                            \\"path\\": [
-                                \\"create\\"
-                            ],
-                            \\"query\\": []
-                        },
-                        \\"header\\": [
-                            {
-                                \\"key\\": \\"My-Header\\",
-                                \\"value\\": \\"{{My-Header}}\\",
-                                \\"type\\": \\"string\\"
-                            }
-                        ],
-                        \\"method\\": \\"POST\\",
-                        \\"body\\": {
-                            \\"mode\\": \\"raw\\",
-                            \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
-                            \\"options\\": {
-                                \\"raw\\": {
-                                    \\"language\\": \\"json\\"
-                                }
-                            }
-                        }
-                    },
-                    \\"response\\": [
-                        {
-                            \\"name\\": \\"Successful createPost\\",
-                            \\"code\\": 200,
-                            \\"originalRequest\\": {
-                                \\"url\\": {
-                                    \\"raw\\": \\"{{origin}}/create\\",
-                                    \\"host\\": [
-                                        \\"{{origin}}\\"
-                                    ],
-                                    \\"path\\": [
-                                        \\"create\\"
-                                    ],
-                                    \\"query\\": []
-                                },
-                                \\"header\\": [
-                                    {
-                                        \\"key\\": \\"My-Header\\",
-                                        \\"value\\": \\"{{My-Header}}\\",
-                                        \\"type\\": \\"string\\"
-                                    }
-                                ],
-                                \\"method\\": \\"POST\\",
-                                \\"body\\": {
-                                    \\"mode\\": \\"raw\\",
-                                    \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
-                                    \\"options\\": {
-                                        \\"raw\\": {
-                                            \\"language\\": \\"json\\"
-                                        }
-                                    }
-                                }
-                            },
-                            \\"body\\": \\"\\\\\\"example\\\\\\"\\",
-                            \\"_postman_previewlanguage\\": \\"json\\"
-                        }
-                    ]
-                },
-                {
-                    \\"name\\": \\"getPost\\",
-                    \\"request\\": {
-                        \\"url\\": {
-                            \\"raw\\": \\"{{origin}}/:postId\\",
-                            \\"host\\": [
-                                \\"{{origin}}\\"
-                            ],
-                            \\"path\\": [
-                                \\":postId\\"
-                            ],
-                            \\"query\\": []
-                        },
-                        \\"header\\": [
-                            {
-                                \\"key\\": \\"My-Header\\",
-                                \\"value\\": \\"{{My-Header}}\\",
-                                \\"type\\": \\"string\\"
-                            }
-                        ],
-                        \\"method\\": \\"GET\\"
-                    },
-                    \\"response\\": [
-                        {
-                            \\"name\\": \\"Successful getPost\\",
-                            \\"code\\": 200,
-                            \\"originalRequest\\": {
-                                \\"url\\": {
-                                    \\"raw\\": \\"{{origin}}/:postId\\",
-                                    \\"host\\": [
-                                        \\"{{origin}}\\"
-                                    ],
-                                    \\"path\\": [
-                                        \\":postId\\"
-                                    ],
-                                    \\"query\\": []
-                                },
-                                \\"header\\": [
-                                    {
-                                        \\"key\\": \\"My-Header\\",
-                                        \\"value\\": \\"{{My-Header}}\\",
-                                        \\"type\\": \\"string\\"
-                                    }
-                                ],
-                                \\"method\\": \\"GET\\"
-                            },
-                            \\"body\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
-                            \\"_postman_previewlanguage\\": \\"json\\"
-                        }
-                    ]
+          \\"name\\": \\"createPost\\",
+          \\"request\\": {
+            \\"url\\": {
+              \\"raw\\": \\"{{origin}}/create\\",
+              \\"host\\": [
+                \\"{{origin}}\\"
+              ],
+              \\"path\\": [
+                \\"create\\"
+              ],
+              \\"query\\": []
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"My-Header\\",
+                \\"value\\": \\"{{My-Header}}\\",
+                \\"type\\": \\"string\\"
+              }
+            ],
+            \\"method\\": \\"POST\\",
+            \\"body\\": {
+              \\"mode\\": \\"raw\\",
+              \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+              \\"options\\": {
+                \\"raw\\": {
+                  \\"language\\": \\"json\\"
                 }
-            ]
+              }
+            }
+          },
+          \\"response\\": [
+            {
+              \\"name\\": \\"Successful createPost\\",
+              \\"code\\": 200,
+              \\"originalRequest\\": {
+                \\"url\\": {
+                  \\"raw\\": \\"{{origin}}/create\\",
+                  \\"host\\": [
+                    \\"{{origin}}\\"
+                  ],
+                  \\"path\\": [
+                    \\"create\\"
+                  ],
+                  \\"query\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"My-Header\\",
+                    \\"value\\": \\"{{My-Header}}\\",
+                    \\"type\\": \\"string\\"
+                  }
+                ],
+                \\"method\\": \\"POST\\",
+                \\"body\\": {
+                  \\"mode\\": \\"raw\\",
+                  \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+                  \\"options\\": {
+                    \\"raw\\": {
+                      \\"language\\": \\"json\\"
+                    }
+                  }
+                }
+              },
+              \\"body\\": \\"\\\\\\"example\\\\\\"\\",
+              \\"_postman_previewlanguage\\": \\"json\\"
+            }
+          ]
+        },
+        {
+          \\"name\\": \\"getPost\\",
+          \\"request\\": {
+            \\"url\\": {
+              \\"raw\\": \\"{{origin}}/:postId\\",
+              \\"host\\": [
+                \\"{{origin}}\\"
+              ],
+              \\"path\\": [
+                \\":postId\\"
+              ],
+              \\"query\\": []
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"My-Header\\",
+                \\"value\\": \\"{{My-Header}}\\",
+                \\"type\\": \\"string\\"
+              }
+            ],
+            \\"method\\": \\"GET\\"
+          },
+          \\"response\\": [
+            {
+              \\"name\\": \\"Successful getPost\\",
+              \\"code\\": 200,
+              \\"originalRequest\\": {
+                \\"url\\": {
+                  \\"raw\\": \\"{{origin}}/:postId\\",
+                  \\"host\\": [
+                    \\"{{origin}}\\"
+                  ],
+                  \\"path\\": [
+                    \\":postId\\"
+                  ],
+                  \\"query\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"My-Header\\",
+                    \\"value\\": \\"{{My-Header}}\\",
+                    \\"type\\": \\"string\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\"
+              },
+              \\"body\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+              \\"_postman_previewlanguage\\": \\"json\\"
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }"
 `;
 
@@ -208,160 +208,160 @@ Array [
 
 exports[`convertToPostman test-api 1`] = `
 "{
-    \\"info\\": {
-        \\"name\\": \\"blog-post-api\\",
-        \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
-    },
-    \\"variable\\": [
+  \\"info\\": {
+    \\"name\\": \\"blog-post-api\\",
+    \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
+  },
+  \\"variable\\": [
+    {
+      \\"key\\": \\"origin\\",
+      \\"value\\": \\"http://localhost:8080\\",
+      \\"type\\": \\"string\\"
+    }
+  ],
+  \\"item\\": [
+    {
+      \\"name\\": \\"PostsService\\",
+      \\"item\\": [
         {
-            \\"key\\": \\"origin\\",
-            \\"value\\": \\"http://localhost:8080\\",
-            \\"type\\": \\"string\\"
-        }
-    ],
-    \\"item\\": [
-        {
-            \\"name\\": \\"PostsService\\",
-            \\"item\\": [
-                {
-                    \\"name\\": \\"createPost\\",
-                    \\"request\\": {
-                        \\"description\\": \\"Creates a blog post and returns blog post id.\\",
-                        \\"url\\": {
-                            \\"raw\\": \\"{{origin}}/create\\",
-                            \\"host\\": [
-                                \\"{{origin}}\\"
-                            ],
-                            \\"path\\": [
-                                \\"create\\"
-                            ],
-                            \\"query\\": []
-                        },
-                        \\"header\\": [
-                            {
-                                \\"key\\": \\"x-service-header\\",
-                                \\"type\\": \\"text\\",
-                                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                            },
-                            {
-                                \\"key\\": \\"x-endpoint-header\\",
-                                \\"description\\": \\"I'm a header!\\",
-                                \\"type\\": \\"text\\",
-                                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                            }
-                        ],
-                        \\"method\\": \\"POST\\",
-                        \\"body\\": {
-                            \\"mode\\": \\"raw\\",
-                            \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"author\\\\\\": {\\\\n            \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n        }\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"3\\\\\\": {\\\\n        \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n    }\\\\n}\\",
-                            \\"options\\": {
-                                \\"raw\\": {
-                                    \\"language\\": \\"json\\"
-                                }
-                            }
-                        }
-                    },
-                    \\"response\\": [
-                        {
-                            \\"name\\": \\"Successful createPost\\",
-                            \\"code\\": 200,
-                            \\"originalRequest\\": {
-                                \\"description\\": \\"Creates a blog post and returns blog post id.\\",
-                                \\"url\\": {
-                                    \\"raw\\": \\"{{origin}}/create\\",
-                                    \\"host\\": [
-                                        \\"{{origin}}\\"
-                                    ],
-                                    \\"path\\": [
-                                        \\"create\\"
-                                    ],
-                                    \\"query\\": []
-                                },
-                                \\"header\\": [
-                                    {
-                                        \\"key\\": \\"x-service-header\\",
-                                        \\"type\\": \\"text\\",
-                                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                                    },
-                                    {
-                                        \\"key\\": \\"x-endpoint-header\\",
-                                        \\"description\\": \\"I'm a header!\\",
-                                        \\"type\\": \\"text\\",
-                                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                                    }
-                                ],
-                                \\"method\\": \\"POST\\",
-                                \\"body\\": {
-                                    \\"mode\\": \\"raw\\",
-                                    \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"author\\\\\\": {\\\\n            \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n        }\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"3\\\\\\": {\\\\n        \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n    }\\\\n}\\",
-                                    \\"options\\": {
-                                        \\"raw\\": {
-                                            \\"language\\": \\"json\\"
-                                        }
-                                    }
-                                }
-                            },
-                            \\"body\\": \\"\\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\",
-                            \\"_postman_previewlanguage\\": \\"json\\"
-                        }
-                    ]
-                },
-                {
-                    \\"name\\": \\"getPost\\",
-                    \\"request\\": {
-                        \\"description\\": \\"Gets a blog post.\\",
-                        \\"url\\": {
-                            \\"raw\\": \\"{{origin}}/:postId\\",
-                            \\"host\\": [
-                                \\"{{origin}}\\"
-                            ],
-                            \\"path\\": [
-                                \\":postId\\"
-                            ],
-                            \\"query\\": []
-                        },
-                        \\"header\\": [
-                            {
-                                \\"key\\": \\"x-service-header\\",
-                                \\"type\\": \\"text\\",
-                                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                            }
-                        ],
-                        \\"method\\": \\"GET\\"
-                    },
-                    \\"response\\": [
-                        {
-                            \\"name\\": \\"Successful getPost\\",
-                            \\"code\\": 200,
-                            \\"originalRequest\\": {
-                                \\"description\\": \\"Gets a blog post.\\",
-                                \\"url\\": {
-                                    \\"raw\\": \\"{{origin}}/:postId\\",
-                                    \\"host\\": [
-                                        \\"{{origin}}\\"
-                                    ],
-                                    \\"path\\": [
-                                        \\":postId\\"
-                                    ],
-                                    \\"query\\": []
-                                },
-                                \\"header\\": [
-                                    {
-                                        \\"key\\": \\"x-service-header\\",
-                                        \\"type\\": \\"text\\",
-                                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                                    }
-                                ],
-                                \\"method\\": \\"GET\\"
-                            },
-                            \\"body\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"3\\\\\\": {\\\\n        \\\\\\"author\\\\\\": {\\\\n            \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n        }\\\\n    },\\\\n    \\\\\\"4\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
-                            \\"_postman_previewlanguage\\": \\"json\\"
-                        }
-                    ]
+          \\"name\\": \\"createPost\\",
+          \\"request\\": {
+            \\"description\\": \\"Creates a blog post and returns blog post id.\\",
+            \\"url\\": {
+              \\"raw\\": \\"{{origin}}/create\\",
+              \\"host\\": [
+                \\"{{origin}}\\"
+              ],
+              \\"path\\": [
+                \\"create\\"
+              ],
+              \\"query\\": []
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"x-service-header\\",
+                \\"type\\": \\"text\\",
+                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+              },
+              {
+                \\"key\\": \\"x-endpoint-header\\",
+                \\"description\\": \\"I'm a header!\\",
+                \\"type\\": \\"text\\",
+                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+              }
+            ],
+            \\"method\\": \\"POST\\",
+            \\"body\\": {
+              \\"mode\\": \\"raw\\",
+              \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"author\\\\\\": {\\\\n      \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    }\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"3\\\\\\": {\\\\n    \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n  }\\\\n}\\",
+              \\"options\\": {
+                \\"raw\\": {
+                  \\"language\\": \\"json\\"
                 }
-            ]
+              }
+            }
+          },
+          \\"response\\": [
+            {
+              \\"name\\": \\"Successful createPost\\",
+              \\"code\\": 200,
+              \\"originalRequest\\": {
+                \\"description\\": \\"Creates a blog post and returns blog post id.\\",
+                \\"url\\": {
+                  \\"raw\\": \\"{{origin}}/create\\",
+                  \\"host\\": [
+                    \\"{{origin}}\\"
+                  ],
+                  \\"path\\": [
+                    \\"create\\"
+                  ],
+                  \\"query\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  },
+                  {
+                    \\"key\\": \\"x-endpoint-header\\",
+                    \\"description\\": \\"I'm a header!\\",
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"POST\\",
+                \\"body\\": {
+                  \\"mode\\": \\"raw\\",
+                  \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"author\\\\\\": {\\\\n      \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    }\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"3\\\\\\": {\\\\n    \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n  }\\\\n}\\",
+                  \\"options\\": {
+                    \\"raw\\": {
+                      \\"language\\": \\"json\\"
+                    }
+                  }
+                }
+              },
+              \\"body\\": \\"\\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\",
+              \\"_postman_previewlanguage\\": \\"json\\"
+            }
+          ]
+        },
+        {
+          \\"name\\": \\"getPost\\",
+          \\"request\\": {
+            \\"description\\": \\"Gets a blog post.\\",
+            \\"url\\": {
+              \\"raw\\": \\"{{origin}}/:postId\\",
+              \\"host\\": [
+                \\"{{origin}}\\"
+              ],
+              \\"path\\": [
+                \\":postId\\"
+              ],
+              \\"query\\": []
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"x-service-header\\",
+                \\"type\\": \\"text\\",
+                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+              }
+            ],
+            \\"method\\": \\"GET\\"
+          },
+          \\"response\\": [
+            {
+              \\"name\\": \\"Successful getPost\\",
+              \\"code\\": 200,
+              \\"originalRequest\\": {
+                \\"description\\": \\"Gets a blog post.\\",
+                \\"url\\": {
+                  \\"raw\\": \\"{{origin}}/:postId\\",
+                  \\"host\\": [
+                    \\"{{origin}}\\"
+                  ],
+                  \\"path\\": [
+                    \\":postId\\"
+                  ],
+                  \\"query\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\"
+              },
+              \\"body\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"3\\\\\\": {\\\\n    \\\\\\"author\\\\\\": {\\\\n      \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    }\\\\n  },\\\\n  \\\\\\"4\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+              \\"_postman_previewlanguage\\": \\"json\\"
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }"
 `;
 

@@ -50,7 +50,7 @@ describe("convertToPostman", () => {
                 environment: GeneratorEnvironment.local(),
             };
 
-            await writeFile(confgPath, JSON.stringify(generatorConfig, undefined, 4));
+            await writeFile(confgPath, JSON.stringify(generatorConfig, undefined, 2));
 
             await execa("fern", ["ir", irPath, "--api", fixture], {
                 cwd: fixtureDir,
