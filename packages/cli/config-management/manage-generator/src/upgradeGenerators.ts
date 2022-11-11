@@ -37,7 +37,8 @@ function maybeUpgradeVersion<T extends BaseGeneratorInvocationSchema>(generatorC
             });
         }
     } else {
-        context.failAndThrow("Unknown generator: " + generatorConfig.name);
+        context.logger.warn("Unknown generator: " + generatorConfig.name);
+        return generatorConfig;
     }
 
     return generatorConfig;
