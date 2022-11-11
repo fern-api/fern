@@ -1,4 +1,6 @@
-import { ExportedDirectory } from "../../exports-manager/ExportedFilePath";
+import { keys } from "@fern-api/core-utils";
+import path from "path";
+import { convertExportedDirectoryPathToFilePath, ExportedDirectory } from "../../exports-manager/ExportedFilePath";
 
 export declare namespace getQualifiedNameOfDirectory {
     export interface Args<QualifiedName> {
@@ -17,12 +19,41 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
 }: getQualifiedNameOfDirectory.Args<QualifiedName>): QualifiedName {
     const { initial, remainingDirectories } = splitQualifieidName({ convertToQualifiedName, prefix, pathToDirectory });
 
-    return remainingDirectories.reduce<QualifiedName>((qualifiedReference, directory) => {
-        if (directory.exportDeclaration?.namespaceExport != null) {
-            return constructQualifiedName(qualifiedReference, directory.exportDeclaration.namespaceExport);
+    let qualifiedReference = initial;
+
+    let i = 0;
+    while (i < remainingDirectories.length) {
+        let nextI = i + 1;
+
+        const directory = remainingDirectories[i]!;
+        let exportDeclaration = directory.exportDeclaration;
+
+        // prefer jumping through subexports when they exist
+        if (directory.subExports != null) {
+            const remainingPath = path.relative(
+                convertExportedDirectoryPathToFilePath([directory]),
+                convertExportedDirectoryPathToFilePath(remainingDirectories.slice(i))
+            );
+            const subExportPaths = keys(directory.subExports)
+                .filter((subExportPath) => remainingPath.startsWith(subExportPath))
+                // sort from deepest to shallowest
+                .sort((a, b) => (a.length > b.length ? -1 : 1));
+            const deepestSubExportPath = subExportPaths[0];
+            if (deepestSubExportPath != null) {
+                exportDeclaration = directory.subExports[deepestSubExportPath];
+                const depth = deepestSubExportPath.split(path.sep).length;
+                nextI += depth;
+            }
         }
-        return qualifiedReference;
-    }, initial);
+
+        if (exportDeclaration?.namespaceExport != null) {
+            qualifiedReference = constructQualifiedName(qualifiedReference, exportDeclaration.namespaceExport);
+        }
+
+        i = nextI;
+    }
+
+    return qualifiedReference;
 }
 
 function splitQualifieidName<QualifiedName>({
