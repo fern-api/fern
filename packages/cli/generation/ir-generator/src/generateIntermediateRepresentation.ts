@@ -11,6 +11,7 @@ import { convertWebsocketChannel } from "./converters/services/convertWebsocketC
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { FERN_CONSTANTS, generateFernConstantsV2 } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
+import { IrGraph } from "./irGraph";
 import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -23,6 +24,8 @@ export async function generateIntermediateRepresentation({
     generationLanguage: Language | undefined;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
+
+    const irGraph = new IrGraph();
 
     const rootApiFile = constructFernFileContext({
         relativeFilepath: undefined,
@@ -77,6 +80,7 @@ export async function generateIntermediateRepresentation({
                             typeDeclaration,
                             file,
                             typeResolver,
+                            irGraph,
                         })
                     );
                 }
@@ -88,14 +92,14 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
-                    intermediateRepresentation.errors.push(
-                        convertErrorDeclaration({
-                            errorName,
-                            errorDeclaration,
-                            file,
-                            typeResolver,
-                        })
-                    );
+                    const convertedErrorDeclaration = convertErrorDeclaration({
+                        errorName,
+                        errorDeclaration,
+                        file,
+                        typeResolver,
+                    });
+                    // irGraph.addError(convertedErrorDeclaration);
+                    intermediateRepresentation.errors.push(convertedErrorDeclaration);
                 }
             },
 
