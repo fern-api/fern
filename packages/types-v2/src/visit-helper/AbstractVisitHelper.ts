@@ -5,14 +5,16 @@ import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure
 export abstract class AbstractVisitHelper {
     public static readonly VISITOR_PARAMETER_NAME = "visitor";
     public static readonly VISITOR_INTERFACE_NAME = "_Visitor";
-    public static readonly VISITOR_RETURN_TYPE = "Result";
+    public static readonly VISITOR_RETURN_TYPE = "_Result";
     public static readonly UNKNOWN_VISITOR_KEY = "_other";
     public static readonly VISITOR_INVOCATION_PARAMETER_NAME = "value";
 
     public static getSignature({
         getReferenceToVisitor,
+        file,
     }: {
-        getReferenceToVisitor: () => ts.EntityName;
+        getReferenceToVisitor: (file: SdkFile) => ts.EntityName;
+        file: SdkFile;
     }): ts.FunctionTypeNode {
         return ts.factory.createFunctionTypeNode(
             [
@@ -30,7 +32,7 @@ export abstract class AbstractVisitHelper {
                     undefined,
                     ts.factory.createIdentifier(AbstractVisitHelper.VISITOR_PARAMETER_NAME),
                     undefined,
-                    ts.factory.createTypeReferenceNode(getReferenceToVisitor(), [
+                    ts.factory.createTypeReferenceNode(getReferenceToVisitor(file), [
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createIdentifier(AbstractVisitHelper.VISITOR_RETURN_TYPE)
                         ),
@@ -47,7 +49,11 @@ export abstract class AbstractVisitHelper {
     public getVisitorInterface(file: SdkFile): OptionalKind<InterfaceDeclarationStructure> {
         return {
             name: AbstractVisitHelper.VISITOR_INTERFACE_NAME,
-            typeParameters: [AbstractVisitHelper.VISITOR_RETURN_TYPE],
+            typeParameters: [
+                {
+                    name: AbstractVisitHelper.VISITOR_RETURN_TYPE,
+                },
+            ],
             properties: [
                 ...this.getProperties(file),
                 {

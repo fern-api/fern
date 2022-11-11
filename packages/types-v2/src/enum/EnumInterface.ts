@@ -35,6 +35,7 @@ export class EnumInterface extends AbstractEnumFileDeclaration {
             type: getTextOfTsNode(
                 EnumVisitHelper.getSignature({
                     getReferenceToVisitor: enumModule.getReferenceToVisitorInterface.bind(enumModule),
+                    file,
                 })
             ),
         });

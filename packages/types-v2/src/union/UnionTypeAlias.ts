@@ -9,11 +9,11 @@ export class UnionTypeAlias extends AbstractUnionDeclaration {
             name: this.typeName,
             type: getWriterForMultiLineUnionType([
                 ...this.parsedSingleUnionTypes.map((singleUnionType) => ({
-                    node: unionModule.getReferenceToSingleUnionType(singleUnionType),
+                    node: unionModule.getReferenceToSingleUnionType(singleUnionType, file),
                     docs: singleUnionType.getDocs(),
                 })),
                 {
-                    node: unionModule.getReferenceToUnknownType(),
+                    node: unionModule.getReferenceToUnknownType(file),
                     docs: undefined,
                 },
             ]),

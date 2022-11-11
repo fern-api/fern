@@ -12,6 +12,7 @@ import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { AuthImpl } from "./implementations/AuthImpl";
+import { BaseCoreUtilitiesImpl } from "./implementations/BaseCoreUtilitiesImpl";
 import { FetcherImpl } from "./implementations/FetcherImpl";
 import { ZurgImpl } from "./implementations/ZurgImpl";
 
@@ -35,6 +36,7 @@ export class CoreUtilitiesManager {
             zurg: new ZurgImpl({ getReferenceToExport }),
             fetcher: new FetcherImpl({ getReferenceToExport }),
             auth: new AuthImpl({ getReferenceToExport }),
+            base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
         };
     }
 

@@ -23,6 +23,7 @@ export class UnionTypeGenerator extends AbstractUnionGenerator {
 
         super({
             typeName,
+            getReferenceToUnion: (file: SdkFile) => file.getReferenceToNamedType(typeDeclaration.name),
             docs: typeDeclaration.docs,
             discriminant: union.discriminantV2,
             parsedSingleUnionTypes,

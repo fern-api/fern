@@ -29,7 +29,7 @@ export class UnionModule extends AbstractUnionDeclaration {
             hasDeclareKeyword: true,
         });
         module.addInterfaces(this.getSingleUnionTypeInterfaces(file));
-        module.addInterface(this.getUtilsInterface());
+        module.addInterface(this.getUtilsInterface(file));
         module.addInterface(unionVisitHelper.getVisitorInterface(file));
     }
 
@@ -56,7 +56,7 @@ export class UnionModule extends AbstractUnionDeclaration {
         }));
     }
 
-    private getUtilsInterface(): OptionalKind<InterfaceDeclarationStructure> {
+    private getUtilsInterface(file: SdkFile): OptionalKind<InterfaceDeclarationStructure> {
         return {
             name: UnionModule.UTILS_INTERFACE_NAME,
             properties: [
@@ -65,6 +65,7 @@ export class UnionModule extends AbstractUnionDeclaration {
                     type: getTextOfTsNode(
                         UnionVisitHelper.getSignature({
                             getReferenceToVisitor: this.getReferenceToVisitorInterface.bind(this),
+                            file,
                         })
                     ),
                 },
@@ -76,23 +77,23 @@ export class UnionModule extends AbstractUnionDeclaration {
         return this.typeName;
     }
 
-    public getReferenceToSingleUnionType(parsedSingleUnionType: ParsedSingleUnionType): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(this.getReferenceTo(parsedSingleUnionType.getInterfaceName()));
+    public getReferenceToSingleUnionType(parsedSingleUnionType: ParsedSingleUnionType, file: SdkFile): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(this.getReferenceTo(parsedSingleUnionType.getInterfaceName(), file));
     }
 
-    public getReferenceToUnknownType(): ts.TypeNode {
+    public getReferenceToUnknownType(file: SdkFile): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(
-            this.getReferenceTo(UnionModule.UNKNOWN_SINGLE_UNION_TYPE_INTERFACE_NAME)
+            this.getReferenceTo(UnionModule.UNKNOWN_SINGLE_UNION_TYPE_INTERFACE_NAME, file)
         );
     }
 
-    public getReferenceToVisitorInterface(): ts.EntityName {
-        return this.getReferenceTo(UnionVisitHelper.VISITOR_INTERFACE_NAME);
+    public getReferenceToVisitorInterface(file: SdkFile): ts.EntityName {
+        return this.getReferenceTo(UnionVisitHelper.VISITOR_INTERFACE_NAME, file);
     }
 
-    private getReferenceTo(name: string): ts.EntityName {
+    private getReferenceTo(name: string, file: SdkFile): ts.EntityName {
         return ts.factory.createQualifiedName(
-            ts.factory.createIdentifier(this.getModuleName()),
+            this.getReferenceToUnion(file).entityName,
             ts.factory.createIdentifier(name)
         );
     }

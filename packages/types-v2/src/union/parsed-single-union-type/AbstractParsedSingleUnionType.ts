@@ -1,8 +1,9 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
+import { Reference, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { AbstractVisitHelper } from "../../visit-helper/AbstractVisitHelper";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { UnionModule } from "../UnionModule";
 import { UnionVisitHelper } from "../UnionVisitHelper";
@@ -73,10 +74,19 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
 
     public getBuilder(
         file: SdkFile,
-        { referenceToBuiltType }: { referenceToBuiltType: ts.TypeNode }
+        {
+            referenceToBuiltType,
+            getReferenceToUnion,
+            unionModule,
+        }: {
+            referenceToBuiltType: ts.TypeNode;
+            getReferenceToUnion: (file: SdkFile) => Reference;
+            unionModule: UnionModule;
+        }
     ): ts.ArrowFunction {
         const VALUE_WITHOUT_VISIT_VARIABLE_NAME = "valueWithoutVisit";
-        const CASTED_VALUE_VARIABLE_NAME = "castedValue";
+        const VISITOR_PARAMETER_NAME = "visitor";
+
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
@@ -94,7 +104,9 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
                                     undefined,
                                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
                                         referenceToBuiltType,
-                                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("_visit")),
+                                        ts.factory.createLiteralTypeNode(
+                                            ts.factory.createStringLiteral(UnionModule.VISIT_UTIL_PROPERTY_NAME)
+                                        ),
                                     ]),
                                     ts.factory.createObjectLiteralExpression(
                                         [
@@ -111,63 +123,68 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
                             ts.NodeFlags.Const
                         )
                     ),
-                    ts.factory.createExpressionStatement(
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("Object"),
-                                ts.factory.createIdentifier("defineProperty")
-                            ),
-                            undefined,
-                            [
-                                ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
-                                ts.factory.createStringLiteral(UnionModule.VISIT_UTIL_PROPERTY_NAME),
-                                ts.factory.createObjectLiteralExpression(
+                    ts.factory.createReturnStatement(
+                        file.coreUtilities.base.addNonEnumerableProperty(
+                            ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
+                            ts.factory.createStringLiteral(UnionModule.VISIT_UTIL_PROPERTY_NAME),
+                            ts.factory.createFunctionExpression(
+                                undefined,
+                                undefined,
+                                undefined,
+                                [
+                                    ts.factory.createTypeParameterDeclaration(
+                                        undefined,
+                                        AbstractVisitHelper.VISITOR_RETURN_TYPE
+                                    ),
+                                ],
+                                [
+                                    ts.factory.createParameterDeclaration(
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        "this",
+                                        undefined,
+                                        referenceToBuiltType,
+                                        undefined
+                                    ),
+                                    ts.factory.createParameterDeclaration(
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        VISITOR_PARAMETER_NAME,
+                                        undefined,
+                                        ts.factory.createTypeReferenceNode(
+                                            unionModule.getReferenceToVisitorInterface(file),
+                                            [
+                                                ts.factory.createTypeReferenceNode(
+                                                    AbstractVisitHelper.VISITOR_RETURN_TYPE
+                                                ),
+                                            ]
+                                        )
+                                    ),
+                                ],
+                                undefined,
+                                ts.factory.createBlock(
                                     [
-                                        ts.factory.createPropertyAssignment(
-                                            ts.factory.createIdentifier("enumerable"),
-                                            ts.factory.createFalse()
-                                        ),
-                                        ts.factory.createPropertyAssignment(
-                                            ts.factory.createIdentifier("writable"),
-                                            ts.factory.createTrue()
+                                        ts.factory.createReturnStatement(
+                                            ts.factory.createCallExpression(
+                                                ts.factory.createPropertyAccessExpression(
+                                                    getReferenceToUnion(file).expression,
+                                                    UnionModule.VISIT_UTIL_PROPERTY_NAME
+                                                ),
+                                                undefined,
+                                                [
+                                                    ts.factory.createThis(),
+                                                    ts.factory.createIdentifier(VISITOR_PARAMETER_NAME),
+                                                ]
+                                            )
                                         ),
                                     ],
                                     true
-                                ),
-                            ]
+                                )
+                            )
                         )
                     ),
-                    ts.factory.createVariableStatement(
-                        undefined,
-                        ts.factory.createVariableDeclarationList(
-                            [
-                                ts.factory.createVariableDeclaration(
-                                    CASTED_VALUE_VARIABLE_NAME,
-                                    undefined,
-                                    undefined,
-                                    ts.factory.createAsExpression(
-                                        ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
-                                        referenceToBuiltType
-                                    )
-                                ),
-                            ],
-                            ts.NodeFlags.Const
-                        )
-                    ),
-                    ts.factory.createExpressionStatement(
-                        ts.factory.createBinaryExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(CASTED_VALUE_VARIABLE_NAME),
-                                UnionModule.VISIT_UTIL_PROPERTY_NAME
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                            UnionVisitHelper.getVisitMethod({
-                                visitorKey: this.getVisitorKey(),
-                                visitorArguments: this.singleUnionType.getVisitorArgumentsForBuilder(),
-                            })
-                        )
-                    ),
-                    ts.factory.createReturnStatement(ts.factory.createIdentifier(CASTED_VALUE_VARIABLE_NAME)),
                 ],
                 true
             )
@@ -218,6 +235,20 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
         return UnionVisitHelper.getVisitorPropertySignature({
             parameterType: this.singleUnionType.getVisitMethodParameterType(file),
         });
+    }
+
+    public invokeVisitMethod({
+        localReferenceToUnionValue,
+        localReferenceToVisitor,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+        localReferenceToVisitor: ts.Expression;
+    }): ts.Expression {
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(localReferenceToVisitor, this.getVisitorKey()),
+            undefined,
+            this.singleUnionType.getVisitorArguments({ localReferenceToUnionValue })
+        );
     }
 
     public abstract getDocs(): string | null | undefined;

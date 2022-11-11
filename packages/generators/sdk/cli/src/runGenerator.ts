@@ -25,6 +25,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
 
     try {
         const logger = createLogger((message, level) => {
+            // eslint-disable-next-line no-console
             console.log(message);
             // kick off log, but don't wait for it
             void generatorNotificationService.sendUpdate(

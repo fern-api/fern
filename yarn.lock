@@ -1976,6 +1976,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/base-core-utilities@workspace:packages/core-utilities/base":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/base-core-utilities@workspace:packages/core-utilities/base"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/client@workspace:*, @fern-typescript/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/client@workspace:packages/client"

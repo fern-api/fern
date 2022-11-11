@@ -46,8 +46,8 @@ export class EnumModule extends AbstractEnumFileDeclaration {
         );
     }
 
-    public getReferenceToVisitorInterface(): ts.EntityName {
-        return this.getReferenceToType(EnumVisitHelper.VISITOR_INTERFACE_NAME);
+    public getReferenceToVisitorInterface(file: SdkFile): ts.EntityName {
+        return this.getReferenceToType(EnumVisitHelper.VISITOR_INTERFACE_NAME, file);
     }
 
     public static getReferenceToBuilder({
@@ -63,10 +63,10 @@ export class EnumModule extends AbstractEnumFileDeclaration {
         });
     }
 
-    private getReferenceToType(name: string): ts.EntityName {
+    private getReferenceToType(name: string, file: SdkFile): ts.EntityName {
         return EnumModule.getReferenceToType({
             name,
-            referenceToModule: ts.factory.createIdentifier(this.getModuleName()),
+            referenceToModule: file.getReferenceToNamedType(this.typeDeclaration.name).entityName,
         });
     }
 

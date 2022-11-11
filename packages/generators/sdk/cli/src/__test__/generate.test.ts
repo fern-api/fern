@@ -77,11 +77,6 @@ describe("runGenerator", () => {
                 };
                 await writeFile(configJsonPath, JSON.stringify(config, undefined, 4));
 
-                const { stdout } = await execa("fern", ["--version"], {
-                    cwd: FIXTURES_PATH,
-                });
-                console.log(stdout);
-
                 await execa("fern", ["ir", irPath, "--api", fixture.path, "--language", "typescript"], {
                     cwd: FIXTURES_PATH,
                 });

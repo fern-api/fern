@@ -39,6 +39,8 @@ export class EndpointErrorUnionGenerator extends AbstractUnionGenerator {
             discriminant: endpoint.errorsV2.discriminant,
             docs: undefined,
             parsedSingleUnionTypes: parsedErrors,
+            getReferenceToUnion: (file) =>
+                file.getReferenceToEndpointFileExport(serviceName, endpoint, EndpointError.TYPE_NAME),
             unknownSingleUnionType: {
                 discriminantType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
                 getVisitorArgument: (file) => file.coreUtilities.fetcher.Fetcher.Error._getReferenceToType(),

@@ -21,6 +21,7 @@ export declare namespace AbstractUnionGenerator {
         docs: string | null | undefined;
         parsedSingleUnionTypes: ParsedSingleUnionType[];
         unknownSingleUnionType: UnknownSingleUnionType;
+        getReferenceToUnion: (file: SdkFile) => Reference;
     }
 }
 
@@ -38,6 +39,7 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
         docs,
         parsedSingleUnionTypes,
         unknownSingleUnionType,
+        getReferenceToUnion,
     }: AbstractUnionGenerator.Init) {
         super({ typeName });
 
@@ -46,6 +48,7 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
             docs,
             typeName,
             parsedSingleUnionTypes,
+            getReferenceToUnion,
         };
 
         this.typeAlias = new UnionTypeAlias(unionFileDeclarationInit);
@@ -55,7 +58,10 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
         });
         this.const_ = new UnionConst(unionFileDeclarationInit);
         this.rawUnion = new RawUnionType({ parsedSingleUnionTypes });
-        this.schema = new UnionSchema({ discriminant, parsedSingleUnionTypes });
+        this.schema = new UnionSchema({
+            discriminant,
+            parsedSingleUnionTypes,
+        });
         this.visitHelper = new UnionVisitHelper({ parsedSingleUnionTypes, unknownSingleUnionType });
     }
 
@@ -80,6 +86,7 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
         return this.schema.toSchema(file, {
             referenceToParsedShape: this.getReferenceToUnionType(file),
             shouldIncludeDefaultCaseInTransform: this.shouldIncludeDefaultCaseInSchemaTransform(),
+            unionModule: this.module,
         });
     }
 
