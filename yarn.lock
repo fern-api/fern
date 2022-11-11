@@ -1371,32 +1371,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:^0.0.184":
-  version: 0.0.184
-  resolution: "@fern-fern/ir-model@npm:0.0.184"
-  checksum: e117e345080c137d0dc06be40325dbf65011621ed0d4f3c9b27b9e293222f489bc49b40f25e2bfad2f39e4e97c5332139576c8962f8286d03bb68fe853db67fc
+"@fern-fern/ir-model@npm:^0.0.294":
+  version: 0.0.294
+  resolution: "@fern-fern/ir-model@npm:0.0.294"
+  checksum: a45dcd090146a53135766525d3210941b525066c665576e01387502544ffdc3e89fd07d44518c659e6ddddb8a8ae0fbb2bf5f18a48932294310bf6ab3ec5e2ab
   languageName: node
   linkType: hard
 
-"@fern-fern/postman-collection-api-client@npm:0.0.16":
-  version: 0.0.16
-  resolution: "@fern-fern/postman-collection-api-client@npm:0.0.16"
+"@fern-fern/postman-sdk@npm:^0.0.12":
+  version: 0.0.12
+  resolution: "@fern-fern/postman-sdk@npm:0.0.12"
   dependencies:
-    "@fern-typescript/service-utils": 0.0.184
     "@types/url-join": 4.0.1
-    url-join: 4.0.1
-  checksum: 2e6640f103532dd36fef444a5cbda6414319aff5d7a804e1eddef841de20a8a9eb30c36450837c2c1640aa66c207ab104ccdbb8bdca2aff76acea5bdffacff77
-  languageName: node
-  linkType: hard
-
-"@fern-typescript/service-utils@npm:0.0.184":
-  version: 0.0.184
-  resolution: "@fern-typescript/service-utils@npm:0.0.184"
-  dependencies:
     axios: ^0.27.2
-    basic-auth: ^2.0.1
-    js-base64: ^3.7.2
-  checksum: 173877b5eb6412e65f577cf7f2ce90317e81e5348bbba0cb6c1b272d10b44c0ad74f1bafb16428f88b42a1af51343f45b82d2664728d5d7f1cf00e987bd3f6be
+    url-join: 4.0.1
+  checksum: 9ee591fdc199b643d6876870182791bacbbf0fb7271df372710dced89d9fb26122e19b91381edbd2d8b35392e95d0d3cbd94dc81d44584dd5b218cf4bd4fc4dd
   languageName: node
   linkType: hard
 
@@ -1998,13 +1987,6 @@ __metadata:
   version: 4.0.1
   resolution: "@types/url-join@npm:4.0.1"
   checksum: 29444b90e165b3970c8ad3fcef1e2de092e72b67e1f3aaff3016eea1697f98a01a28fb4f71f8044e3338a95bd2262327e9299be416efe5297018658760a331b4
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:^8.3.4":
-  version: 8.3.4
-  resolution: "@types/uuid@npm:8.3.4"
-  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
   languageName: node
   linkType: hard
 
@@ -2773,15 +2755,6 @@ __metadata:
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
   checksum: 9706c088a283058a8a99e0bf91b0a2f75497f185980d9ffa8b304de1d9e58ebda7c72c07ebf01dadedaac5b2907b2c6f566f660d62bd336c3468e960403b9d65
-  languageName: node
-  linkType: hard
-
-"basic-auth@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "basic-auth@npm:2.0.1"
-  dependencies:
-    safe-buffer: 5.1.2
-  checksum: 3419b805d5dfc518f3a05dcf42aa53aa9ce820e50b6df5097f9e186322e1bc733c36722b624802cd37e791035aa73b828ed814d8362333d42d7f5cd04d7a5e48
   languageName: node
   linkType: hard
 
@@ -3802,12 +3775,11 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/config-management-commons": 0.0.188-13-g68e2f408
     "@fern-fern/generator-exec-sdk": ^0.0.42
-    "@fern-fern/ir-model": ^0.0.184
-    "@fern-fern/postman-collection-api-client": 0.0.16
+    "@fern-fern/ir-model": ^0.0.294
+    "@fern-fern/postman-sdk": ^0.0.12
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7
-    "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^5.27.1
     "@typescript-eslint/parser": ^5.27.1
     depcheck: ^1.4.3
@@ -3826,7 +3798,6 @@ __metadata:
     tmp-promise: ^3.0.3
     ts-loader: ^9.3.1
     typescript: ^4.6.4
-    uuid: ^8.3.2
     webpack: ^5.72.1
     webpack-cli: ^4.9.2
     zod: ^3.14.3
@@ -4977,13 +4948,6 @@ __metadata:
   bin:
     jest: bin/jest.js
   checksum: b9dcb542eb7c16261c281cdc2bf37155dbb3f1205bae0b567f05051db362c85ddd4b765f126591efb88f6d298eb10336d0aa6c7d5373b4d53f918137a9a70182
-  languageName: node
-  linkType: hard
-
-"js-base64@npm:^3.7.2":
-  version: 3.7.2
-  resolution: "js-base64@npm:3.7.2"
-  checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
   languageName: node
   linkType: hard
 
@@ -6197,17 +6161,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:5.1.2, safe-buffer@npm:~5.1.1":
-  version: 5.1.2
-  resolution: "safe-buffer@npm:5.1.2"
-  checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
-  languageName: node
-  linkType: hard
-
 "safe-buffer@npm:^5.1.0, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
+  languageName: node
+  linkType: hard
+
+"safe-buffer@npm:~5.1.1":
+  version: 5.1.2
+  resolution: "safe-buffer@npm:5.1.2"
+  checksum: f2f1f7943ca44a594893a852894055cf619c1fbcb611237fc39e461ae751187e7baf4dc391a72125e0ac4fb2d8c5c0b3c71529622e6a58f46b960211e704903c
   languageName: node
   linkType: hard
 
@@ -6942,7 +6906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:8.3.2, uuid@npm:^8.3.2":
+"uuid@npm:8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:

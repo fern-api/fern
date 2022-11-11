@@ -2,7 +2,8 @@ import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-sdk/resources";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { CollectionService } from "@fern-fern/postman-collection-api-client/services/collection";
+import { FernPostmanClient } from "@fern-fern/postman-sdk";
+import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Collection, CollectionDefinition } from "postman-collection";
@@ -45,6 +46,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
             const collectionDefinition = convertToPostmanCollection(ir);
+            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.json(collectionDefinition);
             console.log("Converted ir to postman collection");
 
             await writeFile(
@@ -77,8 +79,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                         workspaceId: outputMode.publishTarget.workspaceId,
                     },
                     collectionDefinition: {
-                        ...collectionDefinition,
-                        auth: collectionDefinition.auth ?? undefined,
+                        ...rawCollectionDefinition,
+                        auth: rawCollectionDefinition.auth ?? undefined,
                     },
                 });
             } else if (outputMode.type === "github") {
@@ -92,8 +94,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 await publishCollection({
                     publishConfig: postmanGeneratorConfig.publishing,
                     collectionDefinition: {
-                        ...collectionDefinition,
-                        auth: collectionDefinition.auth ?? undefined,
+                        ...rawCollectionDefinition,
+                        auth: rawCollectionDefinition.auth ?? undefined,
                     },
                 });
             } else {
@@ -125,15 +127,14 @@ async function publishCollection({
     collectionDefinition: CollectionDefinition;
 }) {
     console.log("Publishing postman collection...");
-    const collectionService = new CollectionService({
-        origin: "https://api.getpostman.com",
-        headers: {
-            xApiKey: publishConfig.apiKey,
+    const postman = new FernPostmanClient({
+        auth: {
+            apiKey: publishConfig.apiKey,
         },
     });
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
     console.log(`Workspace id is ${workspace}`);
-    const getCollectionMetadataResponse = await collectionService.getAllCollectionMetadata({
+    const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
         workspace,
     });
     if (!getCollectionMetadataResponse.ok) {
@@ -144,16 +145,16 @@ async function publishCollection({
     });
     if (collectionsToUpdate.length === 0) {
         console.log("Creating new postman collection!");
-        await collectionService.createCollection({
+        await postman.collection.createCollection({
             workspace,
-            body: { collection: new Collection(collectionDefinition) },
+            _body: { collection: new Collection(collectionDefinition) },
         });
     } else {
         collectionsToUpdate.forEach(async (collectionMetadata) => {
             console.log("Updating postman collection!");
-            await collectionService.updateCollection({
+            await postman.collection.updateCollection({
                 collectionId: collectionMetadata.uid,
-                body: { collection: new Collection(collectionDefinition) },
+                _body: { collection: new Collection(collectionDefinition) },
             });
         });
     }

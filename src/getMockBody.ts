@@ -1,6 +1,16 @@
-import { ContainerType, PrimitiveType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
-import { isEqual, noop } from "lodash";
-import { v4 as uuidv4 } from "uuid";
+import {
+    ContainerType,
+    PrimitiveType,
+    SingleUnionTypeProperties,
+    SingleUnionTypeProperty,
+    Type,
+    TypeDeclaration,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
+import { isEqual } from "lodash";
+
+const ISO_DATE = "1994-11-05T13:15:30Z";
+const UUID = "3d20db99-b2d9-4643-8f04-13452707b8e8";
 
 export function getMockBodyFromTypeReference({
     typeReference,
@@ -17,8 +27,8 @@ export function getMockBodyFromTypeReference({
                 string: () => "example",
                 boolean: () => true,
                 long: () => 10000000,
-                dateTime: () => new Date().toISOString(),
-                uuid: () => uuidv4(),
+                dateTime: () => ISO_DATE,
+                uuid: () => UUID,
                 _unknown: () => {
                     throw new Error("Encountered unknown primtiveType: " + primitive);
                 },
@@ -41,13 +51,15 @@ export function getMockBodyFromTypeReference({
                 _unknown: () => {
                     throw new Error("Encountered unknown wireMessage: " + typeReference._type);
                 },
+                literal: () => {
+                    throw new Error("Literals are unsupported!");
+                },
             }),
         named: (typeName) => {
             const namedType = allTypes.find(
                 (val) => val.name.name === typeName.name && isEqual(val.name.fernFilepath, typeName.fernFilepath)
             );
-            if (namedType === undefined) {
-                console.log({ allTypes, typeName });
+            if (namedType == null) {
                 throw new Error("Cannot find type: " + typeName.name);
             }
             return getMockBodyFromType(namedType.shape, allTypes);
@@ -59,17 +71,19 @@ export function getMockBodyFromTypeReference({
     });
 }
 
-function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
+function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): string | Record<string, unknown> {
     return Type._visit(type, {
         object: (objectDeclaration) => {
-            const object: any = {};
-            for (const objectProperty of objectDeclaration.properties) {
-                object[objectProperty.name.wireValue] = getMockBodyFromTypeReference({
-                    typeReference: objectProperty.valueType,
-                    allTypes,
-                });
-            }
-            return object;
+            return {
+                ...objectDeclaration.properties.map((objectProperty) => {
+                    return {
+                        [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
+                            typeReference: objectProperty.valueType,
+                            allTypes,
+                        }),
+                    };
+                }),
+            };
         },
         alias: ({ aliasOf }) => getMockBodyFromTypeReference({ typeReference: aliasOf, allTypes }),
         enum: ({ values }) => {
@@ -85,20 +99,14 @@ function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
                 throw new Error("No values for union.");
             }
 
-            let union: any = {
-                [unionDeclaration.discriminant]: firstUnionType.discriminantValue.wireValue,
+            const discriminantProperties: Record<string, string> = {
+                [unionDeclaration.discriminantV3.wireValue]: firstUnionType.discriminantValueV2.wireValue,
             };
 
-            TypeReference._visit(firstUnionType.valueType, {
-                container: (value) => {
-                    union[firstUnionType.discriminantValue.wireValue] = getMockBodyFromTypeReference({
-                        typeReference: TypeReference.container(value),
-                        allTypes,
-                    });
-                },
-                named: (value) => {
-                    union = {
-                        ...union,
+            return SingleUnionTypeProperties._visit(firstUnionType.shape, {
+                samePropertiesAsObject: (value) => {
+                    return {
+                        ...discriminantProperties,
                         // TODO this doesn't support named aliases of primitive types
                         ...(getMockBodyFromTypeReference({
                             typeReference: TypeReference.named(value),
@@ -106,19 +114,24 @@ function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): unknown {
                         }) as any),
                     };
                 },
-                primitive: (value) => {
-                    union[firstUnionType.discriminantValue.wireValue] = getMockBodyFromTypeReference({
-                        typeReference: TypeReference.primitive(value),
-                        allTypes,
-                    });
+                singleProperty: (value: SingleUnionTypeProperty) => {
+                    return {
+                        ...discriminantProperties,
+                        [value.nameV2.wireValue]: getMockBodyFromTypeReference({
+                            typeReference: value.type,
+                            allTypes,
+                        }),
+                    };
                 },
-                void: noop,
-                unknown: noop,
+                noProperties: () => {
+                    return {
+                        ...discriminantProperties,
+                    };
+                },
                 _unknown: () => {
                     throw new Error("Encountered unknown typeReference: " + firstUnionType.valueType._type);
                 },
             });
-            return union;
         },
         _unknown: () => {
             throw new Error("Unknown type: " + type._type);

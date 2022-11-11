@@ -5,6 +5,7 @@ import {
     GithubPublishInfo,
     OutputMode,
 } from "@fern-fern/generator-exec-sdk/resources";
+import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { execa } from "execa";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
@@ -13,13 +14,18 @@ import { COLLECTION_OUTPUT_FILENAME, writePostmanCollection } from "../writePost
 
 const FIXTURES = ["test-api", "any-auth"];
 
+interface RequestResponse {
+    request: any;
+    response: any;
+}
+
 describe("convertToPostman", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         const fixtureDir = path.join(__dirname, "fixtures");
         it(fixture, async () => {
             const tmpDir = await tmp.dir();
-            const openapiPath = path.join(tmpDir.path, COLLECTION_OUTPUT_FILENAME);
+            const collectionPath = path.join(tmpDir.path, COLLECTION_OUTPUT_FILENAME);
             const confgPath = path.join(tmpDir.path, "config.json");
             const irPath = path.join(tmpDir.path, "ir.json");
 
@@ -52,9 +58,28 @@ describe("convertToPostman", () => {
 
             await writePostmanCollection(confgPath);
 
-            const openApi = (await readFile(openapiPath)).toString();
+            const postmanCollection = (await readFile(collectionPath)).toString();
 
-            expect(openApi).toMatchSnapshot();
+            expect(postmanCollection).toMatchSnapshot();
+
+            const rawPostmanCollection = JSON.parse(postmanCollection);
+            const parsedOpenApi = PostmanParsing.PostmanCollectionSchema.parse(rawPostmanCollection);
+
+            const examples: RequestResponse[] = [];
+            parsedOpenApi.item.forEach((serviceItem) => {
+                serviceItem.item.forEach((item) => {
+                    item.response.forEach((response) => {
+                        examples.push({
+                            request:
+                                response.originalRequest.body != null
+                                    ? JSON.parse(response.originalRequest.body.raw)
+                                    : undefined,
+                            response: JSON.parse(response.body),
+                        });
+                    });
+                });
+            });
+            expect(examples).toMatchSnapshot();
         });
     }
 });

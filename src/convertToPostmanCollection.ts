@@ -17,10 +17,12 @@ import {
     PostmanHeader,
     PostmanMethod,
     PostmanQueryParameter,
+    PostmanRawRequestBodyLanguage,
     PostmanRequest,
     PostmanRequestAuth,
+    PostmanRequestBodyMode,
     PostmanVariable,
-} from "@fern-fern/postman-collection-api-client/model/collection";
+} from "@fern-fern/postman-sdk/resources";
 import { getMockBodyFromTypeReference } from "./getMockBody";
 
 const ORIGIN_VARIABLE_NAME = "origin";
@@ -124,14 +126,20 @@ function convertResponse({
     allTypes: TypeDeclaration[];
     convertedRequest: PostmanRequest;
 }): PostmanExampleResponse {
-    const responseBody = { typeReference: httpEndpoint.response.type, allTypes };
     return {
         name: "Successful " + httpEndpoint.id,
         code: 200,
         originalRequest: convertedRequest,
         description: httpEndpoint.response.docs ?? undefined,
-        body: responseBody != null ? JSON.stringify(responseBody, undefined, 4) : "",
-        _postman_previewlanguage: "json",
+        body:
+            httpEndpoint.response.typeV2 != null
+                ? JSON.stringify(
+                      getMockBodyFromTypeReference({ typeReference: httpEndpoint.response.type, allTypes }),
+                      undefined,
+                      4
+                  )
+                : "",
+        postmanPreviewlanguage: "json",
     };
 }
 
@@ -174,7 +182,7 @@ function convertRequest({
             httpEndpoint.request.type._type === "void"
                 ? undefined
                 : {
-                      mode: "raw",
+                      mode: PostmanRequestBodyMode.Raw,
                       raw: JSON.stringify(
                           getMockBodyFromTypeReference({ typeReference: httpEndpoint.request.type, allTypes }),
                           undefined,
@@ -182,7 +190,7 @@ function convertRequest({
                       ),
                       options: {
                           raw: {
-                              language: "json",
+                              language: PostmanRawRequestBodyLanguage.Json,
                           },
                       },
                   },
@@ -214,7 +222,7 @@ function getQueryParams(queryParameters: readonly QueryParameter[]): PostmanQuer
     return queryParameters.map((queryParam) => ({
         key: queryParam.name.wireValue,
         value: "",
-        description: queryParam.docs,
+        description: queryParam.docs ?? undefined,
     }));
 }
 
@@ -293,7 +301,7 @@ function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
                     key: header.name.wireValue,
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
                     type: "string",
-                    description: header.docs,
+                    description: header.docs ?? undefined,
                 },
             ],
             _unknown: () => {
