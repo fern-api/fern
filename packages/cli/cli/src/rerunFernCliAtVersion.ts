@@ -27,6 +27,12 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
+    // eslint-disable-next-line no-console
+    console.log("Setting env for npx process", {
+        ...env,
+        [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
+    });
+
     const npxProcess = execa("npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,

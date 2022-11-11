@@ -39,6 +39,12 @@ async function runCli() {
 
     try {
         const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+        // eslint-disable-next-line no-console
+        console.log("Running fern CLI", {
+            cliContextEnvironment: cliContext.environment,
+            versionOfCliToRun,
+            processEnv: process.env,
+        });
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             const cwd = process.env[FERN_CWD_ENV_VAR];
             if (cwd != null) {
