@@ -39,6 +39,9 @@ async function runCli() {
     try {
         const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
+            if (process.env.FERN_CWD != null) {
+                process.chdir(process.env.FERN_CWD);
+            }
             await tryRunCli(cliContext);
         } else {
             const { failed } = await rerunFernCliAtVersion({
