@@ -45,13 +45,13 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     message: "Generating collection.json",
                 })
             );
-            const collectionDefinition = convertToPostmanCollection(ir);
-            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.json(collectionDefinition);
+            const _collectionDefinition = convertToPostmanCollection(ir);
+            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.json(_collectionDefinition);
             console.log("Converted ir to postman collection");
 
             await writeFile(
                 path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
-                JSON.stringify(collectionDefinition, undefined, 4)
+                JSON.stringify(rawCollectionDefinition, undefined, 4)
             );
             console.log(`Wrote postman collection to ${COLLECTION_OUTPUT_FILENAME}`);
             await generatorLoggingClient.sendUpdate(

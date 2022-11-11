@@ -67,19 +67,13 @@ exports[`convertToPostman any-auth 1`] = `
                                 \\"type\\": \\"string\\"
                             }
                         ],
-                        \\"method\\": {
-                            \\"value\\": \\"POST\\"
-                        },
+                        \\"method\\": \\"POST\\",
                         \\"body\\": {
-                            \\"mode\\": {
-                                \\"value\\": \\"raw\\"
-                            },
+                            \\"mode\\": \\"raw\\",
                             \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
                             \\"options\\": {
                                 \\"raw\\": {
-                                    \\"language\\": {
-                                        \\"value\\": \\"json\\"
-                                    }
+                                    \\"language\\": \\"json\\"
                                 }
                             }
                         }
@@ -106,25 +100,19 @@ exports[`convertToPostman any-auth 1`] = `
                                         \\"type\\": \\"string\\"
                                     }
                                 ],
-                                \\"method\\": {
-                                    \\"value\\": \\"POST\\"
-                                },
+                                \\"method\\": \\"POST\\",
                                 \\"body\\": {
-                                    \\"mode\\": {
-                                        \\"value\\": \\"raw\\"
-                                    },
+                                    \\"mode\\": \\"raw\\",
                                     \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
                                     \\"options\\": {
                                         \\"raw\\": {
-                                            \\"language\\": {
-                                                \\"value\\": \\"json\\"
-                                            }
+                                            \\"language\\": \\"json\\"
                                         }
                                     }
                                 }
                             },
                             \\"body\\": \\"\\\\\\"example\\\\\\"\\",
-                            \\"postmanPreviewlanguage\\": \\"json\\"
+                            \\"_postman_previewlanguage\\": \\"json\\"
                         }
                     ]
                 },
@@ -148,9 +136,7 @@ exports[`convertToPostman any-auth 1`] = `
                                 \\"type\\": \\"string\\"
                             }
                         ],
-                        \\"method\\": {
-                            \\"value\\": \\"GET\\"
-                        }
+                        \\"method\\": \\"GET\\"
                     },
                     \\"response\\": [
                         {
@@ -174,12 +160,10 @@ exports[`convertToPostman any-auth 1`] = `
                                         \\"type\\": \\"string\\"
                                     }
                                 ],
-                                \\"method\\": {
-                                    \\"value\\": \\"GET\\"
-                                }
+                                \\"method\\": \\"GET\\"
                             },
                             \\"body\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
-                            \\"postmanPreviewlanguage\\": \\"json\\"
+                            \\"_postman_previewlanguage\\": \\"json\\"
                         }
                     ]
                 }
@@ -266,19 +250,13 @@ exports[`convertToPostman test-api 1`] = `
                                 \\"value\\": \\"\\\\\\"example\\\\\\"\\"
                             }
                         ],
-                        \\"method\\": {
-                            \\"value\\": \\"POST\\"
-                        },
+                        \\"method\\": \\"POST\\",
                         \\"body\\": {
-                            \\"mode\\": {
-                                \\"value\\": \\"raw\\"
-                            },
+                            \\"mode\\": \\"raw\\",
                             \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"author\\\\\\": {\\\\n            \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n        }\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"3\\\\\\": {\\\\n        \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n    }\\\\n}\\",
                             \\"options\\": {
                                 \\"raw\\": {
-                                    \\"language\\": {
-                                        \\"value\\": \\"json\\"
-                                    }
+                                    \\"language\\": \\"json\\"
                                 }
                             }
                         }
@@ -312,25 +290,19 @@ exports[`convertToPostman test-api 1`] = `
                                         \\"value\\": \\"\\\\\\"example\\\\\\"\\"
                                     }
                                 ],
-                                \\"method\\": {
-                                    \\"value\\": \\"POST\\"
-                                },
+                                \\"method\\": \\"POST\\",
                                 \\"body\\": {
-                                    \\"mode\\": {
-                                        \\"value\\": \\"raw\\"
-                                    },
+                                    \\"mode\\": \\"raw\\",
                                     \\"raw\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"author\\\\\\": {\\\\n            \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n        }\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"3\\\\\\": {\\\\n        \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n    }\\\\n}\\",
                                     \\"options\\": {
                                         \\"raw\\": {
-                                            \\"language\\": {
-                                                \\"value\\": \\"json\\"
-                                            }
+                                            \\"language\\": \\"json\\"
                                         }
                                     }
                                 }
                             },
                             \\"body\\": \\"\\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\",
-                            \\"postmanPreviewlanguage\\": \\"json\\"
+                            \\"_postman_previewlanguage\\": \\"json\\"
                         }
                     ]
                 },
@@ -355,9 +327,7 @@ exports[`convertToPostman test-api 1`] = `
                                 \\"value\\": \\"\\\\\\"example\\\\\\"\\"
                             }
                         ],
-                        \\"method\\": {
-                            \\"value\\": \\"GET\\"
-                        }
+                        \\"method\\": \\"GET\\"
                     },
                     \\"response\\": [
                         {
@@ -382,12 +352,10 @@ exports[`convertToPostman test-api 1`] = `
                                         \\"value\\": \\"\\\\\\"example\\\\\\"\\"
                                     }
                                 ],
-                                \\"method\\": {
-                                    \\"value\\": \\"GET\\"
-                                }
+                                \\"method\\": \\"GET\\"
                             },
                             \\"body\\": \\"{\\\\n    \\\\\\"0\\\\\\": {\\\\n        \\\\\\"id\\\\\\": \\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\\\n    },\\\\n    \\\\\\"1\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\"\\\\n    },\\\\n    \\\\\\"2\\\\\\": {\\\\n        \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n    },\\\\n    \\\\\\"3\\\\\\": {\\\\n        \\\\\\"author\\\\\\": {\\\\n            \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n        }\\\\n    },\\\\n    \\\\\\"4\\\\\\": {\\\\n        \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n    }\\\\n}\\",
-                            \\"postmanPreviewlanguage\\": \\"json\\"
+                            \\"_postman_previewlanguage\\": \\"json\\"
                         }
                     ]
                 }
