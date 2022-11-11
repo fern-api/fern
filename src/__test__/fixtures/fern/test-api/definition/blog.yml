@@ -1,6 +1,10 @@
 types:
   PostId: uuid
+  BaseBlogPost:
+    properties:
+      writtenDate: datetime
   BlogPost:
+    extends: BaseBlogPost
     docs: A blog post
     properties:
       id: PostId
@@ -24,7 +28,7 @@ types:
         docs: Author is the writer.
       content: string
       postType: PostType
-  PostNotFoundErrorBody: 
+  PostNotFoundErrorBody:
     properties:
       id: PostId
 errors:

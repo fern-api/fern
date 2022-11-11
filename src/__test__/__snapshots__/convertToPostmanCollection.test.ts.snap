@@ -70,7 +70,7 @@ exports[`convertToPostman any-auth 1`] = `
             \\"method\\": \\"POST\\",
             \\"body\\": {
               \\"mode\\": \\"raw\\",
-              \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+              \\"raw\\": \\"{\\\\n  \\\\\\"id\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
               \\"options\\": {
                 \\"raw\\": {
                   \\"language\\": \\"json\\"
@@ -103,7 +103,7 @@ exports[`convertToPostman any-auth 1`] = `
                 \\"method\\": \\"POST\\",
                 \\"body\\": {
                   \\"mode\\": \\"raw\\",
-                  \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+                  \\"raw\\": \\"{\\\\n  \\\\\\"id\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
                   \\"options\\": {
                     \\"raw\\": {
                       \\"language\\": \\"json\\"
@@ -162,7 +162,7 @@ exports[`convertToPostman any-auth 1`] = `
                 ],
                 \\"method\\": \\"GET\\"
               },
-              \\"body\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+              \\"body\\": \\"{\\\\n  \\\\\\"id\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
               \\"_postman_previewlanguage\\": \\"json\\"
             }
           ]
@@ -177,30 +177,18 @@ exports[`convertToPostman any-auth 2`] = `
 Array [
   Object {
     "request": Object {
-      "0": Object {
-        "id": "example",
-      },
-      "1": Object {
-        "title": "example",
-      },
-      "2": Object {
-        "content": "example",
-      },
+      "content": "example",
+      "id": "example",
+      "title": "example",
     },
     "response": "example",
   },
   Object {
     "request": undefined,
     "response": Object {
-      "0": Object {
-        "id": "example",
-      },
-      "1": Object {
-        "title": "example",
-      },
-      "2": Object {
-        "content": "example",
-      },
+      "content": "example",
+      "id": "example",
+      "title": "example",
     },
   },
 ]
@@ -253,7 +241,7 @@ exports[`convertToPostman test-api 1`] = `
             \\"method\\": \\"POST\\",
             \\"body\\": {
               \\"mode\\": \\"raw\\",
-              \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"author\\\\\\": {\\\\n      \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    }\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"3\\\\\\": {\\\\n    \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n  }\\\\n}\\",
+              \\"raw\\": \\"{\\\\n  \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"author\\\\\\": {\\\\n    \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n  },\\\\n  \\\\\\"content\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n}\\",
               \\"options\\": {
                 \\"raw\\": {
                   \\"language\\": \\"json\\"
@@ -293,7 +281,7 @@ exports[`convertToPostman test-api 1`] = `
                 \\"method\\": \\"POST\\",
                 \\"body\\": {
                   \\"mode\\": \\"raw\\",
-                  \\"raw\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"author\\\\\\": {\\\\n      \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    }\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"3\\\\\\": {\\\\n    \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n  }\\\\n}\\",
+                  \\"raw\\": \\"{\\\\n  \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"author\\\\\\": {\\\\n    \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n  },\\\\n  \\\\\\"content\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n}\\",
                   \\"options\\": {
                     \\"raw\\": {
                       \\"language\\": \\"json\\"
@@ -354,7 +342,7 @@ exports[`convertToPostman test-api 1`] = `
                 ],
                 \\"method\\": \\"GET\\"
               },
-              \\"body\\": \\"{\\\\n  \\\\\\"0\\\\\\": {\\\\n    \\\\\\"id\\\\\\": \\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\"\\\\n  },\\\\n  \\\\\\"1\\\\\\": {\\\\n    \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\"\\\\n  },\\\\n  \\\\\\"2\\\\\\": {\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\"\\\\n  },\\\\n  \\\\\\"3\\\\\\": {\\\\n    \\\\\\"author\\\\\\": {\\\\n      \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    }\\\\n  },\\\\n  \\\\\\"4\\\\\\": {\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n  }\\\\n}\\",
+              \\"body\\": \\"{\\\\n  \\\\\\"writtenDate\\\\\\": \\\\\\"1994-11-05T13:15:30Z\\\\\\",\\\\n  \\\\\\"id\\\\\\": \\\\\\"3d20db99-b2d9-4643-8f04-13452707b8e8\\\\\\",\\\\n  \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\",\\\\n  \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n  \\\\\\"author\\\\\\": {\\\\n    \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n  },\\\\n  \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
               \\"_postman_previewlanguage\\": \\"json\\"
             }
           ]
@@ -369,43 +357,26 @@ exports[`convertToPostman test-api 2`] = `
 Array [
   Object {
     "request": Object {
-      "0": Object {
-        "title": "example",
+      "author": Object {
+        "type": "anonymous",
       },
-      "1": Object {
-        "author": Object {
-          "type": "anonymous",
-        },
-      },
-      "2": Object {
-        "content": "example",
-      },
-      "3": Object {
-        "postType": "LONG",
-      },
+      "content": "example",
+      "postType": "LONG",
+      "title": "example",
     },
     "response": "3d20db99-b2d9-4643-8f04-13452707b8e8",
   },
   Object {
     "request": undefined,
     "response": Object {
-      "0": Object {
-        "id": "3d20db99-b2d9-4643-8f04-13452707b8e8",
+      "author": Object {
+        "type": "anonymous",
       },
-      "1": Object {
-        "type": "LONG",
-      },
-      "2": Object {
-        "title": "example",
-      },
-      "3": Object {
-        "author": Object {
-          "type": "anonymous",
-        },
-      },
-      "4": Object {
-        "content": "example",
-      },
+      "content": "example",
+      "id": "3d20db99-b2d9-4643-8f04-13452707b8e8",
+      "title": "example",
+      "type": "LONG",
+      "writtenDate": "1994-11-05T13:15:30Z",
     },
   },
 ]

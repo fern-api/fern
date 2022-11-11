@@ -1,5 +1,6 @@
 import {
     ContainerType,
+    DeclaredTypeName,
     PrimitiveType,
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
@@ -56,13 +57,7 @@ export function getMockBodyFromTypeReference({
                 },
             }),
         named: (typeName) => {
-            const namedType = allTypes.find(
-                (val) => val.name.name === typeName.name && isEqual(val.name.fernFilepath, typeName.fernFilepath)
-            );
-            if (namedType == null) {
-                throw new Error("Cannot find type: " + typeName.name);
-            }
-            return getMockBodyFromType(namedType.shape, allTypes);
+            return getMockBodyFromType(getType(typeName, allTypes), allTypes);
         },
         unknown: () => "UNKNOWN",
         _unknown: () => {
@@ -71,18 +66,36 @@ export function getMockBodyFromTypeReference({
     });
 }
 
-function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): string | Record<string, unknown> {
+function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): any {
     return Type._visit(type, {
         object: (objectDeclaration) => {
+            const mockedExtendedProperties = objectDeclaration.extends.map((extendedType) => {
+                const mockBody = getMockBodyFromType(getType(extendedType, allTypes), allTypes);
+                return mockBody;
+            });
+            const objectProperties = objectDeclaration.properties.map((objectProperty) => {
+                return {
+                    [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
+                        typeReference: objectProperty.valueType,
+                        allTypes,
+                    }),
+                };
+            });
             return {
-                ...objectDeclaration.properties.map((objectProperty) => {
-                    return {
-                        [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
-                            typeReference: objectProperty.valueType,
-                            allTypes,
-                        }),
-                    };
-                }),
+                ...mockedExtendedProperties.reduce<Record<string, any>>(
+                    (combined, extension) => ({
+                        ...combined,
+                        ...extension,
+                    }),
+                    {}
+                ),
+                ...objectProperties.reduce<Record<string, any>>(
+                    (combined, extension) => ({
+                        ...combined,
+                        ...extension,
+                    }),
+                    {}
+                ),
             };
         },
         alias: ({ aliasOf }) => getMockBodyFromTypeReference({ typeReference: aliasOf, allTypes }),
@@ -137,4 +150,15 @@ function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): string | 
             throw new Error("Unknown type: " + type._type);
         },
     });
+}
+
+function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]): Type {
+    const namedType = allTypes.find(
+        (val) =>
+            val.name.name === declaredTypeName.name && isEqual(val.name.fernFilepath, declaredTypeName.fernFilepath)
+    );
+    if (namedType == null) {
+        throw new Error("Cannot find type: " + declaredTypeName.name);
+    }
+    return namedType.shape;
 }
