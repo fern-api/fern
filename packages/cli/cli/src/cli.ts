@@ -38,18 +38,12 @@ async function runCli() {
     });
 
     try {
+        const cwd = process.env[FERN_CWD_ENV_VAR];
+        if (cwd != null) {
+            process.chdir(cwd);
+        }
         const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-        // eslint-disable-next-line no-console
-        console.log("Running fern CLI", {
-            cliContextEnvironment: cliContext.environment,
-            versionOfCliToRun,
-            processEnv: process.env,
-        });
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
-            const cwd = process.env[FERN_CWD_ENV_VAR];
-            if (cwd != null) {
-                process.chdir(cwd);
-            }
             await tryRunCli(cliContext);
         } else {
             const { failed } = await rerunFernCliAtVersion({
