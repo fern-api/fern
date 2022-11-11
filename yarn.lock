@@ -3451,7 +3451,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.22
+    "@fern-fern/api-editor-sdk": 0.0.29
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3926,7 +3926,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.22
+    "@fern-fern/api-editor-sdk": 0.0.29
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -3948,7 +3948,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.22
+    "@fern-fern/api-editor-sdk": 0.0.29
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^8.3.4
@@ -4040,14 +4040,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/api-editor-sdk@npm:0.0.22":
-  version: 0.0.22
-  resolution: "@fern-fern/api-editor-sdk@npm:0.0.22"
+"@fern-fern/api-editor-sdk@npm:0.0.29":
+  version: 0.0.29
+  resolution: "@fern-fern/api-editor-sdk@npm:0.0.29"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: e87a63cb9643c8213d6b8fe869f5f16302ff2151e7c3eadeef7295bdd992e4f88d385a0c6d9d4361ce43cb54f63500f7af6d71943895c2957e01e3754ba48fac
+  checksum: 2f76f98753ec29e4f5ffb546994fa8032bf8207a511a89ce0ab219e4d7dfe56e0d0f7ad2534e8a77cb1c3e2f348c7501394aabf85843314cb65234630024977c
   languageName: node
   linkType: hard
 
@@ -4111,7 +4111,7 @@ __metadata:
     "@fern-api/loadable": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.22
+    "@fern-fern/api-editor-sdk": 0.0.29
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/fonts": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"

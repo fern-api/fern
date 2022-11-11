@@ -1,5 +1,6 @@
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockDefinitionItem } from "./MockDefinitionItem";
 import { MockEndpoint } from "./MockEndpoint";
 import { MockError } from "./MockError";
@@ -51,9 +52,10 @@ export class MockPackage extends MockDefinitionItem {
         return endpoint;
     }
 
-    public addType(name?: string): MockType {
+    public addType({ name, shape }: { name?: string; shape?: FernApiEditor.Shape } = {}): MockType {
         const type = new MockType({
             name,
+            shape,
             applyTransaction: this.applyTransaction.bind(this),
         });
         this.applyTransaction(
@@ -61,6 +63,7 @@ export class MockPackage extends MockDefinitionItem {
                 parent: this.packageId,
                 typeId: type.typeId,
                 typeName: type.typeName,
+                shape: type.shape,
             })
         );
         return type;

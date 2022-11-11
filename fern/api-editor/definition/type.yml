@@ -54,7 +54,14 @@ types:
       aliasOf: TypeReference
 
   ObjectShape:
-    properties: {}
+    properties:
+      properties: list<ObjectProperty>
+
+  ObjectProperty:
+    properties:
+      propertyId: commons.ObjectPropertyId
+      propertyName: string
+      propertyType: TypeReference
 
   UnionShape:
     properties: {}

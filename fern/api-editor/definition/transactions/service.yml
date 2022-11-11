@@ -4,6 +4,7 @@ imports:
   package: package.yml
   endpoint: endpoint.yml
   type: type.yml
+  object: object.yml
   error: error.yml
 
 types:
@@ -32,6 +33,12 @@ types:
       setTypeDescription: type.SetTypeDescriptionTransaction
       setTypeShape: type.SetTypeShapeTransaction
       deleteType: type.DeleteTypeTransaction
+
+      # object-specific transactions
+      createObjectProperty: object.CreateObjectPropertyTransaction
+      setObjectPropertyName: object.SetObjectPropertyNameTransaction
+      setObjectPropertyType: object.SetObjectPropertyTypeTransaction
+      deleteObjectProperty: object.DeleteObjectPropertyTransaction
 
       # error-specific transactions
       createError: error.CreateErrorTransaction

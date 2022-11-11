@@ -8,6 +8,10 @@ import { RenameEndpointTransactionHandler } from "./transaction-handlers/endpoin
 import { CreateErrorTransactionHandler } from "./transaction-handlers/error/CreateErrorTransactionHandler";
 import { DeleteErrorTransactionHandler } from "./transaction-handlers/error/DeleteErrorTransactionHandler";
 import { RenameErrorTransactionHandler } from "./transaction-handlers/error/RenameErrorTransactionHandler";
+import { CreateObjectPropertyTransactionHandler } from "./transaction-handlers/object/CreateObjectPropertyTransactionHandler";
+import { DeleteObjectPropertyTransactionHandler } from "./transaction-handlers/object/DeleteObjectPropertyTransactionHandler";
+import { SetObjectPropertyNameTransactionHandler } from "./transaction-handlers/object/SetObjectPropertyNameTransactionHandler";
+import { SetObjectPropertyTypeTransactionHandler } from "./transaction-handlers/object/SetObjectPropertyTypeTransactionHandler";
 import { CreatePackageTransactionHandler } from "./transaction-handlers/package/CreatePackageTransactionHandler";
 import { DeletePackageTransactionHandler } from "./transaction-handlers/package/DeletePackageTransactionHandler";
 import { RenamePackageTransactionHandler } from "./transaction-handlers/package/RenamePackageTransactionHandler";
@@ -77,6 +81,18 @@ export class TransactionHandler {
             },
             deleteType: (t) => {
                 new DeleteTypeTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            createObjectProperty: (t) => {
+                new CreateObjectPropertyTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            setObjectPropertyName: (t) => {
+                new SetObjectPropertyNameTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            setObjectPropertyType: (t) => {
+                new SetObjectPropertyTypeTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            deleteObjectProperty: (t) => {
+                new DeleteObjectPropertyTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
             },
             createError: (t) => {
                 new CreateErrorTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);

@@ -1,18 +1,18 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
-import { useApiEditorContext } from "../../../../../api-editor-context/ApiEditorContext";
-import { EditableTypeReference } from "../../../type-reference/EditableTypeReference";
-import styles from "./AliasOf.module.scss";
+import { useApiEditorContext } from "../../../../../../api-editor-context/ApiEditorContext";
+import { EditableTypeReference } from "../../../../type-reference/EditableTypeReference";
+import styles from "./AliasSchemaRow.module.scss";
 
-export declare namespace AliasOf {
+export declare namespace AliasSchemaRow {
     export interface Props {
         typeId: FernApiEditor.TypeId;
         shape: FernApiEditor.AliasShape;
     }
 }
 
-export const AliasOf: React.FC<AliasOf.Props> = ({ shape, typeId }) => {
+export const AliasSchemaRow: React.FC<AliasSchemaRow.Props> = ({ shape, typeId }) => {
     const { submitTransaction } = useApiEditorContext();
 
     const onChange = useCallback(

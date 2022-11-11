@@ -6,13 +6,15 @@ types:
   BaseTypeTransaction:
     extends: transactionCommons.BaseTransaction
     properties:
-      TypeId: commons.TypeId
+      typeId: commons.TypeId
 
   CreateTypeTransaction:
     extends: BaseTypeTransaction
     properties:
       parent: commons.PackageId
       typeName: string
+      description: optional<string>
+      shape: type.Shape
 
   RenameTypeTransaction:
     extends: BaseTypeTransaction

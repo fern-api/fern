@@ -141,7 +141,9 @@ function getDefaultShape(shape: TypeShape): FernApiEditor.Shape {
                 aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
             });
         case TypeShape.OBJECT:
-            return FernApiEditor.Shape.object({});
+            return FernApiEditor.Shape.object({
+                properties: [],
+            });
         case TypeShape.UNION:
             return FernApiEditor.Shape.union({});
         case TypeShape.ENUM:

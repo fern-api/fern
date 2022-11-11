@@ -1,6 +1,7 @@
 import { ReactElement, useMemo } from "react";
 import { useSidebarContext } from "../../sidebar/context/useSidebarContext";
 import { DraftSidebarItemId } from "../../sidebar/drafts/DraftSidebarItemId";
+import { MaybeDraftContainingList } from "./MaybeDraftContainingList";
 
 export declare namespace SidebarItemsList {
     export interface Props<Item, DraftId extends DraftSidebarItemId> {
@@ -31,15 +32,5 @@ export function SidebarItemsList<Item, DraftId extends DraftSidebarItemId>({
         return undefined;
     }, [convertDraftToItem, doesDraftBelongInList, draft, parseDraftId]);
 
-    // we put the items all in an array together, so that React gracefully
-    // handles when an item turns from draft to persisted
-    const packagesList = useMemo(() => {
-        const elements = items.map((item) => renderItem(item));
-        if (draftItem != null) {
-            elements.push(renderItem(draftItem));
-        }
-        return elements;
-    }, [draftItem, items, renderItem]);
-
-    return <>{packagesList}</>;
+    return <MaybeDraftContainingList items={items} draft={draftItem} renderItem={renderItem} />;
 }
