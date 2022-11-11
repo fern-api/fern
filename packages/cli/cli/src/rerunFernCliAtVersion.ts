@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import execa, { ExecaChildProcess } from "execa";
 import { CliContext } from "./cli-context/CliContext";
+import { FERN_CWD_ENV_VAR } from "./cwd";
 
 export async function rerunFernCliAtVersion({
     version,
@@ -29,7 +30,10 @@ export async function rerunFernCliAtVersion({
     const npxProcess = execa("npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,
-        env,
+        env: {
+            ...env,
+            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
+        },
     });
     npxProcess.stdout?.pipe(process.stdout);
     npxProcess.stderr?.pipe(process.stderr);
