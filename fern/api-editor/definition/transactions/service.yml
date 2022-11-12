@@ -36,8 +36,9 @@ types:
 
       # object-specific transactions
       createObjectProperty: object.CreateObjectPropertyTransaction
-      setObjectPropertyName: object.SetObjectPropertyNameTransaction
+      renameObjectProperty: object.RenameObjectPropertyTransaction
       setObjectPropertyType: object.SetObjectPropertyTypeTransaction
+      setObjectPropertyDescription: object.SetObjectPropertyDescriptionTransaction
       deleteObjectProperty: object.DeleteObjectPropertyTransaction
 
       # error-specific transactions

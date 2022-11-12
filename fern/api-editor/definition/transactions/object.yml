@@ -19,7 +19,7 @@ types:
       propertyName: string
       propertyType: type.TypeReference
 
-  SetObjectPropertyNameTransaction:
+  RenameObjectPropertyTransaction:
     extends: BaseObjectPropertyTransaction
     properties:
       newPropertyName: string
@@ -28,6 +28,11 @@ types:
     extends: BaseObjectPropertyTransaction
     properties:
       newPropertyType: type.TypeReference
+
+  SetObjectPropertyDescriptionTransaction:
+    extends: BaseObjectPropertyTransaction
+    properties:
+      newPropertyDescription: optional<string>
 
   DeleteObjectPropertyTransaction:
     extends: BaseObjectPropertyTransaction

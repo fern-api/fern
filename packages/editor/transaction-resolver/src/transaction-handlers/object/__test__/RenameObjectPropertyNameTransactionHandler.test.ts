@@ -3,8 +3,8 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
-describe("SetObjectPropertyTypeTransactionHandler", () => {
-    it("correctly sets property type", () => {
+describe("RenameObjectPropertyTransactionHandler", () => {
+    it("correctly sets property name", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
         package_.addType();
@@ -23,11 +23,10 @@ describe("SetObjectPropertyTypeTransactionHandler", () => {
                 propertyType: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
             })
         );
-
-        const transaction = TransactionGenerator.setObjectPropertyType({
+        const transaction = TransactionGenerator.renameObjectProperty({
             objectId: second.typeId,
             propertyId,
-            newPropertyType: FernApiEditor.TypeReference.unknown(),
+            newPropertyName: "New property name",
         });
         api.applyTransaction(transaction);
 
@@ -35,7 +34,7 @@ describe("SetObjectPropertyTypeTransactionHandler", () => {
         if (object?.shape.type !== "object") {
             throw new Error("Type is not an object");
         }
-        expect(object.shape.properties[0]?.propertyType).toEqual(FernApiEditor.TypeReference.unknown());
+        expect(object.shape.properties[0]?.propertyName).toEqual("New property name");
     });
 
     it("throws when object does not exist", () => {
@@ -57,10 +56,10 @@ describe("SetObjectPropertyTypeTransactionHandler", () => {
                 propertyType: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
             })
         );
-        const transaction = TransactionGenerator.setObjectPropertyType({
+        const transaction = TransactionGenerator.renameObjectProperty({
             objectId: "made-up-id",
             propertyId,
-            newPropertyType: FernApiEditor.TypeReference.unknown(),
+            newPropertyName: "My property",
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();
@@ -70,16 +69,12 @@ describe("SetObjectPropertyTypeTransactionHandler", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
         package_.addType();
-        const second = package_.addType({
-            shape: FernApiEditor.Shape.object({
-                properties: [],
-            }),
-        });
+        const second = package_.addType();
 
-        const transaction = TransactionGenerator.setObjectPropertyType({
+        const transaction = TransactionGenerator.renameObjectProperty({
             objectId: second.typeId,
             propertyId: "made-up-id",
-            newPropertyType: FernApiEditor.TypeReference.unknown(),
+            newPropertyName: "My property",
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

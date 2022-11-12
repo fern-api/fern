@@ -1,6 +1,7 @@
 import { EditableText } from "@blueprintjs/core";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useLocalTextState } from "@fern-ui/react-commons";
+import styles from "./ObjectPropertyName.module.scss";
 
 export declare namespace ObjectPropertyName {
     export interface Props {
@@ -19,5 +20,5 @@ export const ObjectPropertyName: React.FC<ObjectPropertyName.Props> = ({ propert
         onRename: onConfirm,
     });
 
-    return <EditableText {...localLabel} placeholder="property" />;
+    return <EditableText {...localLabel} className={styles.container} placeholder="property" />;
 };

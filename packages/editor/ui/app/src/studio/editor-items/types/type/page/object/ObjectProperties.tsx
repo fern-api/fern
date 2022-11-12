@@ -5,7 +5,7 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useState } from "react";
 import { MaybeDraftContainingList } from "../../../../shared/MaybeDraftContainingList";
 import styles from "./ObjectProperties.module.scss";
-import { ObjectPropertyRow } from "./ObjectPropertyRow";
+import { ObjectProperty } from "./ObjectProperty";
 
 export declare namespace ObjectProperties {
     export interface Props {
@@ -31,7 +31,7 @@ export const ObjectProperties: React.FC<ObjectProperties.Props> = ({ objectId, s
     const renderPropertyRow = useCallback(
         (property: FernApiEditor.ObjectProperty, { isDraft }: { isDraft: boolean }) => {
             return (
-                <ObjectPropertyRow
+                <ObjectProperty
                     key={property.propertyId}
                     objectId={objectId}
                     property={property}
@@ -46,7 +46,9 @@ export const ObjectProperties: React.FC<ObjectProperties.Props> = ({ objectId, s
     return (
         <div className={styles.container}>
             <MaybeDraftContainingList items={shape.properties} draft={draftProperty} renderItem={renderPropertyRow} />
-            <Button text="Add property" icon={IconNames.PLUS} onClick={onClickAddProperty} />
+            <div>
+                <Button text="Add property" minimal icon={IconNames.PLUS} onClick={onClickAddProperty} />
+            </div>
         </div>
     );
 };

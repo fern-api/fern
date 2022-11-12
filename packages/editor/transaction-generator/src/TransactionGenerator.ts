@@ -92,13 +92,18 @@ export const TransactionGenerator: TransactionGenerator = {
             ...generateBaseTransaction(),
             ...transaction,
         }),
-    setObjectPropertyName: (transaction: TransactionPayload<"setObjectPropertyName">) =>
-        FernApiEditor.transactions.Transaction.setObjectPropertyName({
+    renameObjectProperty: (transaction: TransactionPayload<"renameObjectProperty">) =>
+        FernApiEditor.transactions.Transaction.renameObjectProperty({
             ...generateBaseTransaction(),
             ...transaction,
         }),
     setObjectPropertyType: (transaction: TransactionPayload<"setObjectPropertyType">) =>
         FernApiEditor.transactions.Transaction.setObjectPropertyType({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
+    setObjectPropertyDescription: (transaction: TransactionPayload<"setObjectPropertyDescription">) =>
+        FernApiEditor.transactions.Transaction.setObjectPropertyDescription({
             ...generateBaseTransaction(),
             ...transaction,
         }),

@@ -62,6 +62,7 @@ types:
       propertyId: commons.ObjectPropertyId
       propertyName: string
       propertyType: TypeReference
+      description: optional<string>
 
   UnionShape:
     properties: {}

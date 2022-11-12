@@ -4,7 +4,10 @@ import produce from "immer";
 import { useCallback, useReducer } from "react";
 
 export type LocalTextState = Required<
-    Pick<EditableTextProps, "value" | "onChange" | "isEditing" | "onEdit" | "onCancel" | "onConfirm">
+    Pick<
+        EditableTextProps,
+        "value" | "onChange" | "isEditing" | "onEdit" | "onCancel" | "onConfirm" | "selectAllOnFocus"
+    >
 >;
 
 export declare namespace useLocalTextState {
@@ -76,6 +79,7 @@ export function useLocalTextState({
         }, []),
         onCancel: handleCancelRename,
         onConfirm: handleConfirmRename,
+        selectAllOnFocus: true,
     };
 }
 
