@@ -8,7 +8,6 @@ export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};
     private typesNeededByAudience: Record<AudienceId, Set<TypeId>> = {};
     private errors: Record<ErrorId, ErrorNode> = {};
-    private errorsNeededByAudience: Record<AudienceId, Set<ErrorId>> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private audienceToSubServices: Record<AudienceId, Record<ServiceId, SubService>> = {};
 
@@ -24,15 +23,9 @@ export class IrGraph {
         return;
     }
 
-    public addError(errorDeclaration: ErrorDeclaration, audiences: AudienceId[]): void {
+    public addError(errorDeclaration: ErrorDeclaration): void {
         const errorNode = new ErrorNode(errorDeclaration);
         this.errors[errorNode.id] = errorNode;
-        for (const audienceId of audiences) {
-            if (this.errorsNeededByAudience[audienceId] == null) {
-                this.errorsNeededByAudience[audienceId] = new Set();
-            }
-            this.errorsNeededByAudience[audienceId]?.add(errorNode.id);
-        }
         return;
     }
 

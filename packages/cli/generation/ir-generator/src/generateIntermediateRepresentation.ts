@@ -90,7 +90,6 @@ export async function generateIntermediateRepresentation({
                 if (errors == null) {
                     return;
                 }
-
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                     const convertedErrorDeclaration = convertErrorDeclaration({
                         errorName,
@@ -98,7 +97,7 @@ export async function generateIntermediateRepresentation({
                         file,
                         typeResolver,
                     });
-                    // irGraph.addError(convertedErrorDeclaration);
+                    irGraph.addError(convertedErrorDeclaration);
                     intermediateRepresentation.errors.push(convertedErrorDeclaration);
                 }
             },
