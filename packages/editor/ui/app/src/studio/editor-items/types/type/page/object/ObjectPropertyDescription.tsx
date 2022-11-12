@@ -4,6 +4,7 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useLocalTextState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
 import { useApiEditorContext } from "../../../../../../api-editor-context/ApiEditorContext";
+import styles from "./ObjectPropertyDescription.module.scss";
 
 export declare namespace ObjectPropertyDescription {
     export interface Props {
@@ -33,5 +34,5 @@ export const ObjectPropertyDescription: React.FC<ObjectPropertyDescription.Props
         onRename: onConfirm,
     });
 
-    return <EditableText {...localLabel} placeholder="Property description..." multiline />;
+    return <EditableText {...localLabel} className={styles.fill} placeholder="Property description..." multiline />;
 };
