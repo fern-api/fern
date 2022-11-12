@@ -1,9 +1,12 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
+$gap: 10px;
+
 .container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: $gap;
+    margin-left: $gap;
 }
 
 .typeReference {

@@ -28,7 +28,9 @@ describe("SetTypeShapeTransactionHandler", () => {
         const first = package_.addType();
         package_.addType();
 
-        const shape = FernApiEditor.Shape.object({});
+        const shape = FernApiEditor.Shape.object({
+            properties: [],
+        });
 
         const transaction = TransactionGenerator.setTypeShape({
             typeId: first.typeId,

@@ -4,3 +4,4 @@ types:
   PackageId: string
   TypeId: string
   ErrorId: string
+  ObjectPropertyId: string

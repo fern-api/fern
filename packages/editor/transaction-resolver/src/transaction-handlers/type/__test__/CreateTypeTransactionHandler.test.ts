@@ -12,19 +12,22 @@ describe("CreateTypeTransactionHandler", () => {
 
         const typeId = EditorItemIdGenerator.type();
 
+        const shape = FernApiEditor.Shape.alias({
+            aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+        });
+
         const transaction = TransactionGenerator.createType({
             parent: package_.packageId,
             typeId,
             typeName: "My new type",
+            shape,
         });
         api.applyTransaction(transaction);
 
         const expectedNewType: FernApiEditor.Type = {
             typeId,
             typeName: "My new type",
-            shape: FernApiEditor.Shape.alias({
-                aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
-            }),
+            shape,
         };
 
         expect(api.definition.types[typeId]).toEqual(expectedNewType);
@@ -39,6 +42,9 @@ describe("CreateTypeTransactionHandler", () => {
             parent: "made-up-id",
             typeId: EditorItemIdGenerator.type(),
             typeName: "My new type",
+            shape: FernApiEditor.Shape.alias({
+                aliasOf: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),
+            }),
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

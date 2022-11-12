@@ -108,7 +108,7 @@ export class CliContext {
         process.exit(this.didSucceed ? 0 : 1);
     }
 
-    private longestWorkspaceName = "";
+    private longestWorkspaceName: string | undefined;
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
             workspaces.map((workspace) => workspace.name),
@@ -169,12 +169,18 @@ export class CliContext {
     }
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
-        const prefixForLongestWorkspaceName = wrapWorkspaceNameForPrefix(this.longestWorkspaceName);
-        const prefix = wrapWorkspaceNameForPrefix(workspace.name)
-            // pad endings so that:
-            //   1. all the workspace prefixes are the same length
-            //   2. the +1 is so even the longest workspace has a space after its prefix
-            .padEnd(prefixForLongestWorkspaceName.length + 1, " ");
+        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspace.name);
+
+        // we want all the prefixes to be the same length, so use this.longestWorkspaceName
+        // if it's defined. (+1 so there's a space after the prefix)
+        const minLengthForPrefix =
+            1 +
+            (this.longestWorkspaceName != null
+                ? wrapWorkspaceNameForPrefix(this.longestWorkspaceName)
+                : prefixWithoutPadding
+            ).length;
+
+        const prefix = prefixWithoutPadding.padEnd(minLengthForPrefix);
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;

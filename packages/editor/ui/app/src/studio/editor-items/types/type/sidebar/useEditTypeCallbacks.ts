@@ -32,6 +32,9 @@ function constructCreateTransaction({
         typeId,
         typeName,
         parent,
+        shape: FernApiEditor.Shape.object({
+            properties: [],
+        }),
     });
 }
 

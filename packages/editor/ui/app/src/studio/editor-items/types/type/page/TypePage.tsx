@@ -4,7 +4,8 @@ import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React from "react";
 import { TYPE_NAME_PLACEHOLDER } from "../placeholder";
 import { TypeIcon } from "../TypeIcon";
-import { AliasOf } from "./AliasOf";
+import { AliasSchemaRow } from "./alias/AliasSchemaRow";
+import { ObjectTableRows } from "./object/ObjectTableRows";
 import styles from "./TypePage.module.scss";
 import { TypeShapeChooser } from "./TypeShapeChooser";
 import { useLocalDescription } from "./useLocalDescription";
@@ -30,20 +31,27 @@ export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
             </div>
             <EditableText {...localDescription} multiline placeholder="Enter a description..."></EditableText>
             <TwoColumnTable>
-                <TwoColumnTableRow label="Schema" verticallyCenterLabel labelClassName={styles.schemaLabel}>
-                    <div className={styles.schema}>
-                        <TypeShapeChooser type={type} />
-                        {type.shape._visit({
-                            alias: (shape) => <AliasOf shape={shape} typeId={type.typeId} />,
-                            enum: () => <div>enum</div>,
-                            object: () => <div>object</div>,
-                            union: () => <div>union</div>,
-                            _other: ({ type }) => {
-                                throw new Error("Unknown shape type: " + type);
-                            },
-                        })}
-                    </div>
+                <TwoColumnTableRow label="Schema" verticallyCenterLabel>
+                    <TypeShapeChooser type={type} />
+                    {type.shape._visit({
+                        alias: (shape) => <AliasSchemaRow shape={shape} typeId={type.typeId} />,
+                        enum: () => null,
+                        object: () => null,
+                        union: () => null,
+                        _other: ({ type }) => {
+                            throw new Error("Unknown shape type: " + type);
+                        },
+                    })}
                 </TwoColumnTableRow>
+                {type.shape._visit({
+                    alias: () => null,
+                    enum: () => null,
+                    object: (shape) => <ObjectTableRows objectId={type.typeId} shape={shape} />,
+                    union: () => null,
+                    _other: ({ type }) => {
+                        throw new Error("Unknown shape type: " + type);
+                    },
+                })}
             </TwoColumnTable>
         </div>
     );

@@ -1,0 +1,39 @@
+imports:
+  commons: ../commons.yml
+  transactionCommons: commons.yml
+  type: ../type.yml
+types:
+  BaseObjectTransaction:
+    extends: transactionCommons.BaseTransaction
+    properties:
+      objectId: commons.TypeId
+
+  BaseObjectPropertyTransaction:
+    extends: BaseObjectTransaction
+    properties:
+      propertyId: commons.ObjectPropertyId
+
+  CreateObjectPropertyTransaction:
+    extends: BaseObjectPropertyTransaction
+    properties:
+      propertyName: string
+      propertyType: type.TypeReference
+
+  RenameObjectPropertyTransaction:
+    extends: BaseObjectPropertyTransaction
+    properties:
+      newPropertyName: string
+
+  SetObjectPropertyTypeTransaction:
+    extends: BaseObjectPropertyTransaction
+    properties:
+      newPropertyType: type.TypeReference
+
+  SetObjectPropertyDescriptionTransaction:
+    extends: BaseObjectPropertyTransaction
+    properties:
+      newPropertyDescription: optional<string>
+
+  DeleteObjectPropertyTransaction:
+    extends: BaseObjectPropertyTransaction
+    properties: {}

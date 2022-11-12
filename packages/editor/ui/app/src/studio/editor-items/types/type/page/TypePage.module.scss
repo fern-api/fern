@@ -1,7 +1,5 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-$schema-font-size: 16px;
-
 .container {
     flex: 1;
     display: flex;
@@ -20,13 +18,8 @@ $schema-font-size: 16px;
     margin-bottom: 0;
 }
 
-.schemaLabel {
-    font-size: $schema-font-size;
-}
-
 .schema {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: $schema-font-size;
 }
