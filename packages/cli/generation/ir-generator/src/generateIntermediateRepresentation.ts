@@ -109,9 +109,29 @@ export async function generateIntermediateRepresentation({
 
                 if (services.http != null) {
                     for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
-                        intermediateRepresentation.services.http.push(
-                            convertHttpService({ serviceDefinition, serviceId, file, errorResolver })
-                        );
+                        const convertedHttpService = convertHttpService({
+                            serviceDefinition,
+                            serviceId,
+                            file,
+                            errorResolver,
+                        });
+                        intermediateRepresentation.services.http.push(convertedHttpService);
+                        convertedHttpService.endpoints.forEach((httpEndpoint) => {
+                            irGraph.addEndpoint(convertedHttpService.name, httpEndpoint);
+                        });
+                        if (serviceDefinition.audiences != null) {
+                            serviceDefinition.audiences.forEach((audience) => {
+                                irGraph.addSubService(
+                                    convertedHttpService.name,
+                                    convertedHttpService.endpoints,
+                                    audience
+                                );
+                            });
+                        }
+                        // Object.entries(serviceDefinition.endpoints).forEach((a)) => {
+                        //     a.
+                        //     return;
+                        // });
                     }
                 }
 

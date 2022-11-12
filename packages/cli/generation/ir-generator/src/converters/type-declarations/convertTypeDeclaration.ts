@@ -3,7 +3,7 @@ import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { IrGraph } from "../../irGraph";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { convertDeclaration } from "../convertDeclaration";
+import { convertDeclaration, getAudiences } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
@@ -23,7 +23,7 @@ export function convertTypeDeclaration({
     typeResolver: TypeResolver;
     irGraph: IrGraph;
 }): TypeDeclaration {
-    const { declaration, audiences } = convertDeclaration(typeDeclaration);
+    const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = {
         fernFilepath: file.fernFilepath,
         fernFilepathV2: file.fernFilepathV2,
@@ -32,7 +32,7 @@ export function convertTypeDeclaration({
         nameV3: file.casingsGenerator.generateName(typeName),
     };
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
-    irGraph.addType(declaredTypeName, referencedTypes, audiences ?? []);
+    irGraph.addType(declaredTypeName, referencedTypes, getAudiences(typeDeclaration));
     return {
         ...declaration,
         name: declaredTypeName,

@@ -6,19 +6,17 @@ import { noop } from "lodash-es";
 
 export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};
-    private typesNeededByAudience: Record<AudienceId, Set<TypeId>> = {};
+    private typesNeededForAudience: Record<AudienceId, Set<TypeId>> = {};
     private errors: Record<ErrorId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
-    private audienceToSubServices: Record<AudienceId, Record<ServiceId, SubService>> = {};
+    private endpointsNeededForAudience: Record<AudienceId, Record<ServiceId, Set<EndpointId>>> = {};
 
     public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[], audiences: AudienceId[]): void {
         const typeNode = new TypeNode(declaredTypeName, descendants);
         this.types[typeNode.id] = typeNode;
         for (const audienceId of audiences) {
-            if (this.typesNeededByAudience[audienceId] == null) {
-                this.typesNeededByAudience[audienceId] = new Set();
-            }
-            this.typesNeededByAudience[audienceId]?.add(typeNode.id);
+            const typesForAudience = (this.typesNeededForAudience[audienceId] ??= new Set());
+            typesForAudience.add(typeNode.id);
         }
         return;
     }
@@ -40,14 +38,12 @@ export class IrGraph {
         httpEndpoints: HttpEndpoint[],
         audienceId: AudienceId
     ): void {
-        const subService = new SubService(declaredServiceName, httpEndpoints);
-        if (this.audienceToSubServices[audienceId] == null) {
-            this.audienceToSubServices[audienceId] = {};
-        }
-        const audienceSubServices = this.audienceToSubServices[audienceId];
-        if (audienceSubServices != null) {
-            audienceSubServices[subService.id] = subService;
-        }
+        const serviceId = getServiceId(declaredServiceName);
+        const servicesForAudience = (this.endpointsNeededForAudience[audienceId] ??= {});
+        const endpointsForAudience = (servicesForAudience[serviceId] ??= new Set());
+        httpEndpoints.forEach((httpEndpoint) =>
+            endpointsForAudience.add(getEndpointId(declaredServiceName, httpEndpoint))
+        );
     }
 }
 
@@ -94,18 +90,6 @@ class EndpointNode {
         }
         httpEndpoint.errors.forEach((responseError) => {
             this.referencedErrors.add(getErrorId(responseError.error));
-        });
-    }
-}
-
-class SubService {
-    public readonly id: ServiceId;
-    private endpoints: Set<EndpointId> = new Set();
-
-    constructor(declaredServiceName: DeclaredServiceName, httpEndpoints: HttpEndpoint[]) {
-        this.id = getServiceId(declaredServiceName);
-        httpEndpoints.forEach((httpEndpoint) => {
-            this.endpoints.add(getEndpointId(declaredServiceName, httpEndpoint));
         });
     }
 }

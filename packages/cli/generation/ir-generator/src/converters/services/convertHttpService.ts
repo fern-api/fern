@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { http } from "@fern-fern/ir-model/services";
 import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";

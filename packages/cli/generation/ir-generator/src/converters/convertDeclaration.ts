@@ -10,27 +10,26 @@ const DEFAULT_DECLARATION = {
     },
 };
 
-export function convertDeclaration(schema: string | RawSchemas.DeclarationSchema): {
-    declaration: Declaration;
-    audiences?: string[];
-} {
+export function convertDeclaration(schema: string | RawSchemas.DeclarationSchema): Declaration {
     if (typeof schema === "string") {
-        return {
-            declaration: DEFAULT_DECLARATION,
-        };
+        return DEFAULT_DECLARATION;
     }
     return {
-        declaration: {
-            docs: schema.docs,
-            availability: {
-                status: convertAvailabilityStatus(
-                    typeof schema.availability === "string" ? schema.availability : schema.availability?.status
-                ),
-                message: typeof schema.availability !== "string" ? schema.availability?.message : undefined,
-            },
+        docs: schema.docs,
+        availability: {
+            status: convertAvailabilityStatus(
+                typeof schema.availability === "string" ? schema.availability : schema.availability?.status
+            ),
+            message: typeof schema.availability !== "string" ? schema.availability?.message : undefined,
         },
-        audiences: schema.audiences,
     };
+}
+
+export function getAudiences(schema: string | RawSchemas.DeclarationSchema): string[] {
+    if (typeof schema === "string") {
+        return [];
+    }
+    return schema.audiences ?? [];
 }
 
 function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema | undefined): AvailabilityStatus {
