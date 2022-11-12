@@ -17,6 +17,7 @@ import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { releaseWorkspaces } from "./commands/release/releaseWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
+import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 interface GlobalCliOptions {
@@ -37,6 +38,10 @@ async function runCli() {
     });
 
     try {
+        const cwd = process.env[FERN_CWD_ENV_VAR];
+        if (cwd != null) {
+            process.chdir(cwd);
+        }
         const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
