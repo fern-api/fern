@@ -1,9 +1,9 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useMemo } from "react";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
-import { useSidebarContext } from "../../sidebar/context/useSidebarContext";
-import { MaybeDraft, Persisted } from "../../sidebar/drafts/DraftableItem";
-import { DraftSidebarItemId } from "../../sidebar/drafts/DraftSidebarItemId";
+import { useApiEditorContext } from "../../../../api-editor-context/ApiEditorContext";
+import { useSidebarContext } from "../../../sidebar/context/useSidebarContext";
+import { MaybeDraft, Persisted } from "../../../sidebar/drafts/DraftableItem";
+import { DraftSidebarItemId } from "../../../sidebar/drafts/DraftSidebarItemId";
 
 export declare namespace useMaybeDraft {
     export interface Args<DefinitionId, DefinitionValue, DraftId extends DraftSidebarItemId> {

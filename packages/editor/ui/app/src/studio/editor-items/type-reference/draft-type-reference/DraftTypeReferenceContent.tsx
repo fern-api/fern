@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
+import { DraftNamed } from "../named-type/DraftNamedType";
 import { DraftList } from "./container/DraftList";
 import { DraftMap } from "./container/DraftMap";
 import { DraftOptional } from "./container/DraftOptional";
 import { DraftSet } from "./container/DraftSet";
 import { useDraftTypeReferenceContext } from "./context/DraftTypeReferenceContext";
 import { DraftLiteral } from "./literal/DraftLiteral";
-import { DraftNamed } from "./named/DraftNamedType";
 import { DraftPlaceholder } from "./placeholder/DraftPlaceholder";
 import { DraftPrimitive } from "./primitive/DraftPrimitive";
 import { DraftTypeReferenceNodeId } from "./tree/DraftTypeReferenceNodeId";

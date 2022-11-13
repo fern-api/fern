@@ -1,7 +1,7 @@
 import React from "react";
-import { useApiEditorContext } from "../../../../../api-editor-context/ApiEditorContext";
-import { SelectableDraftTypeReference } from "../SelectableDraftTypeReference";
-import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
+import { useApiEditorContext } from "../../../../api-editor-context/ApiEditorContext";
+import { SelectableDraftTypeReference } from "../draft-type-reference/SelectableDraftTypeReference";
+import { DraftTypeReferenceNode } from "../draft-type-reference/tree/DraftTypeReferenceNode";
 
 export declare namespace DraftNamed {
     export interface Props {

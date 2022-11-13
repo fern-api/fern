@@ -30,6 +30,7 @@ describe("SetTypeShapeTransactionHandler", () => {
 
         const shape = FernApiEditor.Shape.object({
             properties: [],
+            extensions: [],
         });
 
         const transaction = TransactionGenerator.setTypeShape({

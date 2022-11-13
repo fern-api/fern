@@ -55,7 +55,13 @@ types:
 
   ObjectShape:
     properties:
+      extensions: list<ObjectExtension>
       properties: list<ObjectProperty>
+
+  ObjectExtension:
+    properties:
+      extensionId: commons.ObjectExtensionId
+      extensionOf: commons.TypeId
 
   ObjectProperty:
     properties:

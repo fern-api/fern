@@ -69,6 +69,13 @@ export class MockPackage extends MockDefinitionItem {
         return type;
     }
 
+    public addObject({
+        name,
+        shape = { properties: [], extensions: [] },
+    }: { name?: string; shape?: FernApiEditor.ObjectShape } = {}): MockType {
+        return this.addType({ name, shape: FernApiEditor.Shape.object(shape) });
+    }
+
     public addError(name?: string): MockError {
         const error = new MockError({
             name,

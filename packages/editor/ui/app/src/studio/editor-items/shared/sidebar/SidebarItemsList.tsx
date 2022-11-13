@@ -1,7 +1,7 @@
 import { ReactElement, useMemo } from "react";
-import { useSidebarContext } from "../../sidebar/context/useSidebarContext";
-import { DraftSidebarItemId } from "../../sidebar/drafts/DraftSidebarItemId";
-import { MaybeDraftContainingList } from "./MaybeDraftContainingList";
+import { useSidebarContext } from "../../../sidebar/context/useSidebarContext";
+import { DraftSidebarItemId } from "../../../sidebar/drafts/DraftSidebarItemId";
+import { MaybeDraftContainingList } from "../MaybeDraftContainingList";
 
 export declare namespace SidebarItemsList {
     export interface Props<Item, DraftId extends DraftSidebarItemId> {

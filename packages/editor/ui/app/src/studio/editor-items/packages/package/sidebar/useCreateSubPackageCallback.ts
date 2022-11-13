@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { MaybeDraftPackage } from "../../../../sidebar/drafts/DraftableItem";
 import { SidebarItemIdGenerator } from "../../../../sidebar/ids/SidebarItemIdGenerator";
-import { useAddDraftToGroup } from "../../../shared/useAddDraftToGroup";
+import { useAddDraftToGroup } from "../../../shared/sidebar/useAddDraftToGroup";
 import { useCreateDraftPackage } from "./useCreateDraftPackage";
 
 export declare namespace useCreateSubPackageCallback {

@@ -1,7 +1,7 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback } from "react";
 import { DraftPackageSidebarItemId, DraftSidebarItemId } from "../../../sidebar/drafts/DraftSidebarItemId";
-import { SidebarItemsList } from "../../shared/SidebarItemsList";
+import { SidebarItemsList } from "../../shared/sidebar/SidebarItemsList";
 import { PackageSidebarGroup } from "../package/sidebar/PackageSidebarGroup";
 
 export declare namespace PackagesList {

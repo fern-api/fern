@@ -1,13 +1,10 @@
-import { Button, Intent } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
-import { useBooleanState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
-import { useApiEditorContext } from "../../../../../../api-editor-context/ApiEditorContext";
-import { EditableTypeReference } from "../../../../type-reference/EditableTypeReference";
-import styles from "./ObjectProperty.module.scss";
+import { useApiEditorContext } from "../../../../../../../api-editor-context/ApiEditorContext";
+import { EditableItemRow } from "../../../../../shared/page/EditableItemRow";
+import { EditableTypeReference } from "../../../../../type-reference/EditableTypeReference";
 import { ObjectPropertyDescription } from "./ObjectPropertyDescription";
 import { ObjectPropertyName } from "./ObjectPropertyName";
 
@@ -65,17 +62,10 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ objectId, prope
         );
     }, [objectId, property.propertyId, submitTransaction]);
 
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);
-
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <div className={styles.headerLeft}>
-                    <Button
-                        icon={isCollapsed ? IconNames.CHEVRON_RIGHT : IconNames.CHEVRON_DOWN}
-                        onClick={toggleIsCollapsed}
-                        minimal
-                    />
+        <EditableItemRow
+            leftContent={
+                <>
                     <ObjectPropertyName
                         property={property}
                         isDraft={isDraft}
@@ -83,21 +73,15 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ objectId, prope
                         onCancel={onStopRenaming}
                     />
                     <EditableTypeReference typeReference={property.propertyType} onChange={onChangePropertyType} />
-                </div>
-                <div className={styles.headerActions}>
-                    <Button icon={IconNames.TRASH} intent={Intent.DANGER} minimal onClick={onClickDelete} />
-                </div>
-            </div>
-
-            {isCollapsed || (
-                <div className={styles.details}>
-                    <TwoColumnTable>
-                        <TwoColumnTableRow label="Description">
-                            <ObjectPropertyDescription property={property} objectId={objectId} />
-                        </TwoColumnTableRow>
-                    </TwoColumnTable>
-                </div>
-            )}
-        </div>
+                </>
+            }
+            onDelete={onClickDelete}
+        >
+            <TwoColumnTable>
+                <TwoColumnTableRow label="Description">
+                    <ObjectPropertyDescription property={property} objectId={objectId} />
+                </TwoColumnTableRow>
+            </TwoColumnTable>
+        </EditableItemRow>
     );
 };

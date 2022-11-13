@@ -22,4 +22,16 @@ export abstract class AbstractObjectTransactionHander<T> extends AbstractTransac
         }
         return property;
     }
+
+    protected getObjectExtensionOrThrow(
+        objectId: FernApiEditor.TypeId,
+        extensionId: FernApiEditor.ObjectExtensionId
+    ): Draft<FernApiEditor.ObjectExtension> {
+        const object = this.getObjectOrThrow(objectId);
+        const extension = object.extensions.find((extension) => extension.extensionId === extensionId);
+        if (extension == null) {
+            throw new Error(`Extension ${extensionId} does not exist`);
+        }
+        return extension;
+    }
 }

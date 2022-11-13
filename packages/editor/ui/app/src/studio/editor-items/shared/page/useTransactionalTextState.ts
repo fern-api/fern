@@ -1,7 +1,7 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { LocalTextState, useLocalTextState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
-import { useApiEditorContext } from "../../../api-editor-context/ApiEditorContext";
+import { useApiEditorContext } from "../../../../api-editor-context/ApiEditorContext";
 
 export declare namespace useTransactionalTextState {
     export interface Args {

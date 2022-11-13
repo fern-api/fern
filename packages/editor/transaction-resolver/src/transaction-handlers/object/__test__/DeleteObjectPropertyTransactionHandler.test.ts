@@ -10,6 +10,7 @@ describe("DeleteObjectPropertyTransactionHandler", () => {
         const second = package_.addType({
             shape: FernApiEditor.Shape.object({
                 properties: [],
+                extensions: [],
             }),
         });
 
@@ -43,6 +44,7 @@ describe("DeleteObjectPropertyTransactionHandler", () => {
         const second = package_.addType({
             shape: FernApiEditor.Shape.object({
                 properties: [],
+                extensions: [],
             }),
         });
 

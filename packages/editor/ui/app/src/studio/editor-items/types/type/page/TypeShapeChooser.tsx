@@ -143,6 +143,7 @@ function getDefaultShape(shape: TypeShape): FernApiEditor.Shape {
         case TypeShape.OBJECT:
             return FernApiEditor.Shape.object({
                 properties: [],
+                extensions: [],
             });
         case TypeShape.UNION:
             return FernApiEditor.Shape.union({});

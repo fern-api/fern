@@ -1,5 +1,5 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { MaybeDraftPackage } from "../../sidebar/drafts/DraftableItem";
+import { MaybeDraftPackage } from "../../../sidebar/drafts/DraftableItem";
 
 export function shouldSectionBeDefaultCollapsed<T>({
     parent,

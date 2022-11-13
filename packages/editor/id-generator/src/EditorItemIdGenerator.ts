@@ -6,6 +6,7 @@ export interface EditorItemIdGenerator {
     endpoint: () => FernApiEditor.EndpointId;
     type: () => FernApiEditor.TypeId;
     objectProperty: () => FernApiEditor.ObjectPropertyId;
+    objectExtension: () => FernApiEditor.ObjectExtensionId;
     error: () => FernApiEditor.ErrorId;
 }
 
@@ -14,5 +15,6 @@ export const EditorItemIdGenerator: EditorItemIdGenerator = {
     endpoint: uuidv4,
     type: uuidv4,
     objectProperty: uuidv4,
+    objectExtension: uuidv4,
     error: uuidv4,
 };

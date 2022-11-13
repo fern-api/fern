@@ -4,7 +4,7 @@ import { EndpointId } from "@fern-fern/api-editor-sdk/resources";
 import React, { useCallback } from "react";
 import { MaybeDraftPackage } from "../../../sidebar/drafts/DraftableItem";
 import { DraftEndpointSidebarItemId, DraftSidebarItemId } from "../../../sidebar/drafts/DraftSidebarItemId";
-import { SidebarItemsList } from "../../shared/SidebarItemsList";
+import { SidebarItemsList } from "../../shared/sidebar/SidebarItemsList";
 import { EndpointSidebarItem } from "../endpoint/sidebar/EndpointSidebarItem";
 
 export declare namespace EndpointsSidebarList {

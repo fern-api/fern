@@ -3,7 +3,7 @@ import { IconNames } from "@blueprintjs/icons";
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useState } from "react";
-import { MaybeDraftContainingList } from "../../../../shared/MaybeDraftContainingList";
+import { MaybeDraftContainingList } from "../../../../../shared/MaybeDraftContainingList";
 import styles from "./ObjectProperties.module.scss";
 import { ObjectProperty } from "./ObjectProperty";
 

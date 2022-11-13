@@ -4,7 +4,7 @@ import { TypeId } from "@fern-fern/api-editor-sdk/resources";
 import React, { useCallback } from "react";
 import { MaybeDraftPackage } from "../../../../sidebar/drafts/DraftableItem";
 import { DraftSidebarItemId, DraftTypeSidebarItemId } from "../../../../sidebar/drafts/DraftSidebarItemId";
-import { SidebarItemsList } from "../../../shared/SidebarItemsList";
+import { SidebarItemsList } from "../../../shared/sidebar/SidebarItemsList";
 import { TypeSidebarItem } from "../../type/sidebar/TypeSidebarItem";
 import { TypesSidebarItem } from "./TypesSidebarItem";
 

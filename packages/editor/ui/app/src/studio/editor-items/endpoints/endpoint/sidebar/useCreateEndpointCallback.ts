@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import { MaybeDraftPackage } from "../../../../sidebar/drafts/DraftableItem";
 import { DraftEndpointSidebarItemId } from "../../../../sidebar/drafts/DraftSidebarItemId";
 import { SidebarItemIdGenerator } from "../../../../sidebar/ids/SidebarItemIdGenerator";
-import { useAddDraftToGroup } from "../../../shared/useAddDraftToGroup";
+import { useAddDraftToGroup } from "../../../shared/sidebar/useAddDraftToGroup";
 
 export declare namespace useCreateEndpointCallback {
     export interface Args {

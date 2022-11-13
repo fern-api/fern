@@ -2,7 +2,7 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback } from "react";
 import { MaybeDraftPackage } from "../../../../sidebar/drafts/DraftableItem";
 import { DraftPackageSidebarItemId, DraftSidebarItemId } from "../../../../sidebar/drafts/DraftSidebarItemId";
-import { useMaybeDraft } from "../../../shared/useMaybeDraft";
+import { useMaybeDraft } from "../../../shared/sidebar/useMaybeDraft";
 
 export function useMaybeDraftPackage(packageId: FernApiEditor.PackageId): MaybeDraftPackage {
     const retrieveFromDefinition = useCallback(
