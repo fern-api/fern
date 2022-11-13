@@ -6,9 +6,11 @@ import { runFernCli } from "../../utils/runFernCli";
 export async function generateIrAsString({
     fixturePath,
     language,
+    audiences,
 }: {
     fixturePath: AbsoluteFilePath;
     language?: Language;
+    audiences?: string[];
 }): Promise<string> {
     const irOutputPath = join(fixturePath, "ir.json");
     await rm(irOutputPath, { force: true, recursive: true });
@@ -16,6 +18,12 @@ export async function generateIrAsString({
     const command = ["ir", irOutputPath];
     if (language != null) {
         command.push("--language", language);
+    }
+    if (audiences != null) {
+        command.push("--audience");
+        for (const audience of audiences) {
+            command.push(audience);
+        }
     }
 
     await runFernCli(command, {

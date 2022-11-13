@@ -4,3 +4,5 @@ headers:
     name: apiVersion
     type: string
 error-discriminant: error
+audiences:
+  - test

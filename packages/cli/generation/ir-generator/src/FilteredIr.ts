@@ -26,31 +26,29 @@ interface EndpointNode {
     referencedTypes: Set<TypeId>;
 }
 
-export function getFilteredIrBuilder(audiences: AudienceId[]): FilteredIr.Builder {
+export function getFilteredIrBuilder(audiences: AudienceId[]): FilteredIrBuilder {
     if (audiences.length === 0) {
         return new NoopBuilder();
     }
     return new GraphBuilder(audiences);
 }
 
-export declare namespace FilteredIr {
-    abstract class Builder {
-        public abstract addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void;
+abstract class FilteredIrBuilder {
+    public abstract addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void;
 
-        public abstract markTypeForAudiences(declaredTypeName: DeclaredTypeName, audiences: AudienceId[]): void;
+    public abstract markTypeForAudiences(declaredTypeName: DeclaredTypeName, audiences: AudienceId[]): void;
 
-        public abstract addError(errorDeclaration: ErrorDeclaration): void;
+    public abstract addError(errorDeclaration: ErrorDeclaration): void;
 
-        public abstract addEndpoint(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): void;
+    public abstract addEndpoint(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): void;
 
-        public abstract markEndpointForAudience(
-            declaredServiceName: DeclaredServiceName,
-            httpEndpoints: HttpEndpoint[],
-            audiences: AudienceId[]
-        ): void;
+    public abstract markEndpointForAudience(
+        declaredServiceName: DeclaredServiceName,
+        httpEndpoints: HttpEndpoint[],
+        audiences: AudienceId[]
+    ): void;
 
-        public abstract build(): FilteredIr;
-    }
+    public abstract build(): FilteredIr;
 }
 
 export abstract class FilteredIr {
@@ -115,7 +113,7 @@ export class UnfilteredIr implements FilteredIr {
     }
 }
 
-class GraphBuilder extends FilteredIr.Builder {
+class GraphBuilder extends FilteredIrBuilder {
     private types: Record<TypeId, TypeNode> = {};
     private typesNeededForAudience: Set<TypeId> = new Set();
     private errors: Record<TypeId, ErrorNode> = {};
@@ -257,7 +255,7 @@ class GraphBuilder extends FilteredIr.Builder {
     }
 }
 
-class NoopBuilder extends FilteredIr.Builder {
+class NoopBuilder extends FilteredIrBuilder {
     public addType(_declaredTypeName: DeclaredTypeName, _descendants: DeclaredTypeName[]): void {
         return;
     }

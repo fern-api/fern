@@ -3,5 +3,6 @@ types:
     properties:
       name: string
       age: Age
-  Age: integer
+  Age:
+    type: integer
   LiteralString: literal<"hello">

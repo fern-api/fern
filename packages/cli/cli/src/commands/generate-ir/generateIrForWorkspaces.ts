@@ -26,7 +26,7 @@ export async function generateIrForWorkspaces({
                     workspace,
                     context,
                     generationLanguage,
-                    audiences: [],
+                    audiences,
                 });
                 const irOutputFilePath = path.resolve(irFilepath);
                 await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));
