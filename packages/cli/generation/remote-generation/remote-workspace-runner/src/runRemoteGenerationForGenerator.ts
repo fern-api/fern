@@ -22,6 +22,7 @@ export async function runRemoteGenerationForGenerator({
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         generationLanguage: getLanguageFromGeneratorName(generatorInvocation.name),
+        audiences: generatorInvocation.audiences,
     });
 
     const job = await createAndStartJob({

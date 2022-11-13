@@ -25,4 +25,5 @@ export interface BaseGeneratorInvocation {
     version: string;
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
+    audiences: string[];
 }

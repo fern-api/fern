@@ -30,6 +30,7 @@ export function convertGeneratorsConfiguration({
                                   : undefined,
                           config: draftInvocation.config,
                           outputMode: getOutputModeForDraft(draftInvocation),
+                          audiences: draftInvocation.audiences ?? [],
                       };
                   })
                 : [],
@@ -42,6 +43,7 @@ export function convertGeneratorsConfiguration({
                           version: releaseInvocation.version,
                           config: releaseInvocation.config,
                           outputMode: getOutputModeForRelease(releaseInvocation),
+                          audiences: releaseInvocation.audiences ?? [],
                       };
                   })
                 : [],

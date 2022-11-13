@@ -33,10 +33,12 @@ export async function visitHttpService({
                             await visitor.typeReference?.(type, nodePathForHeader);
                         },
                         docs: createDocsVisitor(visitor, nodePathForHeader),
+                        audiences: noop,
                     });
                 }
             }
         },
+        audiences: noop,
         auth: noop,
         "path-parameters": async (pathParameters) => {
             await visitPathParameters({
@@ -94,10 +96,12 @@ async function visitEndpoint({
                             await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
                         },
                         "allow-multiple": noop,
+                        audiences: noop,
                     });
                 }
             }
         },
+        audiences: noop,
         method: noop,
         auth: noop,
         headers: noop,
@@ -182,6 +186,7 @@ async function visitPathParameters({
                 type: async (type) => {
                     await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
                 },
+                audiences: noop,
             });
         }
     }

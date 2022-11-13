@@ -21,6 +21,7 @@ export async function generateWorkspace({
         workspace,
         context,
         generationLanguage: undefined,
+        audiences: [],
     });
 
     if (runLocal) {

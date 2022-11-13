@@ -1,9 +1,8 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
-import { IrGraph } from "../../irGraph";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { convertDeclaration, getAudiences } from "../convertDeclaration";
+import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
@@ -15,13 +14,11 @@ export function convertTypeDeclaration({
     typeDeclaration,
     file,
     typeResolver,
-    irGraph,
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-    irGraph: IrGraph;
 }): TypeDeclaration {
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = {
@@ -31,8 +28,6 @@ export function convertTypeDeclaration({
         nameV2: file.casingsGenerator.generateNameCasingsV1(typeName),
         nameV3: file.casingsGenerator.generateName(typeName),
     };
-    const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
-    irGraph.addType(declaredTypeName, referencedTypes, getAudiences(typeDeclaration));
     return {
         ...declaration,
         name: declaredTypeName,

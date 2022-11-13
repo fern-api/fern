@@ -2,8 +2,10 @@ import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { convertApiAuth } from "./converters/convertApiAuth";
+import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertHttpHeader, convertHttpService } from "./converters/services/convertHttpService";
@@ -11,7 +13,7 @@ import { convertWebsocketChannel } from "./converters/services/convertWebsocketC
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { FERN_CONSTANTS, generateFernConstantsV2 } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
-import { IrGraph } from "./irGraph";
+import { getFilteredIrBuilder } from "./FilteredIr";
 import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -19,13 +21,15 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 export async function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
+    audiences,
 }: {
     workspace: Workspace;
     generationLanguage: Language | undefined;
+    audiences: string[];
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
 
-    const irGraph = new IrGraph();
+    const filteredIrBuilder = getFilteredIrBuilder(audiences);
 
     const rootApiFile = constructFernFileContext({
         relativeFilepath: undefined,
@@ -74,14 +78,18 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
-                    intermediateRepresentation.types.push(
-                        convertTypeDeclaration({
-                            typeName,
-                            typeDeclaration,
-                            file,
-                            typeResolver,
-                            irGraph,
-                        })
+                    const convertedTypeDeclaration = convertTypeDeclaration({
+                        typeName,
+                        typeDeclaration,
+                        file,
+                        typeResolver,
+                    });
+                    intermediateRepresentation.types.push(convertedTypeDeclaration);
+
+                    filteredIrBuilder.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
+                    filteredIrBuilder.markTypeForAudiences(
+                        convertedTypeDeclaration.name,
+                        getAudiences(typeDeclaration)
                     );
                 }
             },
@@ -97,7 +105,7 @@ export async function generateIntermediateRepresentation({
                         file,
                         typeResolver,
                     });
-                    irGraph.addError(convertedErrorDeclaration);
+                    filteredIrBuilder.addError(convertedErrorDeclaration);
                     intermediateRepresentation.errors.push(convertedErrorDeclaration);
                 }
             },
@@ -116,22 +124,29 @@ export async function generateIntermediateRepresentation({
                             errorResolver,
                         });
                         intermediateRepresentation.services.http.push(convertedHttpService);
+
+                        const convertedEndpoints: Record<string, HttpEndpoint> = {};
                         convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                            irGraph.addEndpoint(convertedHttpService.name, httpEndpoint);
+                            filteredIrBuilder.addEndpoint(convertedHttpService.name, httpEndpoint);
+                            convertedEndpoints[httpEndpoint.id] = httpEndpoint;
                         });
                         if (serviceDefinition.audiences != null) {
-                            serviceDefinition.audiences.forEach((audience) => {
-                                irGraph.addSubService(
-                                    convertedHttpService.name,
-                                    convertedHttpService.endpoints,
-                                    audience
-                                );
-                            });
+                            filteredIrBuilder.markEndpointForAudience(
+                                convertedHttpService.name,
+                                convertedHttpService.endpoints,
+                                serviceDefinition.audiences
+                            );
                         }
-                        // Object.entries(serviceDefinition.endpoints).forEach((a)) => {
-                        //     a.
-                        //     return;
-                        // });
+                        Object.entries(serviceDefinition.endpoints).map(([endpointId, endpoint]) => {
+                            const convertedEndpoint = convertedEndpoints[endpointId];
+                            if (convertedEndpoint != null && endpoint.audiences != null) {
+                                filteredIrBuilder.markEndpointForAudience(
+                                    convertedHttpService.name,
+                                    [convertedEndpoint],
+                                    endpoint.audiences
+                                );
+                            }
+                        });
                     }
                 }
 
@@ -157,14 +172,41 @@ export async function generateIntermediateRepresentation({
         });
     }
 
+    const filteredIr = filteredIrBuilder.build();
+
+    const filteredIntermediateReprsentation = {
+        ...intermediateRepresentation,
+        types: intermediateRepresentation.types.filter((type) => {
+            return filteredIr.hasType(type);
+        }),
+        errors: intermediateRepresentation.errors.filter((error) => {
+            return filteredIr.hasError(error);
+        }),
+        services: {
+            websocket: intermediateRepresentation.services.websocket,
+            http: intermediateRepresentation.services.http
+                .filter((httpService) => {
+                    return filteredIr.hasService(httpService);
+                })
+                .map((httpService) => {
+                    return {
+                        ...httpService,
+                        endpoints: httpService.endpoints.filter((httpEndpoint) => {
+                            return filteredIr.hasEndpoint(httpService, httpEndpoint);
+                        }),
+                    };
+                }),
+        },
+    };
+
     const isAuthMandatory =
         workspace.rootApiFile.auth != null &&
-        intermediateRepresentation.services.http.every((service) => {
+        filteredIntermediateReprsentation.services.http.every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });
 
     return {
-        ...intermediateRepresentation,
+        ...filteredIntermediateReprsentation,
         sdkConfig: {
             isAuthMandatory,
         },

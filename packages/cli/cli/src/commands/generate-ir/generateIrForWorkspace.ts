@@ -8,14 +8,17 @@ export async function generateIrForWorkspace({
     workspace,
     context,
     generationLanguage,
+    audiences,
 }: {
     workspace: Workspace;
     context: TaskContext;
     generationLanguage: Language | undefined;
+    audiences: string[];
 }): Promise<IntermediateRepresentation> {
     await validateWorkspaceAndLogIssues(workspace, context);
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,
+        audiences,
     });
 }
