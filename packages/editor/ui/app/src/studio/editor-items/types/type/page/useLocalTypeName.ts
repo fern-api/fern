@@ -2,7 +2,7 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { LocalTextState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
-import { useTransactionalTextState } from "../../../shared/useTransactionalTextState";
+import { useTransactionalTextState } from "../../../shared/page/useTransactionalTextState";
 
 export function useLocalTypeName(type: FernApiEditor.Type): LocalTextState {
     const constructEditTransaction = useCallback(

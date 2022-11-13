@@ -1,6 +1,6 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
+import { NamedTypePreview } from "../named-type/NamedTypePreview";
 import { Container } from "./container/Container";
-import { NamedType } from "./named/NamedType";
 import { Primitive } from "./primitive/Primitive";
 import { Unknown } from "./unknown/Unknown";
 
@@ -14,7 +14,7 @@ export const TypeReferencePreview: React.FC<TypeReferencePreview.Props> = ({ typ
     return typeReference._visit({
         container: (container) => <Container container={container} />,
         primitive: (primitive) => <Primitive primitive={primitive} />,
-        named: (typeId) => <NamedType typeId={typeId} />,
+        named: (typeId) => <NamedTypePreview typeId={typeId} />,
         unknown: () => <Unknown />,
         _other: ({ type }) => {
             throw new Error("Unknown TypeReference type: " + type);

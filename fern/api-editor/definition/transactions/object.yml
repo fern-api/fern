@@ -8,6 +8,25 @@ types:
     properties:
       objectId: commons.TypeId
 
+  BaseObjectExtensionTransaction:
+    extends: BaseObjectTransaction
+    properties:
+      extensionId: commons.ObjectExtensionId
+
+  CreateObjectExtensionTransaction:
+    extends: BaseObjectExtensionTransaction
+    properties:
+      extensionOf: commons.TypeId
+
+  SetObjectExtensionTypeTransaction:
+    extends: BaseObjectExtensionTransaction
+    properties:
+      extensionOf: commons.TypeId
+
+  DeleteObjectExtensionTransaction:
+    extends: BaseObjectExtensionTransaction
+    properties: {}
+
   BaseObjectPropertyTransaction:
     extends: BaseObjectTransaction
     properties:

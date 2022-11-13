@@ -1,6 +1,6 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useEditableSidebarItemCallbacks } from "../../../shared/useEditableSidebarItemCallbacks";
+import { useEditableSidebarItemCallbacks } from "../../../shared/sidebar/useEditableSidebarItemCallbacks";
 
 export declare namespace useEditTypeCallbacks {
     export interface Args {
@@ -33,6 +33,7 @@ function constructCreateTransaction({
         typeName,
         parent,
         shape: FernApiEditor.Shape.object({
+            extensions: [],
             properties: [],
         }),
     });

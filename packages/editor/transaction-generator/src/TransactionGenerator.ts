@@ -87,6 +87,21 @@ export const TransactionGenerator: TransactionGenerator = {
             ...generateBaseTransaction(),
             ...transaction,
         }),
+    createObjectExtension: (transaction: TransactionPayload<"createObjectExtension">) =>
+        FernApiEditor.transactions.Transaction.createObjectExtension({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
+    setObjectExtensionType: (transaction: TransactionPayload<"setObjectExtensionType">) =>
+        FernApiEditor.transactions.Transaction.setObjectExtensionType({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
+    deleteObjectExtension: (transaction: TransactionPayload<"deleteObjectExtension">) =>
+        FernApiEditor.transactions.Transaction.deleteObjectExtension({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
     createObjectProperty: (transaction: TransactionPayload<"createObjectProperty">) =>
         FernApiEditor.transactions.Transaction.createObjectProperty({
             ...generateBaseTransaction(),

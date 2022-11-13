@@ -3,7 +3,7 @@ import { MaybeDraftPackage } from "../../../../sidebar/drafts/DraftableItem";
 import { SidebarItemIdGenerator } from "../../../../sidebar/ids/SidebarItemIdGenerator";
 import { CollapsibleSidebarItemRow } from "../../../../sidebar/row/collapsible/CollapsibleSidebarItemRow";
 import { NonEditableSidebarItemRow } from "../../../../sidebar/row/non-editable-row/NonEditableSidebarItemRow";
-import { shouldSectionBeDefaultCollapsed } from "../../../shared/shouldSectionBeDefaultCollapsed";
+import { shouldSectionBeDefaultCollapsed } from "../../../shared/sidebar/shouldSectionBeDefaultCollapsed";
 import { useCreateTypeCallback } from "./useCreateTypeCallback";
 
 export declare namespace TypesSidebarItem {

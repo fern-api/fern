@@ -7,12 +7,8 @@ describe("CreateObjectPropertyTransactionHandler", () => {
     it("correctly adds property", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
-        package_.addType();
-        const second = package_.addType({
-            shape: FernApiEditor.Shape.object({
-                properties: [],
-            }),
-        });
+        package_.addObject();
+        const second = package_.addObject();
 
         const propertyId = EditorItemIdGenerator.objectProperty();
 
@@ -40,7 +36,7 @@ describe("CreateObjectPropertyTransactionHandler", () => {
     it("throws when object does not exist", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
-        package_.addType();
+        package_.addObject();
 
         const propertyId = EditorItemIdGenerator.objectProperty();
 

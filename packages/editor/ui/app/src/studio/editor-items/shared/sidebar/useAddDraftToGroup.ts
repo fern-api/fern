@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { useSidebarContext, useSidebarItemState } from "../../sidebar/context/useSidebarContext";
-import { DraftSidebarItemId } from "../../sidebar/drafts/DraftSidebarItemId";
-import { SidebarItemId } from "../../sidebar/ids/SidebarItemId";
+import { useSidebarContext, useSidebarItemState } from "../../../sidebar/context/useSidebarContext";
+import { DraftSidebarItemId } from "../../../sidebar/drafts/DraftSidebarItemId";
+import { SidebarItemId } from "../../../sidebar/ids/SidebarItemId";
 
 export declare namespace useAddDraftToGroup {
     export interface Args {

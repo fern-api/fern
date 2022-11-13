@@ -1,7 +1,8 @@
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { TwoColumnTableRow } from "@fern-ui/common-components";
 import React from "react";
-import { ObjectProperties } from "./ObjectProperties";
+import { ObjectExtensions } from "./extensions/ObjectExtensions";
+import { ObjectProperties } from "./properties/ObjectProperties";
 
 export declare namespace ObjectTableRows {
     export interface Props {
@@ -13,6 +14,9 @@ export declare namespace ObjectTableRows {
 export const ObjectTableRows: React.FC<ObjectTableRows.Props> = ({ objectId, shape }) => {
     return (
         <>
+            <TwoColumnTableRow label="Extensions">
+                <ObjectExtensions objectId={objectId} shape={shape} />
+            </TwoColumnTableRow>
             <TwoColumnTableRow label="Properties">
                 <ObjectProperties objectId={objectId} shape={shape} />
             </TwoColumnTableRow>

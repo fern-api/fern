@@ -35,6 +35,9 @@ types:
       deleteType: type.DeleteTypeTransaction
 
       # object-specific transactions
+      createObjectExtension: object.CreateObjectExtensionTransaction
+      setObjectExtensionType: object.SetObjectExtensionTypeTransaction
+      deleteObjectExtension: object.DeleteObjectExtensionTransaction
       createObjectProperty: object.CreateObjectPropertyTransaction
       renameObjectProperty: object.RenameObjectPropertyTransaction
       setObjectPropertyType: object.SetObjectPropertyTypeTransaction

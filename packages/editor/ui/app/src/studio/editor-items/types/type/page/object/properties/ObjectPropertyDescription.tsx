@@ -3,7 +3,7 @@ import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useLocalTextState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
-import { useApiEditorContext } from "../../../../../../api-editor-context/ApiEditorContext";
+import { useApiEditorContext } from "../../../../../../../api-editor-context/ApiEditorContext";
 import styles from "./ObjectPropertyDescription.module.scss";
 
 export declare namespace ObjectPropertyDescription {

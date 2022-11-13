@@ -4,6 +4,7 @@ import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React, { useCallback } from "react";
 import { TypeIcon } from "../../../types/type/TypeIcon";
+import { TypeNameSuggest } from "../../named-type/TypeNameSuggest";
 import { useDraftTypeReferenceContext } from "../context/DraftTypeReferenceContext";
 import { DraftTypeReferenceNode } from "../tree/DraftTypeReferenceNode";
 import styles from "./DraftTypeReferencePopoverContent.module.scss";
@@ -12,7 +13,6 @@ import { MapTag } from "./MapTag";
 import { OptionalTag } from "./OptionalTag";
 import { PrimitiveTag } from "./PrimitiveTag";
 import { SetTag } from "./SetTag";
-import { TypeNameSuggest } from "./TypeNameSuggest";
 import { UnknownTag } from "./UnknownTag";
 
 export const DraftTypeReferencePopoverContent: React.FC = () => {
@@ -54,6 +54,7 @@ export const DraftTypeReferencePopoverContent: React.FC = () => {
                         <TypeNameSuggest
                             selectedTypeId={selectedNode.type === "named" ? selectedNode.typeId : undefined}
                             onSelect={onSelectNamedType}
+                            defaultIsOpen={false}
                         />
                     </TwoColumnTableRow>
                 </TwoColumnTable>

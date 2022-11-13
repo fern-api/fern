@@ -4,7 +4,7 @@ import { ErrorId } from "@fern-fern/api-editor-sdk/resources";
 import React, { useCallback } from "react";
 import { MaybeDraftPackage } from "../../../../sidebar/drafts/DraftableItem";
 import { DraftErrorSidebarItemId, DraftSidebarItemId } from "../../../../sidebar/drafts/DraftSidebarItemId";
-import { SidebarItemsList } from "../../../shared/SidebarItemsList";
+import { SidebarItemsList } from "../../../shared/sidebar/SidebarItemsList";
 import { ErrorSidebarItem } from "../../error/sidebar/ErrorSidebarItem";
 import { ErrorsSidebarItem } from "./ErrorsSidebarItem";
 

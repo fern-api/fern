@@ -7,12 +7,8 @@ describe("RenameObjectPropertyTransactionHandler", () => {
     it("correctly sets property name", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
-        package_.addType();
-        const second = package_.addType({
-            shape: FernApiEditor.Shape.object({
-                properties: [],
-            }),
-        });
+        package_.addObject();
+        const second = package_.addObject();
 
         const propertyId = EditorItemIdGenerator.objectProperty();
         api.applyTransaction(
@@ -40,12 +36,8 @@ describe("RenameObjectPropertyTransactionHandler", () => {
     it("throws when object does not exist", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
-        package_.addType();
-        const second = package_.addType({
-            shape: FernApiEditor.Shape.object({
-                properties: [],
-            }),
-        });
+        package_.addObject();
+        const second = package_.addObject();
 
         const propertyId = EditorItemIdGenerator.objectProperty();
         api.applyTransaction(
@@ -68,8 +60,8 @@ describe("RenameObjectPropertyTransactionHandler", () => {
     it("throws when property does not exist", () => {
         const api = new MockApi();
         const package_ = api.addPackage();
-        package_.addType();
-        const second = package_.addType();
+        package_.addObject();
+        const second = package_.addObject();
 
         const transaction = TransactionGenerator.renameObjectProperty({
             objectId: second.typeId,
