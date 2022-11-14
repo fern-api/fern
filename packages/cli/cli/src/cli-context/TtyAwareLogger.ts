@@ -37,9 +37,7 @@ export class TtyAwareLogger {
             throw new Error("Cannot start interval because interval already exists");
         }
         this.write(this.paint());
-        this.interval = setInterval(() => {
-            this.repaint();
-        }, getSpinnerInterval(this.spinner));
+        this.interval = setInterval(this.repaint.bind(this), getSpinnerInterval(this.spinner));
     }
 
     public registerTask(context: TaskContextImpl): void {
@@ -61,10 +59,9 @@ export class TtyAwareLogger {
     }
 
     private flushAndStopBuffering() {
-        const buffer = this.buffer;
-        this.buffer = "";
         this.shouldBuffer = false;
-        this.write(buffer);
+        this.write(this.buffer);
+        this.buffer = "";
     }
 
     public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
@@ -136,11 +133,17 @@ function getSpinnerInterval(spinner: Ora) {
 }
 
 function countLines(str: string): number {
-    return [...str].filter((char) => char === "\n").length + 1;
+    let numLines = 1;
+    for (const char of str) {
+        if (char === "\n") {
+            numLines++;
+        }
+    }
+    return numLines;
 }
 
 function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }): string {
-    let content = log.parts.map(stringify).join(" ");
+    let content = log.parts.join(" ");
     if (log.prefix != null) {
         content = addPrefixToString({
             prefix: log.prefix,
@@ -164,16 +167,6 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
         case LogLevel.Info:
             return content;
     }
-}
-
-function stringify(value: unknown): string {
-    if (typeof value === "string") {
-        return value;
-    }
-    if (value instanceof Error) {
-        return value.stack ?? value.message;
-    }
-    return JSON.stringify(value);
 }
 
 const LONGEST_LOG_LEVEL_STRING_LENGTH = Math.max(...LOG_LEVELS.map((level) => getLogLevelAsString(level).length));

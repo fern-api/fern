@@ -28,6 +28,10 @@ import { DeleteTypeTransactionHandler } from "./transaction-handlers/type/Delete
 import { RenameTypeTransactionHandler } from "./transaction-handlers/type/RenameTypeTransactionHandler";
 import { SetTypeDescriptionTransactionHandler } from "./transaction-handlers/type/SetTypeDescriptionTransactionHandler";
 import { SetTypeShapeTransactionHandler } from "./transaction-handlers/type/SetTypeShapeTransactionHandler";
+import { CreateUnionMemberTransactionHandler } from "./transaction-handlers/union/CreateUnionMemberTransactionHandler";
+import { DeleteUnionMemberTransactionHandlerHandler } from "./transaction-handlers/union/DeleteUnionMemberTransactionHandler";
+import { SetUnionDiscriminantTransactionHandler } from "./transaction-handlers/union/SetUnionDiscriminantTransactionHandler";
+import { SetUnionMemberDiscriminantValueTransactionHandler } from "./transaction-handlers/union/SetUnionMemberDiscriminantValueTransactionHandler";
 
 export class TransactionHandler {
     public readonly graph: ApiGraph;
@@ -111,6 +115,21 @@ export class TransactionHandler {
             },
             deleteObjectProperty: (t) => {
                 new DeleteObjectPropertyTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            setUnionDiscriminant: (t) => {
+                new SetUnionDiscriminantTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            createUnionMember: (t) => {
+                new CreateUnionMemberTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);
+            },
+            setUnionMemberDiscriminantValue: (t) => {
+                new SetUnionMemberDiscriminantValueTransactionHandler({
+                    graph: this.graph,
+                    definition,
+                }).applyTransaction(t);
+            },
+            deleteUnionMember: (t) => {
+                new DeleteUnionMemberTransactionHandlerHandler({ graph: this.graph, definition }).applyTransaction(t);
             },
             createError: (t) => {
                 new CreateErrorTransactionHandler({ graph: this.graph, definition }).applyTransaction(t);

@@ -127,6 +127,26 @@ export const TransactionGenerator: TransactionGenerator = {
             ...generateBaseTransaction(),
             ...transaction,
         }),
+    setUnionDiscriminant: (transaction: TransactionPayload<"setUnionDiscriminant">) =>
+        FernApiEditor.transactions.Transaction.setUnionDiscriminant({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
+    createUnionMember: (transaction: TransactionPayload<"createUnionMember">) =>
+        FernApiEditor.transactions.Transaction.createUnionMember({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
+    setUnionMemberDiscriminantValue: (transaction: TransactionPayload<"setUnionMemberDiscriminantValue">) =>
+        FernApiEditor.transactions.Transaction.setUnionMemberDiscriminantValue({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
+    deleteUnionMember: (transaction: TransactionPayload<"deleteUnionMember">) =>
+        FernApiEditor.transactions.Transaction.deleteUnionMember({
+            ...generateBaseTransaction(),
+            ...transaction,
+        }),
     createError: (transaction: TransactionPayload<"createError">) =>
         FernApiEditor.transactions.Transaction.createError({
             ...generateBaseTransaction(),

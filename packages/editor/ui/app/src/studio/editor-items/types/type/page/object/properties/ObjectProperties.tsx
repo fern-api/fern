@@ -1,10 +1,7 @@
-import { Button } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useState } from "react";
-import { MaybeDraftContainingList } from "../../../../../shared/MaybeDraftContainingList";
-import styles from "./ObjectProperties.module.scss";
+import { PageItemsList } from "../../../../../shared/page/PageItemsList";
 import { ObjectProperty } from "./ObjectProperty";
 
 export declare namespace ObjectProperties {
@@ -44,11 +41,12 @@ export const ObjectProperties: React.FC<ObjectProperties.Props> = ({ objectId, s
     );
 
     return (
-        <div className={styles.container}>
-            <MaybeDraftContainingList items={shape.properties} draft={draftProperty} renderItem={renderPropertyRow} />
-            <div>
-                <Button text="Add property" minimal icon={IconNames.PLUS} onClick={onClickAddProperty} />
-            </div>
-        </div>
+        <PageItemsList
+            items={shape.properties}
+            draft={draftProperty}
+            renderItem={renderPropertyRow}
+            addButtonText="Add property"
+            onClickAdd={onClickAddProperty}
+        />
     );
 };

@@ -2,13 +2,13 @@ import boxen from "boxen";
 import chalk from "chalk";
 import { CliEnvironment } from "../CliEnvironment";
 
-export async function getFernCliUpgradeMessage({
+export function getFernCliUpgradeMessage({
     cliEnvironment,
     toVersion,
 }: {
     cliEnvironment: CliEnvironment;
     toVersion: string;
-}): Promise<string> {
+}): string {
     const message =
         "Update available " +
         chalk.dim(cliEnvironment.packageVersion) +

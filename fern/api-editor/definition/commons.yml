@@ -6,3 +6,4 @@ types:
   ErrorId: string
   ObjectExtensionId: string
   ObjectPropertyId: string
+  UnionMemberId: string
