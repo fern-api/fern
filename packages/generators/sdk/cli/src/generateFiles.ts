@@ -6,17 +6,20 @@ import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
 import { PackageJsonScript, SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { NpmPackage } from "./npm-package/NpmPackage";
 import { loadIntermediateRepresentation } from "./utils/loadIntermediateRepresentation";
 import { YarnRunner } from "./yarnRunner";
 
 export async function generateFiles({
     config,
+    customConfig,
     npmPackage,
     logger,
     runYarnCommand,
 }: {
     config: FernGeneratorExec.GeneratorConfig;
+    customConfig: SdkCustomConfig;
     npmPackage: NpmPackage;
     logger: Logger;
     runYarnCommand: YarnRunner;
@@ -34,6 +37,9 @@ export async function generateFiles({
         packageName: npmPackage.packageName,
         packageVersion: npmPackage.version,
         repositoryUrl: npmPackage.repoUrl,
+        config: {
+            shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
+        },
     });
 
     await sdkGenerator.generate();

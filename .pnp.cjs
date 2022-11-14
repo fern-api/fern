@@ -3839,7 +3839,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["umd-compat-loader", "npm:2.1.2"],\
             ["webpack", "virtual:e63295de2bd8fc275ac5033fb924070abcf529ffb116fc48141d6d806d85b3cae9f9f36de59923e81253dacbacb6558ad3568777013d3cbf523bddadae542880#npm:5.74.0"],\
             ["webpack-bundle-analyzer", "npm:4.5.0"],\
-            ["webpack-cli", "virtual:e63295de2bd8fc275ac5033fb924070abcf529ffb116fc48141d6d806d85b3cae9f9f36de59923e81253dacbacb6558ad3568777013d3cbf523bddadae542880#npm:4.10.0"]\
+            ["webpack-cli", "virtual:e63295de2bd8fc275ac5033fb924070abcf529ffb116fc48141d6d806d85b3cae9f9f36de59923e81253dacbacb6558ad3568777013d3cbf523bddadae542880#npm:4.10.0"],\
+            ["zod", "npm:3.18.0"]\
           ],\
           "linkType": "SOFT"\
         }]\

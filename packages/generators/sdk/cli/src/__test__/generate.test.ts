@@ -5,6 +5,7 @@ import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
+import { SdkCustomConfigSchema } from "../custom-config/schema/SdkCustomConfigSchema";
 import { runGenerator } from "../runGenerator";
 
 interface FixtureInfo {
@@ -12,6 +13,7 @@ interface FixtureInfo {
     orgName: string;
     outputMode: "github" | "publish";
     apiName: string;
+    customConfig?: SdkCustomConfigSchema;
 }
 
 const FIXTURES: FixtureInfo[] = [
@@ -20,6 +22,9 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "trace",
         outputMode: "publish",
         apiName: "api",
+        customConfig: {
+            useBrandedStringAliases: true,
+        },
     },
     {
         path: "reserved-keywords",
@@ -70,7 +75,7 @@ describe("runGenerator", () => {
                         mode: generateOutputMode(fixture.orgName, fixture.apiName, fixture.outputMode),
                     },
                     publish: undefined,
-                    customConfig: undefined,
+                    customConfig: fixture.customConfig,
                     workspaceName: fixture.apiName,
                     organization: fixture.orgName,
                     environment: FernGeneratorExec.GeneratorEnvironment.local(),

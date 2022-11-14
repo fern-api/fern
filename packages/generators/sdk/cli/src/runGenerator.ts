@@ -1,8 +1,11 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { GeneratorConfig } from "@fern-fern/generator-exec-client/api";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-client/schemas";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import { readFile } from "fs/promises";
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { generateFiles } from "./generateFiles";
 import { constructNpmPackage } from "./npm-package/constructNpmPackage";
 import { publishPackage } from "./publishPackage";
@@ -21,6 +24,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     const configStr = await readFile(pathToConfig);
     const rawConfig = JSON.parse(configStr.toString());
     const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig);
+    const customConfig = parseCustomConfig(config);
     const generatorNotificationService = new GeneratorNotificationService(config);
 
     try {
@@ -48,6 +52,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
 
         const { writtenTo: pathToPackageOnDisk } = await generateFiles({
             config,
+            customConfig,
             logger,
             npmPackage,
             runYarnCommand,
@@ -94,4 +99,11 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
         );
         throw e;
     }
+}
+
+function parseCustomConfig(config: GeneratorConfig): SdkCustomConfig {
+    const customConfig = config.customConfig != null ? SdkCustomConfigSchema.parse(config.customConfig) : undefined;
+    return {
+        useBrandedStringAliases: customConfig?.useBrandedStringAliases ?? false,
+    };
 }

@@ -39,7 +39,11 @@ export declare namespace Zurg {
         parse: (raw: ts.Expression) => ts.Expression;
         json: (parsed: ts.Expression) => ts.Expression;
         optional: () => Zurg.Schema;
-        transform: (args: { newShape: ts.TypeNode; parse: ts.ArrowFunction; json: ts.ArrowFunction }) => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            parse: ts.ArrowFunction;
+            json: ts.ArrowFunction;
+        }) => Zurg.Schema;
     }
 
     interface ObjectLikeSchema extends Schema, ObjectLikeUtils {}

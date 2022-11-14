@@ -10,12 +10,13 @@ export declare namespace ErrorDeclarationHandler {
         schemaFile: SdkFile;
         errorName: string;
         context: GeneratorContext;
+        shouldUseBrandedStringAliases: boolean;
     }
 }
 
 export function ErrorDeclarationHandler(
     errorDeclaration: ErrorDeclaration,
-    { errorFile, schemaFile, errorName, context }: ErrorDeclarationHandler.Args
+    { errorFile, schemaFile, errorName, context, shouldUseBrandedStringAliases }: ErrorDeclarationHandler.Args
 ): void {
     if (errorDeclaration.type._type === "alias" && errorDeclaration.type.aliasOf._type === "void") {
         return;
@@ -37,5 +38,6 @@ export function ErrorDeclarationHandler(
         typeName: errorName,
         schemaFile,
         context,
+        shouldUseBrandedStringAliases,
     });
 }

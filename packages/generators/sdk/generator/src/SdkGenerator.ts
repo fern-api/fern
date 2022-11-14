@@ -55,12 +55,18 @@ export declare namespace SdkGenerator {
         packageName: string;
         packageVersion: string | undefined;
         repositoryUrl: string | undefined;
+        config: Config;
+    }
+
+    export interface Config {
+        shouldUseBrandedStringAliases: boolean;
     }
 }
 
 export class SdkGenerator {
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
+    private config: SdkGenerator.Config;
 
     private rootDirectory: Directory;
     private exportsManager = new ExportsManager();
@@ -90,9 +96,11 @@ export class SdkGenerator {
         packageName,
         packageVersion,
         repositoryUrl,
+        config,
     }: SdkGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
+        this.config = config;
 
         const project = new Project({
             useInMemoryFileSystem: true,
@@ -182,6 +190,7 @@ export class SdkGenerator {
                                 schemaFile,
                                 typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                                 context: this.context,
+                                shouldUseBrandedStringAliases: this.config.shouldUseBrandedStringAliases,
                             });
                         },
                     });
@@ -204,6 +213,7 @@ export class SdkGenerator {
                                 schemaFile,
                                 errorName: this.errorDeclarationReferencer.getExportedName(errorDeclaration.name),
                                 context: this.context,
+                                shouldUseBrandedStringAliases: this.config.shouldUseBrandedStringAliases,
                             });
                         },
                     });

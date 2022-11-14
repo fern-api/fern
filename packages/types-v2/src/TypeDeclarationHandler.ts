@@ -11,12 +11,13 @@ export declare namespace TypeDeclarationHandler {
         schemaFile: SdkFile;
         typeName: string;
         context: GeneratorContext;
+        shouldUseBrandedStringAliases: boolean;
     }
 }
 
 export function TypeDeclarationHandler(
     typeDeclaration: TypeDeclaration,
-    { typeFile, schemaFile, typeName }: TypeDeclarationHandler.Args
+    { typeFile, schemaFile, typeName, shouldUseBrandedStringAliases }: TypeDeclarationHandler.Args
 ): void {
     Type._visit(typeDeclaration.shape, {
         object: (objectTypeDeclaration) => {
@@ -41,6 +42,7 @@ export function TypeDeclarationHandler(
                 typeName,
                 typeDeclaration,
                 shape: aliasTypeDeclaration,
+                shouldUseBrandedStringAliases,
             }).generate({
                 typeFile,
                 schemaFile,
