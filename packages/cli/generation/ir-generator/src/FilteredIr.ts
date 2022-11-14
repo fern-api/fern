@@ -181,8 +181,7 @@ class GraphBuilder extends FilteredIrBuilder {
         httpEndpoints: HttpEndpoint[],
         audiences: AudienceId[]
     ): void {
-        const containsAudience = this.hasAudience(audiences);
-        if (containsAudience) {
+        if (this.hasAudience(audiences)) {
             const serviceId = getServiceId(declaredServiceName);
             this.servicesNeededForAudience.add(serviceId);
             httpEndpoints.forEach((httpEndpoint) => {
@@ -196,8 +195,7 @@ class GraphBuilder extends FilteredIrBuilder {
     public build(): FilteredIr {
         const typeIds = new Set<TypeId>();
         const errorIds = new Set<ErrorId>();
-
-        for (const endpointId of Object.keys(this.endpointsNeededForAudience)) {
+        for (const endpointId of this.endpointsNeededForAudience.keys()) {
             const endpointNode = this.getEndpointNode(endpointId);
             for (const errorId of endpointNode.referencedErrors) {
                 if (errorIds.has(errorId)) {
@@ -210,12 +208,11 @@ class GraphBuilder extends FilteredIrBuilder {
             this.addReferencedTypes(typeIds, endpointNode.referencedTypes);
         }
         this.addReferencedTypes(typeIds, this.typesNeededForAudience);
-
         return new FilteredIrImpl(typeIds, errorIds, this.servicesNeededForAudience, this.endpointsNeededForAudience);
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
-        for (const typeId of Object.keys(typesToAdd)) {
+        for (const typeId of typesToAdd.keys()) {
             if (types.has(typeId)) {
                 continue;
             }
@@ -225,7 +222,6 @@ class GraphBuilder extends FilteredIrBuilder {
                 types.add(descendantTypeId);
             });
         }
-        return;
     }
 
     private getTypeNode(typeId: TypeId): TypeNode {
