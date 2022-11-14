@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("ReorderTypesTransactionHandler", () => {
@@ -52,7 +53,7 @@ describe("ReorderTypesTransactionHandler", () => {
         const first = package_.addType();
         const second = package_.addType();
         package_.addType();
-        const newOrder = [second.typeId, first.typeId, "made-up-id"];
+        const newOrder = [second.typeId, first.typeId, "made-up-id" as FernApiEditor.TypeId];
         const transaction = TransactionGenerator.reorderTypes({
             packageId: package_.packageId,
             newOrder,

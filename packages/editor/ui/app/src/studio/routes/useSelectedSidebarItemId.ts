@@ -1,3 +1,4 @@
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { useCallback, useMemo } from "react";
 import { generatePath, useMatch, useNavigate } from "react-router-dom";
 import { StudioRoutes } from ".";
@@ -42,25 +43,25 @@ export function useSelectedSidebarItemId(): [
             if (editorItemId in definition.packages) {
                 return {
                     type: "package",
-                    packageId: editorItemId,
+                    packageId: editorItemId as FernApiEditor.PackageId,
                 };
             }
             if (editorItemId in definition.endpoints) {
                 return {
                     type: "endpoint",
-                    endpointId: editorItemId,
+                    endpointId: editorItemId as FernApiEditor.EndpointId,
                 };
             }
             if (editorItemId in definition.types) {
                 return {
                     type: "type",
-                    typeId: editorItemId,
+                    typeId: editorItemId as FernApiEditor.TypeId,
                 };
             }
             if (editorItemId in definition.errors) {
                 return {
                     type: "error",
-                    errorId: editorItemId,
+                    errorId: editorItemId as FernApiEditor.ErrorId,
                 };
             }
             return {
@@ -71,13 +72,17 @@ export function useSelectedSidebarItemId(): [
         if (typesGroupMatch != null && typesGroupMatch.params.EDITOR_ITEM_ID != null) {
             return {
                 type: "typesGroup",
-                packageId: removeHumanReadablePrefixFromId(typesGroupMatch.params.EDITOR_ITEM_ID),
+                packageId: removeHumanReadablePrefixFromId(
+                    typesGroupMatch.params.EDITOR_ITEM_ID
+                ) as FernApiEditor.PackageId,
             };
         }
         if (errorsGroupMatch != null && errorsGroupMatch.params.EDITOR_ITEM_ID != null) {
             return {
                 type: "errorsGroup",
-                packageId: removeHumanReadablePrefixFromId(errorsGroupMatch.params.EDITOR_ITEM_ID),
+                packageId: removeHumanReadablePrefixFromId(
+                    errorsGroupMatch.params.EDITOR_ITEM_ID
+                ) as FernApiEditor.PackageId,
             };
         }
         return undefined;

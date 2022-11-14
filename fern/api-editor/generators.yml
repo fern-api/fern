@@ -1,4 +1,6 @@
 draft:
   - name: fernapi/fern-typescript-sdk
-    version: 0.0.229
+    version: 0.0.231
     mode: publish
+    config:
+      useBrandedStringAliases: true

@@ -50,7 +50,7 @@ describe("SetObjectPropertyTypeTransactionHandler", () => {
             })
         );
         const transaction = TransactionGenerator.setObjectPropertyType({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             propertyId,
             newPropertyType: FernApiEditor.TypeReference.unknown(),
         });
@@ -66,7 +66,7 @@ describe("SetObjectPropertyTypeTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setObjectPropertyType({
             objectId: second.typeId,
-            propertyId: "made-up-id",
+            propertyId: "made-up-id" as FernApiEditor.ObjectPropertyId,
             newPropertyType: FernApiEditor.TypeReference.unknown(),
         });
 

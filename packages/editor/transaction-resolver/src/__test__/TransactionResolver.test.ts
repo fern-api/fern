@@ -131,7 +131,7 @@ describe("TransactionResolver", () => {
 
 function createEmptyDefinition(): FernApiEditor.Api {
     return {
-        apiId: "my-api-id",
+        apiId: "my-api-id" as FernApiEditor.ApiId,
         apiName: "my-api-name",
         rootPackages: [],
         packages: {},

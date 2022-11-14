@@ -1,5 +1,6 @@
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("SetUnionMemberDiscriminantValueTransactionHandler", () => {
@@ -50,7 +51,7 @@ describe("SetUnionMemberDiscriminantValueTransactionHandler", () => {
         );
 
         const transaction = TransactionGenerator.setUnionMemberDiscriminantValue({
-            unionId: "made-up-id",
+            unionId: "made-up-id" as FernApiEditor.TypeId,
             unionMemberId,
             discriminantValue: "cat",
         });
@@ -66,7 +67,7 @@ describe("SetUnionMemberDiscriminantValueTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setUnionMemberDiscriminantValue({
             unionId: second.typeId,
-            unionMemberId: "made-up-id",
+            unionMemberId: "made-up-id" as FernApiEditor.UnionMemberId,
             discriminantValue: "dog",
         });
 

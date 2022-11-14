@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("RenameTypeTransactionHandler", () => {
@@ -24,7 +25,7 @@ describe("RenameTypeTransactionHandler", () => {
         package_.addType();
 
         const transaction = TransactionGenerator.renameType({
-            typeId: "made-up-id",
+            typeId: "made-up-id" as FernApiEditor.TypeId,
             newTypeName: "New type name",
         });
 

@@ -171,6 +171,6 @@ function generateBaseTransaction(): FernApiEditor.transactions.BaseTransaction {
     };
 }
 
-function generateTransactionId() {
-    return uuidv4();
+function generateTransactionId(): FernApiEditor.transactions.TransactionId {
+    return uuidv4() as FernApiEditor.transactions.TransactionId;
 }

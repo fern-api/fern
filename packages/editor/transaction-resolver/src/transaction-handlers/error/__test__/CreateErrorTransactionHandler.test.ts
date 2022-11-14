@@ -33,7 +33,7 @@ describe("CreateErrorTransactionHandler", () => {
         api.addPackage();
 
         const transaction = TransactionGenerator.createError({
-            parent: "made-up-id",
+            parent: "made-up-id" as FernApiEditor.PackageId,
             errorId: EditorItemIdGenerator.error(),
             errorName: "My new error",
         });

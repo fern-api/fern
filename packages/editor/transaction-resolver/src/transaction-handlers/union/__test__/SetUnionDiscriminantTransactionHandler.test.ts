@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("SetUnionDiscriminantTransactionHandler", () => {
@@ -28,7 +29,7 @@ describe("SetUnionDiscriminantTransactionHandler", () => {
         package_.addUnion();
 
         const transaction = TransactionGenerator.setUnionDiscriminant({
-            unionId: "made-up-id",
+            unionId: "made-up-id" as FernApiEditor.TypeId,
             discriminant: "new-discriminant",
         });
 

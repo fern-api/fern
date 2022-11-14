@@ -13,7 +13,7 @@ export declare namespace MockPackage {
 }
 
 export class MockPackage extends MockDefinitionItem {
-    public packageId: string;
+    public packageId: FernApiEditor.PackageId;
     public packageName: string;
 
     constructor({ name = "Mock Package", ...superInit }: MockPackage.Init) {
@@ -29,9 +29,9 @@ export class MockPackage extends MockDefinitionItem {
         });
         this.applyTransaction(
             TransactionGenerator.createPackage({
-                packageId: package_.packageId,
+                packageId: package_.packageId as FernApiEditor.PackageId,
                 packageName: package_.packageName,
-                parent: this.packageId,
+                parent: this.packageId as FernApiEditor.PackageId,
             })
         );
         return package_;
@@ -44,8 +44,8 @@ export class MockPackage extends MockDefinitionItem {
         });
         this.applyTransaction(
             TransactionGenerator.createEndpoint({
-                parent: this.packageId,
-                endpointId: endpoint.endpointId,
+                parent: this.packageId as FernApiEditor.PackageId,
+                endpointId: endpoint.endpointId as FernApiEditor.EndpointId,
                 endpointName: endpoint.endpointName,
             })
         );
@@ -60,8 +60,8 @@ export class MockPackage extends MockDefinitionItem {
         });
         this.applyTransaction(
             TransactionGenerator.createType({
-                parent: this.packageId,
-                typeId: type.typeId,
+                parent: this.packageId as FernApiEditor.PackageId,
+                typeId: type.typeId as FernApiEditor.TypeId,
                 typeName: type.typeName,
                 shape: type.shape,
             })
@@ -90,8 +90,8 @@ export class MockPackage extends MockDefinitionItem {
         });
         this.applyTransaction(
             TransactionGenerator.createError({
-                parent: this.packageId,
-                errorId: error.errorId,
+                parent: this.packageId as FernApiEditor.PackageId,
+                errorId: error.errorId as FernApiEditor.ErrorId,
                 errorName: error.errorName,
             })
         );

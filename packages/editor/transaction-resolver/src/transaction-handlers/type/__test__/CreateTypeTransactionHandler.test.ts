@@ -39,7 +39,7 @@ describe("CreateTypeTransactionHandler", () => {
         api.addPackage();
 
         const transaction = TransactionGenerator.createType({
-            parent: "made-up-id",
+            parent: "made-up-id" as FernApiEditor.PackageId,
             typeId: EditorItemIdGenerator.type(),
             typeName: "My new type",
             shape: FernApiEditor.Shape.alias({

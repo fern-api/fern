@@ -50,7 +50,7 @@ describe("SetObjectPropertyDescriptionTransactionHandler", () => {
             })
         );
         const transaction = TransactionGenerator.setObjectPropertyDescription({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             propertyId,
             newPropertyDescription: "I'm a new description!",
         });
@@ -66,7 +66,7 @@ describe("SetObjectPropertyDescriptionTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setObjectPropertyDescription({
             objectId: second.typeId,
-            propertyId: "made-up-id",
+            propertyId: "made-up-id" as FernApiEditor.ObjectPropertyId,
             newPropertyDescription: "I'm a new description!",
         });
 

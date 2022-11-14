@@ -12,11 +12,11 @@ export interface EditorItemIdGenerator {
 }
 
 export const EditorItemIdGenerator: EditorItemIdGenerator = {
-    package: uuidv4,
-    endpoint: uuidv4,
-    type: uuidv4,
-    objectProperty: uuidv4,
-    objectExtension: uuidv4,
-    unionMember: uuidv4,
-    error: uuidv4,
+    package: () => uuidv4() as FernApiEditor.PackageId,
+    endpoint: () => uuidv4() as FernApiEditor.EndpointId,
+    type: () => uuidv4() as FernApiEditor.TypeId,
+    objectProperty: () => uuidv4() as FernApiEditor.ObjectPropertyId,
+    objectExtension: () => uuidv4() as FernApiEditor.ObjectExtensionId,
+    unionMember: () => uuidv4() as FernApiEditor.UnionMemberId,
+    error: () => uuidv4() as FernApiEditor.ErrorId,
 };

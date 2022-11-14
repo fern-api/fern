@@ -39,7 +39,7 @@ describe("CreateUnionMemberTransactionHandler", () => {
         const unionMemberId = EditorItemIdGenerator.unionMember();
 
         const transaction = TransactionGenerator.createUnionMember({
-            unionId: "made-up-id",
+            unionId: "made-up-id" as FernApiEditor.TypeId,
             unionMemberId,
             discriminantValue: "dog",
         });
