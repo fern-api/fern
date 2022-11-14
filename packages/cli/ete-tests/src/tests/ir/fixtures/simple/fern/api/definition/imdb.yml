@@ -36,6 +36,8 @@ services:
           path: /
           request: CreateMovieRequest
           response: MovieId
+          audiences:
+            - test
         getMovie:
           method: GET
           path: /{movieId}

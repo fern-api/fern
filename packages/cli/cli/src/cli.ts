@@ -279,7 +279,12 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 })
                 .option("language", {
                     choices: Object.values(Language),
-                    description: "Only run the command on the provided API",
+                    description: "Generate ir for a particular language",
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    description: "Filter the ir for certain audiences",
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -290,6 +295,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 generationLanguage: argv.language,
+                audiences: argv.audience ?? [],
             });
         }
     );

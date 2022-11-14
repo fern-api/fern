@@ -11,11 +11,13 @@ export async function generateIrForWorkspaces({
     irFilepath,
     cliContext,
     generationLanguage,
+    audiences,
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
     generationLanguage: Language | undefined;
+    audiences: string[];
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {
@@ -24,6 +26,7 @@ export async function generateIrForWorkspaces({
                     workspace,
                     context,
                     generationLanguage,
+                    audiences,
                 });
                 const irOutputFilePath = path.resolve(irFilepath);
                 await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));

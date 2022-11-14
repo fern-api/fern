@@ -4,26 +4,35 @@ import { generateIrAsString } from "./generateIrAsString";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
 
-const FIXTURES = ["simple"];
+const FIXTURES: Fixture[] = [
+    {
+        name: "simple",
+    },
+    {
+        name: "simple",
+        audiences: ["test"],
+    },
+];
+
+interface Fixture {
+    name: string;
+    audiences?: string[];
+}
 
 describe("ir", () => {
-    for (const fixtureName of FIXTURES) {
-        itFixture(fixtureName);
+    for (const fixture of FIXTURES) {
+        itFixture(fixture.name);
         for (const language of Object.values(Language)) {
-            itFixture(fixtureName, language);
+            itFixture(fixture.name, language, fixture.audiences);
         }
     }
 });
 
-function itFixture(fixtureName: string, language?: Language) {
-    it(
-        // eslint-disable-next-line jest/valid-title
-        fixtureName,
-        async () => {
-            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixtureName));
-            const irContents = await generateIrAsString({ fixturePath, language });
-            expect(irContents).toMatchSnapshot();
-        },
-        90_000
-    );
+function itFixture(fixtureName: string, language?: Language, audiences?: string[]) {
+    it(// eslint-disable-next-line jest/valid-title
+    `${JSON.stringify({ fixtureName, language, audiences })}`, async () => {
+        const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixtureName));
+        const irContents = await generateIrAsString({ fixturePath, language, audiences });
+        expect(irContents).toMatchSnapshot();
+    }, 90_000);
 }

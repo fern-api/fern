@@ -20,15 +20,17 @@ export function convertTypeDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): TypeDeclaration {
+    const declaration = convertDeclaration(typeDeclaration);
+    const declaredTypeName = {
+        fernFilepath: file.fernFilepath,
+        fernFilepathV2: file.fernFilepathV2,
+        name: typeName,
+        nameV2: file.casingsGenerator.generateNameCasingsV1(typeName),
+        nameV3: file.casingsGenerator.generateName(typeName),
+    };
     return {
-        ...convertDeclaration(typeDeclaration),
-        name: {
-            fernFilepath: file.fernFilepath,
-            fernFilepathV2: file.fernFilepathV2,
-            name: typeName,
-            nameV2: file.casingsGenerator.generateNameCasingsV1(typeName),
-            nameV3: file.casingsGenerator.generateName(typeName),
-        },
+        ...declaration,
+        name: declaredTypeName,
         shape: convertType({ typeDeclaration, file, typeResolver }),
         referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
     };

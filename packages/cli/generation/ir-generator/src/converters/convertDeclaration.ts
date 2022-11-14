@@ -25,6 +25,13 @@ export function convertDeclaration(schema: string | RawSchemas.DeclarationSchema
     };
 }
 
+export function getAudiences(schema: string | RawSchemas.DeclarationSchema): string[] {
+    if (typeof schema === "string") {
+        return [];
+    }
+    return schema.audiences ?? [];
+}
+
 function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema | undefined): AvailabilityStatus {
     if (status == null) {
         return AvailabilityStatus.GeneralAvailability;

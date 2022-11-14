@@ -75,6 +75,7 @@ export async function visitTypeDeclaration({
                                 type: async (type) => {
                                     await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
                                 },
+                                audiences: noop,
                             });
                         }
                     }
@@ -122,6 +123,7 @@ export async function visitTypeDeclaration({
                                 availability: noop,
                                 name: noop,
                                 value: noop,
+                                audiences: noop,
                             });
                         }
                     }
