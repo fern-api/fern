@@ -65,38 +65,16 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract unknown(): T;
 
     protected keyType(keyType: TypeReference): T {
-        if (keyType._type !== "named") {
-            return this.convert(keyType);
+        // special case: if the resolved type is an enum,
+        // we need to use the string-version of the enum
+        if (keyType._type === "named") {
+            const resolvedType = this.resolveType(keyType);
+            if (resolvedType._type === "named" && resolvedType.shape === ShapeType.Enum) {
+                return this.enumAsString(keyType);
+            }
         }
-        const resolvedType = this.resolveType(keyType);
-        return ResolvedTypeReference._visit<T>(resolvedType, {
-            container: () => {
-                throw new Error("Containers are not supported as map keys");
-            },
-            primitive: (primitive) => this.primitive(primitive),
-            unknown: () => {
-                throw new Error("Unknown is not supported as a map key");
-            },
-            void: () => {
-                throw new Error("Void is not supported as a map key");
-            },
-            named: (resolvedNamedType) =>
-                ShapeType._visit(resolvedNamedType.shape, {
-                    object: () => {
-                        throw new Error("Objects are not supported as map keys");
-                    },
-                    union: () => {
-                        throw new Error("Unions are not supported as map keys");
-                    },
-                    enum: () => this.enumAsString(keyType),
-                    _unknown: () => {
-                        throw new Error("Unknown ShapeType: " + resolvedNamedType.shape);
-                    },
-                }),
-            _unknown: () => {
-                throw new Error("Unknown ResolvedReferenceType: " + resolvedType._type);
-            },
-        });
+
+        return this.convert(keyType);
     }
 
     protected enumAsString(_enumTypeName: DeclaredTypeName): T {
