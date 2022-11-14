@@ -48,6 +48,7 @@
                                     }
                                   ]
                                 },
+                                "audiences": { "type": "array", "items": { "type": "string" } },
                                 "name": { "type": "string" }
                               },
                               "required": ["type"],
@@ -155,6 +156,9 @@
                             "availability": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
                             },
+                            "audiences": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                            },
                             "name": { "type": "string" },
                             "value": { "type": "string" }
                           },
@@ -183,6 +187,9 @@
                   "availability": {
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
                   },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                  },
                   "auth": { "type": "boolean" },
                   "base-path": { "type": "string" },
                   "path-parameters": {
@@ -199,6 +206,9 @@
                             },
                             "availability": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                            },
+                            "audiences": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
                             }
                           },
                           "required": ["type"],
@@ -222,6 +232,9 @@
                         "availability": {
                           "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
                         },
+                        "audiences": {
+                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                        },
                         "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                         "path": { "type": "string" },
                         "path-parameters": {
@@ -244,6 +257,9 @@
                                   },
                                   "availability": {
                                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                                  },
+                                  "audiences": {
+                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
                                   },
                                   "name": {
                                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/name"
@@ -333,6 +349,9 @@
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                   "availability": {
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                  },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
                   },
                   "auth": { "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth" },
                   "path": { "type": "string" },
