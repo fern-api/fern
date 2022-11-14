@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("RenameEndpointTransactionHandler", () => {
@@ -24,7 +25,7 @@ describe("RenameEndpointTransactionHandler", () => {
         package_.addEndpoint();
 
         const transaction = TransactionGenerator.renameEndpoint({
-            endpointId: "made-up-id",
+            endpointId: "made-up-id" as FernApiEditor.EndpointId,
             newEndpointName: "New endpoint name",
         });
 

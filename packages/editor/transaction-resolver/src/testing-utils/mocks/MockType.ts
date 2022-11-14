@@ -10,7 +10,7 @@ export declare namespace MockType {
 }
 
 export class MockType extends MockDefinitionItem {
-    public typeId: string;
+    public typeId: FernApiEditor.TypeId;
     public typeName: string;
     public shape: FernApiEditor.Shape;
 

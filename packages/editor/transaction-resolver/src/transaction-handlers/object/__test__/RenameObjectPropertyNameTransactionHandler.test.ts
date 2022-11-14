@@ -49,7 +49,7 @@ describe("RenameObjectPropertyTransactionHandler", () => {
             })
         );
         const transaction = TransactionGenerator.renameObjectProperty({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             propertyId,
             newPropertyName: "My property",
         });
@@ -65,7 +65,7 @@ describe("RenameObjectPropertyTransactionHandler", () => {
 
         const transaction = TransactionGenerator.renameObjectProperty({
             objectId: second.typeId,
-            propertyId: "made-up-id",
+            propertyId: "made-up-id" as FernApiEditor.ObjectPropertyId,
             newPropertyName: "My property",
         });
 

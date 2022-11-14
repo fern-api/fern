@@ -12,7 +12,7 @@ export class MockApi extends Mock {
     constructor(name = "Mock API") {
         super();
         this.definition = {
-            apiId: uuidv4(),
+            apiId: uuidv4() as FernApiEditor.ApiId,
             apiName: name,
             rootPackages: [],
             packages: {},
@@ -31,7 +31,7 @@ export class MockApi extends Mock {
         this.transactionHandler.applyTransaction(
             this.definition,
             TransactionGenerator.createPackage({
-                packageId: package_.packageId,
+                packageId: package_.packageId as FernApiEditor.PackageId,
                 packageName: package_.packageName,
             })
         );

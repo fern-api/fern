@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("ReorderEndpointsTransactionHandler", () => {
@@ -52,7 +53,7 @@ describe("ReorderEndpointsTransactionHandler", () => {
         const first = package_.addEndpoint();
         const second = package_.addEndpoint();
         package_.addEndpoint();
-        const newOrder = [second.endpointId, first.endpointId, "made-up-id"];
+        const newOrder = [second.endpointId, first.endpointId, "made-up-id" as FernApiEditor.EndpointId];
         const transaction = TransactionGenerator.reorderEndpoints({
             packageId: package_.packageId,
             newOrder,

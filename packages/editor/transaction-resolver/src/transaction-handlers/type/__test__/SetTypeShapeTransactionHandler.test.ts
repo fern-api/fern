@@ -86,7 +86,7 @@ describe("SetTypeShapeTransactionHandler", () => {
         package_.addType();
 
         const transaction = TransactionGenerator.setTypeShape({
-            typeId: "made-up-id",
+            typeId: "made-up-id" as FernApiEditor.TypeId,
             shape: FernApiEditor.Shape.enum({}),
         });
 

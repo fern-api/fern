@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("DeletePackageTransactionHandler", () => {
@@ -39,7 +40,7 @@ describe("DeletePackageTransactionHandler", () => {
         api.addPackage();
 
         const transaction = TransactionGenerator.deletePackage({
-            packageId: "made-up-id",
+            packageId: "made-up-id" as FernApiEditor.PackageId,
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

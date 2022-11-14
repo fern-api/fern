@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("RenamePackageTransactionHandler", () => {
@@ -22,7 +23,7 @@ describe("RenamePackageTransactionHandler", () => {
         api.addPackage();
 
         const transaction = TransactionGenerator.renamePackage({
-            packageId: "made-up-id",
+            packageId: "made-up-id" as FernApiEditor.PackageId,
             newPackageName: "New package name",
         });
 

@@ -33,7 +33,7 @@ describe("CreateEndpointTransactionHandler", () => {
         api.addPackage();
 
         const transaction = TransactionGenerator.createEndpoint({
-            parent: "made-up-id",
+            parent: "made-up-id" as FernApiEditor.PackageId,
             endpointId: EditorItemIdGenerator.endpoint(),
             endpointName: "My new endpoint",
         });

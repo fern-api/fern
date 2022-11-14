@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("DeleteErrorTransactionHandler", () => {
@@ -23,7 +24,7 @@ describe("DeleteErrorTransactionHandler", () => {
         package_.addError();
 
         const transaction = TransactionGenerator.deleteError({
-            errorId: "made-up-id",
+            errorId: "made-up-id" as FernApiEditor.ErrorId,
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

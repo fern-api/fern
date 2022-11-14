@@ -58,7 +58,7 @@ describe("DeleteObjectPropertyTransactionHandler", () => {
             })
         );
         const transaction = TransactionGenerator.deleteObjectProperty({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             propertyId,
         });
 
@@ -73,7 +73,7 @@ describe("DeleteObjectPropertyTransactionHandler", () => {
 
         const transaction = TransactionGenerator.deleteObjectProperty({
             objectId: second.typeId,
-            propertyId: "made-up-id",
+            propertyId: "made-up-id" as FernApiEditor.ObjectPropertyId,
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

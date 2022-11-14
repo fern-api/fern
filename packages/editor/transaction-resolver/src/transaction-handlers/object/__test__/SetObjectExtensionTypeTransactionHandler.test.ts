@@ -1,5 +1,6 @@
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("SetObjectExtensionTypeTransactionHandler", () => {
@@ -50,7 +51,7 @@ describe("SetObjectExtensionTypeTransactionHandler", () => {
         );
 
         const transaction = TransactionGenerator.setObjectExtensionType({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             extensionId,
             extensionOf: third.typeId,
         });
@@ -66,7 +67,7 @@ describe("SetObjectExtensionTypeTransactionHandler", () => {
 
         const transaction = TransactionGenerator.setObjectExtensionType({
             objectId: second.typeId,
-            extensionId: "made-up-id",
+            extensionId: "made-up-id" as FernApiEditor.ObjectExtensionId,
             extensionOf: first.typeId,
         });
 
@@ -92,7 +93,7 @@ describe("SetObjectExtensionTypeTransactionHandler", () => {
         const transaction = TransactionGenerator.setObjectExtensionType({
             objectId: second.typeId,
             extensionId,
-            extensionOf: "made-up-id",
+            extensionOf: "made-up-id" as FernApiEditor.TypeId,
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();

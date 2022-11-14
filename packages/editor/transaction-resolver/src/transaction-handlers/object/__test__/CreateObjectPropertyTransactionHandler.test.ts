@@ -41,7 +41,7 @@ describe("CreateObjectPropertyTransactionHandler", () => {
         const propertyId = EditorItemIdGenerator.objectProperty();
 
         const transaction = TransactionGenerator.createObjectProperty({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             propertyId,
             propertyName: "My property",
             propertyType: FernApiEditor.TypeReference.primitive(FernApiEditor.PrimitiveType.String),

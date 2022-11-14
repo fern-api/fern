@@ -1,4 +1,5 @@
 import { TransactionGenerator } from "@fern-api/transaction-generator";
+import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import { MockApi } from "../../../testing-utils/mocks/MockApi";
 
 describe("RenameErrorTransactionHandler", () => {
@@ -25,7 +26,7 @@ describe("RenameErrorTransactionHandler", () => {
         package_.addError();
 
         const transaction = TransactionGenerator.renameError({
-            errorId: "made-up-id",
+            errorId: "made-up-id" as FernApiEditor.ErrorId,
             newErrorName: "New error name",
         });
 

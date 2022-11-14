@@ -39,7 +39,7 @@ describe("CreateObjectExtensionTransactionHandler", () => {
         const extensionId = EditorItemIdGenerator.objectExtension();
 
         const transaction = TransactionGenerator.createObjectExtension({
-            objectId: "made-up-id",
+            objectId: "made-up-id" as FernApiEditor.TypeId,
             extensionId,
             extensionOf: first.typeId,
         });
@@ -57,7 +57,7 @@ describe("CreateObjectExtensionTransactionHandler", () => {
         const transaction = TransactionGenerator.createObjectExtension({
             objectId: first.typeId,
             extensionId,
-            extensionOf: "made-up-id",
+            extensionOf: "made-up-id" as FernApiEditor.TypeId,
         });
 
         expect(() => api.applyTransaction(transaction)).toThrow();
