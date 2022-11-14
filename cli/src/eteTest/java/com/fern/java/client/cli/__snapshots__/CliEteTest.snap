@@ -618,7 +618,7 @@ public final class CreatePost {
       Request build();
     }
 
-    static final class Builder implements BodyStage, _FinalStage {
+    public static final class Builder implements BodyStage, _FinalStage {
       private CreatePostRequest body;
 
       private Builder() {
@@ -710,7 +710,7 @@ public final class GetPost {
       Request build();
     }
 
-    static final class Builder implements PostIdStage, _FinalStage {
+    public static final class Builder implements PostIdStage, _FinalStage {
       private PostId postId;
 
       private Builder() {
@@ -1379,7 +1379,7 @@ public final class GetDummy {
       Request build();
     }
 
-    static final class Builder implements BodyStage, _FinalStage {
+    public static final class Builder implements BodyStage, _FinalStage {
       private DummyId body;
 
       private Builder() {
@@ -1980,7 +1980,7 @@ public final class BlogPost {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
+  public static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
     private PostId id;
 
     private PostType type;
@@ -2185,7 +2185,7 @@ public final class CreatePostRequest {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+  public static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
     private String title;
 
     private Author author;
@@ -2361,7 +2361,7 @@ public final class GeneratorIdAndVersion {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements IdStage, VersionStage, _FinalStage {
+  public static final class Builder implements IdStage, VersionStage, _FinalStage {
     private String id;
 
     private String version;

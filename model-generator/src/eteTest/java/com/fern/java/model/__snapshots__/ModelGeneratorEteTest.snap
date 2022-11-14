@@ -651,7 +651,7 @@ public final class BlogPost {
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
-  static final class Builder
+  public static final class Builder
       implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
     private PostId id;
 
@@ -846,7 +846,7 @@ public final class CreatePostRequest {
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
-  static final class Builder
+  public static final class Builder
       implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
     private String title;
 
@@ -989,7 +989,7 @@ public final class GeneratorIdAndVersion {
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
-  static final class Builder implements IdStage, VersionStage, _FinalStage {
+  public static final class Builder implements IdStage, VersionStage, _FinalStage {
     private String id;
 
     private String version;
@@ -1135,7 +1135,7 @@ public final class PostNotFoundErrorBody {
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
-  static final class Builder implements IdStage, _FinalStage {
+  public static final class Builder implements IdStage, _FinalStage {
     private PostId id;
 
     private Builder() {}
@@ -1322,7 +1322,7 @@ public final class UnauthorizedErrorBody {
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
-  static final class Builder implements ReasonStage, _FinalStage {
+  public static final class Builder implements ReasonStage, _FinalStage {
     private String reason;
 
     private Builder() {}

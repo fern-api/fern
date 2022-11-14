@@ -97,7 +97,7 @@ public final class BuilderGenerator {
 
     private List<PoetTypeWithClassName> getStagedBuilderImplementation(StagedBuilderConfig stagedBuilderConfig) {
         TypeSpec.Builder builderImplTypeSpec = TypeSpec.classBuilder(nestedBuilderClassName)
-                .addModifiers(Modifier.STATIC, Modifier.FINAL)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build());
