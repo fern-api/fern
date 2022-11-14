@@ -45,6 +45,7 @@ class EnumGenerator(AbstractTypeGenerator):
                 AST.VariableDeclaration(
                     name=self._get_class_var_name(value),
                     initializer=AST.Expression(f'"{value.value}"'),
+                    docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                 )
             )
 
