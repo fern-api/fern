@@ -86,11 +86,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.result;
     }
 
-    protected logAtLevel(level: LogLevel, ...parts: unknown[]): void {
+    protected logAtLevel(level: LogLevel, ...parts: string[]): void {
         this.logAtLevelWithOverrides(level, parts);
     }
 
-    protected logAtLevelWithOverrides(level: LogLevel, parts: unknown[], overrides: Pick<Log, "omitOnTTY"> = {}): void {
+    protected logAtLevelWithOverrides(level: LogLevel, parts: string[], overrides: Pick<Log, "omitOnTTY"> = {}): void {
         this.log({
             parts,
             level,

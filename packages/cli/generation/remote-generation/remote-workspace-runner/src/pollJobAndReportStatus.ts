@@ -25,7 +25,7 @@ export function pollJobAndReportStatus({
         if (response.ok) {
             return response.body[taskId];
         } else {
-            context.logger.debug("Failed to get job status.", response.error.content);
+            context.logger.debug("Failed to get job status.", JSON.stringify(response.error.content));
             return undefined;
         }
     };

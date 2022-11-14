@@ -5,6 +5,7 @@ imports:
   endpoint: endpoint.yml
   type: type.yml
   object: object.yml
+  union: union.yml
   error: error.yml
 
 types:
@@ -43,6 +44,12 @@ types:
       setObjectPropertyType: object.SetObjectPropertyTypeTransaction
       setObjectPropertyDescription: object.SetObjectPropertyDescriptionTransaction
       deleteObjectProperty: object.DeleteObjectPropertyTransaction
+
+      # union-specific transactions
+      setUnionDiscriminant: union.SetUnionDiscriminantTransaction
+      createUnionMember: union.CreateUnionMemberTransaction
+      setUnionMemberDiscriminantValue: union.SetUnionMemberDiscriminantValueTransaction
+      deleteUnionMember: union.DeleteUnionMemberTransaction
 
       # error-specific transactions
       createError: error.CreateErrorTransaction

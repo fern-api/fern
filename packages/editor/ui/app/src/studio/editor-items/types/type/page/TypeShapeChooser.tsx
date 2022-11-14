@@ -126,7 +126,7 @@ function getLabelForTypeShape(shape: TypeShape): string {
         case TypeShape.OBJECT:
             return "Object";
         case TypeShape.UNION:
-            return "Union";
+            return "Discriminated union";
         case TypeShape.ENUM:
             return "Enum";
         default:
@@ -146,7 +146,7 @@ function getDefaultShape(shape: TypeShape): FernApiEditor.Shape {
                 extensions: [],
             });
         case TypeShape.UNION:
-            return FernApiEditor.Shape.union({});
+            return FernApiEditor.Shape.union({ discriminant: "type", members: [] });
         case TypeShape.ENUM:
             return FernApiEditor.Shape.enum({});
         default:

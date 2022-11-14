@@ -2,6 +2,7 @@ import { useBooleanState, useIsHovering, useNumericState } from "@fern-ui/react-
 import { useIsResizing } from "@fern-ui/split-view";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
 import { useSelectedSidebarItemId } from "../../../routes/useSelectedSidebarItemId";
+import { useSidebarItemState } from "../../context/useSidebarContext";
 import { SidebarItemId } from "../../ids/SidebarItemId";
 import { StringifiedSidebarItemId } from "../../ids/StringifiedSidebarItemId";
 import { isEventSelectionPreventing } from "../utils/markEventAsSelectionPreventing";
@@ -58,13 +59,15 @@ export const SidebarItemRowContextProvider: React.FC<SidebarItemRowContextProvid
      ************/
 
     const [selectedSidebarItemId, setSelectedSidebarItemId] = useSelectedSidebarItemId();
+    const [, setSidebarItemState] = useSidebarItemState(itemId);
     const onClick = useCallback(
         (event: React.MouseEvent) => {
             if (!isEventSelectionPreventing(event)) {
                 setSelectedSidebarItemId(itemId);
+                setSidebarItemState({ isCollapsed: false });
             }
         },
-        [itemId, setSelectedSidebarItemId]
+        [itemId, setSelectedSidebarItemId, setSidebarItemState]
     );
     const isSelected =
         selectedSidebarItemId != null &&

@@ -8,6 +8,7 @@ import { AliasSchemaRow } from "./alias/AliasSchemaRow";
 import { ObjectTableRows } from "./object/ObjectTableRows";
 import styles from "./TypePage.module.scss";
 import { TypeShapeChooser } from "./TypeShapeChooser";
+import { UnionTableRows } from "./union/UnionTableRows";
 import { useLocalDescription } from "./useLocalDescription";
 import { useLocalTypeName } from "./useLocalTypeName";
 
@@ -47,7 +48,7 @@ export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
                     alias: () => null,
                     enum: () => null,
                     object: (shape) => <ObjectTableRows objectId={type.typeId} shape={shape} />,
-                    union: () => null,
+                    union: (shape) => <UnionTableRows unionId={type.typeId} shape={shape} />,
                     _other: ({ type }) => {
                         throw new Error("Unknown shape type: " + type);
                     },

@@ -76,6 +76,13 @@ export class MockPackage extends MockDefinitionItem {
         return this.addType({ name, shape: FernApiEditor.Shape.object(shape) });
     }
 
+    public addUnion({
+        name,
+        shape = { discriminant: "type", members: [] },
+    }: { name?: string; shape?: FernApiEditor.UnionShape } = {}): MockType {
+        return this.addType({ name, shape: FernApiEditor.Shape.union(shape) });
+    }
+
     public addError(name?: string): MockError {
         const error = new MockError({
             name,

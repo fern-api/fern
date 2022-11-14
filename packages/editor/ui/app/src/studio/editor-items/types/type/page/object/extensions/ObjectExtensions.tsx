@@ -1,11 +1,8 @@
-import { Button } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { EditorItemIdGenerator } from "@fern-api/editor-item-id-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
 import React, { useCallback, useState } from "react";
-import { MaybeDraftContainingList } from "../../../../../shared/MaybeDraftContainingList";
+import { PageItemsList } from "../../../../../shared/page/PageItemsList";
 import { ObjectExtension } from "./ObjectExtension";
-import styles from "./ObjectExtensions.module.scss";
 
 export declare namespace ObjectExtensions {
     export interface Props {
@@ -49,17 +46,12 @@ export const ObjectExtensions: React.FC<ObjectExtensions.Props> = ({ objectId, s
     );
 
     return (
-        <div className={styles.container}>
-            <MaybeDraftContainingList
-                items={shape.extensions}
-                draft={draftExtensionOf}
-                renderItem={renderExtensionRow}
-            />
-            {draftExtensionOf == null && (
-                <div>
-                    <Button text="Add extension" minimal icon={IconNames.PLUS} onClick={onClickAddExtension} />
-                </div>
-            )}
-        </div>
+        <PageItemsList
+            items={shape.extensions}
+            draft={draftExtensionOf}
+            renderItem={renderExtensionRow}
+            addButtonText="Add extension"
+            onClickAdd={onClickAddExtension}
+        />
     );
 };

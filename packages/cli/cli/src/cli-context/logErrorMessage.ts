@@ -29,7 +29,7 @@ export function logErrorMessage({
         );
     }
 
-    logger.debug(error);
+    logger.debug(JSON.stringify(error));
 }
 
 function convertErrorToString(error: unknown): string | undefined {

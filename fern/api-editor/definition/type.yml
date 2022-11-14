@@ -71,7 +71,14 @@ types:
       description: optional<string>
 
   UnionShape:
-    properties: {}
+    properties:
+      discriminant: string
+      members: list<UnionMember>
+
+  UnionMember:
+    properties:
+      unionMemberId: commons.UnionMemberId
+      discriminantValue: string
 
   EnumShape:
     properties: {}

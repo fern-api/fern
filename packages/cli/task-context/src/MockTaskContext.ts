@@ -19,7 +19,7 @@ export function createMockTaskContext(): TaskContext {
                 parts.push(message);
             }
             if (error != null) {
-                parts.push(error);
+                parts.push(JSON.stringify(error));
             }
             if (parts.length > 0) {
                 context.logger.error(...parts);
