@@ -124,7 +124,7 @@ class GraphBuilder extends FilteredIrBuilder {
 
     public constructor(audiences: AudienceId[]) {
         super();
-        this.audiences = new Set(...audiences);
+        this.audiences = new Set(audiences);
     }
 
     public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
@@ -181,8 +181,10 @@ class GraphBuilder extends FilteredIrBuilder {
         httpEndpoints: HttpEndpoint[],
         audiences: AudienceId[]
     ): void {
-        if (this.hasAudience(audiences)) {
+        const containsAudience = this.hasAudience(audiences);
+        if (containsAudience) {
             const serviceId = getServiceId(declaredServiceName);
+            this.servicesNeededForAudience.add(serviceId);
             httpEndpoints.forEach((httpEndpoint) => {
                 const endpointId = getEndpointId(declaredServiceName, httpEndpoint);
                 this.endpointsNeededForAudience.add(endpointId);
