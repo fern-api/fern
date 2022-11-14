@@ -51,9 +51,9 @@ function useInitialApi(): Loadable<FernApiEditor.Api> {
 
             setApi(
                 loaded({
-                    apiId: "my-api-id",
+                    apiId: "my-api-id" as FernApiEditor.ApiId,
                     apiName: "My API",
-                    rootPackages: ["9a570317-61fe-4d04-baeb-2a20f2579f12"],
+                    rootPackages: ["9a570317-61fe-4d04-baeb-2a20f2579f12"] as FernApiEditor.PackageId[],
                     packages: {
                         "9a570317-61fe-4d04-baeb-2a20f2579f12": {
                             packageId: "9a570317-61fe-4d04-baeb-2a20f2579f12",

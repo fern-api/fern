@@ -38,7 +38,7 @@
     "@fern-api/loadable": "workspace:*",
     "@fern-api/transaction-generator": "workspace:*",
     "@fern-api/transaction-resolver": "workspace:*",
-    "@fern-fern/api-editor-sdk": "0.0.36",
+    "@fern-fern/api-editor-sdk": "0.0.38",
     "@fern-ui/common-components": "workspace:*",
     "@fern-ui/fonts": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
