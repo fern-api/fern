@@ -37,6 +37,9 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        customConfig: {
+            private: true,
+        },
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");

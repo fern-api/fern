@@ -76,6 +76,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                 await writeGitHubWorkflows({
                     config,
                     githubOutputMode,
+                    customConfig,
                 });
             },
             downloadFiles: () => {
@@ -105,5 +106,6 @@ function parseCustomConfig(config: GeneratorConfig): SdkCustomConfig {
     const customConfig = config.customConfig != null ? SdkCustomConfigSchema.parse(config.customConfig) : undefined;
     return {
         useBrandedStringAliases: customConfig?.useBrandedStringAliases ?? false,
+        private: customConfig?.private ?? false,
     };
 }

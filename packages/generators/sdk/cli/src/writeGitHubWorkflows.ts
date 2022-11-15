@@ -2,13 +2,16 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
 import endent from "endent";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 
 export async function writeGitHubWorkflows({
     config,
     githubOutputMode,
+    customConfig,
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
+    customConfig: SdkCustomConfig;
 }): Promise<void> {
     if (githubOutputMode.publishInfo.type != "npm") {
         throw new Error(
@@ -54,7 +57,7 @@ export async function writeGitHubWorkflows({
           - name: Publish to npm
             run: |
               npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-              npm publish --ignore-scripts --access public
+              npm publish --ignore-scripts --access ${customConfig.private ? "restricted" : "public"}
             env:
               NPM_TOKEN: \${{ secrets.${githubOutputMode.publishInfo.tokenEnvironmentVariable} }}`;
     const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");
