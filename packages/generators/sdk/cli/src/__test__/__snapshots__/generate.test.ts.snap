@@ -138,6 +138,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     "contents": "{
     \\"name\\": \\"@fern/api\\",
     \\"version\\": \\"0.0.1\\",
+    \\"private\\": true,
     \\"repository\\": \\"https://github.com/fern/api}\\",
     \\"files\\": [
         \\"core\\",

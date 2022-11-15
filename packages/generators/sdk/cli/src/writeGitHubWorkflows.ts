@@ -57,7 +57,7 @@ export async function writeGitHubWorkflows({
           - name: Publish to npm
             run: |
               npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-              npm publish --ignore-scripts --access ${customConfig.private ? "restricted" : "public"}
+              npm publish --ignore-scripts --access ${customConfig.isPackagePrivate ? "restricted" : "public"}
             env:
               NPM_TOKEN: \${{ secrets.${githubOutputMode.publishInfo.tokenEnvironmentVariable} }}`;
     const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");

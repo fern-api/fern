@@ -39,6 +39,7 @@ export async function generateFiles({
         repositoryUrl: npmPackage.repoUrl,
         config: {
             shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
+            isPackagePrivate: customConfig.isPackagePrivate,
         },
     });
 

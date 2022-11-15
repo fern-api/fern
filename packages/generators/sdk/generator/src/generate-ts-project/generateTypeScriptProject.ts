@@ -15,6 +15,7 @@ export async function generateTypeScriptProject({
     volume,
     packageName,
     packageVersion,
+    isPackagePrivate,
     repositoryUrl,
     project,
     dependencies,
@@ -22,6 +23,7 @@ export async function generateTypeScriptProject({
     volume: Volume;
     packageName: string;
     packageVersion: string | undefined;
+    isPackagePrivate: boolean;
     repositoryUrl: string | undefined;
     project: Project;
     dependencies: PackageDependencies;
@@ -32,6 +34,7 @@ export async function generateTypeScriptProject({
         volume,
         packageName,
         packageVersion,
+        isPackagePrivate,
         repositoryUrl,
         dependencies,
     });

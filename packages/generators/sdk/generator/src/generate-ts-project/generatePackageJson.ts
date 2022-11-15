@@ -21,12 +21,14 @@ export async function generatePackageJson({
     volume,
     packageName,
     packageVersion,
+    isPackagePrivate,
     dependencies,
     repositoryUrl,
 }: {
     volume: Volume;
     packageName: string;
     packageVersion: string | undefined;
+    isPackagePrivate: boolean;
     repositoryUrl: string | undefined;
     dependencies: PackageDependencies | undefined;
 }): Promise<void> {
@@ -43,6 +45,7 @@ export async function generatePackageJson({
 
     packageJson = {
         ...packageJson,
+        private: isPackagePrivate,
         version: packageVersion,
         repository: repositoryUrl,
         files: ["core", "resources", "serialization", "client", "*.{js,js.map,d.ts}"],
