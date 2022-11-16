@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
-import { FernFiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GeneratorGroup, GeneratorInvocation, GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
