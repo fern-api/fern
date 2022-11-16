@@ -2719,7 +2719,6 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
         }
     ],
     "services": {
-        "websocket": [],
         "http": [
             {
                 "availability": {
@@ -3605,7 +3604,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                     }
                 ]
             }
-        ]
+        ],
+        "websocket": []
     },
     "constants": {
         "errorDiscriminant": "_error",
@@ -6441,7 +6441,6 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
         }
     ],
     "services": {
-        "websocket": [],
         "http": [
             {
                 "availability": {
@@ -7327,7 +7326,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                     }
                 ]
             }
-        ]
+        ],
+        "websocket": []
     },
     "constants": {
         "errorDiscriminant": "_error",
@@ -10163,7 +10163,6 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
         }
     ],
     "services": {
-        "websocket": [],
         "http": [
             {
                 "availability": {
@@ -11049,7 +11048,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                     }
                 ]
             }
-        ]
+        ],
+        "websocket": []
     },
     "constants": {
         "errorDiscriminant": "_error",
@@ -13190,7 +13190,6 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
         }
     ],
     "services": {
-        "websocket": [],
         "http": [
             {
                 "availability": {
@@ -14076,7 +14075,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                     }
                 ]
             }
-        ]
+        ],
+        "websocket": []
     },
     "constants": {
         "errorDiscriminant": "_error",
@@ -16217,7 +16217,6 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
         }
     ],
     "services": {
-        "websocket": [],
         "http": [
             {
                 "availability": {
@@ -17103,7 +17102,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                     }
                 ]
             }
-        ]
+        ],
+        "websocket": []
     },
     "constants": {
         "errorDiscriminant": "_error",

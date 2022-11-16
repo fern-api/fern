@@ -100,7 +100,7 @@ export class RemoteTaskHandler {
     }
 
     private async maybeDownloadFiles(status: FernFiddle.remoteGen.FinishedTaskStatus): Promise<void> {
-        if (this.generatorInvocation.type === "draft" && this.generatorInvocation.absolutePathToLocalOutput != null) {
+        if (this.generatorInvocation.absolutePathToLocalOutput != null) {
             await downloadFilesForTask({
                 s3PreSignedReadUrl: status.s3PreSignedReadUrl,
                 absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,

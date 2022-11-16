@@ -1,10 +1,11 @@
 import { z } from "zod";
-import { DraftGeneratorInvocationSchema } from "./DraftGeneratorInvocationSchema";
-import { ReleaseGeneratorInvocationSchema } from "./ReleaseGeneratorInvocationSchema";
+import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
+
+export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
-    draft: z.optional(z.array(DraftGeneratorInvocationSchema)),
-    release: z.optional(z.array(ReleaseGeneratorInvocationSchema)),
+    [DEFAULT_GROUP_GENERATORS_CONFIG_KEY]: z.optional(z.string()),
+    groups: z.optional(z.record(GeneratorGroupSchema)),
 });
 
 export type GeneratorsConfigurationSchema = z.infer<typeof GeneratorsConfigurationSchema>;

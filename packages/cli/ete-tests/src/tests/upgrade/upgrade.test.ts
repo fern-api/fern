@@ -11,33 +11,86 @@ import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
-    draft: [
-        {
-            name: "fernapi/fern-postman",
-            version: "0.0.20",
-            mode: "download-files",
-            "output-path": "./generated-postman",
+    groups: {
+        internal: {
+            generators: [
+                {
+                    name: "fernapi/fern-postman",
+                    version: "0.0.15",
+                    output: {
+                        location: "local-file-system",
+                        path: "./generated-postman",
+                    },
+                },
+                {
+                    name: "fernapi/fern-openapi",
+                    version: "0.0.3",
+                    output: {
+                        location: "local-file-system",
+                        path: "./generated-openapi",
+                    },
+                    config: {
+                        format: "yaml",
+                    },
+                },
+                {
+                    name: "fernapi/fern-java-sdk",
+                    version: "0.0.50",
+                    output: {
+                        location: "maven",
+                        coordinate: "",
+                    },
+                },
+                {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.11",
+                    output: {
+                        location: "npm",
+                        "package-name": "",
+                    },
+                },
+            ],
         },
-        {
-            name: "fernapi/fern-openapi",
-            version: "0.0.2",
-            config: {
-                format: "yaml",
-            },
-            mode: "download-files",
-            "output-path": "./generated-openapi",
+        external: {
+            generators: [
+                {
+                    name: "fernapi/fern-postman",
+                    version: "0.0.20",
+                    output: {
+                        location: "local-file-system",
+                        path: "./generated-postman",
+                    },
+                },
+                {
+                    name: "fernapi/fern-openapi",
+                    version: "0.0.2",
+                    output: {
+                        location: "local-file-system",
+                        path: "./generated-openapi",
+                    },
+                    config: {
+                        format: "yaml",
+                    },
+                },
+                {
+                    name: "fernapi/fern-java-sdk",
+                    version: "0.0.81",
+                    output: {
+                        location: "maven",
+                        coordinate: "",
+                    },
+                },
+                {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.14",
+                    output: {
+                        location: "npm",
+                        "package-name": "",
+                    },
+                },
+            ],
         },
-        {
-            name: "fernapi/fern-java-sdk",
-            version: "0.0.81",
-            mode: "publish",
-        },
-        {
-            name: "fernapi/fern-typescript-sdk",
-            version: "0.0.14",
-            mode: "publish",
-        },
-    ],
+    },
 };
 
 describe("fern upgrade", () => {

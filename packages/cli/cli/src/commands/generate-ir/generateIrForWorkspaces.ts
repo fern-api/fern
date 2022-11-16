@@ -17,7 +17,7 @@ export async function generateIrForWorkspaces({
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
     generationLanguage: Language | undefined;
-    audiences: string[];
+    audiences: string[] | undefined;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {

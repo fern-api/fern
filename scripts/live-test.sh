@@ -14,7 +14,7 @@ node "$cli_path" add java
 node "$cli_path" add typescript
 node "$cli_path" add postman
 node "$cli_path" add openapi
-node "$cli_path" generate --log-level debug
+node "$cli_path" generate --group external --log-level debug
 set +x
 
 rm -rf "$test_dir"
