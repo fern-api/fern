@@ -68,7 +68,7 @@ async function createJob({
             },
             cannotPublishToMavenGroup: ({ validGroup, invalidGroup }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${validGroup} (expected ${invalidGroup})`
+                    `You do not have permission to publish to ${invalidGroup} (expected ${validGroup})`
                 );
             },
             generatorsDoNotExistError: (value) => {
