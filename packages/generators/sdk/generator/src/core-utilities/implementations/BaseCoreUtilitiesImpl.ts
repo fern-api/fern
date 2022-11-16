@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseCoreUtilities } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { CoreUtility } from "../CoreUtility";

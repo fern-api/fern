@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";

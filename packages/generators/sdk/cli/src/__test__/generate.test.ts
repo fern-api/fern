@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
+import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import decompress from "decompress";
 import execa from "execa";

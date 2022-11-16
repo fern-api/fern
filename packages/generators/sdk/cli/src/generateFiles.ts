@@ -1,7 +1,7 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
-import { Logger } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
 import { PackageJsonScript, SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
@@ -52,7 +52,7 @@ export async function generateFiles({
     await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
     await sdkGenerator.copyCoreUtilities({ pathToPackage: directoyOnDiskToWriteTo });
 
-    await runYarnCommand(["set", "version", "berry"]);
+    await runYarnCommand(["set", "version", "3.2.4"]);
     await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
     await runYarnCommand(["install"], {
         env: {

@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";

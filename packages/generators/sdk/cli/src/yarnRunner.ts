@@ -1,17 +1,10 @@
-import { Logger } from "@fern-typescript/commons-v2";
-import execa from "execa";
+import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 
-export type YarnRunner = (args: readonly string[], opts?: { env?: Record<string, string> }) => Promise<void>;
+export type YarnRunner = (args: string[], opts?: { env?: Record<string, string> }) => Promise<void>;
 
-export function createYarnRunner(logger: Logger, directoyOnDiskToWriteTo: string): YarnRunner {
+export function createYarnRunner(logger: Logger, cwd: string): YarnRunner {
     return async (args, { env } = {}) => {
-        logger.debug(`+ ${["yarn", ...args].join(" ")}`);
-        const command = execa("yarn", args, {
-            cwd: directoyOnDiskToWriteTo,
-            env,
-        });
-        command.stdout?.pipe(process.stdout);
-        command.stderr?.pipe(process.stderr);
-        await command;
+        await loggingExeca(logger, "yarn", args, { cwd, env });
     };
 }

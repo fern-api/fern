@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";

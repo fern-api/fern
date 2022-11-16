@@ -6,7 +6,6 @@
   "references": [
     { "path": "../client" },
     { "path": "../commons" },
-    { "path": "../commons-v2" },
     { "path": "../generators/sdk/declaration-handler" },
     { "path": "../model" },
     { "path": "../server" },

@@ -1,4 +1,4 @@
-import { Logger } from "@fern-typescript/commons-v2";
+import { Logger } from "@fern-api/logger";
 
 export interface GeneratorContext {
     logger: Logger;

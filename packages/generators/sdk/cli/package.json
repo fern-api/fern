@@ -27,11 +27,12 @@
     "dockerTagVersion": "./docker/create_docker.sh"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.0.220-12-g896ac474",
+    "@fern-api/fs-utils": "0.0.242-2-g7745ad27",
+    "@fern-api/logger": "0.0.242-2-g7745ad27",
+    "@fern-api/logging-execa": "0.0.242-2-g7745ad27",
     "@fern-fern/generator-exec-sdk": "^0.0.46",
-    "@fern-fern/ir-model": "0.0.288",
+    "@fern-fern/ir-model": "0.0.294",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",
     "execa": "^5.1.1",

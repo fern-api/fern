@@ -1,7 +1,7 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
-import { createLogger, Logger, LogLevel } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
 import execa from "execa";
 import { camelCase, upperFirst } from "lodash-es";
@@ -33,11 +33,11 @@ export async function runCommand({
     const outputPath = path.join(baseOutputPath, command.key);
 
     const generatorContext = new GeneratorContextImpl(
-        createLogger((message, level) => {
+        createLogger((level, ...message) => {
             // kick off log, but don't wait for it
             void generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.log({
-                    message,
+                    message: message.join(" "),
                     level: LOG_LEVEL_CONVERSIONS[level],
                 })
             );

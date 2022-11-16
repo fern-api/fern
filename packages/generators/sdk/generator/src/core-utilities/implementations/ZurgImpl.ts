@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";

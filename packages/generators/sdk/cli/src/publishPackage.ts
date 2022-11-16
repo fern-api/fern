@@ -1,8 +1,8 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Logger } from "@fern-typescript/commons-v2";
 import { PackageJsonScript } from "@fern-typescript/sdk-generator";
-import execa from "execa";
 import path from "path";
 import { PublishInfo } from "./npm-package/NpmPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
@@ -10,6 +10,7 @@ import { YarnRunner } from "./yarnRunner";
 
 export async function publishPackage({
     generatorNotificationService,
+    logger,
     publishInfo,
     pathToPackageOnDisk,
     runYarnCommand,
@@ -22,18 +23,10 @@ export async function publishPackage({
     runYarnCommand: YarnRunner;
     dryRun: boolean;
 }): Promise<void> {
-    const runCommandInOutputDirectory = async (executable: string, ...args: string[]): Promise<void> => {
-        const command = execa(executable, args, {
-            cwd: pathToPackageOnDisk,
-        });
-        command.stdout?.pipe(process.stdout);
-        command.stderr?.pipe(process.stderr);
-        await command;
-    };
-
-    const runNpmCommandInOutputDirectory = async (...args: string[]): Promise<void> => {
-        await runCommandInOutputDirectory("npm", ...args);
-    };
+    const npm = createLoggingExecutable("npm", {
+        logger,
+        cwd: pathToPackageOnDisk,
+    });
 
     await runYarnCommand(["run", PackageJsonScript.BUILD]);
 
@@ -42,22 +35,24 @@ export async function publishPackage({
     );
 
     const { registryUrl, token } = publishInfo.registry;
-    await runNpmCommandInOutputDirectory("config", "set", "registry", registryUrl, "--location", "project");
+    await npm(["config", "set", "registry", registryUrl, "--location", "project"]);
     const parsedRegistryUrl = new URL(registryUrl);
-    await runNpmCommandInOutputDirectory(
+    await npm([
         "config",
         "set",
         `//${path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname)}:_authToken`,
-        token
+        token,
         // intentionally not writing this to the project config with `--location project`,
         // so the token isn't persisted
-    );
+    ]);
 
     const publishCommand = ["publish"];
     if (dryRun) {
         publishCommand.push("--dry-run");
     }
-    await runNpmCommandInOutputDirectory(...publishCommand);
+    await npm(publishCommand);
+
+    logger.info(`Published ${publishInfo.packageCoordinate.name}@${publishInfo.packageCoordinate.version}`);
 
     await generatorNotificationService.sendUpdate(
         FernGeneratorExec.GeneratorUpdate.published(publishInfo.packageCoordinate)

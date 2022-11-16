@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";

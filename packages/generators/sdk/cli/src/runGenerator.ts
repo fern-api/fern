@@ -1,7 +1,7 @@
-import { AbsoluteFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import { readFile } from "fs/promises";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
@@ -27,13 +27,13 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     const generatorNotificationService = new GeneratorNotificationService(config);
 
     try {
-        const logger = createLogger((message, level) => {
+        const logger = createLogger((level, ...message) => {
             // eslint-disable-next-line no-console
-            console.log(message);
+            console.log(...message);
             // kick off log, but don't wait for it
             void generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.log({
-                    message,
+                    message: message.join(" "),
                     level: LOG_LEVEL_CONVERSIONS[level],
                 })
             );

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import execa from "execa";

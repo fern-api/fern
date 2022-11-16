@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { itFernETE } from "@fern-typescript/testing-utils";
 import { generateModelProject } from "../generateModelProject";
 

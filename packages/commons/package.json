@@ -25,9 +25,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.0.220-12-g896ac474",
+    "@fern-api/core-utils": "0.0.242-2-g7745ad27",
+    "@fern-api/fs-utils": "0.0.242-2-g7745ad27",
     "@fern-fern/generator-exec-sdk": "^0.0.46",
-    "@fern-fern/ir-model": "0.0.288",
+    "@fern-fern/ir-model": "0.0.294",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
     "ts-morph": "^15.1.0",
