@@ -1,8 +1,8 @@
+import { loggingExeca } from "@fern-api/logging-execa";
 import { runMigrations } from "@fern-api/migrations";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject } from "@fern-api/project-loader";
 import chalk from "chalk";
-import execa from "execa";
 import { writeFile } from "fs/promises";
 import produce from "immer";
 import { CliContext } from "../../cli-context/CliContext";
@@ -82,7 +82,7 @@ export async function upgrade({ cliContext }: { cliContext: CliContext }): Promi
             )}`
         );
 
-        await execa("npm", ["install", "-g", cliContext.environment.packageName]);
+        await loggingExeca(cliContext.logger, "npm", ["install", "-g", cliContext.environment.packageName]);
 
         const { failed } = await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
