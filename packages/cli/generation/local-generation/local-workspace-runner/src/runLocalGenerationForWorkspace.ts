@@ -19,10 +19,6 @@ export async function runLocalGenerationForWorkspace({
     intermediateRepresentation: IntermediateRepresentation;
     keepDocker: boolean;
 }): Promise<void> {
-    if (workspace.generatorsConfiguration.draft.length === 0) {
-        return;
-    }
-
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
         // see https://stackoverflow.com/a/45123074
@@ -34,7 +30,7 @@ export async function runLocalGenerationForWorkspace({
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
-        workspace.generatorsConfiguration.draft.map(async (generatorInvocation) =>
+        workspace.generatorsConfiguration.groups.map(async (generatorInvocation) =>
             loadHelpersAndRunGenerator({
                 organization,
                 workspace,
