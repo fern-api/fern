@@ -258,7 +258,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 generationLanguage: argv.language,
-                audiences: argv.audience ?? [],
+                audiences: argv.audience,
             });
         }
     );
