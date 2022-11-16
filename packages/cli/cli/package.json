@@ -41,6 +41,7 @@
     "@fern-api/init": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/logging-execa": "workspace:*",
     "@fern-api/manage-generator": "workspace:*",
     "@fern-api/migrations": "workspace:*",
     "@fern-api/openapi-converter": "workspace:*",

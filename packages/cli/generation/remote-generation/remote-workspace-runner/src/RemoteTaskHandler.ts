@@ -37,22 +37,27 @@ export class RemoteTaskHandler {
             this.context.failAndThrow("Task is missing on job status");
         }
 
+        const coordinates = remoteTask.packages.map((p) => {
+            return p.coordinate._visit({
+                npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
+                maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
+                pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
+                _other: () => "<unknown package>",
+            });
+        });
+
         this.context.setSubtitle(
-            remoteTask.packages.length > 0
-                ? remoteTask.packages
-                      .map((p) => {
-                          const coordinateStr = p.coordinate._visit({
-                              npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
-                              maven: (mavenPackage) =>
-                                  `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
-                              pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
-                              _other: () => "<unknown package>",
-                          });
-                          return `◦ ${coordinateStr}`;
+            coordinates.length > 0
+                ? coordinates
+                      .map((coordinate) => {
+                          return `◦ ${coordinate}`;
                       })
                       .join("\n")
                 : undefined
         );
+        for (const coordinate of coordinates) {
+            this.context.logger.debug(`Generating ${coordinate}`);
+        }
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             const level = newLog.level.visit({

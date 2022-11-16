@@ -1,5 +1,6 @@
+import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
-import execa, { ExecaChildProcess } from "execa";
+import { ExecaChildProcess } from "execa";
 import { CliContext } from "./cli-context/CliContext";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 
@@ -27,7 +28,7 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    const npxProcess = execa("npx", commandLineArgs, {
+    return loggingExeca(cliContext.logger, "npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,
         env: {
@@ -35,7 +36,4 @@ export async function rerunFernCliAtVersion({
             [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
         },
     });
-    npxProcess.stdout?.pipe(process.stdout);
-    npxProcess.stderr?.pipe(process.stderr);
-    return npxProcess;
 }
