@@ -17,7 +17,6 @@ describe("addGenerator", () => {
         const expectedNewConfiguration: GeneratorsConfigurationSchema = {
             groups: {
                 external: {
-                    audiences: "all",
                     generators: [JAVA_GENERATOR_INVOCATION],
                 },
             },
@@ -30,7 +29,6 @@ describe("addGenerator", () => {
         const generatorsConfiguration: GeneratorsConfigurationSchema = {
             groups: {
                 external: {
-                    audiences: "all",
                     generators: [
                         {
                             name: "fernapi/fern-typescript-sdk",

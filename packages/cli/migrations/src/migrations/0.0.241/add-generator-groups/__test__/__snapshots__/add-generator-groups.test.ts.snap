@@ -4,7 +4,6 @@ exports[`add-generator-groups simple 1`] = `
 "default-group: server
 groups:
   server:
-    audiences: all
     generators:
       - name: fernapi/fern-java
         version: 0.0.125-3-gfef2049
@@ -19,7 +18,6 @@ groups:
       - name: fernapi/fern-typescript-sdk
         version: 0.0.227
   external:
-    audiences: all
     generators:
       - name: fernapi/fern-typescript-sdk
         version: 0.0.204

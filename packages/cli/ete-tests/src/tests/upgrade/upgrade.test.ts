@@ -13,7 +13,6 @@ import { init } from "../init/init";
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     groups: {
         internal: {
-            audiences: "all",
             generators: [
                 {
                     name: "fernapi/fern-postman",
@@ -53,7 +52,6 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
             ],
         },
         external: {
-            audiences: "all",
             generators: [
                 {
                     name: "fernapi/fern-postman",

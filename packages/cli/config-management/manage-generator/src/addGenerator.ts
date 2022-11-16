@@ -25,10 +25,7 @@ export function addGenerator({
 
     return produce(generatorsConfiguration, (draft) => {
         const groups = (draft.groups ??= {});
-        const draftGroup = (groups[DEFAULT_GROUP_NAME] ??= {
-            audiences: "all",
-            generators: [],
-        });
+        const draftGroup = (groups[DEFAULT_GROUP_NAME] ??= { generators: [] });
         draftGroup.generators.push(invocation);
     });
 }

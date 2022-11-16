@@ -3,7 +3,6 @@
 exports[`fern upgrade upgrades generators 1`] = `
 "groups:
   internal:
-    audiences: all
     generators:
       - name: fernapi/fern-postman
         version: 0.0.25
@@ -28,7 +27,6 @@ exports[`fern upgrade upgrades generators 1`] = `
           location: npm
           package-name: ''
   external:
-    audiences: all
     generators:
       - name: fernapi/fern-postman
         version: 0.0.25

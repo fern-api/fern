@@ -2,7 +2,7 @@ import { z } from "zod";
 import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
 
 export const GeneratorGroupSchema = z.strictObject({
-    audiences: z.union([z.literal("all"), z.array(z.string())]),
+    audiences: z.optional(z.array(z.string())),
     generators: z.array(GeneratorInvocationSchema),
 });
 

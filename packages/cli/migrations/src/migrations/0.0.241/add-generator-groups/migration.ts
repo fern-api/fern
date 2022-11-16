@@ -29,7 +29,6 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath): Promise<void> {
     let newGeneratorsConfiguration: NewSchemas.GeneratorsConfigurationSchema = {};
     if (oldGeneratorsConfiguration.draft != null && oldGeneratorsConfiguration.draft.length > 0) {
         (newGeneratorsConfiguration.groups ??= {}).server = {
-            audiences: "all",
             generators: oldGeneratorsConfiguration.draft.map((draftGeneratorInvocation) =>
                 convertDraftGeneratorInvocation(draftGeneratorInvocation)
             ),
@@ -41,7 +40,6 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath): Promise<void> {
     }
     if (oldGeneratorsConfiguration.release != null && oldGeneratorsConfiguration.release.length > 0) {
         (newGeneratorsConfiguration.groups ??= {}).external = {
-            audiences: "all",
             generators: oldGeneratorsConfiguration.release.map((releaseGeneratorInvocation) =>
                 convertReleaseGeneratorInvocation(releaseGeneratorInvocation)
             ),

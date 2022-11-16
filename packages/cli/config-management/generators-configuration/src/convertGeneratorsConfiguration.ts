@@ -30,7 +30,7 @@ export function convertGeneratorsConfiguration({
 function convertGroup({ groupName, group }: { groupName: string; group: GeneratorGroupSchema }): GeneratorGroup {
     return {
         groupName,
-        audiences: group.audiences === "all" ? { type: "all" } : { type: "select", audiences: group.audiences },
+        audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: group.generators.map((generator) => convertGenerator(generator)),
     };
 }
