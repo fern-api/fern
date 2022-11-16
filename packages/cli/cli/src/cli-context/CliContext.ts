@@ -1,4 +1,4 @@
-import { Logger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { Finishable, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
@@ -150,23 +150,7 @@ export class CliContext {
         return result;
     }
 
-    get logger(): Logger {
-        return {
-            debug: (...parts) => {
-                this.log(LogLevel.Debug, ...parts);
-            },
-            info: (...parts) => {
-                this.log(LogLevel.Info, ...parts);
-            },
-            warn: (...parts) => {
-                this.log(LogLevel.Warn, ...parts);
-            },
-            error: (...parts) => {
-                this.log(LogLevel.Error, ...parts);
-            },
-            log: this.log.bind(this),
-        };
-    }
+    public readonly logger = createLogger(this.log.bind(this));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspace.name);
