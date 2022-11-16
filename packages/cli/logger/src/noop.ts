@@ -1,10 +1,4 @@
 import { noop } from "@fern-api/core-utils";
-import { Logger } from "./Logger";
+import { createLogger } from "./createLogger";
 
-export const NOOP_LOGGER: Logger = {
-    debug: noop,
-    info: noop,
-    warn: noop,
-    error: noop,
-    log: noop,
-};
+export const NOOP_LOGGER = createLogger(noop);

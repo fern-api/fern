@@ -1,5 +1,5 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { Logger, LogLevel } from "@fern-api/logger";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
     FernCliError,
@@ -114,23 +114,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.bufferedLogs = [];
     }
 
-    public get logger(): Logger {
-        return {
-            debug: (...parts) => {
-                this.logAtLevel(LogLevel.Debug, ...parts);
-            },
-            info: (...parts) => {
-                this.logAtLevel(LogLevel.Info, ...parts);
-            },
-            warn: (...parts) => {
-                this.logAtLevel(LogLevel.Warn, ...parts);
-            },
-            error: (...parts) => {
-                this.logAtLevel(LogLevel.Error, ...parts);
-            },
-            log: this.logAtLevel.bind(this),
-        };
-    }
+    public readonly logger = createLogger(this.logAtLevel.bind(this));
 
     public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
         const subtask = new InteractiveTaskContextImpl({
