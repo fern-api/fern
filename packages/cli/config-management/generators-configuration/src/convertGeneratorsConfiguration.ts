@@ -56,7 +56,7 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         });
     }
     if (generator.output == null) {
-        throw new Error("No output specified for generator: " + generator.name);
+        return FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} });
     }
     switch (generator.output.location) {
         case "local-file-system":
