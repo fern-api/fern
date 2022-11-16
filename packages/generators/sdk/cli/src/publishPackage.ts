@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Logger } from "@fern-typescript/commons-v2";
 import { PackageJsonScript } from "@fern-typescript/sdk-generator";
 import execa from "execa";

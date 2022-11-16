@@ -1,7 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/api";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-client/schemas";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { createLogger, LogLevel } from "@fern-typescript/commons-v2";
 import { readFile } from "fs/promises";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
@@ -102,7 +101,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     }
 }
 
-function parseCustomConfig(config: GeneratorConfig): SdkCustomConfig {
+function parseCustomConfig(config: FernGeneratorExec.GeneratorConfig): SdkCustomConfig {
     const customConfig = config.customConfig != null ? SdkCustomConfigSchema.parse(config.customConfig) : undefined;
     return {
         useBrandedStringAliases: customConfig?.useBrandedStringAliases ?? false,

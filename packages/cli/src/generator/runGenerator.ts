@@ -1,5 +1,5 @@
-import { ExitStatusUpdate, GeneratorUpdate, PackageCoordinate } from "@fern-fern/generator-exec-client/api";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-client/schemas";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { FernTypescriptGeneratorConfig, FernTypescriptGeneratorCustomConfigSchema } from "@fern-typescript/commons";
 import { readFile } from "fs/promises";
 import { Command } from "../commands/Command";
@@ -21,8 +21,8 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
     const generatorNotificationService = new GeneratorNotificationService(config);
 
     await generatorNotificationService.sendUpdate(
-        GeneratorUpdate.init({
-            packagesToPublish: commands.reduce<PackageCoordinate[]>((all, command) => {
+        FernGeneratorExec.GeneratorUpdate.init({
+            packagesToPublish: commands.reduce<FernGeneratorExec.PackageCoordinate[]>((all, command) => {
                 if (command.npmPackage.publishInfo != null) {
                     all.push(command.npmPackage.publishInfo.packageCoordinate);
                 }
@@ -33,11 +33,13 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
 
     try {
         await Promise.all(commands.map((command) => runCommand({ command, config, generatorNotificationService })));
-        await generatorNotificationService.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
+        await generatorNotificationService.sendUpdate(
+            FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful())
+        );
     } catch (e) {
         await generatorNotificationService.sendUpdate(
-            GeneratorUpdate.exitStatusUpdate(
-                ExitStatusUpdate.error({
+            FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
+                FernGeneratorExec.ExitStatusUpdate.error({
                     message: e instanceof Error ? e.message : "Encountered error",
                 })
             )

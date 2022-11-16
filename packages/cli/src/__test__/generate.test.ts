@@ -3,7 +3,7 @@ import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
 import { createMockTaskContext, TaskResult } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { installAndCompileGeneratedProjects } from "@fern-typescript/testing-utils";
 import { mkdir, rm, symlink, writeFile } from "fs/promises";
 import path from "path";

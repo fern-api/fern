@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { Logger } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";

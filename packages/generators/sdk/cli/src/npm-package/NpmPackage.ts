@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export interface NpmPackage {
     packageName: string;

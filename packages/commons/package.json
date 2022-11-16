@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "0.0.220-12-g896ac474",
-    "@fern-fern/generator-exec-client": "^0.0.34",
+    "@fern-fern/generator-exec-sdk": "^0.0.46",
     "@fern-fern/ir-model": "0.0.288",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",

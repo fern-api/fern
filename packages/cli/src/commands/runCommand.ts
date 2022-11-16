@@ -1,6 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-client";
-import { GeneratorUpdate } from "@fern-fern/generator-exec-client/api/logging";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BUILD_PROJECT_SCRIPT_NAME, FernTypescriptGeneratorConfig, writeVolumeToDisk } from "@fern-typescript/commons";
 import { createLogger, Logger, LogLevel } from "@fern-typescript/commons-v2";
 import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
@@ -37,7 +36,7 @@ export async function runCommand({
         createLogger((message, level) => {
             // kick off log, but don't wait for it
             void generatorNotificationService.sendUpdate(
-                GeneratorUpdate.log({
+                FernGeneratorExec.GeneratorUpdate.log({
                     message,
                     level: LOG_LEVEL_CONVERSIONS[level],
                 })
@@ -74,7 +73,7 @@ export async function runCommand({
         };
 
         await generatorNotificationService.sendUpdate(
-            GeneratorUpdate.publishing(command.npmPackage.publishInfo.packageCoordinate)
+            FernGeneratorExec.GeneratorUpdate.publishing(command.npmPackage.publishInfo.packageCoordinate)
         );
 
         const { registryUrl, token } = command.npmPackage.publishInfo.registry;
@@ -99,7 +98,7 @@ export async function runCommand({
         await runNpmCommandInOutputDirectory("publish");
 
         await generatorNotificationService.sendUpdate(
-            GeneratorUpdate.published(command.npmPackage.publishInfo.packageCoordinate)
+            FernGeneratorExec.GeneratorUpdate.published(command.npmPackage.publishInfo.packageCoordinate)
         );
     }
 }

@@ -1,4 +1,4 @@
-import { NpmRegistryConfig, PackageCoordinate } from "@fern-fern/generator-exec-client/api";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernTypescriptGeneratorConfig } from "@fern-typescript/commons";
 import { CommandKey } from "./Command";
 
@@ -9,8 +9,8 @@ export interface NpmPackage {
 }
 
 export interface PublishInfo {
-    registry: NpmRegistryConfig;
-    packageCoordinate: PackageCoordinate.Npm;
+    registry: FernGeneratorExec.NpmRegistryConfig;
+    packageCoordinate: FernGeneratorExec.PackageCoordinate.Npm;
 }
 
 export function constructNpmPackage({
@@ -31,7 +31,7 @@ export function constructNpmPackage({
             generatorConfig.publish != null
                 ? {
                       registry: generatorConfig.publish.registries.npm,
-                      packageCoordinate: PackageCoordinate.npm({
+                      packageCoordinate: FernGeneratorExec.PackageCoordinate.npm({
                           name: packageName,
                           version: generatorConfig.publish.version,
                       }),
