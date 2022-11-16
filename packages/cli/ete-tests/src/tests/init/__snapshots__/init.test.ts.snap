@@ -61,8 +61,7 @@ services:
         "type": "directory",
       },
       {
-        "contents": "draft: []
-release: []
+        "contents": "groups: {}
 ",
         "name": "generators.yml",
         "type": "file",

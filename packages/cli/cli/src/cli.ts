@@ -3,7 +3,12 @@ import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
+import {
+    GENERATORS_CONFIGURATION_FILENAME,
+    getFernDirectory,
+    loadProjectConfig,
+    PROJECT_CONFIG_FILENAME,
+} from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
 import { Argv } from "yargs";
@@ -18,6 +23,8 @@ import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+
+export const GROUP_CLI_OPTION = "group";
 
 interface GlobalCliOptions {
     "log-level": LogLevel;
@@ -161,7 +168,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "add <generator>",
-        "Add a code generator to generators.yml",
+        `Add a code generator to ${GENERATORS_CONFIGURATION_FILENAME}`,
         (yargs) =>
             yargs
                 .positional("generator", {
@@ -188,7 +195,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["generate"],
-        "Run the release tasks from generators.yml",
+        "Generate all generators in the specified group",
         (yargs) =>
             yargs
                 .positional("group", {
@@ -287,12 +294,17 @@ function addUpgradeCommand({
     cliContext: CliContext;
     onRun: () => void;
 }) {
-    cli.command("upgrade", "Upgrades versions in generators.yml and fern.config.json", noop, async () => {
-        await upgrade({
-            cliContext,
-        });
-        onRun();
-    });
+    cli.command(
+        "upgrade",
+        `Upgrades versions in ${GENERATORS_CONFIGURATION_FILENAME} and ${PROJECT_CONFIG_FILENAME}`,
+        noop,
+        async () => {
+            await upgrade({
+                cliContext,
+            });
+            onRun();
+        }
+    );
 }
 
 async function loadProjectAndRegisterWorkspaces(
