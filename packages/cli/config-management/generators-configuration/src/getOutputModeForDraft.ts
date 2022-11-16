@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernFiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { DraftGeneratorInvocationSchema } from "./schemas/DraftGeneratorInvocationSchema";
 
 export function getOutputModeForDraft(generator: DraftGeneratorInvocationSchema): FernFiddle.remoteGen.OutputMode {

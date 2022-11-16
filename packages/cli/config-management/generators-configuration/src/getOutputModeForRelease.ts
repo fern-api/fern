@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernFiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GeneratorPublishingSchema } from "./schemas/GeneratorPublishingSchema";
 import { MavenPublishingSchema } from "./schemas/MavenPublishingSchema";
 import { NpmPublishingSchema } from "./schemas/NpmPublishingSchema";

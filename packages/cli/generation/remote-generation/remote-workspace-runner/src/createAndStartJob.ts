@@ -1,7 +1,7 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { FernFiddle } from "@fern-fern/fiddle-client";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
@@ -60,6 +60,16 @@ async function createJob({
         return createResponse.error._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.name);
+            },
+            cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
+                return context.failAndThrow(
+                    `You do not have permission to publish to ${invalidScope} (expected ${validScope})`
+                );
+            },
+            cannotPublishToMavenGroup: ({ validGroup, invalidGroup }) => {
+                return context.failAndThrow(
+                    `You do not have permission to publish to ${validGroup} (expected ${invalidGroup})`
+                );
             },
             generatorsDoNotExistError: (value) => {
                 return context.failAndThrow(
