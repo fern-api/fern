@@ -4,24 +4,24 @@ import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({
     project,
-    runLocal,
-    keepDocker,
     cliContext,
+    version,
+    groupName,
 }: {
     project: Project;
-    runLocal: boolean;
-    keepDocker: boolean;
     cliContext: CliContext;
+    version: string | undefined;
+    groupName: string | undefined;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) =>
             cliContext.runTaskForWorkspace(workspace, async (context) =>
                 generateWorkspace({
                     workspace,
-                    runLocal,
-                    keepDocker,
                     organization: project.config.organization,
                     context,
+                    version,
+                    groupName,
                 })
             )
         )

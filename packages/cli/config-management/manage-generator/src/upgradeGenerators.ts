@@ -1,4 +1,4 @@
-import { BaseGeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { GeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -13,33 +13,41 @@ export function upgradeGenerators({
     context: TaskContext;
 }): GeneratorsConfigurationSchema {
     return produce(generatorsConfiguration, (draft) => {
-        if (draft.draft != null) {
-            draft.draft = draft.draft.map((generatorConfig) => maybeUpgradeVersion(generatorConfig, context));
+        if (draft.groups == null) {
+            return;
         }
-        if (draft.release != null) {
-            draft.release = draft.release.map((generatorConfig) => maybeUpgradeVersion(generatorConfig, context));
+        for (const [groupName, group] of Object.entries(draft.groups)) {
+            draft.groups[groupName] = {
+                ...group,
+                generators: group.generators.map((generatorInvocation) =>
+                    maybeUpgradeVersion(generatorInvocation, context)
+                ),
+            };
         }
     });
 }
 
-function maybeUpgradeVersion<T extends BaseGeneratorInvocationSchema>(generatorConfig: T, context: TaskContext): T {
-    const updatedInvocation = GENERATOR_INVOCATIONS[generatorConfig.name];
+function maybeUpgradeVersion(
+    generatorInvocation: GeneratorInvocationSchema,
+    context: TaskContext
+): GeneratorInvocationSchema {
+    const updatedInvocation = GENERATOR_INVOCATIONS[generatorInvocation.name];
 
     if (updatedInvocation != null) {
-        if (isVersionAhead(updatedInvocation.version, generatorConfig.version)) {
+        if (isVersionAhead(updatedInvocation.version, generatorInvocation.version)) {
             context.logger.info(
                 chalk.green(
-                    `Upgraded ${generatorConfig.name} from ${generatorConfig.version} to ${updatedInvocation.version}`
+                    `Upgraded ${generatorInvocation.name} from ${generatorInvocation.version} to ${updatedInvocation.version}`
                 )
             );
-            return produce(generatorConfig, (draft) => {
+            return produce(generatorInvocation, (draft) => {
                 draft.version = updatedInvocation.version;
             });
         }
     } else {
-        context.logger.warn("Unknown generator: " + generatorConfig.name);
-        return generatorConfig;
+        context.logger.warn("Unknown generator: " + generatorInvocation.name);
+        return generatorInvocation;
     }
 
-    return generatorConfig;
+    return generatorInvocation;
 }

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-client";
 import { GeneratorGroup, GeneratorInvocation, GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
@@ -18,9 +18,12 @@ export function convertGeneratorsConfiguration({
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
-        groups: Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
-            convertGroup({ groupName, group })
-        ),
+        groups:
+            rawGeneratorsConfiguration.groups != null
+                ? Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
+                      convertGroup({ groupName, group })
+                  )
+                : [],
     };
 }
 
@@ -38,6 +41,8 @@ function convertGenerator(generator: GeneratorInvocationSchema): GeneratorInvoca
         version: generator.version,
         config: generator.config,
         outputMode: convertOutputMode(generator),
+        absolutePathToLocalOutput:
+            generator.output?.location === "local-file-system" ? resolve(cwd(), generator.output.path) : undefined,
     };
 }
 

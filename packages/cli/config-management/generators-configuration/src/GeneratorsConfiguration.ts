@@ -11,9 +11,11 @@ export interface GeneratorsConfiguration {
 
 export interface GeneratorGroup {
     groupName: string;
-    audiences: AllAudiences | SelectAudiences;
+    audiences: GeneratorAudiences;
     generators: GeneratorInvocation[];
 }
+
+export type GeneratorAudiences = AllAudiences | SelectAudiences;
 
 export interface AllAudiences {
     type: "all";
@@ -29,4 +31,5 @@ export interface GeneratorInvocation {
     version: string;
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
+    absolutePathToLocalOutput: AbsoluteFilePath | undefined;
 }

@@ -14,7 +14,6 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { releaseWorkspaces } from "./commands/release/releaseWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
@@ -107,7 +106,6 @@ async function tryRunCli(cliContext: CliContext) {
     addInitCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
     addGenerateCommand(cli, cliContext);
-    addReleaseCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
 
@@ -190,73 +188,31 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["generate"],
-        "Run the draft tasks from generators.yml",
-        (yargs) =>
-            yargs
-                .option("keepDocker", {
-                    boolean: true,
-                    default: false,
-                    hidden: true,
-                    description:
-                        "If true, Docker containers are not removed after generation. This is ignored for remote generation.",
-                })
-                .option("local", {
-                    boolean: true,
-                    default: false,
-                    hidden: true,
-                    description: "If true, code is generated using Docker on this machine.",
-                })
-                .option("api", {
-                    string: true,
-                    description: "Only run the command on the provided API",
-                })
-                .option("all", {
-                    boolean: true,
-                    default: false,
-                    description: "Include all APIs",
-                }),
-        async (argv) => {
-            await generateWorkspaces({
-                project: await loadProjectAndRegisterWorkspaces(cliContext, {
-                    commandLineWorkspace: argv.all ? undefined : argv.api,
-                    defaultToAllWorkspaces: argv.all,
-                }),
-                runLocal: argv.local,
-                keepDocker: argv.keepDocker,
-                cliContext,
-            });
-        }
-    );
-}
-
-function addReleaseCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        ["release <package-version>"],
         "Run the release tasks from generators.yml",
         (yargs) =>
             yargs
-                .positional("package-version", {
+                .positional("group", {
                     type: "string",
                     demandOption: true,
+                    description: "The group to generate",
+                })
+                .positional("version", {
+                    type: "string",
                     description: "The version for the generated packages",
                 })
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
-                })
-                .option("all", {
-                    boolean: true,
-                    default: false,
-                    description: "Include all APIs",
                 }),
         async (argv) => {
-            await releaseWorkspaces({
+            await generateWorkspaces({
                 project: await loadProjectAndRegisterWorkspaces(cliContext, {
-                    commandLineWorkspace: argv.all ? undefined : argv.api,
-                    defaultToAllWorkspaces: argv.all,
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
                 }),
                 cliContext,
-                version: argv.packageVersion,
+                version: argv.version,
+                groupName: argv.group,
             });
         }
     );

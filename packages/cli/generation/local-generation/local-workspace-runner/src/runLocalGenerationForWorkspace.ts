@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { DraftGeneratorInvocation } from "@fern-api/generators-configuration";
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { Workspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mkdir, rm, writeFile } from "fs/promises";
@@ -30,15 +30,17 @@ export async function runLocalGenerationForWorkspace({
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
 
     await Promise.all(
-        workspace.generatorsConfiguration.groups.map(async (generatorInvocation) =>
-            loadHelpersAndRunGenerator({
-                organization,
-                workspace,
-                generatorInvocation,
-                workspaceTempDir,
-                absolutePathToIr,
-                keepDocker,
-            })
+        workspace.generatorsConfiguration.groups.flatMap(async (group) =>
+            group.generators.map((generatorInvocation) =>
+                loadHelpersAndRunGenerator({
+                    organization,
+                    workspace,
+                    generatorInvocation,
+                    workspaceTempDir,
+                    absolutePathToIr,
+                    keepDocker,
+                })
+            )
         )
     );
 }
@@ -53,7 +55,7 @@ async function loadHelpersAndRunGenerator({
 }: {
     organization: string;
     workspace: Workspace;
-    generatorInvocation: DraftGeneratorInvocation;
+    generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     absolutePathToIr: AbsoluteFilePath;
     keepDocker: boolean;

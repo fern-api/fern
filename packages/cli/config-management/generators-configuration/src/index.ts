@@ -1,10 +1,9 @@
 export {
-    type DraftGeneratorInvocation,
+    type GeneratorAudiences,
+    type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration,
-    type ReleaseGeneratorInvocation,
 } from "./GeneratorsConfiguration";
 export { loadGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./loadGeneratorsConfiguration";
-export { type BaseGeneratorInvocationSchema } from "./schemas/BaseGeneratorInvocationSchema";
-export { type DraftGeneratorInvocationSchema } from "./schemas/DraftGeneratorInvocationSchema";
+export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";

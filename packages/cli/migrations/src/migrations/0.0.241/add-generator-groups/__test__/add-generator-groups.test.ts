@@ -6,7 +6,7 @@ import { migration } from "../migration";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), "fixtures");
 
-describe("add-mode-to-draft-generators", () => {
+describe("add-generator-groups", () => {
     it("simple", async () => {
         const fixturePath = join(FIXTURES_PATH, "simple");
         const tmpDir = await tmp.dir();
