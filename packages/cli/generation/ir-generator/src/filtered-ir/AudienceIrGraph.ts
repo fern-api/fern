@@ -1,119 +1,25 @@
 import { noop } from "@fern-api/core-utils";
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
-import { ContainerType, DeclaredTypeName, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
+import {
+    AudienceId,
+    EndpointId,
+    EndpointNode,
+    ErrorId,
+    ErrorNode,
+    getEndpointId,
+    getErrorId,
+    getServiceId,
+    getTypeId,
+    ServiceId,
+    TypeId,
+    TypeNode,
+} from "./ids";
 
-type AudienceId = string;
-type TypeId = string;
-type ErrorId = string;
-type ServiceId = string;
-type EndpointId = string;
-
-interface TypeNode {
-    typeId: TypeId;
-    descendants: Set<TypeId>;
-}
-
-interface ErrorNode {
-    errorId: ErrorId;
-    referencedTypes: Set<TypeId>;
-}
-
-interface EndpointNode {
-    endpointId: EndpointId;
-    referencedErrors: Set<ErrorId>;
-    referencedTypes: Set<TypeId>;
-}
-
-export function getFilteredIrBuilder(audiences: AudienceId[]): FilteredIrBuilder {
-    if (audiences.length === 0) {
-        return new NoopBuilder();
-    }
-    return new GraphBuilder(audiences);
-}
-
-abstract class FilteredIrBuilder {
-    public abstract addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void;
-
-    public abstract markTypeForAudiences(declaredTypeName: DeclaredTypeName, audiences: AudienceId[]): void;
-
-    public abstract addError(errorDeclaration: ErrorDeclaration): void;
-
-    public abstract addEndpoint(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): void;
-
-    public abstract markEndpointForAudience(
-        declaredServiceName: DeclaredServiceName,
-        httpEndpoints: HttpEndpoint[],
-        audiences: AudienceId[]
-    ): void;
-
-    public abstract build(): FilteredIr;
-}
-
-export abstract class FilteredIr {
-    public abstract hasType(type: TypeDeclaration): boolean;
-
-    public abstract hasError(error: ErrorDeclaration): boolean;
-
-    public abstract hasService(service: HttpService): boolean;
-
-    public abstract hasEndpoint(service: HttpService, endpoint: HttpEndpoint): boolean;
-}
-
-export class FilteredIrImpl implements FilteredIr {
-    private types: Set<TypeId> = new Set();
-    private errors: Set<ErrorId> = new Set();
-    private services: Set<ServiceId> = new Set();
-    private endpoints: Set<EndpointId> = new Set();
-
-    public constructor(types: Set<TypeId>, errors: Set<ErrorId>, services: Set<ServiceId>, endpoints: Set<EndpointId>) {
-        this.types = types;
-        this.errors = errors;
-        this.services = services;
-        this.endpoints = endpoints;
-    }
-
-    public hasType(type: TypeDeclaration): boolean {
-        const typeId = getTypeId(type.name);
-        return this.types.has(typeId);
-    }
-
-    public hasError(error: ErrorDeclaration): boolean {
-        const errorId = getErrorId(error.name);
-        return this.errors.has(errorId);
-    }
-
-    public hasService(service: HttpService): boolean {
-        const serviceId = getServiceId(service.name);
-        return this.services.has(serviceId);
-    }
-
-    public hasEndpoint(service: HttpService, endpoint: HttpEndpoint): boolean {
-        const endpointId = getEndpointId(service.name, endpoint);
-        return this.endpoints.has(endpointId);
-    }
-}
-
-export class UnfilteredIr implements FilteredIr {
-    public hasType(_type: TypeDeclaration): boolean {
-        return true;
-    }
-
-    public hasError(_error: ErrorDeclaration): boolean {
-        return true;
-    }
-
-    public hasService(_service: HttpService): boolean {
-        return true;
-    }
-
-    public hasEndpoint(_service: HttpService, _endpoint: HttpEndpoint): boolean {
-        return true;
-    }
-}
-
-class GraphBuilder extends FilteredIrBuilder {
+export class AudienceIrGraph {
     private types: Record<TypeId, TypeNode> = {};
     private typesNeededForAudience: Set<TypeId> = new Set();
     private errors: Record<TypeId, ErrorNode> = {};
@@ -123,7 +29,6 @@ class GraphBuilder extends FilteredIrBuilder {
     private audiences: Set<AudienceId> = new Set();
 
     public constructor(audiences: AudienceId[]) {
-        super();
         this.audiences = new Set(audiences);
     }
 
@@ -208,7 +113,12 @@ class GraphBuilder extends FilteredIrBuilder {
             this.addReferencedTypes(typeIds, endpointNode.referencedTypes);
         }
         this.addReferencedTypes(typeIds, this.typesNeededForAudience);
-        return new FilteredIrImpl(typeIds, errorIds, this.servicesNeededForAudience, this.endpointsNeededForAudience);
+        return new FilteredIrImpl({
+            types: typeIds,
+            errors: errorIds,
+            services: this.servicesNeededForAudience,
+            endpoints: this.endpointsNeededForAudience,
+        });
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
@@ -253,31 +163,6 @@ class GraphBuilder extends FilteredIrBuilder {
     }
 }
 
-class NoopBuilder extends FilteredIrBuilder {
-    public addType(_declaredTypeName: DeclaredTypeName, _descendants: DeclaredTypeName[]): void {
-        return;
-    }
-    public markTypeForAudiences(_declaredTypeName: DeclaredTypeName, _audiences: string[]): void {
-        return;
-    }
-    public addError(_errorDeclaration: ErrorDeclaration): void {
-        return;
-    }
-    public addEndpoint(_declaredServiceName: DeclaredServiceName, _httpEndpoint: HttpEndpoint): void {
-        return;
-    }
-    public markEndpointForAudience(
-        _declaredServiceName: DeclaredServiceName,
-        _httpEndpoints: HttpEndpoint[],
-        _audiences: AudienceId[]
-    ): void {
-        return;
-    }
-    public build(): FilteredIr {
-        return new UnfilteredIr();
-    }
-}
-
 function populateReferencesFromTypeReference(typeReference: TypeReference, referencedTypes: Set<TypeId>) {
     TypeReference._visit(typeReference, {
         container: (containerType) => {
@@ -311,33 +196,4 @@ function populateReferencesFromContainer(containerType: ContainerType, reference
         literal: noop,
         _unknown: noop,
     });
-}
-
-function getEndpointId(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): ErrorId {
-    const joinedFernFilePath = declaredServiceName.fernFilepathV2
-        .map((name) => name.unsafeName.originalValue)
-        .join("/");
-    const serviceName = declaredServiceName.name;
-    const endpointId = httpEndpoint.nameV2.safeName.originalValue;
-    return `endpoint_${joinedFernFilePath}:${serviceName}.${endpointId}`;
-}
-
-function getServiceId(declaredServiceName: DeclaredServiceName): ServiceId {
-    const joinedFernFilePath = declaredServiceName.fernFilepathV2
-        .map((name) => name.unsafeName.originalValue)
-        .join("/");
-    const serviceName = declaredServiceName.name;
-    return `endpoint_${joinedFernFilePath}:${serviceName}`;
-}
-
-function getErrorId(declaredErrorName: DeclaredErrorName): ErrorId {
-    const joinedFernFilePath = declaredErrorName.fernFilepathV2.map((name) => name.unsafeName.originalValue).join("/");
-    const errorName = declaredErrorName.nameV3.unsafeName.originalValue;
-    return `error_${joinedFernFilePath}:${errorName}`;
-}
-
-function getTypeId(declaredTypeName: DeclaredTypeName): TypeId {
-    const joinedFernFilePath = declaredTypeName.fernFilepathV2.map((name) => name.unsafeName.originalValue).join("/");
-    const typeName = declaredTypeName.nameV3.unsafeName.originalValue;
-    return `type_${joinedFernFilePath}:${typeName}`;
 }

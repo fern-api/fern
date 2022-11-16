@@ -1,35 +1,45 @@
-import { DraftGeneratorInvocationSchema } from "@fern-api/generators-configuration";
+import { GeneratorInvocationSchema } from "@fern-api/generators-configuration";
 
-export const JAVA_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
+export const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-java-sdk",
     version: "0.0.122",
-    mode: "publish",
+    output: {
+        location: "maven",
+        coordinate: "",
+    },
 };
 
-export const TYPESCRIPT_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
+export const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-typescript-sdk",
     version: "0.0.227",
-    mode: "publish",
+    output: {
+        location: "npm",
+        "package-name": "",
+    },
 };
 
-export const POSTMAN_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
+export const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-postman",
     version: "0.0.25",
-    mode: "download-files",
-    "output-path": "./generated-postman",
+    output: {
+        location: "local-file-system",
+        path: "./generated-postman",
+    },
 };
 
-export const OPENAPI_GENERATOR_INVOCATION: DraftGeneratorInvocationSchema = {
+export const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
     version: "0.0.10",
+    output: {
+        location: "local-file-system",
+        path: "./generated-openapi",
+    },
     config: {
         format: "yaml",
     },
-    mode: "download-files",
-    "output-path": "./generated-openapi",
 };
 
-export const GENERATOR_INVOCATIONS: Record<string, DraftGeneratorInvocationSchema> = {
+export const GENERATOR_INVOCATIONS: Record<string, GeneratorInvocationSchema> = {
     [JAVA_GENERATOR_INVOCATION.name]: JAVA_GENERATOR_INVOCATION,
     [TYPESCRIPT_GENERATOR_INVOCATION.name]: TYPESCRIPT_GENERATOR_INVOCATION,
     [POSTMAN_GENERATOR_INVOCATION.name]: POSTMAN_GENERATOR_INVOCATION,

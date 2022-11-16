@@ -13,7 +13,7 @@ import { convertWebsocketChannel } from "./converters/services/convertWebsocketC
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { FERN_CONSTANTS, generateFernConstantsV2 } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
-import { getFilteredIrBuilder } from "./FilteredIr";
+import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
 import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -25,11 +25,11 @@ export async function generateIntermediateRepresentation({
 }: {
     workspace: Workspace;
     generationLanguage: Language | undefined;
-    audiences: string[];
+    audiences: string[] | undefined;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
 
-    const filteredIrBuilder = getFilteredIrBuilder(audiences);
+    const audienceIrGraph = audiences != null ? new AudienceIrGraph(audiences) : undefined;
 
     const rootApiFile = constructFernFileContext({
         relativeFilepath: undefined,
@@ -86,11 +86,8 @@ export async function generateIntermediateRepresentation({
                     });
                     intermediateRepresentation.types.push(convertedTypeDeclaration);
 
-                    filteredIrBuilder.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
-                    filteredIrBuilder.markTypeForAudiences(
-                        convertedTypeDeclaration.name,
-                        getAudiences(typeDeclaration)
-                    );
+                    audienceIrGraph?.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
+                    audienceIrGraph?.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },
 
@@ -105,7 +102,7 @@ export async function generateIntermediateRepresentation({
                         file,
                         typeResolver,
                     });
-                    filteredIrBuilder.addError(convertedErrorDeclaration);
+                    audienceIrGraph?.addError(convertedErrorDeclaration);
                     intermediateRepresentation.errors.push(convertedErrorDeclaration);
                 }
             },
@@ -127,11 +124,11 @@ export async function generateIntermediateRepresentation({
 
                         const convertedEndpoints: Record<string, HttpEndpoint> = {};
                         convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                            filteredIrBuilder.addEndpoint(convertedHttpService.name, httpEndpoint);
+                            audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
                             convertedEndpoints[httpEndpoint.id] = httpEndpoint;
                         });
                         if (serviceDefinition.audiences != null) {
-                            filteredIrBuilder.markEndpointForAudience(
+                            audienceIrGraph?.markEndpointForAudience(
                                 convertedHttpService.name,
                                 convertedHttpService.endpoints,
                                 serviceDefinition.audiences
@@ -140,7 +137,7 @@ export async function generateIntermediateRepresentation({
                         Object.entries(serviceDefinition.endpoints).map(([endpointId, endpoint]) => {
                             const convertedEndpoint = convertedEndpoints[endpointId];
                             if (convertedEndpoint != null && endpoint.audiences != null) {
-                                filteredIrBuilder.markEndpointForAudience(
+                                audienceIrGraph?.markEndpointForAudience(
                                     convertedHttpService.name,
                                     [convertedEndpoint],
                                     endpoint.audiences
@@ -172,9 +169,31 @@ export async function generateIntermediateRepresentation({
         });
     }
 
-    const filteredIr = filteredIrBuilder.build();
+    const intermediateRepresentationForAudiences =
+        audienceIrGraph != null
+            ? filterIntermediateRepresentationForAudiences(intermediateRepresentation, audienceIrGraph)
+            : intermediateRepresentation;
 
-    const filteredIntermediateReprsentation = {
+    const isAuthMandatory =
+        workspace.rootApiFile.auth != null &&
+        intermediateRepresentationForAudiences.services.http.every((service) => {
+            return service.endpoints.every((endpoint) => endpoint.auth);
+        });
+
+    return {
+        ...intermediateRepresentationForAudiences,
+        sdkConfig: {
+            isAuthMandatory,
+        },
+    };
+}
+
+function filterIntermediateRepresentationForAudiences(
+    intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig">,
+    audienceIrGraph: AudienceIrGraph
+): Omit<IntermediateRepresentation, "sdkConfig"> {
+    const filteredIr = audienceIrGraph.build();
+    return {
         ...intermediateRepresentation,
         types: intermediateRepresentation.types.filter((type) => {
             return filteredIr.hasType(type);
@@ -196,19 +215,6 @@ export async function generateIntermediateRepresentation({
                         }),
                     };
                 }),
-        },
-    };
-
-    const isAuthMandatory =
-        workspace.rootApiFile.auth != null &&
-        filteredIntermediateReprsentation.services.http.every((service) => {
-            return service.endpoints.every((endpoint) => endpoint.auth);
-        });
-
-    return {
-        ...filteredIntermediateReprsentation,
-        sdkConfig: {
-            isAuthMandatory,
         },
     };
 }

@@ -5,25 +5,31 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
     rawConfiguration: GeneratorsConfigurationSchema;
-    draft: DraftGeneratorInvocation[];
-    release: ReleaseGeneratorInvocation[];
+    defaultGroup: string | undefined;
+    groups: GeneratorGroup[];
 }
 
-export type GeneratorInvocation = DraftGeneratorInvocation | ReleaseGeneratorInvocation;
-
-export interface DraftGeneratorInvocation extends BaseGeneratorInvocation {
-    type: "draft";
-    absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+export interface GeneratorGroup {
+    groupName: string;
+    audiences: GeneratorAudiences;
+    generators: GeneratorInvocation[];
 }
 
-export interface ReleaseGeneratorInvocation extends BaseGeneratorInvocation {
-    type: "release";
+export type GeneratorAudiences = AllAudiences | SelectAudiences;
+
+export interface AllAudiences {
+    type: "all";
 }
 
-export interface BaseGeneratorInvocation {
+export interface SelectAudiences {
+    type: "select";
+    audiences: string[];
+}
+
+export interface GeneratorInvocation {
     name: string;
     version: string;
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
-    audiences: string[];
+    absolutePathToLocalOutput: AbsoluteFilePath | undefined;
 }

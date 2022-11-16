@@ -5,28 +5,38 @@ import { JAVA_GENERATOR_INVOCATION } from "../generatorInvocations";
 
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
-        const generatorsConfiguration: GeneratorsConfigurationSchema = {};
+        const generatorsConfiguration: GeneratorsConfigurationSchema = {
+            groups: {},
+        };
         const newConfiguration = addGenerator({
             generatorName: "java",
             generatorsConfiguration,
             context: createMockTaskContext(),
         });
-        expect(newConfiguration.draft).toMatchObject([
-            {
-                name: JAVA_GENERATOR_INVOCATION.name,
+
+        const expectedNewConfiguration: GeneratorsConfigurationSchema = {
+            groups: {
+                external: {
+                    generators: [JAVA_GENERATOR_INVOCATION],
+                },
             },
-        ]);
+        };
+
+        expect(newConfiguration).toEqual(expectedNewConfiguration);
     });
 
     it("fail if present", () => {
         const generatorsConfiguration: GeneratorsConfigurationSchema = {
-            draft: [
-                {
-                    name: "fernapi/fern-typescript-sdk",
-                    version: "0.0.23",
-                    mode: "publish",
+            groups: {
+                external: {
+                    generators: [
+                        {
+                            name: "fernapi/fern-typescript-sdk",
+                            version: "0.0.23",
+                        },
+                    ],
                 },
-            ],
+            },
         };
 
         expect(() =>
