@@ -5,6 +5,7 @@ export declare namespace loggingExeca {
     export interface Options extends execa.Options {
         doNotPipeOutput?: boolean;
         secrets?: string[];
+        substitutions?: Record<string, string>;
     }
 }
 
@@ -12,12 +13,21 @@ export async function loggingExeca(
     logger: Logger | undefined,
     executable: string,
     args: string[] = [],
-    { doNotPipeOutput = false, secrets = [], ...execaOptions }: loggingExeca.Options = {}
+    { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
 ): Promise<ExecaReturnValue> {
+    const allSubstitutions = secrets.reduce(
+        (acc, secret) => ({
+            ...acc,
+            [secret]: "<redacted>",
+        }),
+        substitutions
+    );
+
     let logLine = [executable, ...args].join(" ");
-    for (const secret of secrets) {
-        logLine = logLine.replaceAll(secret, "<redacted>");
+    for (const [substitutionKey, substitutionValue] of Object.entries(allSubstitutions)) {
+        logLine = logLine.replaceAll(substitutionKey, substitutionValue);
     }
+
     logger?.debug(`+ ${logLine}`);
     const command = execa(executable, args, execaOptions);
     if (!doNotPipeOutput) {
