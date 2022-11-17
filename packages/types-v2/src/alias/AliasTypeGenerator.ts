@@ -2,7 +2,7 @@ import { AliasTypeDeclaration, PrimitiveType, TypeDeclaration } from "@fern-fern
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
-import { ModuleDeclaration, ts } from "ts-morph";
+import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { AbstractSchemaGenerator } from "../AbstractSchemaGenerator";
 import { AbstractTypeSchemaGenerator } from "../AbstractTypeSchemaGenerator";
 
@@ -16,6 +16,8 @@ export declare namespace AliasTypeGenerator {
 }
 
 export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
+    private static CREATE_PROPERTY_NAME = "create";
+
     private typeDeclaration: TypeDeclaration;
     private shape: AliasTypeDeclaration;
     private shouldUseBrandedStringAliases: boolean;
@@ -28,6 +30,61 @@ export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
     }
 
     public generate({ typeFile, schemaFile }: { typeFile: SdkFile; schemaFile: SdkFile }): void {
+        this.writeTypeAlias(typeFile);
+        this.writeConst(typeFile);
+        this.writeSchemaToFile(schemaFile);
+    }
+
+    private writeConst(typeFile: SdkFile) {
+        const VALUE_PARAMETER_NAME = "value";
+        typeFile.sourceFile.addVariableStatement({
+            declarationKind: VariableDeclarationKind.Const,
+            declarations: [
+                {
+                    name: this.typeName,
+                    initializer: getTextOfTsNode(
+                        ts.factory.createAsExpression(
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier(AliasTypeGenerator.CREATE_PROPERTY_NAME),
+                                        ts.factory.createArrowFunction(
+                                            undefined,
+                                            undefined,
+                                            [
+                                                ts.factory.createParameterDeclaration(
+                                                    undefined,
+                                                    undefined,
+                                                    undefined,
+                                                    VALUE_PARAMETER_NAME,
+                                                    undefined,
+                                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                                ),
+                                            ],
+                                            undefined,
+                                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                            ts.factory.createAsExpression(
+                                                ts.factory.createAsExpression(
+                                                    ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
+                                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                                                ),
+                                                this.getReferenceToParsedShape(typeFile)
+                                            )
+                                        )
+                                    ),
+                                ],
+                                true
+                            ),
+                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("const"), undefined)
+                        )
+                    ),
+                },
+            ],
+            isExported: true,
+        });
+    }
+
+    private writeTypeAlias(typeFile: SdkFile) {
         const referenceToAliasedType = typeFile.getReferenceToType(this.shape.aliasOf).typeNode;
         const typeAlias = typeFile.sourceFile.addTypeAlias({
             name: this.typeName,
@@ -49,8 +106,6 @@ export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
             isExported: true,
         });
         maybeAddDocs(typeAlias, this.typeDeclaration.docs);
-
-        this.writeSchemaToFile(schemaFile);
     }
 
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
@@ -73,26 +128,7 @@ export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
         const VALUE_PARAMETER_NAME = "value";
         return schemaOfAlias.transform({
             newShape: undefined,
-            parse: ts.factory.createArrowFunction(
-                undefined,
-                undefined,
-                [
-                    ts.factory.createParameterDeclaration(
-                        undefined,
-                        undefined,
-                        undefined,
-                        VALUE_PARAMETER_NAME,
-                        undefined,
-                        undefined
-                    ),
-                ],
-                undefined,
-                undefined,
-                ts.factory.createAsExpression(
-                    ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
-                    file.getReferenceToNamedType(this.typeDeclaration.name).typeNode
-                )
-            ),
+            parse: this.getAliasCreator(file),
             json: ts.factory.createArrowFunction(
                 undefined,
                 undefined,
@@ -111,6 +147,13 @@ export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
                 ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
             ),
         });
+    }
+
+    private getAliasCreator(file: SdkFile): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            file.getReferenceToNamedType(this.typeDeclaration.name).expression,
+            AliasTypeGenerator.CREATE_PROPERTY_NAME
+        );
     }
 
     private isBrandedString(): boolean {

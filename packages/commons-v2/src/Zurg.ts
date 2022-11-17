@@ -20,7 +20,7 @@ export interface Zurg {
     Schema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
         _fromExpression: (expression: ts.Expression) => Zurg.Schema;
-        _fromArrowFunctions: (args: { parse: ts.ArrowFunction; json: ts.ArrowFunction }) => Zurg.Schema;
+        _fromTransformers: (args: { parse: ts.ArrowFunction; json: ts.ArrowFunction }) => Zurg.Schema;
     };
 
     ObjectSchema: {
@@ -41,8 +41,8 @@ export declare namespace Zurg {
         optional: () => Zurg.Schema;
         transform: (args: {
             newShape: ts.TypeNode | undefined;
-            parse: ts.ArrowFunction;
-            json: ts.ArrowFunction;
+            parse: ts.Expression;
+            json: ts.Expression;
         }) => Zurg.Schema;
     }
 

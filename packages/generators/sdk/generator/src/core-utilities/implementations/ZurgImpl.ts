@@ -369,12 +369,12 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 json,
             }: {
                 newShape: ts.TypeNode | undefined;
-                parse: ts.ArrowFunction;
-                json: ts.ArrowFunction;
+                parse: ts.Expression;
+                json: ts.Expression;
             }) =>
                 this.transform(baseSchema, {
                     newShape,
-                    transformer: this.Schema._fromArrowFunctions({ parse, json }),
+                    transformer: this.Schema._fromTransformers({ parse, json }),
                 }),
         };
     }
@@ -485,7 +485,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             };
         },
 
-        _fromArrowFunctions: ({ parse, json }: { parse: ts.ArrowFunction; json: ts.ArrowFunction }): Zurg.Schema => {
+        _fromTransformers: ({ parse, json }: { parse: ts.Expression; json: ts.Expression }): Zurg.Schema => {
             return this.Schema._fromExpression(
                 ts.factory.createObjectLiteralExpression(
                     [
