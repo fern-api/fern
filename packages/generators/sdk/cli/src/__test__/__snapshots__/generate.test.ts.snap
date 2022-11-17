@@ -3048,12 +3048,6 @@ Array [
     "type": "file",
   },
   Object {
-    "contents": "registry=https://registry.npmjs.org/
-",
-    "name": ".npmrc",
-    "type": "file",
-  },
-  Object {
     "contents": ".yarn
 node_modules
 .npmignore
@@ -4344,12 +4338,6 @@ Array [
 !.yarn/sdks/**
 !.yarn/versions/**",
     "name": ".gitignore",
-    "type": "file",
-  },
-  Object {
-    "contents": "registry=https://registry.npmjs.org/
-",
-    "name": ".npmrc",
     "type": "file",
   },
   Object {

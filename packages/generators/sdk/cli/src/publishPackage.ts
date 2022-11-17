@@ -35,26 +35,17 @@ export async function publishPackage({
     );
 
     const { registryUrl, token } = publishInfo.registry;
-    await npm(["config", "set", "registry", registryUrl, "--location", "project"], {
+    const parsedRegistryUrl = new URL(registryUrl);
+    const registryUrlWithoutProtocol = path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
+
+    // intentionally not writing these to the project config with `--location project`,
+    // so the registry url and token aren't persisted
+    await npm(["config", "set", "registry", registryUrl], {
         secrets: [registryUrl],
     });
-
-    const parsedRegistryUrl = new URL(registryUrl);
-    const normalizedRegistryUrl = path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
-
-    await npm(
-        [
-            // intentionally not writing this to the project config with `--location project`,
-            // so the token isn't persisted
-            "config",
-            "set",
-            `//${normalizedRegistryUrl}:_authToken`,
-            token,
-        ],
-        {
-            secrets: [normalizedRegistryUrl, token],
-        }
-    );
+    await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, token], {
+        secrets: [registryUrlWithoutProtocol, token],
+    });
 
     const publishCommand = ["publish"];
     if (dryRun) {
