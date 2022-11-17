@@ -35,12 +35,13 @@ export async function publishPackage({
     );
 
     const { registryUrl, token } = publishInfo.registry;
+    await npm(["config", "set", "registry", registryUrl, "--location", "project"], {
+        secrets: [registryUrl],
+    });
+
     const parsedRegistryUrl = new URL(registryUrl);
     const normalizedRegistryUrl = path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
 
-    await npm(["config", "set", "registry", normalizedRegistryUrl, "--location", "project"], {
-        secrets: [normalizedRegistryUrl],
-    });
     await npm(
         [
             // intentionally not writing this to the project config with `--location project`,
