@@ -25,6 +25,7 @@ export async function publishPackage({
 }): Promise<void> {
     const npm = createLoggingExecutable("npm", {
         cwd: pathToPackageOnDisk,
+        logger,
     });
 
     await runYarnCommand(["run", PackageJsonScript.BUILD]);
@@ -36,14 +37,19 @@ export async function publishPackage({
     const { registryUrl, token } = publishInfo.registry;
     await npm(["config", "set", "registry", registryUrl, "--location", "project"]);
     const parsedRegistryUrl = new URL(registryUrl);
-    await npm([
-        "config",
-        "set",
-        `//${path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname)}:_authToken`,
-        token,
-        // intentionally not writing this to the project config with `--location project`,
-        // so the token isn't persisted
-    ]);
+    await npm(
+        [
+            // intentionally not writing this to the project config with `--location project`,
+            // so the token isn't persisted
+            "config",
+            "set",
+            `//${path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname)}:_authToken`,
+            token,
+        ],
+        {
+            secrets: [token],
+        }
+    );
 
     const publishCommand = ["publish"];
     if (dryRun) {
