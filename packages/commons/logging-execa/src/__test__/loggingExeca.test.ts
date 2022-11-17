@@ -23,6 +23,19 @@ describe("loggingExeca", () => {
         expect(lines).toEqual([`+ touch ${pathToTouch}`]);
     });
 
+    it("substitutes values", async () => {
+        const lines: string[] = [];
+        const logger = createLogger((_level, ...args) => lines.push(args.join(" ")));
+
+        const tmpdir = (await tmp.dir()).path;
+        const pathToTouch = path.join(tmpdir, "ABC123.txt");
+        await loggingExeca(logger, "touch", [pathToTouch], {
+            substitutions: { ABC123: "new-value" },
+        });
+
+        expect(lines).toEqual([`+ touch ${path.join(tmpdir, "new-value.txt")}`]);
+    });
+
     it("redacts secrets", async () => {
         const lines: string[] = [];
         const logger = createLogger((_level, ...args) => lines.push(args.join(" ")));
