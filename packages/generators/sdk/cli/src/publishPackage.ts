@@ -24,7 +24,6 @@ export async function publishPackage({
     dryRun: boolean;
 }): Promise<void> {
     const npm = createLoggingExecutable("npm", {
-        logger,
         cwd: pathToPackageOnDisk,
     });
 
