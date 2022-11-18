@@ -8,7 +8,7 @@ import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
-import { rm } from "fs/promises";
+import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -138,6 +138,7 @@ async function downloadFilesForTask({
         if (await doesPathExist(absolutePathToLocalOutput)) {
             await rm(absolutePathToLocalOutput, { recursive: true });
         }
+        await mkdir(absolutePathToLocalOutput, { recursive: true });
         await decompress(outputZipPath, absolutePathToLocalOutput);
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
