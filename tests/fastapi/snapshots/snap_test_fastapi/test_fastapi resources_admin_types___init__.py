@@ -2,5 +2,6 @@
 
 from .store_traced_test_case_request import StoreTracedTestCaseRequest
 from .store_traced_workspace_request import StoreTracedWorkspaceRequest
+from .test import Test
 
-__all__ = ["StoreTracedTestCaseRequest", "StoreTracedWorkspaceRequest"]
+__all__ = ["StoreTracedTestCaseRequest", "StoreTracedWorkspaceRequest", "Test"]

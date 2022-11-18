@@ -66,7 +66,7 @@ class UnionGenerator(AbstractTypeGenerator):
                     assert_never(shape.properties_type)
 
                 with PydanticModel(
-                    name=single_union_type.discriminant_value.pascal_case,
+                    name=single_union_type.discriminant_value_v_2.name.safe_name.pascal_case,
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
@@ -99,7 +99,7 @@ class UnionGenerator(AbstractTypeGenerator):
 
                     factory_declaration.add_method(
                         AST.FunctionDeclaration(
-                            name=single_union_type.discriminant_value.snake_case,
+                            name=single_union_type.discriminant_value_v_2.name.safe_name.snake_case,
                             signature=AST.FunctionSignature(
                                 parameters=single_union_type.shape.visit(
                                     same_properties_as_object=lambda type_name: [
@@ -153,8 +153,8 @@ class UnionGenerator(AbstractTypeGenerator):
                 get_visit_method(
                     items=[
                         VisitableItem(
-                            parameter_name=single_union_type.discriminant_value.snake_case,
-                            expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
+                            parameter_name=single_union_type.discriminant_value_v_2.name.safe_name.snake_case,
+                            expected_value=f'"{single_union_type.discriminant_value_v_2.wire_value}"',
                             visitor_argument=single_union_type.shape.visit(
                                 same_properties_as_object=lambda type_name: VisitorArgument(
                                     expression=AST.Expression("self.__root__"),
@@ -260,7 +260,7 @@ class UnionGenerator(AbstractTypeGenerator):
         self,
         single_union_type: ir_types.SingleUnionType,
     ) -> AST.Expression:
-        return AST.Expression(f'"{single_union_type.discriminant_value.wire_value}"')
+        return AST.Expression(f'"{single_union_type.discriminant_value_v_2.wire_value}"')
 
 
 def assert_never(arg: Never) -> Never:

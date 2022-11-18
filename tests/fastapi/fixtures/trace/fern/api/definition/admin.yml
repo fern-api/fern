@@ -15,6 +15,11 @@ types:
         type: list<submission.TraceResponse>
         docs: the trace responses from the "server"
 
+  Test:
+    union:
+      and: boolean
+      or: boolean
+
 services:
   http:
     AdminService:

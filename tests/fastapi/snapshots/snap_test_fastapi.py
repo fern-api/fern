@@ -46,6 +46,7 @@ snapshots['test_fastapi filepaths'] = [
     'resources/admin/types/__init__.py',
     'resources/admin/types/store_traced_test_case_request.py',
     'resources/admin/types/store_traced_workspace_request.py',
+    'resources/admin/types/test.py',
     'resources/commons/__init__.py',
     'resources/commons/types/__init__.py',
     'resources/commons/types/binary_tree_node_and_tree_value.py',
@@ -303,6 +304,8 @@ snapshots['test_fastapi resources_admin_types___init__'] = FileSnapshot('snap_te
 snapshots['test_fastapi resources_admin_types_store_traced_test_case_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_admin_types_store_traced_test_case_request.py')
 
 snapshots['test_fastapi resources_admin_types_store_traced_workspace_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_admin_types_store_traced_workspace_request.py')
+
+snapshots['test_fastapi resources_admin_types_test'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_admin_types_test.py')
 
 snapshots['test_fastapi resources_commons___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_commons___init__.py')
 
