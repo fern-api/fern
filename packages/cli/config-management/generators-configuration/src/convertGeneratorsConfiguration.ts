@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GeneratorGroup, GeneratorInvocation, GeneratorsConfiguration } from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
@@ -21,28 +21,50 @@ export function convertGeneratorsConfiguration({
         groups:
             rawGeneratorsConfiguration.groups != null
                 ? Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
-                      convertGroup({ groupName, group })
+                      convertGroup({
+                          absolutePathToGeneratorsConfiguration,
+                          groupName,
+                          group,
+                      })
                   )
                 : [],
     };
 }
 
-function convertGroup({ groupName, group }: { groupName: string; group: GeneratorGroupSchema }): GeneratorGroup {
+function convertGroup({
+    absolutePathToGeneratorsConfiguration,
+    groupName,
+    group,
+}: {
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    groupName: string;
+    group: GeneratorGroupSchema;
+}): GeneratorGroup {
     return {
         groupName,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
-        generators: group.generators.map((generator) => convertGenerator(generator)),
+        generators: group.generators.map((generator) =>
+            convertGenerator({ absolutePathToGeneratorsConfiguration, generator })
+        ),
     };
 }
 
-function convertGenerator(generator: GeneratorInvocationSchema): GeneratorInvocation {
+function convertGenerator({
+    absolutePathToGeneratorsConfiguration,
+    generator,
+}: {
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    generator: GeneratorInvocationSchema;
+}): GeneratorInvocation {
     return {
         name: generator.name,
         version: generator.version,
         config: generator.config,
         outputMode: convertOutputMode(generator),
         absolutePathToLocalOutput:
-            generator.output?.location === "local-file-system" ? resolve(cwd(), generator.output.path) : undefined,
+            generator.output?.location === "local-file-system"
+                ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
+                : undefined,
     };
 }
 
