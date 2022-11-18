@@ -1,5 +1,5 @@
 import { noop } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { InteractiveTaskContext } from "@fern-api/task-context";
@@ -8,6 +8,7 @@ import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
+import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -134,6 +135,10 @@ async function downloadFilesForTask({
             responseType: "stream",
         });
         await pipeline(request.data, createWriteStream(outputZipPath));
+        if (await doesPathExist(absolutePathToLocalOutput)) {
+            await rm(absolutePathToLocalOutput, { recursive: true });
+        }
+        await mkdir(absolutePathToLocalOutput, { recursive: true });
         await decompress(outputZipPath, absolutePathToLocalOutput);
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
