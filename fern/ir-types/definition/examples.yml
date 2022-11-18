@@ -1,0 +1,39 @@
+imports:
+  http: services/http.yml
+  commons: services/commons.yml
+types:
+  Example:
+    properties:
+      endpoint: {} # TODO
+      type: ExampleTypeReference
+
+  ExampleTypeReference:
+    union:
+      primitive: ExamplePrimitive
+      container: {} # TODO
+      unknown: {} # TODO
+      named: ExampleNamedType
+
+  ExamplePrimitive:
+    union:
+      integer: integer
+      double: double
+      string: string
+      boolean: boolean
+      long: long
+      datetime: datetime
+      uuid: uuid
+
+  ExampleNamedType:
+    properties:
+      typeName: DeclaredTypeName
+      shape: ExampleTypeShape
+  ExampleTypeShape:
+    union:
+      alias: ExampleAliasType
+  ExampleAliasType:
+    properties:
+      aliasOf: ExampleTypeReference
+      enum: {} # TODO
+      object: {} # TODO
+      union: {} # TODO
