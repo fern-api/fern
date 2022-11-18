@@ -125,10 +125,6 @@ async function downloadFilesForTask({
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: InteractiveTaskContext;
 }) {
-    const tmpDir = await tmp.dir({
-        prefix: "fern",
-        unsafeCleanup: true,
-    });
     try {
         // initiate request
         const request = await axios.get(s3PreSignedReadUrl, {
@@ -136,14 +132,15 @@ async function downloadFilesForTask({
         });
 
         // pipe to zip
+        const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
         const outputZipPath = path.join(tmpDir.path, "output.zip");
         await pipeline(request.data, createWriteStream(outputZipPath));
+
+        // decompress to user-specified location
         if (await doesPathExist(absolutePathToLocalOutput)) {
             await rm(absolutePathToLocalOutput, { recursive: true });
         }
         await mkdir(absolutePathToLocalOutput, { recursive: true });
-
-        // decompress to user-specified location
         await decompress(outputZipPath, absolutePathToLocalOutput);
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
