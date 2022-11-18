@@ -376,8 +376,8 @@ public final class Author {
     return new Author(new AnonymousValue());
   }
 
-  public static Author name(String name) {
-    return new Author(new NameValue(name));
+  public static Author name(String value) {
+    return new Author(new NameValue(value));
   }
 
   public boolean isAnonymous() {
@@ -394,7 +394,7 @@ public final class Author {
 
   public Optional<String> getName() {
     if (isName()) {
-      return Optional.of(((NameValue) value).name);
+      return Optional.of(((NameValue) value).value);
     }
     return Optional.empty();
   }
@@ -454,17 +454,17 @@ public final class Author {
 
   @JsonTypeName("name")
   private static final class NameValue implements Value {
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("value")
+    private String value;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    private NameValue(@JsonProperty("name") String name) {
-      this.name = name;
+    private NameValue(@JsonProperty("value") String value) {
+      this.value = value;
     }
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitName(name);
+      return visitor.visitName(value);
     }
 
     @Override
@@ -474,17 +474,17 @@ public final class Author {
     }
 
     private boolean equalTo(NameValue other) {
-      return name.equals(other.name);
+      return value.equals(other.value);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(this.name);
+      return Objects.hash(this.value);
     }
 
     @Override
     public String toString() {
-      return "Author{" + "name: " + name + "}";
+      return "Author{" + "value: " + value + "}";
     }
   }
 
