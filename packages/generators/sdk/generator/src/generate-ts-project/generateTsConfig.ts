@@ -11,6 +11,7 @@ const COMPILER_OPTIONS: CompilerOptions = {
     skipLibCheck: true,
     declaration: true,
     sourceMap: true,
+    inlineSources: true,
     noUncheckedIndexedAccess: true,
     noUnusedLocals: true,
     noUnusedParameters: true,
