@@ -1,9 +1,10 @@
 imports:
   http: services/http.yml
-  commons: services/commons.yml
+  types: ./types.yml
+
 types:
   Example:
-    properties:
+    union:
       endpoint: {} # TODO
       type: ExampleTypeReference
 
@@ -26,13 +27,13 @@ types:
 
   ExampleNamedType:
     properties:
-      typeName: DeclaredTypeName
+      typeName: types.DeclaredTypeName
       shape: ExampleTypeShape
   ExampleTypeShape:
     union:
       alias: ExampleAliasType
   ExampleAliasType:
-    properties:
+    union:
       aliasOf: ExampleTypeReference
       enum: {} # TODO
       object: {} # TODO
