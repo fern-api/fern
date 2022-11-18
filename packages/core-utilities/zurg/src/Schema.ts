@@ -6,8 +6,8 @@ export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw 
 export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 
 export interface BaseSchema<Raw, Parsed> {
-    parse: (raw: Raw, opts?: SchemaOptions) => Parsed;
-    json: (parsed: Parsed, opts?: SchemaOptions) => Raw;
+    parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
+    json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
 }
 
 export interface SchemaOptions {

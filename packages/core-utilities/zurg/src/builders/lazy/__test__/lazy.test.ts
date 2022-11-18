@@ -15,14 +15,14 @@ describe("lazy", () => {
         expect(wasRun).toBe(false);
     });
 
-    it("only runs first time", () => {
+    it("only runs first time", async () => {
         let count = 0;
         const schema = lazy(() => {
             count++;
             return string();
         });
-        schema.parse("hello");
-        schema.json("world");
+        await schema.parse("hello");
+        await schema.json("world");
         expect(count).toBe(1);
     });
 

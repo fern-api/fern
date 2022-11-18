@@ -8,21 +8,21 @@ describe("identity", () => {
     describe("compile", () => {
         describe("parse()", () => {
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid input", () => {
+            it("doesn't compile with invalid input", async () => {
                 const schema = identity<string>();
 
                 // @ts-expect-error
-                schema.parse(42);
+                await schema.parse(42);
             });
         });
 
         describe("json()", () => {
             // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid input", () => {
+            it("doesn't compile with invalid input", async () => {
                 const schema = identity<string>();
 
                 // @ts-expect-error
-                schema.json(42);
+                await schema.json(42);
             });
         });
     });

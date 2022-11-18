@@ -35,12 +35,12 @@ export function transform<PreTransformRaw, PreTransformParsed, PostTransform>(
     transformer: BaseSchema<PreTransformParsed, PostTransform>
 ): Schema<PreTransformRaw, PostTransform> {
     const baseSchema: BaseSchema<PreTransformRaw, PostTransform> = {
-        parse: (raw, opts) => {
-            const postTransformParsed = schema.parse(raw, opts);
+        parse: async (raw, opts) => {
+            const postTransformParsed = await schema.parse(raw, opts);
             return transformer.parse(postTransformParsed, opts);
         },
-        json: (parsed, opts) => {
-            const preTransformParsed = transformer.json(parsed, opts);
+        json: async (parsed, opts) => {
+            const preTransformParsed = await transformer.json(parsed, opts);
             return schema.json(preTransformParsed, opts);
         },
     };

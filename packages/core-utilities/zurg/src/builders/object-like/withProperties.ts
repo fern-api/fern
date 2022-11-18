@@ -8,8 +8,8 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
     const objectSchema: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> = {
         ...OBJECT_LIKE_BRAND,
-        parse: (raw, opts) => {
-            const parsedObject = objectLike.parse(raw, opts);
+        parse: async (raw, opts) => {
+            const parsedObject = await objectLike.parse(raw, opts);
             const additionalProperties = Object.entries(properties).reduce<Record<string, any>>(
                 (processed, [key, value]) => {
                     return {

@@ -28,7 +28,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
     > = {
         ...OBJECT_LIKE_BRAND,
 
-        parse: (raw, { skipUnknownKeysOnParse = false } = {}) => {
+        parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
             const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
 
             for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
@@ -51,7 +51,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 const property = rawKeyToProperty[rawKey];
 
                 if (property != null) {
-                    const value = property.valueSchema.parse(rawPropertyValue);
+                    const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
                 } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
                     parsed[rawKey] = rawPropertyValue;
@@ -61,7 +61,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
             return parsed as inferParsedObjectFromPropertySchemas<T>;
         },
 
-        json: (parsed, { includeUnknownKeysOnJson = false } = {}) => {
+        json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
             const raw: Record<string | number | symbol, any> = {};
 
             for (const [parsedKey, parsedPropertyValue] of entries(parsed)) {
@@ -69,10 +69,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 if (schemaOrObjectProperty != null) {
                     if (isProperty(schemaOrObjectProperty)) {
-                        const value = schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
+                        const value = await schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
                         raw[schemaOrObjectProperty.rawKey] = value;
                     } else {
-                        const value = schemaOrObjectProperty.json(parsedPropertyValue);
+                        const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
                 } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
@@ -97,13 +97,13 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
         extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
             const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
                 ...OBJECT_LIKE_BRAND,
-                parse: (raw, opts) => ({
-                    ...schema.parse(raw, opts),
-                    ...extension.parse(raw, opts),
+                parse: async (raw, opts) => ({
+                    ...(await schema.parse(raw, opts)),
+                    ...(await extension.parse(raw, opts)),
                 }),
-                json: (parsed, opts) => ({
-                    ...schema.json(parsed, opts),
-                    ...extension.json(parsed, opts),
+                json: async (parsed, opts) => ({
+                    ...(await schema.json(parsed, opts)),
+                    ...(await extension.json(parsed, opts)),
                 }),
             };
 

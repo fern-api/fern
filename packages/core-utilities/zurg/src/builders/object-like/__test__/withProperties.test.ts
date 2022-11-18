@@ -4,7 +4,7 @@ import { property } from "../../object/property";
 import { string } from "../../primitives";
 
 describe("withProperties", () => {
-    it("Added properties included on parsed object", () => {
+    it("Added properties included on parsed object", async () => {
         const schema = object({
             foo: property("raw_foo", string()),
             bar: stringLiteral("bar"),
@@ -14,13 +14,13 @@ describe("withProperties", () => {
             helloWorld: "Hello world",
         });
 
-        const parsed = schema.parse({ raw_foo: "value of foo", bar: "bar" });
+        const parsed = await schema.parse({ raw_foo: "value of foo", bar: "bar" });
         expect(parsed.printFoo()).toBe("value of foo");
         expect(parsed.printHelloWorld()).toBe("Hello world");
         expect(parsed.helloWorld).toBe("Hello world");
     });
 
-    it("Added property is removed on raw object", () => {
+    it("Added property is removed on raw object", async () => {
         const schema = object({
             foo: property("raw_foo", string()),
             bar: stringLiteral("bar"),
@@ -29,8 +29,8 @@ describe("withProperties", () => {
         });
 
         const original = { raw_foo: "value of foo", bar: "bar" } as const;
-        const parsed = schema.parse(original);
-        const raw = schema.json(parsed);
+        const parsed = await schema.parse(original);
+        const raw = await schema.json(parsed);
         expect(raw).toEqual(original);
     });
 

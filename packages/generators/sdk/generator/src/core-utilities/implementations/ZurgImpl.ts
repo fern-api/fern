@@ -352,16 +352,20 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         return {
             optional: () => this.optional(baseSchema),
             parse: (raw) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
-                    undefined,
-                    [raw]
+                ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
+                        undefined,
+                        [raw]
+                    )
                 ),
             json: (parsed) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
-                    undefined,
-                    [parsed]
+                ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
+                        undefined,
+                        [parsed]
+                    )
                 ),
             transform: ({
                 newShape,

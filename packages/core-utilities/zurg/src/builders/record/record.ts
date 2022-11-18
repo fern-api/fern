@@ -8,24 +8,20 @@ export function record<RawKey extends string | number, ParsedKey extends string 
 ): Schema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> {
     const baseSchema: BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> = {
         parse: (raw, opts) => {
-            return entries(raw).reduce(
-                (parsed, [key, value]) => {
-                    parsed[keySchema.parse(key, opts)] = valueSchema.parse(value, opts);
-                    return parsed;
-                },
-                // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-                {} as Record<ParsedKey, ParsedValue>
-            );
+            return entries(raw).reduce(async (parsedPromise, [key, value]) => {
+                const parsed: Record<ParsedKey, ParsedValue> = await parsedPromise;
+                const parsedKey = await keySchema.parse(key, opts);
+                parsed[parsedKey] = await valueSchema.parse(value, opts);
+                return parsedPromise;
+            }, Promise.resolve({} as Record<ParsedKey, ParsedValue>));
         },
         json: (parsed, opts) => {
-            return entries(parsed).reduce(
-                (raw, [key, value]) => {
-                    raw[keySchema.json(key, opts)] = valueSchema.json(value, opts);
-                    return raw;
-                },
-                // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-                {} as Record<RawKey, RawValue>
-            );
+            return entries(parsed).reduce(async (rawPromise, [key, value]) => {
+                const raw: Record<RawKey, RawValue> = await rawPromise;
+                const rawKey = await keySchema.json(key, opts);
+                raw[rawKey] = await valueSchema.json(value, opts);
+                return rawPromise;
+            }, Promise.resolve({} as Record<RawKey, RawValue>));
         },
     };
 

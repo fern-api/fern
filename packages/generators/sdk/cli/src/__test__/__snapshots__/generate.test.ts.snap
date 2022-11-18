@@ -399,8 +399,8 @@ export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw 
 export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 
 export interface BaseSchema<Raw, Parsed> {
-  parse: (raw: Raw, opts?: SchemaOptions) => Parsed;
-  json: (parsed: Parsed, opts?: SchemaOptions) => Raw;
+  parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
+  json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
 }
 
 export interface SchemaOptions {
@@ -548,7 +548,7 @@ export { lazyObject } from \\"./lazyObject\\";
                         "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed>;
+type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
 type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
 
 export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
@@ -560,17 +560,17 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
 }
 
 export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-  const getSchema = () => {
+  const getSchema = async () => {
     const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
     if (castedGetter.__zurg_memoized == null) {
-      castedGetter.__zurg_memoized = getter();
+      castedGetter.__zurg_memoized = await getter();
     }
     return castedGetter.__zurg_memoized;
   };
 
   return {
-    parse: (raw) => getSchema().parse(raw),
-    json: (parsed) => getSchema().json(parsed),
+    parse: async (raw) => (await getSchema()).parse(raw),
+    json: async (parsed) => (await getSchema()).json(parsed),
   };
 }
 ",
@@ -619,8 +619,8 @@ import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
   const baseSchema: BaseSchema<Raw[], Parsed[]> = {
-    parse: (raw, opts) => raw.map((item) => schema.parse(item, opts)),
-    json: (parsed, opts) => parsed.map((item) => schema.json(item, opts)),
+    parse: (raw, opts) => Promise.all(raw.map((item) => schema.parse(item, opts))),
+    json: (parsed, opts) => Promise.all(parsed.map((item) => schema.json(item, opts))),
   };
 
   return {
@@ -710,7 +710,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
   const baseSchema: BaseObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectFromPropertySchemas<T>> = {
     ...OBJECT_LIKE_BRAND,
 
-    parse: (raw, { skipUnknownKeysOnParse = false } = {}) => {
+    parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
       const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
 
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
@@ -731,7 +731,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         const property = rawKeyToProperty[rawKey];
 
         if (property != null) {
-          const value = property.valueSchema.parse(rawPropertyValue);
+          const value = await property.valueSchema.parse(rawPropertyValue);
           parsed[property.parsedKey] = value;
         } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
           parsed[rawKey] = rawPropertyValue;
@@ -741,7 +741,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
       return parsed as inferParsedObjectFromPropertySchemas<T>;
     },
 
-    json: (parsed, { includeUnknownKeysOnJson = false } = {}) => {
+    json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
       const raw: Record<string | number | symbol, any> = {};
 
       for (const [parsedKey, parsedPropertyValue] of entries(parsed)) {
@@ -749,10 +749,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (schemaOrObjectProperty != null) {
           if (isProperty(schemaOrObjectProperty)) {
-            const value = schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
+            const value = await schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
             raw[schemaOrObjectProperty.rawKey] = value;
           } else {
-            const value = schemaOrObjectProperty.json(parsedPropertyValue);
+            const value = await schemaOrObjectProperty.json(parsedPropertyValue);
             raw[parsedKey] = value;
           }
         } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
@@ -777,13 +777,13 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
     extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
       const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
         ...OBJECT_LIKE_BRAND,
-        parse: (raw, opts) => ({
-          ...schema.parse(raw, opts),
-          ...extension.parse(raw, opts),
+        parse: async (raw, opts) => ({
+          ...(await schema.parse(raw, opts)),
+          ...(await extension.parse(raw, opts)),
         }),
-        json: (parsed, opts) => ({
-          ...schema.json(parsed, opts),
-          ...extension.json(parsed, opts),
+        json: async (parsed, opts) => ({
+          ...(await schema.json(parsed, opts)),
+          ...(await extension.json(parsed, opts)),
         }),
       };
 
@@ -962,8 +962,8 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
   const objectSchema: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> = {
     ...OBJECT_LIKE_BRAND,
-    parse: (raw, opts) => {
-      const parsedObject = objectLike.parse(raw, opts);
+    parse: async (raw, opts) => {
+      const parsedObject = await objectLike.parse(raw, opts);
       const additionalProperties = Object.entries(properties).reduce<Record<string, any>>((processed, [key, value]) => {
         return {
           ...processed,
@@ -1082,24 +1082,20 @@ export function record<RawKey extends string | number, ParsedKey extends string 
 ): Schema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> {
   const baseSchema: BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> = {
     parse: (raw, opts) => {
-      return entries(raw).reduce(
-        (parsed, [key, value]) => {
-          parsed[keySchema.parse(key, opts)] = valueSchema.parse(value, opts);
-          return parsed;
-        },
-        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-        {} as Record<ParsedKey, ParsedValue>
-      );
+      return entries(raw).reduce(async (parsedPromise, [key, value]) => {
+        const parsed: Record<ParsedKey, ParsedValue> = await parsedPromise;
+        const parsedKey = await keySchema.parse(key, opts);
+        parsed[parsedKey] = await valueSchema.parse(value, opts);
+        return parsedPromise;
+      }, Promise.resolve({} as Record<ParsedKey, ParsedValue>));
     },
     json: (parsed, opts) => {
-      return entries(parsed).reduce(
-        (raw, [key, value]) => {
-          raw[keySchema.json(key, opts)] = valueSchema.json(value, opts);
-          return raw;
-        },
-        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-        {} as Record<RawKey, RawValue>
-      );
+      return entries(parsed).reduce(async (rawPromise, [key, value]) => {
+        const raw: Record<RawKey, RawValue> = await rawPromise;
+        const rawKey = await keySchema.json(key, opts);
+        raw[rawKey] = await valueSchema.json(value, opts);
+        return rawPromise;
+      }, Promise.resolve({} as Record<RawKey, RawValue>));
     },
   };
 
@@ -1156,12 +1152,12 @@ export function transform<PreTransformRaw, PreTransformParsed, PostTransform>(
   transformer: BaseSchema<PreTransformParsed, PostTransform>
 ): Schema<PreTransformRaw, PostTransform> {
   const baseSchema: BaseSchema<PreTransformRaw, PostTransform> = {
-    parse: (raw, opts) => {
-      const postTransformParsed = schema.parse(raw, opts);
+    parse: async (raw, opts) => {
+      const postTransformParsed = await schema.parse(raw, opts);
       return transformer.parse(postTransformParsed, opts);
     },
-    json: (parsed, opts) => {
-      const preTransformParsed = transformer.json(parsed, opts);
+    json: async (parsed, opts) => {
+      const preTransformParsed = await transformer.json(parsed, opts);
       return schema.json(preTransformParsed, opts);
     },
   };
@@ -1212,8 +1208,8 @@ import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
   const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
-    parse: (raw, opts) => new Set(raw.map((item) => schema.parse(item, opts))),
-    json: (parsed, opts) => [...parsed].map((item) => schema.json(item, opts)),
+    parse: async (raw, opts) => new Set(await Promise.all(raw.map((item) => schema.parse(item, opts)))),
+    json: (parsed, opts) => Promise.all([...parsed].map((item) => schema.json(item, opts))),
   };
 
   return {
@@ -1313,7 +1309,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
   const baseSchema: BaseObjectLikeSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> = {
     ...OBJECT_LIKE_BRAND,
 
-    parse: (raw, opts) => {
+    parse: async (raw, opts) => {
       const { [rawDiscriminant]: discriminantValue, ...additionalProperties } = raw;
       const additionalPropertySchemas = union[discriminantValue];
 
@@ -1326,12 +1322,12 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
       }
 
       return {
-        ...additionalPropertySchemas.parse(additionalProperties, opts),
+        ...(await additionalPropertySchemas.parse(additionalProperties, opts)),
         [parsedDiscriminant]: discriminantValue,
       } as inferParsedUnion<D, U>;
     },
 
-    json: (parsed, opts) => {
+    json: async (parsed, opts) => {
       const { [parsedDiscriminant]: discriminantValue, ...additionalProperties } = parsed;
       const additionalPropertySchemas = union[discriminantValue];
 
@@ -1344,7 +1340,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
       }
 
       return {
-        ...additionalPropertySchemas.json(additionalProperties, opts),
+        ...(await additionalPropertySchemas.json(additionalProperties, opts)),
         [rawDiscriminant]: discriminantValue,
       } as inferRawUnion<D, U>;
     },
@@ -1496,7 +1492,7 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: serializers.CreateOwnerRequest.json(request),
+      body: await serializers.CreateOwnerRequest.json(request),
     });
     if (response.ok) {
       return {
@@ -1510,7 +1506,9 @@ export class Client {
         case \\"OwnerAlreadyExistsError\\":
           return {
             ok: false,
-            error: serializers.owner.create.Error.parse(response.error.body as serializers.owner.create.Error.Raw),
+            error: await serializers.owner.create.Error.parse(
+              response.error.body as serializers.owner.create.Error.Raw
+            ),
           };
       }
     }
@@ -1536,7 +1534,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.Owner.parse(response.body as serializers.Owner.Raw),
+        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
       };
     }
 
@@ -1545,7 +1543,7 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: serializers.owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
+            error: await serializers.owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
           };
       }
     }
@@ -1567,12 +1565,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: serializers.UpdateOwnerRequest.json(request._body),
+      body: await serializers.UpdateOwnerRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.Owner.parse(response.body as serializers.Owner.Raw),
+        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
       };
     }
 
@@ -1581,7 +1579,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: serializers.owner.update.Error.parse(response.error.body as serializers.owner.update.Error.Raw),
+            error: await serializers.owner.update.Error.parse(
+              response.error.body as serializers.owner.update.Error.Raw
+            ),
           };
       }
     }
@@ -1913,12 +1913,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: serializers.CreateTokenRequest.json(request),
+      body: await serializers.CreateTokenRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
+        body: await serializers.CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
       };
     }
 
@@ -1927,7 +1927,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: serializers.token.create.Error.parse(response.error.body as serializers.token.create.Error.Raw),
+            error: await serializers.token.create.Error.parse(
+              response.error.body as serializers.token.create.Error.Raw
+            ),
           };
       }
     }
@@ -1951,12 +1953,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: serializers.GetTokenMetadataRequest.json(request),
+      body: await serializers.GetTokenMetadataRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
+        body: await serializers.TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
       };
     }
 
@@ -1965,7 +1967,7 @@ export class Client {
         case \\"TokenNotFoundError\\":
           return {
             ok: false,
-            error: serializers.token.getTokenMetadata.Error.parse(
+            error: await serializers.token.getTokenMetadata.Error.parse(
               response.error.body as serializers.token.getTokenMetadata.Error.Raw
             ),
           };
@@ -1995,7 +1997,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.token.getTokensForOwner.Response.parse(response.body as serializers.TokenMetadata.Raw[]),
+        body: await serializers.token.getTokensForOwner.Response.parse(
+          response.body as serializers.TokenMetadata.Raw[]
+        ),
       };
     }
 
@@ -2004,7 +2008,7 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: serializers.token.getTokensForOwner.Error.parse(
+            error: await serializers.token.getTokensForOwner.Error.parse(
               response.error.body as serializers.token.getTokensForOwner.Error.Raw
             ),
           };
@@ -3146,8 +3150,8 @@ export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw 
 export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 
 export interface BaseSchema<Raw, Parsed> {
-  parse: (raw: Raw, opts?: SchemaOptions) => Parsed;
-  json: (parsed: Parsed, opts?: SchemaOptions) => Raw;
+  parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
+  json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
 }
 
 export interface SchemaOptions {
@@ -3295,7 +3299,7 @@ export { lazyObject } from \\"./lazyObject\\";
                         "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed>;
+type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
 type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
 
 export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
@@ -3307,17 +3311,17 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
 }
 
 export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-  const getSchema = () => {
+  const getSchema = async () => {
     const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
     if (castedGetter.__zurg_memoized == null) {
-      castedGetter.__zurg_memoized = getter();
+      castedGetter.__zurg_memoized = await getter();
     }
     return castedGetter.__zurg_memoized;
   };
 
   return {
-    parse: (raw) => getSchema().parse(raw),
-    json: (parsed) => getSchema().json(parsed),
+    parse: async (raw) => (await getSchema()).parse(raw),
+    json: async (parsed) => (await getSchema()).json(parsed),
   };
 }
 ",
@@ -3366,8 +3370,8 @@ import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
   const baseSchema: BaseSchema<Raw[], Parsed[]> = {
-    parse: (raw, opts) => raw.map((item) => schema.parse(item, opts)),
-    json: (parsed, opts) => parsed.map((item) => schema.json(item, opts)),
+    parse: (raw, opts) => Promise.all(raw.map((item) => schema.parse(item, opts))),
+    json: (parsed, opts) => Promise.all(parsed.map((item) => schema.json(item, opts))),
   };
 
   return {
@@ -3457,7 +3461,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
   const baseSchema: BaseObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectFromPropertySchemas<T>> = {
     ...OBJECT_LIKE_BRAND,
 
-    parse: (raw, { skipUnknownKeysOnParse = false } = {}) => {
+    parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
       const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
 
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
@@ -3478,7 +3482,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         const property = rawKeyToProperty[rawKey];
 
         if (property != null) {
-          const value = property.valueSchema.parse(rawPropertyValue);
+          const value = await property.valueSchema.parse(rawPropertyValue);
           parsed[property.parsedKey] = value;
         } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
           parsed[rawKey] = rawPropertyValue;
@@ -3488,7 +3492,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
       return parsed as inferParsedObjectFromPropertySchemas<T>;
     },
 
-    json: (parsed, { includeUnknownKeysOnJson = false } = {}) => {
+    json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
       const raw: Record<string | number | symbol, any> = {};
 
       for (const [parsedKey, parsedPropertyValue] of entries(parsed)) {
@@ -3496,10 +3500,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (schemaOrObjectProperty != null) {
           if (isProperty(schemaOrObjectProperty)) {
-            const value = schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
+            const value = await schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
             raw[schemaOrObjectProperty.rawKey] = value;
           } else {
-            const value = schemaOrObjectProperty.json(parsedPropertyValue);
+            const value = await schemaOrObjectProperty.json(parsedPropertyValue);
             raw[parsedKey] = value;
           }
         } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
@@ -3524,13 +3528,13 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
     extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
       const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
         ...OBJECT_LIKE_BRAND,
-        parse: (raw, opts) => ({
-          ...schema.parse(raw, opts),
-          ...extension.parse(raw, opts),
+        parse: async (raw, opts) => ({
+          ...(await schema.parse(raw, opts)),
+          ...(await extension.parse(raw, opts)),
         }),
-        json: (parsed, opts) => ({
-          ...schema.json(parsed, opts),
-          ...extension.json(parsed, opts),
+        json: async (parsed, opts) => ({
+          ...(await schema.json(parsed, opts)),
+          ...(await extension.json(parsed, opts)),
         }),
       };
 
@@ -3709,8 +3713,8 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
   const objectSchema: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> = {
     ...OBJECT_LIKE_BRAND,
-    parse: (raw, opts) => {
-      const parsedObject = objectLike.parse(raw, opts);
+    parse: async (raw, opts) => {
+      const parsedObject = await objectLike.parse(raw, opts);
       const additionalProperties = Object.entries(properties).reduce<Record<string, any>>((processed, [key, value]) => {
         return {
           ...processed,
@@ -3829,24 +3833,20 @@ export function record<RawKey extends string | number, ParsedKey extends string 
 ): Schema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> {
   const baseSchema: BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> = {
     parse: (raw, opts) => {
-      return entries(raw).reduce(
-        (parsed, [key, value]) => {
-          parsed[keySchema.parse(key, opts)] = valueSchema.parse(value, opts);
-          return parsed;
-        },
-        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-        {} as Record<ParsedKey, ParsedValue>
-      );
+      return entries(raw).reduce(async (parsedPromise, [key, value]) => {
+        const parsed: Record<ParsedKey, ParsedValue> = await parsedPromise;
+        const parsedKey = await keySchema.parse(key, opts);
+        parsed[parsedKey] = await valueSchema.parse(value, opts);
+        return parsedPromise;
+      }, Promise.resolve({} as Record<ParsedKey, ParsedValue>));
     },
     json: (parsed, opts) => {
-      return entries(parsed).reduce(
-        (raw, [key, value]) => {
-          raw[keySchema.json(key, opts)] = valueSchema.json(value, opts);
-          return raw;
-        },
-        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-        {} as Record<RawKey, RawValue>
-      );
+      return entries(parsed).reduce(async (rawPromise, [key, value]) => {
+        const raw: Record<RawKey, RawValue> = await rawPromise;
+        const rawKey = await keySchema.json(key, opts);
+        raw[rawKey] = await valueSchema.json(value, opts);
+        return rawPromise;
+      }, Promise.resolve({} as Record<RawKey, RawValue>));
     },
   };
 
@@ -3903,12 +3903,12 @@ export function transform<PreTransformRaw, PreTransformParsed, PostTransform>(
   transformer: BaseSchema<PreTransformParsed, PostTransform>
 ): Schema<PreTransformRaw, PostTransform> {
   const baseSchema: BaseSchema<PreTransformRaw, PostTransform> = {
-    parse: (raw, opts) => {
-      const postTransformParsed = schema.parse(raw, opts);
+    parse: async (raw, opts) => {
+      const postTransformParsed = await schema.parse(raw, opts);
       return transformer.parse(postTransformParsed, opts);
     },
-    json: (parsed, opts) => {
-      const preTransformParsed = transformer.json(parsed, opts);
+    json: async (parsed, opts) => {
+      const preTransformParsed = await transformer.json(parsed, opts);
       return schema.json(preTransformParsed, opts);
     },
   };
@@ -3959,8 +3959,8 @@ import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
   const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
-    parse: (raw, opts) => new Set(raw.map((item) => schema.parse(item, opts))),
-    json: (parsed, opts) => [...parsed].map((item) => schema.json(item, opts)),
+    parse: async (raw, opts) => new Set(await Promise.all(raw.map((item) => schema.parse(item, opts)))),
+    json: (parsed, opts) => Promise.all([...parsed].map((item) => schema.json(item, opts))),
   };
 
   return {
@@ -4060,7 +4060,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
   const baseSchema: BaseObjectLikeSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> = {
     ...OBJECT_LIKE_BRAND,
 
-    parse: (raw, opts) => {
+    parse: async (raw, opts) => {
       const { [rawDiscriminant]: discriminantValue, ...additionalProperties } = raw;
       const additionalPropertySchemas = union[discriminantValue];
 
@@ -4073,12 +4073,12 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
       }
 
       return {
-        ...additionalPropertySchemas.parse(additionalProperties, opts),
+        ...(await additionalPropertySchemas.parse(additionalProperties, opts)),
         [parsedDiscriminant]: discriminantValue,
       } as inferParsedUnion<D, U>;
     },
 
-    json: (parsed, opts) => {
+    json: async (parsed, opts) => {
       const { [parsedDiscriminant]: discriminantValue, ...additionalProperties } = parsed;
       const additionalPropertySchemas = union[discriminantValue];
 
@@ -4091,7 +4091,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
       }
 
       return {
-        ...additionalPropertySchemas.json(additionalProperties, opts),
+        ...(await additionalPropertySchemas.json(additionalProperties, opts)),
         [rawDiscriminant]: discriminantValue,
       } as inferRawUnion<D, U>;
     },
@@ -4767,8 +4767,8 @@ export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw 
 export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 
 export interface BaseSchema<Raw, Parsed> {
-  parse: (raw: Raw, opts?: SchemaOptions) => Parsed;
-  json: (parsed: Parsed, opts?: SchemaOptions) => Raw;
+  parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
+  json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
 }
 
 export interface SchemaOptions {
@@ -4916,7 +4916,7 @@ export { lazyObject } from \\"./lazyObject\\";
                         "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed>;
+type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
 type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
 
 export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
@@ -4928,17 +4928,17 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
 }
 
 export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-  const getSchema = () => {
+  const getSchema = async () => {
     const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
     if (castedGetter.__zurg_memoized == null) {
-      castedGetter.__zurg_memoized = getter();
+      castedGetter.__zurg_memoized = await getter();
     }
     return castedGetter.__zurg_memoized;
   };
 
   return {
-    parse: (raw) => getSchema().parse(raw),
-    json: (parsed) => getSchema().json(parsed),
+    parse: async (raw) => (await getSchema()).parse(raw),
+    json: async (parsed) => (await getSchema()).json(parsed),
   };
 }
 ",
@@ -4987,8 +4987,8 @@ import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
   const baseSchema: BaseSchema<Raw[], Parsed[]> = {
-    parse: (raw, opts) => raw.map((item) => schema.parse(item, opts)),
-    json: (parsed, opts) => parsed.map((item) => schema.json(item, opts)),
+    parse: (raw, opts) => Promise.all(raw.map((item) => schema.parse(item, opts))),
+    json: (parsed, opts) => Promise.all(parsed.map((item) => schema.json(item, opts))),
   };
 
   return {
@@ -5078,7 +5078,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
   const baseSchema: BaseObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectFromPropertySchemas<T>> = {
     ...OBJECT_LIKE_BRAND,
 
-    parse: (raw, { skipUnknownKeysOnParse = false } = {}) => {
+    parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
       const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
 
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
@@ -5099,7 +5099,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         const property = rawKeyToProperty[rawKey];
 
         if (property != null) {
-          const value = property.valueSchema.parse(rawPropertyValue);
+          const value = await property.valueSchema.parse(rawPropertyValue);
           parsed[property.parsedKey] = value;
         } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
           parsed[rawKey] = rawPropertyValue;
@@ -5109,7 +5109,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
       return parsed as inferParsedObjectFromPropertySchemas<T>;
     },
 
-    json: (parsed, { includeUnknownKeysOnJson = false } = {}) => {
+    json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
       const raw: Record<string | number | symbol, any> = {};
 
       for (const [parsedKey, parsedPropertyValue] of entries(parsed)) {
@@ -5117,10 +5117,10 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (schemaOrObjectProperty != null) {
           if (isProperty(schemaOrObjectProperty)) {
-            const value = schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
+            const value = await schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
             raw[schemaOrObjectProperty.rawKey] = value;
           } else {
-            const value = schemaOrObjectProperty.json(parsedPropertyValue);
+            const value = await schemaOrObjectProperty.json(parsedPropertyValue);
             raw[parsedKey] = value;
           }
         } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
@@ -5145,13 +5145,13 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
     extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
       const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
         ...OBJECT_LIKE_BRAND,
-        parse: (raw, opts) => ({
-          ...schema.parse(raw, opts),
-          ...extension.parse(raw, opts),
+        parse: async (raw, opts) => ({
+          ...(await schema.parse(raw, opts)),
+          ...(await extension.parse(raw, opts)),
         }),
-        json: (parsed, opts) => ({
-          ...schema.json(parsed, opts),
-          ...extension.json(parsed, opts),
+        json: async (parsed, opts) => ({
+          ...(await schema.json(parsed, opts)),
+          ...(await extension.json(parsed, opts)),
         }),
       };
 
@@ -5330,8 +5330,8 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
   const objectSchema: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> = {
     ...OBJECT_LIKE_BRAND,
-    parse: (raw, opts) => {
-      const parsedObject = objectLike.parse(raw, opts);
+    parse: async (raw, opts) => {
+      const parsedObject = await objectLike.parse(raw, opts);
       const additionalProperties = Object.entries(properties).reduce<Record<string, any>>((processed, [key, value]) => {
         return {
           ...processed,
@@ -5450,24 +5450,20 @@ export function record<RawKey extends string | number, ParsedKey extends string 
 ): Schema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> {
   const baseSchema: BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> = {
     parse: (raw, opts) => {
-      return entries(raw).reduce(
-        (parsed, [key, value]) => {
-          parsed[keySchema.parse(key, opts)] = valueSchema.parse(value, opts);
-          return parsed;
-        },
-        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-        {} as Record<ParsedKey, ParsedValue>
-      );
+      return entries(raw).reduce(async (parsedPromise, [key, value]) => {
+        const parsed: Record<ParsedKey, ParsedValue> = await parsedPromise;
+        const parsedKey = await keySchema.parse(key, opts);
+        parsed[parsedKey] = await valueSchema.parse(value, opts);
+        return parsedPromise;
+      }, Promise.resolve({} as Record<ParsedKey, ParsedValue>));
     },
     json: (parsed, opts) => {
-      return entries(parsed).reduce(
-        (raw, [key, value]) => {
-          raw[keySchema.json(key, opts)] = valueSchema.json(value, opts);
-          return raw;
-        },
-        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-        {} as Record<RawKey, RawValue>
-      );
+      return entries(parsed).reduce(async (rawPromise, [key, value]) => {
+        const raw: Record<RawKey, RawValue> = await rawPromise;
+        const rawKey = await keySchema.json(key, opts);
+        raw[rawKey] = await valueSchema.json(value, opts);
+        return rawPromise;
+      }, Promise.resolve({} as Record<RawKey, RawValue>));
     },
   };
 
@@ -5524,12 +5520,12 @@ export function transform<PreTransformRaw, PreTransformParsed, PostTransform>(
   transformer: BaseSchema<PreTransformParsed, PostTransform>
 ): Schema<PreTransformRaw, PostTransform> {
   const baseSchema: BaseSchema<PreTransformRaw, PostTransform> = {
-    parse: (raw, opts) => {
-      const postTransformParsed = schema.parse(raw, opts);
+    parse: async (raw, opts) => {
+      const postTransformParsed = await schema.parse(raw, opts);
       return transformer.parse(postTransformParsed, opts);
     },
-    json: (parsed, opts) => {
-      const preTransformParsed = transformer.json(parsed, opts);
+    json: async (parsed, opts) => {
+      const preTransformParsed = await transformer.json(parsed, opts);
       return schema.json(preTransformParsed, opts);
     },
   };
@@ -5580,8 +5576,8 @@ import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
   const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
-    parse: (raw, opts) => new Set(raw.map((item) => schema.parse(item, opts))),
-    json: (parsed, opts) => [...parsed].map((item) => schema.json(item, opts)),
+    parse: async (raw, opts) => new Set(await Promise.all(raw.map((item) => schema.parse(item, opts)))),
+    json: (parsed, opts) => Promise.all([...parsed].map((item) => schema.json(item, opts))),
   };
 
   return {
@@ -5681,7 +5677,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
   const baseSchema: BaseObjectLikeSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> = {
     ...OBJECT_LIKE_BRAND,
 
-    parse: (raw, opts) => {
+    parse: async (raw, opts) => {
       const { [rawDiscriminant]: discriminantValue, ...additionalProperties } = raw;
       const additionalPropertySchemas = union[discriminantValue];
 
@@ -5694,12 +5690,12 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
       }
 
       return {
-        ...additionalPropertySchemas.parse(additionalProperties, opts),
+        ...(await additionalPropertySchemas.parse(additionalProperties, opts)),
         [parsedDiscriminant]: discriminantValue,
       } as inferParsedUnion<D, U>;
     },
 
-    json: (parsed, opts) => {
+    json: async (parsed, opts) => {
       const { [parsedDiscriminant]: discriminantValue, ...additionalProperties } = parsed;
       const additionalPropertySchemas = union[discriminantValue];
 
@@ -5712,7 +5708,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
       }
 
       return {
-        ...additionalPropertySchemas.json(additionalProperties, opts),
+        ...(await additionalPropertySchemas.json(additionalProperties, opts)),
         [rawDiscriminant]: discriminantValue,
       } as inferRawUnion<D, U>;
     },
@@ -5881,7 +5877,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.TestSubmissionStatus.json(request._body),
+      body: await serializers.TestSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5912,7 +5908,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.TestSubmissionUpdate.json(request._body),
+      body: await serializers.TestSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5943,7 +5939,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.WorkspaceSubmissionStatus.json(request._body),
+      body: await serializers.WorkspaceSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5974,7 +5970,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.WorkspaceSubmissionUpdate.json(request._body),
+      body: await serializers.WorkspaceSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6005,7 +6001,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.StoreTracedTestCaseRequest.json(request._body),
+      body: await serializers.StoreTracedTestCaseRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6036,7 +6032,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.admin.storeTracedTestCaseV2.Request.json(request._body),
+      body: await serializers.admin.storeTracedTestCaseV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6067,7 +6063,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.StoreTracedWorkspaceRequest.json(request._body),
+      body: await serializers.StoreTracedWorkspaceRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6098,7 +6094,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.admin.storeTracedWorkspaceV2.Request.json(request._body),
+      body: await serializers.admin.storeTracedWorkspaceV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -7756,7 +7752,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.homepage.getHomepageProblems.Response.parse(response.body as serializers.ProblemId.Raw[]),
+        body: await serializers.homepage.getHomepageProblems.Response.parse(
+          response.body as serializers.ProblemId.Raw[]
+        ),
       };
     }
 
@@ -7779,7 +7777,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.homepage.setHomepageProblems.Request.json(request),
+      body: await serializers.homepage.setHomepageProblems.Request.json(request),
     });
     if (response.ok) {
       return {
@@ -7991,7 +7989,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.migration.getAttemptedMigrations.Response.parse(response.body as serializers.Migration.Raw[]),
+        body: await serializers.migration.getAttemptedMigrations.Response.parse(
+          response.body as serializers.Migration.Raw[]
+        ),
       };
     }
 
@@ -8189,12 +8189,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.PlaylistCreateRequest.json(request._body),
+      body: await serializers.PlaylistCreateRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
       };
     }
 
@@ -8231,7 +8231,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
+        body: await serializers.playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
       };
     }
 
@@ -8261,7 +8261,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
       };
     }
 
@@ -8271,7 +8271,7 @@ export class Client {
         case \\"UnauthorizedError\\":
           return {
             ok: false,
-            error: serializers.playlist.getPlaylist.Error.parse(
+            error: await serializers.playlist.getPlaylist.Error.parse(
               response.error.body as serializers.playlist.getPlaylist.Error.Raw
             ),
           };
@@ -8300,12 +8300,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.playlist.updatePlaylist.Request.json(request._body),
+      body: await serializers.playlist.updatePlaylist.Request.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.playlist.updatePlaylist.Response.parse(
+        body: await serializers.playlist.updatePlaylist.Response.parse(
           response.body as serializers.Playlist.Raw | null | undefined
         ),
       };
@@ -8316,7 +8316,7 @@ export class Client {
         case \\"PlaylistIdNotFoundError\\":
           return {
             ok: false,
-            error: serializers.playlist.updatePlaylist.Error.parse(
+            error: await serializers.playlist.updatePlaylist.Error.parse(
               response.error.body as serializers.playlist.updatePlaylist.Error.Raw
             ),
           };
@@ -8913,12 +8913,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.CreateProblemRequest.json(request),
+      body: await serializers.CreateProblemRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
+        body: await serializers.CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
       };
     }
 
@@ -8944,12 +8944,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.CreateProblemRequest.json(request._body),
+      body: await serializers.CreateProblemRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
+        body: await serializers.UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
       };
     }
 
@@ -9002,12 +9002,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: serializers.GetDefaultStarterFilesRequest.json(request),
+      body: await serializers.GetDefaultStarterFilesRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.GetDefaultStarterFilesResponse.parse(
+        body: await serializers.GetDefaultStarterFilesResponse.parse(
           response.body as serializers.GetDefaultStarterFilesResponse.Raw
         ),
       };
@@ -9649,7 +9649,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.ExecutionSessionResponse.parse(response.body as serializers.ExecutionSessionResponse.Raw),
+        body: await serializers.ExecutionSessionResponse.parse(
+          response.body as serializers.ExecutionSessionResponse.Raw
+        ),
       };
     }
 
@@ -9676,7 +9678,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.submission.getExecutionSession.Response.parse(
+        body: await serializers.submission.getExecutionSession.Response.parse(
           response.body as serializers.ExecutionSessionResponse.Raw | null | undefined
         ),
       };
@@ -9730,7 +9732,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.GetExecutionSessionStateResponse.parse(
+        body: await serializers.GetExecutionSessionStateResponse.parse(
           response.body as serializers.GetExecutionSessionStateResponse.Raw
         ),
       };
@@ -13154,7 +13156,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.sysprop.getNumWarmInstances.Response.parse(
+        body: await serializers.sysprop.getNumWarmInstances.Response.parse(
           response.body as Record<serializers.Language.Raw, number>
         ),
       };
@@ -13368,7 +13370,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.problem.getLightweightProblems.Response.parse(
+        body: await serializers.v2.problem.getLightweightProblems.Response.parse(
           response.body as serializers.v2.LightweightProblemInfoV2.Raw[]
         ),
       };
@@ -13395,7 +13397,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.problem.getProblems.Response.parse(response.body as serializers.v2.ProblemInfoV2.Raw[]),
+        body: await serializers.v2.problem.getProblems.Response.parse(
+          response.body as serializers.v2.ProblemInfoV2.Raw[]
+        ),
       };
     }
 
@@ -13425,7 +13429,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
       };
     }
 
@@ -13455,7 +13459,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
       };
     }
 
@@ -14835,7 +14839,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.v3.problem.getLightweightProblems.Response.parse(
+        body: await serializers.v2.v3.problem.getLightweightProblems.Response.parse(
           response.body as serializers.v2.v3.LightweightProblemInfoV2.Raw[]
         ),
       };
@@ -14862,7 +14866,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.v3.problem.getProblems.Response.parse(
+        body: await serializers.v2.v3.problem.getProblems.Response.parse(
           response.body as serializers.v2.v3.ProblemInfoV2.Raw[]
         ),
       };
@@ -14894,7 +14898,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
       };
     }
 
@@ -14924,7 +14928,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
       };
     }
 

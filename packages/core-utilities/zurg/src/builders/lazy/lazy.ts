@@ -1,7 +1,7 @@
 import { BaseSchema, Schema } from "../../Schema";
 import { getSchemaUtils } from "../schema-utils";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed>;
+type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
 type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
 
 export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
@@ -13,16 +13,16 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
 }
 
 export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-    const getSchema = () => {
+    const getSchema = async () => {
         const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
         if (castedGetter.__zurg_memoized == null) {
-            castedGetter.__zurg_memoized = getter();
+            castedGetter.__zurg_memoized = await getter();
         }
         return castedGetter.__zurg_memoized;
     };
 
     return {
-        parse: (raw) => getSchema().parse(raw),
-        json: (parsed) => getSchema().json(parsed),
+        parse: async (raw) => (await getSchema()).parse(raw),
+        json: async (parsed) => (await getSchema()).json(parsed),
     };
 }

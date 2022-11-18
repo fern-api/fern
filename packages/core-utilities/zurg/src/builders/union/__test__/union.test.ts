@@ -45,7 +45,7 @@ describe("union", () => {
     );
 
     describe("withProperties", () => {
-        it("Added property is included on parsed object", () => {
+        it("Added property is included on parsed object", async () => {
             const schema = union("type", {
                 lion: object({}),
                 tiger: object({ value: string() }),
@@ -53,7 +53,7 @@ describe("union", () => {
                 printType: (parsed) => () => parsed.type,
             });
 
-            const parsed = schema.parse({ type: "lion" });
+            const parsed = await schema.parse({ type: "lion" });
             expect(parsed.printType()).toBe("lion");
         });
     });
