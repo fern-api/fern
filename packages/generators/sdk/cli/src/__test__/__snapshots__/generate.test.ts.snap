@@ -1846,9 +1846,9 @@ import { FernApi } from \\"../../..\\";
  */
 export type OwnerId = string;
 
-export const OwnerId = {
-  create: (value: string) => value as unknown as FernApi.OwnerId,
-} as const;
+export function OwnerId(value: string): FernApi.OwnerId {
+  return value as unknown as FernApi.OwnerId;
+}
 ",
                     "name": "OwnerId.ts",
                     "type": "file",
@@ -2282,9 +2282,9 @@ import { FernApi } from \\"../../..\\";
 
 export type TokenId = string;
 
-export const TokenId = {
-  create: (value: string) => value as unknown as FernApi.TokenId,
-} as const;
+export function TokenId(value: string): FernApi.TokenId {
+  return value as unknown as FernApi.TokenId;
+}
 ",
                     "name": "TokenId.ts",
                     "type": "file",
@@ -7069,9 +7069,9 @@ export type NodeId = string & {
   NodeId: void;
 };
 
-export const NodeId = {
-  create: (value: string) => value as unknown as TraceApi.NodeId,
-} as const;
+export function NodeId(value: string): TraceApi.NodeId {
+  return value as unknown as TraceApi.NodeId;
+}
 ",
                     "name": "NodeId.ts",
                     "type": "file",
@@ -7087,9 +7087,9 @@ export type ProblemId = string & {
   ProblemId: void;
 };
 
-export const ProblemId = {
-  create: (value: string) => value as unknown as TraceApi.ProblemId,
-} as const;
+export function ProblemId(value: string): TraceApi.ProblemId {
+  return value as unknown as TraceApi.ProblemId;
+}
 ",
                     "name": "ProblemId.ts",
                     "type": "file",
@@ -7181,9 +7181,9 @@ export type UserId = string & {
   UserId: void;
 };
 
-export const UserId = {
-  create: (value: string) => value as unknown as TraceApi.UserId,
-} as const;
+export function UserId(value: string): TraceApi.UserId {
+  return value as unknown as TraceApi.UserId;
+}
 ",
                     "name": "UserId.ts",
                     "type": "file",
@@ -8655,9 +8655,9 @@ import { TraceApi } from \\"../../..\\";
 
 export type PlaylistIdNotFoundError = TraceApi.PlaylistIdNotFoundErrorBody;
 
-export const PlaylistIdNotFoundError = {
-  create: (value: string) => value as unknown as TraceApi.PlaylistIdNotFoundError,
-} as const;
+export function PlaylistIdNotFoundError(value: string): TraceApi.PlaylistIdNotFoundError {
+  return value as unknown as TraceApi.PlaylistIdNotFoundError;
+}
 ",
                     "name": "PlaylistIdNotFoundError.ts",
                     "type": "file",
@@ -8723,9 +8723,9 @@ export type PlaylistId = string & {
   PlaylistId: void;
 };
 
-export const PlaylistId = {
-  create: (value: string) => value as unknown as TraceApi.PlaylistId,
-} as const;
+export function PlaylistId(value: string): TraceApi.PlaylistId {
+  return value as unknown as TraceApi.PlaylistId;
+}
 ",
                     "name": "PlaylistId.ts",
                     "type": "file",
@@ -11154,9 +11154,9 @@ export type ShareId = string & {
   ShareId: void;
 };
 
-export const ShareId = {
-  create: (value: string) => value as unknown as TraceApi.ShareId,
-} as const;
+export function ShareId(value: string): TraceApi.ShareId {
+  return value as unknown as TraceApi.ShareId;
+}
 ",
                     "name": "ShareId.ts",
                     "type": "file",
@@ -11275,9 +11275,9 @@ export type SubmissionId = string & {
   SubmissionId: void;
 };
 
-export const SubmissionId = {
-  create: (value: string) => value as unknown as TraceApi.SubmissionId,
-} as const;
+export function SubmissionId(value: string): TraceApi.SubmissionId {
+  return value as unknown as TraceApi.SubmissionId;
+}
 ",
                     "name": "SubmissionId.ts",
                     "type": "file",
@@ -14202,9 +14202,9 @@ export type ParameterId = string & {
   v2_ParameterId: void;
 };
 
-export const ParameterId = {
-  create: (value: string) => value as unknown as TraceApi.v2.ParameterId,
-} as const;
+export function ParameterId(value: string): TraceApi.v2.ParameterId {
+  return value as unknown as TraceApi.v2.ParameterId;
+}
 ",
                             "name": "ParameterId.ts",
                             "type": "file",
@@ -14337,9 +14337,9 @@ export type TestCaseId = string & {
   v2_TestCaseId: void;
 };
 
-export const TestCaseId = {
-  create: (value: string) => value as unknown as TraceApi.v2.TestCaseId,
-} as const;
+export function TestCaseId(value: string): TraceApi.v2.TestCaseId {
+  return value as unknown as TraceApi.v2.TestCaseId;
+}
 ",
                             "name": "TestCaseId.ts",
                             "type": "file",
@@ -14581,9 +14581,9 @@ export type TestCaseTemplateId = string & {
   v2_TestCaseTemplateId: void;
 };
 
-export const TestCaseTemplateId = {
-  create: (value: string) => value as unknown as TraceApi.v2.TestCaseTemplateId,
-} as const;
+export function TestCaseTemplateId(value: string): TraceApi.v2.TestCaseTemplateId {
+  return value as unknown as TraceApi.v2.TestCaseTemplateId;
+}
 ",
                             "name": "TestCaseTemplateId.ts",
                             "type": "file",
@@ -15676,9 +15676,9 @@ export type ParameterId = string & {
   v2_v3_ParameterId: void;
 };
 
-export const ParameterId = {
-  create: (value: string) => value as unknown as TraceApi.v2.v3.ParameterId,
-} as const;
+export function ParameterId(value: string): TraceApi.v2.v3.ParameterId {
+  return value as unknown as TraceApi.v2.v3.ParameterId;
+}
 ",
                                     "name": "ParameterId.ts",
                                     "type": "file",
@@ -15811,9 +15811,9 @@ export type TestCaseId = string & {
   v2_v3_TestCaseId: void;
 };
 
-export const TestCaseId = {
-  create: (value: string) => value as unknown as TraceApi.v2.v3.TestCaseId,
-} as const;
+export function TestCaseId(value: string): TraceApi.v2.v3.TestCaseId {
+  return value as unknown as TraceApi.v2.v3.TestCaseId;
+}
 ",
                                     "name": "TestCaseId.ts",
                                     "type": "file",
@@ -16055,9 +16055,9 @@ export type TestCaseTemplateId = string & {
   v2_v3_TestCaseTemplateId: void;
 };
 
-export const TestCaseTemplateId = {
-  create: (value: string) => value as unknown as TraceApi.v2.v3.TestCaseTemplateId,
-} as const;
+export function TestCaseTemplateId(value: string): TraceApi.v2.v3.TestCaseTemplateId {
+  return value as unknown as TraceApi.v2.v3.TestCaseTemplateId;
+}
 ",
                                     "name": "TestCaseTemplateId.ts",
                                     "type": "file",
@@ -16910,7 +16910,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const NodeId: core.schemas.Schema<NodeId.Raw, TraceApi.NodeId> = core.schemas.string().transform({
-  parse: TraceApi.NodeId.create,
+  parse: TraceApi.NodeId,
   json: (value) => value,
 });
 
@@ -16930,7 +16930,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const ProblemId: core.schemas.Schema<ProblemId.Raw, TraceApi.ProblemId> = core.schemas.string().transform({
-  parse: TraceApi.ProblemId.create,
+  parse: TraceApi.ProblemId,
   json: (value) => value,
 });
 
@@ -17087,7 +17087,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const UserId: core.schemas.Schema<UserId.Raw, TraceApi.UserId> = core.schemas.string().transform({
-  parse: TraceApi.UserId.create,
+  parse: TraceApi.UserId,
   json: (value) => value,
 });
 
@@ -17868,7 +17868,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const PlaylistId: core.schemas.Schema<PlaylistId.Raw, TraceApi.PlaylistId> = core.schemas.string().transform({
-  parse: TraceApi.PlaylistId.create,
+  parse: TraceApi.PlaylistId,
   json: (value) => value,
 });
 
@@ -19600,7 +19600,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const ShareId: core.schemas.Schema<ShareId.Raw, TraceApi.ShareId> = core.schemas.string().transform({
-  parse: TraceApi.ShareId.create,
+  parse: TraceApi.ShareId,
   json: (value) => value,
 });
 
@@ -19794,7 +19794,7 @@ import * as core from \\"../../../core\\";
 export const SubmissionId: core.schemas.Schema<SubmissionId.Raw, TraceApi.SubmissionId> = core.schemas
   .string()
   .transform({
-    parse: TraceApi.SubmissionId.create,
+    parse: TraceApi.SubmissionId,
     json: (value) => value,
   });
 
@@ -22196,7 +22196,7 @@ import * as core from \\"../../../../../core\\";
 export const ParameterId: core.schemas.Schema<ParameterId.Raw, TraceApi.v2.ParameterId> = core.schemas
   .string()
   .transform({
-    parse: TraceApi.v2.ParameterId.create,
+    parse: TraceApi.v2.ParameterId,
     json: (value) => value,
   });
 
@@ -22326,7 +22326,7 @@ import { TraceApi } from \\"../../../../..\\";
 import * as core from \\"../../../../../core\\";
 
 export const TestCaseId: core.schemas.Schema<TestCaseId.Raw, TraceApi.v2.TestCaseId> = core.schemas.string().transform({
-  parse: TraceApi.v2.TestCaseId.create,
+  parse: TraceApi.v2.TestCaseId,
   json: (value) => value,
 });
 
@@ -22562,7 +22562,7 @@ import * as core from \\"../../../../../core\\";
 
 export const TestCaseTemplateId: core.schemas.Schema<TestCaseTemplateId.Raw, TraceApi.v2.TestCaseTemplateId> =
   core.schemas.string().transform({
-    parse: TraceApi.v2.TestCaseTemplateId.create,
+    parse: TraceApi.v2.TestCaseTemplateId,
     json: (value) => value,
   });
 
@@ -23594,7 +23594,7 @@ import * as core from \\"../../../../../../../core\\";
 export const ParameterId: core.schemas.Schema<ParameterId.Raw, TraceApi.v2.v3.ParameterId> = core.schemas
   .string()
   .transform({
-    parse: TraceApi.v2.v3.ParameterId.create,
+    parse: TraceApi.v2.v3.ParameterId,
     json: (value) => value,
   });
 
@@ -23726,7 +23726,7 @@ import * as core from \\"../../../../../../../core\\";
 export const TestCaseId: core.schemas.Schema<TestCaseId.Raw, TraceApi.v2.v3.TestCaseId> = core.schemas
   .string()
   .transform({
-    parse: TraceApi.v2.v3.TestCaseId.create,
+    parse: TraceApi.v2.v3.TestCaseId,
     json: (value) => value,
   });
 
@@ -23962,7 +23962,7 @@ import * as core from \\"../../../../../../../core\\";
 
 export const TestCaseTemplateId: core.schemas.Schema<TestCaseTemplateId.Raw, TraceApi.v2.v3.TestCaseTemplateId> =
   core.schemas.string().transform({
-    parse: TraceApi.v2.v3.TestCaseTemplateId.create,
+    parse: TraceApi.v2.v3.TestCaseTemplateId,
     json: (value) => value,
   });
 
