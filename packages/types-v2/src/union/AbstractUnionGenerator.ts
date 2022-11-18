@@ -95,7 +95,7 @@ export abstract class AbstractUnionGenerator extends AbstractTypeSchemaGenerator
     }
 
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
-        return this.getReferenceToUnionType(file).typeNode;
+        return this.getReferenceToUnionType(file).getTypeNode();
     }
 
     protected abstract getReferenceToUnionType(file: SdkFile): Reference;

@@ -169,7 +169,7 @@ export abstract class AbstractParsedSingleUnionType implements ParsedSingleUnion
                                         ts.factory.createReturnStatement(
                                             ts.factory.createCallExpression(
                                                 ts.factory.createPropertyAccessExpression(
-                                                    getReferenceToUnion(file).expression,
+                                                    getReferenceToUnion(file).getExpression(),
                                                     UnionModule.VISIT_UTIL_PROPERTY_NAME
                                                 ),
                                                 undefined,

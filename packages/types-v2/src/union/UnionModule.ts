@@ -93,7 +93,7 @@ export class UnionModule extends AbstractUnionDeclaration {
 
     private getReferenceTo(name: string, file: SdkFile): ts.EntityName {
         return ts.factory.createQualifiedName(
-            this.getReferenceToUnion(file).entityName,
+            this.getReferenceToUnion(file).getEntityName(),
             ts.factory.createIdentifier(name)
         );
     }

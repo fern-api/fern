@@ -59,6 +59,6 @@ export function generateObjectType({
     maybeAddDocs(interfaceNode, typeDeclaration.docs);
 
     for (const extension of shape.extends) {
-        interfaceNode.addExtends(getTextOfTsNode(typeFile.getReferenceToNamedType(extension).typeNode));
+        interfaceNode.addExtends(getTextOfTsNode(typeFile.getReferenceToNamedType(extension).getTypeNode()));
     }
 }

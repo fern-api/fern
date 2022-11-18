@@ -584,7 +584,9 @@ import { ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { constructLazyBaseSchema } from \\"./lazy\\";
 
-export function lazyObject<Raw, Parsed>(getter: () => ObjectSchema<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
+type Getter<Raw, Parsed> = () => ObjectSchema<Raw, Parsed> | Promise<ObjectSchema<Raw, Parsed>>;
+
+export function lazyObject<Raw, Parsed>(getter: Getter<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
   const baseSchema = {
     ...OBJECT_LIKE_BRAND,
     ...constructLazyBaseSchema(getter),
@@ -1472,8 +1474,8 @@ export * from \\"./token/types\\";
 
 import { FernApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
-import * as serializers from \\"../../../serialization\\";
 import * as core from \\"../../../core\\";
+import * as serializers from \\"../../../serialization\\";
 
 export declare namespace Client {
   interface Options {
@@ -1492,7 +1494,7 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await serializers.CreateOwnerRequest.json(request),
+      body: await (await import(\\"../../../serialization\\")).CreateOwnerRequest.json(request),
     });
     if (response.ok) {
       return {
@@ -1506,9 +1508,9 @@ export class Client {
         case \\"OwnerAlreadyExistsError\\":
           return {
             ok: false,
-            error: await serializers.owner.create.Error.parse(
-              response.error.body as serializers.owner.create.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).owner.create.Error.parse(response.error.body as serializers.owner.create.Error.Raw),
           };
       }
     }
@@ -1534,7 +1536,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
+        body: await (await import(\\"../../../serialization\\")).Owner.parse(response.body as serializers.Owner.Raw),
       };
     }
 
@@ -1543,7 +1545,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await serializers.owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
           };
       }
     }
@@ -1565,12 +1569,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await serializers.UpdateOwnerRequest.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).UpdateOwnerRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
+        body: await (await import(\\"../../../serialization\\")).Owner.parse(response.body as serializers.Owner.Raw),
       };
     }
 
@@ -1579,9 +1583,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await serializers.owner.update.Error.parse(
-              response.error.body as serializers.owner.update.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).owner.update.Error.parse(response.error.body as serializers.owner.update.Error.Raw),
           };
       }
     }
@@ -1893,8 +1897,8 @@ export * from \\"./Owner\\";
 
 import { FernApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
-import * as serializers from \\"../../../serialization\\";
 import * as core from \\"../../../core\\";
+import * as serializers from \\"../../../serialization\\";
 
 export declare namespace Client {
   interface Options {
@@ -1913,12 +1917,14 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await serializers.CreateTokenRequest.json(request),
+      body: await (await import(\\"../../../serialization\\")).CreateTokenRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
       };
     }
 
@@ -1927,9 +1933,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await serializers.token.create.Error.parse(
-              response.error.body as serializers.token.create.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).token.create.Error.parse(response.error.body as serializers.token.create.Error.Raw),
           };
       }
     }
@@ -1953,12 +1959,14 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await serializers.GetTokenMetadataRequest.json(request),
+      body: await (await import(\\"../../../serialization\\")).GetTokenMetadataRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
       };
     }
 
@@ -1967,9 +1975,9 @@ export class Client {
         case \\"TokenNotFoundError\\":
           return {
             ok: false,
-            error: await serializers.token.getTokenMetadata.Error.parse(
-              response.error.body as serializers.token.getTokenMetadata.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).token.getTokenMetadata.Error.parse(response.error.body as serializers.token.getTokenMetadata.Error.Raw),
           };
       }
     }
@@ -1997,9 +2005,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.token.getTokensForOwner.Response.parse(
-          response.body as serializers.TokenMetadata.Raw[]
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).token.getTokensForOwner.Response.parse(response.body as serializers.TokenMetadata.Raw[]),
       };
     }
 
@@ -2008,9 +2016,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await serializers.token.getTokensForOwner.Error.parse(
-              response.error.body as serializers.token.getTokensForOwner.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).token.getTokensForOwner.Error.parse(response.error.body as serializers.token.getTokensForOwner.Error.Raw),
           };
       }
     }
@@ -2574,7 +2582,7 @@ import * as serializers from \\"../..\\";
 
 export const CreateOwnerRequest: core.schemas.ObjectSchema<CreateOwnerRequest.Raw, FernApi.CreateOwnerRequest> =
   core.schemas.object({
-    ownerId: core.schemas.lazy(() => serializers.OwnerId),
+    ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
     data: core.schemas.unknown(),
   });
 
@@ -2598,7 +2606,7 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const Owner: core.schemas.ObjectSchema<Owner.Raw, FernApi.Owner> = core.schemas.object({
-  ownerId: core.schemas.lazy(() => serializers.OwnerId),
+  ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
   data: core.schemas.unknown(),
 });
 
@@ -2748,7 +2756,7 @@ import { FernApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Response: core.schemas.Schema<serializers.TokenMetadata.Raw[], FernApi.TokenMetadata[]> =
-  core.schemas.list(core.schemas.lazyObject(() => serializers.TokenMetadata));
+  core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TokenMetadata));
 export const Error: core.schemas.Schema<Error.Raw, FernApi.token.getTokensForOwner.Error> = core.schemas
   .union(\\"errorName\\", {
     OwnerNotFoundError: core.schemas.object({}),
@@ -2806,7 +2814,7 @@ import * as serializers from \\"../..\\";
 
 export const CreateTokenRequest: core.schemas.ObjectSchema<CreateTokenRequest.Raw, FernApi.CreateTokenRequest> =
   core.schemas.object({
-    ownerId: core.schemas.lazy(() => serializers.OwnerId),
+    ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
     description: core.schemas.string().optional(),
   });
 
@@ -2832,7 +2840,7 @@ import * as serializers from \\"../..\\";
 export const CreateTokenResponse: core.schemas.ObjectSchema<CreateTokenResponse.Raw, FernApi.CreateTokenResponse> =
   core.schemas.object({
     token: core.schemas.string(),
-    tokenId: core.schemas.lazy(() => serializers.TokenId),
+    tokenId: core.schemas.lazy(async () => (await import(\\"../..\\")).TokenId),
   });
 
 export declare namespace CreateTokenResponse {
@@ -2896,11 +2904,11 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const TokenMetadata: core.schemas.ObjectSchema<TokenMetadata.Raw, FernApi.TokenMetadata> = core.schemas.object({
-  tokenId: core.schemas.lazy(() => serializers.TokenId),
-  ownerId: core.schemas.lazy(() => serializers.OwnerId),
+  tokenId: core.schemas.lazy(async () => (await import(\\"../..\\")).TokenId),
+  ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
   description: core.schemas.string().optional(),
   createdTime: core.schemas.date(),
-  status: core.schemas.lazy(() => serializers.TokenStatus),
+  status: core.schemas.lazy(async () => (await import(\\"../..\\")).TokenStatus),
 });
 
 export declare namespace TokenMetadata {
@@ -3001,6 +3009,7 @@ export * from \\"./TokenStatus\\";
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
+        \\"module\\": \\"commonjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
@@ -3335,7 +3344,9 @@ import { ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { constructLazyBaseSchema } from \\"./lazy\\";
 
-export function lazyObject<Raw, Parsed>(getter: () => ObjectSchema<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
+type Getter<Raw, Parsed> = () => ObjectSchema<Raw, Parsed> | Promise<ObjectSchema<Raw, Parsed>>;
+
+export function lazyObject<Raw, Parsed>(getter: Getter<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
   const baseSchema = {
     ...OBJECT_LIKE_BRAND,
     ...constructLazyBaseSchema(getter),
@@ -4290,6 +4301,7 @@ export declare namespace Package {
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
+        \\"module\\": \\"commonjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
@@ -4952,7 +4964,9 @@ import { ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { constructLazyBaseSchema } from \\"./lazy\\";
 
-export function lazyObject<Raw, Parsed>(getter: () => ObjectSchema<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
+type Getter<Raw, Parsed> = () => ObjectSchema<Raw, Parsed> | Promise<ObjectSchema<Raw, Parsed>>;
+
+export function lazyObject<Raw, Parsed>(getter: Getter<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
   const baseSchema = {
     ...OBJECT_LIKE_BRAND,
     ...constructLazyBaseSchema(getter),
@@ -5851,7 +5865,6 @@ import * as environments from \\"../../../environments\\";
 import * as core from \\"../../../core\\";
 import { TraceApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
-import * as serializers from \\"../../../serialization\\";
 
 export declare namespace Client {
   interface Options {
@@ -5877,7 +5890,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.TestSubmissionStatus.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).TestSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5908,7 +5921,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.TestSubmissionUpdate.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).TestSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5939,7 +5952,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.WorkspaceSubmissionStatus.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).WorkspaceSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5970,7 +5983,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.WorkspaceSubmissionUpdate.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).WorkspaceSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6001,7 +6014,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.StoreTracedTestCaseRequest.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).StoreTracedTestCaseRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6032,7 +6045,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.admin.storeTracedTestCaseV2.Request.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).admin.storeTracedTestCaseV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6063,7 +6076,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.StoreTracedWorkspaceRequest.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).StoreTracedWorkspaceRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6094,7 +6107,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.admin.storeTracedWorkspaceV2.Request.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).admin.storeTracedWorkspaceV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -7752,9 +7765,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.homepage.getHomepageProblems.Response.parse(
-          response.body as serializers.ProblemId.Raw[]
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).homepage.getHomepageProblems.Response.parse(response.body as serializers.ProblemId.Raw[]),
       };
     }
 
@@ -7777,7 +7790,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.homepage.setHomepageProblems.Request.json(request),
+      body: await (await import(\\"../../../serialization\\")).homepage.setHomepageProblems.Request.json(request),
     });
     if (response.ok) {
       return {
@@ -7989,9 +8002,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.migration.getAttemptedMigrations.Response.parse(
-          response.body as serializers.Migration.Raw[]
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).migration.getAttemptedMigrations.Response.parse(response.body as serializers.Migration.Raw[]),
       };
     }
 
@@ -8189,12 +8202,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.PlaylistCreateRequest.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).PlaylistCreateRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await (await import(\\"../../../serialization\\")).Playlist.parse(response.body as serializers.Playlist.Raw),
       };
     }
 
@@ -8231,7 +8244,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
       };
     }
 
@@ -8261,7 +8276,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await (await import(\\"../../../serialization\\")).Playlist.parse(response.body as serializers.Playlist.Raw),
       };
     }
 
@@ -8271,9 +8286,9 @@ export class Client {
         case \\"UnauthorizedError\\":
           return {
             ok: false,
-            error: await serializers.playlist.getPlaylist.Error.parse(
-              response.error.body as serializers.playlist.getPlaylist.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).playlist.getPlaylist.Error.parse(response.error.body as serializers.playlist.getPlaylist.Error.Raw),
           };
       }
     }
@@ -8300,14 +8315,14 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.playlist.updatePlaylist.Request.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).playlist.updatePlaylist.Request.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.playlist.updatePlaylist.Response.parse(
-          response.body as serializers.Playlist.Raw | null | undefined
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).playlist.updatePlaylist.Response.parse(response.body as serializers.Playlist.Raw | null | undefined),
       };
     }
 
@@ -8316,9 +8331,9 @@ export class Client {
         case \\"PlaylistIdNotFoundError\\":
           return {
             ok: false,
-            error: await serializers.playlist.updatePlaylist.Error.parse(
-              response.error.body as serializers.playlist.updatePlaylist.Error.Raw
-            ),
+            error: await (
+              await import(\\"../../../serialization\\")
+            ).playlist.updatePlaylist.Error.parse(response.error.body as serializers.playlist.updatePlaylist.Error.Raw),
           };
       }
     }
@@ -8913,12 +8928,14 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.CreateProblemRequest.json(request),
+      body: await (await import(\\"../../../serialization\\")).CreateProblemRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
       };
     }
 
@@ -8944,12 +8961,14 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.CreateProblemRequest.json(request._body),
+      body: await (await import(\\"../../../serialization\\")).CreateProblemRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
       };
     }
 
@@ -9002,14 +9021,14 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await serializers.GetDefaultStarterFilesRequest.json(request),
+      body: await (await import(\\"../../../serialization\\")).GetDefaultStarterFilesRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.GetDefaultStarterFilesResponse.parse(
-          response.body as serializers.GetDefaultStarterFilesResponse.Raw
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).GetDefaultStarterFilesResponse.parse(response.body as serializers.GetDefaultStarterFilesResponse.Raw),
       };
     }
 
@@ -9649,9 +9668,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.ExecutionSessionResponse.parse(
-          response.body as serializers.ExecutionSessionResponse.Raw
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).ExecutionSessionResponse.parse(response.body as serializers.ExecutionSessionResponse.Raw),
       };
     }
 
@@ -9678,7 +9697,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.submission.getExecutionSession.Response.parse(
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).submission.getExecutionSession.Response.parse(
           response.body as serializers.ExecutionSessionResponse.Raw | null | undefined
         ),
       };
@@ -9732,9 +9753,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.GetExecutionSessionStateResponse.parse(
-          response.body as serializers.GetExecutionSessionStateResponse.Raw
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).GetExecutionSessionStateResponse.parse(response.body as serializers.GetExecutionSessionStateResponse.Raw),
       };
     }
 
@@ -13156,9 +13177,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.sysprop.getNumWarmInstances.Response.parse(
-          response.body as Record<serializers.Language.Raw, number>
-        ),
+        body: await (
+          await import(\\"../../../serialization\\")
+        ).sysprop.getNumWarmInstances.Response.parse(response.body as Record<serializers.Language.Raw, number>),
       };
     }
 
@@ -13370,7 +13391,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.problem.getLightweightProblems.Response.parse(
+        body: await (
+          await import(\\"../../../../../serialization\\")
+        ).v2.problem.getLightweightProblems.Response.parse(
           response.body as serializers.v2.LightweightProblemInfoV2.Raw[]
         ),
       };
@@ -13397,9 +13420,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.problem.getProblems.Response.parse(
-          response.body as serializers.v2.ProblemInfoV2.Raw[]
-        ),
+        body: await (
+          await import(\\"../../../../../serialization\\")
+        ).v2.problem.getProblems.Response.parse(response.body as serializers.v2.ProblemInfoV2.Raw[]),
       };
     }
 
@@ -13429,7 +13452,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await (
+          await import(\\"../../../../../serialization\\")
+        ).v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
       };
     }
 
@@ -13459,7 +13484,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await (
+          await import(\\"../../../../../serialization\\")
+        ).v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
       };
     }
 
@@ -14839,7 +14866,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.v3.problem.getLightweightProblems.Response.parse(
+        body: await (
+          await import(\\"../../../../../../../serialization\\")
+        ).v2.v3.problem.getLightweightProblems.Response.parse(
           response.body as serializers.v2.v3.LightweightProblemInfoV2.Raw[]
         ),
       };
@@ -14866,9 +14895,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.v3.problem.getProblems.Response.parse(
-          response.body as serializers.v2.v3.ProblemInfoV2.Raw[]
-        ),
+        body: await (
+          await import(\\"../../../../../../../serialization\\")
+        ).v2.v3.problem.getProblems.Response.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw[]),
       };
     }
 
@@ -14898,7 +14927,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await (
+          await import(\\"../../../../../../../serialization\\")
+        ).v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
       };
     }
 
@@ -14928,7 +14959,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await (
+          await import(\\"../../../../../../../serialization\\")
+        ).v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
       };
     }
 
@@ -16257,7 +16290,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<serializers.TraceResponseV2.Raw[], TraceApi.TraceResponseV2[]> =
-  core.schemas.list(core.schemas.lazyObject(() => serializers.TraceResponseV2));
+  core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponseV2));
 ",
                     "name": "storeTracedTestCaseV2.ts",
                     "type": "file",
@@ -16272,7 +16305,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<serializers.TraceResponseV2.Raw[], TraceApi.TraceResponseV2[]> =
-  core.schemas.list(core.schemas.lazyObject(() => serializers.TraceResponseV2));
+  core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponseV2));
 ",
                     "name": "storeTracedWorkspaceV2.ts",
                     "type": "file",
@@ -16303,8 +16336,8 @@ export const StoreTracedTestCaseRequest: core.schemas.ObjectSchema<
   StoreTracedTestCaseRequest.Raw,
   TraceApi.StoreTracedTestCaseRequest
 > = core.schemas.object({
-  result: core.schemas.lazyObject(() => serializers.TestCaseResultWithStdout),
-  traceResponses: core.schemas.list(core.schemas.lazyObject(() => serializers.TraceResponse)),
+  result: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResultWithStdout),
+  traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
 });
 
 export declare namespace StoreTracedTestCaseRequest {
@@ -16330,8 +16363,8 @@ export const StoreTracedWorkspaceRequest: core.schemas.ObjectSchema<
   StoreTracedWorkspaceRequest.Raw,
   TraceApi.StoreTracedWorkspaceRequest
 > = core.schemas.object({
-  workspaceRunDetails: core.schemas.lazyObject(() => serializers.WorkspaceRunDetails),
-  traceResponses: core.schemas.list(core.schemas.lazyObject(() => serializers.TraceResponse)),
+  workspaceRunDetails: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
+  traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
 });
 
 export declare namespace StoreTracedWorkspaceRequest {
@@ -16382,8 +16415,8 @@ export const BinaryTreeNodeAndTreeValue: core.schemas.ObjectSchema<
   BinaryTreeNodeAndTreeValue.Raw,
   TraceApi.BinaryTreeNodeAndTreeValue
 > = core.schemas.object({
-  nodeId: core.schemas.lazy(() => serializers.NodeId),
-  fullTree: core.schemas.lazyObject(() => serializers.BinaryTreeValue),
+  nodeId: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
+  fullTree: core.schemas.lazyObject(async () => (await import(\\"../..\\")).BinaryTreeValue),
 });
 
 export declare namespace BinaryTreeNodeAndTreeValue {
@@ -16407,10 +16440,10 @@ import * as serializers from \\"../..\\";
 
 export const BinaryTreeNodeValue: core.schemas.ObjectSchema<BinaryTreeNodeValue.Raw, TraceApi.BinaryTreeNodeValue> =
   core.schemas.object({
-    nodeId: core.schemas.lazy(() => serializers.NodeId),
+    nodeId: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
     val: core.schemas.number(),
-    right: core.schemas.lazy(() => serializers.NodeId).optional(),
-    left: core.schemas.lazy(() => serializers.NodeId).optional(),
+    right: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
+    left: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
   });
 
 export declare namespace BinaryTreeNodeValue {
@@ -16436,10 +16469,10 @@ import * as serializers from \\"../..\\";
 
 export const BinaryTreeValue: core.schemas.ObjectSchema<BinaryTreeValue.Raw, TraceApi.BinaryTreeValue> =
   core.schemas.object({
-    root: core.schemas.lazy(() => serializers.NodeId).optional(),
+    root: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
     nodes: core.schemas.record(
-      core.schemas.lazy(() => serializers.NodeId),
-      core.schemas.lazyObject(() => serializers.BinaryTreeNodeValue)
+      core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
+      core.schemas.lazyObject(async () => (await import(\\"../..\\")).BinaryTreeNodeValue)
     ),
   });
 
@@ -16464,8 +16497,8 @@ import * as serializers from \\"../..\\";
 
 export const DebugKeyValuePairs: core.schemas.ObjectSchema<DebugKeyValuePairs.Raw, TraceApi.DebugKeyValuePairs> =
   core.schemas.object({
-    key: core.schemas.lazy(() => serializers.DebugVariableValue),
-    value: core.schemas.lazy(() => serializers.DebugVariableValue),
+    key: core.schemas.lazy(async () => (await import(\\"../..\\")).DebugVariableValue),
+    value: core.schemas.lazy(async () => (await import(\\"../..\\")).DebugVariableValue),
   });
 
 export declare namespace DebugKeyValuePairs {
@@ -16488,7 +16521,7 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const DebugMapValue: core.schemas.ObjectSchema<DebugMapValue.Raw, TraceApi.DebugMapValue> = core.schemas.object({
-  keyValuePairs: core.schemas.list(core.schemas.lazyObject(() => serializers.DebugKeyValuePairs)),
+  keyValuePairs: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).DebugKeyValuePairs)),
 });
 
 export declare namespace DebugMapValue {
@@ -16526,16 +16559,20 @@ export const DebugVariableValue: core.schemas.Schema<DebugVariableValue.Raw, Tra
     charValue: core.schemas.object({
       value: core.schemas.string(),
     }),
-    mapValue: core.schemas.lazyObject(() => serializers.DebugMapValue),
+    mapValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).DebugMapValue),
     listValue: core.schemas.object({
-      value: core.schemas.list(core.schemas.lazy(() => serializers.DebugVariableValue)),
+      value: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../..\\")).DebugVariableValue)),
     }),
-    binaryTreeNodeValue: core.schemas.lazyObject(() => serializers.BinaryTreeNodeAndTreeValue),
-    singlyLinkedListNodeValue: core.schemas.lazyObject(() => serializers.SinglyLinkedListNodeAndListValue),
-    doublyLinkedListNodeValue: core.schemas.lazyObject(() => serializers.DoublyLinkedListNodeAndListValue),
+    binaryTreeNodeValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).BinaryTreeNodeAndTreeValue),
+    singlyLinkedListNodeValue: core.schemas.lazyObject(
+      async () => (await import(\\"../..\\")).SinglyLinkedListNodeAndListValue
+    ),
+    doublyLinkedListNodeValue: core.schemas.lazyObject(
+      async () => (await import(\\"../..\\")).DoublyLinkedListNodeAndListValue
+    ),
     undefinedValue: core.schemas.object({}),
     nullValue: core.schemas.object({}),
-    genericValue: core.schemas.lazyObject(() => serializers.GenericValue),
+    genericValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).GenericValue),
   })
   .transform<TraceApi.DebugVariableValue>({
     parse: (value) => {
@@ -16668,8 +16705,8 @@ export const DoublyLinkedListNodeAndListValue: core.schemas.ObjectSchema<
   DoublyLinkedListNodeAndListValue.Raw,
   TraceApi.DoublyLinkedListNodeAndListValue
 > = core.schemas.object({
-  nodeId: core.schemas.lazy(() => serializers.NodeId),
-  fullList: core.schemas.lazyObject(() => serializers.DoublyLinkedListValue),
+  nodeId: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
+  fullList: core.schemas.lazyObject(async () => (await import(\\"../..\\")).DoublyLinkedListValue),
 });
 
 export declare namespace DoublyLinkedListNodeAndListValue {
@@ -16695,10 +16732,10 @@ export const DoublyLinkedListNodeValue: core.schemas.ObjectSchema<
   DoublyLinkedListNodeValue.Raw,
   TraceApi.DoublyLinkedListNodeValue
 > = core.schemas.object({
-  nodeId: core.schemas.lazy(() => serializers.NodeId),
+  nodeId: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
   val: core.schemas.number(),
-  next: core.schemas.lazy(() => serializers.NodeId).optional(),
-  prev: core.schemas.lazy(() => serializers.NodeId).optional(),
+  next: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
+  prev: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
 });
 
 export declare namespace DoublyLinkedListNodeValue {
@@ -16726,10 +16763,10 @@ export const DoublyLinkedListValue: core.schemas.ObjectSchema<
   DoublyLinkedListValue.Raw,
   TraceApi.DoublyLinkedListValue
 > = core.schemas.object({
-  head: core.schemas.lazy(() => serializers.NodeId).optional(),
+  head: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
   nodes: core.schemas.record(
-    core.schemas.lazy(() => serializers.NodeId),
-    core.schemas.lazyObject(() => serializers.DoublyLinkedListNodeValue)
+    core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).DoublyLinkedListNodeValue)
   ),
 });
 
@@ -16799,8 +16836,8 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const KeyValuePair: core.schemas.ObjectSchema<KeyValuePair.Raw, TraceApi.KeyValuePair> = core.schemas.object({
-  key: core.schemas.lazy(() => serializers.VariableValue),
-  value: core.schemas.lazy(() => serializers.VariableValue),
+  key: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue),
+  value: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue),
 });
 
 export declare namespace KeyValuePair {
@@ -16845,7 +16882,7 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const ListType: core.schemas.ObjectSchema<ListType.Raw, TraceApi.ListType> = core.schemas.object({
-  valueType: core.schemas.lazy(() => serializers.VariableType),
+  valueType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
   isFixedLength: core.schemas.boolean().optional(),
 });
 
@@ -16869,8 +16906,8 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const MapType: core.schemas.ObjectSchema<MapType.Raw, TraceApi.MapType> = core.schemas.object({
-  keyType: core.schemas.lazy(() => serializers.VariableType),
-  valueType: core.schemas.lazy(() => serializers.VariableType),
+  keyType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
+  valueType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
 });
 
 export declare namespace MapType {
@@ -16893,7 +16930,7 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const MapValue: core.schemas.ObjectSchema<MapValue.Raw, TraceApi.MapValue> = core.schemas.object({
-  keyValuePairs: core.schemas.list(core.schemas.lazyObject(() => serializers.KeyValuePair)),
+  keyValuePairs: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).KeyValuePair)),
 });
 
 export declare namespace MapValue {
@@ -16958,8 +16995,8 @@ export const SinglyLinkedListNodeAndListValue: core.schemas.ObjectSchema<
   SinglyLinkedListNodeAndListValue.Raw,
   TraceApi.SinglyLinkedListNodeAndListValue
 > = core.schemas.object({
-  nodeId: core.schemas.lazy(() => serializers.NodeId),
-  fullList: core.schemas.lazyObject(() => serializers.SinglyLinkedListValue),
+  nodeId: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
+  fullList: core.schemas.lazyObject(async () => (await import(\\"../..\\")).SinglyLinkedListValue),
 });
 
 export declare namespace SinglyLinkedListNodeAndListValue {
@@ -16985,9 +17022,9 @@ export const SinglyLinkedListNodeValue: core.schemas.ObjectSchema<
   SinglyLinkedListNodeValue.Raw,
   TraceApi.SinglyLinkedListNodeValue
 > = core.schemas.object({
-  nodeId: core.schemas.lazy(() => serializers.NodeId),
+  nodeId: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
   val: core.schemas.number(),
-  next: core.schemas.lazy(() => serializers.NodeId).optional(),
+  next: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
 });
 
 export declare namespace SinglyLinkedListNodeValue {
@@ -17014,10 +17051,10 @@ export const SinglyLinkedListValue: core.schemas.ObjectSchema<
   SinglyLinkedListValue.Raw,
   TraceApi.SinglyLinkedListValue
 > = core.schemas.object({
-  head: core.schemas.lazy(() => serializers.NodeId).optional(),
+  head: core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId).optional(),
   nodes: core.schemas.record(
-    core.schemas.lazy(() => serializers.NodeId),
-    core.schemas.lazyObject(() => serializers.SinglyLinkedListNodeValue)
+    core.schemas.lazy(async () => (await import(\\"../..\\")).NodeId),
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).SinglyLinkedListNodeValue)
   ),
 });
 
@@ -17042,7 +17079,7 @@ import * as serializers from \\"../..\\";
 
 export const TestCase: core.schemas.ObjectSchema<TestCase.Raw, TraceApi.TestCase> = core.schemas.object({
   id: core.schemas.string(),
-  params: core.schemas.list(core.schemas.lazy(() => serializers.VariableValue)),
+  params: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue)),
 });
 
 export declare namespace TestCase {
@@ -17068,8 +17105,8 @@ export const TestCaseWithExpectedResult: core.schemas.ObjectSchema<
   TestCaseWithExpectedResult.Raw,
   TraceApi.TestCaseWithExpectedResult
 > = core.schemas.object({
-  testCase: core.schemas.lazyObject(() => serializers.TestCase),
-  expectedResult: core.schemas.lazy(() => serializers.VariableValue),
+  testCase: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCase),
+  expectedResult: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue),
 });
 
 export declare namespace TestCaseWithExpectedResult {
@@ -17118,8 +17155,8 @@ export const VariableType: core.schemas.Schema<VariableType.Raw, TraceApi.Variab
     booleanType: core.schemas.object({}),
     stringType: core.schemas.object({}),
     charType: core.schemas.object({}),
-    listType: core.schemas.lazyObject(() => serializers.ListType),
-    mapType: core.schemas.lazyObject(() => serializers.MapType),
+    listType: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ListType),
+    mapType: core.schemas.lazyObject(async () => (await import(\\"../..\\")).MapType),
     binaryTreeType: core.schemas.object({}),
     singlyLinkedListType: core.schemas.object({}),
     doublyLinkedListType: core.schemas.object({}),
@@ -17241,13 +17278,13 @@ export const VariableValue: core.schemas.Schema<VariableValue.Raw, TraceApi.Vari
     charValue: core.schemas.object({
       value: core.schemas.string(),
     }),
-    mapValue: core.schemas.lazyObject(() => serializers.MapValue),
+    mapValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).MapValue),
     listValue: core.schemas.object({
-      value: core.schemas.list(core.schemas.lazy(() => serializers.VariableValue)),
+      value: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue)),
     }),
-    binaryTreeValue: core.schemas.lazyObject(() => serializers.BinaryTreeValue),
-    singlyLinkedListValue: core.schemas.lazyObject(() => serializers.SinglyLinkedListValue),
-    doublyLinkedListValue: core.schemas.lazyObject(() => serializers.DoublyLinkedListValue),
+    binaryTreeValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).BinaryTreeValue),
+    singlyLinkedListValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).SinglyLinkedListValue),
+    doublyLinkedListValue: core.schemas.lazyObject(async () => (await import(\\"../..\\")).DoublyLinkedListValue),
     nullValue: core.schemas.object({}),
   })
   .transform<TraceApi.VariableValue>({
@@ -17407,7 +17444,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Response: core.schemas.Schema<serializers.ProblemId.Raw[], TraceApi.ProblemId[]> = core.schemas.list(
-  core.schemas.lazy(() => serializers.ProblemId)
+  core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId)
 );
 ",
                     "name": "getHomepageProblems.ts",
@@ -17430,7 +17467,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<serializers.ProblemId.Raw[], TraceApi.ProblemId[]> = core.schemas.list(
-  core.schemas.lazy(() => serializers.ProblemId)
+  core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId)
 );
 ",
                     "name": "setHomepageProblems.ts",
@@ -17556,7 +17593,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Response: core.schemas.Schema<serializers.Migration.Raw[], TraceApi.Migration[]> = core.schemas.list(
-  core.schemas.lazyObject(() => serializers.Migration)
+  core.schemas.lazyObject(async () => (await import(\\"../..\\")).Migration)
 );
 ",
                     "name": "getAttemptedMigrations.ts",
@@ -17592,7 +17629,7 @@ import * as serializers from \\"../..\\";
 
 export const Migration: core.schemas.ObjectSchema<Migration.Raw, TraceApi.Migration> = core.schemas.object({
   name: core.schemas.string(),
-  status: core.schemas.lazy(() => serializers.MigrationStatus),
+  status: core.schemas.lazy(async () => (await import(\\"../..\\")).MigrationStatus),
 });
 
 export declare namespace Migration {
@@ -17658,7 +17695,7 @@ import * as serializers from \\"../..\\";
 export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.getPlaylist.Error> = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(() => serializers.PlaylistIdNotFoundError),
+      content: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundError),
     }),
     UnauthorizedError: core.schemas.object({}),
   })
@@ -17700,7 +17737,7 @@ import { TraceApi } from \\"../../..\\";
 import * as core from \\"../../../core\\";
 
 export const Response: core.schemas.Schema<serializers.Playlist.Raw[], TraceApi.Playlist[]> = core.schemas.list(
-  core.schemas.lazyObject(() => serializers.Playlist)
+  core.schemas.lazyObject(async () => (await import(\\"../..\\")).Playlist)
 );
 ",
                     "name": "getPlaylists.ts",
@@ -17726,13 +17763,13 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   serializers.UpdatePlaylistRequest.Raw | null | undefined,
   TraceApi.UpdatePlaylistRequest | undefined
-> = core.schemas.lazyObject(() => serializers.UpdatePlaylistRequest).optional();
+> = core.schemas.lazyObject(async () => (await import(\\"../..\\")).UpdatePlaylistRequest).optional();
 export const Response: core.schemas.Schema<serializers.Playlist.Raw | null | undefined, TraceApi.Playlist | undefined> =
-  core.schemas.lazyObject(() => serializers.Playlist).optional();
+  core.schemas.lazyObject(async () => (await import(\\"../..\\")).Playlist).optional();
 export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.updatePlaylist.Error> = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(() => serializers.PlaylistIdNotFoundError),
+      content: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundError),
     }),
   })
   .transform<TraceApi.playlist.updatePlaylist.Error>({
@@ -17775,7 +17812,7 @@ import * as serializers from \\"../..\\";
 export const PlaylistIdNotFoundError: core.schemas.Schema<
   PlaylistIdNotFoundError.Raw,
   TraceApi.PlaylistIdNotFoundError
-> = core.schemas.lazy(() => serializers.PlaylistIdNotFoundErrorBody);
+> = core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundErrorBody);
 
 export declare namespace PlaylistIdNotFoundError {
   type Raw = serializers.PlaylistIdNotFoundErrorBody.Raw;
@@ -17817,14 +17854,14 @@ export const Playlist: core.schemas.ObjectSchema<Playlist.Raw, TraceApi.Playlist
   .object({
     playlistId: core.schemas.property(
       \\"playlist_id\\",
-      core.schemas.lazy(() => serializers.PlaylistId)
+      core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistId)
     ),
     ownerId: core.schemas.property(
       \\"owner-id\\",
-      core.schemas.lazy(() => serializers.UserId)
+      core.schemas.lazy(async () => (await import(\\"../..\\")).UserId)
     ),
   })
-  .extend(core.schemas.lazyObject(() => serializers.PlaylistCreateRequest));
+  .extend(core.schemas.lazyObject(async () => (await import(\\"../..\\")).PlaylistCreateRequest));
 
 export declare namespace Playlist {
   interface Raw extends serializers.PlaylistCreateRequest.Raw {
@@ -17850,7 +17887,7 @@ export const PlaylistCreateRequest: core.schemas.ObjectSchema<
   TraceApi.PlaylistCreateRequest
 > = core.schemas.object({
   name: core.schemas.string(),
-  problems: core.schemas.list(core.schemas.lazy(() => serializers.ProblemId)),
+  problems: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId)),
 });
 
 export declare namespace PlaylistCreateRequest {
@@ -17898,7 +17935,7 @@ export const PlaylistIdNotFoundErrorBody: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     playlistId: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.PlaylistId),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistId),
     }),
   })
   .transform<TraceApi.PlaylistIdNotFoundErrorBody>({
@@ -17964,7 +18001,7 @@ export const UpdatePlaylistRequest: core.schemas.ObjectSchema<
   TraceApi.UpdatePlaylistRequest
 > = core.schemas.object({
   name: core.schemas.string(),
-  problems: core.schemas.list(core.schemas.lazy(() => serializers.ProblemId)),
+  problems: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId)),
 });
 
 export declare namespace UpdatePlaylistRequest {
@@ -18017,7 +18054,7 @@ import * as serializers from \\"../..\\";
 
 export const CreateProblemError: core.schemas.Schema<CreateProblemError.Raw, TraceApi.CreateProblemError> = core.schemas
   .union(core.schemas.discriminant(\\"errorType\\", \\"_type\\"), {
-    generic: core.schemas.lazyObject(() => serializers.GenericCreateProblemError),
+    generic: core.schemas.lazyObject(async () => (await import(\\"../..\\")).GenericCreateProblemError),
   })
   .transform<TraceApi.CreateProblemError>({
     parse: (value) => {
@@ -18058,14 +18095,16 @@ import * as serializers from \\"../..\\";
 export const CreateProblemRequest: core.schemas.ObjectSchema<CreateProblemRequest.Raw, TraceApi.CreateProblemRequest> =
   core.schemas.object({
     problemName: core.schemas.string(),
-    problemDescription: core.schemas.lazyObject(() => serializers.ProblemDescription),
+    problemDescription: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ProblemDescription),
     files: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.ProblemFiles)
+      core.schemas.lazyObject(async () => (await import(\\"../..\\")).ProblemFiles)
     ),
-    inputParams: core.schemas.list(core.schemas.lazyObject(() => serializers.VariableTypeAndName)),
-    outputType: core.schemas.lazy(() => serializers.VariableType),
-    testcases: core.schemas.list(core.schemas.lazyObject(() => serializers.TestCaseWithExpectedResult)),
+    inputParams: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).VariableTypeAndName)),
+    outputType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
+    testcases: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseWithExpectedResult)
+    ),
     methodName: core.schemas.string(),
   });
 
@@ -18097,10 +18136,10 @@ export const CreateProblemResponse: core.schemas.Schema<CreateProblemResponse.Ra
   core.schemas
     .union(\\"type\\", {
       success: core.schemas.object({
-        value: core.schemas.lazy(() => serializers.ProblemId),
+        value: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
       }),
       error: core.schemas.object({
-        value: core.schemas.lazy(() => serializers.CreateProblemError),
+        value: core.schemas.lazy(async () => (await import(\\"../..\\")).CreateProblemError),
       }),
     })
     .transform<TraceApi.CreateProblemResponse>({
@@ -18179,8 +18218,8 @@ export const GetDefaultStarterFilesRequest: core.schemas.ObjectSchema<
   GetDefaultStarterFilesRequest.Raw,
   TraceApi.GetDefaultStarterFilesRequest
 > = core.schemas.object({
-  inputParams: core.schemas.list(core.schemas.lazyObject(() => serializers.VariableTypeAndName)),
-  outputType: core.schemas.lazy(() => serializers.VariableType),
+  inputParams: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).VariableTypeAndName)),
+  outputType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
   methodName: core.schemas.string(),
 });
 
@@ -18210,7 +18249,7 @@ export const GetDefaultStarterFilesResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   files: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.ProblemFiles)
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).ProblemFiles)
   ),
 });
 
@@ -18234,7 +18273,7 @@ import * as serializers from \\"../..\\";
 
 export const ProblemDescription: core.schemas.ObjectSchema<ProblemDescription.Raw, TraceApi.ProblemDescription> =
   core.schemas.object({
-    boards: core.schemas.list(core.schemas.lazy(() => serializers.ProblemDescriptionBoard)),
+    boards: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemDescriptionBoard)),
   });
 
 export declare namespace ProblemDescription {
@@ -18264,7 +18303,7 @@ export const ProblemDescriptionBoard: core.schemas.Schema<
       value: core.schemas.string(),
     }),
     variable: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.VariableValue),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue),
     }),
     testCaseId: core.schemas.object({
       value: core.schemas.string(),
@@ -18322,8 +18361,8 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const ProblemFiles: core.schemas.ObjectSchema<ProblemFiles.Raw, TraceApi.ProblemFiles> = core.schemas.object({
-  solutionFile: core.schemas.lazyObject(() => serializers.FileInfo),
-  readOnlyFiles: core.schemas.list(core.schemas.lazyObject(() => serializers.FileInfo)),
+  solutionFile: core.schemas.lazyObject(async () => (await import(\\"../..\\")).FileInfo),
+  readOnlyFiles: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).FileInfo)),
 });
 
 export declare namespace ProblemFiles {
@@ -18346,17 +18385,17 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const ProblemInfo: core.schemas.ObjectSchema<ProblemInfo.Raw, TraceApi.ProblemInfo> = core.schemas.object({
-  problemId: core.schemas.lazy(() => serializers.ProblemId),
-  problemDescription: core.schemas.lazyObject(() => serializers.ProblemDescription),
+  problemId: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
+  problemDescription: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ProblemDescription),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
   files: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.ProblemFiles)
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).ProblemFiles)
   ),
-  inputParams: core.schemas.list(core.schemas.lazyObject(() => serializers.VariableTypeAndName)),
-  outputType: core.schemas.lazy(() => serializers.VariableType),
-  testcases: core.schemas.list(core.schemas.lazyObject(() => serializers.TestCaseWithExpectedResult)),
+  inputParams: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).VariableTypeAndName)),
+  outputType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
+  testcases: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseWithExpectedResult)),
   methodName: core.schemas.string(),
   supportsCustomTestCases: core.schemas.boolean(),
 });
@@ -18390,8 +18429,8 @@ import * as serializers from \\"../..\\";
 
 export const ProblemsMap: core.schemas.ObjectSchema<ProblemsMap.Raw, TraceApi.ProblemsMap> = core.schemas.object({
   problemsById: core.schemas.record(
-    core.schemas.lazy(() => serializers.ProblemId),
-    core.schemas.lazyObject(() => serializers.ProblemInfo)
+    core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).ProblemInfo)
   ),
 });
 
@@ -18439,7 +18478,7 @@ import * as serializers from \\"../..\\";
 
 export const VariableTypeAndName: core.schemas.ObjectSchema<VariableTypeAndName.Raw, TraceApi.VariableTypeAndName> =
   core.schemas.object({
-    variableType: core.schemas.lazy(() => serializers.VariableType),
+    variableType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
     name: core.schemas.string(),
   });
 
@@ -18495,7 +18534,7 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   serializers.ExecutionSessionResponse.Raw | null | undefined,
   TraceApi.ExecutionSessionResponse | undefined
-> = core.schemas.lazyObject(() => serializers.ExecutionSessionResponse).optional();
+> = core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExecutionSessionResponse).optional();
 ",
                     "name": "getExecutionSession.ts",
                     "type": "file",
@@ -18531,11 +18570,11 @@ import * as serializers from \\"../..\\";
 export const ActualResult: core.schemas.Schema<ActualResult.Raw, TraceApi.ActualResult> = core.schemas
   .union(\\"type\\", {
     value: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.VariableValue),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue),
     }),
-    exception: core.schemas.lazyObject(() => serializers.ExceptionInfo),
+    exception: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExceptionInfo),
     exceptionV2: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.ExceptionV2),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).ExceptionV2),
     }),
   })
   .transform<TraceApi.ActualResult>({
@@ -18592,8 +18631,8 @@ export const BuildingExecutorResponse: core.schemas.ObjectSchema<
   BuildingExecutorResponse.Raw,
   TraceApi.BuildingExecutorResponse
 > = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
-  status: core.schemas.lazy(() => serializers.ExecutionSessionStatus),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
+  status: core.schemas.lazy(async () => (await import(\\"../..\\")).ExecutionSessionStatus),
 });
 
 export declare namespace BuildingExecutorResponse {
@@ -18618,17 +18657,17 @@ import * as serializers from \\"../..\\";
 export const CodeExecutionUpdate: core.schemas.Schema<CodeExecutionUpdate.Raw, TraceApi.CodeExecutionUpdate> =
   core.schemas
     .union(\\"type\\", {
-      buildingExecutor: core.schemas.lazyObject(() => serializers.BuildingExecutorResponse),
-      running: core.schemas.lazyObject(() => serializers.RunningResponse),
-      errored: core.schemas.lazyObject(() => serializers.ErroredResponse),
-      stopped: core.schemas.lazyObject(() => serializers.StoppedResponse),
-      graded: core.schemas.lazyObject(() => serializers.GradedResponse),
-      gradedV2: core.schemas.lazyObject(() => serializers.GradedResponseV2),
-      workspaceRan: core.schemas.lazyObject(() => serializers.WorkspaceRanResponse),
-      recording: core.schemas.lazyObject(() => serializers.RecordingResponseNotification),
-      recorded: core.schemas.lazyObject(() => serializers.RecordedResponseNotification),
-      invalidRequest: core.schemas.lazyObject(() => serializers.InvalidRequestResponse),
-      finished: core.schemas.lazyObject(() => serializers.FinishedResponse),
+      buildingExecutor: core.schemas.lazyObject(async () => (await import(\\"../..\\")).BuildingExecutorResponse),
+      running: core.schemas.lazyObject(async () => (await import(\\"../..\\")).RunningResponse),
+      errored: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ErroredResponse),
+      stopped: core.schemas.lazyObject(async () => (await import(\\"../..\\")).StoppedResponse),
+      graded: core.schemas.lazyObject(async () => (await import(\\"../..\\")).GradedResponse),
+      gradedV2: core.schemas.lazyObject(async () => (await import(\\"../..\\")).GradedResponseV2),
+      workspaceRan: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRanResponse),
+      recording: core.schemas.lazyObject(async () => (await import(\\"../..\\")).RecordingResponseNotification),
+      recorded: core.schemas.lazyObject(async () => (await import(\\"../..\\")).RecordedResponseNotification),
+      invalidRequest: core.schemas.lazyObject(async () => (await import(\\"../..\\")).InvalidRequestResponse),
+      finished: core.schemas.lazyObject(async () => (await import(\\"../..\\")).FinishedResponse),
     })
     .transform<TraceApi.CodeExecutionUpdate>({
       parse: (value) => {
@@ -18762,8 +18801,8 @@ export const CustomTestCasesUnsupported: core.schemas.ObjectSchema<
   CustomTestCasesUnsupported.Raw,
   TraceApi.CustomTestCasesUnsupported
 > = core.schemas.object({
-  problemId: core.schemas.lazy(() => serializers.ProblemId),
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+  problemId: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
 });
 
 export declare namespace CustomTestCasesUnsupported {
@@ -18787,9 +18826,9 @@ import * as serializers from \\"../..\\";
 
 export const ErrorInfo: core.schemas.Schema<ErrorInfo.Raw, TraceApi.ErrorInfo> = core.schemas
   .union(\\"type\\", {
-    compileError: core.schemas.lazyObject(() => serializers.CompileError),
-    runtimeError: core.schemas.lazyObject(() => serializers.RuntimeError),
-    internalError: core.schemas.lazyObject(() => serializers.InternalError),
+    compileError: core.schemas.lazyObject(async () => (await import(\\"../..\\")).CompileError),
+    runtimeError: core.schemas.lazyObject(async () => (await import(\\"../..\\")).RuntimeError),
+    internalError: core.schemas.lazyObject(async () => (await import(\\"../..\\")).InternalError),
   })
   .transform<TraceApi.ErrorInfo>({
     parse: (value) => {
@@ -18841,8 +18880,8 @@ import * as serializers from \\"../..\\";
 
 export const ErroredResponse: core.schemas.ObjectSchema<ErroredResponse.Raw, TraceApi.ErroredResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
-    errorInfo: core.schemas.lazy(() => serializers.ErrorInfo),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
+    errorInfo: core.schemas.lazy(async () => (await import(\\"../..\\")).ErrorInfo),
   });
 
 export declare namespace ErroredResponse {
@@ -18891,7 +18930,7 @@ import * as serializers from \\"../..\\";
 
 export const ExceptionV2: core.schemas.Schema<ExceptionV2.Raw, TraceApi.ExceptionV2> = core.schemas
   .union(\\"type\\", {
-    generic: core.schemas.lazyObject(() => serializers.ExceptionInfo),
+    generic: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExceptionInfo),
     timeout: core.schemas.object({}),
   })
   .transform<TraceApi.ExceptionV2>({
@@ -18942,8 +18981,8 @@ export const ExecutionSessionResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   sessionId: core.schemas.string(),
   executionSessionUrl: core.schemas.string().optional(),
-  language: core.schemas.lazy(() => serializers.Language),
-  status: core.schemas.lazy(() => serializers.ExecutionSessionStatus),
+  language: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
+  status: core.schemas.lazy(async () => (await import(\\"../..\\")).ExecutionSessionStatus),
 });
 
 export declare namespace ExecutionSessionResponse {
@@ -18975,8 +19014,8 @@ export const ExecutionSessionState: core.schemas.ObjectSchema<
   sessionId: core.schemas.string(),
   isWarmInstance: core.schemas.boolean(),
   awsTaskId: core.schemas.string().optional(),
-  language: core.schemas.lazy(() => serializers.Language),
-  status: core.schemas.lazy(() => serializers.ExecutionSessionStatus),
+  language: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
+  status: core.schemas.lazy(async () => (await import(\\"../..\\")).ExecutionSessionStatus),
 });
 
 export declare namespace ExecutionSessionState {
@@ -19027,7 +19066,7 @@ export const ExistingSubmissionExecuting: core.schemas.ObjectSchema<
   ExistingSubmissionExecuting.Raw,
   TraceApi.ExistingSubmissionExecuting
 > = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
 });
 
 export declare namespace ExistingSubmissionExecuting {
@@ -19074,7 +19113,7 @@ import * as serializers from \\"../..\\";
 
 export const FinishedResponse: core.schemas.ObjectSchema<FinishedResponse.Raw, TraceApi.FinishedResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
   });
 
 export declare namespace FinishedResponse {
@@ -19101,7 +19140,7 @@ export const GetExecutionSessionStateResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   states: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.ExecutionSessionState)
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExecutionSessionState)
   ),
   numWarmingInstances: core.schemas.number().optional(),
   warmingSessionIds: core.schemas.list(core.schemas.string()),
@@ -19133,8 +19172,8 @@ export const GetSubmissionStateResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   timeSubmitted: core.schemas.date().optional(),
   submission: core.schemas.string(),
-  language: core.schemas.lazy(() => serializers.Language),
-  submissionTypeState: core.schemas.lazy(() => serializers.SubmissionTypeState),
+  language: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
+  submissionTypeState: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionTypeState),
 });
 
 export declare namespace GetSubmissionStateResponse {
@@ -19184,10 +19223,10 @@ import * as serializers from \\"../..\\";
 
 export const GradedResponse: core.schemas.ObjectSchema<GradedResponse.Raw, TraceApi.GradedResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
     testCases: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.TestCaseResultWithStdout)
+      core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResultWithStdout)
     ),
   });
 
@@ -19212,10 +19251,10 @@ import * as serializers from \\"../..\\";
 
 export const GradedResponseV2: core.schemas.ObjectSchema<GradedResponseV2.Raw, TraceApi.GradedResponseV2> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
     testCases: core.schemas.record(
-      core.schemas.lazy(() => serializers.v2.TestCaseId),
-      core.schemas.lazy(() => serializers.TestCaseGrade)
+      core.schemas.lazy(async () => (await import(\\"../..\\")).v2.TestCaseId),
+      core.schemas.lazy(async () => (await import(\\"../..\\")).TestCaseGrade)
     ),
   });
 
@@ -19240,8 +19279,8 @@ import * as serializers from \\"../..\\";
 
 export const GradedTestCaseUpdate: core.schemas.ObjectSchema<GradedTestCaseUpdate.Raw, TraceApi.GradedTestCaseUpdate> =
   core.schemas.object({
-    testCaseId: core.schemas.lazy(() => serializers.v2.TestCaseId),
-    grade: core.schemas.lazy(() => serializers.TestCaseGrade),
+    testCaseId: core.schemas.lazy(async () => (await import(\\"../..\\")).v2.TestCaseId),
+    grade: core.schemas.lazy(async () => (await import(\\"../..\\")).TestCaseGrade),
   });
 
 export declare namespace GradedTestCaseUpdate {
@@ -19267,7 +19306,7 @@ export const InitializeProblemRequest: core.schemas.ObjectSchema<
   InitializeProblemRequest.Raw,
   TraceApi.InitializeProblemRequest
 > = core.schemas.object({
-  problemId: core.schemas.lazy(() => serializers.ProblemId),
+  problemId: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
   problemVersion: core.schemas.number().optional(),
 });
 
@@ -19291,7 +19330,7 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const InternalError: core.schemas.ObjectSchema<InternalError.Raw, TraceApi.InternalError> = core.schemas.object({
-  exceptionInfo: core.schemas.lazyObject(() => serializers.ExceptionInfo),
+  exceptionInfo: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExceptionInfo),
 });
 
 export declare namespace InternalError {
@@ -19315,9 +19354,11 @@ import * as serializers from \\"../..\\";
 export const InvalidRequestCause: core.schemas.Schema<InvalidRequestCause.Raw, TraceApi.InvalidRequestCause> =
   core.schemas
     .union(\\"type\\", {
-      submissionIdNotFound: core.schemas.lazyObject(() => serializers.SubmissionIdNotFound),
-      customTestCasesUnsupported: core.schemas.lazyObject(() => serializers.CustomTestCasesUnsupported),
-      unexpectedLanguage: core.schemas.lazyObject(() => serializers.UnexpectedLanguageError),
+      submissionIdNotFound: core.schemas.lazyObject(async () => (await import(\\"../..\\")).SubmissionIdNotFound),
+      customTestCasesUnsupported: core.schemas.lazyObject(
+        async () => (await import(\\"../..\\")).CustomTestCasesUnsupported
+      ),
+      unexpectedLanguage: core.schemas.lazyObject(async () => (await import(\\"../..\\")).UnexpectedLanguageError),
     })
     .transform<TraceApi.InvalidRequestCause>({
       parse: (value) => {
@@ -19374,8 +19415,8 @@ export const InvalidRequestResponse: core.schemas.ObjectSchema<
   InvalidRequestResponse.Raw,
   TraceApi.InvalidRequestResponse
 > = core.schemas.object({
-  request: core.schemas.lazy(() => serializers.SubmissionRequest),
-  cause: core.schemas.lazy(() => serializers.InvalidRequestCause),
+  request: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionRequest),
+  cause: core.schemas.lazy(async () => (await import(\\"../..\\")).InvalidRequestCause),
 });
 
 export declare namespace InvalidRequestResponse {
@@ -19427,7 +19468,7 @@ export const RecordedResponseNotification: core.schemas.ObjectSchema<
   RecordedResponseNotification.Raw,
   TraceApi.RecordedResponseNotification
 > = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
   traceResponsesSize: core.schemas.number(),
   testCaseId: core.schemas.string().optional(),
 });
@@ -19456,7 +19497,7 @@ export const RecordedTestCaseUpdate: core.schemas.ObjectSchema<
   RecordedTestCaseUpdate.Raw,
   TraceApi.RecordedTestCaseUpdate
 > = core.schemas.object({
-  testCaseId: core.schemas.lazy(() => serializers.v2.TestCaseId),
+  testCaseId: core.schemas.lazy(async () => (await import(\\"../..\\")).v2.TestCaseId),
   traceResponsesSize: core.schemas.number(),
 });
 
@@ -19483,11 +19524,11 @@ export const RecordingResponseNotification: core.schemas.ObjectSchema<
   RecordingResponseNotification.Raw,
   TraceApi.RecordingResponseNotification
 > = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
   testCaseId: core.schemas.string().optional(),
   lineNumber: core.schemas.number(),
-  lightweightStackInfo: core.schemas.lazyObject(() => serializers.LightweightStackframeInformation),
-  tracedFile: core.schemas.lazyObject(() => serializers.TracedFile).optional(),
+  lightweightStackInfo: core.schemas.lazyObject(async () => (await import(\\"../..\\")).LightweightStackframeInformation),
+  tracedFile: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TracedFile).optional(),
 });
 
 export declare namespace RecordingResponseNotification {
@@ -19514,8 +19555,8 @@ import * as serializers from \\"../..\\";
 
 export const RunningResponse: core.schemas.ObjectSchema<RunningResponse.Raw, TraceApi.RunningResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
-    state: core.schemas.lazy(() => serializers.RunningSubmissionState),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
+    state: core.schemas.lazy(async () => (await import(\\"../..\\")).RunningSubmissionState),
   });
 
 export declare namespace RunningResponse {
@@ -19582,7 +19623,7 @@ import * as serializers from \\"../..\\";
 export const Scope: core.schemas.ObjectSchema<Scope.Raw, TraceApi.Scope> = core.schemas.object({
   variables: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazy(() => serializers.DebugVariableValue)
+    core.schemas.lazy(async () => (await import(\\"../..\\")).DebugVariableValue)
   ),
 });
 
@@ -19627,7 +19668,7 @@ import * as serializers from \\"../..\\";
 export const StackFrame: core.schemas.ObjectSchema<StackFrame.Raw, TraceApi.StackFrame> = core.schemas.object({
   methodName: core.schemas.string(),
   lineNumber: core.schemas.number(),
-  scopes: core.schemas.list(core.schemas.lazyObject(() => serializers.Scope)),
+  scopes: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).Scope)),
 });
 
 export declare namespace StackFrame {
@@ -19653,7 +19694,7 @@ import * as serializers from \\"../..\\";
 export const StackInformation: core.schemas.ObjectSchema<StackInformation.Raw, TraceApi.StackInformation> =
   core.schemas.object({
     numStackFrames: core.schemas.number(),
-    topStackFrame: core.schemas.lazyObject(() => serializers.StackFrame).optional(),
+    topStackFrame: core.schemas.lazyObject(async () => (await import(\\"../..\\")).StackFrame).optional(),
   });
 
 export declare namespace StackInformation {
@@ -19677,7 +19718,7 @@ import * as serializers from \\"../..\\";
 
 export const StderrResponse: core.schemas.ObjectSchema<StderrResponse.Raw, TraceApi.StderrResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
     stderr: core.schemas.string(),
   });
 
@@ -19702,7 +19743,7 @@ import * as serializers from \\"../..\\";
 
 export const StdoutResponse: core.schemas.ObjectSchema<StdoutResponse.Raw, TraceApi.StdoutResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
     stdout: core.schemas.string(),
   });
 
@@ -19726,7 +19767,7 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const StopRequest: core.schemas.ObjectSchema<StopRequest.Raw, TraceApi.StopRequest> = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
 });
 
 export declare namespace StopRequest {
@@ -19749,7 +19790,7 @@ import * as serializers from \\"../..\\";
 
 export const StoppedResponse: core.schemas.ObjectSchema<StoppedResponse.Raw, TraceApi.StoppedResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
   });
 
 export declare namespace StoppedResponse {
@@ -19820,7 +19861,7 @@ import * as serializers from \\"../..\\";
 
 export const SubmissionIdNotFound: core.schemas.ObjectSchema<SubmissionIdNotFound.Raw, TraceApi.SubmissionIdNotFound> =
   core.schemas.object({
-    missingSubmissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    missingSubmissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
   });
 
 export declare namespace SubmissionIdNotFound {
@@ -19843,11 +19884,11 @@ import * as serializers from \\"../..\\";
 
 export const SubmissionRequest: core.schemas.Schema<SubmissionRequest.Raw, TraceApi.SubmissionRequest> = core.schemas
   .union(\\"type\\", {
-    initializeProblemRequest: core.schemas.lazyObject(() => serializers.InitializeProblemRequest),
+    initializeProblemRequest: core.schemas.lazyObject(async () => (await import(\\"../..\\")).InitializeProblemRequest),
     initializeWorkspaceRequest: core.schemas.object({}),
-    submitV2: core.schemas.lazyObject(() => serializers.SubmitRequestV2),
-    workspaceSubmit: core.schemas.lazyObject(() => serializers.WorkspaceSubmitRequest),
-    stop: core.schemas.lazyObject(() => serializers.StopRequest),
+    submitV2: core.schemas.lazyObject(async () => (await import(\\"../..\\")).SubmitRequestV2),
+    workspaceSubmit: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceSubmitRequest),
+    stop: core.schemas.lazyObject(async () => (await import(\\"../..\\")).StopRequest),
   })
   .transform<TraceApi.SubmissionRequest>({
     parse: (value) => {
@@ -19918,14 +19959,14 @@ export const SubmissionResponse: core.schemas.Schema<SubmissionResponse.Raw, Tra
   .union(\\"type\\", {
     serverInitialized: core.schemas.object({}),
     problemInitialized: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.ProblemId),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
     }),
     workspaceInitialized: core.schemas.object({}),
-    serverErrored: core.schemas.lazyObject(() => serializers.ExceptionInfo),
+    serverErrored: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExceptionInfo),
     codeExecutionUpdate: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.CodeExecutionUpdate),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).CodeExecutionUpdate),
     }),
-    terminated: core.schemas.lazyObject(() => serializers.TerminatedResponse),
+    terminated: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TerminatedResponse),
   })
   .transform<TraceApi.SubmissionResponse>({
     parse: (value) => {
@@ -20006,11 +20047,11 @@ export const SubmissionStatusForTestCase: core.schemas.Schema<
   TraceApi.SubmissionStatusForTestCase
 > = core.schemas
   .union(\\"type\\", {
-    graded: core.schemas.lazyObject(() => serializers.TestCaseResultWithStdout),
+    graded: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResultWithStdout),
     gradedV2: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.TestCaseGrade),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).TestCaseGrade),
     }),
-    traced: core.schemas.lazyObject(() => serializers.TracedTestCase),
+    traced: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TracedTestCase),
   })
   .transform<TraceApi.SubmissionStatusForTestCase>({
     parse: (value) => {
@@ -20066,8 +20107,8 @@ import * as serializers from \\"../..\\";
 
 export const SubmissionStatusV2: core.schemas.Schema<SubmissionStatusV2.Raw, TraceApi.SubmissionStatusV2> = core.schemas
   .union(\\"type\\", {
-    test: core.schemas.lazyObject(() => serializers.TestSubmissionStatusV2),
-    workspace: core.schemas.lazyObject(() => serializers.WorkspaceSubmissionStatusV2),
+    test: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestSubmissionStatusV2),
+    workspace: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceSubmissionStatusV2),
   })
   .transform<TraceApi.SubmissionStatusV2>({
     parse: (value) => {
@@ -20136,8 +20177,8 @@ import * as serializers from \\"../..\\";
 export const SubmissionTypeState: core.schemas.Schema<SubmissionTypeState.Raw, TraceApi.SubmissionTypeState> =
   core.schemas
     .union(\\"type\\", {
-      test: core.schemas.lazyObject(() => serializers.TestSubmissionState),
-      workspace: core.schemas.lazyObject(() => serializers.WorkspaceSubmissionState),
+      test: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestSubmissionState),
+      workspace: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceSubmissionState),
     })
     .transform<TraceApi.SubmissionTypeState>({
       parse: (value) => {
@@ -20183,10 +20224,10 @@ import * as serializers from \\"../..\\";
 
 export const SubmitRequestV2: core.schemas.ObjectSchema<SubmitRequestV2.Raw, TraceApi.SubmitRequestV2> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
-    language: core.schemas.lazy(() => serializers.Language),
-    submissionFiles: core.schemas.list(core.schemas.lazyObject(() => serializers.SubmissionFileInfo)),
-    problemId: core.schemas.lazy(() => serializers.ProblemId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
+    language: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
+    submissionFiles: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).SubmissionFileInfo)),
+    problemId: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
     problemVersion: core.schemas.number().optional(),
     userId: core.schemas.string().optional(),
   });
@@ -20234,8 +20275,8 @@ import * as serializers from \\"../..\\";
 
 export const TestCaseGrade: core.schemas.Schema<TestCaseGrade.Raw, TraceApi.TestCaseGrade> = core.schemas
   .union(\\"type\\", {
-    hidden: core.schemas.lazyObject(() => serializers.TestCaseHiddenGrade),
-    nonHidden: core.schemas.lazyObject(() => serializers.TestCaseNonHiddenGrade),
+    hidden: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseHiddenGrade),
+    nonHidden: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseNonHiddenGrade),
   })
   .transform<TraceApi.TestCaseGrade>({
     parse: (value) => {
@@ -20306,8 +20347,8 @@ export const TestCaseNonHiddenGrade: core.schemas.ObjectSchema<
   TraceApi.TestCaseNonHiddenGrade
 > = core.schemas.object({
   passed: core.schemas.boolean(),
-  actualResult: core.schemas.lazy(() => serializers.VariableValue).optional(),
-  exception: core.schemas.lazy(() => serializers.ExceptionV2).optional(),
+  actualResult: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue).optional(),
+  exception: core.schemas.lazy(async () => (await import(\\"../..\\")).ExceptionV2).optional(),
   stdout: core.schemas.string(),
 });
 
@@ -20334,8 +20375,8 @@ import * as serializers from \\"../..\\";
 
 export const TestCaseResult: core.schemas.ObjectSchema<TestCaseResult.Raw, TraceApi.TestCaseResult> =
   core.schemas.object({
-    expectedResult: core.schemas.lazy(() => serializers.VariableValue),
-    actualResult: core.schemas.lazy(() => serializers.ActualResult),
+    expectedResult: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableValue),
+    actualResult: core.schemas.lazy(async () => (await import(\\"../..\\")).ActualResult),
     passed: core.schemas.boolean(),
   });
 
@@ -20363,7 +20404,7 @@ export const TestCaseResultWithStdout: core.schemas.ObjectSchema<
   TestCaseResultWithStdout.Raw,
   TraceApi.TestCaseResultWithStdout
 > = core.schemas.object({
-  result: core.schemas.lazyObject(() => serializers.TestCaseResult),
+  result: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResult),
   stdout: core.schemas.string(),
 });
 
@@ -20388,10 +20429,10 @@ import * as serializers from \\"../..\\";
 
 export const TestSubmissionState: core.schemas.ObjectSchema<TestSubmissionState.Raw, TraceApi.TestSubmissionState> =
   core.schemas.object({
-    problemId: core.schemas.lazy(() => serializers.ProblemId),
-    defaultTestCases: core.schemas.list(core.schemas.lazyObject(() => serializers.TestCase)),
-    customTestCases: core.schemas.list(core.schemas.lazyObject(() => serializers.TestCase)),
-    status: core.schemas.lazy(() => serializers.TestSubmissionStatus),
+    problemId: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
+    defaultTestCases: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCase)),
+    customTestCases: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCase)),
+    status: core.schemas.lazy(async () => (await import(\\"../..\\")).TestSubmissionStatus),
   });
 
 export declare namespace TestSubmissionState {
@@ -20420,15 +20461,15 @@ export const TestSubmissionStatus: core.schemas.Schema<TestSubmissionStatus.Raw,
     .union(\\"type\\", {
       stopped: core.schemas.object({}),
       errored: core.schemas.object({
-        value: core.schemas.lazy(() => serializers.ErrorInfo),
+        value: core.schemas.lazy(async () => (await import(\\"../..\\")).ErrorInfo),
       }),
       running: core.schemas.object({
-        value: core.schemas.lazy(() => serializers.RunningSubmissionState),
+        value: core.schemas.lazy(async () => (await import(\\"../..\\")).RunningSubmissionState),
       }),
       testCaseIdToState: core.schemas.object({
         value: core.schemas.record(
           core.schemas.string(),
-          core.schemas.lazy(() => serializers.SubmissionStatusForTestCase)
+          core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionStatusForTestCase)
         ),
       }),
     })
@@ -20497,10 +20538,10 @@ export const TestSubmissionStatusV2: core.schemas.ObjectSchema<
   TestSubmissionStatusV2.Raw,
   TraceApi.TestSubmissionStatusV2
 > = core.schemas.object({
-  updates: core.schemas.list(core.schemas.lazyObject(() => serializers.TestSubmissionUpdate)),
-  problemId: core.schemas.lazy(() => serializers.ProblemId),
+  updates: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestSubmissionUpdate)),
+  problemId: core.schemas.lazy(async () => (await import(\\"../..\\")).ProblemId),
   problemVersion: core.schemas.number(),
-  problemInfo: core.schemas.lazyObject(() => serializers.v2.ProblemInfoV2),
+  problemInfo: core.schemas.lazyObject(async () => (await import(\\"../..\\")).v2.ProblemInfoV2),
 });
 
 export declare namespace TestSubmissionStatusV2 {
@@ -20527,7 +20568,7 @@ import * as serializers from \\"../..\\";
 export const TestSubmissionUpdate: core.schemas.ObjectSchema<TestSubmissionUpdate.Raw, TraceApi.TestSubmissionUpdate> =
   core.schemas.object({
     updateTime: core.schemas.date(),
-    updateInfo: core.schemas.lazy(() => serializers.TestSubmissionUpdateInfo),
+    updateInfo: core.schemas.lazy(async () => (await import(\\"../..\\")).TestSubmissionUpdateInfo),
   });
 
 export declare namespace TestSubmissionUpdate {
@@ -20555,14 +20596,14 @@ export const TestSubmissionUpdateInfo: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     running: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.RunningSubmissionState),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).RunningSubmissionState),
     }),
     stopped: core.schemas.object({}),
     errored: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.ErrorInfo),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).ErrorInfo),
     }),
-    gradedTestCase: core.schemas.lazyObject(() => serializers.GradedTestCaseUpdate),
-    recordedTestCase: core.schemas.lazyObject(() => serializers.RecordedTestCaseUpdate),
+    gradedTestCase: core.schemas.lazyObject(async () => (await import(\\"../..\\")).GradedTestCaseUpdate),
+    recordedTestCase: core.schemas.lazyObject(async () => (await import(\\"../..\\")).RecordedTestCaseUpdate),
     finished: core.schemas.object({}),
   })
   .transform<TraceApi.TestSubmissionUpdateInfo>({
@@ -20640,11 +20681,11 @@ import * as core from \\"../../../core\\";
 import * as serializers from \\"../..\\";
 
 export const TraceResponse: core.schemas.ObjectSchema<TraceResponse.Raw, TraceApi.TraceResponse> = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
   lineNumber: core.schemas.number(),
-  returnValue: core.schemas.lazy(() => serializers.DebugVariableValue).optional(),
-  expressionLocation: core.schemas.lazyObject(() => serializers.ExpressionLocation).optional(),
-  stack: core.schemas.lazyObject(() => serializers.StackInformation),
+  returnValue: core.schemas.lazy(async () => (await import(\\"../..\\")).DebugVariableValue).optional(),
+  expressionLocation: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExpressionLocation).optional(),
+  stack: core.schemas.lazyObject(async () => (await import(\\"../..\\")).StackInformation),
   stdout: core.schemas.string().optional(),
 });
 
@@ -20673,12 +20714,12 @@ import * as serializers from \\"../..\\";
 
 export const TraceResponseV2: core.schemas.ObjectSchema<TraceResponseV2.Raw, TraceApi.TraceResponseV2> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
     lineNumber: core.schemas.number(),
-    file: core.schemas.lazyObject(() => serializers.TracedFile),
-    returnValue: core.schemas.lazy(() => serializers.DebugVariableValue).optional(),
-    expressionLocation: core.schemas.lazyObject(() => serializers.ExpressionLocation).optional(),
-    stack: core.schemas.lazyObject(() => serializers.StackInformation),
+    file: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TracedFile),
+    returnValue: core.schemas.lazy(async () => (await import(\\"../..\\")).DebugVariableValue).optional(),
+    expressionLocation: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExpressionLocation).optional(),
+    stack: core.schemas.lazyObject(async () => (await import(\\"../..\\")).StackInformation),
     stdout: core.schemas.string().optional(),
   });
 
@@ -20709,7 +20750,7 @@ import * as serializers from \\"../..\\";
 export const TraceResponsesPage: core.schemas.ObjectSchema<TraceResponsesPage.Raw, TraceApi.TraceResponsesPage> =
   core.schemas.object({
     offset: core.schemas.number().optional(),
-    traceResponses: core.schemas.list(core.schemas.lazyObject(() => serializers.TraceResponse)),
+    traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
   });
 
 export declare namespace TraceResponsesPage {
@@ -20734,7 +20775,7 @@ import * as serializers from \\"../..\\";
 export const TraceResponsesPageV2: core.schemas.ObjectSchema<TraceResponsesPageV2.Raw, TraceApi.TraceResponsesPageV2> =
   core.schemas.object({
     offset: core.schemas.number().optional(),
-    traceResponses: core.schemas.list(core.schemas.lazyObject(() => serializers.TraceResponseV2)),
+    traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponseV2)),
   });
 
 export declare namespace TraceResponsesPageV2 {
@@ -20781,7 +20822,7 @@ import * as serializers from \\"../..\\";
 
 export const TracedTestCase: core.schemas.ObjectSchema<TracedTestCase.Raw, TraceApi.TracedTestCase> =
   core.schemas.object({
-    result: core.schemas.lazyObject(() => serializers.TestCaseResultWithStdout),
+    result: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResultWithStdout),
     traceResponsesSize: core.schemas.number(),
   });
 
@@ -20808,8 +20849,8 @@ export const UnexpectedLanguageError: core.schemas.ObjectSchema<
   UnexpectedLanguageError.Raw,
   TraceApi.UnexpectedLanguageError
 > = core.schemas.object({
-  expectedLanguage: core.schemas.lazy(() => serializers.Language),
-  actualLanguage: core.schemas.lazy(() => serializers.Language),
+  expectedLanguage: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
+  actualLanguage: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
 });
 
 export declare namespace UnexpectedLanguageError {
@@ -20833,8 +20874,8 @@ import * as serializers from \\"../..\\";
 
 export const WorkspaceFiles: core.schemas.ObjectSchema<WorkspaceFiles.Raw, TraceApi.WorkspaceFiles> =
   core.schemas.object({
-    mainFile: core.schemas.lazyObject(() => serializers.FileInfo),
-    readOnlyFiles: core.schemas.list(core.schemas.lazyObject(() => serializers.FileInfo)),
+    mainFile: core.schemas.lazyObject(async () => (await import(\\"../..\\")).FileInfo),
+    readOnlyFiles: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).FileInfo)),
   });
 
 export declare namespace WorkspaceFiles {
@@ -20858,8 +20899,8 @@ import * as serializers from \\"../..\\";
 
 export const WorkspaceRanResponse: core.schemas.ObjectSchema<WorkspaceRanResponse.Raw, TraceApi.WorkspaceRanResponse> =
   core.schemas.object({
-    submissionId: core.schemas.lazy(() => serializers.SubmissionId),
-    runDetails: core.schemas.lazyObject(() => serializers.WorkspaceRunDetails),
+    submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
+    runDetails: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
   });
 
 export declare namespace WorkspaceRanResponse {
@@ -20883,8 +20924,8 @@ import * as serializers from \\"../..\\";
 
 export const WorkspaceRunDetails: core.schemas.ObjectSchema<WorkspaceRunDetails.Raw, TraceApi.WorkspaceRunDetails> =
   core.schemas.object({
-    exceptionV2: core.schemas.lazy(() => serializers.ExceptionV2).optional(),
-    exception: core.schemas.lazyObject(() => serializers.ExceptionInfo).optional(),
+    exceptionV2: core.schemas.lazy(async () => (await import(\\"../..\\")).ExceptionV2).optional(),
+    exception: core.schemas.lazyObject(async () => (await import(\\"../..\\")).ExceptionInfo).optional(),
     stdout: core.schemas.string(),
   });
 
@@ -20914,7 +20955,7 @@ export const WorkspaceStarterFilesResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   files: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.WorkspaceFiles)
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceFiles)
   ),
 });
 
@@ -20942,7 +20983,7 @@ export const WorkspaceStarterFilesResponseV2: core.schemas.ObjectSchema<
 > = core.schemas.object({
   filesByLanguage: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.v2.Files)
+    core.schemas.lazyObject(async () => (await import(\\"../..\\")).v2.Files)
   ),
 });
 
@@ -20968,7 +21009,7 @@ export const WorkspaceSubmissionState: core.schemas.ObjectSchema<
   WorkspaceSubmissionState.Raw,
   TraceApi.WorkspaceSubmissionState
 > = core.schemas.object({
-  status: core.schemas.lazy(() => serializers.WorkspaceSubmissionStatus),
+  status: core.schemas.lazy(async () => (await import(\\"../..\\")).WorkspaceSubmissionStatus),
 });
 
 export declare namespace WorkspaceSubmissionState {
@@ -20996,13 +21037,13 @@ export const WorkspaceSubmissionStatus: core.schemas.Schema<
   .union(\\"type\\", {
     stopped: core.schemas.object({}),
     errored: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.ErrorInfo),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).ErrorInfo),
     }),
     running: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.RunningSubmissionState),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).RunningSubmissionState),
     }),
-    ran: core.schemas.lazyObject(() => serializers.WorkspaceRunDetails),
-    traced: core.schemas.lazyObject(() => serializers.WorkspaceRunDetails),
+    ran: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
+    traced: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
   })
   .transform<TraceApi.WorkspaceSubmissionStatus>({
     parse: (value) => {
@@ -21075,7 +21116,7 @@ export const WorkspaceSubmissionStatusV2: core.schemas.ObjectSchema<
   WorkspaceSubmissionStatusV2.Raw,
   TraceApi.WorkspaceSubmissionStatusV2
 > = core.schemas.object({
-  updates: core.schemas.list(core.schemas.lazyObject(() => serializers.WorkspaceSubmissionUpdate)),
+  updates: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceSubmissionUpdate)),
 });
 
 export declare namespace WorkspaceSubmissionStatusV2 {
@@ -21101,7 +21142,7 @@ export const WorkspaceSubmissionUpdate: core.schemas.ObjectSchema<
   TraceApi.WorkspaceSubmissionUpdate
 > = core.schemas.object({
   updateTime: core.schemas.date(),
-  updateInfo: core.schemas.lazy(() => serializers.WorkspaceSubmissionUpdateInfo),
+  updateInfo: core.schemas.lazy(async () => (await import(\\"../..\\")).WorkspaceSubmissionUpdateInfo),
 });
 
 export declare namespace WorkspaceSubmissionUpdate {
@@ -21129,14 +21170,14 @@ export const WorkspaceSubmissionUpdateInfo: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     running: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.RunningSubmissionState),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).RunningSubmissionState),
     }),
-    ran: core.schemas.lazyObject(() => serializers.WorkspaceRunDetails),
+    ran: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
     stopped: core.schemas.object({}),
     traced: core.schemas.object({}),
-    tracedV2: core.schemas.lazyObject(() => serializers.WorkspaceTracedUpdate),
+    tracedV2: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceTracedUpdate),
     errored: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.ErrorInfo),
+      value: core.schemas.lazy(async () => (await import(\\"../..\\")).ErrorInfo),
     }),
     finished: core.schemas.object({}),
   })
@@ -21225,9 +21266,9 @@ export const WorkspaceSubmitRequest: core.schemas.ObjectSchema<
   WorkspaceSubmitRequest.Raw,
   TraceApi.WorkspaceSubmitRequest
 > = core.schemas.object({
-  submissionId: core.schemas.lazy(() => serializers.SubmissionId),
-  language: core.schemas.lazy(() => serializers.Language),
-  submissionFiles: core.schemas.list(core.schemas.lazyObject(() => serializers.SubmissionFileInfo)),
+  submissionId: core.schemas.lazy(async () => (await import(\\"../..\\")).SubmissionId),
+  language: core.schemas.lazy(async () => (await import(\\"../..\\")).Language),
+  submissionFiles: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).SubmissionFileInfo)),
   userId: core.schemas.string().optional(),
 });
 
@@ -21435,7 +21476,7 @@ import * as core from \\"../../../../../core\\";
 export const Response: core.schemas.Schema<
   serializers.v2.LightweightProblemInfoV2.Raw[],
   TraceApi.v2.LightweightProblemInfoV2[]
-> = core.schemas.list(core.schemas.lazyObject(() => serializers.v2.LightweightProblemInfoV2));
+> = core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.LightweightProblemInfoV2));
 ",
                             "name": "getLightweightProblems.ts",
                             "type": "file",
@@ -21450,7 +21491,7 @@ import { TraceApi } from \\"../../../../..\\";
 import * as core from \\"../../../../../core\\";
 
 export const Response: core.schemas.Schema<serializers.v2.ProblemInfoV2.Raw[], TraceApi.v2.ProblemInfoV2[]> =
-  core.schemas.list(core.schemas.lazyObject(() => serializers.v2.ProblemInfoV2));
+  core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.ProblemInfoV2));
 ",
                             "name": "getProblems.ts",
                             "type": "file",
@@ -21489,8 +21530,10 @@ export const AssertCorrectnessCheck: core.schemas.Schema<
   TraceApi.v2.AssertCorrectnessCheck
 > = core.schemas
   .union(\\"type\\", {
-    deepEquality: core.schemas.lazyObject(() => serializers.v2.DeepEqualityCorrectnessCheck),
-    custom: core.schemas.lazyObject(() => serializers.v2.VoidFunctionDefinitionThatTakesActualResult),
+    deepEquality: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.DeepEqualityCorrectnessCheck),
+    custom: core.schemas.lazyObject(
+      async () => (await import(\\"../../../..\\")).v2.VoidFunctionDefinitionThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.AssertCorrectnessCheck>({
     parse: (value) => {
@@ -21537,12 +21580,12 @@ import * as serializers from \\"../../../..\\";
 export const BasicCustomFiles: core.schemas.ObjectSchema<BasicCustomFiles.Raw, TraceApi.v2.BasicCustomFiles> =
   core.schemas.object({
     methodName: core.schemas.string(),
-    signature: core.schemas.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
+    signature: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.NonVoidFunctionSignature),
     additionalFiles: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Files)
     ),
-    basicTestCaseTemplate: core.schemas.lazyObject(() => serializers.v2.BasicTestCaseTemplate),
+    basicTestCaseTemplate: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.BasicTestCaseTemplate),
   });
 
 export declare namespace BasicCustomFiles {
@@ -21570,10 +21613,10 @@ export const BasicTestCaseTemplate: core.schemas.ObjectSchema<
   BasicTestCaseTemplate.Raw,
   TraceApi.v2.BasicTestCaseTemplate
 > = core.schemas.object({
-  templateId: core.schemas.lazy(() => serializers.v2.TestCaseTemplateId),
+  templateId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplateId),
   name: core.schemas.string(),
-  description: core.schemas.lazyObject(() => serializers.v2.TestCaseImplementationDescription),
-  expectedValueParameterId: core.schemas.lazy(() => serializers.v2.ParameterId),
+  description: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseImplementationDescription),
+  expectedValueParameterId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.ParameterId),
 });
 
 export declare namespace BasicTestCaseTemplate {
@@ -21602,11 +21645,13 @@ export const CreateProblemRequestV2: core.schemas.ObjectSchema<
   TraceApi.v2.CreateProblemRequestV2
 > = core.schemas.object({
   problemName: core.schemas.string(),
-  problemDescription: core.schemas.lazyObject(() => serializers.ProblemDescription),
-  customFiles: core.schemas.lazy(() => serializers.v2.CustomFiles),
-  customTestCaseTemplates: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.TestCaseTemplate)),
-  testcases: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.TestCaseV2)),
-  supportedLanguages: core.schemas.list(core.schemas.lazy(() => serializers.Language)),
+  problemDescription: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).ProblemDescription),
+  customFiles: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.CustomFiles),
+  customTestCaseTemplates: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplate)
+  ),
+  testcases: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseV2)),
+  supportedLanguages: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../..\\")).Language)),
   isPublic: core.schemas.boolean(),
 });
 
@@ -21636,11 +21681,11 @@ import * as serializers from \\"../../../..\\";
 
 export const CustomFiles: core.schemas.Schema<CustomFiles.Raw, TraceApi.v2.CustomFiles> = core.schemas
   .union(\\"type\\", {
-    basic: core.schemas.lazyObject(() => serializers.v2.BasicCustomFiles),
+    basic: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.BasicCustomFiles),
     custom: core.schemas.object({
       value: core.schemas.record(
         core.schemas.string(),
-        core.schemas.lazyObject(() => serializers.v2.Files)
+        core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Files)
       ),
     }),
   })
@@ -21691,7 +21736,7 @@ export const DeepEqualityCorrectnessCheck: core.schemas.ObjectSchema<
   DeepEqualityCorrectnessCheck.Raw,
   TraceApi.v2.DeepEqualityCorrectnessCheck
 > = core.schemas.object({
-  expectedValueParameterId: core.schemas.lazy(() => serializers.v2.ParameterId),
+  expectedValueParameterId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.ParameterId),
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
@@ -21714,8 +21759,8 @@ import * as serializers from \\"../../../..\\";
 
 export const DefaultProvidedFile: core.schemas.ObjectSchema<DefaultProvidedFile.Raw, TraceApi.v2.DefaultProvidedFile> =
   core.schemas.object({
-    file: core.schemas.lazyObject(() => serializers.v2.FileInfoV2),
-    relatedTypes: core.schemas.list(core.schemas.lazy(() => serializers.VariableType)),
+    file: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.FileInfoV2),
+    relatedTypes: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../..\\")).VariableType)),
   });
 
 export declare namespace DefaultProvidedFile {
@@ -21765,7 +21810,7 @@ import * as core from \\"../../../../../core\\";
 import * as serializers from \\"../../../..\\";
 
 export const Files: core.schemas.ObjectSchema<Files.Raw, TraceApi.v2.Files> = core.schemas.object({
-  files: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.FileInfoV2)),
+  files: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.FileInfoV2)),
 });
 
 export declare namespace Files {
@@ -21818,7 +21863,7 @@ export const FunctionImplementationForMultipleLanguages: core.schemas.ObjectSche
 > = core.schemas.object({
   codeByLanguage: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.v2.FunctionImplementation)
+    core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.FunctionImplementation)
   ),
 });
 
@@ -21842,9 +21887,11 @@ import * as serializers from \\"../../../..\\";
 
 export const FunctionSignature: core.schemas.Schema<FunctionSignature.Raw, TraceApi.v2.FunctionSignature> = core.schemas
   .union(\\"type\\", {
-    void: core.schemas.lazyObject(() => serializers.v2.VoidFunctionSignature),
-    nonVoid: core.schemas.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
-    voidThatTakesActualResult: core.schemas.lazyObject(() => serializers.v2.VoidFunctionSignatureThatTakesActualResult),
+    void: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.VoidFunctionSignature),
+    nonVoid: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.NonVoidFunctionSignature),
+    voidThatTakesActualResult: core.schemas.lazyObject(
+      async () => (await import(\\"../../../..\\")).v2.VoidFunctionSignatureThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.FunctionSignature>({
     parse: (value) => {
@@ -21898,15 +21945,15 @@ export const GeneratedFiles: core.schemas.ObjectSchema<GeneratedFiles.Raw, Trace
   core.schemas.object({
     generatedTestCaseFiles: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Files)
     ),
     generatedTemplateFiles: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Files)
     ),
     other: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Files)
     ),
   });
 
@@ -21935,7 +21982,7 @@ export const GetBasicSolutionFileRequest: core.schemas.ObjectSchema<
   TraceApi.v2.GetBasicSolutionFileRequest
 > = core.schemas.object({
   methodName: core.schemas.string(),
-  signature: core.schemas.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
+  signature: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.NonVoidFunctionSignature),
 });
 
 export declare namespace GetBasicSolutionFileRequest {
@@ -21963,7 +22010,7 @@ export const GetBasicSolutionFileResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   solutionFileByLanguage: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.v2.FileInfoV2)
+    core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.FileInfoV2)
   ),
 });
 
@@ -21989,7 +22036,7 @@ export const GetFunctionSignatureRequest: core.schemas.ObjectSchema<
   GetFunctionSignatureRequest.Raw,
   TraceApi.v2.GetFunctionSignatureRequest
 > = core.schemas.object({
-  functionSignature: core.schemas.lazy(() => serializers.v2.FunctionSignature),
+  functionSignature: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.FunctionSignature),
 });
 
 export declare namespace GetFunctionSignatureRequest {
@@ -22039,8 +22086,8 @@ export const GetGeneratedTestCaseFileRequest: core.schemas.ObjectSchema<
   GetGeneratedTestCaseFileRequest.Raw,
   TraceApi.v2.GetGeneratedTestCaseFileRequest
 > = core.schemas.object({
-  template: core.schemas.lazyObject(() => serializers.v2.TestCaseTemplate).optional(),
-  testCase: core.schemas.lazyObject(() => serializers.v2.TestCaseV2),
+  template: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplate).optional(),
+  testCase: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseV2),
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {
@@ -22066,7 +22113,7 @@ export const GetGeneratedTestCaseTemplateFileRequest: core.schemas.ObjectSchema<
   GetGeneratedTestCaseTemplateFileRequest.Raw,
   TraceApi.v2.GetGeneratedTestCaseTemplateFileRequest
 > = core.schemas.object({
-  template: core.schemas.lazyObject(() => serializers.v2.TestCaseTemplate),
+  template: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplate),
 });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
@@ -22091,10 +22138,10 @@ export const LightweightProblemInfoV2: core.schemas.ObjectSchema<
   LightweightProblemInfoV2.Raw,
   TraceApi.v2.LightweightProblemInfoV2
 > = core.schemas.object({
-  problemId: core.schemas.lazy(() => serializers.ProblemId),
+  problemId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).ProblemId),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
-  variableTypes: core.schemas.list(core.schemas.lazy(() => serializers.VariableType)),
+  variableTypes: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../..\\")).VariableType)),
 });
 
 export declare namespace LightweightProblemInfoV2 {
@@ -22122,8 +22169,10 @@ export const NonVoidFunctionDefinition: core.schemas.ObjectSchema<
   NonVoidFunctionDefinition.Raw,
   TraceApi.v2.NonVoidFunctionDefinition
 > = core.schemas.object({
-  signature: core.schemas.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
-  code: core.schemas.lazyObject(() => serializers.v2.FunctionImplementationForMultipleLanguages),
+  signature: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.NonVoidFunctionSignature),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"../../../..\\")).v2.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace NonVoidFunctionDefinition {
@@ -22149,8 +22198,8 @@ export const NonVoidFunctionSignature: core.schemas.ObjectSchema<
   NonVoidFunctionSignature.Raw,
   TraceApi.v2.NonVoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.Parameter)),
-  returnType: core.schemas.lazy(() => serializers.VariableType),
+  parameters: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Parameter)),
+  returnType: core.schemas.lazy(async () => (await import(\\"../../../..\\")).VariableType),
 });
 
 export declare namespace NonVoidFunctionSignature {
@@ -22173,9 +22222,9 @@ import * as core from \\"../../../../../core\\";
 import * as serializers from \\"../../../..\\";
 
 export const Parameter: core.schemas.ObjectSchema<Parameter.Raw, TraceApi.v2.Parameter> = core.schemas.object({
-  parameterId: core.schemas.lazy(() => serializers.v2.ParameterId),
+  parameterId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.ParameterId),
   name: core.schemas.string(),
-  variableType: core.schemas.lazy(() => serializers.VariableType),
+  variableType: core.schemas.lazy(async () => (await import(\\"../../../..\\")).VariableType),
 });
 
 export declare namespace Parameter {
@@ -22222,15 +22271,17 @@ import * as serializers from \\"../../../..\\";
 
 export const ProblemInfoV2: core.schemas.ObjectSchema<ProblemInfoV2.Raw, TraceApi.v2.ProblemInfoV2> =
   core.schemas.object({
-    problemId: core.schemas.lazy(() => serializers.ProblemId),
-    problemDescription: core.schemas.lazyObject(() => serializers.ProblemDescription),
+    problemId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).ProblemId),
+    problemDescription: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).ProblemDescription),
     problemName: core.schemas.string(),
     problemVersion: core.schemas.number(),
-    supportedLanguages: core.schemas.list(core.schemas.lazy(() => serializers.Language)),
-    customFiles: core.schemas.lazy(() => serializers.v2.CustomFiles),
-    generatedFiles: core.schemas.lazyObject(() => serializers.v2.GeneratedFiles),
-    customTestCaseTemplates: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.TestCaseTemplate)),
-    testcases: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.TestCaseV2)),
+    supportedLanguages: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../..\\")).Language)),
+    customFiles: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.CustomFiles),
+    generatedFiles: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.GeneratedFiles),
+    customTestCaseTemplates: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplate)
+    ),
+    testcases: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseV2)),
     isPublic: core.schemas.boolean(),
   });
 
@@ -22285,8 +22336,10 @@ import * as serializers from \\"../../../..\\";
 
 export const TestCaseFunction: core.schemas.Schema<TestCaseFunction.Raw, TraceApi.v2.TestCaseFunction> = core.schemas
   .union(\\"type\\", {
-    withActualResult: core.schemas.lazyObject(() => serializers.v2.TestCaseWithActualResultImplementation),
-    custom: core.schemas.lazyObject(() => serializers.v2.VoidFunctionDefinition),
+    withActualResult: core.schemas.lazyObject(
+      async () => (await import(\\"../../../..\\")).v2.TestCaseWithActualResultImplementation
+    ),
+    custom: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.VoidFunctionDefinition),
   })
   .transform<TraceApi.v2.TestCaseFunction>({
     parse: (value) => {
@@ -22354,8 +22407,8 @@ export const TestCaseImplementation: core.schemas.ObjectSchema<
   TestCaseImplementation.Raw,
   TraceApi.v2.TestCaseImplementation
 > = core.schemas.object({
-  description: core.schemas.lazyObject(() => serializers.v2.TestCaseImplementationDescription),
-  function: core.schemas.lazy(() => serializers.v2.TestCaseFunction),
+  description: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseImplementationDescription),
+  function: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseFunction),
 });
 
 export declare namespace TestCaseImplementation {
@@ -22381,7 +22434,9 @@ export const TestCaseImplementationDescription: core.schemas.ObjectSchema<
   TestCaseImplementationDescription.Raw,
   TraceApi.v2.TestCaseImplementationDescription
 > = core.schemas.object({
-  boards: core.schemas.list(core.schemas.lazy(() => serializers.v2.TestCaseImplementationDescriptionBoard)),
+  boards: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseImplementationDescriptionBoard)
+  ),
 });
 
 export declare namespace TestCaseImplementationDescription {
@@ -22411,7 +22466,7 @@ export const TestCaseImplementationDescriptionBoard: core.schemas.Schema<
       value: core.schemas.string(),
     }),
     paramId: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.v2.ParameterId),
+      value: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.ParameterId),
     }),
   })
   .transform<TraceApi.v2.TestCaseImplementationDescriptionBoard>({
@@ -22464,9 +22519,9 @@ export const TestCaseImplementationReference: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     templateId: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.v2.TestCaseTemplateId),
+      value: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplateId),
     }),
-    implementation: core.schemas.lazyObject(() => serializers.v2.TestCaseImplementation),
+    implementation: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseImplementation),
   })
   .transform<TraceApi.v2.TestCaseImplementationReference>({
     parse: (value) => {
@@ -22513,7 +22568,7 @@ import * as serializers from \\"../../../..\\";
 
 export const TestCaseMetadata: core.schemas.ObjectSchema<TestCaseMetadata.Raw, TraceApi.v2.TestCaseMetadata> =
   core.schemas.object({
-    id: core.schemas.lazy(() => serializers.v2.TestCaseId),
+    id: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseId),
     name: core.schemas.string(),
     hidden: core.schemas.boolean(),
   });
@@ -22540,9 +22595,9 @@ import * as serializers from \\"../../../..\\";
 
 export const TestCaseTemplate: core.schemas.ObjectSchema<TestCaseTemplate.Raw, TraceApi.v2.TestCaseTemplate> =
   core.schemas.object({
-    templateId: core.schemas.lazy(() => serializers.v2.TestCaseTemplateId),
+    templateId: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseTemplateId),
     name: core.schemas.string(),
-    implementation: core.schemas.lazyObject(() => serializers.v2.TestCaseImplementation),
+    implementation: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseImplementation),
   });
 
 export declare namespace TestCaseTemplate {
@@ -22587,13 +22642,13 @@ import * as core from \\"../../../../../core\\";
 import * as serializers from \\"../../../..\\";
 
 export const TestCaseV2: core.schemas.ObjectSchema<TestCaseV2.Raw, TraceApi.v2.TestCaseV2> = core.schemas.object({
-  metadata: core.schemas.lazyObject(() => serializers.v2.TestCaseMetadata),
-  implementation: core.schemas.lazy(() => serializers.v2.TestCaseImplementationReference),
+  metadata: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseMetadata),
+  implementation: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.TestCaseImplementationReference),
   arguments: core.schemas.record(
-    core.schemas.lazy(() => serializers.v2.ParameterId),
-    core.schemas.lazy(() => serializers.VariableValue)
+    core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.ParameterId),
+    core.schemas.lazy(async () => (await import(\\"../../../..\\")).VariableValue)
   ),
-  expects: core.schemas.lazyObject(() => serializers.v2.TestCaseExpects).optional(),
+  expects: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.TestCaseExpects).optional(),
 });
 
 export declare namespace TestCaseV2 {
@@ -22621,8 +22676,8 @@ export const TestCaseWithActualResultImplementation: core.schemas.ObjectSchema<
   TestCaseWithActualResultImplementation.Raw,
   TraceApi.v2.TestCaseWithActualResultImplementation
 > = core.schemas.object({
-  getActualResult: core.schemas.lazyObject(() => serializers.v2.NonVoidFunctionDefinition),
-  assertCorrectnessCheck: core.schemas.lazy(() => serializers.v2.AssertCorrectnessCheck),
+  getActualResult: core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.NonVoidFunctionDefinition),
+  assertCorrectnessCheck: core.schemas.lazy(async () => (await import(\\"../../../..\\")).v2.AssertCorrectnessCheck),
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
@@ -22648,8 +22703,10 @@ export const VoidFunctionDefinition: core.schemas.ObjectSchema<
   VoidFunctionDefinition.Raw,
   TraceApi.v2.VoidFunctionDefinition
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.Parameter)),
-  code: core.schemas.lazyObject(() => serializers.v2.FunctionImplementationForMultipleLanguages),
+  parameters: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Parameter)),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"../../../..\\")).v2.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinition {
@@ -22675,8 +22732,12 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.schemas.ObjectSch
   VoidFunctionDefinitionThatTakesActualResult.Raw,
   TraceApi.v2.VoidFunctionDefinitionThatTakesActualResult
 > = core.schemas.object({
-  additionalParameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.Parameter)),
-  code: core.schemas.lazyObject(() => serializers.v2.FunctionImplementationForMultipleLanguages),
+  additionalParameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"../../../..\\")).v2.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {
@@ -22702,7 +22763,7 @@ export const VoidFunctionSignature: core.schemas.ObjectSchema<
   VoidFunctionSignature.Raw,
   TraceApi.v2.VoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.Parameter)),
+  parameters: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Parameter)),
 });
 
 export declare namespace VoidFunctionSignature {
@@ -22727,8 +22788,8 @@ export const VoidFunctionSignatureThatTakesActualResult: core.schemas.ObjectSche
   VoidFunctionSignatureThatTakesActualResult.Raw,
   TraceApi.v2.VoidFunctionSignatureThatTakesActualResult
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.Parameter)),
-  actualResultType: core.schemas.lazy(() => serializers.VariableType),
+  parameters: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../..\\")).v2.Parameter)),
+  actualResultType: core.schemas.lazy(async () => (await import(\\"../../../..\\")).VariableType),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {
@@ -22828,7 +22889,9 @@ import * as core from \\"../../../../../../../core\\";
 export const Response: core.schemas.Schema<
   serializers.v2.v3.LightweightProblemInfoV2.Raw[],
   TraceApi.v2.v3.LightweightProblemInfoV2[]
-> = core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.LightweightProblemInfoV2));
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.LightweightProblemInfoV2)
+);
 ",
                                     "name": "getLightweightProblems.ts",
                                     "type": "file",
@@ -22843,7 +22906,7 @@ import { TraceApi } from \\"../../../../../../..\\";
 import * as core from \\"../../../../../../../core\\";
 
 export const Response: core.schemas.Schema<serializers.v2.v3.ProblemInfoV2.Raw[], TraceApi.v2.v3.ProblemInfoV2[]> =
-  core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.ProblemInfoV2));
+  core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.ProblemInfoV2));
 ",
                                     "name": "getProblems.ts",
                                     "type": "file",
@@ -22882,8 +22945,12 @@ export const AssertCorrectnessCheck: core.schemas.Schema<
   TraceApi.v2.v3.AssertCorrectnessCheck
 > = core.schemas
   .union(\\"type\\", {
-    deepEquality: core.schemas.lazyObject(() => serializers.v2.v3.DeepEqualityCorrectnessCheck),
-    custom: core.schemas.lazyObject(() => serializers.v2.v3.VoidFunctionDefinitionThatTakesActualResult),
+    deepEquality: core.schemas.lazyObject(
+      async () => (await import(\\"../../../../../..\\")).v2.v3.DeepEqualityCorrectnessCheck
+    ),
+    custom: core.schemas.lazyObject(
+      async () => (await import(\\"../../../../../..\\")).v2.v3.VoidFunctionDefinitionThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.v3.AssertCorrectnessCheck>({
     parse: (value) => {
@@ -22930,12 +22997,14 @@ import * as serializers from \\"../../../../../..\\";
 export const BasicCustomFiles: core.schemas.ObjectSchema<BasicCustomFiles.Raw, TraceApi.v2.v3.BasicCustomFiles> =
   core.schemas.object({
     methodName: core.schemas.string(),
-    signature: core.schemas.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
+    signature: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.NonVoidFunctionSignature),
     additionalFiles: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.v3.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Files)
     ),
-    basicTestCaseTemplate: core.schemas.lazyObject(() => serializers.v2.v3.BasicTestCaseTemplate),
+    basicTestCaseTemplate: core.schemas.lazyObject(
+      async () => (await import(\\"../../../../../..\\")).v2.v3.BasicTestCaseTemplate
+    ),
   });
 
 export declare namespace BasicCustomFiles {
@@ -22963,10 +23032,12 @@ export const BasicTestCaseTemplate: core.schemas.ObjectSchema<
   BasicTestCaseTemplate.Raw,
   TraceApi.v2.v3.BasicTestCaseTemplate
 > = core.schemas.object({
-  templateId: core.schemas.lazy(() => serializers.v2.v3.TestCaseTemplateId),
+  templateId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplateId),
   name: core.schemas.string(),
-  description: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseImplementationDescription),
-  expectedValueParameterId: core.schemas.lazy(() => serializers.v2.v3.ParameterId),
+  description: core.schemas.lazyObject(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseImplementationDescription
+  ),
+  expectedValueParameterId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.ParameterId),
 });
 
 export declare namespace BasicTestCaseTemplate {
@@ -22995,11 +23066,15 @@ export const CreateProblemRequestV2: core.schemas.ObjectSchema<
   TraceApi.v2.v3.CreateProblemRequestV2
 > = core.schemas.object({
   problemName: core.schemas.string(),
-  problemDescription: core.schemas.lazyObject(() => serializers.ProblemDescription),
-  customFiles: core.schemas.lazy(() => serializers.v2.v3.CustomFiles),
-  customTestCaseTemplates: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.TestCaseTemplate)),
-  testcases: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.TestCaseV2)),
-  supportedLanguages: core.schemas.list(core.schemas.lazy(() => serializers.Language)),
+  problemDescription: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).ProblemDescription),
+  customFiles: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.CustomFiles),
+  customTestCaseTemplates: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplate)
+  ),
+  testcases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseV2)
+  ),
+  supportedLanguages: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).Language)),
   isPublic: core.schemas.boolean(),
 });
 
@@ -23029,11 +23104,11 @@ import * as serializers from \\"../../../../../..\\";
 
 export const CustomFiles: core.schemas.Schema<CustomFiles.Raw, TraceApi.v2.v3.CustomFiles> = core.schemas
   .union(\\"type\\", {
-    basic: core.schemas.lazyObject(() => serializers.v2.v3.BasicCustomFiles),
+    basic: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.BasicCustomFiles),
     custom: core.schemas.object({
       value: core.schemas.record(
         core.schemas.string(),
-        core.schemas.lazyObject(() => serializers.v2.v3.Files)
+        core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Files)
       ),
     }),
   })
@@ -23084,7 +23159,7 @@ export const DeepEqualityCorrectnessCheck: core.schemas.ObjectSchema<
   DeepEqualityCorrectnessCheck.Raw,
   TraceApi.v2.v3.DeepEqualityCorrectnessCheck
 > = core.schemas.object({
-  expectedValueParameterId: core.schemas.lazy(() => serializers.v2.v3.ParameterId),
+  expectedValueParameterId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.ParameterId),
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
@@ -23109,8 +23184,8 @@ export const DefaultProvidedFile: core.schemas.ObjectSchema<
   DefaultProvidedFile.Raw,
   TraceApi.v2.v3.DefaultProvidedFile
 > = core.schemas.object({
-  file: core.schemas.lazyObject(() => serializers.v2.v3.FileInfoV2),
-  relatedTypes: core.schemas.list(core.schemas.lazy(() => serializers.VariableType)),
+  file: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.FileInfoV2),
+  relatedTypes: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).VariableType)),
 });
 
 export declare namespace DefaultProvidedFile {
@@ -23160,7 +23235,7 @@ import * as core from \\"../../../../../../../core\\";
 import * as serializers from \\"../../../../../..\\";
 
 export const Files: core.schemas.ObjectSchema<Files.Raw, TraceApi.v2.v3.Files> = core.schemas.object({
-  files: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.FileInfoV2)),
+  files: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.FileInfoV2)),
 });
 
 export declare namespace Files {
@@ -23213,7 +23288,7 @@ export const FunctionImplementationForMultipleLanguages: core.schemas.ObjectSche
 > = core.schemas.object({
   codeByLanguage: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.v2.v3.FunctionImplementation)
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.FunctionImplementation)
   ),
 });
 
@@ -23238,10 +23313,10 @@ import * as serializers from \\"../../../../../..\\";
 export const FunctionSignature: core.schemas.Schema<FunctionSignature.Raw, TraceApi.v2.v3.FunctionSignature> =
   core.schemas
     .union(\\"type\\", {
-      void: core.schemas.lazyObject(() => serializers.v2.v3.VoidFunctionSignature),
-      nonVoid: core.schemas.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
+      void: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.VoidFunctionSignature),
+      nonVoid: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.NonVoidFunctionSignature),
       voidThatTakesActualResult: core.schemas.lazyObject(
-        () => serializers.v2.v3.VoidFunctionSignatureThatTakesActualResult
+        async () => (await import(\\"../../../../../..\\")).v2.v3.VoidFunctionSignatureThatTakesActualResult
       ),
     })
     .transform<TraceApi.v2.v3.FunctionSignature>({
@@ -23296,15 +23371,15 @@ export const GeneratedFiles: core.schemas.ObjectSchema<GeneratedFiles.Raw, Trace
   core.schemas.object({
     generatedTestCaseFiles: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.v3.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Files)
     ),
     generatedTemplateFiles: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.v3.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Files)
     ),
     other: core.schemas.record(
       core.schemas.string(),
-      core.schemas.lazyObject(() => serializers.v2.v3.Files)
+      core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Files)
     ),
   });
 
@@ -23333,7 +23408,7 @@ export const GetBasicSolutionFileRequest: core.schemas.ObjectSchema<
   TraceApi.v2.v3.GetBasicSolutionFileRequest
 > = core.schemas.object({
   methodName: core.schemas.string(),
-  signature: core.schemas.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
+  signature: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.NonVoidFunctionSignature),
 });
 
 export declare namespace GetBasicSolutionFileRequest {
@@ -23361,7 +23436,7 @@ export const GetBasicSolutionFileResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   solutionFileByLanguage: core.schemas.record(
     core.schemas.string(),
-    core.schemas.lazyObject(() => serializers.v2.v3.FileInfoV2)
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.FileInfoV2)
   ),
 });
 
@@ -23387,7 +23462,7 @@ export const GetFunctionSignatureRequest: core.schemas.ObjectSchema<
   GetFunctionSignatureRequest.Raw,
   TraceApi.v2.v3.GetFunctionSignatureRequest
 > = core.schemas.object({
-  functionSignature: core.schemas.lazy(() => serializers.v2.v3.FunctionSignature),
+  functionSignature: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.FunctionSignature),
 });
 
 export declare namespace GetFunctionSignatureRequest {
@@ -23437,8 +23512,8 @@ export const GetGeneratedTestCaseFileRequest: core.schemas.ObjectSchema<
   GetGeneratedTestCaseFileRequest.Raw,
   TraceApi.v2.v3.GetGeneratedTestCaseFileRequest
 > = core.schemas.object({
-  template: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseTemplate).optional(),
-  testCase: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseV2),
+  template: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplate).optional(),
+  testCase: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseV2),
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {
@@ -23464,7 +23539,7 @@ export const GetGeneratedTestCaseTemplateFileRequest: core.schemas.ObjectSchema<
   GetGeneratedTestCaseTemplateFileRequest.Raw,
   TraceApi.v2.v3.GetGeneratedTestCaseTemplateFileRequest
 > = core.schemas.object({
-  template: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseTemplate),
+  template: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplate),
 });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
@@ -23489,10 +23564,10 @@ export const LightweightProblemInfoV2: core.schemas.ObjectSchema<
   LightweightProblemInfoV2.Raw,
   TraceApi.v2.v3.LightweightProblemInfoV2
 > = core.schemas.object({
-  problemId: core.schemas.lazy(() => serializers.ProblemId),
+  problemId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).ProblemId),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
-  variableTypes: core.schemas.list(core.schemas.lazy(() => serializers.VariableType)),
+  variableTypes: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).VariableType)),
 });
 
 export declare namespace LightweightProblemInfoV2 {
@@ -23520,8 +23595,10 @@ export const NonVoidFunctionDefinition: core.schemas.ObjectSchema<
   NonVoidFunctionDefinition.Raw,
   TraceApi.v2.v3.NonVoidFunctionDefinition
 > = core.schemas.object({
-  signature: core.schemas.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
-  code: core.schemas.lazyObject(() => serializers.v2.v3.FunctionImplementationForMultipleLanguages),
+  signature: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.NonVoidFunctionSignature),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace NonVoidFunctionDefinition {
@@ -23547,8 +23624,10 @@ export const NonVoidFunctionSignature: core.schemas.ObjectSchema<
   NonVoidFunctionSignature.Raw,
   TraceApi.v2.v3.NonVoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.Parameter)),
-  returnType: core.schemas.lazy(() => serializers.VariableType),
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Parameter)
+  ),
+  returnType: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).VariableType),
 });
 
 export declare namespace NonVoidFunctionSignature {
@@ -23571,9 +23650,9 @@ import * as core from \\"../../../../../../../core\\";
 import * as serializers from \\"../../../../../..\\";
 
 export const Parameter: core.schemas.ObjectSchema<Parameter.Raw, TraceApi.v2.v3.Parameter> = core.schemas.object({
-  parameterId: core.schemas.lazy(() => serializers.v2.v3.ParameterId),
+  parameterId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.ParameterId),
   name: core.schemas.string(),
-  variableType: core.schemas.lazy(() => serializers.VariableType),
+  variableType: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).VariableType),
 });
 
 export declare namespace Parameter {
@@ -23620,15 +23699,19 @@ import * as serializers from \\"../../../../../..\\";
 
 export const ProblemInfoV2: core.schemas.ObjectSchema<ProblemInfoV2.Raw, TraceApi.v2.v3.ProblemInfoV2> =
   core.schemas.object({
-    problemId: core.schemas.lazy(() => serializers.ProblemId),
-    problemDescription: core.schemas.lazyObject(() => serializers.ProblemDescription),
+    problemId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).ProblemId),
+    problemDescription: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).ProblemDescription),
     problemName: core.schemas.string(),
     problemVersion: core.schemas.number(),
-    supportedLanguages: core.schemas.list(core.schemas.lazy(() => serializers.Language)),
-    customFiles: core.schemas.lazy(() => serializers.v2.v3.CustomFiles),
-    generatedFiles: core.schemas.lazyObject(() => serializers.v2.v3.GeneratedFiles),
-    customTestCaseTemplates: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.TestCaseTemplate)),
-    testcases: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.TestCaseV2)),
+    supportedLanguages: core.schemas.list(core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).Language)),
+    customFiles: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.CustomFiles),
+    generatedFiles: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.GeneratedFiles),
+    customTestCaseTemplates: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplate)
+    ),
+    testcases: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseV2)
+    ),
     isPublic: core.schemas.boolean(),
   });
 
@@ -23683,8 +23766,10 @@ import * as serializers from \\"../../../../../..\\";
 
 export const TestCaseFunction: core.schemas.Schema<TestCaseFunction.Raw, TraceApi.v2.v3.TestCaseFunction> = core.schemas
   .union(\\"type\\", {
-    withActualResult: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseWithActualResultImplementation),
-    custom: core.schemas.lazyObject(() => serializers.v2.v3.VoidFunctionDefinition),
+    withActualResult: core.schemas.lazyObject(
+      async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseWithActualResultImplementation
+    ),
+    custom: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.VoidFunctionDefinition),
   })
   .transform<TraceApi.v2.v3.TestCaseFunction>({
     parse: (value) => {
@@ -23754,8 +23839,10 @@ export const TestCaseImplementation: core.schemas.ObjectSchema<
   TestCaseImplementation.Raw,
   TraceApi.v2.v3.TestCaseImplementation
 > = core.schemas.object({
-  description: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseImplementationDescription),
-  function: core.schemas.lazy(() => serializers.v2.v3.TestCaseFunction),
+  description: core.schemas.lazyObject(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseImplementationDescription
+  ),
+  function: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseFunction),
 });
 
 export declare namespace TestCaseImplementation {
@@ -23781,7 +23868,9 @@ export const TestCaseImplementationDescription: core.schemas.ObjectSchema<
   TestCaseImplementationDescription.Raw,
   TraceApi.v2.v3.TestCaseImplementationDescription
 > = core.schemas.object({
-  boards: core.schemas.list(core.schemas.lazy(() => serializers.v2.v3.TestCaseImplementationDescriptionBoard)),
+  boards: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseImplementationDescriptionBoard)
+  ),
 });
 
 export declare namespace TestCaseImplementationDescription {
@@ -23811,7 +23900,7 @@ export const TestCaseImplementationDescriptionBoard: core.schemas.Schema<
       value: core.schemas.string(),
     }),
     paramId: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.v2.v3.ParameterId),
+      value: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.ParameterId),
     }),
   })
   .transform<TraceApi.v2.v3.TestCaseImplementationDescriptionBoard>({
@@ -23864,9 +23953,11 @@ export const TestCaseImplementationReference: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     templateId: core.schemas.object({
-      value: core.schemas.lazy(() => serializers.v2.v3.TestCaseTemplateId),
+      value: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplateId),
     }),
-    implementation: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseImplementation),
+    implementation: core.schemas.lazyObject(
+      async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseImplementation
+    ),
   })
   .transform<TraceApi.v2.v3.TestCaseImplementationReference>({
     parse: (value) => {
@@ -23913,7 +24004,7 @@ import * as serializers from \\"../../../../../..\\";
 
 export const TestCaseMetadata: core.schemas.ObjectSchema<TestCaseMetadata.Raw, TraceApi.v2.v3.TestCaseMetadata> =
   core.schemas.object({
-    id: core.schemas.lazy(() => serializers.v2.v3.TestCaseId),
+    id: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseId),
     name: core.schemas.string(),
     hidden: core.schemas.boolean(),
   });
@@ -23940,9 +24031,11 @@ import * as serializers from \\"../../../../../..\\";
 
 export const TestCaseTemplate: core.schemas.ObjectSchema<TestCaseTemplate.Raw, TraceApi.v2.v3.TestCaseTemplate> =
   core.schemas.object({
-    templateId: core.schemas.lazy(() => serializers.v2.v3.TestCaseTemplateId),
+    templateId: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseTemplateId),
     name: core.schemas.string(),
-    implementation: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseImplementation),
+    implementation: core.schemas.lazyObject(
+      async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseImplementation
+    ),
   });
 
 export declare namespace TestCaseTemplate {
@@ -23987,13 +24080,15 @@ import * as core from \\"../../../../../../../core\\";
 import * as serializers from \\"../../../../../..\\";
 
 export const TestCaseV2: core.schemas.ObjectSchema<TestCaseV2.Raw, TraceApi.v2.v3.TestCaseV2> = core.schemas.object({
-  metadata: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseMetadata),
-  implementation: core.schemas.lazy(() => serializers.v2.v3.TestCaseImplementationReference),
-  arguments: core.schemas.record(
-    core.schemas.lazy(() => serializers.v2.v3.ParameterId),
-    core.schemas.lazy(() => serializers.VariableValue)
+  metadata: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseMetadata),
+  implementation: core.schemas.lazy(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseImplementationReference
   ),
-  expects: core.schemas.lazyObject(() => serializers.v2.v3.TestCaseExpects).optional(),
+  arguments: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).v2.v3.ParameterId),
+    core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).VariableValue)
+  ),
+  expects: core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.TestCaseExpects).optional(),
 });
 
 export declare namespace TestCaseV2 {
@@ -24021,8 +24116,12 @@ export const TestCaseWithActualResultImplementation: core.schemas.ObjectSchema<
   TestCaseWithActualResultImplementation.Raw,
   TraceApi.v2.v3.TestCaseWithActualResultImplementation
 > = core.schemas.object({
-  getActualResult: core.schemas.lazyObject(() => serializers.v2.v3.NonVoidFunctionDefinition),
-  assertCorrectnessCheck: core.schemas.lazy(() => serializers.v2.v3.AssertCorrectnessCheck),
+  getActualResult: core.schemas.lazyObject(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.NonVoidFunctionDefinition
+  ),
+  assertCorrectnessCheck: core.schemas.lazy(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.AssertCorrectnessCheck
+  ),
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
@@ -24048,8 +24147,12 @@ export const VoidFunctionDefinition: core.schemas.ObjectSchema<
   VoidFunctionDefinition.Raw,
   TraceApi.v2.v3.VoidFunctionDefinition
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.Parameter)),
-  code: core.schemas.lazyObject(() => serializers.v2.v3.FunctionImplementationForMultipleLanguages),
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinition {
@@ -24075,8 +24178,12 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.schemas.ObjectSch
   VoidFunctionDefinitionThatTakesActualResult.Raw,
   TraceApi.v2.v3.VoidFunctionDefinitionThatTakesActualResult
 > = core.schemas.object({
-  additionalParameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.Parameter)),
-  code: core.schemas.lazyObject(() => serializers.v2.v3.FunctionImplementationForMultipleLanguages),
+  additionalParameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"../../../../../..\\")).v2.v3.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {
@@ -24102,7 +24209,9 @@ export const VoidFunctionSignature: core.schemas.ObjectSchema<
   VoidFunctionSignature.Raw,
   TraceApi.v2.v3.VoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.Parameter)),
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Parameter)
+  ),
 });
 
 export declare namespace VoidFunctionSignature {
@@ -24127,8 +24236,10 @@ export const VoidFunctionSignatureThatTakesActualResult: core.schemas.ObjectSche
   VoidFunctionSignatureThatTakesActualResult.Raw,
   TraceApi.v2.v3.VoidFunctionSignatureThatTakesActualResult
 > = core.schemas.object({
-  parameters: core.schemas.list(core.schemas.lazyObject(() => serializers.v2.v3.Parameter)),
-  actualResultType: core.schemas.lazy(() => serializers.VariableType),
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"../../../../../..\\")).v2.v3.Parameter)
+  ),
+  actualResultType: core.schemas.lazy(async () => (await import(\\"../../../../../..\\")).VariableType),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {
@@ -24224,6 +24335,7 @@ export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
+        \\"module\\": \\"commonjs\\",
         \\"moduleResolution\\": \\"node\\",
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,

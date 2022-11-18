@@ -50,8 +50,9 @@ export class EndpointError extends AbstractEndpointDeclaration {
 
     public getReferenceToSchema(file: SdkFile): Zurg.Schema {
         return file.coreUtilities.zurg.Schema._fromExpression(
-            file.getReferenceToEndpointSchemaFileExport(this.service.name, this.endpoint, EndpointError.TYPE_NAME)
-                .expression
+            file
+                .getReferenceToEndpointSchemaFileExport(this.service.name, this.endpoint, EndpointError.TYPE_NAME)
+                .getExpression()
         );
     }
 
@@ -60,9 +61,11 @@ export class EndpointError extends AbstractEndpointDeclaration {
     }
 
     public getReferenceToRawType(file: SdkFile): ts.TypeNode {
-        return file.getReferenceToEndpointSchemaFileExport(this.service.name, this.endpoint, [
-            EndpointError.TYPE_NAME,
-            AbstractSchemaGenerator.RAW_TYPE_NAME,
-        ]).typeNode;
+        return file
+            .getReferenceToEndpointSchemaFileExport(this.service.name, this.endpoint, [
+                EndpointError.TYPE_NAME,
+                AbstractSchemaGenerator.RAW_TYPE_NAME,
+            ])
+            .getTypeNode();
     }
 }

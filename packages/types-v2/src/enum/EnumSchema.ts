@@ -11,7 +11,7 @@ export class EnumSchema extends AbstractEnumFileDeclaration {
         const referenceToParsedType = file.getReferenceToNamedType(this.typeDeclaration.name);
 
         return file.coreUtilities.zurg.string().transform({
-            newShape: referenceToParsedType.typeNode,
+            newShape: referenceToParsedType.getTypeNode(),
             parse: ts.factory.createArrowFunction(
                 undefined,
                 undefined,
@@ -20,7 +20,7 @@ export class EnumSchema extends AbstractEnumFileDeclaration {
                 undefined,
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
-                        referenceToParsedType.expression,
+                        referenceToParsedType.getExpression(),
                         EnumConst.PARSE_UTIL_NAME
                     ),
                     undefined,

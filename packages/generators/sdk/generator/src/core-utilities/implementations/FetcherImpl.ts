@@ -78,7 +78,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             }
 
             return ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(fetcher.expression, undefined, [
+                ts.factory.createCallExpression(fetcher.getExpression(), undefined, [
                     ts.factory.createObjectLiteralExpression(properties, true),
                 ])
             );
@@ -89,7 +89,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         _getReferenceToType: this.withExportedName(
             "APIResponse",
             (APIResponse) => (successResponse: ts.TypeNode, failureResponse: ts.TypeNode) =>
-                ts.factory.createTypeReferenceNode(APIResponse.entityName, [successResponse, failureResponse])
+                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [successResponse, failureResponse])
         ),
 
         ok: "ok",
@@ -121,13 +121,13 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
 
     public Supplier = {
         _getReferenceToType: this.withExportedName("Supplier", (Supplier) => (suppliedType: ts.TypeNode) => {
-            return ts.factory.createTypeReferenceNode(Supplier.entityName, [suppliedType]);
+            return ts.factory.createTypeReferenceNode(Supplier.getEntityName(), [suppliedType]);
         }),
 
         get: this.withExportedName("Supplier", (Supplier) => (supplier: ts.Expression) => {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(Supplier.expression, "get"),
+                    ts.factory.createPropertyAccessExpression(Supplier.getExpression(), "get"),
                     undefined,
                     [supplier]
                 )
@@ -139,7 +139,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         return this.withExportedName(
             "Fetcher",
             (Fetcher) => () =>
-                ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(Fetcher.entityName, typeName))
+                ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(Fetcher.getEntityName(), typeName))
         );
     }
 }

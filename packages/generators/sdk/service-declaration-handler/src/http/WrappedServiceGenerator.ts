@@ -24,7 +24,7 @@ export class WrappedServiceGenerator {
             name: this.getCachedMemberName(),
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
-                    referenceToWrapped.typeNode,
+                    referenceToWrapped.getTypeNode(),
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                 ])
             ),
@@ -32,7 +32,7 @@ export class WrappedServiceGenerator {
 
         class_.addGetAccessor({
             name: this.getGetterName(),
-            returnType: getTextOfTsNode(referenceToWrapped.typeNode),
+            returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
             scope: Scope.Public,
             statements: [
                 getTextOfTsNode(
@@ -45,7 +45,7 @@ export class WrappedServiceGenerator {
                                 ),
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
                                 Client.instatiate({
-                                    referenceToClient: referenceToWrapped.expression,
+                                    referenceToClient: referenceToWrapped.getExpression(),
                                     referenceToOptions: Client.getReferenceToOptions(),
                                 })
                             )

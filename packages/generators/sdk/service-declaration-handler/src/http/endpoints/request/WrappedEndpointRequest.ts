@@ -53,8 +53,10 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
     protected override getRequestParameterType(file: SdkFile): TypeReferenceNode {
         return {
             isOptional: false,
-            typeNode: this.getReferenceToEndpointFileExport(WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME, file)
-                .typeNode,
+            typeNode: this.getReferenceToEndpointFileExport(
+                WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME,
+                file
+            ).getTypeNode(),
         };
     }
 

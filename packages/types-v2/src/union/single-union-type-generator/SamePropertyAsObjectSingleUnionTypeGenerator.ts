@@ -15,8 +15,8 @@ export class SamePropertyAsObjectSingleUnionTypeGenerator implements SingleUnion
     public getExtendsForInterface(file: SdkFile, { isRaw }: { isRaw: boolean }): ts.TypeNode[] {
         return [
             isRaw
-                ? file.getReferenceToRawNamedType(this.extended).typeNode
-                : file.getReferenceToNamedType(this.extended).typeNode,
+                ? file.getReferenceToRawNamedType(this.extended).getTypeNode()
+                : file.getReferenceToNamedType(this.extended).getTypeNode(),
         ];
     }
 
@@ -32,7 +32,7 @@ export class SamePropertyAsObjectSingleUnionTypeGenerator implements SingleUnion
                 undefined,
                 SamePropertyAsObjectSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
-                file.getReferenceToNamedType(this.extended).typeNode
+                file.getReferenceToNamedType(this.extended).getTypeNode()
             ),
         ];
     }
@@ -50,7 +50,7 @@ export class SamePropertyAsObjectSingleUnionTypeGenerator implements SingleUnion
     }
 
     public getVisitMethodParameterType(file: SdkFile): ts.TypeNode | undefined {
-        return file.getReferenceToNamedType(this.extended).typeNode;
+        return file.getReferenceToNamedType(this.extended).getTypeNode();
     }
 
     public getVisitorArguments({

@@ -41,7 +41,7 @@ export class Client {
                     type: getTextOfTsNode(
                         file.environments != null
                             ? ts.factory.createUnionTypeNode([
-                                  file.environments.getReferenceToEnvironmentEnum().typeNode,
+                                  file.environments.getReferenceToEnvironmentEnum().getTypeNode(),
                                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                               ])
                             : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)

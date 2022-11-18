@@ -3,7 +3,9 @@ import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { ImportDeclaration } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 
-export type ImportStrategy = { type: "fromRoot"; namespaceImport?: string } | { type: "direct"; alias?: string };
+export type ImportStrategy =
+    | { type: "fromRoot"; namespaceImport?: string; useDynamicImport?: boolean }
+    | { type: "direct"; alias?: string };
 
 export interface DeclarationReferencer<Name> {
     getExportedFilepath: (name: Name) => ExportedFilePath;

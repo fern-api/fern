@@ -20,14 +20,14 @@ export class AuthImpl extends CoreUtility implements Auth {
     };
 
     public readonly BearerToken = {
-        _getReferenceToType: this.withExportedName("BearerToken", (BearerToken) => () => BearerToken.typeNode),
+        _getReferenceToType: this.withExportedName("BearerToken", (BearerToken) => () => BearerToken.getTypeNode()),
         toAuthorizationHeader: this.withExportedName(
             "BearerToken",
             (BearerToken) =>
                 (token: ts.Expression): ts.Expression => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            BearerToken.expression,
+                            BearerToken.getExpression(),
                             ts.factory.createIdentifier("toAuthorizationHeader")
                         ),
                         undefined,
@@ -41,7 +41,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                 (header: ts.Expression): ts.Expression => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            BearerToken.expression,
+                            BearerToken.getExpression(),
                             ts.factory.createIdentifier("fromAuthorizationHeader")
                         ),
                         undefined,
@@ -52,14 +52,14 @@ export class AuthImpl extends CoreUtility implements Auth {
     };
 
     public readonly BasicAuth = {
-        _getReferenceToType: this.withExportedName("BasicAuth", (BasicAuth) => () => BasicAuth.typeNode),
+        _getReferenceToType: this.withExportedName("BasicAuth", (BasicAuth) => () => BasicAuth.getTypeNode()),
         toAuthorizationHeader: this.withExportedName(
             "BasicAuth",
             (BasicAuth) =>
                 (credentials: ts.Expression): ts.Expression => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            BasicAuth.expression,
+                            BasicAuth.getExpression(),
                             ts.factory.createIdentifier("toAuthorizationHeader")
                         ),
                         undefined,
@@ -73,7 +73,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                 (header: ts.Expression): ts.Expression => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            BasicAuth.expression,
+                            BasicAuth.getExpression(),
                             ts.factory.createIdentifier("fromAuthorizationHeader")
                         ),
                         undefined,

@@ -57,7 +57,7 @@ export class EnvironmentsGenerator {
                               addImport,
                               sourceFile,
                               environmentId: defaultEnvironment,
-                          }).expression
+                          }).getExpression()
                     : undefined,
         };
     }

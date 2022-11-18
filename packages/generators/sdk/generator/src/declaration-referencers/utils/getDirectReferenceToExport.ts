@@ -8,7 +8,7 @@ import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 export function getDirectReferenceToExport({
     exportedName,
     exportedFromPath,
-    addImport,
+    addImport: addImportToFile,
     referencedIn,
     importAlias,
     subImport = [],
@@ -25,14 +25,16 @@ export function getDirectReferenceToExport({
         convertExportedFilePathToFilePath(exportedFromPath)
     );
 
-    addImport(moduleSpecifier, {
-        namedImports: [
-            {
-                name: exportedName,
-                alias: importAlias,
-            },
-        ],
-    });
+    const addImport = () => {
+        addImportToFile(moduleSpecifier, {
+            namedImports: [
+                {
+                    name: exportedName,
+                    alias: importAlias,
+                },
+            ],
+        });
+    };
 
     const importedName = importAlias ?? exportedName;
 
@@ -40,9 +42,19 @@ export function getDirectReferenceToExport({
         (acc, subImport) => ts.factory.createQualifiedName(acc, subImport),
         ts.factory.createIdentifier(importedName)
     );
+
     return {
-        typeNode: ts.factory.createTypeReferenceNode(entityName),
-        entityName,
-        expression: ts.factory.createIdentifier(importedName),
+        getTypeNode: () => {
+            addImport();
+            return ts.factory.createTypeReferenceNode(entityName);
+        },
+        getEntityName: () => {
+            addImport();
+            return entityName;
+        },
+        getExpression: () => {
+            addImport();
+            return ts.factory.createIdentifier(importedName);
+        },
     };
 }

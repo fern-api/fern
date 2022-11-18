@@ -77,14 +77,14 @@ export class ObjectTypeGenerator extends AbstractTypeSchemaGenerator {
     }
 
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
-        return file.getReferenceToNamedType(this.typeDeclaration.name).typeNode;
+        return file.getReferenceToNamedType(this.typeDeclaration.name).getTypeNode();
     }
 
     protected override generateRawTypeDeclaration(file: SdkFile, module: ModuleDeclaration): void {
         module.addInterface({
             name: AbstractSchemaGenerator.RAW_TYPE_NAME,
             extends: this.shape.extends.map((extension) =>
-                getTextOfTsNode(file.getReferenceToRawNamedType(extension).typeNode)
+                getTextOfTsNode(file.getReferenceToRawNamedType(extension).getTypeNode())
             ),
             properties: this.properties.map((property) => {
                 const propertyTypeWithMetadata = property.getRawValueType(file);

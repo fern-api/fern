@@ -27,7 +27,7 @@ export class SinglePropertySingleUnionTypeGenerator implements SingleUnionTypeGe
         return [
             {
                 name: isRaw ? this.singleProperty.name.wireValue : this.getSinglePropertyKey(),
-                type: getTextOfTsNode(error.typeNode),
+                type: getTextOfTsNode(error.getTypeNode()),
             },
         ];
     }
@@ -41,7 +41,7 @@ export class SinglePropertySingleUnionTypeGenerator implements SingleUnionTypeGe
                 undefined,
                 SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
-                error.typeNode
+                error.getTypeNode()
             ),
         ];
     }
@@ -60,7 +60,7 @@ export class SinglePropertySingleUnionTypeGenerator implements SingleUnionTypeGe
     }
 
     public getVisitMethodParameterType(file: SdkFile): ts.TypeNode | undefined {
-        return file.getReferenceToError(this.singleProperty.error).typeNode;
+        return file.getReferenceToError(this.singleProperty.error).getTypeNode();
     }
 
     public getVisitorArguments({

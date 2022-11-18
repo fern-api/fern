@@ -46,6 +46,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     referencedIn,
                     addImport,
                     namespaceImport: importStrategy.namespaceImport,
+                    useDynamicImport: importStrategy.useDynamicImport,
                     subImport,
                 });
             default:

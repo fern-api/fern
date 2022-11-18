@@ -86,7 +86,7 @@ export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
     }
 
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
-        return file.getReferenceToNamedType(this.typeDeclaration.name).typeNode;
+        return file.getReferenceToNamedType(this.typeDeclaration.name).getTypeNode();
     }
 
     protected override generateRawTypeDeclaration(file: SdkFile, module: ModuleDeclaration): void {
@@ -127,7 +127,7 @@ export class AliasTypeGenerator extends AbstractTypeSchemaGenerator {
     }
 
     private getAliasCreator(file: SdkFile): ts.Expression {
-        return file.getReferenceToNamedType(this.typeDeclaration.name).expression;
+        return file.getReferenceToNamedType(this.typeDeclaration.name).getExpression();
     }
 
     private isBrandedString(): boolean {

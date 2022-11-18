@@ -66,7 +66,7 @@ export class EnumModule extends AbstractEnumFileDeclaration {
     private getReferenceToType(name: string, file: SdkFile): ts.EntityName {
         return EnumModule.getReferenceToType({
             name,
-            referenceToModule: file.getReferenceToNamedType(this.typeDeclaration.name).entityName,
+            referenceToModule: file.getReferenceToNamedType(this.typeDeclaration.name).getEntityName(),
         });
     }
 

@@ -81,7 +81,7 @@ export class EnumTypeGenerator extends AbstractTypeSchemaGenerator {
     }
 
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
-        return file.getReferenceToNamedType(this.declaredTypeName).typeNode;
+        return file.getReferenceToNamedType(this.declaredTypeName).getTypeNode();
     }
 
     protected override getSchema(file: SdkFile): Zurg.Schema {

@@ -16,7 +16,7 @@ export function getReferenceToExportViaNamespaceImport({
     filepathToNamespaceImport,
     filepathInsideNamespaceImport,
     namespaceImport,
-    addImport,
+    addImport: addImportToFile,
     referencedIn,
     subImport = [],
 }: {
@@ -28,10 +28,15 @@ export function getReferenceToExportViaNamespaceImport({
     referencedIn: SourceFile;
     subImport?: string[];
 }): Reference {
-    addImport(
-        getRelativePathAsModuleSpecifierTo(referencedIn, convertExportedFilePathToFilePath(filepathToNamespaceImport)),
-        { namespaceImport }
-    );
+    const addImport = () => {
+        addImportToFile(
+            getRelativePathAsModuleSpecifierTo(
+                referencedIn,
+                convertExportedFilePathToFilePath(filepathToNamespaceImport)
+            ),
+            { namespaceImport }
+        );
+    };
 
     const pathToDirectoryInsideNamespaceImport =
         filepathInsideNamespaceImport != null
@@ -57,8 +62,17 @@ export function getReferenceToExportViaNamespaceImport({
     );
 
     return {
-        typeNode: ts.factory.createTypeReferenceNode(entityName),
-        entityName,
-        expression,
+        getTypeNode: () => {
+            addImport();
+            return ts.factory.createTypeReferenceNode(entityName);
+        },
+        getEntityName: () => {
+            addImport();
+            return entityName;
+        },
+        getExpression: () => {
+            addImport();
+            return expression;
+        },
     };
 }

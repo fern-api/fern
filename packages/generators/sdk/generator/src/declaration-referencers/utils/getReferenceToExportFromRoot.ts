@@ -20,6 +20,7 @@ export declare namespace getReferenceToExportFromRoot {
         exportedFromPath: ExportedFilePath;
         addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
         namespaceImport?: string;
+        useDynamicImport?: boolean;
         subImport?: string[];
     }
 }
@@ -27,23 +28,29 @@ export declare namespace getReferenceToExportFromRoot {
 export function getReferenceToExportFromRoot({
     exportedName,
     exportedFromPath,
-    addImport,
+    addImport: addImportToFile,
     referencedIn,
     namespaceImport,
+    useDynamicImport = false,
     subImport = [],
 }: getReferenceToExportFromRoot.Args): Reference {
     let prefix: ts.Identifier | undefined;
+    let moduleSpecifier: ModuleSpecifier;
     let directoriesInsideNamespaceExport: ExportedDirectory[];
+    let addImport: () => void;
 
     if (exportedFromPath.directories[0]?.exportDeclaration?.namespaceExport == null && namespaceImport != null) {
         const [firstDirectory, ...remainingDirectories] = exportedFromPath.directories;
-        const moduleSpecifier = getRelativePathAsModuleSpecifierTo(
+        moduleSpecifier = getRelativePathAsModuleSpecifierTo(
             referencedIn,
             firstDirectory != null
                 ? convertExportedDirectoryPathToFilePath([firstDirectory])
                 : convertExportedFilePathToFilePath(exportedFromPath)
         );
-        addImport(moduleSpecifier, { namespaceImport });
+
+        addImport = () => {
+            addImportToFile(moduleSpecifier, { namespaceImport });
+        };
 
         prefix = ts.factory.createIdentifier(namespaceImport);
         directoriesInsideNamespaceExport = remainingDirectories;
@@ -67,20 +74,24 @@ export function getReferenceToExportFromRoot({
             return getDirectReferenceToExport({
                 exportedName,
                 exportedFromPath,
-                addImport,
+                addImport: addImportToFile,
                 referencedIn,
                 importAlias: undefined,
                 subImport,
             });
         }
 
-        const moduleSpecifier = getRelativePathAsModuleSpecifierTo(
+        moduleSpecifier = getRelativePathAsModuleSpecifierTo(
             referencedIn,
             convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
         );
-        addImport(moduleSpecifier, {
-            namedImports: [firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport],
-        });
+
+        const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
+        addImport = () => {
+            addImportToFile(moduleSpecifier, {
+                namedImports: [namedImport],
+            });
+        };
     }
 
     const entityName = [exportedName, ...subImport].reduce<ts.EntityName>(
@@ -95,13 +106,34 @@ export function getReferenceToExportFromRoot({
         (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
         getExpressionToDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
-            prefix,
+            prefix: useDynamicImport
+                ? ts.factory.createParenthesizedExpression(
+                      ts.factory.createAwaitExpression(
+                          ts.factory.createCallExpression(ts.factory.createIdentifier("import"), undefined, [
+                              ts.factory.createStringLiteral(moduleSpecifier),
+                          ])
+                      )
+                  )
+                : prefix,
         })
     );
 
+    const typeNode = ts.factory.createTypeReferenceNode(entityName);
+
     return {
-        typeNode: ts.factory.createTypeReferenceNode(entityName),
-        entityName,
-        expression,
+        getTypeNode: () => {
+            addImport();
+            return typeNode;
+        },
+        getEntityName: () => {
+            addImport();
+            return entityName;
+        },
+        getExpression: () => {
+            if (!useDynamicImport) {
+                addImport();
+            }
+            return expression;
+        },
     };
 }

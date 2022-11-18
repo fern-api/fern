@@ -17,7 +17,7 @@ export class BaseCoreUtilitiesImpl extends CoreUtility implements BaseCoreUtilit
         "addNonEnumerableProperty",
         (addNonEnumerableProperty) =>
             (object: ts.Expression, key: ts.Expression, value: ts.Expression): ts.Expression => {
-                return ts.factory.createCallExpression(addNonEnumerableProperty.expression, undefined, [
+                return ts.factory.createCallExpression(addNonEnumerableProperty.getExpression(), undefined, [
                     object,
                     key,
                     value,

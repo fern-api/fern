@@ -69,7 +69,7 @@ export class UnionConst extends AbstractUnionDeclaration {
                             undefined,
                             ts.factory.createIdentifier(AbstractVisitHelper.VISITOR_INVOCATION_PARAMETER_NAME),
                             undefined,
-                            referenceToUnion.typeNode,
+                            referenceToUnion.getTypeNode(),
                             undefined
                         ),
                         ts.factory.createParameterDeclaration(
@@ -80,7 +80,7 @@ export class UnionConst extends AbstractUnionDeclaration {
                             undefined,
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
-                                    referenceToUnion.entityName,
+                                    referenceToUnion.getEntityName(),
                                     ts.factory.createIdentifier(AbstractVisitHelper.VISITOR_INTERFACE_NAME)
                                 ),
                                 [

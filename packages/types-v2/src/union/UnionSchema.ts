@@ -38,7 +38,7 @@ export class UnionSchema {
             ts.factory.createCaseClause(ts.factory.createStringLiteral(singleUnionType.getDiscriminantValue()), [
                 ts.factory.createReturnStatement(
                     singleUnionType.invokeBuilder({
-                        referenceToParsedUnionType: referenceToParsedShape.expression,
+                        referenceToParsedUnionType: referenceToParsedShape.getExpression(),
                         localReferenceToUnionValue: ts.factory.createIdentifier(rawValueParameterName),
                     })
                 ),
@@ -71,7 +71,7 @@ export class UnionSchema {
                                         undefined,
                                         "this",
                                         undefined,
-                                        referenceToParsedShape.typeNode,
+                                        referenceToParsedShape.getTypeNode(),
                                         undefined
                                     ),
                                     ts.factory.createParameterDeclaration(
@@ -122,7 +122,7 @@ export class UnionSchema {
                 singleUnionTypes: this.parsedSingleUnionTypes.map((singleUnionType) => singleUnionType.getSchema(file)),
             })
             .transform({
-                newShape: referenceToParsedShape.typeNode,
+                newShape: referenceToParsedShape.getTypeNode(),
                 parse: ts.factory.createArrowFunction(
                     undefined,
                     undefined,
