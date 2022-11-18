@@ -7,15 +7,14 @@ const COMPILER_OPTIONS: CompilerOptions = {
     target: "esnext" as unknown as ScriptTarget,
     module: "commonjs" as unknown as ModuleKind,
     moduleResolution: "node" as unknown as ModuleResolutionKind,
+    esModuleInterop: true,
     skipLibCheck: true,
     declaration: true,
     sourceMap: true,
-    emitDeclarationOnly: true,
-    esModuleInterop: true,
     noUncheckedIndexedAccess: true,
     noUnusedLocals: true,
     noUnusedParameters: true,
-    declarationDir: ".",
+    outDir: ".",
     rootDir: "src",
 };
 

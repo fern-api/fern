@@ -151,7 +151,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
-        \\"build\\": \\"esbuild $(find src -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+        \\"build\\": \\"tsc\\"
     },
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
@@ -160,7 +160,6 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
     },
@@ -1474,8 +1473,8 @@ export * from \\"./token/types\\";
 
 import { FernApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
-import * as core from \\"../../../core\\";
 import * as serializers from \\"../../../serialization\\";
+import * as core from \\"../../../core\\";
 
 export declare namespace Client {
   interface Options {
@@ -1494,7 +1493,7 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await (await import(\\"../../../serialization\\")).CreateOwnerRequest.json(request),
+      body: await serializers.CreateOwnerRequest.json(request),
     });
     if (response.ok) {
       return {
@@ -1508,9 +1507,9 @@ export class Client {
         case \\"OwnerAlreadyExistsError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).owner.create.Error.parse(response.error.body as serializers.owner.create.Error.Raw),
+            error: await serializers.owner.create.Error.parse(
+              response.error.body as serializers.owner.create.Error.Raw
+            ),
           };
       }
     }
@@ -1536,7 +1535,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (await import(\\"../../../serialization\\")).Owner.parse(response.body as serializers.Owner.Raw),
+        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
       };
     }
 
@@ -1545,9 +1544,7 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
+            error: await serializers.owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
           };
       }
     }
@@ -1569,12 +1566,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await (await import(\\"../../../serialization\\")).UpdateOwnerRequest.json(request._body),
+      body: await serializers.UpdateOwnerRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (await import(\\"../../../serialization\\")).Owner.parse(response.body as serializers.Owner.Raw),
+        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
       };
     }
 
@@ -1583,9 +1580,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).owner.update.Error.parse(response.error.body as serializers.owner.update.Error.Raw),
+            error: await serializers.owner.update.Error.parse(
+              response.error.body as serializers.owner.update.Error.Raw
+            ),
           };
       }
     }
@@ -1897,8 +1894,8 @@ export * from \\"./Owner\\";
 
 import { FernApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
-import * as core from \\"../../../core\\";
 import * as serializers from \\"../../../serialization\\";
+import * as core from \\"../../../core\\";
 
 export declare namespace Client {
   interface Options {
@@ -1917,14 +1914,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await (await import(\\"../../../serialization\\")).CreateTokenRequest.json(request),
+      body: await serializers.CreateTokenRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
+        body: await serializers.CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
       };
     }
 
@@ -1933,9 +1928,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).token.create.Error.parse(response.error.body as serializers.token.create.Error.Raw),
+            error: await serializers.token.create.Error.parse(
+              response.error.body as serializers.token.create.Error.Raw
+            ),
           };
       }
     }
@@ -1959,14 +1954,12 @@ export class Client {
       headers: {
         \\"X-API-Version\\": this.options?.apiVersion,
       },
-      body: await (await import(\\"../../../serialization\\")).GetTokenMetadataRequest.json(request),
+      body: await serializers.GetTokenMetadataRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
+        body: await serializers.TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
       };
     }
 
@@ -1975,9 +1968,9 @@ export class Client {
         case \\"TokenNotFoundError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).token.getTokenMetadata.Error.parse(response.error.body as serializers.token.getTokenMetadata.Error.Raw),
+            error: await serializers.token.getTokenMetadata.Error.parse(
+              response.error.body as serializers.token.getTokenMetadata.Error.Raw
+            ),
           };
       }
     }
@@ -2005,9 +1998,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).token.getTokensForOwner.Response.parse(response.body as serializers.TokenMetadata.Raw[]),
+        body: await serializers.token.getTokensForOwner.Response.parse(
+          response.body as serializers.TokenMetadata.Raw[]
+        ),
       };
     }
 
@@ -2016,9 +2009,9 @@ export class Client {
         case \\"OwnerNotFoundError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).token.getTokensForOwner.Error.parse(response.error.body as serializers.token.getTokensForOwner.Error.Raw),
+            error: await serializers.token.getTokensForOwner.Error.parse(
+              response.error.body as serializers.token.getTokensForOwner.Error.Raw
+            ),
           };
       }
     }
@@ -3011,15 +3004,14 @@ export * from \\"./TokenStatus\\";
         \\"target\\": \\"esnext\\",
         \\"module\\": \\"commonjs\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
         \\"sourceMap\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,
-        \\"declarationDir\\": \\".\\",
+        \\"outDir\\": \\".\\",
         \\"rootDir\\": \\"src\\"
     },
     \\"include\\": [
@@ -3124,11 +3116,10 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
-        \\"build\\": \\"esbuild $(find src -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+        \\"build\\": \\"tsc\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
     },
@@ -4303,15 +4294,14 @@ export declare namespace Package {
         \\"target\\": \\"esnext\\",
         \\"module\\": \\"commonjs\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
         \\"sourceMap\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,
-        \\"declarationDir\\": \\".\\",
+        \\"outDir\\": \\".\\",
         \\"rootDir\\": \\"src\\"
     },
     \\"include\\": [
@@ -4416,7 +4406,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
-        \\"build\\": \\"esbuild $(find src -name '*.ts') --format=cjs --sourcemap --outdir=. && tsc\\"
+        \\"build\\": \\"tsc\\"
     },
     \\"dependencies\\": {
         \\"@types/basic-auth\\": \\"^1.1.3\\",
@@ -4428,7 +4418,6 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.14.47\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
     },
@@ -5865,6 +5854,7 @@ import * as environments from \\"../../../environments\\";
 import * as core from \\"../../../core\\";
 import { TraceApi } from \\"../../..\\";
 import urlJoin from \\"url-join\\";
+import * as serializers from \\"../../../serialization\\";
 
 export declare namespace Client {
   interface Options {
@@ -5890,7 +5880,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).TestSubmissionStatus.json(request._body),
+      body: await serializers.TestSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5921,7 +5911,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).TestSubmissionUpdate.json(request._body),
+      body: await serializers.TestSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5952,7 +5942,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).WorkspaceSubmissionStatus.json(request._body),
+      body: await serializers.WorkspaceSubmissionStatus.json(request._body),
     });
     if (response.ok) {
       return {
@@ -5983,7 +5973,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).WorkspaceSubmissionUpdate.json(request._body),
+      body: await serializers.WorkspaceSubmissionUpdate.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6014,7 +6004,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).StoreTracedTestCaseRequest.json(request._body),
+      body: await serializers.StoreTracedTestCaseRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6045,7 +6035,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).admin.storeTracedTestCaseV2.Request.json(request._body),
+      body: await serializers.admin.storeTracedTestCaseV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6076,7 +6066,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).StoreTracedWorkspaceRequest.json(request._body),
+      body: await serializers.StoreTracedWorkspaceRequest.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6107,7 +6097,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).admin.storeTracedWorkspaceV2.Request.json(request._body),
+      body: await serializers.admin.storeTracedWorkspaceV2.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -7765,9 +7755,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).homepage.getHomepageProblems.Response.parse(response.body as serializers.ProblemId.Raw[]),
+        body: await serializers.homepage.getHomepageProblems.Response.parse(
+          response.body as serializers.ProblemId.Raw[]
+        ),
       };
     }
 
@@ -7790,7 +7780,7 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).homepage.setHomepageProblems.Request.json(request),
+      body: await serializers.homepage.setHomepageProblems.Request.json(request),
     });
     if (response.ok) {
       return {
@@ -8002,9 +7992,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).migration.getAttemptedMigrations.Response.parse(response.body as serializers.Migration.Raw[]),
+        body: await serializers.migration.getAttemptedMigrations.Response.parse(
+          response.body as serializers.Migration.Raw[]
+        ),
       };
     }
 
@@ -8202,12 +8192,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).PlaylistCreateRequest.json(request._body),
+      body: await serializers.PlaylistCreateRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (await import(\\"../../../serialization\\")).Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
       };
     }
 
@@ -8244,9 +8234,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
+        body: await serializers.playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
       };
     }
 
@@ -8276,7 +8264,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (await import(\\"../../../serialization\\")).Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
       };
     }
 
@@ -8286,9 +8274,9 @@ export class Client {
         case \\"UnauthorizedError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).playlist.getPlaylist.Error.parse(response.error.body as serializers.playlist.getPlaylist.Error.Raw),
+            error: await serializers.playlist.getPlaylist.Error.parse(
+              response.error.body as serializers.playlist.getPlaylist.Error.Raw
+            ),
           };
       }
     }
@@ -8315,14 +8303,14 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).playlist.updatePlaylist.Request.json(request._body),
+      body: await serializers.playlist.updatePlaylist.Request.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).playlist.updatePlaylist.Response.parse(response.body as serializers.Playlist.Raw | null | undefined),
+        body: await serializers.playlist.updatePlaylist.Response.parse(
+          response.body as serializers.Playlist.Raw | null | undefined
+        ),
       };
     }
 
@@ -8331,9 +8319,9 @@ export class Client {
         case \\"PlaylistIdNotFoundError\\":
           return {
             ok: false,
-            error: await (
-              await import(\\"../../../serialization\\")
-            ).playlist.updatePlaylist.Error.parse(response.error.body as serializers.playlist.updatePlaylist.Error.Raw),
+            error: await serializers.playlist.updatePlaylist.Error.parse(
+              response.error.body as serializers.playlist.updatePlaylist.Error.Raw
+            ),
           };
       }
     }
@@ -8928,14 +8916,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).CreateProblemRequest.json(request),
+      body: await serializers.CreateProblemRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
+        body: await serializers.CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
       };
     }
 
@@ -8961,14 +8947,12 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).CreateProblemRequest.json(request._body),
+      body: await serializers.CreateProblemRequest.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
+        body: await serializers.UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
       };
     }
 
@@ -9021,14 +9005,14 @@ export class Client {
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: await (await import(\\"../../../serialization\\")).GetDefaultStarterFilesRequest.json(request),
+      body: await serializers.GetDefaultStarterFilesRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).GetDefaultStarterFilesResponse.parse(response.body as serializers.GetDefaultStarterFilesResponse.Raw),
+        body: await serializers.GetDefaultStarterFilesResponse.parse(
+          response.body as serializers.GetDefaultStarterFilesResponse.Raw
+        ),
       };
     }
 
@@ -9668,9 +9652,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).ExecutionSessionResponse.parse(response.body as serializers.ExecutionSessionResponse.Raw),
+        body: await serializers.ExecutionSessionResponse.parse(
+          response.body as serializers.ExecutionSessionResponse.Raw
+        ),
       };
     }
 
@@ -9697,9 +9681,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).submission.getExecutionSession.Response.parse(
+        body: await serializers.submission.getExecutionSession.Response.parse(
           response.body as serializers.ExecutionSessionResponse.Raw | null | undefined
         ),
       };
@@ -9753,9 +9735,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).GetExecutionSessionStateResponse.parse(response.body as serializers.GetExecutionSessionStateResponse.Raw),
+        body: await serializers.GetExecutionSessionStateResponse.parse(
+          response.body as serializers.GetExecutionSessionStateResponse.Raw
+        ),
       };
     }
 
@@ -13177,9 +13159,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../serialization\\")
-        ).sysprop.getNumWarmInstances.Response.parse(response.body as Record<serializers.Language.Raw, number>),
+        body: await serializers.sysprop.getNumWarmInstances.Response.parse(
+          response.body as Record<serializers.Language.Raw, number>
+        ),
       };
     }
 
@@ -13391,9 +13373,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../serialization\\")
-        ).v2.problem.getLightweightProblems.Response.parse(
+        body: await serializers.v2.problem.getLightweightProblems.Response.parse(
           response.body as serializers.v2.LightweightProblemInfoV2.Raw[]
         ),
       };
@@ -13420,9 +13400,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../serialization\\")
-        ).v2.problem.getProblems.Response.parse(response.body as serializers.v2.ProblemInfoV2.Raw[]),
+        body: await serializers.v2.problem.getProblems.Response.parse(
+          response.body as serializers.v2.ProblemInfoV2.Raw[]
+        ),
       };
     }
 
@@ -13452,9 +13432,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../serialization\\")
-        ).v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
       };
     }
 
@@ -13484,9 +13462,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../serialization\\")
-        ).v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
       };
     }
 
@@ -14866,9 +14842,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../../../serialization\\")
-        ).v2.v3.problem.getLightweightProblems.Response.parse(
+        body: await serializers.v2.v3.problem.getLightweightProblems.Response.parse(
           response.body as serializers.v2.v3.LightweightProblemInfoV2.Raw[]
         ),
       };
@@ -14895,9 +14869,9 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../../../serialization\\")
-        ).v2.v3.problem.getProblems.Response.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw[]),
+        body: await serializers.v2.v3.problem.getProblems.Response.parse(
+          response.body as serializers.v2.v3.ProblemInfoV2.Raw[]
+        ),
       };
     }
 
@@ -14927,9 +14901,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../../../serialization\\")
-        ).v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
       };
     }
 
@@ -14959,9 +14931,7 @@ export class Client {
     if (response.ok) {
       return {
         ok: true,
-        body: await (
-          await import(\\"../../../../../../../serialization\\")
-        ).v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
       };
     }
 
@@ -17695,7 +17665,7 @@ import * as serializers from \\"../..\\";
 export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.getPlaylist.Error> = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundError),
+      content: core.schemas.lazy(async () => serializers.PlaylistIdNotFoundError),
     }),
     UnauthorizedError: core.schemas.object({}),
   })
@@ -17769,7 +17739,7 @@ export const Response: core.schemas.Schema<serializers.Playlist.Raw | null | und
 export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.updatePlaylist.Error> = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundError),
+      content: core.schemas.lazy(async () => serializers.PlaylistIdNotFoundError),
     }),
   })
   .transform<TraceApi.playlist.updatePlaylist.Error>({
@@ -24337,15 +24307,14 @@ export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
         \\"target\\": \\"esnext\\",
         \\"module\\": \\"commonjs\\",
         \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
         \\"sourceMap\\": true,
-        \\"emitDeclarationOnly\\": true,
-        \\"esModuleInterop\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,
-        \\"declarationDir\\": \\".\\",
+        \\"outDir\\": \\".\\",
         \\"rootDir\\": \\"src\\"
     },
     \\"include\\": [

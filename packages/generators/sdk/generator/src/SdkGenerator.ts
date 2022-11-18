@@ -44,12 +44,6 @@ const FILE_HEADER = `/**
  */
 `;
 
-const SCHEMA_IMPORT_STRATEGY: ImportStrategy = {
-    type: "fromRoot",
-    namespaceImport: "serializers",
-    useDynamicImport: true,
-};
-
 export declare namespace SdkGenerator {
     export interface Init {
         apiName: string;
@@ -311,7 +305,7 @@ export class SdkGenerator {
                 const getReferenceToRawNamedType = (typeName: DeclaredTypeName) =>
                     this.typeSchemaDeclarationReferencer.getReferenceToType({
                         name: typeName,
-                        importStrategy: SCHEMA_IMPORT_STRATEGY,
+                        importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                         subImport: getSubImportPathToRawSchema(),
                         addImport,
                         referencedIn: sourceFile,
@@ -327,7 +321,7 @@ export class SdkGenerator {
                 const getReferenceToNamedTypeSchema = (typeName: DeclaredTypeName) =>
                     this.typeSchemaDeclarationReferencer.getReferenceToType({
                         name: typeName,
-                        importStrategy: SCHEMA_IMPORT_STRATEGY,
+                        importStrategy: getSchemaImportStrategy({ useDynamicImport: isGeneratingSchemaFile }),
                         addImport,
                         referencedIn: sourceFile,
                     });
@@ -369,7 +363,7 @@ export class SdkGenerator {
                         this.errorSchemaDeclarationReferencer
                             .getReferenceToError({
                                 name: errorName,
-                                importStrategy: SCHEMA_IMPORT_STRATEGY,
+                                importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                                 addImport,
                                 referencedIn: sourceFile,
                             })
@@ -421,7 +415,7 @@ export class SdkGenerator {
                             name: { serviceName, endpoint },
                             referencedIn: sourceFile,
                             addImport,
-                            importStrategy: SCHEMA_IMPORT_STRATEGY,
+                            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                             subImport: typeof export_ === "string" ? [export_] : export_,
                         }),
                     resolveTypeReference: this.typeResolver.resolveTypeReference.bind(this.typeResolver),
@@ -450,7 +444,7 @@ export class SdkGenerator {
                     getReferenceToRawError: (errorName) =>
                         this.errorSchemaDeclarationReferencer.getReferenceToError({
                             name: errorName,
-                            importStrategy: SCHEMA_IMPORT_STRATEGY,
+                            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                             subImport: getSubImportPathToRawSchema(),
                             addImport,
                             referencedIn: sourceFile,
@@ -505,4 +499,12 @@ export class SdkGenerator {
             this.context.logger.debug(`Generated ${filepathStr}`);
         }
     }
+}
+
+function getSchemaImportStrategy({ useDynamicImport }: { useDynamicImport: boolean }): ImportStrategy {
+    return {
+        type: "fromRoot",
+        namespaceImport: "serializers",
+        useDynamicImport,
+    };
 }
