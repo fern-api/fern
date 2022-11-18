@@ -147,5 +147,4 @@ async function downloadFilesForTask({
     } catch (e) {
         context.failAndThrow("Failed to download files", e);
     }
-    await tmpDir.cleanup();
 }
