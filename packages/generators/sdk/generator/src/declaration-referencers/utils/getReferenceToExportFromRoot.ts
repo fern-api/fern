@@ -1,4 +1,3 @@
-import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import {
@@ -8,6 +7,7 @@ import {
     ExportedFilePath,
 } from "../../exports-manager/ExportedFilePath";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
@@ -22,6 +22,7 @@ export declare namespace getReferenceToExportFromRoot {
         namespaceImport?: string;
         useDynamicImport?: boolean;
         subImport?: string[];
+        packageName: string;
     }
 }
 
@@ -33,6 +34,7 @@ export function getReferenceToExportFromRoot({
     namespaceImport,
     useDynamicImport = false,
     subImport = [],
+    packageName,
 }: getReferenceToExportFromRoot.Args): Reference {
     let prefix: ts.Identifier | undefined;
     let moduleSpecifier: ModuleSpecifier;
@@ -41,12 +43,14 @@ export function getReferenceToExportFromRoot({
 
     if (exportedFromPath.directories[0]?.exportDeclaration?.namespaceExport == null && namespaceImport != null) {
         const [firstDirectory, ...remainingDirectories] = exportedFromPath.directories;
-        moduleSpecifier = getRelativePathAsModuleSpecifierTo(
-            referencedIn,
-            firstDirectory != null
-                ? convertExportedDirectoryPathToFilePath([firstDirectory])
-                : convertExportedFilePathToFilePath(exportedFromPath)
-        );
+        moduleSpecifier = getRelativePathAsModuleSpecifierTo({
+            from: referencedIn,
+            to:
+                firstDirectory != null
+                    ? convertExportedDirectoryPathToFilePath([firstDirectory])
+                    : convertExportedFilePathToFilePath(exportedFromPath),
+            packageName,
+        });
 
         addImport = () => {
             addImportToFile(moduleSpecifier, { namespaceImport });
@@ -78,13 +82,15 @@ export function getReferenceToExportFromRoot({
                 referencedIn,
                 importAlias: undefined,
                 subImport,
+                packageName,
             });
         }
 
-        moduleSpecifier = getRelativePathAsModuleSpecifierTo(
-            referencedIn,
-            convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
-        );
+        moduleSpecifier = getRelativePathAsModuleSpecifierTo({
+            from: referencedIn,
+            to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
+            packageName,
+        });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
         addImport = () => {

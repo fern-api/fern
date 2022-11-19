@@ -68,9 +68,9 @@ export class SdkGenerator {
     private config: SdkGenerator.Config;
 
     private rootDirectory: Directory;
-    private exportsManager = new ExportsManager();
+    private exportsManager: ExportsManager;
     private dependencyManager = new DependencyManager();
-    private coreUtilitiesManager = new CoreUtilitiesManager();
+    private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
 
@@ -101,6 +101,9 @@ export class SdkGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
 
+        this.exportsManager = new ExportsManager({ packageName });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({ packageName });
+
         const project = new Project({
             useInMemoryFileSystem: true,
         });
@@ -123,31 +126,39 @@ export class SdkGenerator {
 
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
+            packageName,
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
+            packageName,
         });
         this.errorDeclarationReferencer = new ErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
+            packageName,
         });
         this.errorSchemaDeclarationReferencer = new ErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
+            packageName,
         });
         this.serviceDeclarationReferencer = new ServiceDeclarationReferencer({
             containingDirectory: apiDirectory,
+            packageName,
         });
         this.rootServiceDeclarationReferencer = new RootServiceDeclarationReferencer({
             containingDirectory: [],
+            packageName,
             apiName,
         });
         this.endpointDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
+            packageName,
         });
         this.endpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
+            packageName,
         });
 
-        this.environmentsGenerator = new EnvironmentsGenerator({ intermediateRepresentation });
+        this.environmentsGenerator = new EnvironmentsGenerator({ intermediateRepresentation, packageName });
 
         this.generatePackage = async () => {
             await generateTypeScriptProject({

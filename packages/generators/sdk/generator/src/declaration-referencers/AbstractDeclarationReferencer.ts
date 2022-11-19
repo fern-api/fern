@@ -7,14 +7,17 @@ import { getReferenceToExportFromRoot } from "./utils/getReferenceToExportFromRo
 
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
+        packageName: string;
         containingDirectory: ExportedDirectory[];
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name> implements DeclarationReferencer<Name> {
+    private packageName: string;
     protected containingDirectory: ExportedDirectory[];
 
-    constructor({ containingDirectory }: AbstractDeclarationReferencer.Init) {
+    constructor({ containingDirectory, packageName }: AbstractDeclarationReferencer.Init) {
+        this.packageName = packageName;
         this.containingDirectory = containingDirectory;
     }
 
@@ -38,6 +41,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     addImport,
                     referencedIn,
                     subImport,
+                    packageName: this.packageName,
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({
@@ -48,6 +52,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport,
+                    packageName: this.packageName,
                 });
             default:
                 assertNever(importStrategy);

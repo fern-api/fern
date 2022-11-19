@@ -19,7 +19,12 @@ interface CombinedExportDeclarations {
 type PathToDirectory = string;
 
 export class ExportsManager {
+    private packageName: string;
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
+
+    constructor({ packageName }: { packageName: string }) {
+        this.packageName = packageName;
+    }
 
     public addExport(from: SourceFile | string, exportDeclaration: ExportDeclaration | undefined): void {
         const fromPath = typeof from === "string" ? from : from.getFilePath();
@@ -31,7 +36,11 @@ export class ExportsManager {
 
         this.addExportDeclarationForDirectory({
             directory: pathToDirectory,
-            moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(pathToDirectory, fromPath),
+            moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
+                from: pathToDirectory,
+                to: fromPath,
+                packageName: this.packageName,
+            }),
             exportDeclaration,
         });
     }
@@ -47,7 +56,11 @@ export class ExportsManager {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
             this.addExportDeclarationForDirectory({
                 directory: directoryFilepath,
-                moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(directoryFilepath, nextDirectoryPath),
+                moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
+                    from: directoryFilepath,
+                    to: nextDirectoryPath,
+                    packageName: this.packageName,
+                }),
                 exportDeclaration: part.exportDeclaration,
             });
 
@@ -55,10 +68,11 @@ export class ExportsManager {
                 for (const [relativeFilePath, exportDeclaration] of Object.entries(part.subExports)) {
                     this.addExportDeclarationForDirectory({
                         directory: directoryFilepath,
-                        moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo(
-                            directoryFilepath,
-                            path.join(nextDirectoryPath, relativeFilePath)
-                        ),
+                        moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
+                            from: directoryFilepath,
+                            to: path.join(nextDirectoryPath, relativeFilePath),
+                            packageName: this.packageName,
+                        }),
                         exportDeclaration,
                     });
                 }

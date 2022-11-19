@@ -1,4 +1,3 @@
-import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import {
@@ -7,6 +6,7 @@ import {
     ExportedFilePath,
 } from "../../exports-manager/ExportedFilePath";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
@@ -19,6 +19,7 @@ export function getReferenceToExportViaNamespaceImport({
     addImport: addImportToFile,
     referencedIn,
     subImport = [],
+    packageName,
 }: {
     exportedName: string;
     filepathToNamespaceImport: ExportedFilePath;
@@ -27,13 +28,15 @@ export function getReferenceToExportViaNamespaceImport({
     addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
     referencedIn: SourceFile;
     subImport?: string[];
+    packageName: string;
 }): Reference {
     const addImport = () => {
         addImportToFile(
-            getRelativePathAsModuleSpecifierTo(
-                referencedIn,
-                convertExportedFilePathToFilePath(filepathToNamespaceImport)
-            ),
+            getRelativePathAsModuleSpecifierTo({
+                from: referencedIn,
+                to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
+                packageName,
+            }),
             { namespaceImport }
         );
     };

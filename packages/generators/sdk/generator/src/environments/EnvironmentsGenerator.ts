@@ -11,15 +11,18 @@ import { ModuleSpecifier } from "../utils/ModuleSpecifier";
 export declare namespace EnvironmentsGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
+        packageName: string;
     }
 }
 
 export class EnvironmentsGenerator {
     private static TYPE_NAME = "Environment";
+    private packageName: string;
     private intermediateRepresentation: IntermediateRepresentation;
 
-    constructor({ intermediateRepresentation }: EnvironmentsGenerator.Init) {
+    constructor({ intermediateRepresentation, packageName }: EnvironmentsGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
+        this.packageName = packageName;
     }
 
     public getFilepath(): ExportedFilePath {
@@ -79,6 +82,7 @@ export class EnvironmentsGenerator {
             addImport,
             referencedIn: sourceFile,
             subImport: environmentId != null ? [this.getNameOfEnvironmentId(environmentId)] : undefined,
+            packageName: this.packageName,
         });
     }
 

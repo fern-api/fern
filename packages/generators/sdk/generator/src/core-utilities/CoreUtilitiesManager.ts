@@ -28,7 +28,12 @@ export declare namespace CoreUtilitiesManager {
 }
 
 export class CoreUtilitiesManager {
+    private packageName: string;
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
+
+    constructor({ packageName }: { packageName: string }) {
+        this.packageName = packageName;
+    }
 
     public getCoreUtilities({ sourceFile, addImport }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
         const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, addImport });
@@ -86,6 +91,7 @@ export class CoreUtilitiesManager {
                 addImport: (moduleSpecifier, importDeclaration) => {
                     addImport(moduleSpecifier, importDeclaration);
                 },
+                packageName: this.packageName,
             });
         };
     }

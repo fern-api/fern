@@ -1,12 +1,24 @@
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 
-export function getRelativePathAsModuleSpecifierTo(
-    from: Directory | SourceFile | string,
-    to: Directory | SourceFile | string
-): string {
+export function getRelativePathAsModuleSpecifierTo({
+    from,
+    to,
+    packageName,
+}: {
+    from: Directory | SourceFile | string;
+    to: Directory | SourceFile | string;
+    packageName: string;
+}): string {
     const parsedToFilePath = path.parse(getPath(to));
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name);
+
+    // special case: if "to" is the root, we just use the package name.
+    // (this is aliased in tsconfig.json)
+    if (path.normalize(toFilePathWithoutExtension) === "/") {
+        return packageName;
+    }
+
     let moduleSpecifier = path.relative(getDirectory(from), toFilePathWithoutExtension);
     if (!moduleSpecifier.startsWith(".")) {
         moduleSpecifier = `./${moduleSpecifier}`;

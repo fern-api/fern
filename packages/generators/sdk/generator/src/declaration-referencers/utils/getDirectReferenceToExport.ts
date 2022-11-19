@@ -1,8 +1,8 @@
-import { getRelativePathAsModuleSpecifierTo } from "@fern-typescript/commons";
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import { convertExportedFilePathToFilePath, ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 
 export function getDirectReferenceToExport({
@@ -12,6 +12,7 @@ export function getDirectReferenceToExport({
     referencedIn,
     importAlias,
     subImport = [],
+    packageName,
 }: {
     exportedName: string;
     exportedFromPath: ExportedFilePath;
@@ -19,11 +20,13 @@ export function getDirectReferenceToExport({
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
+    packageName: string;
 }): Reference {
-    const moduleSpecifier = getRelativePathAsModuleSpecifierTo(
-        referencedIn,
-        convertExportedFilePathToFilePath(exportedFromPath)
-    );
+    const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
+        from: referencedIn,
+        to: convertExportedFilePathToFilePath(exportedFromPath),
+        packageName,
+    });
 
     const addImport = () => {
         addImportToFile(moduleSpecifier, {

@@ -38,7 +38,7 @@ export async function generateTypeScriptProject({
         repositoryUrl,
         dependencies,
     });
-    await generateTsConfig(volume);
+    await generateTsConfig({ volume, packageName });
     await generatePrettierIgnore(volume);
     await generateGitIgnore(volume);
 }
