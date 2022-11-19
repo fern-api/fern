@@ -38,7 +38,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
     }
 
     public getExportedName(typeName: DeclaredTypeName): string {
-        return typeName.name;
+        return typeName.nameV3.unsafeName.pascalCase;
     }
 
     public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<DeclaredTypeName>): Reference {

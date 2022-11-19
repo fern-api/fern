@@ -3,12 +3,12 @@ imports:
 types:
   PlaylistId: string
   Playlist:
-    extends: PlaylistCreateRequest
+    extends: playlistCreateRequest
     properties:
       playlist_id: PlaylistId
       owner-id: commons.UserId
 
-  PlaylistCreateRequest:
+  playlistCreateRequest:
     properties:
       name: string
       problems: list<commons.ProblemId>
@@ -39,7 +39,7 @@ services:
           docs: Create a new playlist
           method: POST
           path: /create
-          request: PlaylistCreateRequest
+          request: playlistCreateRequest
           response: Playlist
 
         getPlaylists:

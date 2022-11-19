@@ -39,7 +39,7 @@ export class ErrorDeclarationReferencer extends AbstractDeclarationReferencer<De
     }
 
     public getExportedName(errorName: DeclaredTypeName): string {
-        return errorName.name;
+        return errorName.nameV3.unsafeName.pascalCase;
     }
 
     public getReferenceToError(args: DeclarationReferencer.getReferenceTo.Options<DeclaredErrorName>): Reference {
