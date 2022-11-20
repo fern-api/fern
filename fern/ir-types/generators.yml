@@ -7,7 +7,8 @@ groups:
         config:
           mode: model
   sdks:
-    - name: fernapi/java-model
-      version: 0.0.126-2-g8af8c3f
-    - name: fernapi/fern-pydantic-model
-      version: 0.0.13-7-gc850d9e
+    generators:
+      - name: fernapi/java-model
+        version: 0.0.126-2-g8af8c3f
+      - name: fernapi/fern-pydantic-model
+        version: 0.0.13-7-gc850d9e
