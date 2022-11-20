@@ -16,10 +16,12 @@
 
 package com.fern.java.output;
 
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.MethodSpec;
 import java.util.List;
+import java.util.Set;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -27,6 +29,8 @@ import org.immutables.value.Value;
 public abstract class GeneratedJavaInterface extends AbstractGeneratedJavaFile {
 
     public abstract List<PropertyMethodSpec> propertyMethodSpecs();
+
+    public abstract Set<DeclaredTypeName> extendedInterfaces();
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle

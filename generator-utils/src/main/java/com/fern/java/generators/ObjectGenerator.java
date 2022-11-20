@@ -15,6 +15,7 @@
  */
 package com.fern.java.generators;
 
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
@@ -27,13 +28,19 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class ObjectGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
     private final Optional<GeneratedJavaInterface> selfInterface;
+    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
 
     public ObjectGenerator(
@@ -41,12 +48,14 @@ public final class ObjectGenerator extends AbstractFileGenerator {
             Optional<GeneratedJavaInterface> selfInterface,
             List<GeneratedJavaInterface> extendedInterfaces,
             AbstractGeneratorContext generatorContext,
+            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
             ClassName className) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.selfInterface = selfInterface;
         selfInterface.ifPresent(this.extendedInterfaces::add);
         this.extendedInterfaces.addAll(extendedInterfaces);
+        this.allGeneratedInterfaces = allGeneratedInterfaces;
     }
 
     @Override
@@ -62,16 +71,28 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                     .collect(Collectors.toList());
         }
         List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
+        Set<GeneratedJavaInterface> visited = new HashSet<>();
         extendedInterfaces.stream()
-                .map(generatedInterface -> ImplementsInterface.builder()
-                        .interfaceClassName(generatedInterface.getClassName())
-                        .addAllInterfaceProperties(generatedInterface.propertyMethodSpecs().stream()
-                                .map(propertyMethodSpec -> EnrichedObjectProperty.of(
-                                        propertyMethodSpec.objectProperty().getNameV2(),
-                                        true,
-                                        propertyMethodSpec.methodSpec().returnType))
-                                .collect(Collectors.toList()))
-                        .build())
+                .map(generatedInterface -> {
+                    List<EnrichedObjectProperty> enrichedProperties = new ArrayList<>();
+                    Queue<GeneratedJavaInterface> interfaceQueue = new LinkedList<>();
+                    interfaceQueue.add(generatedInterface);
+                    while (!interfaceQueue.isEmpty()) {
+                        GeneratedJavaInterface generatedJavaInterface = interfaceQueue.poll();
+                        if (visited.contains(generatedJavaInterface)) {
+                            continue;
+                        }
+                        interfaceQueue.addAll(generatedJavaInterface.extendedInterfaces().stream()
+                                .map(allGeneratedInterfaces::get)
+                                .collect(Collectors.toList()));
+                        enrichedProperties.addAll(getEnrichedObjectProperties(generatedJavaInterface));
+                        visited.add(generatedJavaInterface);
+                    }
+                    return ImplementsInterface.builder()
+                            .interfaceClassName(generatedInterface.getClassName())
+                            .addAllInterfaceProperties(enrichedProperties)
+                            .build();
+                })
                 .forEach(implementsInterfaces::add);
         ObjectTypeSpecGenerator genericObjectGenerator =
                 new ObjectTypeSpecGenerator(className, enrichedObjectProperties, implementsInterfaces, true);
@@ -82,5 +103,15 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 .className(className)
                 .javaFile(javaFile)
                 .build();
+    }
+
+    private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
+            GeneratedJavaInterface generatedJavaInterface) {
+        return generatedJavaInterface.propertyMethodSpecs().stream()
+                .map(propertyMethodSpec -> EnrichedObjectProperty.of(
+                        propertyMethodSpec.objectProperty().getNameV2(),
+                        true,
+                        propertyMethodSpec.methodSpec().returnType))
+                .collect(Collectors.toList());
     }
 }

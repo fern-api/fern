@@ -26,7 +26,6 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -70,16 +69,14 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
 
     @Override
     public Optional<GeneratedJavaFile> visitObject(ObjectTypeDeclaration value) {
-        List<GeneratedJavaInterface> extendedInterfaces = value.getExtends().stream()
-                .map(allGeneratedInterfaces::get)
-                .sorted(Comparator.comparing(
-                        generatedInterface -> generatedInterface.getClassName().simpleName()))
-                .collect(Collectors.toList());
+        List<GeneratedJavaInterface> extendedInterfaces =
+                value.getExtends().stream().map(allGeneratedInterfaces::get).collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 value,
                 Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName)),
                 extendedInterfaces,
                 generatorContext,
+                allGeneratedInterfaces,
                 className);
         return Optional.of(objectGenerator.generateFile());
     }

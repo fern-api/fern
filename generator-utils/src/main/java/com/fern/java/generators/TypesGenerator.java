@@ -83,10 +83,8 @@ public final class TypesGenerator {
                     .orElseThrow(() -> new IllegalStateException("Non-objects cannot be extended. Fix type "
                             + typeDeclaration.getName().getName() + " located in file"
                             + typeDeclaration.getName().getFernFilepath()));
-            ClassName interfaceClassName =
-                    generatorContext.getPoetClassNameFactory().getInterfaceClassName(typeDeclaration.getName());
             InterfaceGenerator interfaceGenerator =
-                    new InterfaceGenerator(interfaceClassName, generatorContext, objectTypeDeclaration);
+                    new InterfaceGenerator(generatorContext, typeDeclaration.getName(), objectTypeDeclaration);
             return interfaceGenerator.generateFile();
         }));
     }

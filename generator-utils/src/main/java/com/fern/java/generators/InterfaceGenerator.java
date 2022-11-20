@@ -15,6 +15,7 @@
  */
 package com.fern.java.generators;
 
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -33,18 +34,23 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public InterfaceGenerator(
-            ClassName className,
             AbstractGeneratorContext generatorContext,
+            DeclaredTypeName declaredTypeName,
             ObjectTypeDeclaration objectTypeDeclaration) {
-        super(className, generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getInterfaceClassName(declaredTypeName), generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
     }
 
     @Override
     public GeneratedJavaInterface generateFile() {
         List<PropertyMethodSpec> methodSpecsByProperties = getPropertyGetters();
+        List<ClassName> superInterfaces = objectTypeDeclaration.getExtends().stream()
+                .map(declaredTypeName ->
+                        generatorContext.getPoetClassNameFactory().getInterfaceClassName(declaredTypeName))
+                .collect(Collectors.toList());
         TypeSpec interfaceTypeSpec = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
+                .addSuperinterfaces(superInterfaces)
                 .addMethods(methodSpecsByProperties.stream()
                         .map(PropertyMethodSpec::methodSpec)
                         .collect(Collectors.toList()))
@@ -55,6 +61,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                 .className(className)
                 .javaFile(interfaceFile)
                 .addAllPropertyMethodSpecs(methodSpecsByProperties)
+                .addAllExtendedInterfaces(objectTypeDeclaration.getExtends())
                 .build();
     }
 
