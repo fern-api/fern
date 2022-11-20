@@ -5,9 +5,8 @@ import {
     ExportedDirectory,
     ExportedFilePath,
 } from "../../exports-manager/ExportedFilePath";
-import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { ImportsManager } from "../../imports-manager/ImportsManager";
 import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
-import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
 
@@ -16,7 +15,7 @@ export function getReferenceToExportViaNamespaceImport({
     filepathToNamespaceImport,
     filepathInsideNamespaceImport,
     namespaceImport,
-    addImport: addImportToFile,
+    importsManager,
     referencedIn,
     subImport = [],
     packageName,
@@ -25,13 +24,13 @@ export function getReferenceToExportViaNamespaceImport({
     filepathToNamespaceImport: ExportedFilePath;
     filepathInsideNamespaceImport: ExportedDirectory[] | ExportedFilePath | undefined;
     namespaceImport: string;
-    addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+    importsManager: ImportsManager;
     referencedIn: SourceFile;
     subImport?: string[];
     packageName: string;
 }): Reference {
     const addImport = () => {
-        addImportToFile(
+        importsManager.addImport(
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
                 to: convertExportedFilePathToFilePath(filepathToNamespaceImport),

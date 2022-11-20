@@ -1,24 +1,19 @@
-import {
-    ContainerType,
-    DeclaredTypeName,
-    MapType,
-    PrimitiveType,
-    ResolvedTypeReference,
-    ShapeType,
-    TypeReference,
-} from "@fern-fern/ir-model/types";
+import { ContainerType, DeclaredTypeName, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import { TypeReferenceNode } from "@fern-typescript/commons-v2";
+import { TypeResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
-        resolveType: (typeName: DeclaredTypeName) => ResolvedTypeReference;
+        typeResolver: TypeResolver;
     }
 }
 
 export abstract class AbstractTypeReferenceConverter<T> {
-    protected resolveType: (typeName: DeclaredTypeName) => ResolvedTypeReference;
+    protected typeResolver: TypeResolver;
 
-    constructor({ resolveType }: AbstractTypeReferenceConverter.Init) {
-        this.resolveType = resolveType;
+    constructor({ typeResolver }: AbstractTypeReferenceConverter.Init) {
+        this.typeResolver = typeResolver;
     }
 
     public convert(typeReference: TypeReference): T {
@@ -64,25 +59,6 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract optional(itemType: TypeReference): T;
     protected abstract unknown(): T;
 
-    protected keyType(keyType: TypeReference): T {
-        // special case: if the resolved type is an enum,
-        // we need to use the string-version of the enum
-        if (keyType._type === "named") {
-            const resolvedType = this.resolveType(keyType);
-            if (resolvedType._type === "named" && resolvedType.shape === ShapeType.Enum) {
-                return this.enumAsString(keyType);
-            }
-        }
-
-        return this.convert(keyType);
-    }
-
-    protected enumAsString(_enumTypeName: DeclaredTypeName): T {
-        // by default, treat enums as strings in maps. otherwise, typescript assumes
-        // that there won't be unknown values
-        return this.string();
-    }
-
     protected primitive(primitive: PrimitiveType): T {
         return PrimitiveType._visit<T>(primitive, {
             boolean: this.boolean.bind(this),
@@ -99,13 +75,15 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
-        if (typeReference._type === "primitive") {
-            return true;
-        }
-        if (typeReference._type !== "named") {
-            return false;
-        }
-        const resolvedType = this.resolveType(typeReference);
+        const resolvedType = this.typeResolver.resolveTypeReference(typeReference);
         return resolvedType._type === "primitive";
+    }
+
+    protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {
+        return {
+            isOptional: false,
+            typeNode,
+            typeNodeWithoutUndefined: typeNode,
+        };
     }
 }

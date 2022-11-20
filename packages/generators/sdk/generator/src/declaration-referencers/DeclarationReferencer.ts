@@ -1,7 +1,6 @@
 import { SourceFile } from "ts-morph";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../utils/ModuleSpecifier";
+import { ImportsManager } from "../imports-manager/ImportsManager";
 
 export type ImportStrategy =
     | { type: "fromRoot"; namespaceImport?: string; useDynamicImport?: boolean }
@@ -17,7 +16,7 @@ export declare namespace DeclarationReferencer {
         export interface Options<Name> {
             name: Name;
             importStrategy: ImportStrategy;
-            addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+            importsManager: ImportsManager;
             referencedIn: SourceFile;
             subImport?: string[];
         }

@@ -1,10 +1,10 @@
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../utils/ModuleSpecifier";
+import { DependencyManager } from "../dependency-manager/DependencyManager";
+import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager";
 
 export declare namespace ExternalDependency {
     export interface Init {
-        addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
-        addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
+        importsManager: ImportsManager;
+        dependencyManager: DependencyManager;
     }
 
     export interface Package {
@@ -17,12 +17,12 @@ export abstract class ExternalDependency {
     protected abstract readonly PACKAGE: ExternalDependency.Package;
     protected abstract readonly TYPES_PACKAGE: ExternalDependency.Package | undefined;
 
-    private addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
-    private addDependency: (name: string, version: string, options?: { preferPeer?: boolean }) => void;
+    private importsManager: ImportsManager;
+    private dependencyManager: DependencyManager;
 
-    constructor(init: ExternalDependency.Init) {
-        this.addImport = init.addImport;
-        this.addDependency = init.addDependency;
+    constructor({ importsManager, dependencyManager }: ExternalDependency.Init) {
+        this.importsManager = importsManager;
+        this.dependencyManager = dependencyManager;
     }
 
     protected withNamedImport<T>(
@@ -53,11 +53,11 @@ export abstract class ExternalDependency {
     ): T {
         return run(<F extends Function>(f: F): F => {
             const wrapped = (...args: unknown[]) => {
-                this.addDependency(this.PACKAGE.name, this.PACKAGE.version);
+                this.dependencyManager.addDependency(this.PACKAGE.name, this.PACKAGE.version);
                 if (this.TYPES_PACKAGE != null) {
-                    this.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
+                    this.dependencyManager.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
                 }
-                this.addImport(this.PACKAGE.name, importDeclaration);
+                this.importsManager.addImport(this.PACKAGE.name, importDeclaration);
 
                 return f(...args);
             };

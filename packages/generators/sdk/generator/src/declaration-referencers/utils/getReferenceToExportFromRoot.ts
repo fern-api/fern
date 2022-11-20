@@ -6,7 +6,7 @@ import {
     ExportedDirectory,
     ExportedFilePath,
 } from "../../exports-manager/ExportedFilePath";
-import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { ImportsManager } from "../../imports-manager/ImportsManager";
 import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
 import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
@@ -18,7 +18,7 @@ export declare namespace getReferenceToExportFromRoot {
         referencedIn: SourceFile;
         exportedName: string;
         exportedFromPath: ExportedFilePath;
-        addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+        importsManager: ImportsManager;
         namespaceImport?: string;
         useDynamicImport?: boolean;
         subImport?: string[];
@@ -29,7 +29,7 @@ export declare namespace getReferenceToExportFromRoot {
 export function getReferenceToExportFromRoot({
     exportedName,
     exportedFromPath,
-    addImport: addImportToFile,
+    importsManager,
     referencedIn,
     namespaceImport,
     useDynamicImport = false,
@@ -53,7 +53,7 @@ export function getReferenceToExportFromRoot({
         });
 
         addImport = () => {
-            addImportToFile(moduleSpecifier, { namespaceImport });
+            importsManager.addImport(moduleSpecifier, { namespaceImport });
         };
 
         prefix = ts.factory.createIdentifier(namespaceImport);
@@ -78,7 +78,7 @@ export function getReferenceToExportFromRoot({
             return getDirectReferenceToExport({
                 exportedName,
                 exportedFromPath,
-                addImport: addImportToFile,
+                importsManager,
                 referencedIn,
                 importAlias: undefined,
                 subImport,
@@ -94,7 +94,7 @@ export function getReferenceToExportFromRoot({
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
         addImport = () => {
-            addImportToFile(moduleSpecifier, {
+            importsManager.addImport(moduleSpecifier, {
                 namedImports: [namedImport],
             });
         };

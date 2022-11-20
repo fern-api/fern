@@ -69,13 +69,6 @@ export class ObjectTypeGenerator extends AbstractTypeSchemaGenerator {
         this.writeSchemaToFile(schemaFile);
     }
 
-    protected override getReferenceToSchemaType(file: SdkFile): ts.TypeNode {
-        return file.coreUtilities.zurg.ObjectSchema._getReferenceToType({
-            rawShape: this.getReferenceToRawShape(),
-            parsedShape: this.getReferenceToParsedShape(file),
-        });
-    }
-
     protected override getReferenceToParsedShape(file: SdkFile): ts.TypeNode {
         return file.getReferenceToNamedType(this.typeDeclaration.name).getTypeNode();
     }

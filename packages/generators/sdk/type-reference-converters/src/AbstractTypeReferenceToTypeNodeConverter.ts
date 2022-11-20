@@ -18,7 +18,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override named(typeName: DeclaredTypeName): TypeReferenceNode {
-        const resolvedType = this.resolveType(typeName);
+        const resolvedType = this.typeResolver.resolveTypeName(typeName);
         const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
             container: (container) => this.container(container).isOptional,
             primitive: (primitive) => this.primitive(primitive).isOptional,
@@ -32,10 +32,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
 
         const typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(this.getReferenceToNamedType(typeName));
         if (!isOptional) {
-            return {
-                isOptional: false,
-                typeNode: typeNodeWithoutUndefined,
-            };
+            return this.generateNonOptionalTypeReferenceNode(typeNodeWithoutUndefined);
         } else {
             return {
                 isOptional: true,
@@ -46,32 +43,25 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     protected override string(): TypeReferenceNode {
-        return {
-            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-            isOptional: false,
-        };
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
     }
 
     protected override boolean(): TypeReferenceNode {
-        return {
-            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword),
-            isOptional: false,
-        };
+        return this.generateNonOptionalTypeReferenceNode(
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
+        );
     }
 
     protected override number(): TypeReferenceNode {
-        return {
-            typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-            isOptional: false,
-        };
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
     }
 
     protected override optional(itemType: TypeReference): TypeReferenceNode {
         const referencedToValueType = this.convert(itemType).typeNode;
         return {
+            isOptional: true,
             typeNode: this.addUndefinedToTypeNode(referencedToValueType),
             typeNodeWithoutUndefined: referencedToValueType,
-            isOptional: true,
         };
     }
 
@@ -85,16 +75,15 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected override unknown(): TypeReferenceNode {
         const typeNode = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
         return {
-            typeNode,
             isOptional: true,
+            typeNode,
             typeNodeWithoutUndefined: typeNode,
         };
     }
 
     protected override list(itemType: TypeReference): TypeReferenceNode {
-        return {
-            typeNode: ts.factory.createArrayTypeNode(this.convert(itemType).typeNode),
-            isOptional: false,
-        };
+        return this.generateNonOptionalTypeReferenceNode(
+            ts.factory.createArrayTypeNode(this.convert(itemType).typeNode)
+        );
     }
 }

@@ -8,16 +8,20 @@ import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { GeneratorContext, SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { ErrorDeclarationHandler } from "@fern-typescript/sdk-errors";
 import { ServiceDeclarationHandler } from "@fern-typescript/sdk-service-declaration-handler";
+import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToRawTypeNodeConverter,
     TypeReferenceToSchemaConverter,
     TypeReferenceToStringExpressionConverter,
 } from "@fern-typescript/type-reference-converters";
-import { EnumTypeGenerator, getSubImportPathToRawSchema, TypeDeclarationHandler } from "@fern-typescript/types-v2";
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { EnumTypeGenerator, getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { constructAugmentedServices } from "./constructAugmentedServices";
+import { TypeContextImpl } from "./contexts/TypeContextImpl";
+import { TypeSchemaContextImpl } from "./contexts/TypeSchemaContextImpl";
 import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { ImportStrategy } from "./declaration-referencers/DeclarationReferencer";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
@@ -83,6 +87,8 @@ export class SdkGenerator {
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
     private endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
 
+    private typeGenerator: TypeGenerator;
+    private typeSchemaGenerator: TypeSchemaGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
 
     private generatePackage: () => Promise<void>;
@@ -158,6 +164,8 @@ export class SdkGenerator {
             packageName,
         });
 
+        this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
+        this.typeSchemaGenerator = new TypeSchemaGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator({ intermediateRepresentation, packageName });
 
         this.generatePackage = async () => {
@@ -175,6 +183,7 @@ export class SdkGenerator {
 
     public async generate(): Promise<void> {
         this.generateTypeDeclarations();
+        this.generateTypeSchemas();
         this.generateErrorDeclarations();
         this.generateServiceDeclarations();
         this.generateEnvironments();
@@ -189,22 +198,49 @@ export class SdkGenerator {
 
     private generateTypeDeclarations() {
         for (const typeDeclaration of this.intermediateRepresentation.types) {
-            this.withSdkFile({
+            this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                run: (typeFile) => {
-                    this.withSdkFile({
-                        filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
-                        isGeneratingSchemaFile: true,
-                        run: (schemaFile) => {
-                            TypeDeclarationHandler(typeDeclaration, {
-                                typeFile,
-                                schemaFile,
-                                typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
-                                context: this.context,
-                                shouldUseBrandedStringAliases: this.config.shouldUseBrandedStringAliases,
-                            });
-                        },
+                run: ({ sourceFile, importsManager }) => {
+                    const generatedType = this.typeGenerator.generateType({
+                        typeDeclaration,
+                        typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                     });
+                    const typeContext = new TypeContextImpl({
+                        sourceFile,
+                        coreUtilitiesManager: this.coreUtilitiesManager,
+                        dependencyManager: this.dependencyManager,
+                        fernConstants: this.intermediateRepresentation.constants,
+                        importsManager,
+                        typeResolver: this.typeResolver,
+                        typeDeclarationReferencer: this.typeDeclarationReferencer,
+                    });
+                    generatedType.writeToFile(typeContext);
+                },
+            });
+        }
+    }
+
+    private generateTypeSchemas() {
+        for (const typeDeclaration of this.intermediateRepresentation.types) {
+            this.withSourceFile({
+                filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                run: ({ sourceFile, importsManager }) => {
+                    const generatedSchemaType = this.typeSchemaGenerator.generateTypeSchema({
+                        typeDeclaration,
+                        typeName: this.typeSchemaDeclarationReferencer.getExportedName(typeDeclaration.name),
+                    });
+                    const typeSchemaContext = new TypeSchemaContextImpl({
+                        sourceFile,
+                        coreUtilitiesManager: this.coreUtilitiesManager,
+                        dependencyManager: this.dependencyManager,
+                        fernConstants: this.intermediateRepresentation.constants,
+                        importsManager,
+                        typeResolver: this.typeResolver,
+                        typeDeclarationReferencer: this.typeDeclarationReferencer,
+                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                        typeGenerator: this.typeGenerator,
+                    });
+                    generatedSchemaType.writeToFile(typeSchemaContext);
                 },
             });
         }
@@ -296,21 +332,17 @@ export class SdkGenerator {
         this.withSourceFile({
             filepath,
             run: ({ sourceFile, importsManager }) => {
-                const addImport = importsManager.addImport.bind(importsManager);
-
                 const getReferenceToNamedType = (typeName: DeclaredTypeName) =>
                     this.typeDeclarationReferencer.getReferenceToType({
                         name: typeName,
                         importStrategy: { type: "fromRoot" },
                         referencedIn: sourceFile,
-                        addImport,
+                        importsManager,
                     });
 
                 const typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
                     getReferenceToNamedType: (typeName) => getReferenceToNamedType(typeName).getEntityName(),
-                    resolveType: this.typeResolver.resolveTypeName.bind(this.typeResolver),
-                    getReferenceToRawEnum: (referenceToEnum) =>
-                        EnumTypeGenerator.getReferenceToRawValueType({ referenceToModule: referenceToEnum }),
+                    typeResolver: this.typeResolver,
                 });
 
                 const getReferenceToRawNamedType = (typeName: DeclaredTypeName) =>
@@ -318,22 +350,22 @@ export class SdkGenerator {
                         name: typeName,
                         importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                         subImport: getSubImportPathToRawSchema(),
-                        addImport,
+                        importsManager,
                         referencedIn: sourceFile,
                     });
 
                 const typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
                     getReferenceToNamedType: (typeName) => getReferenceToRawNamedType(typeName).getEntityName(),
-                    resolveType: this.typeResolver.resolveTypeName.bind(this.typeResolver),
+                    typeResolver: this.typeResolver,
                 });
 
-                const coreUtilities = this.coreUtilitiesManager.getCoreUtilities({ sourceFile, addImport });
+                const coreUtilities = this.coreUtilitiesManager.getCoreUtilities({ sourceFile, importsManager });
 
                 const getReferenceToNamedTypeSchema = (typeName: DeclaredTypeName) =>
                     this.typeSchemaDeclarationReferencer.getReferenceToType({
                         name: typeName,
                         importStrategy: getSchemaImportStrategy({ useDynamicImport: isGeneratingSchemaFile }),
-                        addImport,
+                        importsManager,
                         referencedIn: sourceFile,
                     });
 
@@ -357,16 +389,12 @@ export class SdkGenerator {
                 const typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
                     getSchemaOfNamedType,
                     zurg: coreUtilities.zurg,
-                    resolveType: this.typeResolver.resolveTypeName.bind(this.typeResolver),
+                    typeResolver: this.typeResolver,
                 });
 
-                const addDependency = (name: string, version: string, options?: { preferPeer?: boolean }) => {
-                    this.dependencyManager.addDependency(name, version, options);
-                };
-
                 const externalDependencies = createExternalDependencies({
-                    addDependency,
-                    addImport,
+                    dependencyManager: this.dependencyManager,
+                    importsManager,
                 });
 
                 const getErrorSchema = (errorName: DeclaredErrorName) => {
@@ -375,7 +403,7 @@ export class SdkGenerator {
                             .getReferenceToError({
                                 name: errorName,
                                 importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
-                                addImport,
+                                importsManager,
                                 referencedIn: sourceFile,
                             })
                             .getExpression()
@@ -390,7 +418,7 @@ export class SdkGenerator {
                 };
 
                 const typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
-                    resolveType: this.typeResolver.resolveTypeName.bind(this.typeResolver),
+                    typeResolver: this.typeResolver,
                     stringifyEnum: EnumTypeGenerator.getReferenceToRawValue.bind(this),
                 });
 
@@ -410,14 +438,14 @@ export class SdkGenerator {
                         this.serviceDeclarationReferencer.getReferenceToClient({
                             name: serviceName,
                             referencedIn: sourceFile,
-                            addImport,
+                            importsManager,
                             importStrategy: { type: "direct", alias: importAlias },
                         }),
                     getReferenceToEndpointFileExport: (serviceName, endpoint, export_) =>
                         this.endpointDeclarationReferencer.getReferenceToEndpointExport({
                             name: { serviceName, endpoint },
                             referencedIn: sourceFile,
-                            addImport,
+                            importsManager,
                             importStrategy: { type: "fromRoot" },
                             subImport: typeof export_ === "string" ? [export_] : export_,
                         }),
@@ -425,18 +453,19 @@ export class SdkGenerator {
                         this.endpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
                             name: { serviceName, endpoint },
                             referencedIn: sourceFile,
-                            addImport,
+                            importsManager,
                             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                             subImport: typeof export_ === "string" ? [export_] : export_,
                         }),
                     resolveTypeReference: this.typeResolver.resolveTypeReference.bind(this.typeResolver),
+                    resolveTypeName: this.typeResolver.resolveTypeName.bind(this.typeResolver),
                     getErrorDeclaration: (errorName) => this.errorResolver.getErrorDeclarationFromName(errorName),
                     getReferenceToError: (errorName) =>
                         this.errorDeclarationReferencer.getReferenceToError({
                             name: errorName,
                             importStrategy: { type: "fromRoot" },
                             referencedIn: sourceFile,
-                            addImport,
+                            importsManager,
                         }),
                     externalDependencies,
                     coreUtilities,
@@ -457,7 +486,7 @@ export class SdkGenerator {
                             name: errorName,
                             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
                             subImport: getSubImportPathToRawSchema(),
-                            addImport,
+                            importsManager,
                             referencedIn: sourceFile,
                         }),
                     getSchemaOfTypeReference:
@@ -465,7 +494,7 @@ export class SdkGenerator {
                     convertExpressionToString,
                     environments: this.environmentsGenerator.toParsedEnvironments({
                         sourceFile,
-                        addImport,
+                        importsManager,
                     }),
                     globalHeaders: parseGlobalHeaders({
                         headers: this.intermediateRepresentation.headers,

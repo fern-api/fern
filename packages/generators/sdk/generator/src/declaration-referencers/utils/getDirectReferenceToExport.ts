@@ -1,14 +1,13 @@
 import { Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile, ts } from "ts-morph";
 import { convertExportedFilePathToFilePath, ExportedFilePath } from "../../exports-manager/ExportedFilePath";
-import { ImportDeclaration } from "../../imports-manager/ImportsManager";
+import { ImportsManager } from "../../imports-manager/ImportsManager";
 import { getRelativePathAsModuleSpecifierTo } from "../../utils/getRelativePathAsModuleSpecifierTo";
-import { ModuleSpecifier } from "../../utils/ModuleSpecifier";
 
 export function getDirectReferenceToExport({
     exportedName,
     exportedFromPath,
-    addImport: addImportToFile,
+    importsManager,
     referencedIn,
     importAlias,
     subImport = [],
@@ -16,7 +15,7 @@ export function getDirectReferenceToExport({
 }: {
     exportedName: string;
     exportedFromPath: ExportedFilePath;
-    addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+    importsManager: ImportsManager;
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
@@ -29,7 +28,7 @@ export function getDirectReferenceToExport({
     });
 
     const addImport = () => {
-        addImportToFile(moduleSpecifier, {
+        importsManager.addImport(moduleSpecifier, {
             namedImports: [
                 {
                     name: exportedName,

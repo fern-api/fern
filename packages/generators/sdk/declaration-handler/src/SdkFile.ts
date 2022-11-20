@@ -1,29 +1,24 @@
 import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { FernConstants } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
-import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { ExpressionReferenceNode, TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
-import { SourceFile, ts } from "ts-morph";
-import { CoreUtilities } from "./core-utilities";
-import { ExternalDependencies } from "./external-dependencies/ExternalDependencies";
+import { ts } from "ts-morph";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { ParsedEnvironments } from "./ParsedEnvironments";
 import { ParsedGlobalHeaders } from "./ParsedGlobalHeaders";
 import { Reference } from "./Reference";
+import { TypeContext } from "./TypeContext";
 
-export interface SdkFile {
-    sourceFile: SourceFile;
-
+export interface SdkFile extends TypeContext {
     // types
-    getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
-    getReferenceToNamedType: (typeName: DeclaredTypeName) => Reference;
+    convertExpressionToString: (expression: ts.Expression, type: TypeReference) => ExpressionReferenceNode;
+
+    // schemas
     getReferenceToRawType: (typeReference: TypeReference) => TypeReferenceNode;
     getReferenceToRawNamedType: (typeReference: DeclaredTypeName) => Reference;
     getSchemaOfTypeReference: (typeReference: TypeReference) => Zurg.Schema;
     getSchemaOfNamedType: (typeName: DeclaredTypeName) => Zurg.Schema;
-    resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;
-    convertExpressionToString: (expression: ts.Expression, type: TypeReference) => ExpressionReferenceNode;
 
     // errors
     getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
@@ -45,10 +40,7 @@ export interface SdkFile {
     ) => Reference;
 
     // misc
-    externalDependencies: ExternalDependencies;
-    coreUtilities: CoreUtilities;
     authSchemes: ParsedAuthSchemes;
     environments: ParsedEnvironments | undefined;
     globalHeaders: ParsedGlobalHeaders;
-    fernConstants: FernConstants;
 }

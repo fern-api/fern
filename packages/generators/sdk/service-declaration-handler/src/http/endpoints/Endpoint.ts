@@ -75,11 +75,7 @@ export class Endpoint {
                     ? [
                           {
                               name: requestParameter.name,
-                              type: getTextOfTsNode(
-                                  requestParameter.type.isOptional
-                                      ? requestParameter.type.typeNodeWithoutUndefined
-                                      : requestParameter.type.typeNode
-                              ),
+                              type: getTextOfTsNode(requestParameter.type.typeNodeWithoutUndefined),
                               hasQuestionToken: requestParameter.type.isOptional,
                           },
                       ]

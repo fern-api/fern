@@ -53,7 +53,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
 
     protected override map({ keyType, valueType }: MapType): Zurg.Schema {
         return this.zurg.record({
-            keySchema: this.keyType(keyType),
+            keySchema: this.convert(keyType),
             valueSchema: this.convert(valueType),
         });
     }

@@ -6,6 +6,8 @@
     { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
     { "path": "../../../resolvers" },
+    { "path": "../../../type-generator" },
+    { "path": "../../../type-schema-generator" },
     { "path": "../../../types-v2" },
     { "path": "../declaration-handler" },
     { "path": "../errors" },

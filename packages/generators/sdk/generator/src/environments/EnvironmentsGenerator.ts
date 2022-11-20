@@ -5,8 +5,7 @@ import { ParsedEnvironments, Reference } from "@fern-typescript/sdk-declaration-
 import { SourceFile, ts, VariableDeclarationKind } from "ts-morph";
 import { getReferenceToExportViaNamespaceImport } from "../declaration-referencers/utils/getReferenceToExportViaNamespaceImport";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../utils/ModuleSpecifier";
+import { ImportsManager } from "../imports-manager/ImportsManager";
 
 export declare namespace EnvironmentsGenerator {
     export interface Init {
@@ -35,10 +34,10 @@ export class EnvironmentsGenerator {
     }
 
     public toParsedEnvironments({
-        addImport,
+        importsManager,
         sourceFile,
     }: {
-        addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+        importsManager: ImportsManager;
         sourceFile: SourceFile;
     }): ParsedEnvironments | undefined {
         if (this.intermediateRepresentation.environments.length === 0) {
@@ -50,14 +49,14 @@ export class EnvironmentsGenerator {
         return {
             getReferenceToEnvironmentEnum: () =>
                 this.getReferenceToEnvironmentEnum({
-                    addImport,
+                    importsManager,
                     sourceFile,
                 }),
             getReferenceToDefaultEnvironment:
                 defaultEnvironment != null
                     ? () =>
                           this.getReferenceToEnvironmentEnum({
-                              addImport,
+                              importsManager,
                               sourceFile,
                               environmentId: defaultEnvironment,
                           }).getExpression()
@@ -66,11 +65,11 @@ export class EnvironmentsGenerator {
     }
 
     private getReferenceToEnvironmentEnum({
-        addImport,
+        importsManager,
         sourceFile,
         environmentId,
     }: {
-        addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+        importsManager: ImportsManager;
         sourceFile: SourceFile;
         environmentId?: EnvironmentId;
     }): Reference {
@@ -79,7 +78,7 @@ export class EnvironmentsGenerator {
             filepathToNamespaceImport: this.getFilepath(),
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "environments",
-            addImport,
+            importsManager,
             referencedIn: sourceFile,
             subImport: environmentId != null ? [this.getNameOfEnvironmentId(environmentId)] : undefined,
             packageName: this.packageName,

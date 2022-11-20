@@ -26,7 +26,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     }
 
     protected override named(typeName: DeclaredTypeName): (reference: ts.Expression) => ExpressionReferenceNode {
-        const resolvedType = this.resolveType(typeName);
+        const resolvedType = this.typeResolver.resolveTypeName(typeName);
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ExpressionReferenceNode>(resolvedType, {
             container: (containerType) =>
                 ContainerType._visit(containerType, {

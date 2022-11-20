@@ -1937,6 +1937,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-typescript/abstract-schema-generator@workspace:*, @fern-typescript/abstract-schema-generator@workspace:packages/abstract-schema-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/abstract-schema-generator@workspace:packages/abstract-schema-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/auth@workspace:packages/core-utilities/auth":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/auth@workspace:packages/core-utilities/auth"
@@ -2254,7 +2275,9 @@ __metadata:
     "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/sdk-errors": "workspace:*"
     "@fern-typescript/sdk-service-declaration-handler": "workspace:*"
+    "@fern-typescript/type-generator": "workspace:*"
     "@fern-typescript/type-reference-converters": "workspace:*"
+    "@fern-typescript/type-schema-generator": "workspace:*"
     "@fern-typescript/types-v2": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/lodash-es": ^4.17.6
@@ -2392,6 +2415,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/type-generator@workspace:*, @fern-typescript/type-generator@workspace:packages/type-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/type-generator@workspace:packages/type-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/union-generator": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/type-reference-converters@workspace:*, @fern-typescript/type-reference-converters@workspace:packages/generators/sdk/type-reference-converters":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-reference-converters@workspace:packages/generators/sdk/type-reference-converters"
@@ -2401,6 +2446,31 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.294
     "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/resolvers": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/type-schema-generator@workspace:*, @fern-typescript/type-schema-generator@workspace:packages/type-schema-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/type-schema-generator@workspace:packages/type-schema-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/abstract-schema-generator": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/union-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2451,6 +2521,50 @@ __metadata:
     eslint: ^8.23.1
     jest: ^28.1.3
     lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/union-generator@workspace:*, @fern-typescript/union-generator@workspace:packages/union-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/union-generator@workspace:packages/union-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/union-schema-generator@workspace:*, @fern-typescript/union-schema-generator@workspace:packages/union-schema-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/union-schema-generator@workspace:packages/union-schema-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/abstract-schema-generator": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
     prettier: ^2.7.1
     ts-morph: ^15.1.0
     typescript: 4.6.4
@@ -5807,7 +5921,7 @@ __metadata:
     is-ci: ^3.0.1
     jest: ^28.1.3
     lint-staged: ^12.3.7
-    mrlint: ^0.0.103
+    mrlint: ^0.0.106
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-node: ^10.9.1
@@ -7779,12 +7893,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.103":
-  version: 0.0.103
-  resolution: "mrlint@npm:0.0.103"
+"mrlint@npm:^0.0.106":
+  version: 0.0.106
+  resolution: "mrlint@npm:0.0.106"
   bin:
     mrlint: cli.cjs
-  checksum: 4ea8e0914153457912984df0602971c14290c65a17d0921d43140883780e9439fb4e5b57878f85691d0fafc0f36050989ab8b3bad67c7ca87d061cb2f10a2dc2
+  checksum: a7a0a6c881777eb2d40a2f20f7b118e483606a1e440d3603368cf281f3650f8c1402f0c103b77cb854ee7fc78cc127fe599ac5964452d174a0fb62651e15fa14
   languageName: node
   linkType: hard
 

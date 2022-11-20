@@ -8,8 +8,7 @@ import { getReferenceToExportViaNamespaceImport } from "../declaration-reference
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 import { ExportsManager } from "../exports-manager/ExportsManager";
-import { ImportDeclaration } from "../imports-manager/ImportsManager";
-import { ModuleSpecifier } from "../utils/ModuleSpecifier";
+import { ImportsManager } from "../imports-manager/ImportsManager";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { AuthImpl } from "./implementations/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./implementations/BaseCoreUtilitiesImpl";
@@ -22,7 +21,7 @@ export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
         interface Args {
             sourceFile: SourceFile;
-            addImport: (moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration) => void;
+            importsManager: ImportsManager;
         }
     }
 }
@@ -35,8 +34,8 @@ export class CoreUtilitiesManager {
         this.packageName = packageName;
     }
 
-    public getCoreUtilities({ sourceFile, addImport }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
-        const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, addImport });
+    public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
+        const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
             fetcher: new FetcherImpl({ getReferenceToExport }),
@@ -79,7 +78,7 @@ export class CoreUtilitiesManager {
         );
     }
 
-    private createGetReferenceToExport({ sourceFile, addImport }: CoreUtilitiesManager.getCoreUtilities.Args) {
+    private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.referencedCoreUtilities[manifest.name] = manifest;
             return getReferenceToExportViaNamespaceImport({
@@ -88,9 +87,7 @@ export class CoreUtilitiesManager {
                 filepathToNamespaceImport: { directories: CORE_UTILITIES_FILEPATH, file: undefined },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
-                addImport: (moduleSpecifier, importDeclaration) => {
-                    addImport(moduleSpecifier, importDeclaration);
-                },
+                importsManager,
                 packageName: this.packageName,
             });
         };

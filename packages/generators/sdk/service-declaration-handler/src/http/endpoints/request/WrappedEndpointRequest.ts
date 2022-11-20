@@ -51,12 +51,15 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
     }
 
     protected override getRequestParameterType(file: SdkFile): TypeReferenceNode {
+        const typeNode = this.getReferenceToEndpointFileExport(
+            WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME,
+            file
+        ).getTypeNode();
+
         return {
             isOptional: false,
-            typeNode: this.getReferenceToEndpointFileExport(
-                WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME,
-                file
-            ).getTypeNode(),
+            typeNode,
+            typeNodeWithoutUndefined: typeNode,
         };
     }
 
@@ -199,7 +202,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
             const type = file.getReferenceToType(queryParameter.valueType);
             properties.push({
                 name: keyInWrapper,
-                type: getTextOfTsNode(type.isOptional ? type.typeNodeWithoutUndefined : type.typeNode),
+                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
                 docs: queryParameter.docs != null ? [queryParameter.docs] : undefined,
             });
@@ -209,7 +212,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
             const type = file.getReferenceToType(pathParameter.valueType);
             properties.push({
                 name: keyInWrapper,
-                type: getTextOfTsNode(type.isOptional ? type.typeNodeWithoutUndefined : type.typeNode),
+                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
                 docs: pathParameter.docs != null ? [pathParameter.docs] : undefined,
             });
@@ -219,7 +222,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
             const type = file.getReferenceToType(header.valueType);
             properties.push({
                 name: keyInWrapper,
-                type: getTextOfTsNode(type.isOptional ? type.typeNodeWithoutUndefined : type.typeNode),
+                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
                 docs: header.docs != null ? [header.docs] : undefined,
             });
@@ -229,7 +232,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest {
             const type = file.getReferenceToType(this.endpoint.request.type);
             properties.push({
                 name: WrappedEndpointRequest.REQUEST_BODY_PROPERTY_NAME,
-                type: getTextOfTsNode(type.isOptional ? type.typeNodeWithoutUndefined : type.typeNode),
+                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
             });
         }

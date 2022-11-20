@@ -30,7 +30,13 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
 
     protected getReferenceTo(
         exportedName: string,
-        { name, addImport, referencedIn, subImport, importStrategy }: DeclarationReferencer.getReferenceTo.Options<Name>
+        {
+            name,
+            importsManager,
+            referencedIn,
+            subImport,
+            importStrategy,
+        }: DeclarationReferencer.getReferenceTo.Options<Name>
     ): Reference {
         switch (importStrategy.type) {
             case "direct":
@@ -38,7 +44,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     exportedName,
                     exportedFromPath: this.getExportedFilepathForReferences(name),
                     importAlias: importStrategy.alias,
-                    addImport,
+                    importsManager,
                     referencedIn,
                     subImport,
                     packageName: this.packageName,
@@ -48,7 +54,7 @@ export abstract class AbstractDeclarationReferencer<Name> implements Declaration
                     exportedName,
                     exportedFromPath: this.getExportedFilepathForReferences(name),
                     referencedIn,
-                    addImport,
+                    importsManager,
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport,
