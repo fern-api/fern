@@ -60,3 +60,14 @@ services:
           response: BlogPost
           errors:
             - PostNotFoundError
+        updatePost:
+          docs: Updates a blog post.
+          method: POST
+          auth: false
+          path: /{postId}
+          path-parameters:
+            postId: PostId
+          request: CreatePostRequest
+          response: PostId
+          errors:
+            - PostNotFoundError

@@ -42,14 +42,11 @@ export function convertServices({
                 fernConstants,
                 security,
             });
-            const pathsObject = paths[fullPath];
-            if (pathsObject == null || pathsObject[convertedHttpMethod] == null) {
-                const pathItemObject: OpenAPIV3.PathItemObject = {};
-                pathItemObject[convertedHttpMethod] = operationObject;
-                paths[fullPath] = pathItemObject;
-            } else {
-                pathsObject[convertedHttpMethod] = operationObject;
+            const pathsObject = (paths[fullPath] ??= {});
+            if (pathsObject[convertedHttpMethod] != null) {
+                throw new Error(`Duplicate ${convertedHttpMethod} endpoint at ${fullPath}`);
             }
+            pathsObject[convertedHttpMethod] = operationObject;
         });
     });
     return paths;

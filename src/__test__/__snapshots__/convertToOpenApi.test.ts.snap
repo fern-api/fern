@@ -158,6 +158,45 @@ paths:
                             enum:
                               - PostNotFoundError
                       - $ref: '#/components/schemas/BlogPostNotFoundError'
+    post:
+      description: Updates a blog post.
+      operationId: PostsService.updatePost
+      tags:
+        - PostsService
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BlogPostId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPostId'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    allOf:
+                      - type: object
+                        properties:
+                          _error:
+                            type: string
+                            enum:
+                              - PostNotFoundError
+                      - $ref: '#/components/schemas/BlogPostNotFoundError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogCreatePostRequest'
 components:
   schemas:
     BlogPostId:
