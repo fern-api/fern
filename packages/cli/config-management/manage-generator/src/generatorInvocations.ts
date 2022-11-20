@@ -7,7 +7,7 @@ export const JAVA_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 export const TYPESCRIPT_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-typescript-sdk",
-    version: "0.0.227",
+    version: "0.0.241",
 };
 
 export const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
@@ -17,7 +17,7 @@ export const POSTMAN_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
 
 export const OPENAPI_GENERATOR_INVOCATION: GeneratorInvocationSchema = {
     name: "fernapi/fern-openapi",
-    version: "0.0.10",
+    version: "0.0.11",
     config: {
         format: "yaml",
     },
