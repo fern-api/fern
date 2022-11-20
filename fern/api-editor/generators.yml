@@ -1,6 +1,8 @@
-draft:
-  - name: fernapi/fern-typescript-sdk
-    version: 0.0.231
-    mode: publish
-    config:
-      useBrandedStringAliases: true
+default-group: server
+groups:
+  server:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.241
+        config:
+          useBrandedStringAliases: true
