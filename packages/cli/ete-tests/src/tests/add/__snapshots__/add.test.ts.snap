@@ -69,11 +69,11 @@ services:
       - name: fernapi/fern-java-sdk
         version: 0.0.122
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.227
+        version: 0.0.241
       - name: fernapi/fern-postman
         version: 0.0.25
       - name: fernapi/fern-openapi
-        version: 0.0.10
+        version: 0.0.11
         config:
           format: yaml
 ",
