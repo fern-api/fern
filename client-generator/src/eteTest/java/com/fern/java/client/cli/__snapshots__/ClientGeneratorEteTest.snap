@@ -679,6 +679,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -693,7 +694,9 @@ interface PostsService {
   @GET
   @Path("/{postId}")
   BlogPost getPost(
-      @HeaderParam("API-VERSION") String apiVersion, @PathParam("postId") String postId)
+      @HeaderParam("API-VERSION") String apiVersion,
+      @PathParam("postId") String postId,
+      @QueryParam("dummy") String dummy)
       throws GetPostException;
 
   static PostsService getClient(String url) {
@@ -734,7 +737,7 @@ public final class PostsServiceClient {
   }
 
   public BlogPost getPost(GetPost.Request request) throws GetPostException {
-    return this.service.getPost(apiVersion, request.getPostId());
+    return this.service.getPost(apiVersion, request.getPostId(), request.getDummy());
   }
 }
 
@@ -805,6 +808,7 @@ public final class CreatePost {
       this.authOverride = authOverride;
     }
 
+    /** This will create a Post. */
     public CreatePostRequest getBody() {
       return body;
     }
@@ -868,6 +872,7 @@ public final class CreatePost {
         return this;
       }
 
+      /** This will create a Post. */
       @Override
       public _FinalStage body(CreatePostRequest body) {
         this.body = body;
@@ -910,17 +915,26 @@ public final class GetPost {
   public static final class Request {
     private final String postId;
 
+    private final String dummy;
+
     private final Optional<BearerAuth> authOverride;
 
     private int _cachedHashCode;
 
-    Request(String postId, Optional<BearerAuth> authOverride) {
+    Request(String postId, String dummy, Optional<BearerAuth> authOverride) {
       this.postId = postId;
+      this.dummy = dummy;
       this.authOverride = authOverride;
     }
 
+    /** The post id for the blog post */
     public String getPostId() {
       return postId;
+    }
+
+    /** Dummy query param */
+    public String getDummy() {
+      return dummy;
     }
 
     public Optional<BearerAuth> getAuthOverride() {
@@ -934,20 +948,29 @@ public final class GetPost {
     }
 
     private boolean equalTo(Request other) {
-      return postId.equals(other.postId) && authOverride.equals(other.authOverride);
+      return postId.equals(other.postId)
+          && dummy.equals(other.dummy)
+          && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.postId, this.authOverride);
+        _cachedHashCode = Objects.hash(this.postId, this.dummy, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "GetPost.Request{" + "postId: " + postId + ", authOverride: " + authOverride + "}";
+      return "GetPost.Request{"
+          + "postId: "
+          + postId
+          + ", dummy: "
+          + dummy
+          + ", authOverride: "
+          + authOverride
+          + "}";
     }
 
     public static PostIdStage builder() {
@@ -955,9 +978,13 @@ public final class GetPost {
     }
 
     public interface PostIdStage {
-      _FinalStage postId(String postId);
+      DummyStage postId(String postId);
 
       Builder from(Request other);
+    }
+
+    public interface DummyStage {
+      _FinalStage dummy(String dummy);
     }
 
     public interface _FinalStage {
@@ -968,8 +995,10 @@ public final class GetPost {
       _FinalStage authOverride(BearerAuth authOverride);
     }
 
-    public static final class Builder implements PostIdStage, _FinalStage {
+    public static final class Builder implements PostIdStage, DummyStage, _FinalStage {
       private String postId;
+
+      private String dummy;
 
       private Optional<BearerAuth> authOverride = Optional.empty();
 
@@ -978,13 +1007,22 @@ public final class GetPost {
       @Override
       public Builder from(Request other) {
         postId(other.getPostId());
+        dummy(other.getDummy());
         authOverride(other.getAuthOverride());
         return this;
       }
 
+      /** The post id for the blog post */
       @Override
-      public _FinalStage postId(String postId) {
+      public DummyStage postId(String postId) {
         this.postId = postId;
+        return this;
+      }
+
+      /** Dummy query param */
+      @Override
+      public _FinalStage dummy(String dummy) {
+        this.dummy = dummy;
         return this;
       }
 
@@ -1002,7 +1040,7 @@ public final class GetPost {
 
       @Override
       public Request build() {
-        return new Request(postId, authOverride);
+        return new Request(postId, dummy, authOverride);
       }
     }
   }

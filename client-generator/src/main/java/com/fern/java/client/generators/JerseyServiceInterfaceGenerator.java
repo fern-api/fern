@@ -24,6 +24,13 @@ import com.fern.ir.model.services.http.HttpResponse;
 import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedJerseyServiceInterface;
+import com.fern.java.client.GeneratedJerseyServiceInterface.AuthEndpointParameter;
+import com.fern.java.client.GeneratedJerseyServiceInterface.EndpointHeaderParameter;
+import com.fern.java.client.GeneratedJerseyServiceInterface.EndpointParameter;
+import com.fern.java.client.GeneratedJerseyServiceInterface.EndpointPathParameter;
+import com.fern.java.client.GeneratedJerseyServiceInterface.EndpointQueryParameter;
+import com.fern.java.client.GeneratedJerseyServiceInterface.EndpointRequestParameter;
+import com.fern.java.client.GeneratedJerseyServiceInterface.GeneratedEndpointMethod;
 import com.fern.java.client.generators.jersey.AuthToJerseyParameterSpecConverter;
 import com.fern.java.client.generators.jersey.JerseyHttpMethodToAnnotationSpec;
 import com.fern.java.client.generators.jersey.JerseyParameterSpecFactory;
@@ -50,6 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
@@ -97,7 +105,7 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                         .addMember("value", "$S", httpService.getBasePath().orElse("/"))
                         .build());
 
-        Map<HttpEndpointId, MethodSpec> endpointMethods = new HashMap<>();
+        Map<HttpEndpointId, GeneratedEndpointMethod> endpointMethods = new HashMap<>();
         Map<HttpEndpointId, AbstractGeneratedJavaFile> endpointExceptions = new HashMap<>();
         for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
             HttpEndpointId httpEndpointId = httpEndpoint.getId();
@@ -105,11 +113,11 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                     clientGeneratorContext, httpService, httpEndpoint, generatedErrors);
             AbstractGeneratedJavaFile endpointException = endpointExceptionGenerator.generateFile();
 
-            MethodSpec endpointMethodSpec = getEndpointMethodSpec(httpEndpoint, endpointException);
-            jerseyInterfaceBuilder.addMethod(endpointMethodSpec);
+            GeneratedEndpointMethod generatedEndpointMethod = getEndpointMethodSpec(httpEndpoint, endpointException);
+            jerseyInterfaceBuilder.addMethod(generatedEndpointMethod.methodSpec());
 
             endpointExceptions.put(httpEndpointId, endpointException);
-            endpointMethods.put(httpEndpointId, endpointMethodSpec);
+            endpointMethods.put(httpEndpointId, generatedEndpointMethod);
         }
 
         AbstractGeneratedJavaFile errorDecoder = getErrorDecoder(endpointExceptions);
@@ -128,7 +136,9 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                 .build();
     }
 
-    private MethodSpec getEndpointMethodSpec(HttpEndpoint httpEndpoint, AbstractGeneratedJavaFile endpointException) {
+    private GeneratedEndpointMethod getEndpointMethodSpec(
+            HttpEndpoint httpEndpoint, AbstractGeneratedJavaFile endpointException) {
+        List<EndpointParameter> endpointParameters = getEndpointMethodParameters(httpEndpoint);
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().getCamelCase())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
@@ -137,7 +147,9 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
                         .addMember(
                                 "value", "$S", HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.getPath()))
                         .build())
-                .addParameters(getEndpointMethodParameters(httpEndpoint))
+                .addParameters(endpointParameters.stream()
+                        .map(EndpointParameter::parameterSpec)
+                        .collect(Collectors.toList()))
                 .addException(endpointException.getClassName());
 
         HttpResponse httpResponse = httpEndpoint.getResponse();
@@ -147,49 +159,78 @@ public final class JerseyServiceInterfaceGenerator extends AbstractFileGenerator
             endpointMethodBuilder.returns(responseTypeName);
         }
 
-        return endpointMethodBuilder.build();
+        return GeneratedEndpointMethod.builder()
+                .methodSpec(endpointMethodBuilder.build())
+                .addAllParameters(endpointParameters)
+                .build();
     }
 
-    private List<ParameterSpec> getEndpointMethodParameters(HttpEndpoint httpEndpoint) {
-        List<ParameterSpec> parameters = new ArrayList<>();
+    private List<EndpointParameter> getEndpointMethodParameters(HttpEndpoint httpEndpoint) {
+        List<EndpointParameter> parameters = new ArrayList<>();
 
         // auth
         maybeAuth.ifPresent(auth -> {
             AuthToJerseyParameterSpecConverter authToJerseyParameterSpecConverter =
                     new AuthToJerseyParameterSpecConverter(generatorContext, auth);
-            parameters.addAll(authToJerseyParameterSpecConverter.getAuthParameters(httpEndpoint));
+            authToJerseyParameterSpecConverter.getAuthParameters(httpEndpoint).forEach(parameterSpec -> {
+                parameters.add(AuthEndpointParameter.builder()
+                        .parameterSpec(parameterSpec)
+                        .build());
+            });
         });
 
         // headers
-        generatorContext.getGlobalHeaders().getRequiredGlobalHeaders().stream()
-                .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
-                .forEach(parameters::add);
-        generatorContext.getGlobalHeaders().getOptionalGlobalHeaders().stream()
-                .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
-                .forEach(parameters::add);
-        httpService.getHeaders().stream()
-                .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
-                .forEach(parameters::add);
-        httpEndpoint.getHeaders().stream()
-                .map(jerseyParameterSpecFactory::getHeaderParameterSpec)
-                .forEach(parameters::add);
+        generatorContext.getGlobalHeaders().getRequiredGlobalHeaders().forEach(httpHeader -> {
+            parameters.add(EndpointHeaderParameter.builder()
+                    .parameterSpec(jerseyParameterSpecFactory.getHeaderParameterSpec(httpHeader))
+                    .httpHeader(httpHeader)
+                    .build());
+        });
+        generatorContext.getGlobalHeaders().getOptionalGlobalHeaders().forEach(httpHeader -> {
+            parameters.add(EndpointHeaderParameter.builder()
+                    .parameterSpec(jerseyParameterSpecFactory.getHeaderParameterSpec(httpHeader))
+                    .httpHeader(httpHeader)
+                    .build());
+        });
+        httpService.getHeaders().forEach(httpHeader -> {
+            parameters.add(EndpointHeaderParameter.builder()
+                    .parameterSpec(jerseyParameterSpecFactory.getHeaderParameterSpec(httpHeader))
+                    .httpHeader(httpHeader)
+                    .build());
+        });
+        httpEndpoint.getHeaders().forEach(httpHeader -> {
+            parameters.add(EndpointHeaderParameter.builder()
+                    .parameterSpec(jerseyParameterSpecFactory.getHeaderParameterSpec(httpHeader))
+                    .httpHeader(httpHeader)
+                    .build());
+        });
 
         // path params
-        httpEndpoint.getPathParameters().stream()
-                .map(jerseyParameterSpecFactory::getPathParameterSpec)
-                .forEach(parameters::add);
+        httpEndpoint.getPathParameters().forEach(pathParameter -> {
+            parameters.add(EndpointPathParameter.builder()
+                    .parameterSpec(jerseyParameterSpecFactory.getPathParameterSpec(pathParameter))
+                    .pathParameter(pathParameter)
+                    .build());
+        });
 
         // query params
-        httpEndpoint.getQueryParameters().stream()
-                .map(jerseyParameterSpecFactory::getQueryParameterSpec)
-                .forEach(parameters::add);
+        httpEndpoint.getQueryParameters().forEach(queryParameter -> {
+            parameters.add(EndpointQueryParameter.builder()
+                    .parameterSpec(jerseyParameterSpecFactory.getQueryParameterSpec(queryParameter))
+                    .queryParameter(queryParameter)
+                    .build());
+        });
 
         // request body
         HttpRequest httpRequest = httpEndpoint.getRequest();
         if (!httpRequest.getType().isVoid()) {
             TypeName requestTypeName =
                     generatorContext.getPoetTypeNameMapper().convertToTypeName(true, httpRequest.getType());
-            parameters.add(ParameterSpec.builder(requestTypeName, "body").build());
+            parameters.add(EndpointRequestParameter.builder()
+                    .parameterSpec(
+                            ParameterSpec.builder(requestTypeName, "body").build())
+                    .httpRequest(httpRequest)
+                    .build());
         }
 
         return parameters;

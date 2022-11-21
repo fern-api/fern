@@ -21,6 +21,7 @@ import com.fern.ir.model.services.http.HttpEndpoint;
 import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedEndpointRequest;
+import com.fern.java.client.GeneratedJerseyServiceInterface.EndpointParameter;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
@@ -29,7 +30,6 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
     private static final String AUTH_REQUEST_PARAMETER_PASCAL_CASE = "AuthOverride";
 
     private final HttpEndpoint httpEndpoint;
-    private final List<ParameterSpec> parametersToInclude;
+    private final List<EndpointParameter> parametersToInclude;
 
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors;
@@ -58,7 +58,7 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
             ClientGeneratorContext generatorContext,
             HttpService httpService,
             HttpEndpoint httpEndpoint,
-            List<ParameterSpec> parametersToInclude,
+            List<EndpointParameter> parametersToInclude,
             Optional<GeneratedAuthFiles> maybeAuth,
             Map<DeclaredErrorName, GeneratedJavaFile> generatedErrors) {
         super(
@@ -88,11 +88,12 @@ public final class HttpEndpointFileGenerator extends AbstractFileGenerator {
     private TypeSpec generateNestedRequestType(GeneratedEndpointRequest.Builder outputBuilder) {
         ClassName requestClassName = className.nestedClass(REQUEST_CLASS_NAME);
         List<EnrichedObjectProperty> enrichedObjectProperties = parametersToInclude.stream()
-                .map(parameterSpec -> EnrichedObjectProperty.builder()
-                        .camelCaseKey(parameterSpec.name)
-                        .pascalCaseKey(StringUtils.capitalize(parameterSpec.name))
-                        .poetTypeName(parameterSpec.type)
+                .map(endpointParameter -> EnrichedObjectProperty.builder()
+                        .camelCaseKey(endpointParameter.parameterSpec().name)
+                        .pascalCaseKey(StringUtils.capitalize(endpointParameter.parameterSpec().name))
+                        .poetTypeName(endpointParameter.parameterSpec().type)
                         .fromInterface(false)
+                        .docs(endpointParameter.docs())
                         .build())
                 .collect(Collectors.toList());
         Optional<EnrichedObjectProperty> maybeAuthProperty = Optional.empty();

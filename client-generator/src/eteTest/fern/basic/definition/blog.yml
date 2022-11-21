@@ -62,12 +62,20 @@ services:
           docs: Create a new blog post
           method: POST
           path: /create
-          request: CreatePostRequest
+          request:
+            type: CreatePostRequest
+            docs: This will create a Post.
         getPost:
           method: GET
           path: /{postId}
           path-parameters:
-            postId: PostId
+            postId:
+              type: PostId
+              docs: The post id for the blog post
+          query-parameters:
+            dummy:
+              type: string
+              docs: Dummy query param
           response: BlogPost
           errors:
             - PostNotFoundError

@@ -23,6 +23,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEndpointRequest;
 import com.fern.java.client.GeneratedJerseyServiceInterface;
+import com.fern.java.client.GeneratedJerseyServiceInterface.GeneratedEndpointMethod;
 import com.fern.java.client.GeneratedServiceClient;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -125,23 +126,26 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
 
         List<GeneratedEndpointRequest> generatedEndpointRequests = new ArrayList<>();
         for (HttpEndpoint httpEndpoint : httpService.getEndpoints()) {
-            MethodSpec endpointInterfaceMethod =
+            GeneratedEndpointMethod generatedEndpointMethod =
                     jerseyServiceInterfaceOutput.endpointMethods().get(httpEndpoint.getId());
             Optional<GeneratedEndpointRequest> wrappedRequestFile =
-                    getWrappedRequest(httpEndpoint, endpointInterfaceMethod);
+                    getWrappedRequest(httpEndpoint, generatedEndpointMethod);
             MethodSpec.Builder endpointMethodBuilder =
                     MethodSpec.methodBuilder(httpEndpoint.getId().get()).addModifiers(Modifier.PUBLIC);
 
             if (wrappedRequestFile.isPresent()) {
                 generateCallWithWrappedRequest(
-                        httpEndpoint, endpointInterfaceMethod, wrappedRequestFile.get(), endpointMethodBuilder);
+                        httpEndpoint,
+                        generatedEndpointMethod.methodSpec(),
+                        wrappedRequestFile.get(),
+                        endpointMethodBuilder);
                 generatedEndpointRequests.add(wrappedRequestFile.get());
             } else {
-                generateCallWithoutRequest(endpointMethodBuilder, endpointInterfaceMethod);
+                generateCallWithoutRequest(endpointMethodBuilder, generatedEndpointMethod.methodSpec());
             }
 
-            endpointMethodBuilder.addExceptions(endpointInterfaceMethod.exceptions);
-            endpointMethodBuilder.returns(endpointInterfaceMethod.returnType);
+            endpointMethodBuilder.addExceptions(generatedEndpointMethod.methodSpec().exceptions);
+            endpointMethodBuilder.returns(generatedEndpointMethod.methodSpec().returnType);
             serviceClientBuilder.addMethod(endpointMethodBuilder.build());
         }
 
@@ -317,12 +321,12 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
     }
 
     private Optional<GeneratedEndpointRequest> getWrappedRequest(
-            HttpEndpoint httpEndpoint, MethodSpec endpointInterfaceMethod) {
+            HttpEndpoint httpEndpoint, GeneratedEndpointMethod generatedEndpointMethod) {
         int numRequiredHeaders = generatorContext
                 .getGlobalHeaders()
                 .getRequiredGlobalHeaderParameters()
                 .size();
-        if (endpointInterfaceMethod.parameters.size() <= numRequiredHeaders) {
+        if (generatedEndpointMethod.parameters().size() <= numRequiredHeaders) {
             return Optional.empty();
         }
 
@@ -334,10 +338,13 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
                 clientGeneratorContext,
                 httpService,
                 httpEndpoint,
-                numParametersToSkip == endpointInterfaceMethod.parameters.size()
+                numParametersToSkip == generatedEndpointMethod.parameters().size()
                         ? Collections.emptyList()
-                        : endpointInterfaceMethod.parameters.subList(
-                                numParametersToSkip, endpointInterfaceMethod.parameters.size()),
+                        : generatedEndpointMethod
+                                .parameters()
+                                .subList(
+                                        numParametersToSkip,
+                                        generatedEndpointMethod.parameters().size()),
                 maybeAuth,
                 generatedErrors);
         return Optional.of(httpEndpointFileGenerator.generateFile());
