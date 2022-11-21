@@ -57,7 +57,7 @@ export class RemoteTaskHandler {
                 : undefined
         );
         for (const coordinate of coordinates) {
-            this.context.logger.debug(`Generating ${coordinate}`);
+            this.context.logger.info(`Generating ${coordinate}`);
         }
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
