@@ -56,9 +56,6 @@ export class RemoteTaskHandler {
                       .join("\n")
                 : undefined
         );
-        for (const coordinate of coordinates) {
-            this.context.logger.info(`Generating ${coordinate}`);
-        }
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             const level = newLog.level.visit({
@@ -91,6 +88,9 @@ export class RemoteTaskHandler {
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
+                for (const coordinate of coordinates) {
+                    this.context.logger.info(`Published ${coordinate}`);
+                }
                 log_s3_url(finishedStatus.s3PreSignedReadUrl);
                 this.#isFinished = true;
             },
