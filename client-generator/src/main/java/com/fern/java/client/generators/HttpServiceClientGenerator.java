@@ -27,6 +27,7 @@ import com.fern.java.client.GeneratedServiceClient;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.JavaDocUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -271,6 +272,9 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
         endpointMethodBuilder.addParameter(
                 ParameterSpec.builder(generatedRequest.requestClassName(), REQUEST_PARAMETER_NAME)
                         .build());
+
+        httpEndpoint.getDocs().ifPresent(docs -> endpointMethodBuilder.addJavadoc(JavaDocUtils.render(docs)));
+
         List<String> endpointArguments = new ArrayList<>();
         if (httpEndpoint.getAuth()) {
             GeneratedAuthFiles generatedAuth = maybeAuth.orElseThrow(

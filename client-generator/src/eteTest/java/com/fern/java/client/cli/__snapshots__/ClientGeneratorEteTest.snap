@@ -728,6 +728,7 @@ public final class PostsServiceClient {
     this.apiVersion = apiVersion;
   }
 
+  /** Create a new blog post */
   public void createPost(CreatePost.Request request) throws CreatePostException {
     this.service.createPost(apiVersion, request.getBody());
   }
