@@ -6,7 +6,9 @@ types:
     properties:
       id: PostId
       type: PostType
-      title: string
+      title:
+        type: string
+        docs: The title of the blog post.
       author: Author
       content: string
   CreatePostRequest:

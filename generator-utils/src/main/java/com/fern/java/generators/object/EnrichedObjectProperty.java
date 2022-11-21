@@ -17,8 +17,10 @@
 package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.StringWithAllCasings;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.FieldSpec;
@@ -41,6 +43,8 @@ public interface EnrichedObjectProperty {
     TypeName poetTypeName();
 
     boolean fromInterface();
+
+    Optional<String> docs();
 
     @Value.Lazy
     default FieldSpec fieldSpec() {
@@ -66,6 +70,9 @@ public interface EnrichedObjectProperty {
         if (fromInterface()) {
             getterBuilder.addAnnotation(Override.class);
         }
+        if (docs().isPresent()) {
+            getterBuilder.addJavadoc("$L", JavaDocUtils.render(docs().get()));
+        }
         return getterBuilder.build();
     }
 
@@ -73,13 +80,15 @@ public interface EnrichedObjectProperty {
         return ImmutableEnrichedObjectProperty.builder();
     }
 
-    static EnrichedObjectProperty of(NameAndWireValue nameAndWireValue, boolean fromInterface, TypeName poetTypeName) {
+    static EnrichedObjectProperty of(ObjectProperty objectProperty, boolean fromInterface, TypeName poetTypeName) {
+        StringWithAllCasings safeName = objectProperty.getNameV2().getName().getSafeName();
         return EnrichedObjectProperty.builder()
-                .camelCaseKey(nameAndWireValue.getName().getSafeName().getCamelCase())
-                .pascalCaseKey(nameAndWireValue.getName().getSafeName().getPascalCase())
+                .camelCaseKey(safeName.getCamelCase())
+                .pascalCaseKey(safeName.getPascalCase())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
-                .wireKey(nameAndWireValue.getWireValue())
+                .wireKey(objectProperty.getNameV2().getWireValue())
+                .docs(objectProperty.getDocs())
                 .build();
     }
 }

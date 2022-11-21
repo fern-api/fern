@@ -1660,6 +1660,7 @@ public final class BlogPost {
     return type;
   }
 
+  /** The title of the blog post. */
   @JsonProperty("title")
   public String getTitle() {
     return title;
@@ -2270,9 +2271,9 @@ import java.util.Locale;
 public final class PostType {
   public static final PostType LONG = new PostType(Value.LONG, "LONG");
 
-  public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
-
   public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
 
   private final Value value;
 
@@ -2308,10 +2309,10 @@ public final class PostType {
     switch (value) {
       case LONG:
         return visitor.visitLong();
-      case MEDIUM:
-        return visitor.visitMedium();
       case SHORT:
         return visitor.visitShort();
+      case MEDIUM:
+        return visitor.visitMedium();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -2324,10 +2325,10 @@ public final class PostType {
     switch (upperCasedValue) {
       case "LONG":
         return LONG;
-      case "med.med":
-        return MEDIUM;
       case "SHORT":
         return SHORT;
+      case "med.med":
+        return MEDIUM;
       default:
         return new PostType(Value.UNKNOWN, upperCasedValue);
     }
