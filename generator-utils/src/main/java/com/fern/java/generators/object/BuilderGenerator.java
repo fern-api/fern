@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fern.java.PoetTypeWithClassName;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.utils.JavaDocUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -233,6 +234,10 @@ public final class BuilderGenerator {
                         enrichedObjectProperty.fieldSpec().name,
                         enrichedObjectProperty.fieldSpec().name)
                 .addStatement("return this");
+        if (enrichedObjectProperty.docs().isPresent()) {
+            methodBuilder.addJavadoc(
+                    JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        }
         if (enrichedObjectProperty.wireKey().isPresent()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember("value", "$S", enrichedObjectProperty.wireKey().get())
@@ -243,12 +248,13 @@ public final class BuilderGenerator {
 
     private MethodSpec.Builder getRequiredFieldSetter(
             EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass) {
-        return MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec().name)
+        MethodSpec.Builder setterBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec().name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
                 .addParameter(ParameterSpec.builder(
                                 enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec().name)
                         .build());
+        return setterBuilder;
     }
 
     private MethodSpec.Builder getFromSetter() {
@@ -476,6 +482,9 @@ public final class BuilderGenerator {
         if (isOverriden) {
             setter.addAnnotation(Override.class);
         }
+        if (enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        }
         return setter;
     }
 
@@ -499,6 +508,9 @@ public final class BuilderGenerator {
         if (isOverriden) {
             setter.addAnnotation(Override.class);
         }
+        if (enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        }
         return setter;
     }
 
@@ -519,6 +531,9 @@ public final class BuilderGenerator {
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
+        }
+        if (enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
         }
         return setter;
     }
@@ -543,6 +558,9 @@ public final class BuilderGenerator {
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
+        if (enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        }
         return setter;
     }
 
@@ -563,6 +581,9 @@ public final class BuilderGenerator {
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
+        }
+        if (enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
         }
         return setter;
     }

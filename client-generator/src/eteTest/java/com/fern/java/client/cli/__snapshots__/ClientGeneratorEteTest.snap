@@ -1784,6 +1784,7 @@ public final class BlogPost {
       return this;
     }
 
+    /** The title of the blog post. */
     @Override
     @JsonSetter("title")
     public AuthorStage title(String title) {
