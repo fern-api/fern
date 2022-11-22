@@ -11,7 +11,10 @@ export class GeneratedObjectTypeSchemaImpl
     implements GeneratedObjectTypeSchema
 {
     protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
-        const generatedType = context.getGeneratedObjectType(this.typeDeclaration.name);
+        const generatedType = context.getTypeBeingGenerated();
+        if (generatedType.type !== "object") {
+            throw new Error("Type is not an object: " + this.typeName);
+        }
 
         let schema = context.coreUtilities.zurg.object(
             this.shape.properties.map((property) => ({

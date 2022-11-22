@@ -5,11 +5,7 @@ import { TypeResolver } from "@fern-typescript/resolvers";
 import {
     CoreUtilities,
     ExternalDependencies,
-    GeneratedAliasType,
-    GeneratedEnumType,
-    GeneratedObjectType,
     GeneratedType,
-    GeneratedUnionType,
     Reference,
     TypeSchemaContext,
 } from "@fern-typescript/sdk-declaration-handler";
@@ -38,6 +34,7 @@ export declare namespace TypeSchemaContextImpl {
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: FernConstants;
         typeGenerator: TypeGenerator;
+        typeBeingGenerated: DeclaredTypeName;
     }
 }
 
@@ -55,6 +52,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToRawTypeNodeConverter: TypeReferenceToRawTypeNodeConverter;
     private typeReferenceToSchemaConverter: TypeReferenceToSchemaConverter;
+    private typeBeingGenerated: DeclaredTypeName;
 
     constructor({
         sourceFile,
@@ -66,6 +64,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         typeDeclarationReferencer,
         typeSchemaDeclarationReferencer,
         typeGenerator,
+        typeBeingGenerated,
     }: TypeSchemaContextImpl.Init) {
         this.typeContext = new TypeContextImpl({
             sourceFile,
@@ -97,6 +96,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
 
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;
+        this.typeBeingGenerated = typeBeingGenerated;
     }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
@@ -115,66 +115,10 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         return this.typeContext.resolveTypeName(typeName);
     }
 
-    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+    public getTypeBeingGenerated(): GeneratedType {
         return this.typeGenerator.generateType({
-            typeName: this.typeDeclarationReferencer.getExportedName(typeName),
-            typeDeclaration: this.typeResolver.getTypeDeclarationFromName(typeName),
-        });
-    }
-
-    public getGeneratedUnionType(typeName: DeclaredTypeName): GeneratedUnionType {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (typeDeclaration.shape._type !== "union") {
-            throw new Error(
-                `Cannot get generated union type because ${typeName.nameV3.unsafeName.originalValue} is not a union`
-            );
-        }
-        return this.typeGenerator.generateUnion({
-            typeDeclaration,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeName),
-            shape: typeDeclaration.shape,
-        });
-    }
-
-    public getGeneratedAliasType(typeName: DeclaredTypeName): GeneratedAliasType {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (typeDeclaration.shape._type !== "alias") {
-            throw new Error(
-                `Cannot get generated alias type because ${typeName.nameV3.unsafeName.originalValue} is not a alias`
-            );
-        }
-        return this.typeGenerator.generateAlias({
-            typeDeclaration,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeName),
-            shape: typeDeclaration.shape,
-        });
-    }
-
-    public getGeneratedObjectType(typeName: DeclaredTypeName): GeneratedObjectType {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (typeDeclaration.shape._type !== "object") {
-            throw new Error(
-                `Cannot get generated object type because ${typeName.nameV3.unsafeName.originalValue} is not a object`
-            );
-        }
-        return this.typeGenerator.generateObject({
-            typeDeclaration,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeName),
-            shape: typeDeclaration.shape,
-        });
-    }
-
-    public getGeneratedEnumType(typeName: DeclaredTypeName): GeneratedEnumType {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
-        if (typeDeclaration.shape._type !== "enum") {
-            throw new Error(
-                `Cannot get generated enum type because ${typeName.nameV3.unsafeName.originalValue} is not a enum`
-            );
-        }
-        return this.typeGenerator.generateEnum({
-            typeDeclaration,
-            typeName: this.typeDeclarationReferencer.getExportedName(typeName),
-            shape: typeDeclaration.shape,
+            typeName: this.typeDeclarationReferencer.getExportedName(this.typeBeingGenerated),
+            typeDeclaration: this.typeResolver.getTypeDeclarationFromName(this.typeBeingGenerated),
         });
     }
 

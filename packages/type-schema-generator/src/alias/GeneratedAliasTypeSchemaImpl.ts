@@ -12,7 +12,10 @@ export class GeneratedAliasTypeSchemaImpl
 {
     protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
         const schemaOfAlias = context.getSchemaOfTypeReference(this.shape.aliasOf);
-        const generatedAliasType = context.getGeneratedAliasType(this.typeDeclaration.name);
+        const generatedAliasType = context.getTypeBeingGenerated();
+        if (generatedAliasType.type !== "alias") {
+            throw new Error("Type is not an alias: " + this.typeName);
+        }
         if (!generatedAliasType.isBranded) {
             return schemaOfAlias;
         }

@@ -1,5 +1,6 @@
-import { TypeContext } from "../TypeContext";
+import { GeneratedAliasType } from "./GeneratedAliasType";
+import { GeneratedEnumType } from "./GeneratedEnumType";
+import { GeneratedObjectType } from "./GeneratedObjectType";
+import { GeneratedUnionType } from "./GeneratedUnionType";
 
-export interface GeneratedType {
-    writeToFile: (context: TypeContext) => void;
-}
+export type GeneratedType = GeneratedAliasType | GeneratedEnumType | GeneratedObjectType | GeneratedUnionType;

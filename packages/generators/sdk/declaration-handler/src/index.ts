@@ -1,7 +1,11 @@
 export * from "./core-utilities";
+export { type ErrorContext } from "./ErrorContext";
+export { type ErrorSchemaContext } from "./ErrorSchemaContext";
 export * from "./external-dependencies";
 export * from "./generated-type-schemas";
 export * from "./generated-types";
+export { type GeneratedError } from "./GeneratedError";
+export { type GeneratedErrorSchema } from "./GeneratedErrorSchema";
 export { type GeneratedUnion } from "./GeneratedUnion";
 export { type GeneratorContext } from "./GeneratorContext";
 export { type ParsedAuthSchemes } from "./ParsedAuthSchemes";

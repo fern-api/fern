@@ -8,6 +8,8 @@ export class GeneratedObjectTypeImpl
     extends AbstractGeneratedType<ObjectTypeDeclaration>
     implements GeneratedObjectType
 {
+    public readonly type = "object";
+
     public writeToFile(context: TypeContext): void {
         const interfaceNode = context.sourceFile.addInterface({
             name: this.typeName,

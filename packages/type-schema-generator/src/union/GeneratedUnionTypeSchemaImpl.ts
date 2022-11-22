@@ -1,6 +1,10 @@
 import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { GeneratedUnionTypeSchema, TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import {
+    GeneratedUnionType,
+    GeneratedUnionTypeSchema,
+    TypeSchemaContext,
+} from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionSchema, RawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
@@ -21,8 +25,7 @@ export class GeneratedUnionTypeSchemaImpl
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
             discriminant,
-            getGeneratedUnion: (context) =>
-                context.getGeneratedUnionType(this.typeDeclaration.name).getGeneratedUnion(),
+            getGeneratedUnion: (context) => this.getGeneratedUnionType(context).getGeneratedUnion(),
             getDefaultCaseForParseTransform: ({ context, parsedValue }) =>
                 this.getDefaultCaseForParseTransform({ context, parsedValue }),
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
@@ -72,11 +75,19 @@ export class GeneratedUnionTypeSchemaImpl
     }): ts.Statement[] {
         return [
             ts.factory.createReturnStatement(
-                context.getGeneratedUnionType(this.typeDeclaration.name).addVistMethodToValue({
+                this.getGeneratedUnionType(context).addVistMethodToValue({
                     context,
                     parsedValue,
                 })
             ),
         ];
+    }
+
+    private getGeneratedUnionType(context: TypeSchemaContext): GeneratedUnionType {
+        const generatedType = context.getTypeBeingGenerated();
+        if (generatedType.type !== "union") {
+            throw new Error("Type is not an union: " + this.typeName);
+        }
+        return generatedType;
     }
 }

@@ -1,11 +1,11 @@
 import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
-import { GeneratedType } from "./generated-types/GeneratedType";
+import { GeneratedError } from "./GeneratedError";
 import { Reference } from "./Reference";
 import { TypeContext } from "./TypeContext";
 
-export interface TypeSchemaContext extends TypeContext {
-    getTypeBeingGenerated: () => GeneratedType;
+export interface ErrorSchemaContext extends TypeContext {
+    getErrorBeingGenerated: () => GeneratedError;
 
     // schemas
     getReferenceToRawType: (typeReference: TypeReference) => TypeReferenceNode;

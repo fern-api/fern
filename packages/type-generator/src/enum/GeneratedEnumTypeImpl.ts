@@ -5,6 +5,8 @@ import { ts, VariableDeclarationKind } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedEnumTypeImpl extends AbstractGeneratedType<EnumTypeDeclaration> implements GeneratedEnumType {
+    public readonly type = "enum";
+
     public writeToFile(context: TypeContext): void {
         const type = context.sourceFile.addTypeAlias({
             name: this.typeName,

@@ -2,6 +2,7 @@ import {
     AliasTypeDeclaration,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
+    PrimitiveType,
     Type,
     TypeDeclaration,
     UnionTypeDeclaration,
@@ -14,7 +15,7 @@ import {
     GeneratedUnionType,
 } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
-import { GeneratedBrandedAliasImpl } from "./alias/GeneratedBrandedAliasImpl";
+import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
 import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";
 import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl";
 import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl";
@@ -96,8 +97,10 @@ export class TypeGenerator {
         typeName: string;
         shape: AliasTypeDeclaration;
     }): GeneratedAliasType {
-        return this.useBrandedStringAliases
-            ? new GeneratedBrandedAliasImpl({ typeDeclaration, typeName, shape })
+        return this.useBrandedStringAliases &&
+            shape.aliasOf._type === "primitive" &&
+            shape.aliasOf.primitive === PrimitiveType.String
+            ? new GeneratedBrandedStringAliasImpl({ typeDeclaration, typeName, shape })
             : new GeneratedAliasTypeImpl({ typeDeclaration, typeName, shape });
     }
 }

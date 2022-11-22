@@ -42,14 +42,16 @@ export class RawSinglePropertySingleUnionType extends AbstractRawSingleUnionType
     protected getNonDiscriminantPropertiesForSchema(
         context: TypeSchemaContext
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
+        const unionBeingGenerated = context.getTypeBeingGenerated();
+        if (unionBeingGenerated.type !== "union") {
+            throw new Error("Type is not a union: " + this.unionTypeName.nameV3.unsafeName.originalValue);
+        }
         return {
             isInline: true,
             properties: [
                 {
                     key: {
-                        parsed: context
-                            .getGeneratedUnionType(this.unionTypeName)
-                            .getSinglePropertyKey(this.singleProperty),
+                        parsed: unionBeingGenerated.getSinglePropertyKey(this.singleProperty),
                         raw: this.singleProperty.nameV2.wireValue,
                     },
                     value: context.getSchemaOfTypeReference(this.singleProperty.type),

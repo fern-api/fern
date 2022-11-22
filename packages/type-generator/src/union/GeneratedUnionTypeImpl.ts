@@ -12,6 +12,8 @@ import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { SinglePropertySingleUnionTypeGenerator } from "./single-union-type-generators/SinglePropertySingleUnionTypeGenerator";
 
 export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDeclaration> implements GeneratedUnionType {
+    public readonly type = "union";
+
     private generatedUnion: GeneratedUnionImpl<TypeContext>;
 
     constructor(superInit: AbstractGeneratedType.Init<UnionTypeDeclaration>) {
