@@ -45,6 +45,9 @@ import org.immutables.value.Value;
 
 public final class BuilderGenerator {
 
+    private static final String CHAINED_RETURN_DOCS =
+            "Reference to {@code this} so that method calls can be chained together.";
+
     private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
 
     private static final String STATIC_BUILDER_METHOD_NAME = "builder";
@@ -237,6 +240,7 @@ public final class BuilderGenerator {
         if (enrichedObjectProperty.docs().isPresent()) {
             methodBuilder.addJavadoc(
                     JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+            methodBuilder.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         if (enrichedObjectProperty.wireKey().isPresent()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
@@ -482,8 +486,9 @@ public final class BuilderGenerator {
         if (isOverriden) {
             setter.addAnnotation(Override.class);
         }
-        if (enrichedObjectProperty.docs().isPresent()) {
+        if (isOverriden && enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
@@ -499,17 +504,18 @@ public final class BuilderGenerator {
             EnrichedObjectProperty enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass,
-            boolean isOverriden) {
+            boolean isOverridden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
         MethodSpec.Builder setter = defaultSetter(
                         StageBuilderConstants.PUT_ALL_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
-        if (isOverriden) {
+        if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (enrichedObjectProperty.docs().isPresent()) {
+        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
@@ -532,8 +538,9 @@ public final class BuilderGenerator {
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (enrichedObjectProperty.docs().isPresent()) {
+        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
@@ -558,8 +565,9 @@ public final class BuilderGenerator {
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (enrichedObjectProperty.docs().isPresent()) {
+        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
@@ -582,8 +590,9 @@ public final class BuilderGenerator {
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (enrichedObjectProperty.docs().isPresent()) {
+        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+            setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }

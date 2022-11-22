@@ -16,6 +16,8 @@
 
 package com.fern.java.utils;
 
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.TypeName;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.node.Paragraph;
 import org.commonmark.parser.Parser;
@@ -25,12 +27,12 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 public final class JavaDocUtils {
 
-    private static final Parser parser = Parser.builder().build();
-    private static final Renderer renderer = HtmlRenderer.builder()
-            // Escaping existing HTML may break docs that rendered fine previously.
-            .escapeHtml(false)
-            // Disable paragraph tags, prefer raw text instead. Otherwise
-            // all javadoc will be wrapped in paragraphs.
+    private static final Parser PARSER = Parser.builder().build();
+    private static final Renderer DEFAULT_RENDERER =
+            HtmlRenderer.builder().escapeHtml(true).build();
+
+    private static final Renderer RENDERER_WITHOUT_OUTER_PARAGRAPH_TAGS = HtmlRenderer.builder()
+            .escapeHtml(true)
             .nodeRendererFactory(context -> new CoreHtmlNodeRenderer(context) {
                 private boolean firstParagraph = true;
 
@@ -48,12 +50,33 @@ public final class JavaDocUtils {
             .build();
 
     public static String render(String docs) {
-        String rawDocumentation = StringUtils.stripToEmpty(docs);
-        if (StringUtils.isBlank(rawDocumentation)) {
+        return render(docs, false);
+    }
+
+    public static String render(String docs, boolean excludeOuterParagraphTags) {
+        String rawDocs = StringUtils.stripToEmpty(docs);
+        if (StringUtils.isBlank(rawDocs)) {
             return "";
         }
-        String renderedHtml = renderer.render(parser.parse(rawDocumentation));
+        String renderedHtml = excludeOuterParagraphTags
+                ? RENDERER_WITHOUT_OUTER_PARAGRAPH_TAGS.render(PARSER.parse(rawDocs))
+                : DEFAULT_RENDERER.render(PARSER.parse(rawDocs));
         return StringUtils.appendIfMissing(renderedHtml, "\n");
+    }
+
+    public static String getParameterJavadoc(String paramName, String docs) {
+        return "@param " + paramName + " " + docs + "\n";
+    }
+
+    public static CodeBlock getThrowsJavadoc(TypeName typeName, String docs) {
+        return CodeBlock.of("@throws $T $L \n", typeName, docs);
+    }
+
+    public static String getReturnDocs(String returnDocs) {
+        if (returnDocs.startsWith("returns") || returnDocs.startsWith("Returns")) {
+            return "@return " + render(returnDocs.substring(7).strip());
+        }
+        return "@return " + render(returnDocs, true);
     }
 
     private JavaDocUtils() {}

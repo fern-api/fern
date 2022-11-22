@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.ir.model.commons.FernFilepath;
+import com.fern.ir.model.commons.StringWithAllCasings;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.GlobalHeaders;
 import com.fern.java.client.GeneratedClientOptions;
@@ -152,6 +153,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
             clientWrapperBuilder.addMethod(MethodSpec.methodBuilder(prefix)
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addStatement("return this.$L", prefix)
+                    .returns(nestedClientConfig.className())
                     .build());
         });
         clientWrapperBuilder.addMethods(getConstructors(supplierFields, nestedClientFields));
@@ -340,7 +342,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                         "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L") + ")",
                         fieldName,
                         nestedClientCLassName,
-                        environmentConstructorParam.urlGetterCodeBlock));
+                        environmentConstructorParam.paramName));
         return constructorBuilder.build();
     }
 
@@ -368,7 +370,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                         "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L") + ", options)",
                         fieldName,
                         nestedClientCLassName,
-                        environmentConstructorParam.urlGetterCodeBlock));
+                        environmentConstructorParam.paramName));
         return constructorBuilder.build();
     }
 
@@ -408,7 +410,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                     "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, $L") + ")",
                     fieldName,
                     nestedClientCLassName,
-                    environmentConstructorParam.urlGetterCodeBlock,
+                    environmentConstructorParam.paramName,
                     AUTH_PARAMETER_NAME);
         });
         return constructorBuilder.build();
@@ -454,7 +456,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
                     "this.$L = new $T(" + globalHeaders.suffixRequiredGlobalHeaderParams("$L, $L, options") + ")",
                     fieldName,
                     nestedClientCLassName,
-                    environmentConstructorParam.urlGetterCodeBlock,
+                    environmentConstructorParam.paramName,
                     AUTH_PARAMETER_NAME);
         });
         return constructorBuilder.build();
@@ -514,31 +516,43 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
             List<GeneratedServiceClient> serviceClients, int fernFilePathSize, ClassName wrapperClassName) {
         ImmutableClientConfig.BuildFinal clientConfigBuilder =
                 ClientConfig.builder().className(wrapperClassName);
-        Map<String, List<GeneratedServiceClient>> nestedClients = new HashMap<>();
+        Map<String, NestedClient> nestedClients = new HashMap<>();
         for (GeneratedServiceClient generatedHttpServiceClient : serviceClients) {
             FernFilepath fernFilepath =
                     generatedHttpServiceClient.httpService().getName().getFernFilepath();
             if (fernFilepath.get().size() <= fernFilePathSize) {
                 clientConfigBuilder.addGeneratedServiceClients(generatedHttpServiceClient);
             } else {
-                String prefix = fernFilepath.get().get(fernFilePathSize).getOriginalValue();
+                StringWithAllCasings prefixCasings = fernFilepath.get().get(fernFilePathSize);
+                String prefix = prefixCasings.getOriginalValue();
                 if (nestedClients.containsKey(prefix)) {
-                    nestedClients.get(prefix).add(generatedHttpServiceClient);
+                    nestedClients.get(prefix).clients.add(generatedHttpServiceClient);
                 } else {
                     List<GeneratedServiceClient> clients = new ArrayList<>();
                     clients.add(generatedHttpServiceClient);
-                    nestedClients.put(prefix, clients);
+                    nestedClients.put(prefix, new NestedClient(prefixCasings, clients));
                 }
             }
         }
         KeyedStream.stream(nestedClients).forEach((prefix, prefixedClients) -> {
-            ClassName nestedClientClassName =
-                    generatorContext.getPoetClassNameFactory().getTopLevelClassName(prefix + "Client");
+            ClassName nestedClientClassName = generatorContext
+                    .getPoetClassNameFactory()
+                    .getTopLevelClassName(prefixedClients.prefixCasings.getPascalCase() + "Client");
             ClientConfig nestedClientConfig =
-                    createClientConfig(prefixedClients, fernFilePathSize + 1, nestedClientClassName);
+                    createClientConfig(prefixedClients.clients, fernFilePathSize + 1, nestedClientClassName);
             clientConfigBuilder.putNestedClients(prefix, nestedClientConfig);
         });
         return clientConfigBuilder.build();
+    }
+
+    private static class NestedClient {
+        private final StringWithAllCasings prefixCasings;
+        private final List<GeneratedServiceClient> clients;
+
+        private NestedClient(StringWithAllCasings prefixCasings, List<GeneratedServiceClient> clients) {
+            this.prefixCasings = prefixCasings;
+            this.clients = clients;
+        }
     }
 
     @Value.Immutable

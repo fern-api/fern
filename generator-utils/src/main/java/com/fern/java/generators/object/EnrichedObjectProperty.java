@@ -71,7 +71,7 @@ public interface EnrichedObjectProperty {
             getterBuilder.addAnnotation(Override.class);
         }
         if (docs().isPresent()) {
-            getterBuilder.addJavadoc("$L", JavaDocUtils.render(docs().get()));
+            getterBuilder.addJavadoc(JavaDocUtils.getReturnDocs(docs().get()));
         }
         return getterBuilder.build();
     }

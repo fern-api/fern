@@ -40,7 +40,6 @@ public class ClientGeneratorEteTest {
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
-
         Path currentPath = Paths.get("").toAbsolutePath();
         Path eteTestDirectory = currentPath.endsWith("client-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest"))

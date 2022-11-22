@@ -79,6 +79,7 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
         this.generatedClientOptionsClass = generatedClientOptionsClass;
     }
 
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     @Override
     public GeneratedServiceClient generateFile() {
         JerseyServiceInterfaceGenerator jerseyServiceInterfaceGenerator = new JerseyServiceInterfaceGenerator(
@@ -133,19 +134,56 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
             MethodSpec.Builder endpointMethodBuilder =
                     MethodSpec.methodBuilder(httpEndpoint.getId().get()).addModifiers(Modifier.PUBLIC);
 
+            boolean addJavaDoc = httpEndpoint.getDocs().isPresent()
+                    || httpEndpoint.getResponse().getDocs().isPresent();
+
+            if (addJavaDoc) {
+                httpEndpoint
+                        .getDocs()
+                        .ifPresent(docs -> endpointMethodBuilder.addJavadoc("$L", JavaDocUtils.render(docs)));
+            }
+
             if (wrappedRequestFile.isPresent()) {
                 generateCallWithWrappedRequest(
                         httpEndpoint,
                         generatedEndpointMethod.methodSpec(),
                         wrappedRequestFile.get(),
                         endpointMethodBuilder);
+                if (addJavaDoc) {
+                    if (httpEndpoint.getRequest().getTypeV2().isPresent()) {
+                        endpointMethodBuilder.addJavadoc(JavaDocUtils.getParameterJavadoc(
+                                REQUEST_PARAMETER_NAME,
+                                "Wrapper object for the request body that includes any path parameters, query "
+                                        + "parameters, and headers"));
+                    } else {
+                        endpointMethodBuilder.addJavadoc(JavaDocUtils.getParameterJavadoc(
+                                REQUEST_PARAMETER_NAME,
+                                "Wrapper object that includes any path parameters, query parameters, and headers"));
+                    }
+                }
                 generatedEndpointRequests.add(wrappedRequestFile.get());
             } else {
                 generateCallWithoutRequest(endpointMethodBuilder, generatedEndpointMethod.methodSpec());
             }
 
             endpointMethodBuilder.addExceptions(generatedEndpointMethod.methodSpec().exceptions);
+            if (addJavaDoc && !generatedEndpointMethod.methodSpec().exceptions.isEmpty()) {
+                for (TypeName exception : generatedEndpointMethod.methodSpec().exceptions) {
+                    endpointMethodBuilder.addJavadoc(JavaDocUtils.getThrowsJavadoc(
+                            exception, "Exception that wraps all possible endpoint errors"));
+                }
+            }
+
             endpointMethodBuilder.returns(generatedEndpointMethod.methodSpec().returnType);
+            if (addJavaDoc) {
+                if (httpEndpoint.getResponse().getDocs().isPresent()) {
+                    endpointMethodBuilder.addJavadoc(JavaDocUtils.getReturnDocs(
+                            httpEndpoint.getResponse().getDocs().get()));
+                } else if (httpEndpoint.getResponse().getTypeV2().isPresent()) {
+                    endpointMethodBuilder.addJavadoc("@return $T", generatedEndpointMethod.methodSpec().returnType);
+                }
+            }
+
             serviceClientBuilder.addMethod(endpointMethodBuilder.build());
         }
 
@@ -276,8 +314,6 @@ public final class HttpServiceClientGenerator extends AbstractFileGenerator {
         endpointMethodBuilder.addParameter(
                 ParameterSpec.builder(generatedRequest.requestClassName(), REQUEST_PARAMETER_NAME)
                         .build());
-
-        httpEndpoint.getDocs().ifPresent(docs -> endpointMethodBuilder.addJavadoc(JavaDocUtils.render(docs)));
 
         List<String> endpointArguments = new ArrayList<>();
         if (httpEndpoint.getAuth()) {
