@@ -1,126 +1,95 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { FernConstants } from "@fern-fern/ir-model/ir";
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
-import {
-    CoreUtilities,
-    ErrorSchemaContext,
-    ExternalDependencies,
-    GeneratedError,
-    Reference,
-} from "@fern-typescript/sdk-declaration-handler";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { SourceFile } from "ts-morph";
-import { CoreUtilitiesManager } from "../core-utilities/CoreUtilitiesManager";
+import { ErrorSchemaContext, GeneratedError, Reference } from "@fern-typescript/sdk-declaration-handler";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { ImportsManager } from "../imports-manager/ImportsManager";
-import { TypeSchemaContextImpl } from "./TypeSchemaContextImpl";
+import { BaseContextImpl } from "./BaseContextImpl";
+import { TypeReferencingContextMixinImpl } from "./mixins/TypeReferencingContextMixinImpl";
+import { TypeSchemaReferencingContextMixinImpl } from "./mixins/TypeSchemaReferencingContextMixinImpl";
 
 export declare namespace ErrorSchemaContextImpl {
-    export interface Init {
-        sourceFile: SourceFile;
-        importsManager: ImportsManager;
-        dependencyManager: DependencyManager;
+    export interface Init extends BaseContextImpl.Init {
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        coreUtilitiesManager: CoreUtilitiesManager;
-        fernConstants: FernConstants;
-        typeGenerator: TypeGenerator;
-        errorBeingGenerated: DeclaredErrorName;
-        errorGenerator: ErrorGenerator;
         errorDeclarationReferencer: ErrorDeclarationReferencer;
+        errorGenerator: ErrorGenerator;
         errorResolver: ErrorResolver;
+        errorBeingGenerated: DeclaredErrorName;
     }
 }
 
-export class ErrorSchemaContextImpl implements ErrorSchemaContext {
-    public readonly sourceFile: SourceFile;
-    public readonly externalDependencies: ExternalDependencies;
-    public readonly coreUtilities: CoreUtilities;
-    public readonly fernConstants: FernConstants;
-
-    private errorBeingGenerated: DeclaredErrorName;
-    private typeSchemaContext: TypeSchemaContextImpl;
-    private errorGenerator: ErrorGenerator;
+export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSchemaContext {
+    private typeReferencingContextMixin: TypeReferencingContextMixinImpl;
+    private typeSchemaReferencingContextMixin: TypeSchemaReferencingContextMixinImpl;
     private errorDeclarationReferencer: ErrorDeclarationReferencer;
+    private errorGenerator: ErrorGenerator;
     private errorResolver: ErrorResolver;
+    private errorBeingGenerated: DeclaredErrorName;
 
     constructor({
-        sourceFile,
-        coreUtilitiesManager,
-        fernConstants,
-        importsManager,
-        dependencyManager,
         typeResolver,
         typeDeclarationReferencer,
         typeSchemaDeclarationReferencer,
-        typeGenerator,
-        errorGenerator,
         errorDeclarationReferencer,
+        errorGenerator,
         errorResolver,
         errorBeingGenerated,
+        ...superInit
     }: ErrorSchemaContextImpl.Init) {
-        this.typeSchemaContext = new TypeSchemaContextImpl({
-            sourceFile,
-            coreUtilitiesManager,
-            fernConstants,
-            importsManager,
-            dependencyManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeSchemaDeclarationReferencer,
-            typeGenerator,
-            // TODO this is confusing and we should delete
-            // once we have context mixins
-            typeBeingGenerated: errorBeingGenerated,
-        });
-
-        this.sourceFile = sourceFile;
-        this.externalDependencies = this.typeSchemaContext.externalDependencies;
-        this.coreUtilities = this.typeSchemaContext.coreUtilities;
-        this.fernConstants = this.typeSchemaContext.fernConstants;
-
+        super(superInit);
         this.errorGenerator = errorGenerator;
         this.errorDeclarationReferencer = errorDeclarationReferencer;
         this.errorResolver = errorResolver;
         this.errorBeingGenerated = errorBeingGenerated;
+        this.typeReferencingContextMixin = new TypeReferencingContextMixinImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            typeResolver,
+            typeDeclarationReferencer,
+        });
+        this.typeSchemaReferencingContextMixin = new TypeSchemaReferencingContextMixinImpl({
+            sourceFile: this.sourceFile,
+            coreUtilities: this.coreUtilities,
+            importsManager: this.importsManager,
+            typeResolver,
+            typeSchemaDeclarationReferencer,
+        });
     }
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeSchemaContext.getReferenceToType(typeReference);
+        return this.typeReferencingContextMixin.getReferenceToType(typeReference);
     }
 
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
-        return this.typeSchemaContext.getReferenceToNamedType(typeName);
+        return this.typeReferencingContextMixin.getReferenceToNamedType(typeName);
     }
 
     public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {
-        return this.typeSchemaContext.resolveTypeReference(typeReference);
+        return this.typeReferencingContextMixin.resolveTypeReference(typeReference);
     }
 
     public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
-        return this.typeSchemaContext.resolveTypeName(typeName);
+        return this.typeReferencingContextMixin.resolveTypeName(typeName);
     }
 
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeSchemaContext.getReferenceToRawType(typeReference);
+        return this.typeSchemaReferencingContextMixin.getReferenceToRawType(typeReference);
     }
 
     public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
-        return this.typeSchemaContext.getReferenceToRawNamedType(typeName);
+        return this.typeSchemaReferencingContextMixin.getReferenceToRawNamedType(typeName);
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
-        return this.typeSchemaContext.getSchemaOfTypeReference(typeReference);
+        return this.typeSchemaReferencingContextMixin.getSchemaOfTypeReference(typeReference);
     }
 
     public getSchemaOfNamedType(typeName: DeclaredTypeName): Zurg.Schema {
-        return this.typeSchemaContext.getSchemaOfNamedType(typeName);
+        return this.typeSchemaReferencingContextMixin.getSchemaOfNamedType(typeName);
     }
 
     public getErrorBeingGenerated(): GeneratedError {

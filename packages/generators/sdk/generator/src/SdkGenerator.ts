@@ -301,7 +301,6 @@ export class SdkGenerator {
                         typeResolver: this.typeResolver,
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
                         typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-                        typeGenerator: this.typeGenerator,
                         errorDeclarationReferencer: this.errorDeclarationReferencer,
                         errorGenerator: this.errorGenerator,
                         errorResolver: this.errorResolver,

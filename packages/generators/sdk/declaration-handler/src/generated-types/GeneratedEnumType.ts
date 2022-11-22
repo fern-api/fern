@@ -1,4 +1,4 @@
-import { TypeContext } from "../TypeContext";
+import { TypeContext } from "../contexts/TypeContext";
 
 export interface GeneratedEnumType {
     type: "enum";

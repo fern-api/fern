@@ -1,5 +1,5 @@
 import { ObjectProperty } from "@fern-fern/ir-model/types";
-import { TypeContext } from "../TypeContext";
+import { TypeContext } from "../contexts/TypeContext";
 
 export interface GeneratedObjectType {
     type: "object";
