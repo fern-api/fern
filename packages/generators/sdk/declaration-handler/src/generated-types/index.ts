@@ -1,3 +1,4 @@
+export { type BaseGenerated } from "./BaseGenerated";
 export {
     type BrandedGeneratedAliasType,
     type GeneratedAliasType,

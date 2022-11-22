@@ -1,5 +1,10 @@
-import { TypeSchemaContext } from "../contexts/TypeSchemaContext";
+import { GeneratedAliasTypeSchema } from "./GeneratedAliasTypeSchema";
+import { GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
+import { GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
+import { GeneratedUnionTypeSchema } from "./GeneratedUnionTypeSchema";
 
-export interface GeneratedTypeSchema {
-    writeToFile: (context: TypeSchemaContext) => void;
-}
+export type GeneratedTypeSchema =
+    | GeneratedAliasTypeSchema
+    | GeneratedEnumTypeSchema
+    | GeneratedUnionTypeSchema
+    | GeneratedObjectTypeSchema;

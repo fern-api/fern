@@ -1,3 +1,6 @@
-import { GeneratedTypeSchema } from "./GeneratedTypeSchema";
+import { TypeSchemaContext } from "../contexts";
+import { BaseGenerated } from "./BaseGenerated";
 
-export interface GeneratedUnionTypeSchema extends GeneratedTypeSchema {}
+export interface GeneratedUnionTypeSchema extends BaseGenerated<TypeSchemaContext> {
+    type: "union";
+}

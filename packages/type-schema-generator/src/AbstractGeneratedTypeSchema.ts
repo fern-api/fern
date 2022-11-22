@@ -1,6 +1,6 @@
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import { TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedTypeSchema {
@@ -11,10 +11,7 @@ export declare namespace AbstractGeneratedTypeSchema {
     }
 }
 
-export abstract class AbstractGeneratedTypeSchema<Shape>
-    extends AbstractGeneratedSchema<TypeSchemaContext>
-    implements GeneratedTypeSchema
-{
+export abstract class AbstractGeneratedTypeSchema<Shape> extends AbstractGeneratedSchema<TypeSchemaContext> {
     protected typeDeclaration: TypeDeclaration;
     protected shape: Shape;
 

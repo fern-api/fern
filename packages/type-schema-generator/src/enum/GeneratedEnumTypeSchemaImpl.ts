@@ -10,6 +10,8 @@ export class GeneratedEnumTypeSchemaImpl
     extends AbstractGeneratedTypeSchema<EnumTypeDeclaration>
     implements GeneratedEnumTypeSchema
 {
+    public readonly type = "enum";
+
     protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
         return context.coreUtilities.zurg.enum(this.shape.values.map((value) => value.value));
     }

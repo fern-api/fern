@@ -1,6 +1,6 @@
 import { TypeContext } from "../contexts/TypeContext";
+import { BaseGenerated } from "./BaseGenerated";
 
-export interface GeneratedEnumType {
+export interface GeneratedEnumType extends BaseGenerated<TypeContext> {
     type: "enum";
-    writeToFile: (context: TypeContext) => void;
 }

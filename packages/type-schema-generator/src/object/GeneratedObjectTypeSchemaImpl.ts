@@ -10,6 +10,8 @@ export class GeneratedObjectTypeSchemaImpl
     extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration>
     implements GeneratedObjectTypeSchema
 {
+    public readonly type = "object";
+
     protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
         const generatedType = context.getTypeBeingGenerated();
         if (generatedType.type !== "object") {

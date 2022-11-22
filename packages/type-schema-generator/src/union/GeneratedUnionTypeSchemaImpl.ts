@@ -16,6 +16,8 @@ export class GeneratedUnionTypeSchemaImpl
     extends AbstractGeneratedTypeSchema<UnionTypeDeclaration>
     implements GeneratedUnionTypeSchema
 {
+    public readonly type = "union";
+
     private generatedUnionSchema: GeneratedUnionSchema<TypeSchemaContext>;
 
     constructor(superInit: AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration>) {

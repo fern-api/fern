@@ -10,6 +10,8 @@ export class GeneratedAliasTypeSchemaImpl
     extends AbstractGeneratedTypeSchema<AliasTypeDeclaration>
     implements GeneratedAliasTypeSchema
 {
+    public readonly type = "alias";
+
     protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
         const schemaOfAlias = context.getSchemaOfTypeReference(this.shape.aliasOf);
         const generatedAliasType = context.getTypeBeingGenerated();
