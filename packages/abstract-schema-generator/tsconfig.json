@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../commons" },
     { "path": "../commons-v2" },
+    { "path": "../deprecated/commons" },
     { "path": "../generators/sdk/declaration-handler" }
   ]
 }

@@ -3,16 +3,16 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
+    { "path": "../../../deprecated/commons" },
+    { "path": "../../../deprecated/service-declaration-handler" },
+    { "path": "../../../deprecated/types-v2" },
     { "path": "../../../resolvers" },
     { "path": "../../../type-generator" },
     { "path": "../../../type-schema-generator" },
-    { "path": "../../../types-v2" },
     { "path": "../declaration-handler" },
     { "path": "../error-generator" },
     { "path": "../error-schema-generator" },
-    { "path": "../service-declaration-handler" },
     { "path": "../type-reference-converters" }
   ]
 }

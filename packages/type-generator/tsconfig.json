@@ -3,7 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../commons" },
+    { "path": "../deprecated/commons" },
     { "path": "../generators/sdk/declaration-handler" },
     { "path": "../union-generator" }
   ]

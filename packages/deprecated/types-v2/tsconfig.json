@@ -1,11 +1,11 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
+  "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../../deprecated/commons" },
-    { "path": "../declaration-handler" },
-    { "path": "../generator" }
+    { "path": "../../commons-v2" },
+    { "path": "../../generators/sdk/declaration-handler" },
+    { "path": "../commons" }
   ]
 }

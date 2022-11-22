@@ -1995,9 +1995,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/client@workspace:*, @fern-typescript/client@workspace:packages/client":
+"@fern-typescript/client@workspace:*, @fern-typescript/client@workspace:packages/deprecated/client":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/client@workspace:packages/client"
+  resolution: "@fern-typescript/client@workspace:packages/deprecated/client"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2040,9 +2040,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:packages/commons":
+"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:packages/deprecated/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/commons@workspace:packages/commons"
+  resolution: "@fern-typescript/commons@workspace:packages/deprecated/commons"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2110,9 +2110,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/errors@workspace:*, @fern-typescript/errors@workspace:packages/errors":
+"@fern-typescript/errors@workspace:*, @fern-typescript/errors@workspace:packages/deprecated/errors":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/errors@workspace:packages/errors"
+  resolution: "@fern-typescript/errors@workspace:packages/deprecated/errors"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2148,9 +2148,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/model-context@workspace:*, @fern-typescript/model-context@workspace:packages/model-context":
+"@fern-typescript/model-context@workspace:*, @fern-typescript/model-context@workspace:packages/deprecated/model-context":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/model-context@workspace:packages/model-context"
+  resolution: "@fern-typescript/model-context@workspace:packages/deprecated/model-context"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2170,9 +2170,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/model@workspace:*, @fern-typescript/model@workspace:packages/model":
+"@fern-typescript/model@workspace:*, @fern-typescript/model@workspace:packages/deprecated/model":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/model@workspace:packages/model"
+  resolution: "@fern-typescript/model@workspace:packages/deprecated/model"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2237,9 +2237,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-errors@workspace:packages/generators/sdk/errors":
+"@fern-typescript/sdk-errors@workspace:packages/deprecated/errors-v2":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-errors@workspace:packages/generators/sdk/errors"
+  resolution: "@fern-typescript/sdk-errors@workspace:packages/deprecated/errors-v2"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2340,9 +2340,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-service-declaration-handler@workspace:*, @fern-typescript/sdk-service-declaration-handler@workspace:packages/generators/sdk/service-declaration-handler":
+"@fern-typescript/sdk-service-declaration-handler@workspace:*, @fern-typescript/sdk-service-declaration-handler@workspace:packages/deprecated/service-declaration-handler":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-service-declaration-handler@workspace:packages/generators/sdk/service-declaration-handler"
+  resolution: "@fern-typescript/sdk-service-declaration-handler@workspace:packages/deprecated/service-declaration-handler"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2365,9 +2365,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/server@workspace:*, @fern-typescript/server@workspace:packages/server":
+"@fern-typescript/server@workspace:*, @fern-typescript/server@workspace:packages/deprecated/server":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/server@workspace:packages/server"
+  resolution: "@fern-typescript/server@workspace:packages/deprecated/server"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2391,9 +2391,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-types@workspace:*, @fern-typescript/service-types@workspace:packages/service-types":
+"@fern-typescript/service-types@workspace:*, @fern-typescript/service-types@workspace:packages/deprecated/service-types":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/service-types@workspace:packages/service-types"
+  resolution: "@fern-typescript/service-types@workspace:packages/deprecated/service-types"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2414,9 +2414,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/service-utils@workspace:packages/service-utils":
+"@fern-typescript/service-utils@workspace:packages/deprecated/service-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/service-utils@workspace:packages/service-utils"
+  resolution: "@fern-typescript/service-utils@workspace:packages/deprecated/service-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2525,9 +2525,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/types-v2@workspace:*, @fern-typescript/types-v2@workspace:packages/types-v2":
+"@fern-typescript/types-v2@workspace:*, @fern-typescript/types-v2@workspace:packages/deprecated/types-v2":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/types-v2@workspace:packages/types-v2"
+  resolution: "@fern-typescript/types-v2@workspace:packages/deprecated/types-v2"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -2547,9 +2547,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/types@workspace:*, @fern-typescript/types@workspace:packages/types":
+"@fern-typescript/types@workspace:*, @fern-typescript/types@workspace:packages/deprecated/types":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/types@workspace:packages/types"
+  resolution: "@fern-typescript/types@workspace:packages/deprecated/types"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -5895,9 +5895,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fern-typescript@workspace:packages/cli":
+"fern-typescript@workspace:packages/deprecated/cli":
   version: 0.0.0-use.local
-  resolution: "fern-typescript@workspace:packages/cli"
+  resolution: "fern-typescript@workspace:packages/deprecated/cli"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
