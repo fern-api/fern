@@ -19,10 +19,16 @@ export declare namespace OpenApiConverter {
     }
 }
 
+
+
+
 export enum OpenApiConversionFailure {
     FAILED_TO_PARSE_OPENAPI,
     OTHER,
 }
+
+
+
 
 export async function convertOpenApi(openapiFilepath: AbsoluteFilePath): Promise<OpenApiConverter.Result> {
     const openApi = await SwaggerParser.parse(openapiFilepath);
@@ -32,6 +38,8 @@ export async function convertOpenApi(openapiFilepath: AbsoluteFilePath): Promise
             failure: OpenApiConversionFailure.FAILED_TO_PARSE_OPENAPI,
         };
     }
+    
+    console.log(openApi);
     const convertedFernConfiguration: Required<RawSchemas.ServiceFileSchema> = {
         errors: {},
         imports: {},
