@@ -1,1 +1,1 @@
-export { convertOpenApi, OpenApiConversionFailure } from "./openapiConverter";
+export { OpenApiConverter } from "./openApiConverterV2";

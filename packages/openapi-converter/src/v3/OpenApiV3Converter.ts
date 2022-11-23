@@ -1,10 +1,14 @@
 import { Logger } from "@fern-api/logger";
-import { HttpHeaderSchema } from "@fern-api/yaml-schema/src/schemas";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { ConvertedFernDefinition } from "../openApiConverterV2";
+import { ConvertedEndpoint } from "./convertedTypes/convertedEndpoint";
 import { ConvertedHeader, getHttpHeaderSchema } from "./convertedTypes/convertedHeader";
+import { ConvertedPathParam } from "./convertedTypes/convertedPathParam";
+import { ConvertedQueryParam } from "./convertedTypes/convertedQueryParam";
 import { convertSchemaToFernPrimitiveType } from "./convertSchemaToFernPrimitive";
-import { OpenApiV3Context } from "./OpenApiV3Context";
+import { EndpointDefinition, OpenApiV3Context } from "./OpenApiV3Context";
+import { ServiceBuilder } from "./ServiceBuilder";
 
 export class OpenApiV3Converter {
     private openApiV3: OpenAPIV3.Document;
@@ -21,47 +25,110 @@ export class OpenApiV3Converter {
     }
 
     public async convert(): Promise<ConvertedFernDefinition> {
+        const globalHeaders = this.getGlobalHeaders();
         return {
             rootApiFile: {
-                name: "",
+                name: "api",
+                headers: globalHeaders,
             },
             serviceFiles: {},
         };
     }
 
-    private getGlobalHeaders(): HttpHeaderSchema[] {
-        let headersAdded = false;
-        const globalHeaders: Record<string, HttpHeaderSchema> = {};
-        for (const [path, pathDefinition] of Object.entries(this.openApiV3.paths)) {
-            if (pathDefinition == null) {
+    private getServices({
+        globalHeaders,
+    }: {
+        globalHeaders: Record<string, RawSchemas.HttpHeaderSchema>;
+    }): Record<string, string> {
+        if (this.openApiV3.tags == null) {
+            this.logger.error("No tags present. Skipping creating services.");
+            return {};
+        }
+
+        const serviceBuilders: Record<string, ServiceBuilder> = {};
+        this.openApiV3.tags.forEach((tag) => {
+            serviceBuilders[tag.name] = new ServiceBuilder({ tag });
+        });
+
+        for (const endpoint of this.context.getEndpoints()) {
+            if (endpoint.definition.tags == null || endpoint.definition.tags.length === 0) {
+                this.logger.error(`${endpoint.httpMethod.toUpperCase()} ${endpoint.path} is missing tag. Skipping.`);
                 continue;
             }
-            for (const httpMethod of Object.values(OpenAPIV3.HttpMethods)) {
-                const httpMethodDefinition = pathDefinition[httpMethod];
-                if (httpMethodDefinition == null) {
-                    continue;
-                }
-                if (httpMethodDefinition.parameters == null) {
-                    return [];
-                }
-                const headers = this.getheadersFromMethodParameters(httpMethodDefinition.parameters);
-                for (const header of headers) {
-                    if (!headersAdded) {
-                        globalHeaders[header.wireKey] = getHttpHeaderSchema(header);
-                    } else if (!(header.wireKey in globalHeaders)) {
-                        delete globalHeaders[header.wireKey];
+            if (endpoint.definition.operationId == null) {
+                this.logger.error(
+                    `${endpoint.httpMethod.toUpperCase()} ${endpoint.path} is missing operationId. Skipping.`
+                );
+                continue;
+            }
+
+            if (endpoint.definition.tags.length > 0) {
+                this.logger.info(
+                    `${endpoint.httpMethod.toUpperCase()} ${endpoint.path} has multiple tags. Using ${
+                        endpoint.definition.tags[0]
+                    }`
+                );
+            }
+            const endpointTag = endpoint.definition.tags[0];
+            const operationId = endpoint.definition.operationId;
+        }
+        return;
+    }
+
+    private getConvertedEndpoint({
+        endpiont,
+        globalHeaders,
+    }: {
+        endpoint: EndpointDefinition;
+        globalHeaders: Record<string, RawSchemas.HttpHeaderSchema>;
+    }): void {
+        endpoint.definition.parameters?.map((parameter) => {
+            const parameterObject = this.context.getParameter(parameter);
+            if (parameterObject == null) {
+                return undefined;
+            }
+            return this.convertParameter(parameterObject);
+        });
+
+        const convertedEndpoint: ConvertedEndpoint = {
+            path: endpoint.path,
+            method: endpoint.httpMethod,
+            headers: [],
+        };
+    }
+
+    private getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema> {
+        let headersAdded = false;
+        const globalHeaders = new Map<string, RawSchemas.HttpHeaderSchema>();
+        for (const endpoint of this.context.getEndpoints()) {
+            if (endpoint.definition.parameters == null) {
+                return {};
+            }
+            const headers = this.getheadersFromMethodParameters(endpoint.definition.parameters);
+            if (!headersAdded) {
+                Object.values(headers).forEach((convertedHeader) => {
+                    globalHeaders.set(convertedHeader.wireKey, getHttpHeaderSchema(convertedHeader));
+                });
+            } else {
+                for (const globalHeaderKey of Object.keys(globalHeaders)) {
+                    if (!(globalHeaderKey in headers)) {
+                        globalHeaders.delete(globalHeaderKey);
                     }
                 }
-                headersAdded = true;
             }
+            headersAdded = true;
         }
-        return [];
+        const result: Record<string, RawSchemas.HttpHeaderSchema> = {};
+        for (const [globalHeaderKey, globalHeader] of globalHeaders.entries()) {
+            result[globalHeaderKey] = globalHeader;
+        }
+        return result;
     }
 
     private getheadersFromMethodParameters(
         parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[]
-    ): ConvertedHeader[] {
-        const convertedHeaders: ConvertedHeader[] = [];
+    ): Record<string, ConvertedHeader> {
+        const convertedHeaders: Record<string, ConvertedHeader> = {};
         for (const parameter of parameters) {
             const parameterObject = this.context.getParameter(parameter);
             if (parameterObject == null) {
@@ -69,18 +136,98 @@ export class OpenApiV3Converter {
             }
             const convertedHeader = this.convertParameterToHeader(parameterObject);
             if (convertedHeader != null) {
-                convertedHeaders.push(convertedHeader);
+                convertedHeaders[convertedHeader.wireKey] = convertedHeader;
             }
         }
         return convertedHeaders;
+    }
+
+    private convertParameter(
+        parameter: OpenAPIV3.ParameterObject
+    ): ConvertedHeader | ConvertedQueryParam | ConvertedPathParam | undefined {
+        if (parameter.in === "header") {
+            return this.convertParameterToHeader(parameter);
+        } else if (parameter.in === "query") {
+            return this.convertParameterToQuery(parameter);
+        } else if (parameter.in === "path") {
+            return this.convertParameterToPath(parameter);
+        }
+        this.logger.error(`Unsupported endpoint parameter ${parameter.name} has type ${parameter.in}`);
+        return undefined;
     }
 
     private convertParameterToHeader(parameter: OpenAPIV3.ParameterObject): ConvertedHeader | undefined {
         if (parameter.in !== "header") {
             return undefined;
         }
+
+        const paramType = this.getParamType({
+            parameter,
+            paramType: "header",
+        });
+        if (paramType == null) {
+            return undefined;
+        }
+
+        return {
+            paramType: "header",
+            wireKey: parameter.name,
+            docs: parameter.description,
+            type: paramType,
+        };
+    }
+
+    private convertParameterToQuery(parameter: OpenAPIV3.ParameterObject): ConvertedQueryParam | undefined {
+        if (parameter.in !== "query") {
+            return undefined;
+        }
+
+        const paramType = this.getParamType({
+            parameter,
+            paramType: "query",
+        });
+        if (paramType == null) {
+            return undefined;
+        }
+
+        return {
+            paramType: "query",
+            paramName: parameter.name,
+            docs: parameter.description,
+            type: paramType,
+        };
+    }
+
+    private convertParameterToPath(parameter: OpenAPIV3.ParameterObject): ConvertedPathParam | undefined {
+        if (parameter.in !== "path") {
+            return undefined;
+        }
+
+        const paramType = this.getParamType({
+            parameter,
+            paramType: "path",
+        });
+        if (paramType == null) {
+            return undefined;
+        }
+
+        return {
+            paramType: "path",
+            paramName: parameter.name,
+            docs: parameter.description,
+            type: paramType,
+        };
+    }
+
+    private getParamType({
+        parameter,
+        paramType,
+    }: {
+        parameter: OpenAPIV3.ParameterObject;
+        paramType: "header" | "query" | "path";
+    }): string | undefined {
         if (parameter.schema == null) {
-            this.logger.error(`Header ${parameter.name} has undefined schema.`);
+            this.logger.error(`${this.getBeautifiedParameterName(paramType)} ${parameter.name} has undefined schema.`);
             return undefined;
         }
         const parameterSchema = this.context.getSchema(parameter.schema);
@@ -90,18 +237,26 @@ export class OpenApiV3Converter {
         const primitiveParameterSchema = convertSchemaToFernPrimitiveType(parameterSchema);
         if (primitiveParameterSchema == null) {
             this.logger.error(
-                `Header ${parameter.name} has invalid schema: ${JSON.stringify(parameter.schema, undefined, 2)}`
+                `${this.getBeautifiedParameterName(paramType)} ${parameter.name} has invalid schema: ${JSON.stringify(
+                    parameter.schema,
+                    undefined,
+                    2
+                )}`
             );
             return undefined;
         }
+        return parameter.required != null && parameter.required
+            ? primitiveParameterSchema
+            : `optional<${primitiveParameterSchema}>`;
+    }
 
-        return {
-            wireKey: parameter.name,
-            docs: parameter.description,
-            type:
-                parameter.required != null && parameter.required
-                    ? primitiveParameterSchema
-                    : `optional<${primitiveParameterSchema}>`,
-        };
+    private getBeautifiedParameterName(paramType: "header" | "query" | "path"): string {
+        if (paramType === "header") {
+            return "Header";
+        } else if (paramType === "path") {
+            return "Path parameter";
+        } else {
+            return "Query parameter";
+        }
     }
 }

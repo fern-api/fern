@@ -2,13 +2,21 @@ import { Logger } from "@fern-api/logger";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenApiV3ReferenceResolver } from "./OpenApiV3ReferenceResolver";
 
+export interface EndpointDefinition {
+    path: string;
+    httpMethod: OpenAPIV3.HttpMethods;
+    definition: OpenAPIV3.OperationObject;
+}
+
 export class OpenApiV3Context {
-    private openApiV3: OpenAPIV3.Document;
     private referenceResolver: OpenApiV3ReferenceResolver;
+    private openApiV3: OpenAPIV3.Document;
+    private endpointDefinitions: EndpointDefinition[];
 
     constructor({ openApiV3, logger }: { openApiV3: OpenAPIV3.Document; logger: Logger }) {
         this.openApiV3 = openApiV3;
         this.referenceResolver = new OpenApiV3ReferenceResolver({ openApiV3, logger });
+        this.endpointDefinitions = this.createPathDefinitions();
     }
 
     public getSchema(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): OpenAPIV3.SchemaObject | undefined {
@@ -19,6 +27,31 @@ export class OpenApiV3Context {
         parameter: OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject
     ): OpenAPIV3.ParameterObject | undefined {
         return isReferenceObject(parameter) ? this.referenceResolver.resolveParameterReference(parameter) : parameter;
+    }
+
+    public getEndpoints(): EndpointDefinition[] {
+        return this.endpointDefinitions;
+    }
+
+    private createPathDefinitions(): EndpointDefinition[] {
+        const pathDefinitions: EndpointDefinition[] = [];
+        for (const [path, pathDefinition] of Object.entries(this.openApiV3.paths)) {
+            if (pathDefinition == null) {
+                continue;
+            }
+            for (const httpMethod of Object.values(OpenAPIV3.HttpMethods)) {
+                const httpMethodDefinition = pathDefinition[httpMethod];
+                if (httpMethodDefinition == null) {
+                    continue;
+                }
+                pathDefinitions.push({
+                    path,
+                    httpMethod,
+                    definition: httpMethodDefinition,
+                });
+            }
+        }
+        return pathDefinitions;
     }
 }
 
