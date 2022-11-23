@@ -5,7 +5,7 @@ import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { HttpHeaderSchema } from "@fern-api/yaml-schema/src/schemas";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 
-interface ConvertedFernDefinition {
+export interface ConvertedFernDefinition {
     rootApiFile: RootApiFileSchema;
     serviceFiles: Record<RelativeFilePath, ServiceFileSchema>;
 }
@@ -132,9 +132,6 @@ class OpenApiV3Converter {
     }
 }
 
-class OpenApiV3Resolver {
-    
-}
 
 function isParameterReferenceObject(parameter: OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject): parameter is OpenAPIV3.ReferenceObject {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
