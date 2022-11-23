@@ -337,7 +337,7 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -2793,7 +2793,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -4059,7 +4059,7 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -6515,7 +6515,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -7781,7 +7781,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -10237,7 +10237,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -13264,7 +13264,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],
@@ -16291,7 +16291,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                         "auth": false,
                         "method": "POST",
                         "path": {
-                            "head": "/",
+                            "head": "",
                             "parts": []
                         },
                         "pathParameters": [],

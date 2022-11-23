@@ -4,7 +4,7 @@ export function constructHttpPath(rawPath: string): HttpPath {
     const rawPathGenerator = createStringGenerator(rawPath);
     const { value: head, done } = readUntil(rawPathGenerator, "{");
     if (done) {
-        return { head, parts: [] };
+        return { head: removeTrailingSlash(head), parts: [] };
     } else {
         return {
             head,
@@ -21,9 +21,13 @@ function* getAllParts(rawPathGenerator: Generator<string>): Generator<HttpPathPa
         done = untilNextOpeningBrace.done;
         yield {
             pathParameter,
-            tail: untilNextOpeningBrace.value,
+            tail: done ? removeTrailingSlash(untilNextOpeningBrace.value) : untilNextOpeningBrace.value,
         };
     } while (!done);
+}
+
+function removeTrailingSlash(path: string): string {
+    return path.endsWith("/") ? path.slice(0, -1) : path;
 }
 
 function* createStringGenerator(str: string) {
