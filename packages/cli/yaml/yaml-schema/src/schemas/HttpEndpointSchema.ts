@@ -7,8 +7,12 @@ import { HttpRequestSchema } from "./HttpRequestSchema";
 import { HttpResponseSchema } from "./HttpResponseSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 
+export const HttpMethodSchema = z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+
+export type HttpMethodSchema = z.infer<typeof HttpMethodSchema>;
+
 export const HttpEndpointSchema = DeclarationSchema.extend({
-    method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
+    method: z.optional(HttpMethodSchema),
     path: z.string(),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),

@@ -3,12 +3,14 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { ConvertedFernDefinition } from "../openApiConverterV2";
 import { ConvertedEndpoint } from "./convertedTypes/convertedEndpoint";
-import { ConvertedHeader, getHttpHeaderSchema } from "./convertedTypes/convertedHeader";
+import { ConvertedHeader } from "./convertedTypes/convertedHeader";
 import { ConvertedPathParam } from "./convertedTypes/convertedPathParam";
-import { ConvertedQueryParam } from "./convertedTypes/convertedQueryParam";
+import { ConvertedQueryParam } from "./convertedTypes/ConvertedQueryParam";
 import { convertSchemaToFernPrimitiveType } from "./convertSchemaToFernPrimitive";
 import { EndpointDefinition, OpenApiV3Context } from "./OpenApiV3Context";
 import { ServiceBuilder } from "./ServiceBuilder";
+
+const APPLICATION_JSON_KEY = "application/json";
 
 export class OpenApiV3Converter {
     private openApiV3: OpenAPIV3.Document;
@@ -76,13 +78,13 @@ export class OpenApiV3Converter {
     }
 
     private getConvertedEndpoint({
-        endpiont,
+        endpoint,
         globalHeaders,
     }: {
         endpoint: EndpointDefinition;
         globalHeaders: Record<string, RawSchemas.HttpHeaderSchema>;
-    }): void {
-        endpoint.definition.parameters?.map((parameter) => {
+    }): ConvertedEndpoint {
+        const convertedParameters = (endpoint.definition.parameters ?? []).map((parameter) => {
             const parameterObject = this.context.getParameter(parameter);
             if (parameterObject == null) {
                 return undefined;
@@ -93,8 +95,18 @@ export class OpenApiV3Converter {
         const convertedEndpoint: ConvertedEndpoint = {
             path: endpoint.path,
             method: endpoint.httpMethod,
-            headers: [],
+            headers: convertedParameters.filter(isHeader),
+            queryParameters: convertedParameters.filter(isQuery),
+            pathParameters: convertedParameters.filter(isPath),
         };
+        return convertedEndpoint;
+    }
+
+    private getConvertedRequestyBody(endpoint: EndpointDefinition): void {
+        if (endpoint.definition.requestBody == null) {
+            return;
+        }
+        if (endpoint.definition.requestBody is )
     }
 
     private getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema> {
@@ -107,7 +119,7 @@ export class OpenApiV3Converter {
             const headers = this.getheadersFromMethodParameters(endpoint.definition.parameters);
             if (!headersAdded) {
                 Object.values(headers).forEach((convertedHeader) => {
-                    globalHeaders.set(convertedHeader.wireKey, getHttpHeaderSchema(convertedHeader));
+                    globalHeaders.set(convertedHeader.headerName, convertedHeader.toRawSchema());
                 });
             } else {
                 for (const globalHeaderKey of Object.keys(globalHeaders)) {
@@ -136,7 +148,7 @@ export class OpenApiV3Converter {
             }
             const convertedHeader = this.convertParameterToHeader(parameterObject);
             if (convertedHeader != null) {
-                convertedHeaders[convertedHeader.wireKey] = convertedHeader;
+                convertedHeaders[convertedHeader.headerName] = convertedHeader;
             }
         }
         return convertedHeaders;
@@ -169,12 +181,11 @@ export class OpenApiV3Converter {
             return undefined;
         }
 
-        return {
-            paramType: "header",
-            wireKey: parameter.name,
+        return new ConvertedHeader({
+            headerName: parameter.name,
             docs: parameter.description,
             type: paramType,
-        };
+        });
     }
 
     private convertParameterToQuery(parameter: OpenAPIV3.ParameterObject): ConvertedQueryParam | undefined {
@@ -190,12 +201,11 @@ export class OpenApiV3Converter {
             return undefined;
         }
 
-        return {
-            paramType: "query",
+        return new ConvertedQueryParam({
             paramName: parameter.name,
             docs: parameter.description,
             type: paramType,
-        };
+        });
     }
 
     private convertParameterToPath(parameter: OpenAPIV3.ParameterObject): ConvertedPathParam | undefined {
@@ -211,12 +221,11 @@ export class OpenApiV3Converter {
             return undefined;
         }
 
-        return {
-            paramType: "path",
+        return new ConvertedPathParam({
             paramName: parameter.name,
             docs: parameter.description,
             type: paramType,
-        };
+        });
     }
 
     private getParamType({
@@ -259,4 +268,22 @@ export class OpenApiV3Converter {
             return "Query parameter";
         }
     }
+}
+
+function isHeader(
+    convertedParameter: ConvertedHeader | ConvertedQueryParam | ConvertedPathParam | undefined
+): convertedParameter is ConvertedHeader {
+    return convertedParameter != null && convertedParameter instanceof ConvertedHeader;
+}
+
+function isQuery(
+    convertedParameter: ConvertedHeader | ConvertedQueryParam | ConvertedPathParam | undefined
+): convertedParameter is ConvertedQueryParam {
+    return convertedParameter != null && convertedParameter instanceof ConvertedQueryParam;
+}
+
+function isPath(
+    convertedParameter: ConvertedHeader | ConvertedQueryParam | ConvertedPathParam | undefined
+): convertedParameter is ConvertedPathParam {
+    return convertedParameter != null && convertedParameter instanceof ConvertedPathParam;
 }

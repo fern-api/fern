@@ -1,5 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { OpenAPIV3 } from "openapi-types";
+import { AbstractConvertedSchema } from "./convertedTypes/abstractConvertedSchema";
 import { OpenApiV3ReferenceResolver } from "./OpenApiV3ReferenceResolver";
 
 export interface EndpointDefinition {
@@ -12,6 +13,7 @@ export class OpenApiV3Context {
     private referenceResolver: OpenApiV3ReferenceResolver;
     private openApiV3: OpenAPIV3.Document;
     private endpointDefinitions: EndpointDefinition[];
+    private types: Record<string, AbstractConvertedSchema> = {};
 
     constructor({ openApiV3, logger }: { openApiV3: OpenAPIV3.Document; logger: Logger }) {
         this.openApiV3 = openApiV3;
@@ -31,6 +33,22 @@ export class OpenApiV3Context {
 
     public getEndpoints(): EndpointDefinition[] {
         return this.endpointDefinitions;
+    }
+
+    public createSchemasForRequest({
+        requestBody,
+    }: {
+        requestBody: OpenAPIV3.RequestBodyObject | OpenAPIV3.ReferenceObject;
+    }): void {
+        if (isReferenceObject(requestBody)) {
+            const schemaObject = this.getSchema(requestBody);
+        }
+        return;
+    }
+
+    public getOrCreateSchema(schemaObject: OpenAPIV3.SchemaObject): void {
+        if (schemaObject.)
+        return;
     }
 
     private createPathDefinitions(): EndpointDefinition[] {
@@ -56,7 +74,11 @@ export class OpenApiV3Context {
 }
 
 function isReferenceObject(
-    parameter: OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject | OpenAPIV3.SchemaObject
+    parameter:
+        | OpenAPIV3.ReferenceObject
+        | OpenAPIV3.ParameterObject
+        | OpenAPIV3.SchemaObject
+        | OpenAPIV3.RequestBodyObject
 ): parameter is OpenAPIV3.ReferenceObject {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (parameter as OpenAPIV3.ReferenceObject).$ref != null;

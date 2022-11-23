@@ -13,7 +13,7 @@ export { ErrorDeclarationSchema } from "./ErrorDeclarationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
 export * from "./file-schemas";
 export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
-export { HttpEndpointSchema } from "./HttpEndpointSchema";
+export { HttpEndpointSchema, HttpMethodSchema } from "./HttpEndpointSchema";
 export { HttpHeaderSchema } from "./HttpHeaderSchema";
 export { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 export { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
