@@ -2,9 +2,9 @@ import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-import { GeneratedUnionImpl } from "./GeneratedUnionImpl";
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
+import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
-import { SingleUnionTypeGenerator } from "./SingleUnionTypeGenerator";
 
 export abstract class AbstractParsedSingleUnionType<Context extends TypeContext>
     implements ParsedSingleUnionType<Context>

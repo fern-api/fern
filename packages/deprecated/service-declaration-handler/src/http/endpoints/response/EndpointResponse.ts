@@ -1,4 +1,3 @@
-import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkFile } from "@fern-typescript/sdk-declaration-handler";
 import { AbstractParsedSingleUnionType, UnionModule, UnionVisitHelper } from "@fern-typescript/types-v2";
 import { ts } from "ts-morph";
@@ -32,20 +31,7 @@ export class EndpointResponse extends AbstractEndpointDeclaration {
         this.endpointError = endpointError;
     }
 
-    public generate({ endpointFile, schemaFile }: { endpointFile: SdkFile; schemaFile: SdkFile }): void {
-        endpointFile.sourceFile.addTypeAlias({
-            name: EndpointResponse.TYPE_NAME,
-            isExported: true,
-            type: getTextOfTsNode(
-                endpointFile.coreUtilities.fetcher.APIResponse._getReferenceToType(
-                    this.endpoint.response.type._type === "void"
-                        ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                        : endpointFile.getReferenceToType(this.endpoint.response.type).typeNode,
-                    this.endpointError.getReferenceTo(endpointFile).getTypeNode()
-                )
-            ),
-        });
-
+    public generate({ schemaFile }: { schemaFile: SdkFile }): void {
         this.schema?.writeSchemaToFile(schemaFile);
     }
 

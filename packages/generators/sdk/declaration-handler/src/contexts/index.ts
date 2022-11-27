@@ -1,4 +1,5 @@
 export { type BaseContext } from "./BaseContext";
+export { type EndpointTypesContext } from "./EndpointTypesContext";
 export { type ErrorContext } from "./ErrorContext";
 export { type ErrorSchemaContext } from "./ErrorSchemaContext";
 export * from "./mixins";

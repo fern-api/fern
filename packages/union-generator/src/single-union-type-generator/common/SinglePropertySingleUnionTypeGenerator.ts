@@ -1,0 +1,78 @@
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { TypeReferenceNode } from "@fern-typescript/commons-v2";
+import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
+
+export declare namespace SinglePropertySingleUnionTypeGenerator {
+    export interface Init<Context extends TypeContext> {
+        propertyName: string;
+        getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+    }
+}
+
+export class SinglePropertySingleUnionTypeGenerator<Context extends TypeContext> implements SingleUnionTypeGenerator {
+    private static BUILDER_PARAMETER_NAME = "value";
+
+    private propertyName: string;
+    private getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+
+    constructor({ propertyName, getReferenceToPropertyType }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
+        this.propertyName = propertyName;
+        this.getReferenceToPropertyType = getReferenceToPropertyType;
+    }
+
+    public getExtendsForInterface(): ts.TypeNode[] {
+        return [];
+    }
+
+    public getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
+        const type = this.getReferenceToPropertyType(context);
+        return [
+            {
+                name: this.propertyName,
+                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+                hasQuestionToken: type.isOptional,
+            },
+        ];
+    }
+
+    public getParametersForBuilder(context: Context): ts.ParameterDeclaration[] {
+        const type = this.getReferenceToPropertyType(context);
+        return [
+            ts.factory.createParameterDeclaration(
+                undefined,
+                undefined,
+                undefined,
+                SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
+                type.isOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                type.typeNodeWithoutUndefined
+            ),
+        ];
+    }
+
+    public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
+        return [
+            ts.factory.createPropertyAssignment(
+                this.propertyName,
+                ts.factory.createIdentifier(SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
+            ),
+        ];
+    }
+
+    public getVisitMethodParameterType(context: Context): ts.TypeNode {
+        return this.getReferenceToPropertyType(context).typeNode;
+    }
+
+    public getVisitorArguments({
+        localReferenceToUnionValue,
+    }: {
+        localReferenceToUnionValue: ts.Expression;
+    }): ts.Expression[] {
+        return [ts.factory.createPropertyAccessExpression(localReferenceToUnionValue, this.propertyName)];
+    }
+
+    public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
+        return [ts.factory.createPropertyAccessExpression(existingValue, this.propertyName)];
+    }
+}

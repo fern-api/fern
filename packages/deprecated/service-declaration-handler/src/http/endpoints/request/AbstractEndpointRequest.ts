@@ -7,7 +7,7 @@ import { AbstractEndpointDeclaration } from "../AbstractEndpointDeclaration";
 import { WireBodySchema } from "../WireBodySchema";
 
 export interface EndpointRequest {
-    generate({ endpointFile, schemaFile }: { endpointFile: SdkFile; schemaFile: SdkFile }): void;
+    generate({ schemaFile }: { schemaFile: SdkFile }): void;
     getRequestParameter(file: SdkFile): { name: string; type: TypeReferenceNode } | undefined;
     buildFetcherArgs(file: SdkFile): {
         statements: ts.Statement[];
@@ -31,8 +31,7 @@ export abstract class AbstractEndpointRequest extends AbstractEndpointDeclaratio
         });
     }
 
-    public generate({ endpointFile, schemaFile }: { endpointFile: SdkFile; schemaFile: SdkFile }): void {
-        this.generateTypeDeclaration(endpointFile);
+    public generate({ schemaFile }: { schemaFile: SdkFile }): void {
         this.schema?.writeSchemaToFile(schemaFile);
     }
 

@@ -1,3 +1,3 @@
-export { AbstractParsedSingleUnionType } from "./AbstractParsedSingleUnionType";
 export { GeneratedUnionImpl } from "./GeneratedUnionImpl";
-export { type SingleUnionTypeGenerator } from "./SingleUnionTypeGenerator";
+export { AbstractParsedSingleUnionType } from "./parsed-single-union-type/AbstractParsedSingleUnionType";
+export * from "./single-union-type-generator";

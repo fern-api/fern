@@ -14,8 +14,8 @@ import {
     ts,
     VariableDeclarationKind,
 } from "ts-morph";
-import { AbstractParsedSingleUnionType } from "./AbstractParsedSingleUnionType";
-import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
+import { AbstractParsedSingleUnionType } from "./parsed-single-union-type/AbstractParsedSingleUnionType";
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 
 export declare namespace GeneratedUnionImpl {

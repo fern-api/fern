@@ -7,6 +7,7 @@
     { "path": "../../../deprecated/commons" },
     { "path": "../../../deprecated/service-declaration-handler" },
     { "path": "../../../deprecated/types-v2" },
+    { "path": "../../../endpoint-types-generator" },
     { "path": "../../../resolvers" },
     { "path": "../../../type-generator" },
     { "path": "../../../type-schema-generator" },

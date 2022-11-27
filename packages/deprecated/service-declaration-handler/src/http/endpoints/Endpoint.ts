@@ -19,7 +19,6 @@ import { EndpointResponse } from "./response/EndpointResponse";
 
 export declare namespace Endpoint {
     export interface Init {
-        file: SdkFile;
         service: HttpService;
         endpoint: HttpEndpoint;
     }
@@ -31,7 +30,7 @@ export class Endpoint {
     private error: EndpointError;
     private endpoint: HttpEndpoint;
 
-    constructor({ service, endpoint, file }: Endpoint.Init) {
+    constructor({ service, endpoint }: Endpoint.Init) {
         this.request = Endpoint.isRequestWrapped(service, endpoint)
             ? new WrappedEndpointRequest({ service, endpoint })
             : new NotWrappedEndpointRequest({ service, endpoint });
@@ -39,7 +38,6 @@ export class Endpoint {
         this.error = new EndpointError({
             service,
             endpoint,
-            file,
         });
 
         this.response = new EndpointResponse({
@@ -60,10 +58,10 @@ export class Endpoint {
         );
     }
 
-    public generate({ endpointFile, schemaFile }: { endpointFile: SdkFile; schemaFile: SdkFile }): void {
-        this.request.generate({ endpointFile, schemaFile });
-        this.response.generate({ endpointFile, schemaFile });
-        this.error.generate({ endpointFile, schemaFile });
+    public generate({ schemaFile }: { schemaFile: SdkFile }): void {
+        this.request.generate({ schemaFile });
+        this.response.generate({ schemaFile });
+        this.error.generate({ schemaFile });
     }
 
     private getSignature(file: SdkFile): OptionalKind<MethodSignatureStructure> {

@@ -16,7 +16,6 @@ export declare namespace ServiceDeclarationHandler {
 
     export namespace withEndpoint {
         export interface Args {
-            endpointFile: SdkFile;
             schemaFile: SdkFile;
         }
     }

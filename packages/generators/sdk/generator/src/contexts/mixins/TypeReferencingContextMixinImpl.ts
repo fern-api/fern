@@ -29,7 +29,8 @@ export class TypeReferencingContextMixinImpl implements TypeReferencingContextMi
         typeResolver,
         typeDeclarationReferencer,
     }: TypeReferencingContextMixinImpl.Init) {
-        (this.sourceFile = sourceFile), (this.importsManager = importsManager);
+        this.sourceFile = sourceFile;
+        this.importsManager = importsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
 

@@ -22,13 +22,12 @@ export function generateHttpService({
     const { originalService } = service;
     if (originalService != null) {
         for (const irEndpoint of originalService.endpoints) {
-            withEndpoint(irEndpoint, ({ endpointFile, schemaFile }) => {
+            withEndpoint(irEndpoint, ({ schemaFile }) => {
                 const endpoint = new Endpoint({
                     service: originalService,
                     endpoint: irEndpoint,
-                    file: endpointFile,
                 });
-                endpoint.generate({ endpointFile, schemaFile });
+                endpoint.generate({ schemaFile });
                 endpoints.push(endpoint);
             });
         }

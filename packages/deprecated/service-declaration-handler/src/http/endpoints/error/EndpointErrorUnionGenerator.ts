@@ -11,14 +11,6 @@ export declare namespace EndpointErrorUnionGenerator {
     export interface Init {
         serviceName: DeclaredServiceName;
         endpoint: HttpEndpoint;
-        file: SdkFile;
-    }
-}
-
-export declare namespace EndpointErrorUnionGenerator {
-    export interface Init {
-        serviceName: DeclaredServiceName;
-        endpoint: HttpEndpoint;
     }
 }
 
@@ -69,7 +61,7 @@ export class EndpointErrorUnionGenerator extends AbstractUnionGenerator {
         return [...this.parsedErrors];
     }
 
-    protected override shouldWriteSchema(): boolean {
+    public override shouldWriteSchema(): boolean {
         return this.parsedErrors.length > 0;
     }
 

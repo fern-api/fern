@@ -1,5 +1,5 @@
-import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export class NoPropertiesSingleUnionTypeGenerator implements SingleUnionTypeGenerator {
     public getExtendsForInterface(): ts.TypeNode[] {

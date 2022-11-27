@@ -1,10 +1,18 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
-import { SingleUnionType, SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    SingleUnionTypeProperty,
+    UnionTypeDeclaration,
+} from "@fern-fern/ir-model/types";
 import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
-import { AbstractParsedSingleUnionType, SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { NoPropertiesSingleUnionTypeGenerator } from "./single-union-type-generators/NoPropertiesSingleUnionTypeGenerator";
-import { SamePropertyAsObjectSingleUnionTypeGenerator } from "./single-union-type-generators/SamePropertyAsObjectSingleUnionTypeGenerator";
-import { SinglePropertySingleUnionTypeGenerator } from "./single-union-type-generators/SinglePropertySingleUnionTypeGenerator";
+import {
+    AbstractParsedSingleUnionType,
+    NoPropertiesSingleUnionTypeGenerator,
+    SinglePropertySingleUnionTypeGenerator,
+    SingleUnionTypeGenerator,
+} from "@fern-typescript/union-generator";
+import { SamePropertyAsObjectSingleUnionTypeGenerator } from "./SamePropertyAsObjectSingleUnionTypeGenerator";
 
 export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
@@ -22,7 +30,11 @@ export class ParsedSingleUnionTypeForUnion extends AbstractParsedSingleUnionType
             SingleUnionTypeProperties._visit<SingleUnionTypeGenerator>(init.singleUnionType.shape, {
                 noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                 samePropertiesAsObject: (extended) => new SamePropertyAsObjectSingleUnionTypeGenerator({ extended }),
-                singleProperty: (singleProperty) => new SinglePropertySingleUnionTypeGenerator({ singleProperty }),
+                singleProperty: (singleProperty) =>
+                    new SinglePropertySingleUnionTypeGenerator({
+                        propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty),
+                        getReferenceToPropertyType: (context) => context.getReferenceToType(singleProperty.type),
+                    }),
                 _unknown: () => {
                     throw new Error("Unknown SingleUnionTypeProperties: " + init.singleUnionType.shape._type);
                 },
@@ -55,5 +67,9 @@ export class ParsedSingleUnionTypeForUnion extends AbstractParsedSingleUnionType
 
     protected getDiscriminant(): WireStringWithAllCasings {
         return this.union.discriminantV2;
+    }
+
+    public static getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
+        return singleProperty.nameV2.name.unsafeName.camelCase;
     }
 }

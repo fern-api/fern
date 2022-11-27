@@ -5,6 +5,7 @@ export {
     type NotBrandedGeneratedAliasType,
 } from "./GeneratedAliasType";
 export { type GeneratedAliasTypeSchema } from "./GeneratedAliasTypeSchema";
+export { type GeneratedEndpointTypes } from "./GeneratedEndpointTypes";
 export { type GeneratedEnumType } from "./GeneratedEnumType";
 export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
 export { type GeneratedError } from "./GeneratedError";

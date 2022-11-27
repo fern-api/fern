@@ -9,7 +9,6 @@ import { AbstractParsedSingleUnionType, GeneratedUnionImpl } from "@fern-typescr
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
-import { SinglePropertySingleUnionTypeGenerator } from "./single-union-type-generators/SinglePropertySingleUnionTypeGenerator";
 
 export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDeclaration> implements GeneratedUnionType {
     public readonly type = "union";
@@ -55,7 +54,7 @@ export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDecla
     }
 
     public getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
-        return SinglePropertySingleUnionTypeGenerator.getSinglePropertyKey(singleProperty);
+        return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty);
     }
 
     public addVistMethodToValue({

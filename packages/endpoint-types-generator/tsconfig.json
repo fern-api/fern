@@ -5,6 +5,7 @@
   "references": [
     { "path": "../commons-v2" },
     { "path": "../deprecated/commons" },
-    { "path": "../generators/sdk/declaration-handler" }
+    { "path": "../generators/sdk/declaration-handler" },
+    { "path": "../union-generator" }
   ]
 }

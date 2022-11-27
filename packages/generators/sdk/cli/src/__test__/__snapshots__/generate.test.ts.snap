@@ -1653,7 +1653,7 @@ export const Error = {
       case \\"OwnerAlreadyExistsError\\":
         return visitor.ownerAlreadyExistsError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -1713,7 +1713,7 @@ export const Error = {
       case \\"OwnerNotFoundError\\":
         return visitor.ownerNotFoundError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -1785,7 +1785,7 @@ export const Error = {
       case \\"OwnerNotFoundError\\":
         return visitor.ownerNotFoundError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -2076,7 +2076,7 @@ export const Error = {
       case \\"OwnerNotFoundError\\":
         return visitor.ownerNotFoundError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -2137,7 +2137,7 @@ export const Error = {
       case \\"TokenNotFoundError\\":
         return visitor.tokenNotFoundError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -2202,7 +2202,7 @@ export const Error = {
       case \\"OwnerNotFoundError\\":
         return visitor.ownerNotFoundError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -8430,7 +8430,7 @@ export const Error = {
       case \\"UnauthorizedError\\":
         return visitor.unauthorizedError();
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;
@@ -8546,7 +8546,7 @@ export const Error = {
       case \\"PlaylistIdNotFoundError\\":
         return visitor.playlistIdNotFoundError(value.content);
       default:
-        return visitor._other(visitor as any);
+        return visitor._other(value as any);
     }
   },
 } as const;

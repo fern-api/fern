@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/union-generator",
+  "name": "@fern-typescript/endpoint-types-generator",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/union-generator"
+    "directory": "packages/endpoint-types-generator"
   },
   "files": [
     "lib"
@@ -29,6 +29,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
+    "@fern-typescript/union-generator": "workspace:*",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

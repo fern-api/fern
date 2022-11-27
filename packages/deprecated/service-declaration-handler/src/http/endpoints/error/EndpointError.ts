@@ -8,28 +8,23 @@ import { ts } from "ts-morph";
 import { AbstractEndpointDeclaration } from "../AbstractEndpointDeclaration";
 import { EndpointErrorUnionGenerator } from "./EndpointErrorUnionGenerator";
 
-export declare namespace EndpointError {
-    export interface Init extends AbstractEndpointDeclaration.Init {
-        file: SdkFile;
-    }
-}
-
 export class EndpointError extends AbstractEndpointDeclaration {
     public static TYPE_NAME = "Error";
 
     private unionGenerator: EndpointErrorUnionGenerator;
 
-    constructor({ file, ...init }: EndpointError.Init) {
-        super(init);
+    constructor(superInit: AbstractEndpointDeclaration.Init) {
+        super(superInit);
         this.unionGenerator = new EndpointErrorUnionGenerator({
             serviceName: this.service.name,
             endpoint: this.endpoint,
-            file,
         });
     }
 
-    public generate({ endpointFile, schemaFile }: { endpointFile: SdkFile; schemaFile: SdkFile }): void {
-        this.unionGenerator.generate({ typeFile: endpointFile, schemaFile });
+    public generate({ schemaFile }: { schemaFile: SdkFile }): void {
+        if (this.unionGenerator.shouldWriteSchema()) {
+            this.unionGenerator.writeSchemaToFile(schemaFile);
+        }
     }
 
     public static getReferenceTo(

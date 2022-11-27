@@ -1,6 +1,6 @@
 import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-import { GeneratedUnionImpl } from "./GeneratedUnionImpl";
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
 export interface ParsedSingleUnionType<Context extends TypeContext> {
     getDocs(): string | null | undefined;
