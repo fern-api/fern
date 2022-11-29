@@ -10,7 +10,9 @@ export declare namespace RawSamePropertiesAsObjectSingleUnionType {
     }
 }
 
-export class RawSamePropertiesAsObjectSingleUnionType extends AbstractRawSingleUnionType<TypeSchemaContext> {
+export class RawSamePropertiesAsObjectSingleUnionType<
+    Context extends TypeSchemaContext = TypeSchemaContext
+> extends AbstractRawSingleUnionType<Context> {
     private extended: DeclaredTypeName;
 
     constructor({ extended, ...superInit }: RawSamePropertiesAsObjectSingleUnionType.Init) {
@@ -18,7 +20,7 @@ export class RawSamePropertiesAsObjectSingleUnionType extends AbstractRawSingleU
         this.extended = extended;
     }
 
-    protected getExtends(context: TypeSchemaContext): ts.TypeNode[] {
+    protected getExtends(context: Context): ts.TypeNode[] {
         return [context.getReferenceToRawNamedType(this.extended).getTypeNode()];
     }
 
@@ -27,7 +29,7 @@ export class RawSamePropertiesAsObjectSingleUnionType extends AbstractRawSingleU
     }
 
     protected getNonDiscriminantPropertiesForSchema(
-        context: TypeSchemaContext
+        context: Context
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         return {
             isInline: false,

@@ -3,15 +3,17 @@ import {
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
     Type,
-    TypeDeclaration,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import {
     GeneratedAliasTypeSchema,
     GeneratedEnumTypeSchema,
     GeneratedObjectTypeSchema,
+    GeneratedType,
     GeneratedTypeSchema,
     GeneratedUnionTypeSchema,
+    Reference,
+    TypeSchemaContext,
 } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
 import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";
@@ -20,78 +22,91 @@ import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaIm
 
 export declare namespace TypeSchemaGenerator {
     export namespace generateTypeSchema {
-        export interface Args {
+        export interface Args<Context extends TypeSchemaContext = TypeSchemaContext> {
             typeName: string;
-            typeDeclaration: TypeDeclaration;
+            shape: Type;
+            getGeneratedType: () => GeneratedType<Context>;
+            getReferenceToGeneratedType: () => Reference;
         }
     }
 }
 
-export class TypeSchemaGenerator {
+export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaContext> {
     public generateTypeSchema({
-        typeDeclaration,
+        shape,
         typeName,
-    }: TypeSchemaGenerator.generateTypeSchema.Args): GeneratedTypeSchema {
-        return Type._visit<GeneratedTypeSchema>(typeDeclaration.shape, {
-            union: (shape) => this.generateUnion({ typeDeclaration, typeName, shape }),
-            object: (shape) => this.generateObject({ typeDeclaration, typeName, shape }),
-            enum: (shape) => this.generateEnum({ typeDeclaration, typeName, shape }),
-            alias: (shape) => this.generateAlias({ typeDeclaration, typeName, shape }),
+        getGeneratedType,
+        getReferenceToGeneratedType,
+    }: TypeSchemaGenerator.generateTypeSchema.Args<Context>): GeneratedTypeSchema<Context> {
+        return Type._visit<GeneratedTypeSchema<Context>>(shape, {
+            union: (shape) => this.generateUnion({ typeName, shape, getGeneratedType, getReferenceToGeneratedType }),
+            object: (shape) => this.generateObject({ typeName, shape, getGeneratedType, getReferenceToGeneratedType }),
+            enum: (shape) => this.generateEnum({ typeName, shape, getGeneratedType, getReferenceToGeneratedType }),
+            alias: (shape) => this.generateAlias({ typeName, shape, getGeneratedType, getReferenceToGeneratedType }),
             _unknown: () => {
-                throw new Error("Unknown type declaration shape: " + typeDeclaration.shape._type);
+                throw new Error("Unknown type declaration shape: " + shape._type);
             },
         });
     }
 
     public generateUnion({
-        typeDeclaration,
         typeName,
         shape,
+        getGeneratedType,
+        getReferenceToGeneratedType,
     }: {
-        typeDeclaration: TypeDeclaration;
         typeName: string;
         shape: UnionTypeDeclaration;
-    }): GeneratedUnionTypeSchema {
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => Reference;
+    }): GeneratedUnionTypeSchema<Context> {
         return new GeneratedUnionTypeSchemaImpl({
-            typeDeclaration,
             typeName,
             shape,
+            getGeneratedType,
+            getReferenceToGeneratedType,
         });
     }
 
     public generateObject({
-        typeDeclaration,
         typeName,
         shape,
+        getGeneratedType,
+        getReferenceToGeneratedType,
     }: {
-        typeDeclaration: TypeDeclaration;
         typeName: string;
         shape: ObjectTypeDeclaration;
-    }): GeneratedObjectTypeSchema {
-        return new GeneratedObjectTypeSchemaImpl({ typeDeclaration, typeName, shape });
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => Reference;
+    }): GeneratedObjectTypeSchema<Context> {
+        return new GeneratedObjectTypeSchemaImpl({ typeName, shape, getGeneratedType, getReferenceToGeneratedType });
     }
 
     public generateEnum({
-        typeDeclaration,
         typeName,
         shape,
+        getGeneratedType,
+        getReferenceToGeneratedType,
     }: {
-        typeDeclaration: TypeDeclaration;
         typeName: string;
         shape: EnumTypeDeclaration;
-    }): GeneratedEnumTypeSchema {
-        return new GeneratedEnumTypeSchemaImpl({ typeDeclaration, typeName, shape });
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => Reference;
+    }): GeneratedEnumTypeSchema<Context> {
+        return new GeneratedEnumTypeSchemaImpl({ typeName, shape, getGeneratedType, getReferenceToGeneratedType });
     }
 
     public generateAlias({
-        typeDeclaration,
         typeName,
         shape,
+        getGeneratedType,
+        getReferenceToGeneratedType,
     }: {
-        typeDeclaration: TypeDeclaration;
         typeName: string;
         shape: AliasTypeDeclaration;
-    }): GeneratedAliasTypeSchema {
-        return new GeneratedAliasTypeSchemaImpl({ typeDeclaration, typeName, shape });
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => Reference;
+    }): GeneratedAliasTypeSchema<Context> {
+        return new GeneratedAliasTypeSchemaImpl({ typeName, shape, getGeneratedType, getReferenceToGeneratedType });
     }
 }

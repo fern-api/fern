@@ -6,14 +6,14 @@ import { GeneratedObjectTypeSchema, TypeSchemaContext } from "@fern-typescript/s
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
-export class GeneratedObjectTypeSchemaImpl
-    extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration>
-    implements GeneratedObjectTypeSchema
+export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext = TypeSchemaContext>
+    extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration, Context>
+    implements GeneratedObjectTypeSchema<Context>
 {
     public readonly type = "object";
 
-    protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
-        const generatedType = context.getTypeBeingGenerated();
+    protected override getSchema(context: Context): Zurg.Schema {
+        const generatedType = this.getGeneratedType();
         if (generatedType.type !== "object") {
             throw new Error("Type is not an object: " + this.typeName);
         }
@@ -35,7 +35,7 @@ export class GeneratedObjectTypeSchemaImpl
         return schema;
     }
 
-    protected override generateRawTypeDeclaration(context: TypeSchemaContext, module: ModuleDeclaration): void {
+    protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             extends: this.shape.extends.map((extension) =>
@@ -57,7 +57,7 @@ export class GeneratedObjectTypeSchemaImpl
         rawShape,
         parsedShape,
     }: {
-        context: TypeSchemaContext;
+        context: Context;
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {

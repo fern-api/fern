@@ -2,15 +2,18 @@ import { ts } from "ts-morph";
 import { TypeContext } from "../contexts/TypeContext";
 import { BaseGenerated } from "./BaseGenerated";
 
-export type GeneratedAliasType = BrandedGeneratedAliasType | NotBrandedGeneratedAliasType;
+export type GeneratedAliasType<Context extends TypeContext = TypeContext> =
+    | BrandedGeneratedAliasType<Context>
+    | NotBrandedGeneratedAliasType<Context>;
 
-export interface BrandedGeneratedAliasType extends BaseGenerated<TypeContext> {
+export interface BrandedGeneratedAliasType<Context extends TypeContext = TypeContext> extends BaseGenerated<Context> {
     type: "alias";
     isBranded: true;
-    getReferenceToCreator: (context: TypeContext) => ts.Expression;
+    getReferenceToCreator: (context: Context) => ts.Expression;
 }
 
-export interface NotBrandedGeneratedAliasType extends BaseGenerated<TypeContext> {
+export interface NotBrandedGeneratedAliasType<Context extends TypeContext = TypeContext>
+    extends BaseGenerated<Context> {
     type: "alias";
     isBranded: false;
 }

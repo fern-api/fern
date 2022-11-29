@@ -103,7 +103,11 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
 
     public getRequestParameterType(context: EndpointTypesContext): TypeReferenceNode {
         const typeNode = context
-            .getReferenceToExportFromThisFile(WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME)
+            .getReferenceToEndpointTypeExport(
+                this.service.name,
+                this.endpoint.id,
+                WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME
+            )
             .getTypeNode();
         return {
             isOptional: false,

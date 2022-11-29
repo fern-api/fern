@@ -4,10 +4,13 @@ import { GeneratedEnumType, TypeContext } from "@fern-typescript/sdk-declaration
 import { ts, VariableDeclarationKind } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedEnumTypeImpl extends AbstractGeneratedType<EnumTypeDeclaration> implements GeneratedEnumType {
+export class GeneratedEnumTypeImpl<Context extends TypeContext = TypeContext>
+    extends AbstractGeneratedType<EnumTypeDeclaration, Context>
+    implements GeneratedEnumType<Context>
+{
     public readonly type = "enum";
 
-    public writeToFile(context: TypeContext): void {
+    public writeToFile(context: Context): void {
         const type = context.sourceFile.addTypeAlias({
             name: this.typeName,
             isExported: true,
@@ -19,7 +22,7 @@ export class GeneratedEnumTypeImpl extends AbstractGeneratedType<EnumTypeDeclara
             ),
         });
 
-        maybeAddDocs(type, this.typeDeclaration.docs);
+        maybeAddDocs(type, this.docs);
 
         context.sourceFile.addVariableStatement({
             declarationKind: VariableDeclarationKind.Const,

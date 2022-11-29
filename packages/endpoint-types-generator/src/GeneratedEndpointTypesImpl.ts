@@ -39,7 +39,11 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
                 (error) => new ParsedSingleUnionTypeForError({ errors: endpoint.errorsV2, error })
             ),
             getReferenceToUnion: (context) =>
-                context.getReferenceToExportFromThisFile(GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME),
+                context.getReferenceToEndpointTypeExport(
+                    service.name,
+                    this.endpoint.id,
+                    GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME
+                ),
             unknownSingleUnionType: {
                 discriminantType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
                 getVisitorArgument: (file) => file.coreUtilities.fetcher.Fetcher.Error._getReferenceToType(),

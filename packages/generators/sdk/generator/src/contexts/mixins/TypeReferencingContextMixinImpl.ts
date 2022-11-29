@@ -1,7 +1,8 @@
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { TypeResolver } from "@fern-typescript/resolvers";
-import { Reference, TypeReferencingContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedType, Reference, TypeReferencingContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceToParsedTypeNodeConverter } from "@fern-typescript/type-reference-converters";
 import { SourceFile } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
@@ -13,6 +14,7 @@ export declare namespace TypeReferencingContextMixinImpl {
         importsManager: ImportsManager;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
+        typeGenerator: TypeGenerator;
     }
 }
 
@@ -22,17 +24,20 @@ export class TypeReferencingContextMixinImpl implements TypeReferencingContextMi
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
     private typeResolver: TypeResolver;
+    private typeGenerator: TypeGenerator;
 
     constructor({
         sourceFile,
         importsManager,
         typeResolver,
         typeDeclarationReferencer,
+        typeGenerator,
     }: TypeReferencingContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
+        this.typeGenerator = typeGenerator;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
@@ -59,5 +64,16 @@ export class TypeReferencingContextMixinImpl implements TypeReferencingContextMi
 
     public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
         return this.typeResolver.resolveTypeName(typeName);
+    }
+
+    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
+        return this.typeGenerator.generateType({
+            shape: typeDeclaration.shape,
+            docs: typeDeclaration.docs ?? undefined,
+            typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+            fernFilepath: typeDeclaration.name.fernFilepathV2,
+            getReferenceToSelf: (context) => context.getReferenceToNamedType(typeName),
+        });
     }
 }

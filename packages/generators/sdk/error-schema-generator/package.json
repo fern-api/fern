@@ -26,10 +26,8 @@
   },
   "dependencies": {
     "@fern-fern/ir-model": "0.0.294",
-    "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
-    "@fern-typescript/type-schema-generator": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "@fern-typescript/type-schema-generator": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

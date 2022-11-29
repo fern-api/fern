@@ -4,23 +4,23 @@ import { BrandedGeneratedAliasType, TypeContext } from "@fern-typescript/sdk-dec
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedBrandedStringAliasImpl
-    extends AbstractGeneratedType<AliasTypeDeclaration>
-    implements BrandedGeneratedAliasType
+export class GeneratedBrandedStringAliasImpl<Context extends TypeContext = TypeContext>
+    extends AbstractGeneratedType<AliasTypeDeclaration, Context>
+    implements BrandedGeneratedAliasType<Context>
 {
     public readonly type = "alias";
     public readonly isBranded = true;
 
-    public writeToFile(context: TypeContext): void {
+    public writeToFile(context: Context): void {
         this.writeTypeAlias(context);
         this.writeBuilder(context);
     }
 
-    public getReferenceToCreator(context: TypeContext): ts.Expression {
-        return context.getReferenceToNamedType(this.typeDeclaration.name).getExpression();
+    public getReferenceToCreator(context: Context): ts.Expression {
+        return this.getReferenceToSelf(context).getExpression();
     }
 
-    private writeTypeAlias(context: TypeContext) {
+    private writeTypeAlias(context: Context) {
         const referenceToAliasedType = context.getReferenceToType(this.shape.aliasOf).typeNode;
         const typeAlias = context.sourceFile.addTypeAlias({
             name: this.typeName,
@@ -39,10 +39,10 @@ export class GeneratedBrandedStringAliasImpl
             ),
             isExported: true,
         });
-        maybeAddDocs(typeAlias, this.typeDeclaration.docs);
+        maybeAddDocs(typeAlias, this.docs);
     }
 
-    private writeBuilder(context: TypeContext) {
+    private writeBuilder(context: Context) {
         const VALUE_PARAMETER_NAME = "value";
         context.sourceFile.addFunction({
             name: this.typeName,
@@ -71,9 +71,6 @@ export class GeneratedBrandedStringAliasImpl
     }
 
     private getStringBrand(): string {
-        return [
-            ...this.typeDeclaration.name.fernFilepathV2.slice(0, -1).map((part) => part.unsafeName.camelCase),
-            this.typeName,
-        ].join("_");
+        return [...this.fernFilepath.slice(0, -1).map((part) => part.unsafeName.camelCase), this.typeName].join("_");
     }
 }

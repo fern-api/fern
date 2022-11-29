@@ -1,6 +1,13 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { CoreUtilities, ErrorSchemaReferencingContextMixin, Reference } from "@fern-typescript/sdk-declaration-handler";
+import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import {
+    CoreUtilities,
+    ErrorSchemaReferencingContextMixin,
+    GeneratedErrorSchema,
+    Reference,
+} from "@fern-typescript/sdk-declaration-handler";
 import { getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
 import { SourceFile } from "ts-morph";
 import { ErrorDeclarationReferencer } from "../../declaration-referencers/ErrorDeclarationReferencer";
@@ -13,6 +20,8 @@ export declare namespace ErrorSchemaReferencingContextMixinImpl {
         coreUtilities: CoreUtilities;
         importsManager: ImportsManager;
         errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
+        errorSchemaGenerator: ErrorSchemaGenerator;
+        errorResolver: ErrorResolver;
     }
 }
 
@@ -21,17 +30,23 @@ export class ErrorSchemaReferencingContextMixinImpl implements ErrorSchemaRefere
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
     private errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
+    private errorSchemaGenerator: ErrorSchemaGenerator;
+    private errorResolver: ErrorResolver;
 
     constructor({
         sourceFile,
         coreUtilities,
         importsManager,
         errorSchemaDeclarationReferencer,
+        errorSchemaGenerator,
+        errorResolver,
     }: ErrorSchemaReferencingContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
         this.errorSchemaDeclarationReferencer = errorSchemaDeclarationReferencer;
+        this.errorSchemaGenerator = errorSchemaGenerator;
+        this.errorResolver = errorResolver;
     }
 
     public getReferenceToRawError(errorName: DeclaredErrorName): Reference {
@@ -59,5 +74,12 @@ export class ErrorSchemaReferencingContextMixinImpl implements ErrorSchemaRefere
             .getExpression();
 
         return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema));
+    }
+
+    public getGeneratedErrorSchema(errorName: DeclaredErrorName): GeneratedErrorSchema | undefined {
+        return this.errorSchemaGenerator.generateErrorSchema({
+            errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
+            errorName: this.errorSchemaDeclarationReferencer.getExportedName(errorName),
+        });
     }
 }

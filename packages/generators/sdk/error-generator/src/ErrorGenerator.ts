@@ -1,5 +1,5 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { GeneratedError } from "@fern-typescript/sdk-declaration-handler";
+import { ErrorContext, GeneratedError } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { GeneratedErrorImpl } from "./GeneratedErrorImpl";
 
@@ -17,7 +17,7 @@ export declare namespace ErrorGenerator {
 }
 
 export class ErrorGenerator {
-    private typeGenerator: TypeGenerator;
+    private typeGenerator: TypeGenerator<ErrorContext>;
 
     constructor({ useBrandedStringAliases }: ErrorGenerator.Init) {
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases });

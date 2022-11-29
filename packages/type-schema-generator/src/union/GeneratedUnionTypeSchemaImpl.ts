@@ -15,26 +15,26 @@ import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
 
-export class GeneratedUnionTypeSchemaImpl
-    extends AbstractGeneratedTypeSchema<UnionTypeDeclaration>
-    implements GeneratedUnionTypeSchema
+export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext = TypeSchemaContext>
+    extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
+    implements GeneratedUnionTypeSchema<Context>
 {
     public readonly type = "union";
 
-    private generatedUnionSchema: GeneratedUnionSchema<TypeSchemaContext>;
+    private generatedUnionSchema: GeneratedUnionSchema<Context>;
 
-    constructor(superInit: AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration>) {
+    constructor(superInit: AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context>) {
         super(superInit);
 
         const discriminant = this.shape.discriminantV2;
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
             discriminant,
-            getParsedDiscriminant: (context) => this.getGeneratedUnionType(context).getGeneratedUnion().discriminant,
+            getParsedDiscriminant: () => this.getGeneratedUnionType().getGeneratedUnion().discriminant,
             getReferenceToParsedUnion: (context) =>
-                this.getGeneratedUnionType(context).getGeneratedUnion().getReferenceTo(context),
+                this.getGeneratedUnionType().getGeneratedUnion().getReferenceTo(context),
             buildParsedUnion: ({ discriminantValueToBuild, existingValue, context }) =>
-                this.getGeneratedUnionType(context).getGeneratedUnion().buildFromExistingValue({
+                this.getGeneratedUnionType().getGeneratedUnion().buildFromExistingValue({
                     discriminantValueToBuild,
                     existingValue,
                     context,
@@ -43,7 +43,7 @@ export class GeneratedUnionTypeSchemaImpl
                 this.getDefaultCaseForParseTransform({ context, parsedValue }),
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
                 const discriminantValue = singleUnionType.discriminantValue;
-                return SingleUnionTypeProperties._visit<RawSingleUnionType<TypeSchemaContext>>(singleUnionType.shape, {
+                return SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
                     noProperties: () =>
                         new RawNoPropertiesSingleUnionType({
                             discriminant,
@@ -58,9 +58,9 @@ export class GeneratedUnionTypeSchemaImpl
                     singleProperty: (singleProperty) =>
                         new RawSinglePropertySingleUnionType({
                             singleProperty,
-                            unionTypeName: this.typeDeclaration.name,
                             discriminant,
                             discriminantValue,
+                            getGeneratedType: this.getGeneratedType.bind(this),
                         }),
                     _unknown: () => {
                         throw new Error("Unknown SingleUnionTypeProperties type: " + singleUnionType.shape._type);
@@ -71,11 +71,11 @@ export class GeneratedUnionTypeSchemaImpl
         });
     }
 
-    public override generateRawTypeDeclaration(context: TypeSchemaContext, module: ModuleDeclaration): void {
+    public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         this.generatedUnionSchema.generateRawTypeDeclaration(context, module);
     }
 
-    public override getSchema(context: TypeSchemaContext): Zurg.Schema {
+    public override getSchema(context: Context): Zurg.Schema {
         return this.generatedUnionSchema.getSchema(context);
     }
 
@@ -83,12 +83,12 @@ export class GeneratedUnionTypeSchemaImpl
         context,
         parsedValue,
     }: {
-        context: TypeSchemaContext;
+        context: Context;
         parsedValue: ts.Expression;
     }): ts.Statement[] {
         return [
             ts.factory.createReturnStatement(
-                this.getGeneratedUnionType(context).addVistMethodToValue({
+                this.getGeneratedUnionType().addVistMethodToValue({
                     context,
                     parsedValue,
                 })
@@ -96,8 +96,8 @@ export class GeneratedUnionTypeSchemaImpl
         ];
     }
 
-    private getGeneratedUnionType(context: TypeSchemaContext): GeneratedUnionType {
-        const generatedType = context.getTypeBeingGenerated();
+    private getGeneratedUnionType(): GeneratedUnionType<Context> {
+        const generatedType = this.getGeneratedType();
         if (generatedType.type !== "union") {
             throw new Error("Type is not an union: " + this.typeName);
         }

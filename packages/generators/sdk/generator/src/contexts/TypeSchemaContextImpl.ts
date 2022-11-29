@@ -1,8 +1,14 @@
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
 import { TypeResolver } from "@fern-typescript/resolvers";
-import { GeneratedType, Reference, TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import {
+    GeneratedType,
+    GeneratedTypeSchema,
+    Reference,
+    TypeSchemaContext,
+} from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { TypeReferencingContextMixinImpl } from "./mixins/TypeReferencingContextMixinImpl";
@@ -11,38 +17,31 @@ import { TypeSchemaReferencingContextMixinImpl } from "./mixins/TypeSchemaRefere
 export declare namespace TypeSchemaContextImpl {
     export interface Init extends BaseContextImpl.Init {
         typeResolver: TypeResolver;
+        typeGenerator: TypeGenerator;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        typeGenerator: TypeGenerator;
-        typeBeingGenerated: DeclaredTypeName;
+        typeSchemaGenerator: TypeSchemaGenerator;
     }
 }
 
 export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchemaContext {
     private typeReferencingContextMixin: TypeReferencingContextMixinImpl;
     private typeSchemaReferencingContextMixin: TypeSchemaReferencingContextMixinImpl;
-    private typeDeclarationReferencer: TypeDeclarationReferencer;
-    private typeGenerator: TypeGenerator;
-    private typeResolver: TypeResolver;
-    private typeBeingGenerated: DeclaredTypeName;
 
     constructor({
         typeResolver,
         typeDeclarationReferencer,
         typeSchemaDeclarationReferencer,
+        typeSchemaGenerator,
         typeGenerator,
-        typeBeingGenerated,
         ...superInit
     }: TypeSchemaContextImpl.Init) {
         super(superInit);
-        this.typeGenerator = typeGenerator;
-        this.typeDeclarationReferencer = typeDeclarationReferencer;
-        this.typeResolver = typeResolver;
-        this.typeBeingGenerated = typeBeingGenerated;
         this.typeReferencingContextMixin = new TypeReferencingContextMixinImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
             typeResolver,
+            typeGenerator,
             typeDeclarationReferencer,
         });
         this.typeSchemaReferencingContextMixin = new TypeSchemaReferencingContextMixinImpl({
@@ -51,6 +50,9 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
             importsManager: this.importsManager,
             typeResolver,
             typeSchemaDeclarationReferencer,
+            typeDeclarationReferencer,
+            typeGenerator,
+            typeSchemaGenerator,
         });
     }
 
@@ -70,6 +72,10 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
         return this.typeReferencingContextMixin.resolveTypeName(typeName);
     }
 
+    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+        return this.typeReferencingContextMixin.getGeneratedType(typeName);
+    }
+
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
         return this.typeSchemaReferencingContextMixin.getReferenceToRawType(typeReference);
     }
@@ -86,10 +92,7 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
         return this.typeSchemaReferencingContextMixin.getSchemaOfNamedType(typeName);
     }
 
-    public getTypeBeingGenerated(): GeneratedType {
-        return this.typeGenerator.generateType({
-            typeName: this.typeDeclarationReferencer.getExportedName(this.typeBeingGenerated),
-            typeDeclaration: this.typeResolver.getTypeDeclarationFromName(this.typeBeingGenerated),
-        });
+    public getGeneratedTypeSchema(typeName: DeclaredTypeName): GeneratedTypeSchema {
+        return this.typeSchemaReferencingContextMixin.getGeneratedTypeSchema(typeName);
     }
 }

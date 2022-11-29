@@ -2,9 +2,5 @@
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [
-    { "path": "../../../commons-v2" },
-    { "path": "../../../type-schema-generator" },
-    { "path": "../declaration-handler" }
-  ]
+  "references": [{ "path": "../../../type-schema-generator" }, { "path": "../declaration-handler" }]
 }

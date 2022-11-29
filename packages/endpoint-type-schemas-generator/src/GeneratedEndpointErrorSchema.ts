@@ -1,12 +1,16 @@
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { EndpointTypeSchemasContext } from "@fern-typescript/sdk-declaration-handler";
+import {
+    EndpointTypeSchemasContext,
+    EndpointTypesContext,
+    GeneratedUnion,
+} from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
-import { EndpointTypesContextImpl } from "./EndpointTypesContextImpl";
 import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType";
 
 export declare namespace GeneratedEndpointErrorSchema {
     export interface Init {
+        service: HttpService;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
     }
@@ -15,27 +19,25 @@ export declare namespace GeneratedEndpointErrorSchema {
 export class GeneratedEndpointErrorSchema {
     private static ERROR_SCHEMA_NAME = "Error";
 
+    private service: HttpService;
+    private endpoint: HttpEndpoint;
     private generatedErrorUnionSchema: GeneratedUnionSchema<EndpointTypeSchemasContext>;
 
-    constructor({ endpoint, errorResolver }: GeneratedEndpointErrorSchema.Init) {
+    constructor({ service, endpoint, errorResolver }: GeneratedEndpointErrorSchema.Init) {
+        this.service = service;
+        this.endpoint = endpoint;
+
         const discriminant = endpoint.errorsV2.discriminant;
         this.generatedErrorUnionSchema = new GeneratedUnionSchema<EndpointTypeSchemasContext>({
             discriminant,
-            getParsedDiscriminant: (context) => context.getEndpointTypesBeingGenerated().getErrorUnion().discriminant,
-            getReferenceToParsedUnion: (context) =>
-                context
-                    .getEndpointTypesBeingGenerated()
-                    .getErrorUnion()
-                    .getReferenceTo(new EndpointTypesContextImpl({ endpointTypeSchemaContext: context })),
+            getParsedDiscriminant: (context) => this.getErrorUnion(context).discriminant,
+            getReferenceToParsedUnion: (context) => this.getErrorUnion(context).getReferenceTo(context),
             buildParsedUnion: ({ discriminantValueToBuild, existingValue, context }) =>
-                context
-                    .getEndpointTypesBeingGenerated()
-                    .getErrorUnion()
-                    .buildFromExistingValue({
-                        discriminantValueToBuild,
-                        existingValue,
-                        context: new EndpointTypesContextImpl({ endpointTypeSchemaContext: context }),
-                    }),
+                this.getErrorUnion(context).buildFromExistingValue({
+                    discriminantValueToBuild,
+                    existingValue,
+                    context,
+                }),
             singleUnionTypes: endpoint.errors.map((responseError) => {
                 const errorDeclaration = errorResolver.getErrorDeclarationFromName(responseError.error);
                 if (errorDeclaration.typeV2 == null) {
@@ -58,5 +60,9 @@ export class GeneratedEndpointErrorSchema {
 
     public writeToFile(context: EndpointTypeSchemasContext): void {
         this.generatedErrorUnionSchema.writeSchemaToFile(context);
+    }
+
+    private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointTypesContext> {
+        return context.getGeneratedEndpointTypes(this.service.name, this.endpoint.id).getErrorUnion();
     }
 }

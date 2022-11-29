@@ -1,32 +1,38 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ErrorSchemaContext, GeneratedErrorSchema } from "@fern-typescript/sdk-declaration-handler";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { TypeSchemaContextImpl } from "./TypeSchemaContextImpl";
 
 export declare namespace GeneratedErrorSchemaImpl {
     export interface Init {
         errorName: string;
         errorDeclaration: ErrorDeclaration;
-        typeSchemaGenerator: TypeSchemaGenerator;
+        typeSchemaGenerator: TypeSchemaGenerator<ErrorSchemaContext>;
     }
 }
 
 export class GeneratedErrorSchemaImpl implements GeneratedErrorSchema {
     private errorName: string;
-    private typeSchemaGenerator: TypeSchemaGenerator;
+    private errorDeclaration: ErrorDeclaration;
+    private typeSchemaGenerator: TypeSchemaGenerator<ErrorSchemaContext>;
 
-    constructor({ errorName, typeSchemaGenerator }: GeneratedErrorSchemaImpl.Init) {
+    constructor({ errorName, errorDeclaration, typeSchemaGenerator }: GeneratedErrorSchemaImpl.Init) {
         this.errorName = errorName;
+        this.errorDeclaration = errorDeclaration;
         this.typeSchemaGenerator = typeSchemaGenerator;
     }
 
     public writeToFile(context: ErrorSchemaContext): void {
-        const generatedError = context.getErrorBeingGenerated();
+        const generatedError = context.getGeneratedError(this.errorDeclaration.name);
+        if (generatedError == null) {
+            throw new Error("Error was not generated");
+        }
         this.typeSchemaGenerator
             .generateTypeSchema({
                 typeName: this.errorName,
-                typeDeclaration: generatedError.getEquivalentTypeDeclaration(),
+                shape: this.errorDeclaration.type,
+                getGeneratedType: () => generatedError.getAsGeneratedType(),
+                getReferenceToGeneratedType: () => context.getReferenceToError(this.errorDeclaration.name),
             })
-            .writeToFile(new TypeSchemaContextImpl({ errorSchemaContext: context }));
+            .writeToFile(context);
     }
 }

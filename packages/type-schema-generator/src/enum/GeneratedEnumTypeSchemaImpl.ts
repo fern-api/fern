@@ -6,17 +6,17 @@ import { GeneratedEnumTypeSchema, TypeSchemaContext } from "@fern-typescript/sdk
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
-export class GeneratedEnumTypeSchemaImpl
-    extends AbstractGeneratedTypeSchema<EnumTypeDeclaration>
-    implements GeneratedEnumTypeSchema
+export class GeneratedEnumTypeSchemaImpl<Context extends TypeSchemaContext = TypeSchemaContext>
+    extends AbstractGeneratedTypeSchema<EnumTypeDeclaration, Context>
+    implements GeneratedEnumTypeSchema<Context>
 {
     public readonly type = "enum";
 
-    protected override getSchema(context: TypeSchemaContext): Zurg.Schema {
+    protected override getSchema(context: Context): Zurg.Schema {
         return context.coreUtilities.zurg.enum(this.shape.values.map((value) => value.value));
     }
 
-    protected override generateRawTypeDeclaration(_context: TypeSchemaContext, module: ModuleDeclaration): void {
+    protected override generateRawTypeDeclaration(_context: Context, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             type: getTextOfTsNode(

@@ -24,8 +24,9 @@ export class EndpointTypeSchemasGenerator {
     }
 
     public generateEndpointTypeSchemas({
+        service,
         endpoint,
     }: EndpointTypeSchemasGenerator.generateEndpointTypeSchemas.Args): GeneratedEndpointTypeSchemas {
-        return new GeneratedEndpointTypeSchemasImpl({ endpoint, errorResolver: this.errorResolver });
+        return new GeneratedEndpointTypeSchemasImpl({ service, endpoint, errorResolver: this.errorResolver });
     }
 }

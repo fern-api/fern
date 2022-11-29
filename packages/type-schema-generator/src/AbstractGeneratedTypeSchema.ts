@@ -1,31 +1,41 @@
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedType, Reference, TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedTypeSchema {
-    export interface Init<Shape> {
+    export interface Init<Shape, Context extends TypeSchemaContext = TypeSchemaContext> {
         typeName: string;
-        typeDeclaration: TypeDeclaration;
         shape: Shape;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: (context: Context) => Reference;
     }
 }
 
-export abstract class AbstractGeneratedTypeSchema<Shape> extends AbstractGeneratedSchema<TypeSchemaContext> {
-    protected typeDeclaration: TypeDeclaration;
+export abstract class AbstractGeneratedTypeSchema<
+    Shape,
+    Context extends TypeSchemaContext = TypeSchemaContext
+> extends AbstractGeneratedSchema<Context> {
     protected shape: Shape;
+    protected getGeneratedType: () => GeneratedType<Context>;
+    protected getReferenceToGeneratedType: (context: Context) => Reference;
 
-    constructor({ typeName, typeDeclaration, shape }: AbstractGeneratedTypeSchema.Init<Shape>) {
+    constructor({
+        typeName,
+        shape,
+        getGeneratedType,
+        getReferenceToGeneratedType,
+    }: AbstractGeneratedTypeSchema.Init<Shape, Context>) {
         super({ typeName });
-        this.typeDeclaration = typeDeclaration;
         this.shape = shape;
+        this.getGeneratedType = getGeneratedType;
+        this.getReferenceToGeneratedType = getReferenceToGeneratedType;
     }
 
-    public writeToFile(context: TypeSchemaContext): void {
+    public writeToFile(context: Context): void {
         this.writeSchemaToFile(context);
     }
 
-    protected override getReferenceToParsedShape(context: TypeSchemaContext): ts.TypeNode {
-        return context.getReferenceToNamedType(this.typeDeclaration.name).getTypeNode();
+    protected override getReferenceToParsedShape(context: Context): ts.TypeNode {
+        return this.getReferenceToGeneratedType(context).getTypeNode();
     }
 }

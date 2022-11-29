@@ -21,13 +21,15 @@ export declare namespace ParsedSingleUnionTypeForUnion {
     }
 }
 
-export class ParsedSingleUnionTypeForUnion extends AbstractParsedSingleUnionType<TypeContext> {
+export class ParsedSingleUnionTypeForUnion<
+    Context extends TypeContext = TypeContext
+> extends AbstractParsedSingleUnionType<Context> {
     private singleUnionTypeFromUnion: SingleUnionType;
     protected union: UnionTypeDeclaration;
 
     constructor(init: ParsedSingleUnionTypeForUnion.Init) {
         super(
-            SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<TypeContext>>(init.singleUnionType.shape, {
+            SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(init.singleUnionType.shape, {
                 noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                 samePropertiesAsObject: (extended) => new SamePropertyAsObjectSingleUnionTypeGenerator({ extended }),
                 singleProperty: (singleProperty) =>

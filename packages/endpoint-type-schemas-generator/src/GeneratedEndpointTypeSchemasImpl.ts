@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
@@ -6,6 +6,7 @@ import { GeneratedTypeReferenceSchema } from "./GeneratedTypeReferenceSchema";
 
 export declare namespace GeneratedEndpointTypeSchemasImpl {
     export interface Init {
+        service: HttpService;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
     }
@@ -19,7 +20,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     private generatedResponseSchema: GeneratedTypeReferenceSchema | undefined;
     private generatedErrorSchema: GeneratedEndpointErrorSchema;
 
-    constructor({ endpoint, errorResolver }: GeneratedEndpointTypeSchemasImpl.Init) {
+    constructor({ service, endpoint, errorResolver }: GeneratedEndpointTypeSchemasImpl.Init) {
         this.generatedRequestSchema = GeneratedTypeReferenceSchema.of({
             typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
             typeReference: endpoint.request.typeV2 ?? undefined,
@@ -28,7 +29,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
             typeName: GeneratedEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
             typeReference: endpoint.response.typeV2 ?? undefined,
         });
-        this.generatedErrorSchema = new GeneratedEndpointErrorSchema({ endpoint, errorResolver });
+        this.generatedErrorSchema = new GeneratedEndpointErrorSchema({ service, endpoint, errorResolver });
     }
 
     public writeToFile(context: EndpointTypeSchemasContext): void {

@@ -1,21 +1,19 @@
 import { SingleUnionTypeProperty, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
-import {
-    GeneratedUnion,
-    GeneratedUnionType,
-    TypeContext,
-    TypeSchemaContext,
-} from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedUnion, GeneratedUnionType, TypeContext } from "@fern-typescript/sdk-declaration-handler";
 import { AbstractParsedSingleUnionType, GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 
-export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDeclaration> implements GeneratedUnionType {
+export class GeneratedUnionTypeImpl<Context extends TypeContext = TypeContext>
+    extends AbstractGeneratedType<UnionTypeDeclaration, Context>
+    implements GeneratedUnionType<Context>
+{
     public readonly type = "union";
 
-    private generatedUnion: GeneratedUnionImpl<TypeContext>;
+    private generatedUnion: GeneratedUnionImpl<Context>;
 
-    constructor(superInit: AbstractGeneratedType.Init<UnionTypeDeclaration>) {
+    constructor(superInit: AbstractGeneratedType.Init<UnionTypeDeclaration, Context>) {
         super(superInit);
 
         const parsedSingleUnionTypes = this.shape.types.map(
@@ -25,7 +23,7 @@ export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDecla
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
-            docs: this.typeDeclaration.docs,
+            docs: this.docs,
             discriminant: this.shape.discriminantV2,
             parsedSingleUnionTypes,
             unknownSingleUnionType: {
@@ -45,11 +43,11 @@ export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDecla
         });
     }
 
-    public writeToFile(context: TypeContext): void {
+    public writeToFile(context: Context): void {
         this.generatedUnion.writeToFile(context);
     }
 
-    public getGeneratedUnion(): GeneratedUnion<TypeContext> {
+    public getGeneratedUnion(): GeneratedUnion<Context> {
         return this.generatedUnion;
     }
 
@@ -61,7 +59,7 @@ export class GeneratedUnionTypeImpl extends AbstractGeneratedType<UnionTypeDecla
         context,
         parsedValue,
     }: {
-        context: TypeSchemaContext;
+        context: Context;
         parsedValue: ts.Expression;
     }): ts.Expression {
         return this.generatedUnion.addVistMethodToValue({ context, parsedValue });

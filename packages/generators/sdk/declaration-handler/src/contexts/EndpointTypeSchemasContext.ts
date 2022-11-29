@@ -1,7 +1,7 @@
-import { GeneratedEndpointTypes } from "../generated-types";
-import { Reference } from "../Reference";
 import { BaseContext } from "./BaseContext";
 import {
+    EndpointTypeSchemasReferencingContextMixin,
+    EndpointTypesReferencingContextMixin,
     ErrorReferencingContextMixin,
     ErrorSchemaReferencingContextMixin,
     TypeReferencingContextMixin,
@@ -13,7 +13,6 @@ export interface EndpointTypeSchemasContext
         TypeReferencingContextMixin,
         TypeSchemaReferencingContextMixin,
         ErrorReferencingContextMixin,
-        ErrorSchemaReferencingContextMixin {
-    getEndpointTypesBeingGenerated: () => GeneratedEndpointTypes;
-    getReferenceToEndpointTypeExport: (export_: string | string[]) => Reference;
-}
+        ErrorSchemaReferencingContextMixin,
+        EndpointTypesReferencingContextMixin,
+        EndpointTypeSchemasReferencingContextMixin {}

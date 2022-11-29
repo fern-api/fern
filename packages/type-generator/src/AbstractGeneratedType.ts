@@ -1,26 +1,34 @@
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import { FernFilepathV2 } from "@fern-fern/ir-model/commons";
 import { Reference, TypeContext } from "@fern-typescript/sdk-declaration-handler";
 
 export declare namespace AbstractGeneratedType {
-    export interface Init<Shape> {
+    export interface Init<Shape, Context extends TypeContext = TypeContext> {
         typeName: string;
-        typeDeclaration: TypeDeclaration;
         shape: Shape;
+        docs: string | undefined;
+        fernFilepath: FernFilepathV2;
+        getReferenceToSelf: (context: Context) => Reference;
     }
 }
 
-export abstract class AbstractGeneratedType<Shape> {
+export abstract class AbstractGeneratedType<Shape, Context extends TypeContext = TypeContext> {
     protected typeName: string;
-    protected typeDeclaration: TypeDeclaration;
     protected shape: Shape;
+    protected docs: string | undefined;
+    protected fernFilepath: FernFilepathV2;
+    protected getReferenceToSelf: (context: Context) => Reference;
 
-    constructor({ typeName, typeDeclaration, shape }: AbstractGeneratedType.Init<Shape>) {
+    constructor({
+        getReferenceToSelf,
+        typeName,
+        shape,
+        docs,
+        fernFilepath,
+    }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
-        this.typeDeclaration = typeDeclaration;
         this.shape = shape;
-    }
-
-    protected getReferenceToSelf(context: TypeContext): Reference {
-        return context.getReferenceToNamedType(this.typeDeclaration.name);
+        this.getReferenceToSelf = getReferenceToSelf;
+        this.docs = docs;
+        this.fernFilepath = fernFilepath;
     }
 }

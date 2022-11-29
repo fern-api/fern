@@ -1,34 +1,35 @@
-import { DeclaredTypeName, SingleUnionTypeProperty } from "@fern-fern/ir-model/types";
+import { SingleUnionTypeProperty } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedType, TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace RawSinglePropertySingleUnionType {
-    export interface Init extends AbstractRawSingleUnionType.Init {
-        unionTypeName: DeclaredTypeName;
+    export interface Init<Context extends TypeSchemaContext = TypeSchemaContext>
+        extends AbstractRawSingleUnionType.Init {
         singleProperty: SingleUnionTypeProperty;
+        getGeneratedType: () => GeneratedType<Context>;
     }
 }
 
-export class RawSinglePropertySingleUnionType extends AbstractRawSingleUnionType<TypeSchemaContext> {
-    private unionTypeName: DeclaredTypeName;
+export class RawSinglePropertySingleUnionType<
+    Context extends TypeSchemaContext = TypeSchemaContext
+> extends AbstractRawSingleUnionType<Context> {
     private singleProperty: SingleUnionTypeProperty;
+    private getGeneratedType: () => GeneratedType<Context>;
 
-    constructor({ singleProperty, unionTypeName, ...superInit }: RawSinglePropertySingleUnionType.Init) {
+    constructor({ singleProperty, getGeneratedType, ...superInit }: RawSinglePropertySingleUnionType.Init<Context>) {
         super(superInit);
-        this.unionTypeName = unionTypeName;
         this.singleProperty = singleProperty;
+        this.getGeneratedType = getGeneratedType;
     }
 
     protected getExtends(): ts.TypeNode[] {
         return [];
     }
 
-    protected getNonDiscriminantPropertiesForInterface(
-        context: TypeSchemaContext
-    ): OptionalKind<PropertySignatureStructure>[] {
+    protected getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
         const type = context.getReferenceToRawType(this.singleProperty.type);
         return [
             {
@@ -40,11 +41,11 @@ export class RawSinglePropertySingleUnionType extends AbstractRawSingleUnionType
     }
 
     protected getNonDiscriminantPropertiesForSchema(
-        context: TypeSchemaContext
+        context: Context
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
-        const unionBeingGenerated = context.getTypeBeingGenerated();
+        const unionBeingGenerated = this.getGeneratedType();
         if (unionBeingGenerated.type !== "union") {
-            throw new Error("Type is not a union: " + this.unionTypeName.nameV3.unsafeName.originalValue);
+            throw new Error("Type is not a union");
         }
         return {
             isInline: true,

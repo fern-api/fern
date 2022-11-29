@@ -2,54 +2,67 @@ import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
+import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { ErrorSchemaContext, GeneratedError, Reference } from "@fern-typescript/sdk-declaration-handler";
+import {
+    ErrorSchemaContext,
+    GeneratedError,
+    GeneratedErrorSchema,
+    GeneratedType,
+    GeneratedTypeSchema,
+    Reference,
+} from "@fern-typescript/sdk-declaration-handler";
+import { TypeGenerator } from "@fern-typescript/type-generator";
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
+import { ErrorReferencingContextMixinImpl } from "./mixins/ErrorReferencingContextMixinImpl";
+import { ErrorSchemaReferencingContextMixinImpl } from "./mixins/ErrorSchemaReferencingContextMixinImpl";
 import { TypeReferencingContextMixinImpl } from "./mixins/TypeReferencingContextMixinImpl";
 import { TypeSchemaReferencingContextMixinImpl } from "./mixins/TypeSchemaReferencingContextMixinImpl";
 
 export declare namespace ErrorSchemaContextImpl {
     export interface Init extends BaseContextImpl.Init {
+        typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
+        typeSchemaGenerator: TypeSchemaGenerator;
         errorDeclarationReferencer: ErrorDeclarationReferencer;
+        errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
+        errorSchemaGenerator: ErrorSchemaGenerator;
         errorGenerator: ErrorGenerator;
         errorResolver: ErrorResolver;
-        errorBeingGenerated: DeclaredErrorName;
     }
 }
 
 export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSchemaContext {
     private typeReferencingContextMixin: TypeReferencingContextMixinImpl;
     private typeSchemaReferencingContextMixin: TypeSchemaReferencingContextMixinImpl;
-    private errorDeclarationReferencer: ErrorDeclarationReferencer;
-    private errorGenerator: ErrorGenerator;
-    private errorResolver: ErrorResolver;
-    private errorBeingGenerated: DeclaredErrorName;
+    private errorReferencingContextMixin: ErrorReferencingContextMixinImpl;
+    private errorSchemaReferencingContextMixin: ErrorSchemaReferencingContextMixinImpl;
 
     constructor({
+        typeGenerator,
         typeResolver,
         typeDeclarationReferencer,
         typeSchemaDeclarationReferencer,
+        typeSchemaGenerator,
         errorDeclarationReferencer,
+        errorSchemaDeclarationReferencer,
+        errorSchemaGenerator,
         errorGenerator,
         errorResolver,
-        errorBeingGenerated,
         ...superInit
     }: ErrorSchemaContextImpl.Init) {
         super(superInit);
-        this.errorGenerator = errorGenerator;
-        this.errorDeclarationReferencer = errorDeclarationReferencer;
-        this.errorResolver = errorResolver;
-        this.errorBeingGenerated = errorBeingGenerated;
         this.typeReferencingContextMixin = new TypeReferencingContextMixinImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
             typeResolver,
             typeDeclarationReferencer,
+            typeGenerator,
         });
         this.typeSchemaReferencingContextMixin = new TypeSchemaReferencingContextMixinImpl({
             sourceFile: this.sourceFile,
@@ -57,6 +70,24 @@ export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSche
             importsManager: this.importsManager,
             typeResolver,
             typeSchemaDeclarationReferencer,
+            typeDeclarationReferencer,
+            typeGenerator,
+            typeSchemaGenerator,
+        });
+        this.errorReferencingContextMixin = new ErrorReferencingContextMixinImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            errorDeclarationReferencer,
+            errorGenerator,
+            errorResolver,
+        });
+        this.errorSchemaReferencingContextMixin = new ErrorSchemaReferencingContextMixinImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            coreUtilities: this.coreUtilities,
+            errorSchemaDeclarationReferencer,
+            errorSchemaGenerator,
+            errorResolver,
         });
     }
 
@@ -76,6 +107,10 @@ export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSche
         return this.typeReferencingContextMixin.resolveTypeName(typeName);
     }
 
+    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
+        return this.typeReferencingContextMixin.getGeneratedType(typeName);
+    }
+
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
         return this.typeSchemaReferencingContextMixin.getReferenceToRawType(typeReference);
     }
@@ -92,16 +127,27 @@ export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSche
         return this.typeSchemaReferencingContextMixin.getSchemaOfNamedType(typeName);
     }
 
-    public getErrorBeingGenerated(): GeneratedError {
-        const generatedError = this.errorGenerator.generateError({
-            errorName: this.errorDeclarationReferencer.getExportedName(this.errorBeingGenerated),
-            errorDeclaration: this.errorResolver.getErrorDeclarationFromName(this.errorBeingGenerated),
-        });
-        if (generatedError == null) {
-            throw new Error(
-                "No error was generated for name: " + this.errorBeingGenerated.nameV3.unsafeName.originalValue
-            );
-        }
-        return generatedError;
+    public getGeneratedTypeSchema(typeName: DeclaredTypeName): GeneratedTypeSchema {
+        return this.typeSchemaReferencingContextMixin.getGeneratedTypeSchema(typeName);
+    }
+
+    public getReferenceToError(errorName: DeclaredErrorName): Reference {
+        return this.errorReferencingContextMixin.getReferenceToError(errorName);
+    }
+
+    public getGeneratedError(errorName: DeclaredErrorName): GeneratedError | undefined {
+        return this.errorReferencingContextMixin.getGeneratedError(errorName);
+    }
+
+    public getReferenceToRawError(errorName: DeclaredErrorName): Reference {
+        return this.errorSchemaReferencingContextMixin.getReferenceToRawError(errorName);
+    }
+
+    public getSchemaOfError(errorName: DeclaredErrorName): Zurg.Schema {
+        return this.errorSchemaReferencingContextMixin.getSchemaOfError(errorName);
+    }
+
+    public getGeneratedErrorSchema(errorName: DeclaredErrorName): GeneratedErrorSchema | undefined {
+        return this.errorSchemaReferencingContextMixin.getGeneratedErrorSchema(errorName);
     }
 }
