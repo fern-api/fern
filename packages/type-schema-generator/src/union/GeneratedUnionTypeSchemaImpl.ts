@@ -5,10 +5,13 @@ import {
     GeneratedUnionTypeSchema,
     TypeSchemaContext,
 } from "@fern-typescript/sdk-declaration-handler";
-import { GeneratedUnionSchema, RawSingleUnionType } from "@fern-typescript/union-schema-generator";
+import {
+    GeneratedUnionSchema,
+    RawNoPropertiesSingleUnionType,
+    RawSingleUnionType,
+} from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
-import { RawNoPropertiesSingleUnionType } from "./RawNoPropertiesSingleUnionType";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
 
@@ -27,7 +30,15 @@ export class GeneratedUnionTypeSchemaImpl
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
             discriminant,
-            getGeneratedUnion: (context) => this.getGeneratedUnionType(context).getGeneratedUnion(),
+            getParsedDiscriminant: (context) => this.getGeneratedUnionType(context).getGeneratedUnion().discriminant,
+            getReferenceToParsedUnion: (context) =>
+                this.getGeneratedUnionType(context).getGeneratedUnion().getReferenceTo(context),
+            buildParsedUnion: ({ discriminantValueToBuild, existingValue, context }) =>
+                this.getGeneratedUnionType(context).getGeneratedUnion().buildFromExistingValue({
+                    discriminantValueToBuild,
+                    existingValue,
+                    context,
+                }),
             getDefaultCaseForParseTransform: ({ context, parsedValue }) =>
                 this.getDefaultCaseForParseTransform({ context, parsedValue }),
             singleUnionTypes: this.shape.types.map((singleUnionType) => {

@@ -17359,7 +17359,7 @@ import * as serializers from \\"../..\\";
 export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.getPlaylist.Error> = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(async () => serializers.PlaylistIdNotFoundError),
+      content: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundError),
     }),
     UnauthorizedError: core.schemas.object({}),
   })
@@ -17433,7 +17433,7 @@ export const Response: core.schemas.Schema<serializers.Playlist.Raw | null | und
 export const Error: core.schemas.Schema<Error.Raw, TraceApi.playlist.updatePlaylist.Error> = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(async () => serializers.PlaylistIdNotFoundError),
+      content: core.schemas.lazy(async () => (await import(\\"../..\\")).PlaylistIdNotFoundError),
     }),
   })
   .transform<TraceApi.playlist.updatePlaylist.Error>({

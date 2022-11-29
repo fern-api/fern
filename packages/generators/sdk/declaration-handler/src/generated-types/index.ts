@@ -6,6 +6,7 @@ export {
 } from "./GeneratedAliasType";
 export { type GeneratedAliasTypeSchema } from "./GeneratedAliasTypeSchema";
 export { type GeneratedEndpointTypes } from "./GeneratedEndpointTypes";
+export { type GeneratedEndpointTypeSchemas } from "./GeneratedEndpointTypeSchemas";
 export { type GeneratedEnumType } from "./GeneratedEnumType";
 export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
 export { type GeneratedError } from "./GeneratedError";

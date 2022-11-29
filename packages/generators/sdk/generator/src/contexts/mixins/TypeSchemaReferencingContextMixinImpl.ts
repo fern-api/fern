@@ -8,9 +8,9 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
 import { SourceFile } from "ts-morph";
-import { ImportStrategy } from "../../declaration-referencers/DeclarationReferencer";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
+import { getSchemaImportStrategy } from "./getSchemaImportStrategy";
 
 export declare namespace TypeSchemaReferencingContextMixinImpl {
     export interface Init {
@@ -61,7 +61,7 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
     public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
         return this.typeSchemaDeclarationReferencer.getReferenceToType({
             name: typeName,
-            importStrategy: this.getSchemaImportStrategy({
+            importStrategy: getSchemaImportStrategy({
                 // dynamic import not needed for types
                 useDynamicImport: false,
             }),
@@ -69,14 +69,6 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
             importsManager: this.importsManager,
             referencedIn: this.sourceFile,
         });
-    }
-
-    private getSchemaImportStrategy({ useDynamicImport }: { useDynamicImport: boolean }): ImportStrategy {
-        return {
-            type: "fromRoot",
-            namespaceImport: "serializers",
-            useDynamicImport,
-        };
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
@@ -87,7 +79,7 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
         const referenceToSchema = this.typeSchemaDeclarationReferencer
             .getReferenceToType({
                 name: typeName,
-                importStrategy: this.getSchemaImportStrategy({
+                importStrategy: getSchemaImportStrategy({
                     // use dynamic imports when referencing schemas insides schemas,
                     // to avoid issues with circular imports
                     useDynamicImport: true,
@@ -99,7 +91,7 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
 
         const schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema);
 
-        // when generating schemas, wrapped named types with lazy() to prevent issues with circular imports
+        // when generating schemas, wrap named types with lazy() to prevent issues with circular imports
         return this.wrapSchemaWithLazy(schema, typeName);
     }
 

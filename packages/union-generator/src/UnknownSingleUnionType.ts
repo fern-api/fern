@@ -1,8 +1,8 @@
-import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-export interface UnknownSingleUnionType {
+export interface UnknownSingleUnionType<Context extends BaseContext> {
     discriminantType: ts.TypeNode;
-    getVisitorArgument: (context: TypeContext) => ts.TypeNode;
-    getNonDiscriminantProperties?: (context: TypeContext) => OptionalKind<PropertySignatureStructure>[];
+    getVisitorArgument: (context: Context) => ts.TypeNode;
+    getNonDiscriminantProperties?: (context: Context) => OptionalKind<PropertySignatureStructure>[];
 }

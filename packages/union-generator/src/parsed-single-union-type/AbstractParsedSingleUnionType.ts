@@ -1,17 +1,17 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
 
-export abstract class AbstractParsedSingleUnionType<Context extends TypeContext>
+export abstract class AbstractParsedSingleUnionType<Context extends BaseContext>
     implements ParsedSingleUnionType<Context>
 {
     private static VISITOR_PARAMETER_NAME = "visitor";
 
-    constructor(private readonly singleUnionType: SingleUnionTypeGenerator) {}
+    constructor(private readonly singleUnionType: SingleUnionTypeGenerator<Context>) {}
 
     public getInterfaceDeclaration(context: Context): ParsedSingleUnionType.InterfaceDeclaration {
         return AbstractParsedSingleUnionType.createDiscriminatedInterface({
@@ -105,7 +105,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends TypeContext>
         );
     }
 
-    public static addVisitMethodToValue<Context extends TypeContext>({
+    public static addVisitMethodToValue<Context extends BaseContext>({
         context,
         generatedUnion,
         value,

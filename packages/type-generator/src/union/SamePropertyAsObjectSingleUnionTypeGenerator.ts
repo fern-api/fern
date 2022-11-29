@@ -3,7 +3,7 @@ import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-export class SamePropertyAsObjectSingleUnionTypeGenerator implements SingleUnionTypeGenerator {
+export class SamePropertyAsObjectSingleUnionTypeGenerator implements SingleUnionTypeGenerator<TypeContext> {
     private extended: DeclaredTypeName;
     private static BUILDER_PARAMETER_NAME = "value";
 

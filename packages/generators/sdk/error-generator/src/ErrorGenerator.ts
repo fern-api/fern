@@ -27,7 +27,7 @@ export class ErrorGenerator {
         errorDeclaration,
         errorName,
     }: ErrorGenerator.generateError.Args): GeneratedError | undefined {
-        if (errorDeclaration.type._type === "alias" && errorDeclaration.type.aliasOf._type === "void") {
+        if (errorDeclaration.typeV3 == null) {
             return undefined;
         }
         return new GeneratedErrorImpl({

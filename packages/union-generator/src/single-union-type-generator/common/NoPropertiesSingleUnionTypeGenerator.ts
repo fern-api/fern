@@ -1,7 +1,10 @@
+import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
-export class NoPropertiesSingleUnionTypeGenerator implements SingleUnionTypeGenerator {
+export class NoPropertiesSingleUnionTypeGenerator<Context extends BaseContext>
+    implements SingleUnionTypeGenerator<Context>
+{
     public getExtendsForInterface(): ts.TypeNode[] {
         return [];
     }

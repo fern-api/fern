@@ -1,17 +1,19 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
-import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {
-    export interface Init<Context extends TypeContext> {
+    export interface Init<Context extends BaseContext> {
         propertyName: string;
         getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
     }
 }
 
-export class SinglePropertySingleUnionTypeGenerator<Context extends TypeContext> implements SingleUnionTypeGenerator {
+export class SinglePropertySingleUnionTypeGenerator<Context extends BaseContext>
+    implements SingleUnionTypeGenerator<Context>
+{
     private static BUILDER_PARAMETER_NAME = "value";
 
     private propertyName: string;

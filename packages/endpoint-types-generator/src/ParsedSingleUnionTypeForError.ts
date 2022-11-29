@@ -21,7 +21,7 @@ export class ParsedSingleUnionTypeForError extends AbstractParsedSingleUnionType
 
     constructor({ error, errors }: ParsedSingleUnionTypeForError.Init) {
         super(
-            ResponseErrorShape._visit<SingleUnionTypeGenerator>(error.shape, {
+            ResponseErrorShape._visit<SingleUnionTypeGenerator<EndpointTypesContext>>(error.shape, {
                 noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                 singleProperty: (singleProperty) =>
                     new SinglePropertySingleUnionTypeGenerator<EndpointTypesContext>({

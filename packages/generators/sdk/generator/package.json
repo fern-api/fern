@@ -30,6 +30,7 @@
     "@fern-fern/ir-model": "0.0.294",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
+    "@fern-typescript/endpoint-type-schemas-generator": "workspace:*",
     "@fern-typescript/endpoint-types-generator": "workspace:*",
     "@fern-typescript/error-generator": "workspace:*",
     "@fern-typescript/error-schema-generator": "workspace:*",

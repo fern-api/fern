@@ -1,17 +1,28 @@
 import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { FernConstants } from "@fern-fern/ir-model/ir";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { ExpressionReferenceNode, TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
-import { ts } from "ts-morph";
-import { TypeContext } from "./contexts/TypeContext";
+import { SourceFile, ts } from "ts-morph";
+import { CoreUtilities } from "./core-utilities";
+import { ExternalDependencies } from "./external-dependencies";
 import { ParsedAuthSchemes } from "./ParsedAuthSchemes";
 import { ParsedEnvironments } from "./ParsedEnvironments";
 import { ParsedGlobalHeaders } from "./ParsedGlobalHeaders";
 import { Reference } from "./Reference";
 
-export interface SdkFile extends TypeContext {
+export interface SdkFile {
+    sourceFile: SourceFile;
+    externalDependencies: ExternalDependencies;
+    coreUtilities: CoreUtilities;
+    fernConstants: FernConstants;
+
     // types
+    getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
+    getReferenceToNamedType: (typeName: DeclaredTypeName) => Reference;
+    resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;
+    resolveTypeName: (typeName: DeclaredTypeName) => ResolvedTypeReference;
     convertExpressionToString: (expression: ts.Expression, type: TypeReference) => ExpressionReferenceNode;
 
     // schemas

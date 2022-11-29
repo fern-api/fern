@@ -1,6 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { EndpointTypesContext, GeneratedEndpointTypes } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
 import { ParsedSingleUnionTypeForError } from "./ParsedSingleUnionTypeForError";
@@ -57,6 +57,10 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
         this.request.writeToFile(context);
         this.writeResponseToFile(context);
         this.errorUnion.writeToFile(context);
+    }
+
+    public getErrorUnion(): GeneratedUnion<EndpointTypesContext> {
+        return this.errorUnion;
     }
 
     private writeResponseToFile(context: EndpointTypesContext): void {

@@ -1,8 +1,8 @@
-import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
-export interface ParsedSingleUnionType<Context extends TypeContext> {
+export interface ParsedSingleUnionType<Context extends BaseContext> {
     getDocs(): string | null | undefined;
     getDiscriminantValue(): string;
     getInterfaceName(): string;

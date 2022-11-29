@@ -1,8 +1,8 @@
 import { ts } from "ts-morph";
-import { TypeContext } from "../contexts/TypeContext";
+import { BaseContext } from "../contexts";
 import { BaseGenerated } from "./BaseGenerated";
 
-export interface GeneratedUnion<Context extends TypeContext> extends BaseGenerated<Context> {
+export interface GeneratedUnion<Context extends BaseContext> extends BaseGenerated<Context> {
     discriminant: string;
     getReferenceTo: (context: Context) => ts.TypeNode;
     buildFromExistingValue: (args: {

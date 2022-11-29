@@ -27,7 +27,7 @@ export class ParsedSingleUnionTypeForUnion extends AbstractParsedSingleUnionType
 
     constructor(init: ParsedSingleUnionTypeForUnion.Init) {
         super(
-            SingleUnionTypeProperties._visit<SingleUnionTypeGenerator>(init.singleUnionType.shape, {
+            SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<TypeContext>>(init.singleUnionType.shape, {
                 noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                 samePropertiesAsObject: (extended) => new SamePropertyAsObjectSingleUnionTypeGenerator({ extended }),
                 singleProperty: (singleProperty) =>

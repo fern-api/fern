@@ -1,4 +1,4 @@
-import { FernConstants } from "@fern-fern/ir-model/ir";
+import { Constants } from "@fern-fern/ir-model/constants";
 import { CoreUtilities, ExternalDependencies } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { CoreUtilitiesManager } from "../core-utilities/CoreUtilitiesManager";
@@ -12,7 +12,7 @@ export declare namespace BaseContextImpl {
         importsManager: ImportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
-        fernConstants: FernConstants;
+        fernConstants: Constants;
     }
 }
 
@@ -20,7 +20,7 @@ export abstract class BaseContextImpl {
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
-    public readonly fernConstants: FernConstants;
+    public readonly fernConstants: Constants;
 
     protected importsManager: ImportsManager;
 

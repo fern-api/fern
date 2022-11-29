@@ -1,7 +1,7 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ErrorSchemaContext, GeneratedErrorSchema } from "@fern-typescript/sdk-declaration-handler";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { TypeSchemaContextForErrorSchema } from "./TypeSchemaContextForErrorSchema";
+import { TypeSchemaContextImpl } from "./TypeSchemaContextImpl";
 
 export declare namespace GeneratedErrorSchemaImpl {
     export interface Init {
@@ -27,6 +27,6 @@ export class GeneratedErrorSchemaImpl implements GeneratedErrorSchema {
                 typeName: this.errorName,
                 typeDeclaration: generatedError.getEquivalentTypeDeclaration(),
             })
-            .writeToFile(new TypeSchemaContextForErrorSchema({ errorSchemaContext: context }));
+            .writeToFile(new TypeSchemaContextImpl({ errorSchemaContext: context }));
     }
 }

@@ -6,7 +6,7 @@ import {
     maybeAddDocs,
     ObjectWriter,
 } from "@fern-typescript/commons";
-import { GeneratedUnion, Reference, TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { BaseContext, GeneratedUnion, Reference } from "@fern-typescript/sdk-declaration-handler";
 import {
     InterfaceDeclarationStructure,
     OptionalKind,
@@ -19,17 +19,17 @@ import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUn
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 
 export declare namespace GeneratedUnionImpl {
-    export interface Init<Context extends TypeContext> {
+    export interface Init<Context extends BaseContext> {
         typeName: string;
         discriminant: WireStringWithAllCasings;
         docs: string | null | undefined;
         parsedSingleUnionTypes: ParsedSingleUnionType<Context>[];
-        unknownSingleUnionType: UnknownSingleUnionType;
+        unknownSingleUnionType: UnknownSingleUnionType<Context>;
         getReferenceToUnion: (context: Context) => Reference;
     }
 }
 
-export class GeneratedUnionImpl<Context extends TypeContext> implements GeneratedUnion<Context> {
+export class GeneratedUnionImpl<Context extends BaseContext> implements GeneratedUnion<Context> {
     public static readonly UNKNOWN_SINGLE_UNION_TYPE_INTERFACE_NAME = "_Unknown";
     public static readonly UTILS_INTERFACE_NAME = "_Utils";
     public static readonly VISITOR_INTERFACE_NAME = "_Visitor";
@@ -43,7 +43,7 @@ export class GeneratedUnionImpl<Context extends TypeContext> implements Generate
     private docs: string | null | undefined;
     private typeName: string;
     private parsedSingleUnionTypes: ParsedSingleUnionType<Context>[];
-    private unknownSingleUnionType: UnknownSingleUnionType;
+    private unknownSingleUnionType: UnknownSingleUnionType<Context>;
 
     public readonly getReferenceToUnion: (context: Context) => Reference;
 

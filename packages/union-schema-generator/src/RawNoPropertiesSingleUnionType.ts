@@ -1,9 +1,9 @@
 import { Zurg } from "@fern-typescript/commons-v2";
-import { TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
-import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
+import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { AbstractRawSingleUnionType } from "./AbstractRawSingleUnionType";
 
-export class RawNoPropertiesSingleUnionType extends AbstractRawSingleUnionType<TypeSchemaContext> {
+export class RawNoPropertiesSingleUnionType<Context extends BaseContext> extends AbstractRawSingleUnionType<Context> {
     protected getExtends(): ts.TypeNode[] {
         return [];
     }

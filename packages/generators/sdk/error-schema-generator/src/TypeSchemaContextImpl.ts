@@ -1,4 +1,4 @@
-import { FernConstants } from "@fern-fern/ir-model/ir";
+import { Constants } from "@fern-fern/ir-model/constants";
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode, Zurg } from "@fern-typescript/commons-v2";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 
-export class TypeSchemaContextForErrorSchema implements TypeSchemaContext {
+export class TypeSchemaContextImpl implements TypeSchemaContext {
     private errorSchemaContext: ErrorSchemaContext;
 
     constructor({ errorSchemaContext }: { errorSchemaContext: ErrorSchemaContext }) {
@@ -30,7 +30,7 @@ export class TypeSchemaContextForErrorSchema implements TypeSchemaContext {
         return this.errorSchemaContext.coreUtilities;
     }
 
-    public get fernConstants(): FernConstants {
+    public get fernConstants(): Constants {
         return this.errorSchemaContext.fernConstants;
     }
 
