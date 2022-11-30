@@ -4417,6 +4417,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
         \\"@types/url-join\\": \\"4.0.1\\",
         \\"axios\\": \\"^0.27.2\\",
         \\"basic-auth\\": \\"^2.0.1\\",
+        \\"buffer\\": \\"^6.0.3\\",
         \\"js-base64\\": \\"^3.7.2\\",
         \\"url-join\\": \\"4.0.1\\"
     },

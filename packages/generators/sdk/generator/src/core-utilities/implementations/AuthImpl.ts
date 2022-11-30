@@ -16,6 +16,7 @@ export class AuthImpl extends CoreUtility implements Auth {
             dependencyManager.addDependency("basic-auth", "^2.0.1");
             dependencyManager.addDependency("@types/basic-auth", "^1.1.3");
             dependencyManager.addDependency("js-base64", "^3.7.2");
+            dependencyManager.addDependency("buffer", "^6.0.3");
         },
     };
 
