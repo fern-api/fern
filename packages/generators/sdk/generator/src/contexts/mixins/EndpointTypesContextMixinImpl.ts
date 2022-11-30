@@ -1,16 +1,12 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
-import {
-    EndpointTypesReferencingContextMixin,
-    GeneratedEndpointTypes,
-    Reference,
-} from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContextMixin, GeneratedEndpointTypes, Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
 
-export declare namespace EndpointTypesReferencingContextMixinImpl {
+export declare namespace EndpointTypesContextMixinImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
@@ -20,7 +16,7 @@ export declare namespace EndpointTypesReferencingContextMixinImpl {
     }
 }
 
-export class EndpointTypesReferencingContextMixinImpl implements EndpointTypesReferencingContextMixin {
+export class EndpointTypesContextMixinImpl implements EndpointTypesContextMixin {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
@@ -33,7 +29,7 @@ export class EndpointTypesReferencingContextMixinImpl implements EndpointTypesRe
         endpointDeclarationReferencer,
         endpointTypesGenerator,
         serviceResolver,
-    }: EndpointTypesReferencingContextMixinImpl.Init) {
+    }: EndpointTypesContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.endpointDeclarationReferencer = endpointDeclarationReferencer;

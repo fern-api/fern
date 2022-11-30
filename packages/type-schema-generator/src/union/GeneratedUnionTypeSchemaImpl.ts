@@ -15,7 +15,7 @@ import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
 
-export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext = TypeSchemaContext>
+export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
     extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
     implements GeneratedUnionTypeSchema<Context>
 {

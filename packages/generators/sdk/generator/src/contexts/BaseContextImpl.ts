@@ -1,10 +1,9 @@
 import { Constants } from "@fern-fern/ir-model/constants";
-import { CoreUtilities, ExternalDependencies } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { CoreUtilitiesManager } from "../core-utilities/CoreUtilitiesManager";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { createExternalDependencies } from "../external-dependencies/createExternalDependencies";
 import { ImportsManager } from "../imports-manager/ImportsManager";
+import { BaseContextMixinImpl } from "./mixins/BaseContextMixinImpl";
 
 export declare namespace BaseContextImpl {
     export interface Init {
@@ -17,10 +16,7 @@ export declare namespace BaseContextImpl {
 }
 
 export abstract class BaseContextImpl {
-    public readonly sourceFile: SourceFile;
-    public readonly externalDependencies: ExternalDependencies;
-    public readonly coreUtilities: CoreUtilities;
-    public readonly fernConstants: Constants;
+    public readonly base: BaseContextMixinImpl;
 
     protected importsManager: ImportsManager;
 
@@ -31,16 +27,13 @@ export abstract class BaseContextImpl {
         coreUtilitiesManager,
         fernConstants,
     }: BaseContextImpl.Init) {
-        this.sourceFile = sourceFile;
-        this.externalDependencies = createExternalDependencies({
-            dependencyManager,
-            importsManager,
-        });
-        this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
+        this.base = new BaseContextMixinImpl({
             sourceFile,
             importsManager,
+            dependencyManager,
+            coreUtilitiesManager,
+            fernConstants,
         });
-        this.fernConstants = fernConstants;
         this.importsManager = importsManager;
     }
 }

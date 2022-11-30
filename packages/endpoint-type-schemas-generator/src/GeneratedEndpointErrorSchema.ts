@@ -63,6 +63,6 @@ export class GeneratedEndpointErrorSchema {
     }
 
     private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointTypesContext> {
-        return context.getGeneratedEndpointTypes(this.service.name, this.endpoint.id).getErrorUnion();
+        return context.endpointTypes.getGeneratedEndpointTypes(this.service.name, this.endpoint.id).getErrorUnion();
     }
 }

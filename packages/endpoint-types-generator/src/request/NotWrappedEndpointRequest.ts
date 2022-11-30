@@ -12,6 +12,6 @@ export class NotWrappedEndpointRequest extends AbstractEndpointRequest implement
         if (this.endpoint.request.typeV2 == null) {
             return undefined;
         }
-        return context.getReferenceToType(this.endpoint.request.typeV2);
+        return context.type.getReferenceToType(this.endpoint.request.typeV2);
     }
 }

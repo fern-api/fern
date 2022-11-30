@@ -5,7 +5,7 @@ import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 
-export class GeneratedUnionTypeImpl<Context extends TypeContext = TypeContext>
+export class GeneratedUnionTypeImpl<Context extends TypeContext>
     extends AbstractGeneratedType<UnionTypeDeclaration, Context>
     implements GeneratedUnionType<Context>
 {
@@ -17,7 +17,11 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext = TypeContext>
         super(superInit);
 
         const parsedSingleUnionTypes = this.shape.types.map(
-            (singleUnionType) => new ParsedSingleUnionTypeForUnion({ singleUnionType, union: this.shape })
+            (singleUnionType) =>
+                new ParsedSingleUnionTypeForUnion({
+                    singleUnionType,
+                    union: this.shape,
+                })
         );
 
         this.generatedUnion = new GeneratedUnionImpl({

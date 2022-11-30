@@ -1,5 +1,3 @@
-import { BaseContext } from "./BaseContext";
-import { ErrorReferencingContextMixin } from "./mixins";
-import { TypeReferencingContextMixin } from "./mixins/TypeReferencingContextMixin";
+import { WithBaseContextMixin, WithErrorContextMixin, WithTypeContextMixin } from "./mixins";
 
-export interface ErrorContext extends BaseContext, TypeReferencingContextMixin, ErrorReferencingContextMixin {}
+export interface ErrorContext extends WithBaseContextMixin, WithErrorContextMixin, WithTypeContextMixin {}

@@ -19,7 +19,7 @@ export class GeneratedErrorImpl implements GeneratedError {
             shape: errorDeclaration.type,
             docs: errorDeclaration.docs ?? undefined,
             fernFilepath: errorDeclaration.name.fernFilepathV2,
-            getReferenceToSelf: (context) => context.getReferenceToError(errorDeclaration.name),
+            getReferenceToSelf: (context) => context.error.getReferenceToError(errorDeclaration.name),
         });
     }
 

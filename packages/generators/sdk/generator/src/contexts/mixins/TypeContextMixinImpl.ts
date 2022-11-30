@@ -1,14 +1,14 @@
 import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { TypeResolver } from "@fern-typescript/resolvers";
-import { GeneratedType, Reference, TypeReferencingContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedType, Reference, TypeContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceToParsedTypeNodeConverter } from "@fern-typescript/type-reference-converters";
 import { SourceFile } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
 
-export declare namespace TypeReferencingContextMixinImpl {
+export declare namespace TypeContextMixinImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
@@ -18,7 +18,7 @@ export declare namespace TypeReferencingContextMixinImpl {
     }
 }
 
-export class TypeReferencingContextMixinImpl implements TypeReferencingContextMixin {
+export class TypeContextMixinImpl implements TypeContextMixin {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -32,7 +32,7 @@ export class TypeReferencingContextMixinImpl implements TypeReferencingContextMi
         typeResolver,
         typeDeclarationReferencer,
         typeGenerator,
-    }: TypeReferencingContextMixinImpl.Init) {
+    }: TypeContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.typeResolver = typeResolver;
@@ -73,7 +73,7 @@ export class TypeReferencingContextMixinImpl implements TypeReferencingContextMi
             docs: typeDeclaration.docs ?? undefined,
             typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
             fernFilepath: typeDeclaration.name.fernFilepathV2,
-            getReferenceToSelf: (context) => context.getReferenceToNamedType(typeName),
+            getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
         });
     }
 }

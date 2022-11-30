@@ -1,12 +1,12 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
+import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
 
-export abstract class AbstractParsedSingleUnionType<Context extends BaseContext>
+export abstract class AbstractParsedSingleUnionType<Context extends WithBaseContextMixin>
     implements ParsedSingleUnionType<Context>
 {
     private static VISITOR_PARAMETER_NAME = "visitor";
@@ -105,7 +105,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends BaseContext>
         );
     }
 
-    public static addVisitMethodToValue<Context extends BaseContext>({
+    public static addVisitMethodToValue<Context extends WithBaseContextMixin>({
         context,
         generatedUnion,
         value,
@@ -116,7 +116,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends BaseContext>
         value: ts.Expression;
         referenceToBuiltType: ts.TypeNode;
     }): ts.Expression {
-        return context.coreUtilities.base.addNonEnumerableProperty(
+        return context.base.coreUtilities.base.addNonEnumerableProperty(
             value,
             ts.factory.createStringLiteral(GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME),
             ts.factory.createFunctionExpression(

@@ -1,4 +1,3 @@
-export { type BaseContext } from "./BaseContext";
 export { type EndpointTypeSchemasContext } from "./EndpointTypeSchemasContext";
 export { type EndpointTypesContext } from "./EndpointTypesContext";
 export { type ErrorContext } from "./ErrorContext";

@@ -2,25 +2,22 @@ import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
 import {
-    EndpointTypeSchemasReferencingContextMixin,
+    EndpointTypeSchemasContextMixin,
     GeneratedEndpointTypeSchemas,
 } from "@fern-typescript/sdk-declaration-handler";
 
-export declare namespace EndpointTypeSchemasReferencingContextMixinImpl {
+export declare namespace EndpointTypeSchemasContextMixinImpl {
     export interface Init {
         endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
         serviceResolver: ServiceResolver;
     }
 }
 
-export class EndpointTypeSchemasReferencingContextMixinImpl implements EndpointTypeSchemasReferencingContextMixin {
+export class EndpointTypeSchemasContextMixinImpl implements EndpointTypeSchemasContextMixin {
     private endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
     private serviceResolver: ServiceResolver;
 
-    constructor({
-        endpointTypeSchemasGenerator,
-        serviceResolver,
-    }: EndpointTypeSchemasReferencingContextMixinImpl.Init) {
+    constructor({ endpointTypeSchemasGenerator, serviceResolver }: EndpointTypeSchemasContextMixinImpl.Init) {
         this.serviceResolver = serviceResolver;
         this.endpointTypeSchemasGenerator = endpointTypeSchemasGenerator;
     }

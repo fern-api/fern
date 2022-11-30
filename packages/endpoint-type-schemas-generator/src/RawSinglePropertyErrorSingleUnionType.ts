@@ -28,8 +28,8 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     ): OptionalKind<PropertySignatureStructure>[] {
         return [
             {
-                name: `"${context.fernConstants.errorsV2.errorContentKey.wireValue}"`,
-                type: getTextOfTsNode(context.getReferenceToRawError(this.errorName).getTypeNode()),
+                name: `"${context.base.fernConstants.errorsV2.errorContentKey.wireValue}"`,
+                type: getTextOfTsNode(context.errorSchema.getReferenceToRawError(this.errorName).getTypeNode()),
             },
         ];
     }
@@ -42,10 +42,10 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
             properties: [
                 {
                     key: {
-                        parsed: context.fernConstants.errorsV2.errorContentKey.name.unsafeName.camelCase,
-                        raw: context.fernConstants.errorsV2.errorContentKey.wireValue,
+                        parsed: context.base.fernConstants.errorsV2.errorContentKey.name.unsafeName.camelCase,
+                        raw: context.base.fernConstants.errorsV2.errorContentKey.wireValue,
                     },
-                    value: context.getSchemaOfError(this.errorName),
+                    value: context.errorSchema.getSchemaOfError(this.errorName),
                 },
             ],
         };

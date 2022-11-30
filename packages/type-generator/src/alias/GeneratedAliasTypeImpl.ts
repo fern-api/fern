@@ -3,7 +3,7 @@ import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { NotBrandedGeneratedAliasType, TypeContext } from "@fern-typescript/sdk-declaration-handler";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedAliasTypeImpl<Context extends TypeContext = TypeContext>
+export class GeneratedAliasTypeImpl<Context extends TypeContext>
     extends AbstractGeneratedType<AliasTypeDeclaration, Context>
     implements NotBrandedGeneratedAliasType<Context>
 {
@@ -15,9 +15,9 @@ export class GeneratedAliasTypeImpl<Context extends TypeContext = TypeContext>
     }
 
     private writeTypeAlias(context: Context) {
-        const typeAlias = context.sourceFile.addTypeAlias({
+        const typeAlias = context.base.sourceFile.addTypeAlias({
             name: this.typeName,
-            type: getTextOfTsNode(context.getReferenceToType(this.shape.aliasOf).typeNode),
+            type: getTextOfTsNode(context.type.getReferenceToType(this.shape.aliasOf).typeNode),
             isExported: true,
         });
         maybeAddDocs(typeAlias, this.docs);

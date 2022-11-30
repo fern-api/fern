@@ -56,7 +56,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
         for (const { keyInWrapper, queryParameter } of this.parsedQueryParameters) {
-            const type = context.getReferenceToType(queryParameter.valueType);
+            const type = context.type.getReferenceToType(queryParameter.valueType);
             properties.push({
                 name: keyInWrapper,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
@@ -66,7 +66,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
         }
 
         for (const { keyInWrapper, pathParameter } of this.parsedPathParameters) {
-            const type = context.getReferenceToType(pathParameter.valueType);
+            const type = context.type.getReferenceToType(pathParameter.valueType);
             properties.push({
                 name: keyInWrapper,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
@@ -76,7 +76,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
         }
 
         for (const { keyInWrapper, header } of this.parsedHeaders) {
-            const type = context.getReferenceToType(header.valueType);
+            const type = context.type.getReferenceToType(header.valueType);
             properties.push({
                 name: keyInWrapper,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
@@ -86,7 +86,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
         }
 
         if (this.endpoint.request.typeV2 != null) {
-            const type = context.getReferenceToType(this.endpoint.request.typeV2);
+            const type = context.type.getReferenceToType(this.endpoint.request.typeV2);
             properties.push({
                 name: WrappedEndpointRequest.REQUEST_BODY_PROPERTY_NAME,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
@@ -94,7 +94,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
             });
         }
 
-        context.sourceFile.addInterface({
+        context.base.sourceFile.addInterface({
             name: WrappedEndpointRequest.REQUEST_WRAPPER_INTERFACE_NAME,
             isExported: true,
             properties,
@@ -102,7 +102,7 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
     }
 
     public getRequestParameterType(context: EndpointTypesContext): TypeReferenceNode {
-        const typeNode = context
+        const typeNode = context.endpointTypes
             .getReferenceToEndpointTypeExport(
                 this.service.name,
                 this.endpoint.id,

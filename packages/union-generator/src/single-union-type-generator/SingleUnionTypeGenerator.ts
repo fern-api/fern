@@ -1,7 +1,6 @@
-import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-export interface SingleUnionTypeGenerator<Context extends BaseContext> {
+export interface SingleUnionTypeGenerator<Context> {
     getExtendsForInterface(context: Context): ts.TypeNode[];
     getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[];
     getVisitorArguments(args: { localReferenceToUnionValue: ts.Expression }): ts.Expression[];

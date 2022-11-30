@@ -4,7 +4,7 @@ import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     CoreUtilities,
-    ErrorSchemaReferencingContextMixin,
+    ErrorSchemaContextMixin,
     GeneratedErrorSchema,
     Reference,
 } from "@fern-typescript/sdk-declaration-handler";
@@ -14,7 +14,7 @@ import { ErrorDeclarationReferencer } from "../../declaration-referencers/ErrorD
 import { ImportsManager } from "../../imports-manager/ImportsManager";
 import { getSchemaImportStrategy } from "./getSchemaImportStrategy";
 
-export declare namespace ErrorSchemaReferencingContextMixinImpl {
+export declare namespace ErrorSchemaContextMixinImpl {
     export interface Init {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
@@ -25,7 +25,7 @@ export declare namespace ErrorSchemaReferencingContextMixinImpl {
     }
 }
 
-export class ErrorSchemaReferencingContextMixinImpl implements ErrorSchemaReferencingContextMixin {
+export class ErrorSchemaContextMixinImpl implements ErrorSchemaContextMixin {
     private sourceFile: SourceFile;
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
@@ -40,7 +40,7 @@ export class ErrorSchemaReferencingContextMixinImpl implements ErrorSchemaRefere
         errorSchemaDeclarationReferencer,
         errorSchemaGenerator,
         errorResolver,
-    }: ErrorSchemaReferencingContextMixinImpl.Init) {
+    }: ErrorSchemaContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
@@ -64,7 +64,7 @@ export class ErrorSchemaReferencingContextMixinImpl implements ErrorSchemaRefere
             .getReferenceToError({
                 name: errorName,
                 importStrategy: getSchemaImportStrategy({
-                    // use dynamic imports when referencing schemas insides schemas,
+                    // use dynamic imports when  schemas insides schemas,
                     // to avoid issues with circular imports
                     useDynamicImport: true,
                 }),

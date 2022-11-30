@@ -4,7 +4,7 @@ import { GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
 import { GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
 import { GeneratedUnionTypeSchema } from "./GeneratedUnionTypeSchema";
 
-export type GeneratedTypeSchema<Context extends TypeSchemaContext = TypeSchemaContext> =
+export type GeneratedTypeSchema<Context = TypeSchemaContext> =
     | GeneratedAliasTypeSchema<Context>
     | GeneratedEnumTypeSchema<Context>
     | GeneratedUnionTypeSchema<Context>

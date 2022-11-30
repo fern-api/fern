@@ -5,7 +5,7 @@ import {
     CoreUtilities,
     GeneratedTypeSchema,
     Reference,
-    TypeSchemaReferencingContextMixin,
+    TypeSchemaContextMixin,
 } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -19,7 +19,7 @@ import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDec
 import { ImportsManager } from "../../imports-manager/ImportsManager";
 import { getSchemaImportStrategy } from "./getSchemaImportStrategy";
 
-export declare namespace TypeSchemaReferencingContextMixinImpl {
+export declare namespace TypeSchemaContextMixinImpl {
     export interface Init {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
@@ -32,7 +32,7 @@ export declare namespace TypeSchemaReferencingContextMixinImpl {
     }
 }
 
-export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferencingContextMixin {
+export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
     private sourceFile: SourceFile;
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
@@ -53,7 +53,7 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
         typeGenerator,
         typeSchemaDeclarationReferencer,
         typeSchemaGenerator,
-    }: TypeSchemaReferencingContextMixinImpl.Init) {
+    }: TypeSchemaContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
@@ -84,7 +84,7 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
                     docs: typeDeclaration.docs ?? undefined,
                     fernFilepath: typeDeclaration.name.fernFilepathV2,
                     typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
-                    getReferenceToSelf: (context) => context.getReferenceToNamedType(typeName),
+                    getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer.getReferenceToType({
@@ -122,7 +122,7 @@ export class TypeSchemaReferencingContextMixinImpl implements TypeSchemaReferenc
             .getReferenceToType({
                 name: typeName,
                 importStrategy: getSchemaImportStrategy({
-                    // use dynamic imports when referencing schemas insides schemas,
+                    // use dynamic imports when  schemas insides schemas,
                     // to avoid issues with circular imports
                     useDynamicImport: true,
                 }),

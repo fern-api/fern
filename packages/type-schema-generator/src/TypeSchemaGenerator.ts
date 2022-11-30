@@ -22,7 +22,7 @@ import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaIm
 
 export declare namespace TypeSchemaGenerator {
     export namespace generateTypeSchema {
-        export interface Args<Context extends TypeSchemaContext = TypeSchemaContext> {
+        export interface Args<Context> {
             typeName: string;
             shape: Type;
             getGeneratedType: () => GeneratedType<Context>;

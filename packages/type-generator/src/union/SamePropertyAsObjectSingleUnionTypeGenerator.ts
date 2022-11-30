@@ -3,18 +3,25 @@ import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-export class SamePropertyAsObjectSingleUnionTypeGenerator<Context extends TypeContext = TypeContext>
+export declare namespace SamePropertyAsObjectSingleUnionTypeGenerator {
+    export interface Init<Context> {
+        extended: DeclaredTypeName;
+    }
+}
+
+export class SamePropertyAsObjectSingleUnionTypeGenerator<Context extends TypeContext>
     implements SingleUnionTypeGenerator<Context>
 {
-    private extended: DeclaredTypeName;
     private static BUILDER_PARAMETER_NAME = "value";
 
-    constructor({ extended }: { extended: DeclaredTypeName }) {
+    private extended: DeclaredTypeName;
+
+    constructor({ extended }: SamePropertyAsObjectSingleUnionTypeGenerator.Init<Context>) {
         this.extended = extended;
     }
 
     public getExtendsForInterface(context: Context): ts.TypeNode[] {
-        return [context.getReferenceToNamedType(this.extended).getTypeNode()];
+        return [context.type.getReferenceToNamedType(this.extended).getTypeNode()];
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
@@ -29,7 +36,7 @@ export class SamePropertyAsObjectSingleUnionTypeGenerator<Context extends TypeCo
                 undefined,
                 SamePropertyAsObjectSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
-                context.getReferenceToNamedType(this.extended).getTypeNode()
+                context.type.getReferenceToNamedType(this.extended).getTypeNode()
             ),
         ];
     }
@@ -43,7 +50,7 @@ export class SamePropertyAsObjectSingleUnionTypeGenerator<Context extends TypeCo
     }
 
     public getVisitMethodParameterType(context: Context): ts.TypeNode | undefined {
-        return context.getReferenceToNamedType(this.extended).getTypeNode();
+        return context.type.getReferenceToNamedType(this.extended).getTypeNode();
     }
 
     public getVisitorArguments({

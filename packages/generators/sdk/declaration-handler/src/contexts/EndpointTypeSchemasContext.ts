@@ -1,18 +1,18 @@
-import { BaseContext } from "./BaseContext";
 import {
-    EndpointTypeSchemasReferencingContextMixin,
-    EndpointTypesReferencingContextMixin,
-    ErrorReferencingContextMixin,
-    ErrorSchemaReferencingContextMixin,
-    TypeReferencingContextMixin,
-    TypeSchemaReferencingContextMixin,
+    WithBaseContextMixin,
+    WithEndpointTypeSchemasContextMixin,
+    WithEndpointTypesContextMixin,
+    WithErrorContextMixin,
+    WithErrorSchemaContextMixin,
+    WithTypeContextMixin,
+    WithTypeSchemaContextMixin,
 } from "./mixins";
 
 export interface EndpointTypeSchemasContext
-    extends BaseContext,
-        TypeReferencingContextMixin,
-        TypeSchemaReferencingContextMixin,
-        ErrorReferencingContextMixin,
-        ErrorSchemaReferencingContextMixin,
-        EndpointTypesReferencingContextMixin,
-        EndpointTypeSchemasReferencingContextMixin {}
+    extends WithBaseContextMixin,
+        WithEndpointTypesContextMixin,
+        WithEndpointTypeSchemasContextMixin,
+        WithTypeContextMixin,
+        WithTypeSchemaContextMixin,
+        WithErrorContextMixin,
+        WithErrorSchemaContextMixin {}

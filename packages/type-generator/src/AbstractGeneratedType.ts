@@ -1,8 +1,8 @@
 import { FernFilepathV2 } from "@fern-fern/ir-model/commons";
-import { Reference, TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { Reference } from "@fern-typescript/sdk-declaration-handler";
 
 export declare namespace AbstractGeneratedType {
-    export interface Init<Shape, Context extends TypeContext = TypeContext> {
+    export interface Init<Shape, Context> {
         typeName: string;
         shape: Shape;
         docs: string | undefined;
@@ -11,7 +11,7 @@ export declare namespace AbstractGeneratedType {
     }
 }
 
-export abstract class AbstractGeneratedType<Shape, Context extends TypeContext = TypeContext> {
+export abstract class AbstractGeneratedType<Shape, Context> {
     protected typeName: string;
     protected shape: Shape;
     protected docs: string | undefined;

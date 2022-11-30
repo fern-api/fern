@@ -1,6 +1,6 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
+import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace AbstractGeneratedSchema {
@@ -9,7 +9,7 @@ export declare namespace AbstractGeneratedSchema {
     }
 }
 
-export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
+export abstract class AbstractGeneratedSchema<Context extends WithBaseContextMixin> {
     public static RAW_TYPE_NAME = "Raw";
 
     protected typeName: string;
@@ -19,7 +19,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
     }
 
     public writeSchemaToFile(context: Context): void {
-        context.sourceFile.addVariableStatement({
+        context.base.sourceFile.addVariableStatement({
             isExported: true,
             declarationKind: VariableDeclarationKind.Const,
             declarations: [
@@ -49,11 +49,11 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
-        return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
+        return context.base.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
     }
 
     protected generateModule(context: Context): void {
-        const module = context.sourceFile.addModule({
+        const module = context.base.sourceFile.addModule({
             name: this.getModuleName(),
             isExported: true,
             hasDeclareKeyword: true,

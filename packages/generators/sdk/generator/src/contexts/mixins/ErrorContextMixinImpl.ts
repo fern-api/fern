@@ -1,12 +1,12 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ErrorReferencingContextMixin, GeneratedError, Reference } from "@fern-typescript/sdk-declaration-handler";
+import { ErrorContextMixin, GeneratedError, Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { ErrorDeclarationReferencer } from "../../declaration-referencers/ErrorDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
 
-export declare namespace ErrorReferencingContextMixinImpl {
+export declare namespace ErrorContextMixinImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
@@ -16,7 +16,7 @@ export declare namespace ErrorReferencingContextMixinImpl {
     }
 }
 
-export class ErrorReferencingContextMixinImpl implements ErrorReferencingContextMixin {
+export class ErrorContextMixinImpl implements ErrorContextMixin {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
     private errorDeclarationReferencer: ErrorDeclarationReferencer;
@@ -29,7 +29,7 @@ export class ErrorReferencingContextMixinImpl implements ErrorReferencingContext
         errorDeclarationReferencer,
         errorGenerator,
         errorResolver,
-    }: ErrorReferencingContextMixinImpl.Init) {
+    }: ErrorContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.errorDeclarationReferencer = errorDeclarationReferencer;

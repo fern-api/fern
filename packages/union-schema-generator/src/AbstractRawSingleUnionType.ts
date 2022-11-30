@@ -1,7 +1,6 @@
 import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
@@ -12,7 +11,7 @@ export declare namespace AbstractRawSingleUnionType {
     }
 }
 
-export abstract class AbstractRawSingleUnionType<Context extends BaseContext> implements RawSingleUnionType<Context> {
+export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
     private disciminant: WireStringWithAllCasings;
     private discriminantValueWithAllCasings: WireStringWithAllCasings;
 

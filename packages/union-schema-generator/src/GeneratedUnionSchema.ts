@@ -2,12 +2,12 @@ import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { BaseContext } from "@fern-typescript/sdk-declaration-handler";
+import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
-    export interface Init<Context extends BaseContext> extends AbstractGeneratedSchema.Init {
+    export interface Init<Context> extends AbstractGeneratedSchema.Init {
         discriminant: WireStringWithAllCasings;
         getParsedDiscriminant: (context: Context) => string;
         getReferenceToParsedUnion: (context: Context) => ts.TypeNode;
@@ -21,7 +21,7 @@ export declare namespace GeneratedUnionSchema {
     }
 }
 
-export class GeneratedUnionSchema<Context extends BaseContext> extends AbstractGeneratedSchema<Context> {
+export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends AbstractGeneratedSchema<Context> {
     private static VALUE_PARAMETER_NAME = "value";
 
     private discriminant: WireStringWithAllCasings;
@@ -82,7 +82,7 @@ export class GeneratedUnionSchema<Context extends BaseContext> extends AbstractG
     }
 
     public override getSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg
+        return context.base.coreUtilities.zurg
             .union({
                 parsedDiscriminant: this.getParsedDiscriminant(context),
                 rawDiscriminant: this.discriminant.wireValue,

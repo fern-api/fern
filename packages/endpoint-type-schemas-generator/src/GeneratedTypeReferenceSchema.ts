@@ -39,19 +39,21 @@ export class GeneratedTypeReferenceSchema {
     }
 
     public writeToFile(context: EndpointTypeSchemasContext): void {
-        context.sourceFile.addVariableStatement({
+        context.base.sourceFile.addVariableStatement({
             isExported: true,
             declarationKind: VariableDeclarationKind.Const,
             declarations: [
                 {
                     name: this.typeName,
                     type: getTextOfTsNode(
-                        context.coreUtilities.zurg.Schema._getReferenceToType({
-                            rawShape: context.getReferenceToRawType(this.typeReference).typeNode,
-                            parsedShape: context.getReferenceToType(this.typeReference).typeNode,
+                        context.base.coreUtilities.zurg.Schema._getReferenceToType({
+                            rawShape: context.typeSchema.getReferenceToRawType(this.typeReference).typeNode,
+                            parsedShape: context.type.getReferenceToType(this.typeReference).typeNode,
                         })
                     ),
-                    initializer: getTextOfTsNode(context.getSchemaOfTypeReference(this.typeReference).toExpression()),
+                    initializer: getTextOfTsNode(
+                        context.typeSchema.getSchemaOfTypeReference(this.typeReference).toExpression()
+                    ),
                 },
             ],
         });

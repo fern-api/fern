@@ -1,8 +1,3 @@
-import { BaseContext } from "./BaseContext";
-import { TypeReferencingContextMixin } from "./mixins/TypeReferencingContextMixin";
-import { TypeSchemaReferencingContextMixin } from "./mixins/TypeSchemaReferencingContextMixin";
+import { WithBaseContextMixin, WithTypeContextMixin, WithTypeSchemaContextMixin } from "./mixins";
 
-export interface TypeSchemaContext
-    extends BaseContext,
-        TypeReferencingContextMixin,
-        TypeSchemaReferencingContextMixin {}
+export interface TypeSchemaContext extends WithBaseContextMixin, WithTypeSchemaContextMixin, WithTypeContextMixin {}

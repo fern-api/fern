@@ -1,6 +1,6 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import { WithTypeSchemaContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -11,7 +11,7 @@ export declare namespace RawSamePropertiesAsObjectSingleUnionType {
 }
 
 export class RawSamePropertiesAsObjectSingleUnionType<
-    Context extends TypeSchemaContext = TypeSchemaContext
+    Context extends WithTypeSchemaContextMixin
 > extends AbstractRawSingleUnionType<Context> {
     private extended: DeclaredTypeName;
 
@@ -21,7 +21,7 @@ export class RawSamePropertiesAsObjectSingleUnionType<
     }
 
     protected getExtends(context: Context): ts.TypeNode[] {
-        return [context.getReferenceToRawNamedType(this.extended).getTypeNode()];
+        return [context.typeSchema.getReferenceToRawNamedType(this.extended).getTypeNode()];
     }
 
     protected getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
@@ -33,7 +33,7 @@ export class RawSamePropertiesAsObjectSingleUnionType<
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         return {
             isInline: false,
-            objectSchema: context.getSchemaOfNamedType(this.extended),
+            objectSchema: context.typeSchema.getSchemaOfNamedType(this.extended),
         };
     }
 }

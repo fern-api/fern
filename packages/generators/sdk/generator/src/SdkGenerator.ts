@@ -229,7 +229,7 @@ export class SdkGenerator {
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
                         typeGenerator: this.typeGenerator,
                     });
-                    typeContext.getGeneratedType(typeDeclaration.name).writeToFile(typeContext);
+                    typeContext.type.getGeneratedType(typeDeclaration.name).writeToFile(typeContext);
                 },
             });
         }
@@ -252,7 +252,9 @@ export class SdkGenerator {
                         typeGenerator: this.typeGenerator,
                         typeSchemaGenerator: this.typeSchemaGenerator,
                     });
-                    typeSchemaContext.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(typeSchemaContext);
+                    typeSchemaContext.typeSchema
+                        .getGeneratedTypeSchema(typeDeclaration.name)
+                        .writeToFile(typeSchemaContext);
                 },
             });
         }
@@ -276,7 +278,7 @@ export class SdkGenerator {
                         errorGenerator: this.errorGenerator,
                         errorResolver: this.errorResolver,
                     });
-                    errorContext.getGeneratedError(errorDeclaration.name)?.writeToFile(errorContext);
+                    errorContext.error.getGeneratedError(errorDeclaration.name)?.writeToFile(errorContext);
                 },
             });
         }
@@ -304,7 +306,9 @@ export class SdkGenerator {
                         errorSchemaDeclarationReferencer: this.errorSchemaDeclarationReferencer,
                         errorSchemaGenerator: this.errorSchemaGenerator,
                     });
-                    errorSchemaContext.getGeneratedErrorSchema(errorDeclaration.name)?.writeToFile(errorSchemaContext);
+                    errorSchemaContext.errorSchema
+                        .getGeneratedErrorSchema(errorDeclaration.name)
+                        ?.writeToFile(errorSchemaContext);
                 },
             });
         }
@@ -329,15 +333,13 @@ export class SdkGenerator {
                             typeDeclarationReferencer: this.typeDeclarationReferencer,
                             errorDeclarationReferencer: this.errorDeclarationReferencer,
                             endpointDeclarationReferencer: this.endpointDeclarationReferencer,
-                            serviceName: service.name,
-                            endpoint,
                             errorGenerator: this.errorGenerator,
                             errorResolver: this.errorResolver,
                             typeGenerator: this.typeGenerator,
                             serviceResolver: this.serviceResolver,
                             endpointTypesGenerator: this.endpointTypesGenerator,
                         });
-                        endpointTypesContext
+                        endpointTypesContext.endpointTypes
                             .getGeneratedEndpointTypes(service.name, endpoint.id)
                             .writeToFile(endpointTypesContext);
                     },
@@ -376,7 +378,7 @@ export class SdkGenerator {
                             typeSchemaGenerator: this.typeSchemaGenerator,
                             errorSchemaGenerator: this.errorSchemaGenerator,
                         });
-                        endpointTypeSchemasContext
+                        endpointTypeSchemasContext.endpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(service.name, endpoint.id)
                             .writeToFile(endpointTypeSchemasContext);
                     },

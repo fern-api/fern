@@ -27,7 +27,7 @@ export class ParsedSingleUnionTypeForError extends AbstractParsedSingleUnionType
                     new SinglePropertySingleUnionTypeGenerator<EndpointTypesContext>({
                         propertyName: singleProperty.name.camelCase,
                         getReferenceToPropertyType: (context) => {
-                            const typeNode = context.getReferenceToError(singleProperty.error).getTypeNode();
+                            const typeNode = context.error.getReferenceToError(singleProperty.error).getTypeNode();
                             return {
                                 isOptional: false,
                                 typeNode,

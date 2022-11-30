@@ -4,18 +4,18 @@ import { GeneratedObjectType, TypeContext } from "@fern-typescript/sdk-declarati
 import { OptionalKind, PropertySignatureStructure } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedObjectTypeImpl<Context extends TypeContext = TypeContext>
+export class GeneratedObjectTypeImpl<Context extends TypeContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
     public readonly type = "object";
 
     public writeToFile(context: Context): void {
-        const interfaceNode = context.sourceFile.addInterface({
+        const interfaceNode = context.base.sourceFile.addInterface({
             name: this.typeName,
             properties: [
                 ...this.shape.properties.map((property) => {
-                    const value = context.getReferenceToType(property.valueType);
+                    const value = context.type.getReferenceToType(property.valueType);
                     const propertyNode: OptionalKind<PropertySignatureStructure> = {
                         name: this.getPropertyKey(property),
                         type: getTextOfTsNode(value.typeNodeWithoutUndefined),
@@ -32,7 +32,7 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext = TypeContext>
         maybeAddDocs(interfaceNode, this.docs);
 
         for (const extension of this.shape.extends) {
-            interfaceNode.addExtends(getTextOfTsNode(context.getReferenceToNamedType(extension).getTypeNode()));
+            interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
         }
     }
 

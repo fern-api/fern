@@ -1,6 +1,10 @@
-export { type EndpointTypeSchemasReferencingContextMixin } from "./EndpointTypeSchemasReferencingContextMixin";
-export { type EndpointTypesReferencingContextMixin } from "./EndpointTypesReferencingContextMixin";
-export { type ErrorReferencingContextMixin } from "./ErrorReferencingContextMixin";
-export { type ErrorSchemaReferencingContextMixin } from "./ErrorSchemaReferencingContextMixin";
-export { type TypeReferencingContextMixin } from "./TypeReferencingContextMixin";
-export { type TypeSchemaReferencingContextMixin } from "./TypeSchemaReferencingContextMixin";
+export { type BaseContextMixin, type WithBaseContextMixin } from "./BaseContextMixin";
+export {
+    type EndpointTypeSchemasContextMixin,
+    type WithEndpointTypeSchemasContextMixin,
+} from "./EndpointTypeSchemasContextMixin";
+export { type EndpointTypesContextMixin, type WithEndpointTypesContextMixin } from "./EndpointTypesContextMixin";
+export { type ErrorContextMixin, type WithErrorContextMixin } from "./ErrorContextMixin";
+export { type ErrorSchemaContextMixin, type WithErrorSchemaContextMixin } from "./ErrorSchemaContextMixin";
+export { type TypeContextMixin, type WithTypeContextMixin } from "./TypeContextMixin";
+export { type TypeSchemaContextMixin, type WithTypeSchemaContextMixin } from "./TypeSchemaContextMixin";

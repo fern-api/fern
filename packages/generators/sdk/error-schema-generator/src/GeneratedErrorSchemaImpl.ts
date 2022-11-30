@@ -22,7 +22,7 @@ export class GeneratedErrorSchemaImpl implements GeneratedErrorSchema {
     }
 
     public writeToFile(context: ErrorSchemaContext): void {
-        const generatedError = context.getGeneratedError(this.errorDeclaration.name);
+        const generatedError = context.error.getGeneratedError(this.errorDeclaration.name);
         if (generatedError == null) {
             throw new Error("Error was not generated");
         }
@@ -31,7 +31,7 @@ export class GeneratedErrorSchemaImpl implements GeneratedErrorSchema {
                 typeName: this.errorName,
                 shape: this.errorDeclaration.type,
                 getGeneratedType: () => generatedError.getAsGeneratedType(),
-                getReferenceToGeneratedType: () => context.getReferenceToError(this.errorDeclaration.name),
+                getReferenceToGeneratedType: () => context.error.getReferenceToError(this.errorDeclaration.name),
             })
             .writeToFile(context);
     }

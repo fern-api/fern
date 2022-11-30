@@ -1,32 +1,18 @@
-import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
-import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
-import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
-import {
-    EndpointTypesContext,
-    GeneratedEndpointTypes,
-    GeneratedError,
-    GeneratedType,
-    Reference,
-} from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
-import { EndpointTypesReferencingContextMixinImpl } from "./mixins/EndpointTypesReferencingContextMixinImpl";
-import { ErrorReferencingContextMixinImpl } from "./mixins/ErrorReferencingContextMixinImpl";
-import { TypeReferencingContextMixinImpl } from "./mixins/TypeReferencingContextMixinImpl";
+import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
+import { ErrorContextMixinImpl } from "./mixins/ErrorContextMixinImpl";
+import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 
 export declare namespace EndpointTypesContextImpl {
     export interface Init extends BaseContextImpl.Init {
-        serviceName: DeclaredServiceName;
-        endpoint: HttpEndpoint;
-
         typeResolver: TypeResolver;
         typeGenerator: TypeGenerator;
         typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -40,17 +26,11 @@ export declare namespace EndpointTypesContextImpl {
 }
 
 export class EndpointTypesContextImpl extends BaseContextImpl implements EndpointTypesContext {
-    private serviceName: DeclaredServiceName;
-    private endpoint: HttpEndpoint;
-    private endpointDeclarationReferencer: EndpointDeclarationReferencer;
-
-    private typeReferencingContextMixin: TypeReferencingContextMixinImpl;
-    private errorReferencingContextMixin: ErrorReferencingContextMixinImpl;
-    private endpointTypeReferencingContextMixin: EndpointTypesReferencingContextMixinImpl;
+    public readonly type: TypeContextMixinImpl;
+    public readonly error: ErrorContextMixinImpl;
+    public readonly endpointTypes: EndpointTypesContextMixinImpl;
 
     constructor({
-        serviceName,
-        endpoint,
         typeResolver,
         typeGenerator,
         typeDeclarationReferencer,
@@ -63,83 +43,26 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
         ...superInit
     }: EndpointTypesContextImpl.Init) {
         super(superInit);
-        this.serviceName = serviceName;
-        this.endpoint = endpoint;
-        this.typeReferencingContextMixin = new TypeReferencingContextMixinImpl({
-            sourceFile: this.sourceFile,
+        this.type = new TypeContextMixinImpl({
+            sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             typeResolver,
             typeDeclarationReferencer,
             typeGenerator,
         });
-        this.errorReferencingContextMixin = new ErrorReferencingContextMixinImpl({
-            sourceFile: this.sourceFile,
+        this.error = new ErrorContextMixinImpl({
+            sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
             errorGenerator,
             errorResolver,
         });
-        this.endpointDeclarationReferencer = endpointDeclarationReferencer;
-        this.endpointTypeReferencingContextMixin = new EndpointTypesReferencingContextMixinImpl({
-            sourceFile: this.sourceFile,
+        this.endpointTypes = new EndpointTypesContextMixinImpl({
+            sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             endpointDeclarationReferencer,
             endpointTypesGenerator,
             serviceResolver,
         });
-    }
-
-    public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferencingContextMixin.getReferenceToType(typeReference);
-    }
-
-    public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
-        return this.typeReferencingContextMixin.getReferenceToNamedType(typeName);
-    }
-
-    public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {
-        return this.typeReferencingContextMixin.resolveTypeReference(typeReference);
-    }
-
-    public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
-        return this.typeReferencingContextMixin.resolveTypeName(typeName);
-    }
-
-    public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
-        return this.typeReferencingContextMixin.getGeneratedType(typeName);
-    }
-
-    public getReferenceToExportFromThisFile(export_: string | string[]): Reference {
-        return this.endpointDeclarationReferencer.getReferenceToEndpointExport({
-            name: { serviceName: this.serviceName, endpoint: this.endpoint },
-            referencedIn: this.sourceFile,
-            importsManager: this.importsManager,
-            importStrategy: { type: "fromRoot" },
-            subImport: typeof export_ === "string" ? [export_] : export_,
-        });
-    }
-
-    public getReferenceToError(errorName: DeclaredErrorName): Reference {
-        return this.errorReferencingContextMixin.getReferenceToError(errorName);
-    }
-
-    public getGeneratedError(errorName: DeclaredErrorName): GeneratedError | undefined {
-        return this.errorReferencingContextMixin.getGeneratedError(errorName);
-    }
-
-    public getGeneratedEndpointTypes(serviceName: DeclaredServiceName, endpointId: string): GeneratedEndpointTypes {
-        return this.endpointTypeReferencingContextMixin.getGeneratedEndpointTypes(serviceName, endpointId);
-    }
-
-    public getReferenceToEndpointTypeExport(
-        serviceName: DeclaredServiceName,
-        endpointId: string,
-        export_: string | string[]
-    ): Reference {
-        return this.endpointTypeReferencingContextMixin.getReferenceToEndpointTypeExport(
-            serviceName,
-            endpointId,
-            export_
-        );
     }
 }

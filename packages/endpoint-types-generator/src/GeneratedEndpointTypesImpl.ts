@@ -31,7 +31,7 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
             ? new WrappedEndpointRequest({ service, endpoint })
             : new NotWrappedEndpointRequest({ service, endpoint });
 
-        this.errorUnion = new GeneratedUnionImpl({
+        this.errorUnion = new GeneratedUnionImpl<EndpointTypesContext>({
             typeName: GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME,
             discriminant: endpoint.errorsV2.discriminant,
             docs: undefined,
@@ -39,18 +39,18 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
                 (error) => new ParsedSingleUnionTypeForError({ errors: endpoint.errorsV2, error })
             ),
             getReferenceToUnion: (context) =>
-                context.getReferenceToEndpointTypeExport(
+                context.endpointTypes.getReferenceToEndpointTypeExport(
                     service.name,
                     this.endpoint.id,
                     GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME
                 ),
             unknownSingleUnionType: {
                 discriminantType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-                getVisitorArgument: (file) => file.coreUtilities.fetcher.Fetcher.Error._getReferenceToType(),
-                getNonDiscriminantProperties: (file) => [
+                getVisitorArgument: (context) => context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType(),
+                getNonDiscriminantProperties: (context) => [
                     {
                         name: GeneratedEndpointTypesImpl.UNKNOWN_ERROR_PROPERTY_NAME,
-                        type: getTextOfTsNode(file.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()),
+                        type: getTextOfTsNode(context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()),
                     },
                 ],
             },
@@ -68,14 +68,14 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
     }
 
     private writeResponseToFile(context: EndpointTypesContext): void {
-        context.sourceFile.addTypeAlias({
+        context.base.sourceFile.addTypeAlias({
             name: GeneratedEndpointTypesImpl.RESPONSE_INTERFACE_NAME,
             isExported: true,
             type: getTextOfTsNode(
-                context.coreUtilities.fetcher.APIResponse._getReferenceToType(
+                context.base.coreUtilities.fetcher.APIResponse._getReferenceToType(
                     this.endpoint.response.typeV2 == null
                         ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                        : context.getReferenceToType(this.endpoint.response.typeV2).typeNode,
+                        : context.type.getReferenceToType(this.endpoint.response.typeV2).typeNode,
                     this.errorUnion.getReferenceTo(context)
                 )
             ),
