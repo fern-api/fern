@@ -12,8 +12,8 @@ export declare namespace AbstractDeclarationReferencer {
     }
 }
 
-export abstract class AbstractDeclarationReferencer<Name> implements DeclarationReferencer<Name> {
-    private packageName: string;
+export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
+    protected packageName: string;
     protected containingDirectory: ExportedDirectory[];
 
     constructor({ containingDirectory, packageName }: AbstractDeclarationReferencer.Init) {

@@ -9,6 +9,7 @@ export { type GeneratedEndpointTypes } from "./GeneratedEndpointTypes";
 export { type GeneratedEndpointTypeSchemas } from "./GeneratedEndpointTypeSchemas";
 export { type GeneratedEnumType } from "./GeneratedEnumType";
 export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
+export { type GeneratedEnvironments } from "./GeneratedEnvironments";
 export { type GeneratedError } from "./GeneratedError";
 export { type GeneratedErrorSchema } from "./GeneratedErrorSchema";
 export { type GeneratedObjectType } from "./GeneratedObjectType";

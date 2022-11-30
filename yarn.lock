@@ -2116,6 +2116,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/environments-generator@workspace:*, @fern-typescript/environments-generator@workspace:packages/environments-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/environments-generator@workspace:packages/environments-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/error-generator@workspace:*, @fern-typescript/error-generator@workspace:packages/generators/sdk/error-generator":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/error-generator@workspace:packages/generators/sdk/error-generator"
@@ -2361,6 +2382,7 @@ __metadata:
     "@fern-typescript/commons-v2": "workspace:*"
     "@fern-typescript/endpoint-type-schemas-generator": "workspace:*"
     "@fern-typescript/endpoint-types-generator": "workspace:*"
+    "@fern-typescript/environments-generator": "workspace:*"
     "@fern-typescript/error-generator": "workspace:*"
     "@fern-typescript/error-schema-generator": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"

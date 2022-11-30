@@ -32,6 +32,7 @@
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/endpoint-type-schemas-generator": "workspace:*",
     "@fern-typescript/endpoint-types-generator": "workspace:*",
+    "@fern-typescript/environments-generator": "workspace:*",
     "@fern-typescript/error-generator": "workspace:*",
     "@fern-typescript/error-schema-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",

@@ -4,6 +4,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
+import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
@@ -23,6 +24,7 @@ import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { constructAugmentedServices } from "./constructAugmentedServices";
 import { EndpointTypeSchemasContextImpl } from "./contexts/EndpointTypeSchemasContextImpl";
 import { EndpointTypesContextImpl } from "./contexts/EndpointTypesContextImpl";
+import { EnvironmentsContextImpl } from "./contexts/EnvironmentsContextImpl";
 import { ErrorContextImpl } from "./contexts/ErrorContextImpl";
 import { ErrorSchemaContextImpl } from "./contexts/ErrorSchemaContextImpl";
 import { TypeContextImpl } from "./contexts/TypeContextImpl";
@@ -30,12 +32,13 @@ import { TypeSchemaContextImpl } from "./contexts/TypeSchemaContextImpl";
 import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { ImportStrategy } from "./declaration-referencers/DeclarationReferencer";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
+import { EnvironmentEnumDeclarationReferencer } from "./declaration-referencers/EnvironmentEnumDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
 import { RootServiceDeclarationReferencer } from "./declaration-referencers/RootServiceDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { DependencyManager } from "./dependency-manager/DependencyManager";
-import { EnvironmentsGenerator } from "./environments/EnvironmentsGenerator";
+import { EnvironmentsGenerator as EnvironmentsGenerator_OLD } from "./environments/EnvironmentsGenerator";
 import {
     convertExportedFilePathToFilePath,
     ExportedDirectory,
@@ -91,6 +94,7 @@ export class SdkGenerator {
     private rootServiceDeclarationReferencer: RootServiceDeclarationReferencer;
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
     private endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
+    private environmentsEnumDeclarationReferencer: EnvironmentEnumDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
@@ -99,6 +103,7 @@ export class SdkGenerator {
     private endpointTypesGenerator: EndpointTypesGenerator;
     private endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
+    private environmentsGenerator_OLD: EnvironmentsGenerator_OLD;
 
     private generatePackage: () => Promise<void>;
 
@@ -172,6 +177,10 @@ export class SdkGenerator {
             containingDirectory: schemaDirectory,
             packageName,
         });
+        this.environmentsEnumDeclarationReferencer = new EnvironmentEnumDeclarationReferencer({
+            containingDirectory: [],
+            packageName,
+        });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.typeSchemaGenerator = new TypeSchemaGenerator();
@@ -181,7 +190,8 @@ export class SdkGenerator {
         this.endpointTypeSchemasGenerator = new EndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
         });
-        this.environmentsGenerator = new EnvironmentsGenerator({ intermediateRepresentation, packageName });
+        this.environmentsGenerator = new EnvironmentsGenerator();
+        this.environmentsGenerator_OLD = new EnvironmentsGenerator_OLD({ intermediateRepresentation, packageName });
 
         this.generatePackage = async () => {
             await generateTypeScriptProject({
@@ -409,9 +419,19 @@ export class SdkGenerator {
 
     private generateEnvironments(): void {
         this.withSourceFile({
-            filepath: this.environmentsGenerator.getFilepath(),
-            run: ({ sourceFile }) => {
-                this.environmentsGenerator.generateEnvironments(sourceFile);
+            filepath: this.environmentsEnumDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const environmentsContext = new EnvironmentsContextImpl({
+                    sourceFile,
+                    coreUtilitiesManager: this.coreUtilitiesManager,
+                    dependencyManager: this.dependencyManager,
+                    fernConstants: this.intermediateRepresentation.constantsV2,
+                    importsManager,
+                    intermediateRepresentation: this.intermediateRepresentation,
+                    environmentsGenerator: this.environmentsGenerator,
+                    environmentsEnumDeclarationReferencer: this.environmentsEnumDeclarationReferencer,
+                });
+                environmentsContext.environments.getGeneratedEnvironments().writeToFile(environmentsContext);
             },
         });
     }
@@ -589,7 +609,7 @@ export class SdkGenerator {
                     getSchemaOfTypeReference:
                         typeReferenceToSchemaConverter.convert.bind(typeReferenceToSchemaConverter),
                     convertExpressionToString,
-                    environments: this.environmentsGenerator.toParsedEnvironments({
+                    environments: this.environmentsGenerator_OLD.toParsedEnvironments({
                         sourceFile,
                         importsManager,
                     }),
