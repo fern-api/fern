@@ -135,8 +135,7 @@ public abstract class AbstractGeneratorCli {
             GithubOutputMode githubOutputMode) {
         Optional<MavenCoordinate> maybeMavenCoordinate = githubOutputMode
                 .getPublishInfo()
-                .getMaven()
-                .map(mavenGithubPublishInfo -> {
+                .flatMap(githubPublishInfo -> githubPublishInfo.getMaven().map(mavenGithubPublishInfo -> {
                     MavenArtifactAndGroup mavenArtifactAndGroup =
                             MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
                     return MavenCoordinate.builder()
@@ -144,14 +143,15 @@ public abstract class AbstractGeneratorCli {
                             .artifact(mavenArtifactAndGroup.artifact())
                             .version(githubOutputMode.getVersion())
                             .build();
-                });
-
+                }));
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
         // add project level files
         addRootProjectFiles(maybeMavenCoordinate);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
-                githubOutputMode.getPublishInfo().getMaven().map(MavenGithubPublishInfo::getRegistryUrl)));
+                githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo
+                        .getMaven()
+                        .map(MavenGithubPublishInfo::getRegistryUrl))));
 
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
