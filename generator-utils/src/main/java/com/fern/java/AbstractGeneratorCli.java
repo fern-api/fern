@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
@@ -132,23 +133,25 @@ public abstract class AbstractGeneratorCli {
             IntermediateRepresentation ir,
             CustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
-        MavenGithubPublishInfo mavenGithubPublishInfo = githubOutputMode
+        Optional<MavenCoordinate> maybeMavenCoordinate = githubOutputMode
                 .getPublishInfo()
                 .getMaven()
-                .orElseThrow(() -> new RuntimeException("Expected maven publish info, but received other!"));
-        MavenArtifactAndGroup mavenArtifactAndGroup =
-                MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
-        MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
-                .group(mavenArtifactAndGroup.group())
-                .artifact(mavenArtifactAndGroup.artifact())
-                .version(githubOutputMode.getVersion())
-                .build();
+                .map(mavenGithubPublishInfo -> {
+                    MavenArtifactAndGroup mavenArtifactAndGroup =
+                            MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
+                    return MavenCoordinate.builder()
+                            .group(mavenArtifactAndGroup.group())
+                            .artifact(mavenArtifactAndGroup.artifact())
+                            .version(githubOutputMode.getVersion())
+                            .build();
+                });
 
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
         // add project level files
-        addRootProjectFiles(mavenCoordinate);
-        addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(mavenGithubPublishInfo.getRegistryUrl()));
+        addRootProjectFiles(maybeMavenCoordinate);
+        addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
+                githubOutputMode.getPublishInfo().getMaven().map(MavenGithubPublishInfo::getRegistryUrl)));
 
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
@@ -183,7 +186,7 @@ public abstract class AbstractGeneratorCli {
 
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, customConfig, publishOutputMode);
 
-        addRootProjectFiles(mavenCoordinate);
+        addRootProjectFiles(Optional.of(mavenCoordinate));
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
@@ -228,7 +231,7 @@ public abstract class AbstractGeneratorCli {
         }
     }
 
-    private void addRootProjectFiles(MavenCoordinate mavenCoordinate) {
+    private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate) {
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
                 .addAllPlugins(List.of(
                         GradlePlugin.builder()
@@ -244,11 +247,11 @@ public abstract class AbstractGeneratorCli {
                 .addCustomRepositories(GradleRepository.builder()
                         .url("https://s01.oss.sonatype.org/content/repositories/releases/")
                         .build())
-                .gradlePublishingConfig(GradlePublishingConfig.builder()
+                .gradlePublishingConfig(maybeMavenCoordinate.map(mavenCoordinate -> GradlePublishingConfig.builder()
                         .version(mavenCoordinate.getVersion())
                         .group(mavenCoordinate.getGroup())
                         .artifact(mavenCoordinate.getArtifact())
-                        .build())
+                        .build()))
                 .addAllDependencies(getBuildGradleDependencies())
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        googleJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
