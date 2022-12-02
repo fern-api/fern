@@ -54,6 +54,7 @@ const config = {
                         to: "https://buildwithfern.com/docs",
                         label: "Docs",
                         position: "left",
+                        target: "_self",
                     },
                     // {
                     //     docId: "intro",
