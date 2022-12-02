@@ -16,9 +16,9 @@ will look like after completing the tutorial.
 
 ### Step 0: Prerequisites
 
-- Install
-  [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- Install [Postman](https://www.postman.com/downloads/)
+-   Install
+    [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+-   Install [Postman](https://www.postman.com/downloads/)
 
 Have a question?
 
@@ -153,23 +153,23 @@ import express from "express";
 const app = express();
 
 app.use(
-  MoviesService.expressMiddleware({
-    createMovie: () => {
-      return {
-        ok: true,
-        // We are hardcoding the movie "Iron Man 3" for this demo
-        // because we don't have our server wired up to a database.
-        body: "iron-man-3",
-      };
-    },
+    MoviesService.expressMiddleware({
+        createMovie: () => {
+            return {
+                ok: true,
+                // We are hardcoding the movie "Iron Man 3" for this demo
+                // because we don't have our server wired up to a database.
+                body: "iron-man-3",
+            };
+        },
 
-    getMovie: () => {
-      return {
-        ok: false,
-        error: GetMovieErrorBody.notFoundError(),
-      };
-    },
-  })
+        getMovie: () => {
+            return {
+                ok: false,
+                error: GetMovieErrorBody.notFoundError(),
+            };
+        },
+    })
 );
 
 console.log("Listening for requests...");

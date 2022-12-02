@@ -44,13 +44,7 @@
     },
     {
       "group": "Features",
-      "pages": [
-        "features/sdk",
-        "features/api-docs",
-        "features/server",
-        "features/postman",
-        "features/openapi"
-      ]
+      "pages": ["features/sdk", "features/api-docs", "features/server", "features/postman", "features/openapi"]
     },
     {
       "group": "Define your API",
@@ -69,15 +63,7 @@
     },
     {
       "group": "CLI",
-      "pages": [
-        "cli/add",
-        "cli/check",
-        "cli/generate",
-        "cli/release",
-        "cli/init",
-        "cli/upgrade",
-        "cli/fern.config"
-      ]
+      "pages": ["cli/add", "cli/check", "cli/generate", "cli/release", "cli/init", "cli/upgrade", "cli/fern.config"]
     },
     {
       "group": "Tutorials",

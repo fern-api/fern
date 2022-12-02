@@ -1,7 +1,6 @@
 ---
 title: "Postman integration"
-description:
-  "The Fern team uses Postman and, if you're here, you probably do too."
+description: "The Fern team uses Postman and, if you're here, you probably do too."
 ---
 
 Fern has a first class integration with Postman so that you can automatically
@@ -27,12 +26,12 @@ variable, such as \{POSTMAN_API_KEY\}.
 
 ```yml /fern/api/generators.yml
 draft:
-  - name: fernapi/fern-postman
-    version: 0.0.xx
-    mode: download-files
-    output-path: ./generated-postman
-? +   config
-? +     publishing
+    - name: fernapi/fern-postman
+      version: 0.0.xx
+      mode: download-files
+      output-path: ./generated-postman
++   config:
++     publishing:
 +       apiKey: ${POSTMAN_API_KEY}
 +       workspaceId: ${POSTMAN_WORKSPACE_ID}
 ```
