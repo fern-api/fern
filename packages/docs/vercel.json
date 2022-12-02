@@ -8,5 +8,8 @@
       "source": "/docs/:match*",
       "destination": "https://fern.mintlify.dev/docs/:match*"
     }
-  ]
+  ],
+  "github": {
+    "silent": true
+  }
 }
