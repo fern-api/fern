@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    {
+      "source": "/docs",
+      "destination": "https://fern.mintlify.dev/docs/intro"
+    },
+    {
+      "source": "/docs/:match*",
+      "destination": "https://fern.mintlify.dev/docs/:match*"
+    }
+  ],
+  "github": {
+    "silent": true
+  }
+}
