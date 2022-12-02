@@ -133,10 +133,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public async runInteractiveTask(
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
-    ): Promise<void> {
+    ): Promise<boolean> {
         const subtask = this.addInteractiveTask(params).start();
         await run(subtask);
         subtask.finish();
+        return this.result === TaskResult.Success;
     }
 
     public printInteractiveTasks({ spinner }: { spinner: string }): string {
