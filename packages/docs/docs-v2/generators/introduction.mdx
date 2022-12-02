@@ -1,0 +1,97 @@
+---
+title: "generators.yml"
+description: "generators.yml is a file where you set configuration for which code generators
+you will use."
+---
+
+## How code generation works
+
+A code generator reads in your **Fern Definition** and outputs code. The
+outputted code is either published to a registry or downloaded locally within
+your project. Code generators run remotely in the cloud.
+
+By default, `generators.yml` starts with two empty lists: `draft` and `release`.
+
+```yml /fern/api/generators.yml
+draft: []
+release: []
+```
+
+**Draft** is used when iterating on your API and SDKs.
+
+**Release** is used when you are ready to share your SDKs with the world.
+
+## An example of generators.md
+
+View an example using multiple generators
+[on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml)
+or here:
+
+```yml /fern/api/generators.yml
+draft:
+  - name: fernapi/fern-java
+    version: 0.0.115
+    mode: publish
+  - name: fernapi/fern-openapi
+    version: 0.0.8
+    config:
+      format: yaml
+    mode: download-files
+    output-path: ./generated-openapi
+
+release:
+  - name: fernapi/fern-typescript-sdk
+    version: 0.0.215
+    publishing:
+      npm:
+        package-name: "@fern-api/example"
+        token: ${NPM_TOKEN}
+    github:
+      repository: fern-api/example-node
+  - name: fernapi/fern-java-sdk
+    version: 0.0.117
+    publishing:
+      maven:
+        coordinate: "io.github.fern-api:example"
+    github:
+      repository: fern-api/example-java-sdk
+```
+
+## Draft
+
+Generators in the `draft` list will publish to a private registry managed by
+Fern. Use this when your API is a work-in-progress. By default, code generators
+you add will show up as a draft.
+
+[Add a generator](../cli/add.md) in the CLI. For example, when we add the
+`postman` generator:
+
+```yml /fern/api/generators.yml
+draft:
++ - name: fernapi/fern-typescript-sdk
++   version: 0.0.206
++   mode: download-files
+release: []
+```
+
+## Release
+
+Generators in the `release` list will publish to a public registry (e.g. npm,
+Maven, PyPi). Use this when your API is ready for release. You will need to add
+additional configuration within each generator to tell Fern where to publish.
+
+For example:
+
+```yml /fern/api/generators.yml
+draft: []
+release:
+  - name: fernapi/fern-java-sdk
+    version: 0.0.xxx
+    mode: publish
+? +   outputs
+? +     maven
++       url: https://s01.oss.sonatype.org/content/repositories/releases/
++       coordinate: <maven-group:maven-artifact>
++       username: ${MAVEN_USERNAME}
++       password: ${MAVEN_PASSWORD}
+```

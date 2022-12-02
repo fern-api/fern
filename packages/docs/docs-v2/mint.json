@@ -1,0 +1,92 @@
+{
+  "name": "Fern",
+  "logo": {
+    "light": "/logo.svg",
+    "dark": "/logo.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#17A083",
+    "light": "#25C2A0",
+    "dark": "#09715B",
+    "ultraLight": "#CEF0E9",
+    "ultraDark": "#04382D",
+    "background": {
+      "dark": "#171717"
+    }
+  },
+  "topbarCtaButton": {
+    "name": "View GitHub",
+    "url": "https://www.buildwithfern.com/#:~:text=View-,GitHub,-Privacy%20Policy"
+  },
+  "topbarLinks": [
+    {
+      "name": "Community",
+      "url": "https://discord.com/invite/JkkXumPzcG"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Community",
+      "icon": "Discord",
+      "url": "https://discord.com/invite/JkkXumPzcG"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/fern-api/fern"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Home",
+      "pages": ["intro", "getting-started"]
+    },
+    {
+      "group": "Features",
+      "pages": [
+        "features/sdk",
+        "features/api-docs",
+        "features/server",
+        "features/postman",
+        "features/openapi"
+      ]
+    },
+    {
+      "group": "Define your API",
+      "pages": [
+        "definition",
+        "definition/services",
+        "definition/types",
+        "definition/errors",
+        "definition/docs",
+        "definition/imports"
+      ]
+    },
+    {
+      "group": "Code generators",
+      "pages": ["generators/code-generators", "generators/introduction"]
+    },
+    {
+      "group": "CLI",
+      "pages": [
+        "cli/add",
+        "cli/check",
+        "cli/generate",
+        "cli/release",
+        "cli/init",
+        "cli/upgrade",
+        "cli/fern.config"
+      ]
+    },
+    {
+      "group": "Tutorials",
+      "pages": ["tutorials/express", "tutorials/fastapi", "tutorials/spring"]
+    }
+  ],
+  "footerSocials": {
+    "discord": "https://discord.com/invite/JkkXumPzcG",
+    "github": "https://github.com/fern-api/fern/",
+    "website": "https://www.buildwithfern.com/"
+  }
+}
