@@ -1,4 +1,4 @@
-import { Environment } from "@fern-fern/ir-model/environment";
+import { Environment, EnvironmentId } from "@fern-fern/ir-model/environment";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/sdk-declaration-handler";
 import { ts, VariableDeclarationKind } from "ts-morph";
@@ -7,16 +7,19 @@ export declare namespace GeneratedEnvironmentsImpl {
     export interface Init {
         environmentEnumName: string;
         environments: Environment[];
+        defaultEnvironment: EnvironmentId | undefined;
     }
 }
 
 export class GeneratedEnvironmentsImpl implements GeneratedEnvironments {
     private environmentEnumName: string;
     private environments: Environment[];
+    private defaultEnvironmentId: EnvironmentId | undefined;
 
-    constructor({ environments, environmentEnumName }: GeneratedEnvironmentsImpl.Init) {
+    constructor({ environments, defaultEnvironment, environmentEnumName }: GeneratedEnvironmentsImpl.Init) {
         this.environments = environments;
         this.environmentEnumName = environmentEnumName;
+        this.defaultEnvironmentId = defaultEnvironment;
     }
 
     public writeToFile(context: EnvironmentsContext): void {
@@ -61,6 +64,19 @@ export class GeneratedEnvironmentsImpl implements GeneratedEnvironments {
                 )
             ),
         });
+    }
+
+    public get defaultEnvironmentEnumMemberName(): string | undefined {
+        if (this.defaultEnvironmentId == null) {
+            return undefined;
+        }
+        const defaultEnvironment = this.environments.find(
+            (environment) => environment.id === this.defaultEnvironmentId
+        );
+        if (defaultEnvironment == null) {
+            throw new Error("Default environment does not exist");
+        }
+        return this.getNameOfEnvironment(defaultEnvironment);
     }
 
     private getNameOfEnvironment(environment: Environment): string {

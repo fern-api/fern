@@ -2077,6 +2077,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -2173,6 +2174,7 @@ __metadata:
     eslint: ^8.23.1
     jest: ^28.1.3
     prettier: ^2.7.1
+    ts-morph: ^15.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2458,6 +2460,30 @@ __metadata:
     prettier: ^2.7.1
     ts-morph: ^15.1.0
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/service-generator@workspace:packages/service-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/service-generator@workspace:packages/service-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.294
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    "@types/url-join": 4.0.1
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+    url-join: 4.0.1
   languageName: unknown
   linkType: soft
 

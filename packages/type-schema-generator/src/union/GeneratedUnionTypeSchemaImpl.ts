@@ -10,7 +10,7 @@ import {
     RawNoPropertiesSingleUnionType,
     RawSingleUnionType,
 } from "@fern-typescript/union-schema-generator";
-import { ModuleDeclaration, ts } from "ts-morph";
+import { ModuleDeclaration } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
@@ -29,18 +29,11 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
         const discriminant = this.shape.discriminantV2;
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
+            typeName: superInit.typeName,
             discriminant,
-            getParsedDiscriminant: () => this.getGeneratedUnionType().getGeneratedUnion().discriminant,
-            getReferenceToParsedUnion: (context) =>
-                this.getGeneratedUnionType().getGeneratedUnion().getReferenceTo(context),
-            buildParsedUnion: ({ discriminantValueToBuild, existingValue, context }) =>
-                this.getGeneratedUnionType().getGeneratedUnion().buildFromExistingValue({
-                    discriminantValueToBuild,
-                    existingValue,
-                    context,
-                }),
-            getDefaultCaseForParseTransform: ({ context, parsedValue }) =>
-                this.getDefaultCaseForParseTransform({ context, parsedValue }),
+            shouldIncludeDefaultCaseInTransform: true,
+            getReferenceToSchema: this.getReferenceToSchema,
+            getGeneratedUnion: () => this.getGeneratedUnionType().getGeneratedUnion(),
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
                 const discriminantValue = singleUnionType.discriminantValue;
                 return SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
@@ -67,7 +60,6 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
                     },
                 });
             }),
-            typeName: superInit.typeName,
         });
     }
 
@@ -75,25 +67,8 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
         this.generatedUnionSchema.generateRawTypeDeclaration(context, module);
     }
 
-    public override getSchema(context: Context): Zurg.Schema {
-        return this.generatedUnionSchema.getSchema(context);
-    }
-
-    private getDefaultCaseForParseTransform({
-        context,
-        parsedValue,
-    }: {
-        context: Context;
-        parsedValue: ts.Expression;
-    }): ts.Statement[] {
-        return [
-            ts.factory.createReturnStatement(
-                this.getGeneratedUnionType().addVistMethodToValue({
-                    context,
-                    parsedValue,
-                })
-            ),
-        ];
+    public override buildSchema(context: Context): Zurg.Schema {
+        return this.generatedUnionSchema.buildSchema(context);
     }
 
     private getGeneratedUnionType(): GeneratedUnionType<Context> {

@@ -1,5 +1,5 @@
-import { BaseGenerated } from "./BaseGenerated";
+import { BaseGeneratedTypeSchema } from "./BaseGeneratedTypeSchema";
 
-export interface GeneratedAliasTypeSchema<Context> extends BaseGenerated<Context> {
+export interface GeneratedAliasTypeSchema<Context> extends BaseGeneratedTypeSchema<Context> {
     type: "alias";
 }

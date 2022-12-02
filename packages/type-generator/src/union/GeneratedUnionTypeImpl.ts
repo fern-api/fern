@@ -1,9 +1,10 @@
 import { SingleUnionTypeProperty, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
 import { GeneratedUnion, GeneratedUnionType, TypeContext } from "@fern-typescript/sdk-declaration-handler";
-import { AbstractParsedSingleUnionType, GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ts } from "ts-morph";
+import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
+import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
+import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
 
 export class GeneratedUnionTypeImpl<Context extends TypeContext>
     extends AbstractGeneratedType<UnionTypeDeclaration, Context>
@@ -24,26 +25,18 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
                 })
         );
 
+        const unknownSingleUnionTypeGenerator = new UnknownSingleUnionTypeGenerator();
+
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             docs: this.docs,
             discriminant: this.shape.discriminantV2,
             parsedSingleUnionTypes,
-            unknownSingleUnionType: {
-                discriminantType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-                getVisitorArgument: () =>
-                    ts.factory.createTypeLiteralNode([
-                        ts.factory.createPropertySignature(
-                            undefined,
-                            ts.factory.createIdentifier(
-                                AbstractParsedSingleUnionType.getDiscriminantKey(this.shape.discriminantV2)
-                            ),
-                            undefined,
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                        ),
-                    ]),
-            },
+            unknownSingleUnionType: new UnknownSingleUnionType({
+                singleUnionType: unknownSingleUnionTypeGenerator,
+                builderParameterName: unknownSingleUnionTypeGenerator.getBuilderParameterName(),
+            }),
         });
     }
 
@@ -57,15 +50,5 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 
     public getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
         return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty);
-    }
-
-    public addVistMethodToValue({
-        context,
-        parsedValue,
-    }: {
-        context: Context;
-        parsedValue: ts.Expression;
-    }): ts.Expression {
-        return this.generatedUnion.addVistMethodToValue({ context, parsedValue });
     }
 }

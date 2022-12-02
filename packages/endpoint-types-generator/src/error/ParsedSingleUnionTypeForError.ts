@@ -1,8 +1,7 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { ResponseErrorShape, ResponseErrorsV2, ResponseErrorV2 } from "@fern-fern/ir-model/services/commons";
 import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
 import {
-    AbstractParsedSingleUnionType,
+    AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator,
@@ -15,13 +14,13 @@ export declare namespace ParsedSingleUnionTypeForError {
     }
 }
 
-export class ParsedSingleUnionTypeForError extends AbstractParsedSingleUnionType<EndpointTypesContext> {
+export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<EndpointTypesContext> {
     protected errors: ResponseErrorsV2;
     protected error: ResponseErrorV2;
 
     constructor({ error, errors }: ParsedSingleUnionTypeForError.Init) {
-        super(
-            ResponseErrorShape._visit<SingleUnionTypeGenerator<EndpointTypesContext>>(error.shape, {
+        super({
+            singleUnionType: ResponseErrorShape._visit<SingleUnionTypeGenerator<EndpointTypesContext>>(error.shape, {
                 noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                 singleProperty: (singleProperty) =>
                     new SinglePropertySingleUnionTypeGenerator<EndpointTypesContext>({
@@ -38,8 +37,8 @@ export class ParsedSingleUnionTypeForError extends AbstractParsedSingleUnionType
                 _unknown: () => {
                     throw new Error("Unknown ResponseErrorShape: " + error.shape.type);
                 },
-            })
-        );
+            }),
+        });
 
         this.error = error;
         this.errors = errors;
@@ -63,9 +62,5 @@ export class ParsedSingleUnionTypeForError extends AbstractParsedSingleUnionType
 
     public getVisitorKey(): string {
         return this.error.discriminantValue.camelCase;
-    }
-
-    protected override getDiscriminant(): WireStringWithAllCasings {
-        return this.errors.discriminant;
     }
 }

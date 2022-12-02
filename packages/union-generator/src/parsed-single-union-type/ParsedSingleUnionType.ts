@@ -4,14 +4,18 @@ import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
 export interface ParsedSingleUnionType<Context extends WithBaseContextMixin> {
     getDocs(): string | null | undefined;
-    getDiscriminantValue(): string;
+    getDiscriminantValue(): string | undefined;
+    getDiscriminantValueOrThrow(): string;
     getInterfaceName(): string;
-    getInterfaceDeclaration(context: Context): ParsedSingleUnionType.InterfaceDeclaration;
+    getInterfaceDeclaration(
+        context: Context,
+        generatedUnion: GeneratedUnionImpl<Context>
+    ): ParsedSingleUnionType.InterfaceDeclaration;
     getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction;
     getBuilderName(): string;
     getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[];
     getVisitMethod(args: { localReferenceToUnionValue: ts.Expression }): ts.ArrowFunction;
-    getVisitMethodSignature(context: Context): ts.FunctionTypeNode;
+    getVisitMethodSignature(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.FunctionTypeNode;
     getVisitorKey(): string;
     invokeVisitMethod(args: {
         localReferenceToUnionValue: ts.Expression;

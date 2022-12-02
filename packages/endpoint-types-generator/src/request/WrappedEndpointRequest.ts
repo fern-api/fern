@@ -2,24 +2,9 @@ import { HttpHeader, PathParameter, QueryParameter } from "@fern-fern/ir-model/s
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
-import { OptionalKind, PropertySignatureStructure } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { AbstractEndpointRequest } from "./AbstractEndpointRequest";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
-
-interface ParsedQueryParam {
-    keyInWrapper: string;
-    queryParameter: QueryParameter;
-}
-
-interface ParsedPathParam {
-    keyInWrapper: string;
-    pathParameter: PathParameter;
-}
-
-interface ParsedHeader {
-    keyInWrapper: string;
-    header: HttpHeader;
-}
 
 export declare namespace WrappedEndpointRequest {
     export interface Init extends AbstractEndpointRequest.Init {}
@@ -29,56 +14,33 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
     private static REQUEST_WRAPPER_INTERFACE_NAME = "Request";
     private static REQUEST_BODY_PROPERTY_NAME = "_body";
 
-    private parsedQueryParameters: ParsedQueryParam[] = [];
-    private parsedPathParameters: ParsedPathParam[] = [];
-    private parsedHeaders: ParsedHeader[] = [];
-
-    constructor(superInit: AbstractEndpointRequest.Init) {
-        super(superInit);
-
-        this.parsedQueryParameters = this.endpoint.queryParameters.map((queryParameter) => ({
-            keyInWrapper: queryParameter.name.camelCase,
-            queryParameter,
-        }));
-        this.parsedPathParameters = [...this.service.pathParameters, ...this.endpoint.pathParameters].map(
-            (pathParameter) => ({
-                keyInWrapper: pathParameter.name.camelCase,
-                pathParameter,
-            })
-        );
-        this.parsedHeaders = [...this.service.headers, ...this.endpoint.headers].map((header) => ({
-            keyInWrapper: header.name.camelCase,
-            header,
-        }));
-    }
-
     public writeToFile(context: EndpointTypesContext): void {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
-        for (const { keyInWrapper, queryParameter } of this.parsedQueryParameters) {
+        for (const queryParameter of this.endpoint.queryParameters) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             properties.push({
-                name: keyInWrapper,
+                name: this.getQueryParameterKeyInWrapper(queryParameter),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
                 docs: queryParameter.docs != null ? [queryParameter.docs] : undefined,
             });
         }
 
-        for (const { keyInWrapper, pathParameter } of this.parsedPathParameters) {
+        for (const pathParameter of this.getAllPathParameters()) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             properties.push({
-                name: keyInWrapper,
+                name: this.getPathParameterKeyInWrapper(pathParameter),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
                 docs: pathParameter.docs != null ? [pathParameter.docs] : undefined,
             });
         }
 
-        for (const { keyInWrapper, header } of this.parsedHeaders) {
+        for (const header of this.getAllHeaders()) {
             const type = context.type.getReferenceToType(header.valueType);
             properties.push({
-                name: keyInWrapper,
+                name: this.getHeaderKeyInWrapper(header),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
                 docs: header.docs != null ? [header.docs] : undefined,
@@ -114,5 +76,59 @@ export class WrappedEndpointRequest extends AbstractEndpointRequest implements G
             typeNode,
             typeNodeWithoutUndefined: typeNode,
         };
+    }
+
+    public getReferenceToRequestBody(requestParameter: ts.Expression): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            requestParameter,
+            WrappedEndpointRequest.REQUEST_BODY_PROPERTY_NAME
+        );
+    }
+
+    public getReferenceToQueryParameter(
+        queryParameter: QueryParameter,
+        requestParameter: ts.Expression
+    ): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            requestParameter,
+            this.getQueryParameterKeyInWrapper(queryParameter)
+        );
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, requestParameter: ts.Expression): ts.Expression {
+        const pathParameter = this.getAllPathParameters().find(
+            (pathParameter) => pathParameter.nameV2.unsafeName.originalValue === pathParameterKey
+        );
+        if (pathParameter == null) {
+            throw new Error("Cannot find path parameter " + pathParameterKey);
+        }
+        return ts.factory.createPropertyAccessExpression(
+            requestParameter,
+            this.getPathParameterKeyInWrapper(pathParameter)
+        );
+    }
+
+    public getReferenceToHeader(header: HttpHeader, requestParameter: ts.Expression): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(requestParameter, this.getHeaderKeyInWrapper(header));
+    }
+
+    private getQueryParameterKeyInWrapper(queryParameter: QueryParameter): string {
+        return queryParameter.name.camelCase;
+    }
+
+    private getPathParameterKeyInWrapper(pathParameter: PathParameter): string {
+        return pathParameter.name.camelCase;
+    }
+
+    private getAllPathParameters(): PathParameter[] {
+        return [...this.service.pathParameters, ...this.endpoint.pathParameters];
+    }
+
+    private getHeaderKeyInWrapper(header: HttpHeader): string {
+        return header.name.camelCase;
+    }
+
+    private getAllHeaders(): HttpHeader[] {
+        return [...this.service.headers, ...this.endpoint.headers];
     }
 }

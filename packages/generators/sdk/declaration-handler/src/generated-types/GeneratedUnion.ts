@@ -9,4 +9,5 @@ export interface GeneratedUnion<Context> extends BaseGenerated<Context> {
         existingValue: ts.Expression;
         context: Context;
     }) => ts.Expression;
+    buildUnknown: (args: { existingValue: ts.Expression; context: Context }) => ts.Expression;
 }

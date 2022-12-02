@@ -8,7 +8,6 @@ import {
     GeneratedErrorSchema,
     Reference,
 } from "@fern-typescript/sdk-declaration-handler";
-import { getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
 import { SourceFile } from "ts-morph";
 import { ErrorDeclarationReferencer } from "../../declaration-referencers/ErrorDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
@@ -49,16 +48,6 @@ export class ErrorSchemaContextMixinImpl implements ErrorSchemaContextMixin {
         this.errorResolver = errorResolver;
     }
 
-    public getReferenceToRawError(errorName: DeclaredErrorName): Reference {
-        return this.errorSchemaDeclarationReferencer.getReferenceToError({
-            name: errorName,
-            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
-            subImport: getSubImportPathToRawSchema(),
-            importsManager: this.importsManager,
-            referencedIn: this.sourceFile,
-        });
-    }
-
     public getSchemaOfError(errorName: DeclaredErrorName): Zurg.Schema {
         const referenceToSchema = this.errorSchemaDeclarationReferencer
             .getReferenceToError({
@@ -80,6 +69,15 @@ export class ErrorSchemaContextMixinImpl implements ErrorSchemaContextMixin {
         return this.errorSchemaGenerator.generateErrorSchema({
             errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
             errorName: this.errorSchemaDeclarationReferencer.getExportedName(errorName),
+        });
+    }
+
+    public getReferenceToErrorSchema(errorName: DeclaredErrorName): Reference {
+        return this.errorSchemaDeclarationReferencer.getReferenceToError({
+            name: errorName,
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
+            referencedIn: this.sourceFile,
+            importsManager: this.importsManager,
         });
     }
 }

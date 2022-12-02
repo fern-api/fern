@@ -1,4 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { Zurg } from "@fern-typescript/commons-v2";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     EndpointTypeSchemasContext,
@@ -6,6 +7,7 @@ import {
     GeneratedUnion,
 } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
+import { ts } from "ts-morph";
 import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType";
 
 export declare namespace GeneratedEndpointErrorSchema {
@@ -29,15 +31,16 @@ export class GeneratedEndpointErrorSchema {
 
         const discriminant = endpoint.errorsV2.discriminant;
         this.generatedErrorUnionSchema = new GeneratedUnionSchema<EndpointTypeSchemasContext>({
+            typeName: GeneratedEndpointErrorSchema.ERROR_SCHEMA_NAME,
+            shouldIncludeDefaultCaseInTransform: false,
             discriminant,
-            getParsedDiscriminant: (context) => this.getErrorUnion(context).discriminant,
-            getReferenceToParsedUnion: (context) => this.getErrorUnion(context).getReferenceTo(context),
-            buildParsedUnion: ({ discriminantValueToBuild, existingValue, context }) =>
-                this.getErrorUnion(context).buildFromExistingValue({
-                    discriminantValueToBuild,
-                    existingValue,
-                    context,
-                }),
+            getReferenceToSchema: (context) =>
+                context.endpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
+                    service.name,
+                    endpoint.id,
+                    GeneratedEndpointErrorSchema.ERROR_SCHEMA_NAME
+                ),
+            getGeneratedUnion: (context) => this.getErrorUnion(context),
             singleUnionTypes: endpoint.errors.map((responseError) => {
                 const errorDeclaration = errorResolver.getErrorDeclarationFromName(responseError.error);
                 if (errorDeclaration.typeV2 == null) {
@@ -53,13 +56,19 @@ export class GeneratedEndpointErrorSchema {
                     });
                 }
             }),
-
-            typeName: GeneratedEndpointErrorSchema.ERROR_SCHEMA_NAME,
         });
     }
 
     public writeToFile(context: EndpointTypeSchemasContext): void {
         this.generatedErrorUnionSchema.writeSchemaToFile(context);
+    }
+
+    public getReferenceToRawShape(context: EndpointTypeSchemasContext): ts.TypeNode {
+        return this.generatedErrorUnionSchema.getReferenceToRawShape(context);
+    }
+
+    public getReferenceToZurgSchema(context: EndpointTypeSchemasContext): Zurg.Schema {
+        return this.generatedErrorUnionSchema.getReferenceToZurgSchema(context);
     }
 
     private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointTypesContext> {

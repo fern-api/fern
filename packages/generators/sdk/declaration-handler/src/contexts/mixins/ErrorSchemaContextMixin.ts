@@ -5,8 +5,8 @@ import { Reference } from "../../Reference";
 
 export interface ErrorSchemaContextMixin {
     getGeneratedErrorSchema: (errorName: DeclaredErrorName) => GeneratedErrorSchema | undefined;
-    getReferenceToRawError: (errorName: DeclaredErrorName) => Reference;
     getSchemaOfError: (errorName: DeclaredErrorName) => Zurg.Schema;
+    getReferenceToErrorSchema: (errorName: DeclaredErrorName) => Reference;
 }
 
 export interface WithErrorSchemaContextMixin {

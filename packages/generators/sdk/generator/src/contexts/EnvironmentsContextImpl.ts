@@ -27,6 +27,8 @@ export class EnvironmentsContextImpl extends BaseContextImpl implements Environm
             intermediateRepresentation,
             environmentsGenerator,
             environmentsEnumDeclarationReferencer,
+            importsManager: this.importsManager,
+            sourceFile: this.sourceFile,
         });
     }
 }

@@ -1,9 +1,12 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpHeader, HttpService, QueryParameter } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
-import { ParsedSingleUnionTypeForError } from "./ParsedSingleUnionTypeForError";
+import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
+import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
+import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
 import { GeneratedEndpointRequest } from "./request/GeneratedEndpointRequest";
 import { NotWrappedEndpointRequest } from "./request/NotWrappedEndpointRequest";
 import { WrappedEndpointRequest } from "./request/WrappedEndpointRequest";
@@ -18,19 +21,21 @@ export declare namespace GeneratedEndpointTypesImpl {
 export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
     private static RESPONSE_INTERFACE_NAME = "Response";
     private static ERROR_INTERFACE_NAME = "Error";
-    private static UNKNOWN_ERROR_PROPERTY_NAME = "content";
 
+    private service: HttpService;
     private endpoint: HttpEndpoint;
     private request: GeneratedEndpointRequest;
     private errorUnion: GeneratedUnionImpl<EndpointTypesContext>;
 
     constructor({ service, endpoint }: GeneratedEndpointTypesImpl.Init) {
+        this.service = service;
         this.endpoint = endpoint;
 
         this.request = isRequestWrapped(service, endpoint)
             ? new WrappedEndpointRequest({ service, endpoint })
             : new NotWrappedEndpointRequest({ service, endpoint });
 
+        const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator();
         this.errorUnion = new GeneratedUnionImpl<EndpointTypesContext>({
             typeName: GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME,
             discriminant: endpoint.errorsV2.discriminant,
@@ -44,16 +49,10 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
                     this.endpoint.id,
                     GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME
                 ),
-            unknownSingleUnionType: {
-                discriminantType: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-                getVisitorArgument: (context) => context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType(),
-                getNonDiscriminantProperties: (context) => [
-                    {
-                        name: GeneratedEndpointTypesImpl.UNKNOWN_ERROR_PROPERTY_NAME,
-                        type: getTextOfTsNode(context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()),
-                    },
-                ],
-            },
+            unknownSingleUnionType: new UnknownErrorSingleUnionType({
+                singleUnionType: unknownErrorSingleUnionTypeGenerator,
+                builderParameterName: unknownErrorSingleUnionTypeGenerator.getBuilderParameterName(),
+            }),
         });
     }
 
@@ -65,6 +64,39 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
 
     public getErrorUnion(): GeneratedUnion<EndpointTypesContext> {
         return this.errorUnion;
+    }
+
+    public getReferenceToRequestType(context: EndpointTypesContext): TypeReferenceNode | undefined {
+        return this.request.getRequestParameterType(context);
+    }
+
+    public getReferenceToResponseType(context: EndpointTypesContext): ts.TypeNode {
+        return context.endpointTypes
+            .getReferenceToEndpointTypeExport(
+                this.service.name,
+                this.endpoint.id,
+                GeneratedEndpointTypesImpl.RESPONSE_INTERFACE_NAME
+            )
+            .getTypeNode();
+    }
+
+    public getReferenceToRequestBody(requestParameter: ts.Expression): ts.Expression {
+        return this.request.getReferenceToRequestBody(requestParameter);
+    }
+
+    public getReferenceToQueryParameter(
+        queryParameter: QueryParameter,
+        requestParameter: ts.Expression
+    ): ts.Expression {
+        return this.request.getReferenceToQueryParameter(queryParameter, requestParameter);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, requestParameter: ts.Expression): ts.Expression {
+        return this.request.getReferenceToPathParameter(pathParameterKey, requestParameter);
+    }
+
+    public getReferenceToHeader(header: HttpHeader, requestParameter: ts.Expression): ts.Expression {
+        return this.request.getReferenceToHeader(header, requestParameter);
     }
 
     private writeResponseToFile(context: EndpointTypesContext): void {

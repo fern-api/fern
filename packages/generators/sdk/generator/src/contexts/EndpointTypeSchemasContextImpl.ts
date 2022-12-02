@@ -30,6 +30,7 @@ export declare namespace EndpointTypeSchemasContextImpl {
         errorDeclarationReferencer: ErrorDeclarationReferencer;
         errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
+        endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         endpointTypesGenerator: EndpointTypesGenerator;
         endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
         serviceResolver: ServiceResolver;
@@ -56,6 +57,7 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
         errorSchemaDeclarationReferencer,
         errorSchemaGenerator,
         endpointDeclarationReferencer,
+        endpointSchemaDeclarationReferencer,
         endpointTypesGenerator,
         endpointTypeSchemasGenerator,
         serviceResolver,
@@ -105,6 +107,9 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
         this.endpointTypeSchemas = new EndpointTypeSchemasContextMixinImpl({
             serviceResolver,
             endpointTypeSchemasGenerator,
+            endpointSchemaDeclarationReferencer,
+            importsManager: this.importsManager,
+            sourceFile: this.base.sourceFile,
         });
     }
 }

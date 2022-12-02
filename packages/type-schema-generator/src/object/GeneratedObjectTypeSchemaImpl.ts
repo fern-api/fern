@@ -12,7 +12,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
 {
     public readonly type = "object";
 
-    protected override getSchema(context: Context): Zurg.Schema {
+    protected override buildSchema(context: Context): Zurg.Schema {
         const generatedType = this.getGeneratedType();
         if (generatedType.type !== "object") {
             throw new Error("Type is not an object: " + this.typeName);

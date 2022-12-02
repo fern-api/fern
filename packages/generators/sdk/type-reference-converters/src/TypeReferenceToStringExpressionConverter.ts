@@ -10,21 +10,12 @@ import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToStringExpressionConverter {
-    export interface Init extends AbstractTypeReferenceConverter.Init {
-        stringifyEnum: (referenceToEnum: ts.Expression) => ts.Expression;
-    }
+    export interface Init extends AbstractTypeReferenceConverter.Init {}
 }
 
 export class TypeReferenceToStringExpressionConverter extends AbstractTypeReferenceConverter<
     (reference: ts.Expression) => ExpressionReferenceNode
 > {
-    private stringifyEnum: (referenceToEnum: ts.Expression) => ts.Expression;
-
-    constructor({ stringifyEnum, ...superInit }: TypeReferenceToStringExpressionConverter.Init) {
-        super(superInit);
-        this.stringifyEnum = stringifyEnum;
-    }
-
     protected override named(typeName: DeclaredTypeName): (reference: ts.Expression) => ExpressionReferenceNode {
         const resolvedType = this.typeResolver.resolveTypeName(typeName);
         return ResolvedTypeReference._visit<(reference: ts.Expression) => ExpressionReferenceNode>(resolvedType, {
@@ -45,7 +36,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             named: ({ shape }) => {
                 if (shape === ShapeType.Enum) {
                     return (reference) => ({
-                        expression: this.stringifyEnum(reference),
+                        expression: reference,
                         isNullable: false,
                     });
                 }

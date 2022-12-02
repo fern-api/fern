@@ -12,7 +12,7 @@ export class GeneratedEnumTypeSchemaImpl<Context extends WithBaseContextMixin>
 {
     public readonly type = "enum";
 
-    protected override getSchema(context: Context): Zurg.Schema {
+    protected override buildSchema(context: Context): Zurg.Schema {
         return context.base.coreUtilities.zurg.enum(this.shape.values.map((value) => value.value));
     }
 

@@ -1,64 +1,52 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
+
+export declare namespace AbstractParsedSingleUnionType {
+    export interface Init<Context extends WithBaseContextMixin> {
+        singleUnionType: SingleUnionTypeGenerator<Context>;
+    }
+}
 
 export abstract class AbstractParsedSingleUnionType<Context extends WithBaseContextMixin>
     implements ParsedSingleUnionType<Context>
 {
     private static VISITOR_PARAMETER_NAME = "visitor";
+    protected static VALUE_WITHOUT_VISIT_VARIABLE_NAME = "valueWithoutVisit";
 
-    constructor(private readonly singleUnionType: SingleUnionTypeGenerator<Context>) {}
+    protected singleUnionType: SingleUnionTypeGenerator<Context>;
 
-    public getInterfaceDeclaration(context: Context): ParsedSingleUnionType.InterfaceDeclaration {
-        return AbstractParsedSingleUnionType.createDiscriminatedInterface({
-            typeName: this.getInterfaceName(),
-            discriminantValue: ts.factory.createLiteralTypeNode(
-                ts.factory.createStringLiteral(this.getDiscriminantValue())
-            ),
-            nonDiscriminantProperties: this.singleUnionType.getNonDiscriminantPropertiesForInterface(context),
-            extends: this.singleUnionType.getExtendsForInterface(context),
-            discriminant: this.getDiscriminant(),
-        });
+    constructor({ singleUnionType }: AbstractParsedSingleUnionType.Init<Context>) {
+        this.singleUnionType = singleUnionType;
     }
 
-    public static createDiscriminatedInterface({
-        typeName,
-        discriminant,
-        discriminantValue,
-        nonDiscriminantProperties = [],
-        extends: extends_ = [],
-    }: {
-        typeName: string;
-        discriminant: WireStringWithAllCasings;
-        discriminantValue: ts.TypeNode;
-        nonDiscriminantProperties?: OptionalKind<PropertySignatureStructure>[];
-        extends?: ts.TypeNode[];
-    }): ParsedSingleUnionType.InterfaceDeclaration {
+    public getInterfaceDeclaration(
+        context: Context,
+        generatedUnion: GeneratedUnionImpl<Context>
+    ): ParsedSingleUnionType.InterfaceDeclaration {
         return {
-            name: typeName,
-            extends: extends_,
+            name: this.getInterfaceName(),
+            extends: this.singleUnionType.getExtendsForInterface(context),
             jsonProperties: [
                 {
-                    name: AbstractParsedSingleUnionType.getDiscriminantKey(discriminant),
-                    type: getTextOfTsNode(discriminantValue),
+                    name: generatedUnion.discriminant,
+                    type: getTextOfTsNode(this.getDiscriminantValueType()),
                 },
-                ...nonDiscriminantProperties,
+                ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context),
             ],
         };
     }
 
     public getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction {
-        const VALUE_WITHOUT_VISIT_VARIABLE_NAME = "valueWithoutVisit";
         const referenceToBuiltType = generatedUnion.getReferenceToSingleUnionType(this, context);
 
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
-            this.singleUnionType.getParametersForBuilder(context),
+            this.singleUnionType.getParametersForBuilder(context, { discriminant: generatedUnion.discriminant }),
             referenceToBuiltType,
             undefined,
             ts.factory.createBlock(
@@ -67,37 +55,83 @@ export abstract class AbstractParsedSingleUnionType<Context extends WithBaseCont
                         undefined,
                         ts.factory.createVariableDeclarationList(
                             [
-                                ts.factory.createVariableDeclaration(
-                                    ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
-                                    undefined,
-                                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
-                                        referenceToBuiltType,
-                                        ts.factory.createLiteralTypeNode(
-                                            ts.factory.createStringLiteral(GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME)
-                                        ),
-                                    ]),
-                                    ts.factory.createObjectLiteralExpression(
+                                this.getVariableWithoutVisitDeclaration({
+                                    referenceToTypeWithoutVisit: ts.factory.createTypeReferenceNode(
+                                        ts.factory.createIdentifier("Omit"),
                                         [
-                                            ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
-                                            ts.factory.createPropertyAssignment(
-                                                this.getDiscriminantKey(),
-                                                ts.factory.createStringLiteral(this.getDiscriminantValue())
+                                            referenceToBuiltType,
+                                            ts.factory.createLiteralTypeNode(
+                                                ts.factory.createStringLiteral(
+                                                    GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME
+                                                )
                                             ),
-                                        ],
-                                        true
-                                    )
-                                ),
+                                        ]
+                                    ),
+                                    context,
+                                    generatedUnion,
+                                }),
                             ],
                             ts.NodeFlags.Const
                         )
                     ),
                     ts.factory.createReturnStatement(
-                        AbstractParsedSingleUnionType.addVisitMethodToValue({
-                            context,
-                            generatedUnion,
-                            value: ts.factory.createIdentifier(VALUE_WITHOUT_VISIT_VARIABLE_NAME),
-                            referenceToBuiltType,
-                        })
+                        context.base.coreUtilities.base.addNonEnumerableProperty(
+                            ts.factory.createIdentifier(
+                                AbstractParsedSingleUnionType.VALUE_WITHOUT_VISIT_VARIABLE_NAME
+                            ),
+                            ts.factory.createStringLiteral(GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME),
+                            ts.factory.createFunctionExpression(
+                                undefined,
+                                undefined,
+                                undefined,
+                                [
+                                    ts.factory.createTypeParameterDeclaration(
+                                        undefined,
+                                        GeneratedUnionImpl.VISITOR_RETURN_TYPE
+                                    ),
+                                ],
+                                [
+                                    ts.factory.createParameterDeclaration(
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        "this",
+                                        undefined,
+                                        referenceToBuiltType,
+                                        undefined
+                                    ),
+                                    ts.factory.createParameterDeclaration(
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME,
+                                        undefined,
+                                        generatedUnion.getReferenceToVisitorInterface(context)
+                                    ),
+                                ],
+                                undefined,
+                                ts.factory.createBlock(
+                                    [
+                                        ts.factory.createReturnStatement(
+                                            ts.factory.createCallExpression(
+                                                ts.factory.createPropertyAccessExpression(
+                                                    generatedUnion.getReferenceToUnion(context).getExpression(),
+                                                    GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME
+                                                ),
+                                                undefined,
+                                                [
+                                                    ts.factory.createThis(),
+                                                    ts.factory.createIdentifier(
+                                                        AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME
+                                                    ),
+                                                ]
+                                            )
+                                        ),
+                                    ],
+                                    true
+                                )
+                            )
+                        )
                     ),
                 ],
                 true
@@ -105,77 +139,8 @@ export abstract class AbstractParsedSingleUnionType<Context extends WithBaseCont
         );
     }
 
-    public static addVisitMethodToValue<Context extends WithBaseContextMixin>({
-        context,
-        generatedUnion,
-        value,
-        referenceToBuiltType,
-    }: {
-        context: Context;
-        generatedUnion: GeneratedUnionImpl<Context>;
-        value: ts.Expression;
-        referenceToBuiltType: ts.TypeNode;
-    }): ts.Expression {
-        return context.base.coreUtilities.base.addNonEnumerableProperty(
-            value,
-            ts.factory.createStringLiteral(GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME),
-            ts.factory.createFunctionExpression(
-                undefined,
-                undefined,
-                undefined,
-                [ts.factory.createTypeParameterDeclaration(undefined, GeneratedUnionImpl.VISITOR_RETURN_TYPE)],
-                [
-                    ts.factory.createParameterDeclaration(
-                        undefined,
-                        undefined,
-                        undefined,
-                        "this",
-                        undefined,
-                        referenceToBuiltType,
-                        undefined
-                    ),
-                    ts.factory.createParameterDeclaration(
-                        undefined,
-                        undefined,
-                        undefined,
-                        AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME,
-                        undefined,
-                        generatedUnion.getReferenceToVisitorInterface(context)
-                    ),
-                ],
-                undefined,
-                ts.factory.createBlock(
-                    [
-                        ts.factory.createReturnStatement(
-                            ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    generatedUnion.getReferenceToUnion(context).getExpression(),
-                                    GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME
-                                ),
-                                undefined,
-                                [
-                                    ts.factory.createThis(),
-                                    ts.factory.createIdentifier(AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME),
-                                ]
-                            )
-                        ),
-                    ],
-                    true
-                )
-            )
-        );
-    }
-
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
         return this.singleUnionType.getBuilderArgsFromExistingValue(existingValue);
-    }
-
-    private getDiscriminantKey(): string {
-        return AbstractParsedSingleUnionType.getDiscriminantKey(this.getDiscriminant());
-    }
-
-    public static getDiscriminantKey(discriminant: WireStringWithAllCasings): string {
-        return discriminant.camelCase;
     }
 
     public getVisitMethod({
@@ -207,17 +172,10 @@ export abstract class AbstractParsedSingleUnionType<Context extends WithBaseCont
         );
     }
 
-    public getVisitMethodSignature(context: Context): ts.FunctionTypeNode {
-        return AbstractParsedSingleUnionType.getVisitorPropertySignature({
-            parameterType: this.singleUnionType.getVisitMethodParameterType(context),
+    public getVisitMethodSignature(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.FunctionTypeNode {
+        const parameterType = this.singleUnionType.getVisitMethodParameterType(context, {
+            discriminant: generatedUnion.discriminant,
         });
-    }
-
-    public static getVisitorPropertySignature({
-        parameterType,
-    }: {
-        parameterType: ts.TypeNode | undefined;
-    }): ts.FunctionTypeNode {
         return ts.factory.createFunctionTypeNode(
             undefined,
             parameterType != null
@@ -250,10 +208,34 @@ export abstract class AbstractParsedSingleUnionType<Context extends WithBaseCont
         );
     }
 
+    public getDiscriminantValueType(): ts.TypeNode {
+        const discriminantValue = this.getDiscriminantValue();
+        return discriminantValue != null
+            ? ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue))
+            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+    }
+
+    public getDiscriminantValueOrThrow(): string {
+        const discriminantValue = this.getDiscriminantValue();
+        if (discriminantValue == null) {
+            throw new Error("Discriminant value is not defined");
+        }
+        return discriminantValue;
+    }
+
+    protected abstract getVariableWithoutVisitDeclaration({
+        referenceToTypeWithoutVisit,
+        context,
+        generatedUnion,
+    }: {
+        referenceToTypeWithoutVisit: ts.TypeNode;
+        context: Context;
+        generatedUnion: GeneratedUnionImpl<Context>;
+    }): ts.VariableDeclaration;
+
     public abstract getDocs(): string | null | undefined;
-    public abstract getDiscriminantValue(): string;
+    public abstract getDiscriminantValue(): string | undefined;
     public abstract getInterfaceName(): string;
     public abstract getBuilderName(): string;
     public abstract getVisitorKey(): string;
-    protected abstract getDiscriminant(): WireStringWithAllCasings;
 }

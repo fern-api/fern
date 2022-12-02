@@ -2,22 +2,17 @@ import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context> extends AbstractGeneratedSchema.Init {
         discriminant: WireStringWithAllCasings;
-        getParsedDiscriminant: (context: Context) => string;
-        getReferenceToParsedUnion: (context: Context) => ts.TypeNode;
-        buildParsedUnion: (args: {
-            discriminantValueToBuild: string;
-            existingValue: ts.Expression;
-            context: Context;
-        }) => ts.Expression;
         singleUnionTypes: RawSingleUnionType<Context>[];
-        getDefaultCaseForParseTransform?: (args: { context: Context; parsedValue: ts.Expression }) => ts.Statement[];
+        getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
+        getReferenceToSchema: (context: Context) => Reference;
+        shouldIncludeDefaultCaseInTransform: boolean;
     }
 }
 
@@ -25,34 +20,25 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
     private static VALUE_PARAMETER_NAME = "value";
 
     private discriminant: WireStringWithAllCasings;
-    private getParsedDiscriminant: (context: Context) => string;
-    private getReferenceToParsedUnion: (context: Context) => ts.TypeNode;
-    private buildParsedUnion: (args: {
-        discriminantValueToBuild: string;
-        existingValue: ts.Expression;
-        context: Context;
-    }) => ts.Expression;
     private singleUnionTypes: RawSingleUnionType<Context>[];
-    private getDefaultCaseForParseTransform:
-        | ((args: { context: Context; parsedValue: ts.Expression }) => ts.Statement[])
-        | undefined;
+    private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
+    protected getReferenceToSchema: (context: Context) => Reference;
+    private shouldIncludeDefaultCaseInTransform: boolean;
 
     constructor({
         discriminant,
-        getParsedDiscriminant,
-        getReferenceToParsedUnion,
-        buildParsedUnion,
         singleUnionTypes,
-        getDefaultCaseForParseTransform,
+        getGeneratedUnion,
+        getReferenceToSchema,
+        shouldIncludeDefaultCaseInTransform,
         ...superInit
     }: GeneratedUnionSchema.Init<Context>) {
         super(superInit);
-        this.getParsedDiscriminant = getParsedDiscriminant;
-        this.getReferenceToParsedUnion = getReferenceToParsedUnion;
-        this.buildParsedUnion = buildParsedUnion;
         this.discriminant = discriminant;
         this.singleUnionTypes = singleUnionTypes;
-        this.getDefaultCaseForParseTransform = getDefaultCaseForParseTransform;
+        this.getGeneratedUnion = getGeneratedUnion;
+        this.getReferenceToSchema = getReferenceToSchema;
+        this.shouldIncludeDefaultCaseInTransform = shouldIncludeDefaultCaseInTransform;
     }
 
     public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
@@ -81,7 +67,7 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
         return this.getReferenceToParsedUnion(context);
     }
 
-    public override getSchema(context: Context): Zurg.Schema {
+    public buildSchema(context: Context): Zurg.Schema {
         return context.base.coreUtilities.zurg
             .union({
                 parsedDiscriminant: this.getParsedDiscriminant(context),
@@ -163,16 +149,43 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
                 ),
             ])
         );
-        if (this.getDefaultCaseForParseTransform != null) {
+
+        if (this.shouldIncludeDefaultCaseInTransform) {
             clauses.push(
-                ts.factory.createDefaultClause(
-                    this.getDefaultCaseForParseTransform({
-                        context,
-                        parsedValue: ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
-                    })
-                )
+                ts.factory.createDefaultClause([
+                    ts.factory.createReturnStatement(
+                        this.getGeneratedUnion(context).buildUnknown({
+                            existingValue: ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
+                            context,
+                        })
+                    ),
+                ])
             );
         }
         return clauses;
+    }
+
+    private getParsedDiscriminant(context: Context): string {
+        return this.getGeneratedUnion(context).discriminant;
+    }
+
+    private getReferenceToParsedUnion(context: Context): ts.TypeNode {
+        return this.getGeneratedUnion(context).getReferenceTo(context);
+    }
+
+    private buildParsedUnion({
+        discriminantValueToBuild,
+        existingValue,
+        context,
+    }: {
+        discriminantValueToBuild: string;
+        existingValue: ts.Expression;
+        context: Context;
+    }): ts.Expression {
+        return this.getGeneratedUnion(context).buildFromExistingValue({
+            discriminantValueToBuild,
+            existingValue,
+            context,
+        });
     }
 }

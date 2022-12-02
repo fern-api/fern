@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@fern-fern/ir-model": "0.0.294",
+    "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",

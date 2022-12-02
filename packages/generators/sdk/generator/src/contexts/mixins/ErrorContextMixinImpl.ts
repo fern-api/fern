@@ -1,4 +1,4 @@
-import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ErrorContextMixin, GeneratedError, Reference } from "@fern-typescript/sdk-declaration-handler";
@@ -49,7 +49,11 @@ export class ErrorContextMixinImpl implements ErrorContextMixin {
     public getGeneratedError(errorName: DeclaredErrorName): GeneratedError | undefined {
         return this.errorGenerator.generateError({
             errorName: this.errorDeclarationReferencer.getExportedName(errorName),
-            errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
+            errorDeclaration: this.getErrorDeclaration(errorName),
         });
+    }
+
+    public getErrorDeclaration(errorName: DeclaredErrorName): ErrorDeclaration {
+        return this.errorResolver.getErrorDeclarationFromName(errorName);
     }
 }

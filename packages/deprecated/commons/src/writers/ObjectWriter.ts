@@ -34,12 +34,18 @@ export class ObjectWriter {
         return new ObjectWriter(init);
     }
 
+    #isEmpty = true;
+    public get isEmpty(): boolean {
+        return this.#isEmpty;
+    }
+
     private constructor({ asConst = false, newlinesBetweenProperties = false }: ObjectWriter.Init) {
         this.asConst = asConst;
         this.newlinesBetweenProperties = newlinesBetweenProperties;
     }
 
     public addProperty(property: Omit<ObjectWriter.Property, "type">): this {
+        this.#isEmpty = false;
         this.blocks.push({
             ...property,
             type: "property",

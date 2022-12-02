@@ -18,6 +18,7 @@ export declare namespace BaseContextImpl {
 export abstract class BaseContextImpl {
     public readonly base: BaseContextMixinImpl;
 
+    protected sourceFile: SourceFile;
     protected importsManager: ImportsManager;
 
     constructor({
@@ -34,6 +35,7 @@ export abstract class BaseContextImpl {
             coreUtilitiesManager,
             fernConstants,
         });
+        this.sourceFile = sourceFile;
         this.importsManager = importsManager;
     }
 }

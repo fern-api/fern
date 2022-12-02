@@ -7,7 +7,7 @@ import {
 } from "@fern-fern/ir-model/types";
 import { TypeContext, WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import {
-    AbstractParsedSingleUnionType,
+    AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator,
@@ -21,25 +21,30 @@ export declare namespace ParsedSingleUnionTypeForUnion {
     }
 }
 
-export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends AbstractParsedSingleUnionType<Context> {
+export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends AbstractKnownSingleUnionType<Context> {
     private singleUnionTypeFromUnion: SingleUnionType;
     protected union: UnionTypeDeclaration;
 
     constructor({ singleUnionType, union }: ParsedSingleUnionTypeForUnion.Init<Context>) {
-        super(
-            SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(singleUnionType.shape, {
-                noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
-                samePropertiesAsObject: (extended) => new SamePropertyAsObjectSingleUnionTypeGenerator({ extended }),
-                singleProperty: (singleProperty) =>
-                    new SinglePropertySingleUnionTypeGenerator({
-                        propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty),
-                        getReferenceToPropertyType: (context) => context.type.getReferenceToType(singleProperty.type),
-                    }),
-                _unknown: () => {
-                    throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
-                },
-            })
-        );
+        super({
+            singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
+                singleUnionType.shape,
+                {
+                    noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
+                    samePropertiesAsObject: (extended) =>
+                        new SamePropertyAsObjectSingleUnionTypeGenerator({ extended }),
+                    singleProperty: (singleProperty) =>
+                        new SinglePropertySingleUnionTypeGenerator({
+                            propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty),
+                            getReferenceToPropertyType: (context) =>
+                                context.type.getReferenceToType(singleProperty.type),
+                        }),
+                    _unknown: () => {
+                        throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
+                    },
+                }
+            ),
+        });
 
         this.union = union;
         this.singleUnionTypeFromUnion = singleUnionType;

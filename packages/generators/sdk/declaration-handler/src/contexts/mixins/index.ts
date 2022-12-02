@@ -7,5 +7,6 @@ export { type EndpointTypesContextMixin, type WithEndpointTypesContextMixin } fr
 export { type EnvironmentsContextMixin, type WithEnvironmentsContextMixin } from "./EnvironmentsContextMixin";
 export { type ErrorContextMixin, type WithErrorContextMixin } from "./ErrorContextMixin";
 export { type ErrorSchemaContextMixin, type WithErrorSchemaContextMixin } from "./ErrorSchemaContextMixin";
+export { type ServiceContextMixin, type WithServiceContextMixin } from "./ServiceContextMixin";
 export { type TypeContextMixin, type WithTypeContextMixin } from "./TypeContextMixin";
 export { type TypeSchemaContextMixin, type WithTypeSchemaContextMixin } from "./TypeSchemaContextMixin";

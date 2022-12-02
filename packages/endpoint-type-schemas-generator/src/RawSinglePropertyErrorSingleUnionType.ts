@@ -26,10 +26,14 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     protected getNonDiscriminantPropertiesForInterface(
         context: EndpointTypeSchemasContext
     ): OptionalKind<PropertySignatureStructure>[] {
+        const errorSchema = context.errorSchema.getGeneratedErrorSchema(this.errorName);
+        if (errorSchema == null) {
+            throw new Error("Error schema does not exist");
+        }
         return [
             {
                 name: `"${context.base.fernConstants.errorsV2.errorContentKey.wireValue}"`,
-                type: getTextOfTsNode(context.errorSchema.getReferenceToRawError(this.errorName).getTypeNode()),
+                type: getTextOfTsNode(errorSchema.getReferenceToRawShape(context)),
             },
         ];
     }

@@ -18,7 +18,7 @@ import {
     TypeReferenceToStringExpressionConverter,
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { EnumTypeGenerator, getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
+import { getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { constructAugmentedServices } from "./constructAugmentedServices";
@@ -379,6 +379,7 @@ export class SdkGenerator {
                             errorDeclarationReferencer: this.errorDeclarationReferencer,
                             errorSchemaDeclarationReferencer: this.errorSchemaDeclarationReferencer,
                             endpointDeclarationReferencer: this.endpointDeclarationReferencer,
+                            endpointSchemaDeclarationReferencer: this.endpointSchemaDeclarationReferencer,
                             endpointTypesGenerator: this.endpointTypesGenerator,
                             typeGenerator: this.typeGenerator,
                             errorGenerator: this.errorGenerator,
@@ -536,7 +537,6 @@ export class SdkGenerator {
 
                 const typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
                     typeResolver: this.typeResolver,
-                    stringifyEnum: EnumTypeGenerator.getReferenceToRawValue.bind(this),
                 });
 
                 const getReferenceToType = (typeReference: TypeReference) =>

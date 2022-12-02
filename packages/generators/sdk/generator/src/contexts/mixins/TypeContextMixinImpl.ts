@@ -3,8 +3,11 @@ import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { GeneratedType, Reference, TypeContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceToParsedTypeNodeConverter } from "@fern-typescript/type-reference-converters";
-import { SourceFile } from "ts-morph";
+import {
+    TypeReferenceToParsedTypeNodeConverter,
+    TypeReferenceToStringExpressionConverter,
+} from "@fern-typescript/type-reference-converters";
+import { SourceFile, ts } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
 
@@ -23,6 +26,7 @@ export class TypeContextMixinImpl implements TypeContextMixin {
     private importsManager: ImportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
+    private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
     private typeResolver: TypeResolver;
     private typeGenerator: TypeGenerator;
 
@@ -41,6 +45,9 @@ export class TypeContextMixinImpl implements TypeContextMixin {
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
+            typeResolver,
+        });
+        this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
         });
     }
@@ -75,5 +82,9 @@ export class TypeContextMixinImpl implements TypeContextMixin {
             fernFilepath: typeDeclaration.name.fernFilepathV2,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
         });
+    }
+
+    public stringify(valueToStringify: ts.Expression, valueType: TypeReference): ts.Expression {
+        return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify).expression;
     }
 }
