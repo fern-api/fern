@@ -32,11 +32,7 @@ const config = {
                 //     /* other docs plugin options */
                 // },
                 blog: false,
-                docs: {
-                    sidebarPath: require.resolve("./sidebars.js"),
-                    // Remove this to remove the "edit this page" links.
-                    editUrl: "https://github.com/fern-api/fern/tree/main/docs",
-                },
+                docs: false,
                 theme: {
                     customCss: require.resolve("./src/css/custom.css"),
                 },
@@ -55,10 +51,9 @@ const config = {
                 },
                 items: [
                     {
-                        type: "doc",
-                        docId: "intro",
-                        position: "left",
+                        to: "https://buildwithfern.com/docs",
                         label: "Docs",
+                        position: "left",
                     },
                     // {
                     //     docId: "intro",
