@@ -1,1 +1,3 @@
-export default Docs = () => <div />;
+export default function Docs() {
+    return <div />;
+}
