@@ -1,0 +1,32 @@
+---
+title: "fern upgrade"
+description: "Upgrade versions in generators.yml and fern.config.json."
+---
+
+This ensures that you have the latest Fern CLI, including recently added
+`fern check` rules, and the latest code generation improvements.
+
+## Usage
+
+```
+fern upgrade
+```
+
+## Examples of changes
+
+```yml /fern/fern.config.json
+{
+   "organization": "imdb",
+-  "version": "0.0.203"
++  "version": "0.0.210"
+}
+```
+
+```yml /fern/api/generators.yml
+draft:
+   - name: fernapi/fern-typescript-sdk
+-    version: 0.0.197
++    version: 0.0.206
+     mode: download-files
+release: []
+```
