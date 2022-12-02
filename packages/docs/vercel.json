@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "destination": "https://fern.mintlify.dev/docs"
+    },
+    {
+      "source": "/hello-world",
+      "destination": "https://fern.mintlify.dev/docs"
+    },
+    {
       "source": "/docs",
       "destination": "https://fern.mintlify.dev/docs"
     },
