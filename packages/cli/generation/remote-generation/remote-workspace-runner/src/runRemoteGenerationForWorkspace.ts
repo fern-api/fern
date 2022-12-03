@@ -34,14 +34,13 @@ export async function runRemoteGenerationForWorkspace({
                         audiences: generatorGroup.audiences,
                     });
                 } catch (e) {
-                    interactiveTaskContext.logger.error("Failed");
-                    interactiveTaskContext.logger.debug(`${e}`);
+                    interactiveTaskContext.failWithoutThrowing(undefined, e);
                 }
             })
         )
     );
 
-    if (results.some((result) => result.status === "rejected" || result.value === false)) {
+    if (results.some((result) => result.status === "rejected" || !result.value)) {
         context.failAndThrow();
     }
 }

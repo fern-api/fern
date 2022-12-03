@@ -37,7 +37,7 @@ function convertErrorToString(error: unknown): string | undefined {
         return error;
     }
     if (error instanceof Error) {
-        return error.message;
+        return error.stack ?? error.message;
     }
     return undefined;
 }
