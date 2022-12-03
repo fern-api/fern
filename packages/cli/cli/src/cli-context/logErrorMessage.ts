@@ -1,5 +1,6 @@
 import { addPrefixToString } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
+import { FernCliError } from "@fern-api/task-context";
 
 export function logErrorMessage({
     message,
@@ -14,7 +15,11 @@ export function logErrorMessage({
         logger.error(message);
     }
 
-    if (error == null) {
+    if (
+        error == null ||
+        // thrower is responsible for logging, so we don't need to log here
+        error instanceof FernCliError
+    ) {
         return;
     }
 
