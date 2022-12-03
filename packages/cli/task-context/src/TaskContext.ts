@@ -10,7 +10,7 @@ export interface TaskContext {
     runInteractiveTask: (
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
-    ) => Promise<void>;
+    ) => Promise<boolean>;
 }
 
 export interface InteractiveTaskContext extends TaskContext {

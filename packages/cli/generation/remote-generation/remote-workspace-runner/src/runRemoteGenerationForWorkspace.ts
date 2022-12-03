@@ -23,20 +23,24 @@ export async function runRemoteGenerationForWorkspace({
 
     const results = await Promise.allSettled(
         generatorGroup.generators.map((generatorInvocation) =>
-            context.runInteractiveTask({ name: generatorInvocation.name }, (interactiveTaskContext) =>
-                runRemoteGenerationForGenerator({
-                    organization,
-                    workspace,
-                    interactiveTaskContext,
-                    generatorInvocation,
-                    version,
-                    audiences: generatorGroup.audiences,
-                })
-            )
+            context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                try {
+                    await runRemoteGenerationForGenerator({
+                        organization,
+                        workspace,
+                        interactiveTaskContext,
+                        generatorInvocation,
+                        version,
+                        audiences: generatorGroup.audiences,
+                    });
+                } catch (e) {
+                    interactiveTaskContext.failWithoutThrowing(undefined, e);
+                }
+            })
         )
     );
 
-    if (results.some((result) => result.status === "rejected")) {
+    if (results.some((result) => result.status === "rejected" || !result.value)) {
         context.failAndThrow();
     }
 }

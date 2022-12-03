@@ -63,7 +63,9 @@ async function runCli() {
     } catch (error) {
         if (error instanceof FernCliError) {
             if (cliContext.getLogLevel() === LogLevel.Debug) {
-                cliContext.logger.error(`${error.name}: ${error.message}\n${error.stack}`);
+                if (error.stack != null) {
+                    cliContext.logger.error(error.stack);
+                }
             }
             // thrower is responsible for logging, so we don't need to log here
             cliContext.fail();
