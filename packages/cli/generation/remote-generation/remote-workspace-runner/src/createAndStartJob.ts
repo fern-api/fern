@@ -79,6 +79,9 @@ async function createJob({
                             .join(", ")
                 );
             },
+            insufficientPermissions: () => {
+                return context.failAndThrow("Insufficient permissions. Do you have a token set in generators.yml?");
+            },
             _other: (content) => {
                 return context.failAndThrow("Failed to create job", content);
             },

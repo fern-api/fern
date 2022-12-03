@@ -21,7 +21,7 @@ export async function runRemoteGenerationForWorkspace({
         return;
     }
 
-    const results = await Promise.allSettled(
+    const results = await Promise.all(
         generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 try {
@@ -40,7 +40,7 @@ export async function runRemoteGenerationForWorkspace({
         )
     );
 
-    if (results.some((result) => result.status === "rejected" || !result.value)) {
+    if (results.some((didSucceed) => !didSucceed)) {
         context.failAndThrow();
     }
 }

@@ -58,14 +58,7 @@ export class RemoteTaskHandler {
         );
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
-            const level = newLog.level.visit({
-                debug: () => LogLevel.Debug,
-                info: () => LogLevel.Info,
-                warn: () => LogLevel.Warn,
-                error: () => LogLevel.Error,
-                _other: () => LogLevel.Info,
-            });
-            this.context.logger.log(level, newLog.message);
+            this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
@@ -146,5 +139,20 @@ async function downloadFilesForTask({
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
         context.failAndThrow("Failed to download files", e);
+    }
+}
+
+function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
+    switch (logLevel) {
+        case "DEBUG":
+            return LogLevel.Debug;
+        case "INFO":
+            return LogLevel.Info;
+        case "WARN":
+            return LogLevel.Warn;
+        case "ERROR":
+            return LogLevel.Error;
+        default:
+            return LogLevel.Info;
     }
 }
