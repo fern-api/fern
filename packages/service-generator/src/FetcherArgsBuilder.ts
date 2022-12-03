@@ -56,6 +56,10 @@ export class FetcherArgsBuilder {
         this.headers.push(header);
     }
 
+    public addHeaders(headers: GeneratedHeader[]): void {
+        this.headers.push(...headers);
+    }
+
     public build(): FetcherArgsBuilder.build.Return {
         const statementsToPrepend: ts.Statement[] = [];
         if (this.queryParameters.length > 0) {

@@ -17,11 +17,13 @@ import {
 } from "ts-morph";
 import urlJoin from "url-join";
 import { FetcherArgsBuilder } from "./FetcherArgsBuilder";
+import { GeneratedServiceImpl } from "./GeneratedServiceImpl";
 
 export declare namespace GeneratedEndpointImplementation {
     export interface Init {
         service: HttpService;
         endpoint: HttpEndpoint;
+        generatedService: GeneratedServiceImpl;
     }
 }
 
@@ -31,10 +33,12 @@ export class GeneratedEndpointImplementation {
 
     private service: HttpService;
     private endpoint: HttpEndpoint;
+    private generatedService: GeneratedServiceImpl;
 
-    constructor({ service, endpoint }: GeneratedEndpointImplementation.Init) {
+    constructor({ service, endpoint, generatedService }: GeneratedEndpointImplementation.Init) {
         this.service = service;
         this.endpoint = endpoint;
+        this.generatedService = generatedService;
     }
 
     public getImplementation(context: ServiceContext): OptionalKind<MethodDeclarationStructure> {
@@ -52,7 +56,11 @@ export class GeneratedEndpointImplementation {
                           },
                       ]
                     : [],
-            returnType: getTextOfTsNode(generatedEndpointTypes.getReferenceToResponseType(context)),
+            returnType: getTextOfTsNode(
+                ts.factory.createTypeReferenceNode("Promise", [
+                    generatedEndpointTypes.getReferenceToResponseType(context),
+                ])
+            ),
             scope: Scope.Public,
             isAsync: true,
             statements: this.generateMethodBody(context),
@@ -65,7 +73,10 @@ export class GeneratedEndpointImplementation {
         const generatedEndpointTypes = this.getGeneratedEndpointTypes(context);
 
         const fetcherArgsBuilder = new FetcherArgsBuilder({
-            url: this.buildUrl(context),
+            url: context.base.externalDependencies.urlJoin.invoke([
+                this.generatedService.getEnvironment(context),
+                this.buildUrl(context),
+            ]),
             method: this.endpoint.method,
             body:
                 this.endpoint.request.typeV2 != null
@@ -92,7 +103,7 @@ export class GeneratedEndpointImplementation {
             });
         }
 
-        for (const header of this.endpoint.headers) {
+        for (const header of [...this.service.headers, ...this.endpoint.headers]) {
             fetcherArgsBuilder.addHeader({
                 header: header.nameV2.wireValue,
                 value: generatedEndpointTypes.getReferenceToHeader(
@@ -101,6 +112,11 @@ export class GeneratedEndpointImplementation {
                 ),
             });
         }
+
+        fetcherArgsBuilder.addHeaders([
+            ...this.generatedService.getApiHeaders(),
+            ...this.generatedService.getAuthorizationHeaders(context),
+        ]);
 
         const { statementsToPrepend, fetcherArgs } = fetcherArgsBuilder.build();
         statements.push(...statementsToPrepend.map(getTextOfTsNode));
@@ -169,7 +185,7 @@ export class GeneratedEndpointImplementation {
                 ...serviceBasePathPartsExceptLast,
                 {
                     pathParameter: lastServiceBasePathPart.pathParameter,
-                    tail: urlJoin(lastServiceBasePathPart.tail, this.endpoint.path.head),
+                    tail: urlJoin(lastServiceBasePathPart.tail, "/", this.endpoint.path.head),
                 },
                 ...this.endpoint.path.parts,
             ],
@@ -222,6 +238,13 @@ export class GeneratedEndpointImplementation {
     }
 
     private getReturnResponseForKnownErrors(context: ServiceContext): ts.Statement[] {
+        const allErrorsButLast = [...this.endpoint.errors];
+        const lastError = allErrorsButLast.pop();
+
+        if (lastError == null) {
+            return [];
+        }
+
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
 
         const referenceToError = ts.factory.createPropertyAccessExpression(
@@ -246,16 +269,43 @@ export class GeneratedEndpointImplementation {
             ),
             ts.factory.createBlock(
                 [
-                    ts.factory.createReturnStatement(
-                        context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                            generatedEndpointTypeSchemas.deserializeError(
-                                ts.factory.createAsExpression(
-                                    referenceToErrorBody,
-                                    generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                    ts.factory.createSwitchStatement(
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createAsExpression(
+                                referenceToErrorBody,
+                                generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            this.endpoint.errorsV2.discriminant.wireValue
+                        ),
+                        ts.factory.createCaseBlock([
+                            ...allErrorsButLast.map((error) =>
+                                ts.factory.createCaseClause(
+                                    ts.factory.createStringLiteral(
+                                        context.error.getErrorDeclaration(error.error).discriminantValueV2.wireValue
+                                    ),
+                                    []
+                                )
+                            ),
+                            ts.factory.createCaseClause(
+                                ts.factory.createStringLiteral(
+                                    context.error.getErrorDeclaration(lastError.error).discriminantValueV2.wireValue
                                 ),
-                                context
-                            )
-                        )
+                                [
+                                    ts.factory.createReturnStatement(
+                                        context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                            generatedEndpointTypeSchemas.deserializeError(
+                                                ts.factory.createAsExpression(
+                                                    referenceToErrorBody,
+                                                    generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                                                ),
+                                                context
+                                            )
+                                        )
+                                    ),
+                                ]
+                            ),
+                        ])
                     ),
                 ],
                 true

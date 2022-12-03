@@ -39,11 +39,14 @@ export class EndpointTypesContextMixinImpl implements EndpointTypesContextMixin 
 
     public getGeneratedEndpointTypes(serviceName: DeclaredServiceName, endpointId: string): GeneratedEndpointTypes {
         const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        const endpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
+        if (service.originalService == null) {
+            throw new Error("Service is a wrapper");
+        }
+        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointId} does not exist`);
         }
-        return this.endpointTypesGenerator.generateEndpointTypes({ service, endpoint });
+        return this.endpointTypesGenerator.generateEndpointTypes({ service: service.originalService, endpoint });
     }
 
     public getReferenceToEndpointTypeExport(
@@ -52,7 +55,10 @@ export class EndpointTypesContextMixinImpl implements EndpointTypesContextMixin 
         export_: string | string[]
     ): Reference {
         const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        const endpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
+        if (service.originalService == null) {
+            throw new Error("Service is a wrapper");
+        }
+        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointId} does not exist`);
         }

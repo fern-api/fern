@@ -47,11 +47,17 @@ export class EndpointTypeSchemasContextMixinImpl implements EndpointTypeSchemasC
         endpointId: string
     ): GeneratedEndpointTypeSchemas {
         const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        const endpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
+        if (service.originalService == null) {
+            throw new Error("Service is a wrapper");
+        }
+        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointId} does not exist`);
         }
-        return this.endpointTypeSchemasGenerator.generateEndpointTypeSchemas({ service, endpoint });
+        return this.endpointTypeSchemasGenerator.generateEndpointTypeSchemas({
+            service: service.originalService,
+            endpoint,
+        });
     }
 
     public getReferenceToEndpointTypeSchemaExport(
@@ -60,7 +66,10 @@ export class EndpointTypeSchemasContextMixinImpl implements EndpointTypeSchemasC
         export_: string | string[]
     ): Reference {
         const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        const endpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
+        if (service.originalService == null) {
+            throw new Error("Service is a wrapper");
+        }
+        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointId} does not exist`);
         }

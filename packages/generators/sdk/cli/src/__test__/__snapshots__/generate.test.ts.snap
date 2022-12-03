@@ -1492,9 +1492,9 @@ export class Client {
       url: urlJoin(this.options.environment, \\"/owner/\\"),
       method: \\"POST\\",
       headers: {
-        \\"X-API-Version\\": this.options?.apiVersion,
+        \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.CreateOwnerRequest.json(request),
+      body: await serializers.owner.create.Request.json(request),
     });
     if (response.ok) {
       return {
@@ -1517,11 +1517,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: FernApi.owner.create.Error._unknown(response.error),
     };
   }
 
@@ -1530,13 +1526,13 @@ export class Client {
       url: urlJoin(this.options.environment, \`/owner/\${request.ownerId}\`),
       method: \\"GET\\",
       headers: {
-        \\"X-API-Version\\": this.options?.apiVersion,
+        \\"X-API-Version\\": this.options.apiVersion,
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
+        body: await serializers.owner.get.Response.parse(response.body as serializers.owner.get.Response.Raw),
       };
     }
 
@@ -1552,11 +1548,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: FernApi.owner.get.Error._unknown(response.error),
     };
   }
 
@@ -1565,14 +1557,14 @@ export class Client {
       url: urlJoin(this.options.environment, \`/owner/\${request.ownerId}\`),
       method: \\"PUT\\",
       headers: {
-        \\"X-API-Version\\": this.options?.apiVersion,
+        \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.UpdateOwnerRequest.json(request._body),
+      body: await serializers.owner.update.Request.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Owner.parse(response.body as serializers.Owner.Raw),
+        body: await serializers.owner.update.Response.parse(response.body as serializers.owner.update.Response.Raw),
       };
     }
 
@@ -1590,11 +1582,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: FernApi.owner.update.Error._unknown(response.error),
     };
   }
 }
@@ -1934,14 +1922,14 @@ export class Client {
       url: urlJoin(this.options.environment, \\"/tokens/create\\"),
       method: \\"POST\\",
       headers: {
-        \\"X-API-Version\\": this.options?.apiVersion,
+        \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.CreateTokenRequest.json(request),
+      body: await serializers.token.create.Request.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.CreateTokenResponse.parse(response.body as serializers.CreateTokenResponse.Raw),
+        body: await serializers.token.create.Response.parse(response.body as serializers.token.create.Response.Raw),
       };
     }
 
@@ -1959,11 +1947,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: FernApi.token.create.Error._unknown(response.error),
     };
   }
 
@@ -1974,14 +1958,16 @@ export class Client {
       url: urlJoin(this.options.environment, \\"/tokens/metadata\\"),
       method: \\"POST\\",
       headers: {
-        \\"X-API-Version\\": this.options?.apiVersion,
+        \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.GetTokenMetadataRequest.json(request),
+      body: await serializers.token.getTokenMetadata.Request.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.TokenMetadata.parse(response.body as serializers.TokenMetadata.Raw),
+        body: await serializers.token.getTokenMetadata.Response.parse(
+          response.body as serializers.token.getTokenMetadata.Response.Raw
+        ),
       };
     }
 
@@ -1999,11 +1985,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: FernApi.token.getTokenMetadata.Error._unknown(response.error),
     };
   }
 
@@ -2014,14 +1996,14 @@ export class Client {
       url: urlJoin(this.options.environment, \`/tokens/owner/\${request.ownerId}\`),
       method: \\"GET\\",
       headers: {
-        \\"X-API-Version\\": this.options?.apiVersion,
+        \\"X-API-Version\\": this.options.apiVersion,
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.token.getTokensForOwner.Response.parse(
-          response.body as serializers.TokenMetadata.Raw[]
+          response.body as serializers.token.getTokensForOwner.Response.Raw
         ),
       };
     }
@@ -2040,11 +2022,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: FernApi.token.getTokensForOwner.Error._unknown(response.error),
     };
   }
 }
@@ -4603,9 +4581,7 @@ import { Client as V2Client } from \\"./resources/v2/client/Client\\";
 export declare namespace TraceApiClient {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -6014,9 +5990,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -6033,9 +6007,9 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.TestSubmissionStatus.json(request._body),
+      body: await serializers.admin.updateTestSubmissionStatus.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6046,11 +6020,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.updateTestSubmissionStatus.Error._unknown(response.error),
     };
   }
 
@@ -6064,9 +6034,9 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.TestSubmissionUpdate.json(request._body),
+      body: await serializers.admin.sendTestSubmissionUpdate.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6077,11 +6047,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.sendTestSubmissionUpdate.Error._unknown(response.error),
     };
   }
 
@@ -6095,9 +6061,9 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.WorkspaceSubmissionStatus.json(request._body),
+      body: await serializers.admin.updateWorkspaceSubmissionStatus.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6108,11 +6074,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.updateWorkspaceSubmissionStatus.Error._unknown(response.error),
     };
   }
 
@@ -6126,9 +6088,9 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.WorkspaceSubmissionUpdate.json(request._body),
+      body: await serializers.admin.sendWorkspaceSubmissionUpdate.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6139,11 +6101,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.sendWorkspaceSubmissionUpdate.Error._unknown(response.error),
     };
   }
 
@@ -6157,9 +6115,9 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.StoreTracedTestCaseRequest.json(request._body),
+      body: await serializers.admin.storeTracedTestCase.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6170,11 +6128,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.storeTracedTestCase.Error._unknown(response.error),
     };
   }
 
@@ -6188,7 +6142,7 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
       body: await serializers.admin.storeTracedTestCaseV2.Request.json(request._body),
     });
@@ -6201,11 +6155,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.storeTracedTestCaseV2.Error._unknown(response.error),
     };
   }
 
@@ -6219,9 +6169,9 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.StoreTracedWorkspaceRequest.json(request._body),
+      body: await serializers.admin.storeTracedWorkspace.Request.json(request._body),
     });
     if (response.ok) {
       return {
@@ -6232,11 +6182,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.storeTracedWorkspace.Error._unknown(response.error),
     };
   }
 
@@ -6250,7 +6196,7 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
       body: await serializers.admin.storeTracedWorkspaceV2.Request.json(request._body),
     });
@@ -6263,11 +6209,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.admin.storeTracedWorkspaceV2.Error._unknown(response.error),
     };
   }
 }
@@ -8062,9 +8004,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -8076,25 +8016,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/homepage-problems/\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.homepage.getHomepageProblems.Response.parse(
-          response.body as serializers.ProblemId.Raw[]
+          response.body as serializers.homepage.getHomepageProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.homepage.getHomepageProblems.Error._unknown(response.error),
     };
   }
 
@@ -8105,7 +8041,7 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/homepage-problems/\\"),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
       body: await serializers.homepage.setHomepageProblems.Request.json(request),
     });
@@ -8118,11 +8054,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.homepage.setHomepageProblems.Error._unknown(response.error),
     };
   }
 }
@@ -8347,9 +8279,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -8361,25 +8291,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/migration-info/all\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.migration.getAttemptedMigrations.Response.parse(
-          response.body as serializers.Migration.Raw[]
+          response.body as serializers.migration.getAttemptedMigrations.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.migration.getAttemptedMigrations.Error._unknown(response.error),
     };
   }
 }
@@ -8523,9 +8449,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -8538,65 +8462,61 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}create\`
+        \`/v2/playlist/\${request.serviceParam}/create\`
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.PlaylistCreateRequest.json(request._body),
+      body: await serializers.playlist.createPlaylist.Request.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await serializers.playlist.createPlaylist.Response.parse(
+          response.body as serializers.playlist.createPlaylist.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.playlist.createPlaylist.Error._unknown(response.error),
     };
   }
 
   public async getPlaylists(
     request: TraceApi.playlist.getPlaylists.Request
   ): Promise<TraceApi.playlist.getPlaylists.Response> {
-    const queryParameters = new URLSearchParams();
+    const queryParams = new URLSearchParams();
     if (request.limit != null) {
-      queryParameters.append(\\"limit\\", request.limit.toString());
+      queryParams.append(\\"limit\\", request.limit.toString());
     }
 
-    queryParameters.append(\\"otherField\\", request.otherField);
+    queryParams.append(\\"otherField\\", request.otherField);
     const response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}all\`
+        \`/v2/playlist/\${request.serviceParam}/all\`
       ),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      queryParameters: queryParameters,
+      queryParameters: queryParams,
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.playlist.getPlaylists.Response.parse(response.body as serializers.Playlist.Raw[]),
+        body: await serializers.playlist.getPlaylists.Response.parse(
+          response.body as serializers.playlist.getPlaylists.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.playlist.getPlaylists.Error._unknown(response.error),
     };
   }
 
@@ -8606,17 +8526,19 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`
+        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
       ),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.Playlist.parse(response.body as serializers.Playlist.Raw),
+        body: await serializers.playlist.getPlaylist.Response.parse(
+          response.body as serializers.playlist.getPlaylist.Response.Raw
+        ),
       };
     }
 
@@ -8635,11 +8557,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.playlist.getPlaylist.Error._unknown(response.error),
     };
   }
 
@@ -8649,11 +8567,11 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`
+        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
       ),
       method: \\"PUT\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
       body: await serializers.playlist.updatePlaylist.Request.json(request._body),
     });
@@ -8661,7 +8579,7 @@ export class Client {
       return {
         ok: true,
         body: await serializers.playlist.updatePlaylist.Response.parse(
-          response.body as serializers.Playlist.Raw | null | undefined
+          response.body as serializers.playlist.updatePlaylist.Response.Raw
         ),
       };
     }
@@ -8680,11 +8598,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.playlist.updatePlaylist.Error._unknown(response.error),
     };
   }
 
@@ -8694,11 +8608,11 @@ export class Client {
     const response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}\${request.playlistId}\`
+        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
       ),
       method: \\"DELETE\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
@@ -8710,11 +8624,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.playlist.deletePlaylist.Error._unknown(response.error),
     };
   }
 }
@@ -9308,9 +9218,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -9322,24 +9230,22 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problem-crud/create\\"),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.CreateProblemRequest.json(request),
+      body: await serializers.problem.createProblem.Request.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.CreateProblemResponse.parse(response.body as serializers.CreateProblemResponse.Raw),
+        body: await serializers.problem.createProblem.Response.parse(
+          response.body as serializers.problem.createProblem.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.problem.createProblem.Error._unknown(response.error),
     };
   }
 
@@ -9353,24 +9259,22 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.CreateProblemRequest.json(request._body),
+      body: await serializers.problem.updateProblem.Request.json(request._body),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.UpdateProblemResponse.parse(response.body as serializers.UpdateProblemResponse.Raw),
+        body: await serializers.problem.updateProblem.Response.parse(
+          response.body as serializers.problem.updateProblem.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.problem.updateProblem.Error._unknown(response.error),
     };
   }
 
@@ -9384,7 +9288,7 @@ export class Client {
       ),
       method: \\"DELETE\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
@@ -9396,11 +9300,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.problem.deleteProblem.Error._unknown(response.error),
     };
   }
 
@@ -9411,26 +9311,22 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problem-crud/default-starter-files\\"),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.GetDefaultStarterFilesRequest.json(request),
+      body: await serializers.problem.getDefaultStarterFiles.Request.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.GetDefaultStarterFilesResponse.parse(
-          response.body as serializers.GetDefaultStarterFilesResponse.Raw
+        body: await serializers.problem.getDefaultStarterFiles.Response.parse(
+          response.body as serializers.problem.getDefaultStarterFiles.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.problem.getDefaultStarterFiles.Error._unknown(response.error),
     };
   }
 }
@@ -10146,9 +10042,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -10168,25 +10062,21 @@ export class Client {
       ),
       method: \\"POST\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.ExecutionSessionResponse.parse(
-          response.body as serializers.ExecutionSessionResponse.Raw
+        body: await serializers.submission.createExecutionSession.Response.parse(
+          response.body as serializers.submission.createExecutionSession.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.submission.createExecutionSession.Error._unknown(response.error),
     };
   }
 
@@ -10197,25 +10087,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/\${request.sessionId}\`),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.submission.getExecutionSession.Response.parse(
-          response.body as serializers.ExecutionSessionResponse.Raw | null | undefined
+          response.body as serializers.submission.getExecutionSession.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.submission.getExecutionSession.Error._unknown(response.error),
     };
   }
 
@@ -10226,7 +10112,7 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/stop/\${request.sessionId}\`),
       method: \\"DELETE\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
@@ -10238,11 +10124,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.submission.stopExecutionSession.Error._unknown(response.error),
     };
   }
 
@@ -10251,25 +10133,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/sessions/execution-sessions-state\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.GetExecutionSessionStateResponse.parse(
-          response.body as serializers.GetExecutionSessionStateResponse.Raw
+        body: await serializers.submission.getExecutionSessionsState.Response.parse(
+          response.body as serializers.submission.getExecutionSessionsState.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.submission.getExecutionSessionsState.Error._unknown(response.error),
     };
   }
 }
@@ -13693,9 +13571,7 @@ import * as serializers from \\"../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -13712,7 +13588,7 @@ export class Client {
       ),
       method: \\"PUT\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
@@ -13724,11 +13600,7 @@ export class Client {
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.sysprop.setNumWarmInstances.Error._unknown(response.error),
     };
   }
 
@@ -13737,25 +13609,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/sysprop/num-warm-instances\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.sysprop.getNumWarmInstances.Response.parse(
-          response.body as Record<serializers.Language.Raw, number>
+          response.body as serializers.sysprop.getNumWarmInstances.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.sysprop.getNumWarmInstances.Error._unknown(response.error),
     };
   }
 }
@@ -13912,9 +13780,7 @@ import { Client as V3Client } from \\"../resources/v3/client/Client\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -13982,9 +13848,7 @@ import * as serializers from \\"../../../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -13996,25 +13860,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/lightweight-problem-info\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.v2.problem.getLightweightProblems.Response.parse(
-          response.body as serializers.v2.LightweightProblemInfoV2.Raw[]
+          response.body as serializers.v2.problem.getLightweightProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.problem.getLightweightProblems.Error._unknown(response.error),
     };
   }
 
@@ -14023,25 +13883,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/problem-info\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.v2.problem.getProblems.Response.parse(
-          response.body as serializers.v2.ProblemInfoV2.Raw[]
+          response.body as serializers.v2.problem.getProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.problem.getProblems.Error._unknown(response.error),
     };
   }
 
@@ -14055,23 +13911,21 @@ export class Client {
       ),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await serializers.v2.problem.getLatestProblem.Response.parse(
+          response.body as serializers.v2.problem.getLatestProblem.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.problem.getLatestProblem.Error._unknown(response.error),
     };
   }
 
@@ -14085,23 +13939,21 @@ export class Client {
       ),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.ProblemInfoV2.parse(response.body as serializers.v2.ProblemInfoV2.Raw),
+        body: await serializers.v2.problem.getProblemVersion.Response.parse(
+          response.body as serializers.v2.problem.getProblemVersion.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.problem.getProblemVersion.Error._unknown(response.error),
     };
   }
 }
@@ -15538,9 +15390,7 @@ import { Client as ProblemClient } from \\"../resources/problem/client/Client\\"
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -15601,9 +15451,7 @@ import * as serializers from \\"../../../../../../../serialization\\";
 export declare namespace Client {
   interface Options {
     environment?: environments.Environment | string;
-    auth?: {
-      token?: core.Supplier<core.BearerToken>;
-    };
+    token?: core.Supplier<core.BearerToken>;
   }
 }
 
@@ -15615,25 +15463,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/lightweight-problem-info\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.v2.v3.problem.getLightweightProblems.Response.parse(
-          response.body as serializers.v2.v3.LightweightProblemInfoV2.Raw[]
+          response.body as serializers.v2.v3.problem.getLightweightProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.v3.problem.getLightweightProblems.Error._unknown(response.error),
     };
   }
 
@@ -15642,25 +15486,21 @@ export class Client {
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/problem-info\\"),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
         body: await serializers.v2.v3.problem.getProblems.Response.parse(
-          response.body as serializers.v2.v3.ProblemInfoV2.Raw[]
+          response.body as serializers.v2.v3.problem.getProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.v3.problem.getProblems.Error._unknown(response.error),
     };
   }
 
@@ -15674,23 +15514,21 @@ export class Client {
       ),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await serializers.v2.v3.problem.getLatestProblem.Response.parse(
+          response.body as serializers.v2.v3.problem.getLatestProblem.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.v3.problem.getLatestProblem.Error._unknown(response.error),
     };
   }
 
@@ -15704,23 +15542,21 @@ export class Client {
       ),
       method: \\"GET\\",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: await serializers.v2.v3.ProblemInfoV2.parse(response.body as serializers.v2.v3.ProblemInfoV2.Raw),
+        body: await serializers.v2.v3.problem.getProblemVersion.Response.parse(
+          response.body as serializers.v2.v3.problem.getProblemVersion.Response.Raw
+        ),
       };
     }
 
     return {
       ok: false,
-      error: {
-        errorName: undefined,
-        content: response.error,
-        _visit: (visitor) => visitor._other(response.error),
-      },
+      error: TraceApi.v2.v3.problem.getProblemVersion.Error._unknown(response.error),
     };
   }
 }
