@@ -7,7 +7,7 @@
     { "path": "../commons-v2" },
     { "path": "../deprecated/commons" },
     { "path": "../generators/sdk/declaration-handler" },
-    { "path": "../resolvers" },
-    { "path": "../union-schema-generator" }
+    { "path": "../generators/sdk/union-schema-generator" },
+    { "path": "../resolvers" }
   ]
 }

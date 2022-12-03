@@ -5,17 +5,16 @@
   "references": [
     { "path": "../../../commons-v2" },
     { "path": "../../../deprecated/commons" },
-    { "path": "../../../deprecated/types-v2" },
     { "path": "../../../endpoint-type-schemas-generator" },
     { "path": "../../../endpoint-types-generator" },
     { "path": "../../../environments-generator" },
     { "path": "../../../resolvers" },
-    { "path": "../../../service-generator" },
-    { "path": "../../../type-generator" },
-    { "path": "../../../type-schema-generator" },
     { "path": "../declaration-handler" },
     { "path": "../error-generator" },
     { "path": "../error-schema-generator" },
-    { "path": "../type-reference-converters" }
+    { "path": "../service-generator" },
+    { "path": "../type-generator" },
+    { "path": "../type-reference-converters" },
+    { "path": "../type-schema-generator" }
   ]
 }

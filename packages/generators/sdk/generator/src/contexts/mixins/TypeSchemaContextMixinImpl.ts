@@ -13,7 +13,6 @@ import {
     TypeReferenceToSchemaConverter,
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { getSubImportPathToRawSchema } from "@fern-typescript/types-v2";
 import { SourceFile } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
@@ -114,7 +113,8 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
                 // dynamic import not needed for types
                 useDynamicImport: false,
             }),
-            subImport: getSubImportPathToRawSchema(),
+            // TODO this should not be hardcoded here
+            subImport: ["Raw"],
             importsManager: this.importsManager,
             referencedIn: this.sourceFile,
         });

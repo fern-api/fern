@@ -1,0 +1,12 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../../abstract-schema-generator" },
+    { "path": "../../../commons-v2" },
+    { "path": "../../../deprecated/commons" },
+    { "path": "../declaration-handler" },
+    { "path": "../union-schema-generator" }
+  ]
+}
