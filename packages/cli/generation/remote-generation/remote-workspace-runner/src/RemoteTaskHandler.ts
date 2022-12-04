@@ -1,5 +1,5 @@
 import { noop } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
 import { InteractiveTaskContext } from "@fern-api/task-context";
@@ -8,6 +8,7 @@ import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
+import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -55,19 +56,9 @@ export class RemoteTaskHandler {
                       .join("\n")
                 : undefined
         );
-        for (const coordinate of coordinates) {
-            this.context.logger.debug(`Generating ${coordinate}`);
-        }
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
-            const level = newLog.level.visit({
-                debug: () => LogLevel.Debug,
-                info: () => LogLevel.Info,
-                warn: () => LogLevel.Warn,
-                error: () => LogLevel.Error,
-                _other: () => LogLevel.Info,
-            });
-            this.context.logger.log(level, newLog.message);
+            this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
@@ -90,6 +81,9 @@ export class RemoteTaskHandler {
             },
             finished: async (finishedStatus) => {
                 await this.maybeDownloadFiles(finishedStatus);
+                for (const coordinate of coordinates) {
+                    this.context.logger.info(`Published ${coordinate}`);
+                }
                 log_s3_url(finishedStatus.s3PreSignedReadUrl);
                 this.#isFinished = true;
             },
@@ -124,20 +118,41 @@ async function downloadFilesForTask({
     absolutePathToLocalOutput: AbsoluteFilePath;
     context: InteractiveTaskContext;
 }) {
-    const tmpDir = await tmp.dir({
-        prefix: "fern",
-        unsafeCleanup: true,
-    });
-    const outputZipPath = path.join(tmpDir.path, "output.zip");
     try {
+        // initiate request
         const request = await axios.get(s3PreSignedReadUrl, {
             responseType: "stream",
         });
+
+        // pipe to zip
+        const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
+        const outputZipPath = path.join(tmpDir.path, "output.zip");
         await pipeline(request.data, createWriteStream(outputZipPath));
+
+        // decompress to user-specified location
+        if (await doesPathExist(absolutePathToLocalOutput)) {
+            await rm(absolutePathToLocalOutput, { recursive: true });
+        }
+        await mkdir(absolutePathToLocalOutput, { recursive: true });
         await decompress(outputZipPath, absolutePathToLocalOutput);
+
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
         context.failAndThrow("Failed to download files", e);
     }
-    await tmpDir.cleanup();
+}
+
+function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
+    switch (logLevel) {
+        case "DEBUG":
+            return LogLevel.Debug;
+        case "INFO":
+            return LogLevel.Info;
+        case "WARN":
+            return LogLevel.Warn;
+        case "ERROR":
+            return LogLevel.Error;
+        default:
+            return LogLevel.Info;
+    }
 }

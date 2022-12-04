@@ -169,6 +169,15 @@ jobs:
           name: Publish fern-api CLI
           command: yarn workspace @fern-api/cli publish:cli:prod
 
+  publish-ir-sdk:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - run:
+          name: Publish ir sdks
+          command: npx fern-api generate --api ir-types --group sdks
+
 workflows:
   version: 2
   build:
@@ -217,6 +226,18 @@ workflows:
           context:
             - npm
             - auth0-dev
+
+      - publish-ir-sdk:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          requires:
+            - check
+            - test
+            - ete-tests
+            - live-test
 
       - publish:
           filters:

@@ -4,6 +4,7 @@ import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runn
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../cli";
+import { validateWorkspaceAndLogIssues } from "../validate/validateWorkspaceAndLogIssues";
 
 export async function generateWorkspace({
     workspace,
@@ -36,6 +37,8 @@ export async function generateWorkspace({
     if (group == null) {
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
+
+    await validateWorkspaceAndLogIssues(workspace, context);
 
     await runRemoteGenerationForWorkspace({
         workspace,

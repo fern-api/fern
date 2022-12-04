@@ -3521,7 +3521,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.71
+    "@fern-fern/fiddle-sdk": ^0.0.89
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -3852,7 +3852,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.71
+    "@fern-fern/fiddle-sdk": ^0.0.89
     "@fern-fern/ir-model": 0.0.294
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
@@ -4073,14 +4073,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.71":
-  version: 0.0.71
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.71"
+"@fern-fern/fiddle-sdk@npm:^0.0.89":
+  version: 0.0.89
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.89"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: bd7ea1f63366dc9f7e07fcd4b11c29079503bce1964bcd34595de5ed4f6ca24337c485885b53bb44d18a5b21341e9e5be56774a083de2195a236a373490a147d
+  checksum: 82112bbae0ccc55daedbf20f33357016f3a980332e7a1d3369a0bd607ab101ca63521244e67d81a77f7f355ba65bce50d10e61734f1e235c7b0bae66d2f565b9
   languageName: node
   linkType: hard
 
