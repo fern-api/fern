@@ -14,7 +14,7 @@ types:
       discriminantValueV2:
         type: commons.NameAndWireValue
         docs: this id deprecated. use discriminantValueV3 instead
-      discriminantValueV3: ErrorDeclarationDiscriminant
+      discriminantValueV3: ErrorDeclarationDiscriminantValue
       type:
         docs: this is deprecated. use typeV3 instead.
         type: types.Type
@@ -24,7 +24,7 @@ types:
       typeV3: optional<types.TypeReference>
       http: optional<HttpErrorConfiguration>
       statusCode: integer
-  ErrorDeclarationDiscriminant:
+  ErrorDeclarationDiscriminantValue:
     union:
       property: commons.NameAndWireValue
       statusCode: {}

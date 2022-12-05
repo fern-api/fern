@@ -1,5 +1,5 @@
 import { RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
-import { ErrorDeclaration, ErrorDeclarationDiscriminant } from "@fern-fern/ir-model/errors";
+import { ErrorDeclaration, ErrorDeclarationDiscriminantValue } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { convertType } from "./type-declarations/convertTypeDeclaration";
@@ -45,8 +45,8 @@ export function convertErrorDeclaration({
         }),
         discriminantValueV2,
         discriminantValueV3: isStatusCodeDiscriminated
-            ? ErrorDeclarationDiscriminant.statusCode()
-            : ErrorDeclarationDiscriminant.property(discriminantValueV2),
+            ? ErrorDeclarationDiscriminantValue.statusCode()
+            : ErrorDeclarationDiscriminantValue.property(discriminantValueV2),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         http: {
             statusCode: errorDeclaration["status-code"],
