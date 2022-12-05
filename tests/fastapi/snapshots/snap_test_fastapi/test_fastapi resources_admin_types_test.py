@@ -68,6 +68,7 @@ class Test(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 class _Test:

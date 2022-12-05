@@ -110,3 +110,4 @@ class Playlist(PlaylistCreateRequest):
     class Config:
         frozen = True
         allow_population_by_field_name = True
+        extra = pydantic.Extra.forbid

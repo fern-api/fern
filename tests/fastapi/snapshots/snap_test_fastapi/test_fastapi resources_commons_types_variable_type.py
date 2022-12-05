@@ -218,6 +218,7 @@ class VariableType(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 from .list_type import ListType as resources_commons_types_list_type_ListType  # noqa: E402

@@ -247,6 +247,7 @@ class VariableValue(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 from .map_value import MapValue as resources_commons_types_map_value_MapValue  # noqa: E402

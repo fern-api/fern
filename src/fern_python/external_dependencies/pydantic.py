@@ -21,6 +21,9 @@ class Pydantic:
 
     PrivateAttr = _export("PrivateAttr")
 
+    class Extra:
+        forbid = AST.Expression(_export("Extra", "forbid"))
+
     root_validator = AST.ReferenceNode(_export("root_validator"))
 
     @staticmethod

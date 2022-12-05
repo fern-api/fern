@@ -80,6 +80,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 class _PlaylistIdNotFoundErrorBody:

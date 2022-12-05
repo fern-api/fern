@@ -86,6 +86,7 @@ class CreateProblemResponse(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 class _CreateProblemResponse:

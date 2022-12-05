@@ -23,6 +23,7 @@ class PydanticModel:
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
         docstring: Optional[str] = None,
+        forbid_extra_fields: bool = False,
     ):
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
@@ -35,6 +36,7 @@ class PydanticModel:
         self._has_aliases = False
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
+        self._forbid_extra_fields = forbid_extra_fields
         self.frozen = True
         self.name = name
 
@@ -241,6 +243,14 @@ class PydanticModel:
                 AST.VariableDeclaration(
                     name="allow_population_by_field_name",
                     initializer=AST.Expression("True"),
+                )
+            )
+
+        if self._forbid_extra_fields:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.forbid,
                 )
             )
 

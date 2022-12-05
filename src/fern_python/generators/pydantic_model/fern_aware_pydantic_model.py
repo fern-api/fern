@@ -53,6 +53,7 @@ class FernAwarePydanticModel:
             if extends is not None
             else None,
             docstring=docstring,
+            forbid_extra_fields=custom_config.forbid_extra_fields,
         )
         self._model_contains_forward_refs = False
 

@@ -109,6 +109,7 @@ class DebugKeyValuePairs(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 from .debug_variable_value import DebugVariableValue  # noqa: E402

@@ -105,6 +105,7 @@ class KeyValuePair(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        extra = pydantic.Extra.forbid
 
 
 from .variable_value import VariableValue  # noqa: E402
