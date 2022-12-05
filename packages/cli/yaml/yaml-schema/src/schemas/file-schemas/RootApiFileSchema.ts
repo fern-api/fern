@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ApiAuthSchema } from "../ApiAuthSchema";
 import { AuthSchemeDeclarationSchema } from "../AuthSchemeDeclarationSchema";
 import { EnvironmentSchema } from "../EnvironmentSchema";
+import { ErrorDiscriminationSchema } from "../ErrorDiscriminationSchema";
 import { HttpHeaderSchema } from "../HttpHeaderSchema";
 
 export const RootApiFileSchema = z.strictObject({
@@ -12,7 +13,7 @@ export const RootApiFileSchema = z.strictObject({
     headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
     "default-environment": z.optional(z.string().or(z.null())),
     environments: z.optional(z.record(z.string(), EnvironmentSchema)),
-    "error-discriminant": z.string().optional(),
+    "error-discrimination": z.optional(ErrorDiscriminationSchema),
     audiences: z.optional(z.array(z.string())),
 });
 
