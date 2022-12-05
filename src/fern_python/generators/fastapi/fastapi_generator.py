@@ -31,7 +31,7 @@ class FastApiGenerator(AbstractGenerator):
 
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
-            custom_config=PydanticModelCustomConfig.parse_obj({"forbid_extra_fields": True}),
+            custom_config=PydanticModelCustomConfig.parse_obj({"forbid_extra_fields": True, "wrapped_aliases": True}),
             ir=ir,
             project=project,
             context=context.pydantic_generator_context,

@@ -32,28 +32,37 @@ class AliasGenerator(AbstractTypeGenerator):
     def generate(
         self,
     ) -> None:
-        BUILDER_PARAMETER_NAME = "value"
-        with FernAwarePydanticModel(
-            type_name=self._name,
-            context=self._context,
-            custom_config=self._custom_config,
-            source_file=self._source_file,
-            docstring=self._docs,
-        ) as pydantic_model:
-            pydantic_model.set_root_type(self._alias.alias_of)
-            pydantic_model.add_method(
-                name=self._get_getter_name(self._alias.alias_of),
-                parameters=[],
-                return_type=self._alias.alias_of,
-                body=AST.CodeWriter("return self.__root__"),
+        if not self._custom_config.wrapped_aliases:
+            self._source_file.add_declaration(
+                declaration=AST.TypeAliasDeclaration(
+                    name=self._name.name_v_3.safe_name.pascal_case,
+                    type_hint=self._context.get_type_hint_for_type_reference(self._alias.alias_of),
+                ),
+                should_export=True,
             )
-            pydantic_model.add_method(
-                name=self._get_builder_name(self._alias.alias_of),
-                parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
-                return_type=ir_types.TypeReference.factory.named(self._name),
-                body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}(__root__={BUILDER_PARAMETER_NAME})"),
-                decorator=AST.ClassMethodDecorator.STATIC,
-            )
+        else:
+            BUILDER_PARAMETER_NAME = "value"
+            with FernAwarePydanticModel(
+                type_name=self._name,
+                context=self._context,
+                custom_config=self._custom_config,
+                source_file=self._source_file,
+                docstring=self._docs,
+            ) as pydantic_model:
+                pydantic_model.set_root_type(self._alias.alias_of)
+                pydantic_model.add_method(
+                    name=self._get_getter_name(self._alias.alias_of),
+                    parameters=[],
+                    return_type=self._alias.alias_of,
+                    body=AST.CodeWriter("return self.__root__"),
+                )
+                pydantic_model.add_method(
+                    name=self._get_builder_name(self._alias.alias_of),
+                    parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
+                    return_type=ir_types.TypeReference.factory.named(self._name),
+                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}(__root__={BUILDER_PARAMETER_NAME})"),
+                    decorator=AST.ClassMethodDecorator.STATIC,
+                )
 
     def _get_builder_name(self, alias_of: ir_types.TypeReference) -> str:
         return alias_of.visit(
