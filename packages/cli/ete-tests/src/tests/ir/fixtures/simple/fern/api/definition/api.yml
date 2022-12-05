@@ -3,6 +3,8 @@ headers:
   X-API-VERSION:
     name: apiVersion
     type: string
-error-discriminant: error
+error-discrimination:
+  strategy: property
+  property-name: error
 audiences:
   - test

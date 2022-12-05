@@ -3275,7 +3275,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.294
+    "@fern-fern/ir-model": 0.0.336
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.0
     "@types/jest": ^29.0.3
@@ -3573,7 +3573,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.294
+    "@fern-fern/ir-model": 0.0.336
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -3638,7 +3638,7 @@ __metadata:
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-client": 0.0.5
-    "@fern-fern/ir-model": 0.0.294
+    "@fern-fern/ir-model": 0.0.336
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.3
@@ -3853,7 +3853,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.89
-    "@fern-fern/ir-model": 0.0.294
+    "@fern-fern/ir-model": 0.0.336
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
@@ -4050,7 +4050,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.294
+    "@fern-fern/ir-model": 0.0.336
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4095,10 +4095,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.294":
-  version: 0.0.294
-  resolution: "@fern-fern/ir-model@npm:0.0.294"
-  checksum: a45dcd090146a53135766525d3210941b525066c665576e01387502544ffdc3e89fd07d44518c659e6ddddb8a8ae0fbb2bf5f18a48932294310bf6ab3ec5e2ab
+"@fern-fern/ir-model@npm:0.0.336":
+  version: 0.0.336
+  resolution: "@fern-fern/ir-model@npm:0.0.336"
+  checksum: 585dfc362c7ae02a6756b801dcddd83da5d62ea5482235978acc46e28098659191ce47312b0838cf61b6a358c2c5a9e3718186153fd63c3b065143a02475ec71
   languageName: node
   linkType: hard
 

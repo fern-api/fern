@@ -1,3 +1,4 @@
+import { ErrorDiscriminationSchema } from "../schemas";
 import { NodePath } from "./NodePath";
 
 export type FernRootApiFileAstVisitor<R = void | Promise<void>> = {
@@ -6,7 +7,7 @@ export type FernRootApiFileAstVisitor<R = void | Promise<void>> = {
 
 export interface FernRootApiFileAstNodeTypes {
     defaultEnvironment: string | null | undefined;
-    errorDiscriminant: string | null | undefined;
+    errorDiscrimination: ErrorDiscriminationSchema | null | undefined;
 }
 
 export type FernRootApiFileAstNodeVisitor<K extends keyof FernRootApiFileAstNodeTypes, R = void | Promise<void>> = (

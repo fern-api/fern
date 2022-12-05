@@ -14,8 +14,8 @@ describe("no-missing-error-discriminant", () => {
         });
         expect(violations).toEqual([
             {
-                message: "Error discriminant is required because this API includes error declarations.",
-                nodePath: ["error-discriminant"],
+                message: "error-discrimination is required because this API has declared errors.",
+                nodePath: ["error-discrimination"],
                 relativeFilepath: "api.yml",
                 severity: "error",
             },

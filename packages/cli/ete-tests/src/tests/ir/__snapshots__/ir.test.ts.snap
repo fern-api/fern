@@ -2686,6 +2686,26 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 },
                 "wireValue": "NotFoundError"
             },
+            "discriminantValueV3": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError",
+                "type": "property"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -6407,6 +6427,26 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                     }
                 },
                 "wireValue": "NotFoundError"
+            },
+            "discriminantValueV3": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError",
+                "type": "property"
             },
             "http": {
                 "statusCode": 404
@@ -10130,6 +10170,26 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 },
                 "wireValue": "NotFoundError"
             },
+            "discriminantValueV3": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError",
+                "type": "property"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -13157,6 +13217,26 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 },
                 "wireValue": "NotFoundError"
             },
+            "discriminantValueV3": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError",
+                "type": "property"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -16183,6 +16263,26 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                     }
                 },
                 "wireValue": "NotFoundError"
+            },
+            "discriminantValueV3": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError",
+                "type": "property"
             },
             "http": {
                 "statusCode": 404
