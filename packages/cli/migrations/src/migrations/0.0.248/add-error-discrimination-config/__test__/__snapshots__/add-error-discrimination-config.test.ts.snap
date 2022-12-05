@@ -12,5 +12,6 @@ exports[`add-generator-groups status-code 1`] = `
 "name: api
 auth: bearer
 audiences:
-  - external"
+  - external
+"
 `;
