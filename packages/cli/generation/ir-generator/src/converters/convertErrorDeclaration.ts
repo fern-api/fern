@@ -1,5 +1,5 @@
 import { RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ErrorDeclaration, ErrorDeclarationDiscriminant } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { convertType } from "./type-declarations/convertTypeDeclaration";
@@ -9,11 +9,13 @@ export function convertErrorDeclaration({
     errorDeclaration,
     file,
     typeResolver,
+    isStatusCodeDiscriminated,
 }: {
     errorName: string;
     errorDeclaration: RawSchemas.ErrorDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
+    isStatusCodeDiscriminated: boolean;
 }): ErrorDeclaration {
     const rawType = errorDeclaration.type;
     const convertedType = rawType != null ? file.parseTypeReference(rawType) : undefined;
@@ -25,7 +27,10 @@ export function convertErrorDeclaration({
                   typeResolver,
               })
             : undefined;
-
+    const discriminantValueV2 = file.casingsGenerator.generateNameAndWireValue({
+        wireValue: errorName,
+        name: errorName,
+    });
     return {
         name: {
             name: errorName,
@@ -38,10 +43,10 @@ export function convertErrorDeclaration({
             wireValue: errorName,
             name: errorName,
         }),
-        discriminantValueV2: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: errorName,
-            name: errorName,
-        }),
+        discriminantValueV2,
+        discriminantValueV3: isStatusCodeDiscriminated
+            ? ErrorDeclarationDiscriminant.statusCode()
+            : ErrorDeclarationDiscriminant.property(discriminantValueV2),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         http: {
             statusCode: errorDeclaration["status-code"],
