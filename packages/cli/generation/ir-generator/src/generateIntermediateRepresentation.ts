@@ -96,15 +96,17 @@ export async function generateIntermediateRepresentation({
                 if (errors == null) {
                     return;
                 }
-                const isStatusCodeDiscriminated =
-                    workspace.rootApiFile["error-discrimination"]?.strategy === "status-code";
+                const errorDiscriminationSchema = workspace.rootApiFile["error-discrimination"];
+                if (errorDiscriminationSchema == null) {
+                    throw new Error("Please specify error-discrimination in api.yml.");
+                }
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                     const convertedErrorDeclaration = convertErrorDeclaration({
                         errorName,
                         errorDeclaration,
                         file,
                         typeResolver,
-                        isStatusCodeDiscriminated,
+                        errorDiscriminationSchema,
                     });
                     audienceIrGraph?.addError(convertedErrorDeclaration);
                     intermediateRepresentation.errors.push(convertedErrorDeclaration);
