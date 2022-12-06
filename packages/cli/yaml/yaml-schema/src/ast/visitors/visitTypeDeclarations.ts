@@ -44,6 +44,9 @@ export async function visitTypeDeclaration({
                         await visitor.typeReference?.(aliasOf, [...nodePathForType, "alias"]);
                     },
                     docs: createDocsVisitor(visitor, nodePathForType),
+                    availability: noop,
+                    audiences: noop,
+                    examples: noop,
                 });
             }
         },
@@ -80,6 +83,9 @@ export async function visitTypeDeclaration({
                         }
                     }
                 },
+                availability: noop,
+                audiences: noop,
+                examples: noop,
             });
         },
         union: async (union) => {
@@ -105,6 +111,9 @@ export async function visitTypeDeclaration({
                         }
                     }
                 },
+                availability: noop,
+                audiences: noop,
+                examples: noop,
             });
         },
         enum: async (_enum) => {
@@ -120,14 +129,15 @@ export async function visitTypeDeclaration({
                         if (typeof enumType !== "string") {
                             await visitObject(enumType, {
                                 docs: createDocsVisitor(visitor, nodePathForEnumType),
-                                availability: noop,
                                 name: noop,
                                 value: noop,
-                                audiences: noop,
                             });
                         }
                     }
                 },
+                availability: noop,
+                audiences: noop,
+                examples: noop,
             });
         },
     });

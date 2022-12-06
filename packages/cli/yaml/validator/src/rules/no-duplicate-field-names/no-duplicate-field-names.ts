@@ -1,8 +1,8 @@
 import {
     constructFernFileContext,
     getEnumName,
+    getSingleUnionTypeName,
     getUnionDiscriminantName,
-    getUnionedTypeName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
@@ -74,7 +74,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                         union: (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 Object.entries(unionDeclaration.union),
-                                ([unionKey, unionedType]) => getUnionedTypeName({ unionKey, unionedType }).name
+                                ([unionKey, rawSingleUnionType]) =>
+                                    getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
                             );
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
@@ -83,12 +84,12 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 });
                             }
 
-                            for (const [unionKey, unionedType] of Object.entries(unionDeclaration.union)) {
+                            for (const [unionKey, singleUnionType] of Object.entries(unionDeclaration.union)) {
                                 const specifiedType =
-                                    typeof unionedType === "string"
-                                        ? unionedType
-                                        : unionedType.type != null
-                                        ? unionedType.type
+                                    typeof singleUnionType === "string"
+                                        ? singleUnionType
+                                        : singleUnionType.type != null
+                                        ? singleUnionType.type
                                         : undefined;
 
                                 if (specifiedType != null) {

@@ -1,13 +1,21 @@
 imports:
   director: director.yml
 types:
-  MovieId: string
+  MovieId:
+    type: string
+    examples:
+      - id1
+      - id2
   ActorId: string
   Movie:
     properties:
       id: MovieId
       title: string
       rating: double
+    examples:
+      - id: my-movie-id
+        title: Goodwill Hunting
+        rating: 14.5
   CreateMovieRequest:
     properties:
       title: string
@@ -17,10 +25,30 @@ types:
       actor: ActorId
       director: director.Director
       producer: {}
+    examples:
+      - type: actor
+        value: Matt Damon
+      - type: director
+        name: George the Directory
+        age: 100
+      - type: producer
   RecursiveType:
     extends: CreateMovieRequest
     properties:
-      selfRefrencing: list<RecursiveType>
+      selfReferencing: list<RecursiveType>
+    examples:
+      - title: The Godfather
+        ratings: [10, 5, 9]
+        selfReferencing:
+          - title: The Godfather II
+            ratings: [10, 11]
+            selfReferencing: []
+          - title: The Godfather III
+            ratings: []
+            selfReferencing: []
+      - title: Goodfellas
+        ratings: [1, 2, 3]
+        selfReferencing: []
 errors:
   NotFoundError:
     status-code: 404

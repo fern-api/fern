@@ -2,7 +2,7 @@ import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
-import { visitFernServiceFileYamlAst, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { recursivelyVisitRawTypeReference, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -89,7 +89,7 @@ function getAllNamedTypes({
     relativeFilepath: RelativeFilePath;
     imports: Record<string, RelativeFilePath>;
 }): ReferenceToTypeName[] {
-    return visitRawTypeReference<ReferenceToTypeName[]>(type, {
+    return recursivelyVisitRawTypeReference<ReferenceToTypeName[]>(type, {
         primitive: () => [],
         unknown: () => [],
         void: () => [],

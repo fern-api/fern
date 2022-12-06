@@ -1,4 +1,4 @@
-import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../FernFileContext";
 import { parseTypeName } from "./parseTypeName";
@@ -11,7 +11,7 @@ export declare namespace parseInlineType {
 }
 
 export function parseInlineType({ type, file }: parseInlineType.Args): TypeReference {
-    return visitRawTypeReference<TypeReference>(type, {
+    return recursivelyVisitRawTypeReference<TypeReference>(type, {
         primitive: TypeReference.primitive,
         unknown: TypeReference.unknown,
         void: TypeReference.void,

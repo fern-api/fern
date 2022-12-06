@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 
-export const AliasSchema = WithDocsSchema.extend({
+export const AliasSchema = BaseTypeDeclarationSchema.extend({
     type: z.string(),
 });
 
