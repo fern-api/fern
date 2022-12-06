@@ -15,7 +15,16 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
         context.logger.log(
             getLogLevelForSeverity(violation.severity),
             formatLog({
-                breadcrumbs: [violation.relativeFilepath, ...violation.nodePath],
+                breadcrumbs: [
+                    violation.relativeFilepath,
+                    ...violation.nodePath.map((nodePathItem) => {
+                        let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
+                        if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
+                            itemStr += `[${nodePathItem.arrayIndex}]`;
+                        }
+                        return itemStr;
+                    }),
+                ],
                 title: violation.message,
             })
         );

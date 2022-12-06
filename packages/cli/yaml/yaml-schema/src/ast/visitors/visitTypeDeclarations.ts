@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { TypeDeclarationSchema } from "../../schemas";
+import { TypeDeclarationSchema, TypeExampleSchema } from "../../schemas";
 import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
 import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
 import { NodePath } from "../NodePath";
@@ -34,6 +34,18 @@ export async function visitTypeDeclaration({
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForType: NodePath;
 }): Promise<void> {
+    const visitExamples = async (examples: TypeExampleSchema[] | undefined) => {
+        if (examples == null) {
+            return;
+        }
+        for (const [arrayIndex, example] of examples.entries()) {
+            await visitor.typeExample?.({ typeDeclaration: declaration, example }, [
+                ...nodePathForType,
+                { key: "examples", arrayIndex },
+            ]);
+        }
+    };
+
     await visitRawTypeDeclaration(declaration, {
         alias: async (alias) => {
             if (typeof alias === "string") {
@@ -41,12 +53,12 @@ export async function visitTypeDeclaration({
             } else {
                 await visitObject(alias, {
                     type: async (aliasOf) => {
-                        await visitor.typeReference?.(aliasOf, [...nodePathForType, "alias"]);
+                        await visitor.typeReference?.(aliasOf, [...nodePathForType, "type"]);
                     },
                     docs: createDocsVisitor(visitor, nodePathForType),
                     availability: noop,
                     audiences: noop,
-                    examples: noop,
+                    examples: visitExamples,
                 });
             }
         },
@@ -85,7 +97,7 @@ export async function visitTypeDeclaration({
                 },
                 availability: noop,
                 audiences: noop,
-                examples: noop,
+                examples: visitExamples,
             });
         },
         union: async (union) => {
@@ -113,7 +125,7 @@ export async function visitTypeDeclaration({
                 },
                 availability: noop,
                 audiences: noop,
-                examples: noop,
+                examples: visitExamples,
             });
         },
         enum: async (_enum) => {
@@ -137,7 +149,7 @@ export async function visitTypeDeclaration({
                 },
                 availability: noop,
                 audiences: noop,
-                examples: noop,
+                examples: visitExamples,
             });
         },
     });

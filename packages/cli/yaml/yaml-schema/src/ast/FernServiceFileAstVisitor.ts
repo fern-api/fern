@@ -4,6 +4,7 @@ import {
     HttpQueryParameterSchema,
     HttpServiceSchema,
     TypeDeclarationSchema,
+    TypeExampleSchema,
     TypeReferenceSchema,
 } from "../schemas";
 import { NodePath } from "./NodePath";
@@ -16,6 +17,7 @@ export interface FernServiceFileAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
+    typeExample: { typeDeclaration: TypeDeclarationSchema; example: TypeExampleSchema };
     typeReference: TypeReferenceSchema;
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };
