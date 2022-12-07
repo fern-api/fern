@@ -32,7 +32,10 @@ types:
       constantsV2: constants.Constants
       defaultEnvironment: optional<environment.EnvironmentId>
       environments: list<environment.Environment>
-      errorDiscriminant: optional<commons.Name>
+      errorDiscriminant:
+        docs: deprecated. use errorDiscriminationStrategy instead.
+        type: optional<commons.Name>
+      errorDiscriminationStrategy: ErrorDiscriminationStrategy
       sdkConfig: SdkConfig
   SdkConfig:
     properties:
@@ -46,3 +49,11 @@ types:
       errorDiscriminant: string
       unknownErrorDiscriminantValue: string
       errorInstanceIdKey: string
+  ErrorDiscriminationStrategy:
+    union:
+      statusCode: {}
+      property: ErrorDiscriminationByPropertyStrategy
+  ErrorDiscriminationByPropertyStrategy:
+    properties:
+      discriminant: commons.NameAndWireValue
+      contentProperty: commons.NameAndWireValue

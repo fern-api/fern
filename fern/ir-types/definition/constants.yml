@@ -19,6 +19,6 @@ types:
         docs: this is deprecated. use IR. errorDiscriminant instead
         type: commons.NameAndWireValue
       errorContentKey:
-        docs: this is deprecated. properties are defined on error bodies now.
+        docs: this is deprecated. use the root errorDiscriminationStrategy instead.
         type: commons.NameAndWireValue
       errorInstanceIdKey: commons.NameAndWireValue

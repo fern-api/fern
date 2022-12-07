@@ -33,10 +33,10 @@ types:
       queryParameters: list<QueryParameter>
       request: HttpRequest
       response: HttpResponse
-      errors:
-        docs: this is deprecated. Use errorsV2 instead.
-        type: serviceCommons.ResponseErrors
-      errorsV2: serviceCommons.ResponseErrorsV2
+      errors: serviceCommons.ResponseErrors
+      errorsV2:
+        docs: this is deprecated. Use errors instead. yes, this is weird.
+        type: serviceCommons.ResponseErrorsV2
       auth: boolean
   EndpointName: commons.Name
   HttpPath:
