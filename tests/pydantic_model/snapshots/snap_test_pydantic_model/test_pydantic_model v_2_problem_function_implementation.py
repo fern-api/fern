@@ -54,7 +54,7 @@ class FunctionImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["impl"]
+            cls, field_name: typing_extensions.Literal["impl"], *, pre: bool
         ) -> typing.Callable[
             [FunctionImplementation.Validators.ImplValidator], FunctionImplementation.Validators.ImplValidator
         ]:
@@ -63,7 +63,7 @@ class FunctionImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["imports"]
+            cls, field_name: typing_extensions.Literal["imports"], *, pre: bool
         ) -> typing.Callable[
             [FunctionImplementation.Validators.ImportsValidator], FunctionImplementation.Validators.ImportsValidator
         ]:

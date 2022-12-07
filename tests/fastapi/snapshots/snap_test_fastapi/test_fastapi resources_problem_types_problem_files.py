@@ -60,7 +60,7 @@ class ProblemFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["solution_file"]
+            cls, field_name: typing_extensions.Literal["solution_file"], *, pre: bool
         ) -> typing.Callable[
             [ProblemFiles.Validators.SolutionFileValidator], ProblemFiles.Validators.SolutionFileValidator
         ]:
@@ -69,7 +69,7 @@ class ProblemFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["read_only_files"]
+            cls, field_name: typing_extensions.Literal["read_only_files"], *, pre: bool
         ) -> typing.Callable[
             [ProblemFiles.Validators.ReadOnlyFilesValidator], ProblemFiles.Validators.ReadOnlyFilesValidator
         ]:

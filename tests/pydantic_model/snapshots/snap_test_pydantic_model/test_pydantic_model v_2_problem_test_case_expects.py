@@ -50,7 +50,7 @@ class TestCaseExpects(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_stdout"]
+            cls, field_name: typing_extensions.Literal["expected_stdout"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseExpects.Validators.ExpectedStdoutValidator], TestCaseExpects.Validators.ExpectedStdoutValidator
         ]:

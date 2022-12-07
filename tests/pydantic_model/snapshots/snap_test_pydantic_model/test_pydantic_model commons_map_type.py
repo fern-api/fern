@@ -54,14 +54,14 @@ class MapType(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key_type"]
+            cls, field_name: typing_extensions.Literal["key_type"], *, pre: bool
         ) -> typing.Callable[[MapType.Validators.KeyTypeValidator], MapType.Validators.KeyTypeValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["value_type"]
+            cls, field_name: typing_extensions.Literal["value_type"], *, pre: bool
         ) -> typing.Callable[[MapType.Validators.ValueTypeValidator], MapType.Validators.ValueTypeValidator]:
             ...
 

@@ -69,7 +69,7 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_v_2"]
+            cls, field_name: typing_extensions.Literal["exception_v_2"], *, pre: bool
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators.ExceptionV2Validator], WorkspaceRunDetails.Validators.ExceptionV2Validator
         ]:
@@ -78,7 +78,7 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception"]
+            cls, field_name: typing_extensions.Literal["exception"], *, pre: bool
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators.ExceptionValidator], WorkspaceRunDetails.Validators.ExceptionValidator
         ]:
@@ -87,7 +87,7 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"]
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators.StdoutValidator], WorkspaceRunDetails.Validators.StdoutValidator
         ]:

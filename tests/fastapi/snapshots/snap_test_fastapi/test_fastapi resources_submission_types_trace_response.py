@@ -97,7 +97,7 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"]
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
         ) -> typing.Callable[
             [TraceResponse.Validators.SubmissionIdValidator], TraceResponse.Validators.SubmissionIdValidator
         ]:
@@ -106,7 +106,7 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["line_number"]
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool
         ) -> typing.Callable[
             [TraceResponse.Validators.LineNumberValidator], TraceResponse.Validators.LineNumberValidator
         ]:
@@ -115,7 +115,7 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["return_value"]
+            cls, field_name: typing_extensions.Literal["return_value"], *, pre: bool
         ) -> typing.Callable[
             [TraceResponse.Validators.ReturnValueValidator], TraceResponse.Validators.ReturnValueValidator
         ]:
@@ -124,7 +124,7 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expression_location"]
+            cls, field_name: typing_extensions.Literal["expression_location"], *, pre: bool
         ) -> typing.Callable[
             [TraceResponse.Validators.ExpressionLocationValidator], TraceResponse.Validators.ExpressionLocationValidator
         ]:
@@ -133,14 +133,14 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stack"]
+            cls, field_name: typing_extensions.Literal["stack"], *, pre: bool
         ) -> typing.Callable[[TraceResponse.Validators.StackValidator], TraceResponse.Validators.StackValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"]
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool
         ) -> typing.Callable[[TraceResponse.Validators.StdoutValidator], TraceResponse.Validators.StdoutValidator]:
             ...
 

@@ -75,6 +75,12 @@ class FieldValidatorGenerator(ValidatorGenerator):
                     type_hint=AST.TypeHint.literal(AST.Expression(f'"{self.field.name}"')),
                 )
             ],
+            named_parameters=[
+                AST.FunctionParameter(
+                    name=FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT,
+                    type_hint=AST.TypeHint.bool_(),
+                )
+            ],
             return_type=AST.TypeHint.callable([self._get_type_of_validator()], self._get_type_of_validator()),
         )
 

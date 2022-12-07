@@ -64,7 +64,7 @@ class StackInformation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["num_stack_frames"]
+            cls, field_name: typing_extensions.Literal["num_stack_frames"], *, pre: bool
         ) -> typing.Callable[
             [StackInformation.Validators.NumStackFramesValidator], StackInformation.Validators.NumStackFramesValidator
         ]:
@@ -73,7 +73,7 @@ class StackInformation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["top_stack_frame"]
+            cls, field_name: typing_extensions.Literal["top_stack_frame"], *, pre: bool
         ) -> typing.Callable[
             [StackInformation.Validators.TopStackFrameValidator], StackInformation.Validators.TopStackFrameValidator
         ]:

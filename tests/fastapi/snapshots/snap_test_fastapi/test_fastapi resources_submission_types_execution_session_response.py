@@ -85,7 +85,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["session_id"]
+            cls, field_name: typing_extensions.Literal["session_id"], *, pre: bool
         ) -> typing.Callable[
             [ExecutionSessionResponse.Validators.SessionIdValidator],
             ExecutionSessionResponse.Validators.SessionIdValidator,
@@ -95,7 +95,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["execution_session_url"]
+            cls, field_name: typing_extensions.Literal["execution_session_url"], *, pre: bool
         ) -> typing.Callable[
             [ExecutionSessionResponse.Validators.ExecutionSessionUrlValidator],
             ExecutionSessionResponse.Validators.ExecutionSessionUrlValidator,
@@ -105,7 +105,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"]
+            cls, field_name: typing_extensions.Literal["language"], *, pre: bool
         ) -> typing.Callable[
             [ExecutionSessionResponse.Validators.LanguageValidator],
             ExecutionSessionResponse.Validators.LanguageValidator,
@@ -115,7 +115,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["status"]
+            cls, field_name: typing_extensions.Literal["status"], *, pre: bool
         ) -> typing.Callable[
             [ExecutionSessionResponse.Validators.StatusValidator], ExecutionSessionResponse.Validators.StatusValidator
         ]:

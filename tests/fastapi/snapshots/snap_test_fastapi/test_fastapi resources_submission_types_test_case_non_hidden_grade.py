@@ -81,7 +81,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["passed"]
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.PassedValidator], TestCaseNonHiddenGrade.Validators.PassedValidator
         ]:
@@ -90,7 +90,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_result"]
+            cls, field_name: typing_extensions.Literal["actual_result"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.ActualResultValidator],
             TestCaseNonHiddenGrade.Validators.ActualResultValidator,
@@ -100,7 +100,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception"]
+            cls, field_name: typing_extensions.Literal["exception"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.ExceptionValidator], TestCaseNonHiddenGrade.Validators.ExceptionValidator
         ]:
@@ -109,7 +109,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"]
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.StdoutValidator], TestCaseNonHiddenGrade.Validators.StdoutValidator
         ]:

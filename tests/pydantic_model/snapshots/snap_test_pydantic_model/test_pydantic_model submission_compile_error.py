@@ -46,7 +46,7 @@ class CompileError(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["message"]
+            cls, field_name: typing_extensions.Literal["message"], *, pre: bool
         ) -> typing.Callable[[CompileError.Validators.MessageValidator], CompileError.Validators.MessageValidator]:
             ...
 

@@ -65,7 +65,7 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["workspace_run_details"]
+            cls, field_name: typing_extensions.Literal["workspace_run_details"], *, pre: bool
         ) -> typing.Callable[
             [StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator],
             StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator,
@@ -75,7 +75,7 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses"]
+            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool
         ) -> typing.Callable[
             [StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator],
             StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator,

@@ -74,7 +74,7 @@ class ExceptionInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_type"]
+            cls, field_name: typing_extensions.Literal["exception_type"], *, pre: bool
         ) -> typing.Callable[
             [ExceptionInfo.Validators.ExceptionTypeValidator], ExceptionInfo.Validators.ExceptionTypeValidator
         ]:
@@ -83,7 +83,7 @@ class ExceptionInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_message"]
+            cls, field_name: typing_extensions.Literal["exception_message"], *, pre: bool
         ) -> typing.Callable[
             [ExceptionInfo.Validators.ExceptionMessageValidator], ExceptionInfo.Validators.ExceptionMessageValidator
         ]:
@@ -92,7 +92,7 @@ class ExceptionInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_stacktrace"]
+            cls, field_name: typing_extensions.Literal["exception_stacktrace"], *, pre: bool
         ) -> typing.Callable[
             [ExceptionInfo.Validators.ExceptionStacktraceValidator],
             ExceptionInfo.Validators.ExceptionStacktraceValidator,

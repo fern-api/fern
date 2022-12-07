@@ -54,14 +54,14 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key"]
+            cls, field_name: typing_extensions.Literal["key"], *, pre: bool
         ) -> typing.Callable[[DebugKeyValuePairs.Validators.KeyValidator], DebugKeyValuePairs.Validators.KeyValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["value"]
+            cls, field_name: typing_extensions.Literal["value"], *, pre: bool
         ) -> typing.Callable[
             [DebugKeyValuePairs.Validators.ValueValidator], DebugKeyValuePairs.Validators.ValueValidator
         ]:

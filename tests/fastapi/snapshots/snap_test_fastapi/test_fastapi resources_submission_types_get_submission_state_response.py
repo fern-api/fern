@@ -90,7 +90,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["time_submitted"]
+            cls, field_name: typing_extensions.Literal["time_submitted"], *, pre: bool
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.TimeSubmittedValidator],
             GetSubmissionStateResponse.Validators.TimeSubmittedValidator,
@@ -100,7 +100,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission"]
+            cls, field_name: typing_extensions.Literal["submission"], *, pre: bool
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.SubmissionValidator],
             GetSubmissionStateResponse.Validators.SubmissionValidator,
@@ -110,7 +110,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"]
+            cls, field_name: typing_extensions.Literal["language"], *, pre: bool
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.LanguageValidator],
             GetSubmissionStateResponse.Validators.LanguageValidator,
@@ -120,7 +120,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_type_state"]
+            cls, field_name: typing_extensions.Literal["submission_type_state"], *, pre: bool
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator],
             GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator,

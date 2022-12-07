@@ -65,7 +65,7 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"]
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool
         ) -> typing.Callable[
             [CustomTestCasesUnsupported.Validators.ProblemIdValidator],
             CustomTestCasesUnsupported.Validators.ProblemIdValidator,
@@ -75,7 +75,7 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"]
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
         ) -> typing.Callable[
             [CustomTestCasesUnsupported.Validators.SubmissionIdValidator],
             CustomTestCasesUnsupported.Validators.SubmissionIdValidator,

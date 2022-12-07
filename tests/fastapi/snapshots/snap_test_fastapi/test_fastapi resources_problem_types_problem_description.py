@@ -48,7 +48,7 @@ class ProblemDescription(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["boards"]
+            cls, field_name: typing_extensions.Literal["boards"], *, pre: bool
         ) -> typing.Callable[
             [ProblemDescription.Validators.BoardsValidator], ProblemDescription.Validators.BoardsValidator
         ]:

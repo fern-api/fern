@@ -64,21 +64,21 @@ class StackFrame(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"]
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool
         ) -> typing.Callable[[StackFrame.Validators.MethodNameValidator], StackFrame.Validators.MethodNameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["line_number"]
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool
         ) -> typing.Callable[[StackFrame.Validators.LineNumberValidator], StackFrame.Validators.LineNumberValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["scopes"]
+            cls, field_name: typing_extensions.Literal["scopes"], *, pre: bool
         ) -> typing.Callable[[StackFrame.Validators.ScopesValidator], StackFrame.Validators.ScopesValidator]:
             ...
 

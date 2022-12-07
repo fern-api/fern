@@ -64,7 +64,7 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"]
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool
         ) -> typing.Callable[
             [GetBasicSolutionFileRequest.Validators.MethodNameValidator],
             GetBasicSolutionFileRequest.Validators.MethodNameValidator,
@@ -74,7 +74,7 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["signature"]
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: bool
         ) -> typing.Callable[
             [GetBasicSolutionFileRequest.Validators.SignatureValidator],
             GetBasicSolutionFileRequest.Validators.SignatureValidator,

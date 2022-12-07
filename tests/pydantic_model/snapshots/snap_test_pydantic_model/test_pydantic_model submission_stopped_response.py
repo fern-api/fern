@@ -52,7 +52,7 @@ class StoppedResponse(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"]
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
         ) -> typing.Callable[
             [StoppedResponse.Validators.SubmissionIdValidator], StoppedResponse.Validators.SubmissionIdValidator
         ]:

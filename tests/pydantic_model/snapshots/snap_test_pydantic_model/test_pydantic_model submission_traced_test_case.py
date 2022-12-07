@@ -60,14 +60,14 @@ class TracedTestCase(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["result"]
+            cls, field_name: typing_extensions.Literal["result"], *, pre: bool
         ) -> typing.Callable[[TracedTestCase.Validators.ResultValidator], TracedTestCase.Validators.ResultValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses_size"]
+            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool
         ) -> typing.Callable[
             [TracedTestCase.Validators.TraceResponsesSizeValidator],
             TracedTestCase.Validators.TraceResponsesSizeValidator,

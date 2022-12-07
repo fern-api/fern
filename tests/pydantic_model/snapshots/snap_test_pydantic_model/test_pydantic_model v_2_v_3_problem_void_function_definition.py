@@ -61,7 +61,7 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"]
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool
         ) -> typing.Callable[
             [VoidFunctionDefinition.Validators.ParametersValidator],
             VoidFunctionDefinition.Validators.ParametersValidator,
@@ -71,7 +71,7 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code"]
+            cls, field_name: typing_extensions.Literal["code"], *, pre: bool
         ) -> typing.Callable[
             [VoidFunctionDefinition.Validators.CodeValidator], VoidFunctionDefinition.Validators.CodeValidator
         ]:

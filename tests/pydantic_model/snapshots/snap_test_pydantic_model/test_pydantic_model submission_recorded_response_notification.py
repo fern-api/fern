@@ -76,7 +76,7 @@ class RecordedResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"]
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
         ) -> typing.Callable[
             [RecordedResponseNotification.Validators.SubmissionIdValidator],
             RecordedResponseNotification.Validators.SubmissionIdValidator,
@@ -86,7 +86,7 @@ class RecordedResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses_size"]
+            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool
         ) -> typing.Callable[
             [RecordedResponseNotification.Validators.TraceResponsesSizeValidator],
             RecordedResponseNotification.Validators.TraceResponsesSizeValidator,
@@ -96,7 +96,7 @@ class RecordedResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case_id"]
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool
         ) -> typing.Callable[
             [RecordedResponseNotification.Validators.TestCaseIdValidator],
             RecordedResponseNotification.Validators.TestCaseIdValidator,

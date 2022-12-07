@@ -46,7 +46,7 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["passed"]
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseHiddenGrade.Validators.PassedValidator], TestCaseHiddenGrade.Validators.PassedValidator
         ]:

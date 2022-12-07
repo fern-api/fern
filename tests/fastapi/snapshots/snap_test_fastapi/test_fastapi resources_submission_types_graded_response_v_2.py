@@ -62,7 +62,7 @@ class GradedResponseV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"]
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
         ) -> typing.Callable[
             [GradedResponseV2.Validators.SubmissionIdValidator], GradedResponseV2.Validators.SubmissionIdValidator
         ]:
@@ -71,7 +71,7 @@ class GradedResponseV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_cases"]
+            cls, field_name: typing_extensions.Literal["test_cases"], *, pre: bool
         ) -> typing.Callable[
             [GradedResponseV2.Validators.TestCasesValidator], GradedResponseV2.Validators.TestCasesValidator
         ]:

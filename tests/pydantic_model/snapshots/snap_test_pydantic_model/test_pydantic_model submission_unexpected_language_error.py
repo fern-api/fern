@@ -64,7 +64,7 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_language"]
+            cls, field_name: typing_extensions.Literal["expected_language"], *, pre: bool
         ) -> typing.Callable[
             [UnexpectedLanguageError.Validators.ExpectedLanguageValidator],
             UnexpectedLanguageError.Validators.ExpectedLanguageValidator,
@@ -74,7 +74,7 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_language"]
+            cls, field_name: typing_extensions.Literal["actual_language"], *, pre: bool
         ) -> typing.Callable[
             [UnexpectedLanguageError.Validators.ActualLanguageValidator],
             UnexpectedLanguageError.Validators.ActualLanguageValidator,

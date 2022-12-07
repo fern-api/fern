@@ -65,7 +65,7 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case"]
+            cls, field_name: typing_extensions.Literal["test_case"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseWithExpectedResult.Validators.TestCaseValidator],
             TestCaseWithExpectedResult.Validators.TestCaseValidator,
@@ -75,7 +75,7 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_result"]
+            cls, field_name: typing_extensions.Literal["expected_result"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseWithExpectedResult.Validators.ExpectedResultValidator],
             TestCaseWithExpectedResult.Validators.ExpectedResultValidator,

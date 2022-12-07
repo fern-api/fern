@@ -76,7 +76,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["states"]
+            cls, field_name: typing_extensions.Literal["states"], *, pre: bool
         ) -> typing.Callable[
             [GetExecutionSessionStateResponse.Validators.StatesValidator],
             GetExecutionSessionStateResponse.Validators.StatesValidator,
@@ -86,7 +86,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["num_warming_instances"]
+            cls, field_name: typing_extensions.Literal["num_warming_instances"], *, pre: bool
         ) -> typing.Callable[
             [GetExecutionSessionStateResponse.Validators.NumWarmingInstancesValidator],
             GetExecutionSessionStateResponse.Validators.NumWarmingInstancesValidator,
@@ -96,7 +96,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["warming_session_ids"]
+            cls, field_name: typing_extensions.Literal["warming_session_ids"], *, pre: bool
         ) -> typing.Callable[
             [GetExecutionSessionStateResponse.Validators.WarmingSessionIdsValidator],
             GetExecutionSessionStateResponse.Validators.WarmingSessionIdsValidator,

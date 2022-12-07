@@ -56,7 +56,7 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["result"]
+            cls, field_name: typing_extensions.Literal["result"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseResultWithStdout.Validators.ResultValidator], TestCaseResultWithStdout.Validators.ResultValidator
         ]:
@@ -65,7 +65,7 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"]
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseResultWithStdout.Validators.StdoutValidator], TestCaseResultWithStdout.Validators.StdoutValidator
         ]:

@@ -52,7 +52,7 @@ class InternalError(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_info"]
+            cls, field_name: typing_extensions.Literal["exception_info"], *, pre: bool
         ) -> typing.Callable[
             [InternalError.Validators.ExceptionInfoValidator], InternalError.Validators.ExceptionInfoValidator
         ]:

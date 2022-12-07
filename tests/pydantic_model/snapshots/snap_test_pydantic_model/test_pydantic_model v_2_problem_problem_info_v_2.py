@@ -146,7 +146,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"]
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.ProblemIdValidator], ProblemInfoV2.Validators.ProblemIdValidator
         ]:
@@ -155,7 +155,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_description"]
+            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.ProblemDescriptionValidator], ProblemInfoV2.Validators.ProblemDescriptionValidator
         ]:
@@ -164,7 +164,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_name"]
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.ProblemNameValidator], ProblemInfoV2.Validators.ProblemNameValidator
         ]:
@@ -173,7 +173,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"]
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.ProblemVersionValidator], ProblemInfoV2.Validators.ProblemVersionValidator
         ]:
@@ -182,7 +182,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["supported_languages"]
+            cls, field_name: typing_extensions.Literal["supported_languages"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.SupportedLanguagesValidator], ProblemInfoV2.Validators.SupportedLanguagesValidator
         ]:
@@ -191,7 +191,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["custom_files"]
+            cls, field_name: typing_extensions.Literal["custom_files"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.CustomFilesValidator], ProblemInfoV2.Validators.CustomFilesValidator
         ]:
@@ -200,7 +200,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["generated_files"]
+            cls, field_name: typing_extensions.Literal["generated_files"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.GeneratedFilesValidator], ProblemInfoV2.Validators.GeneratedFilesValidator
         ]:
@@ -209,7 +209,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["custom_test_case_templates"]
+            cls, field_name: typing_extensions.Literal["custom_test_case_templates"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.CustomTestCaseTemplatesValidator],
             ProblemInfoV2.Validators.CustomTestCaseTemplatesValidator,
@@ -219,7 +219,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["testcases"]
+            cls, field_name: typing_extensions.Literal["testcases"], *, pre: bool
         ) -> typing.Callable[
             [ProblemInfoV2.Validators.TestcasesValidator], ProblemInfoV2.Validators.TestcasesValidator
         ]:
@@ -228,7 +228,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["is_public"]
+            cls, field_name: typing_extensions.Literal["is_public"], *, pre: bool
         ) -> typing.Callable[[ProblemInfoV2.Validators.IsPublicValidator], ProblemInfoV2.Validators.IsPublicValidator]:
             ...
 

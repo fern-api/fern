@@ -57,7 +57,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code_by_language"]
+            cls, field_name: typing_extensions.Literal["code_by_language"], *, pre: bool
         ) -> typing.Callable[
             [FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator],
             FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator,

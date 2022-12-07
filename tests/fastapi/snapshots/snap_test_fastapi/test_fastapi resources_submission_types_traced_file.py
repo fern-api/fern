@@ -54,14 +54,14 @@ class TracedFile(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"]
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool
         ) -> typing.Callable[[TracedFile.Validators.FilenameValidator], TracedFile.Validators.FilenameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["directory"]
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool
         ) -> typing.Callable[[TracedFile.Validators.DirectoryValidator], TracedFile.Validators.DirectoryValidator]:
             ...
 

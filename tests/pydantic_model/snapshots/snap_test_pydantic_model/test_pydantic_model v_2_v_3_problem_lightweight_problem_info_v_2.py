@@ -89,7 +89,7 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"]
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.ProblemIdValidator],
             LightweightProblemInfoV2.Validators.ProblemIdValidator,
@@ -99,7 +99,7 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_name"]
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.ProblemNameValidator],
             LightweightProblemInfoV2.Validators.ProblemNameValidator,
@@ -109,7 +109,7 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"]
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.ProblemVersionValidator],
             LightweightProblemInfoV2.Validators.ProblemVersionValidator,
@@ -119,7 +119,7 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variable_types"]
+            cls, field_name: typing_extensions.Literal["variable_types"], *, pre: bool
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.VariableTypesValidator],
             LightweightProblemInfoV2.Validators.VariableTypesValidator,

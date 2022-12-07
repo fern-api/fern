@@ -52,7 +52,7 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["function_by_language"]
+            cls, field_name: typing_extensions.Literal["function_by_language"], *, pre: bool
         ) -> typing.Callable[
             [GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator],
             GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator,

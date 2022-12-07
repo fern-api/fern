@@ -60,7 +60,7 @@ class VariableTypeAndName(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variable_type"]
+            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: bool
         ) -> typing.Callable[
             [VariableTypeAndName.Validators.VariableTypeValidator], VariableTypeAndName.Validators.VariableTypeValidator
         ]:
@@ -69,7 +69,7 @@ class VariableTypeAndName(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"]
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
         ) -> typing.Callable[
             [VariableTypeAndName.Validators.NameValidator], VariableTypeAndName.Validators.NameValidator
         ]:

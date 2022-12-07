@@ -70,28 +70,28 @@ class FileInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"]
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool
         ) -> typing.Callable[[FileInfoV2.Validators.FilenameValidator], FileInfoV2.Validators.FilenameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["directory"]
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool
         ) -> typing.Callable[[FileInfoV2.Validators.DirectoryValidator], FileInfoV2.Validators.DirectoryValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["contents"]
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool
         ) -> typing.Callable[[FileInfoV2.Validators.ContentsValidator], FileInfoV2.Validators.ContentsValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["editable"]
+            cls, field_name: typing_extensions.Literal["editable"], *, pre: bool
         ) -> typing.Callable[[FileInfoV2.Validators.EditableValidator], FileInfoV2.Validators.EditableValidator]:
             ...
 

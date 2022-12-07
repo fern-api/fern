@@ -46,7 +46,7 @@ class LangServerRequest(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["request"]
+            cls, field_name: typing_extensions.Literal["request"], *, pre: bool
         ) -> typing.Callable[
             [LangServerRequest.Validators.RequestValidator], LangServerRequest.Validators.RequestValidator
         ]:

@@ -62,7 +62,7 @@ class GenericValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stringified_type"]
+            cls, field_name: typing_extensions.Literal["stringified_type"], *, pre: bool
         ) -> typing.Callable[
             [GenericValue.Validators.StringifiedTypeValidator], GenericValue.Validators.StringifiedTypeValidator
         ]:
@@ -71,7 +71,7 @@ class GenericValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stringified_value"]
+            cls, field_name: typing_extensions.Literal["stringified_value"], *, pre: bool
         ) -> typing.Callable[
             [GenericValue.Validators.StringifiedValueValidator], GenericValue.Validators.StringifiedValueValidator
         ]:

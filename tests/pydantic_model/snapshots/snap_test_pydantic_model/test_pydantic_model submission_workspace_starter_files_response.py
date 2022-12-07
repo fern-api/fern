@@ -53,7 +53,7 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"]
+            cls, field_name: typing_extensions.Literal["files"], *, pre: bool
         ) -> typing.Callable[
             [WorkspaceStarterFilesResponse.Validators.FilesValidator],
             WorkspaceStarterFilesResponse.Validators.FilesValidator,

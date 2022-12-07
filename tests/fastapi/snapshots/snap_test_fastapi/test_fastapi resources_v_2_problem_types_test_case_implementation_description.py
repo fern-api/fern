@@ -52,7 +52,7 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["boards"]
+            cls, field_name: typing_extensions.Literal["boards"], *, pre: bool
         ) -> typing.Callable[
             [TestCaseImplementationDescription.Validators.BoardsValidator],
             TestCaseImplementationDescription.Validators.BoardsValidator,

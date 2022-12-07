@@ -52,7 +52,7 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["missing_submission_id"]
+            cls, field_name: typing_extensions.Literal["missing_submission_id"], *, pre: bool
         ) -> typing.Callable[
             [SubmissionIdNotFound.Validators.MissingSubmissionIdValidator],
             SubmissionIdNotFound.Validators.MissingSubmissionIdValidator,

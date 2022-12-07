@@ -52,7 +52,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["updates"]
+            cls, field_name: typing_extensions.Literal["updates"], *, pre: bool
         ) -> typing.Callable[
             [WorkspaceSubmissionStatusV2.Validators.UpdatesValidator],
             WorkspaceSubmissionStatusV2.Validators.UpdatesValidator,

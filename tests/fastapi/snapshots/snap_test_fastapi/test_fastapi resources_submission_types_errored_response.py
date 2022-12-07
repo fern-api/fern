@@ -61,7 +61,7 @@ class ErroredResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"]
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
         ) -> typing.Callable[
             [ErroredResponse.Validators.SubmissionIdValidator], ErroredResponse.Validators.SubmissionIdValidator
         ]:
@@ -70,7 +70,7 @@ class ErroredResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["error_info"]
+            cls, field_name: typing_extensions.Literal["error_info"], *, pre: bool
         ) -> typing.Callable[
             [ErroredResponse.Validators.ErrorInfoValidator], ErroredResponse.Validators.ErrorInfoValidator
         ]:

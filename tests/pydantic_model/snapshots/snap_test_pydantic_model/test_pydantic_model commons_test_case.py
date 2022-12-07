@@ -56,14 +56,14 @@ class TestCase(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["id"]
+            cls, field_name: typing_extensions.Literal["id"], *, pre: bool
         ) -> typing.Callable[[TestCase.Validators.IdValidator], TestCase.Validators.IdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["params"]
+            cls, field_name: typing_extensions.Literal["params"], *, pre: bool
         ) -> typing.Callable[[TestCase.Validators.ParamsValidator], TestCase.Validators.ParamsValidator]:
             ...
 

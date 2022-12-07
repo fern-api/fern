@@ -86,7 +86,7 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["template_id"]
+            cls, field_name: typing_extensions.Literal["template_id"], *, pre: bool
         ) -> typing.Callable[
             [BasicTestCaseTemplate.Validators.TemplateIdValidator], BasicTestCaseTemplate.Validators.TemplateIdValidator
         ]:
@@ -95,7 +95,7 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"]
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
         ) -> typing.Callable[
             [BasicTestCaseTemplate.Validators.NameValidator], BasicTestCaseTemplate.Validators.NameValidator
         ]:
@@ -104,7 +104,7 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["description"]
+            cls, field_name: typing_extensions.Literal["description"], *, pre: bool
         ) -> typing.Callable[
             [BasicTestCaseTemplate.Validators.DescriptionValidator],
             BasicTestCaseTemplate.Validators.DescriptionValidator,
@@ -114,7 +114,7 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"]
+            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"], *, pre: bool
         ) -> typing.Callable[
             [BasicTestCaseTemplate.Validators.ExpectedValueParameterIdValidator],
             BasicTestCaseTemplate.Validators.ExpectedValueParameterIdValidator,

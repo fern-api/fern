@@ -83,7 +83,7 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"]
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.MethodNameValidator], BasicCustomFiles.Validators.MethodNameValidator
         ]:
@@ -92,7 +92,7 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["signature"]
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: bool
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.SignatureValidator], BasicCustomFiles.Validators.SignatureValidator
         ]:
@@ -101,7 +101,7 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["additional_files"]
+            cls, field_name: typing_extensions.Literal["additional_files"], *, pre: bool
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.AdditionalFilesValidator], BasicCustomFiles.Validators.AdditionalFilesValidator
         ]:
@@ -110,7 +110,7 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["basic_test_case_template"]
+            cls, field_name: typing_extensions.Literal["basic_test_case_template"], *, pre: bool
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.BasicTestCaseTemplateValidator],
             BasicCustomFiles.Validators.BasicTestCaseTemplateValidator,

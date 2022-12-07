@@ -57,7 +57,7 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["head"]
+            cls, field_name: typing_extensions.Literal["head"], *, pre: bool
         ) -> typing.Callable[
             [SinglyLinkedListValue.Validators.HeadValidator], SinglyLinkedListValue.Validators.HeadValidator
         ]:
@@ -66,7 +66,7 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["nodes"]
+            cls, field_name: typing_extensions.Literal["nodes"], *, pre: bool
         ) -> typing.Callable[
             [SinglyLinkedListValue.Validators.NodesValidator], SinglyLinkedListValue.Validators.NodesValidator
         ]:
