@@ -20,15 +20,21 @@ export async function visitErrorDeclarations({
     for (const [errorName, errorDeclaration] of Object.entries(errorDeclarations)) {
         const nodePathForError = [...nodePath, errorName];
         await visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
-        await visitErrorDeclaration(errorDeclaration, visitor, nodePathForError);
+        await visitErrorDeclaration({ errorName, declaration: errorDeclaration, visitor, nodePathForError });
     }
 }
 
-async function visitErrorDeclaration(
-    declaration: ErrorDeclarationSchema,
-    visitor: Partial<FernServiceFileAstVisitor>,
-    nodePathForError: NodePath
-) {
+async function visitErrorDeclaration({
+    errorName,
+    declaration,
+    visitor,
+    nodePathForError,
+}: {
+    errorName: string;
+    declaration: ErrorDeclarationSchema;
+    visitor: Partial<FernServiceFileAstVisitor>;
+    nodePathForError: NodePath;
+}) {
     if (typeof declaration === "string") {
         await visitor.typeReference?.(declaration, nodePathForError);
     } else {
@@ -43,7 +49,12 @@ async function visitErrorDeclaration(
                 if (typeof type === "string") {
                     await visitor.typeReference?.(type, nodePathForErrorType);
                 } else {
-                    await visitTypeDeclaration({ declaration: type, visitor, nodePathForType: nodePathForErrorType });
+                    await visitTypeDeclaration({
+                        typeName: errorName,
+                        declaration: type,
+                        visitor,
+                        nodePathForType: nodePathForErrorType,
+                    });
                 }
             },
         });

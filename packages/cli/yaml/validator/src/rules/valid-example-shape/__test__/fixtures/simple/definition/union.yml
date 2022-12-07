@@ -1,0 +1,34 @@
+types:
+  Name: string
+  Animal:
+    discriminant: type2
+    union:
+      dog: Dog
+      person:
+        type: Name
+        key: value2
+      cat: {}
+    examples:
+      - type2: dog
+        name: Fido
+      - type2: person
+        value2: Jane
+      - type2: cat
+
+      - type2: dog
+      - type2: dog
+        name: 42
+      - type2: dog
+        name: Fido
+        randomProperty: hello
+      - type2: person
+      - type2: person
+        value2: 42
+      - type2: person
+        randomProperty: hello
+      - type2: cat
+        randomProperty: hello
+
+  Dog:
+    properties:
+      name: string

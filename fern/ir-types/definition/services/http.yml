@@ -25,7 +25,7 @@ types:
       name:
         type: commons.StringWithAllCasings
         docs: this is deprecated. use nameV2 instead
-      nameV2: commons.Name
+      nameV2: EndpointName
       method: HttpMethod
       headers: list<HttpHeader>
       path: HttpPath
@@ -38,6 +38,7 @@ types:
         type: serviceCommons.ResponseErrors
       errorsV2: serviceCommons.ResponseErrorsV2
       auth: boolean
+  EndpointName: commons.Name
   HttpPath:
     properties:
       head: string

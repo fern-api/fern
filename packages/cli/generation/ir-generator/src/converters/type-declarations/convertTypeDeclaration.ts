@@ -6,6 +6,7 @@ import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
+import { convertTypeExample } from "./convertTypeExample";
 import { convertUnionTypeDeclaration } from "./convertUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
 
@@ -33,6 +34,18 @@ export function convertTypeDeclaration({
         name: declaredTypeName,
         shape: convertType({ typeDeclaration, file, typeResolver }),
         referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
+        examples:
+            typeof typeDeclaration !== "string" && typeDeclaration.examples != null
+                ? typeDeclaration.examples.map((example) =>
+                      convertTypeExample({
+                          typeName: declaredTypeName,
+                          example,
+                          typeResolver,
+                          typeDeclaration,
+                          file,
+                      })
+                  )
+                : [],
     };
 }
 

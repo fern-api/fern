@@ -1,8 +1,8 @@
 import {
     constructFernFileContext,
     getEnumName,
+    getSingleUnionTypeName,
     getUnionDiscriminantName,
-    getUnionedTypeName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
@@ -10,11 +10,9 @@ import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
+    convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
-    ObjectPropertyPath,
-    ObjectPropertyPathPart,
-    ObjectPropertyWithPath,
-} from "./getAllPropertiesForObject";
+} from "../../utils/getAllPropertiesForObject";
 
 export const NoDuplicateFieldNamesRule: Rule = {
     name: "no-duplicate-field-names",
@@ -44,6 +42,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
                         object: (objectDeclaration) => {
                             const allProperties = getAllPropertiesForObject({
+                                typeName,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
                                 serviceFile: contents,
@@ -74,7 +73,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                         union: (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 Object.entries(unionDeclaration.union),
-                                ([unionKey, unionedType]) => getUnionedTypeName({ unionKey, unionedType }).name
+                                ([unionKey, rawSingleUnionType]) =>
+                                    getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
                             );
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
@@ -83,12 +83,12 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 });
                             }
 
-                            for (const [unionKey, unionedType] of Object.entries(unionDeclaration.union)) {
+                            for (const [unionKey, singleUnionType] of Object.entries(unionDeclaration.union)) {
                                 const specifiedType =
-                                    typeof unionedType === "string"
-                                        ? unionedType
-                                        : unionedType.type != null
-                                        ? unionedType.type
+                                    typeof singleUnionType === "string"
+                                        ? singleUnionType
+                                        : singleUnionType.type != null
+                                        ? singleUnionType.type
                                         : undefined;
 
                                 if (specifiedType != null) {
@@ -116,6 +116,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             continue;
                                         }
                                         const propertiesOnObject = getAllPropertiesForObject({
+                                            typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
                                             serviceFile,
@@ -171,36 +172,4 @@ function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[
         }
         return duplicates;
     }, []);
-}
-
-function convertObjectPropertyWithPathToString({
-    property,
-    prefixBreadcrumbs = [],
-}: {
-    property: ObjectPropertyWithPath;
-    prefixBreadcrumbs?: string[];
-}): string {
-    const parts = [
-        ...prefixBreadcrumbs,
-        ...convertObjectPropertyPathToStrings(property.path),
-        property.finalPropertyKey,
-    ];
-    return parts.join(" -> ");
-}
-
-function convertObjectPropertyPathToStrings(path: ObjectPropertyPath): string[] {
-    return path.map(convertObjectPropertyPathPartToString);
-}
-
-function convertObjectPropertyPathPartToString(part: ObjectPropertyPathPart): string {
-    return [getPrefixForObjectPropertyPathPart(part), part.name].join(" ");
-}
-
-function getPrefixForObjectPropertyPathPart(part: ObjectPropertyPathPart): string {
-    switch (part.followedVia) {
-        case "alias":
-            return "(alias of)";
-        case "extension":
-            return "(extends)";
-    }
 }

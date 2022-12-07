@@ -1,5 +1,5 @@
 import { Workspace } from "@fern-api/workspace-loader";
-import { isRawAliasDefinition, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
@@ -12,8 +12,14 @@ export interface TypeResolver {
     getDeclarationOfNamedType: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }) => { declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined;
+    }) => { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined;
+    getDeclarationOfNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => {
+        typeName: string;
+        declaration: RawSchemas.TypeDeclarationSchema;
+        file: FernFileContext;
+    };
     resolveNamedType: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType | undefined;
+    resolveNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType;
 }
 
 export class TypeResolverImpl implements TypeResolver {
@@ -27,13 +33,27 @@ export class TypeResolverImpl implements TypeResolver {
         return resolvedType;
     }
 
+    public getDeclarationOfNamedTypeOrThrow({
+        referenceToNamedType,
+        file,
+    }: {
+        referenceToNamedType: string;
+        file: FernFileContext;
+    }): { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } {
+        const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file });
+        if (declaration == null) {
+            throw new Error("Cannot find declaration of type: " + referenceToNamedType);
+        }
+        return declaration;
+    }
+
     public getDeclarationOfNamedType({
         referenceToNamedType,
         file,
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): { declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined {
+    }): { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToNamedType,
             referencedIn: file.relativeFilepath,
@@ -53,6 +73,7 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         return {
+            typeName: parsedReference.typeName,
             declaration,
             file: constructFernFileContext({
                 relativeFilepath: parsedReference.relativeFilepath,
@@ -71,7 +92,7 @@ export class TypeResolverImpl implements TypeResolver {
         file: FernFileContext;
         objectPath?: string[];
     }): ResolvedType | undefined {
-        return visitRawTypeReference<ResolvedType | undefined>(type, {
+        return recursivelyVisitRawTypeReference<ResolvedType | undefined>(type, {
             primitive: (primitive) => ({
                 _type: "primitive",
                 primitive,
@@ -152,6 +173,20 @@ export class TypeResolverImpl implements TypeResolver {
         });
     }
 
+    public resolveNamedTypeOrThrow({
+        referenceToNamedType,
+        file,
+    }: {
+        referenceToNamedType: string;
+        file: FernFileContext;
+    }): ResolvedType {
+        const resolvedType = this.resolveNamedType({ referenceToNamedType, file });
+        if (resolvedType == null) {
+            throw new Error("Cannot resolve type: " + referenceToNamedType);
+        }
+        return resolvedType;
+    }
+
     public resolveNamedType({
         referenceToNamedType,
         file,
@@ -183,13 +218,24 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
+        const serviceFile = this.workspace.serviceFiles[fileOfResolvedDeclaration.relativeFilepath];
+        if (serviceFile == null) {
+            return undefined;
+        }
+
         return {
             _type: "named",
+            rawName: maybeDeclaration.typeName,
             name: parsedTypeReference,
             declaration,
             filepath: fileOfResolvedDeclaration.relativeFilepath,
             objectPath,
             originalTypeReference: parsedTypeReference,
+            file: constructFernFileContext({
+                relativeFilepath: fileOfResolvedDeclaration.relativeFilepath,
+                serviceFile,
+                casingsGenerator: file.casingsGenerator,
+            }),
         };
     }
 }

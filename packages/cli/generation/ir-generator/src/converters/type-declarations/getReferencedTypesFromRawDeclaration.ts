@@ -1,4 +1,4 @@
-import { RawSchemas, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { RawSchemas, recursivelyVisitRawTypeReference, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -43,8 +43,8 @@ export function getReferencedTypesFromRawDeclaration({
             return types;
         },
         union: (unionDeclaration) => {
-            return Object.values(unionDeclaration.union).reduce<string[]>((types, unionedType) => {
-                const rawType = typeof unionedType === "string" ? unionedType : unionedType.type;
+            return Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
+                const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
                 if (rawType != null) {
                     types.push(rawType);
                 }
@@ -57,7 +57,7 @@ export function getReferencedTypesFromRawDeclaration({
     const referencedTypes: DeclaredTypeName[] = [];
 
     for (const rawTypeReference of rawTypeReferences) {
-        const rawNames = visitRawTypeReference<string[]>(rawTypeReference, {
+        const rawNames = recursivelyVisitRawTypeReference<string[]>(rawTypeReference, {
             primitive: () => [],
             map: ({ keyType, valueType }) => [...keyType, ...valueType],
             list: (valueType) => valueType,
@@ -76,13 +76,10 @@ export function getReferencedTypesFromRawDeclaration({
 
                 referencedTypes.push(parsedTypeName);
 
-                const maybeDeclaration = typeResolver.getDeclarationOfNamedType({
+                const maybeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                     referenceToNamedType: rawName,
                     file,
                 });
-                if (maybeDeclaration == null) {
-                    throw new Error("Cannot find declaration for: " + rawName);
-                }
 
                 referencedTypes.push(
                     ...getReferencedTypesFromRawDeclaration({

@@ -26,21 +26,25 @@ export function convertUnionTypeDeclaration({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name,
         }),
-        types: Object.entries(union.union).map(([unionKey, unionedType]) => {
+        types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]) => {
             const rawType: string | undefined =
-                typeof unionedType === "string" ? unionedType : unionedType.type != null ? unionedType.type : undefined;
+                typeof rawSingleUnionType === "string"
+                    ? rawSingleUnionType
+                    : rawSingleUnionType.type != null
+                    ? rawSingleUnionType.type
+                    : undefined;
 
             const discriminantValue = file.casingsGenerator.generateWireCasingsV1({
                 wireValue: unionKey,
-                name: getUnionedTypeName({ unionKey, unionedType }).name,
+                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name,
             });
 
             const discriminantValueV2 = file.casingsGenerator.generateNameAndWireValue({
                 wireValue: unionKey,
-                name: getUnionedTypeName({ unionKey, unionedType }).name,
+                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name,
             });
 
-            const docs = getDocs(unionedType);
+            const docs = getDocs(rawSingleUnionType);
 
             if (rawType == null) {
                 return {
@@ -52,26 +56,26 @@ export function convertUnionTypeDeclaration({
                 };
             }
 
-            const valueType = file.parseTypeReference(rawType);
+            const parsedValueType = file.parseTypeReference(rawType);
 
             return {
                 discriminantValue,
                 discriminantValueV2,
-                valueType,
+                valueType: parsedValueType,
                 shape: getSingleUnionTypeProperties({
-                    rawType,
-                    valueType,
+                    rawSingleUnionType,
+                    rawValueType: rawType,
+                    parsedValueType,
                     file,
                     typeResolver,
-                    rawSingleUnionType: typeof unionedType !== "string" ? unionedType.key : undefined,
                 }),
-                docs: getDocs(unionedType),
+                docs: getDocs(rawSingleUnionType),
             };
         }),
     });
 }
 
-function getUnionDiscriminant(union: RawSchemas.UnionSchema): string {
+export function getUnionDiscriminant(union: RawSchemas.UnionSchema): string {
     if (union.discriminant == null) {
         return "type";
     }
@@ -94,19 +98,19 @@ export function getUnionDiscriminantName(union: RawSchemas.UnionSchema): { name:
     };
 }
 
-export function getUnionedTypeName({
+export function getSingleUnionTypeName({
     unionKey,
-    unionedType,
+    rawSingleUnionType,
 }: {
     unionKey: string;
-    unionedType: string | RawSchemas.SingleUnionTypeSchema;
+    rawSingleUnionType: string | RawSchemas.SingleUnionTypeSchema;
 }): {
     name: string;
     wasExplicitlySet: boolean;
 } {
-    if (typeof unionedType !== "string" && unionedType.name != null) {
+    if (typeof rawSingleUnionType !== "string" && rawSingleUnionType.name != null) {
         return {
-            name: unionedType.name,
+            name: rawSingleUnionType.name,
             wasExplicitlySet: true,
         };
     }
@@ -117,34 +121,35 @@ export function getUnionedTypeName({
     };
 }
 
-function getSingleUnionTypeProperties({
-    rawType,
-    valueType,
+export function getSingleUnionTypeProperties({
+    rawSingleUnionType,
+    rawValueType,
+    parsedValueType,
     file,
     typeResolver,
-    rawSingleUnionType,
 }: {
-    rawType: string;
-    valueType: TypeReference;
+    rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
+    rawValueType: string;
+    parsedValueType: TypeReference;
     file: FernFileContext;
     typeResolver: TypeResolver;
-    rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema | undefined;
-}): SingleUnionTypeProperties {
-    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawType, file });
+}): SingleUnionTypeProperties.SamePropertiesAsObject | SingleUnionTypeProperties.SingleProperty {
+    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
     } else {
+        const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
         return SingleUnionTypeProperties.singleProperty({
             name: file.casingsGenerator.generateWireCasingsV1({
-                wireValue: getSinglePropertyKeyValue(rawSingleUnionType),
-                name: getSinglePropertyKeyName(rawSingleUnionType),
+                wireValue: getSinglePropertyKeyValue(singlePropertyKey),
+                name: getSinglePropertyKeyName(singlePropertyKey),
             }),
             nameV2: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: getSinglePropertyKeyValue(rawSingleUnionType),
-                name: getSinglePropertyKeyName(rawSingleUnionType),
+                wireValue: getSinglePropertyKeyValue(singlePropertyKey),
+                name: getSinglePropertyKeyName(singlePropertyKey),
             }),
-            type: valueType,
+            type: parsedValueType,
         });
     }
 }

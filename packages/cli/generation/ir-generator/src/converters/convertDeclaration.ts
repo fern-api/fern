@@ -25,7 +25,7 @@ export function convertDeclaration(schema: string | RawSchemas.DeclarationSchema
     };
 }
 
-export function getAudiences(schema: string | RawSchemas.DeclarationSchema): string[] {
+export function getAudiences(schema: RawSchemas.TypeDeclarationSchema): string[] {
     if (typeof schema === "string") {
         return [];
     }

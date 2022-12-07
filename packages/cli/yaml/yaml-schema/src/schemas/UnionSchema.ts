@@ -1,9 +1,9 @@
 import { z } from "zod";
+import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 import { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 import { UnionDiscriminantSchema } from "./UnionDiscriminantSchema";
-import { WithDocsSchema } from "./WithDocsSchema";
 
-export const UnionSchema = WithDocsSchema.extend({
+export const UnionSchema = BaseTypeDeclarationSchema.extend({
     union: z.record(SingleUnionTypeSchema),
     discriminant: z.optional(z.union([z.string(), UnionDiscriminantSchema])),
 });

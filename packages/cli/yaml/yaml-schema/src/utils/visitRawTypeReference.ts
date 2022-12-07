@@ -9,10 +9,10 @@ const LITERAL_REGEX = /^literal<\s*"(.*)"\s*>$/;
 
 export interface RawTypeReferenceVisitor<R> {
     primitive: (primitive: PrimitiveType) => R;
-    map: (args: { keyType: R; valueType: R }) => R;
-    list: (valueType: R) => R;
-    set: (valueType: R) => R;
-    optional: (valueType: R) => R;
+    map: (args: { keyType: string; valueType: string }) => R;
+    list: (valueType: string) => R;
+    set: (valueType: string) => R;
+    optional: (valueType: string) => R;
     literal: (literalValue: string) => R;
     named: (named: string) => R;
     unknown: () => R;
@@ -44,24 +44,24 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
     const mapMatch = type.match(MAP_REGEX);
     if (mapMatch?.[1] != null && mapMatch[2] != null) {
         return visitor.map({
-            keyType: visitRawTypeReference(mapMatch[1], visitor),
-            valueType: visitRawTypeReference(mapMatch[2], visitor),
+            keyType: mapMatch[1],
+            valueType: mapMatch[2],
         });
     }
 
     const listMatch = type.match(LIST_REGEX);
     if (listMatch?.[1] != null) {
-        return visitor.list(visitRawTypeReference(listMatch[1], visitor));
+        return visitor.list(listMatch[1]);
     }
 
     const setMatch = type.match(SET_REGEX);
     if (setMatch?.[1] != null) {
-        return visitor.set(visitRawTypeReference(setMatch[1], visitor));
+        return visitor.set(setMatch[1]);
     }
 
     const optionalMatch = type.match(OPTIONAL_REGEX);
     if (optionalMatch?.[1] != null) {
-        return visitor.optional(visitRawTypeReference(optionalMatch[1], visitor));
+        return visitor.optional(optionalMatch[1]);
     }
 
     const literalMatch = type.match(LITERAL_REGEX);

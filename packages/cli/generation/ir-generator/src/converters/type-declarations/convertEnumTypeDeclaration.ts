@@ -26,7 +26,10 @@ export function convertEnumTypeDeclaration({
     });
 }
 
-export function getEnumName(enumValue: RawSchemas.EnumValueSchema): { name: string; wasExplicitlySet: boolean } {
+export function getEnumName(enumValue: string | RawSchemas.EnumValueSchema): {
+    name: string;
+    wasExplicitlySet: boolean;
+} {
     if (typeof enumValue === "string") {
         return {
             name: enumValue,

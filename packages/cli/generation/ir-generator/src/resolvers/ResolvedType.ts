@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import { FernFileContext } from "../FernFileContext";
 
 export declare type ResolvedType =
     | ResolvedType.Container
@@ -18,9 +19,11 @@ export declare namespace ResolvedType {
 
     interface Named {
         _type: "named";
+        rawName: string;
         name: DeclaredTypeName;
         declaration: RawSchemas.ObjectSchema | RawSchemas.UnionSchema | RawSchemas.EnumSchema;
         filepath: RelativeFilePath;
+        file: FernFileContext;
         // this is the breadcrumbs path to the final declaration, including intermediate aliases
         objectPath: string[];
         originalTypeReference: TypeReference.Named;

@@ -1,0 +1,13 @@
+types:
+  Color:
+    enum:
+      - Red
+      - BLUE
+      - value: purple
+        name: PURPLE
+    examples:
+      - Red
+      - Blue
+      - purple
+      - PURPLE
+      - key: value

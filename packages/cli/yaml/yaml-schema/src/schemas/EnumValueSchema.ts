@@ -1,12 +1,9 @@
 import { z } from "zod";
-import { DeclarationSchema } from "./DeclarationSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
-export const EnumValueSchema = z.union([
-    z.string(),
-    DeclarationSchema.extend({
-        name: z.optional(z.string()),
-        value: z.string(),
-    }),
-]);
+export const EnumValueSchema = WithDocsSchema.extend({
+    name: z.optional(z.string()),
+    value: z.string(),
+});
 
 export type EnumValueSchema = z.infer<typeof EnumValueSchema>;

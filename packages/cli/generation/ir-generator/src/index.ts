@@ -3,8 +3,9 @@ export { constructHttpPath } from "./converters/services/constructHttpPath";
 export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
 export {
+    getSingleUnionTypeName,
+    getUnionDiscriminant,
     getUnionDiscriminantName,
-    getUnionedTypeName,
 } from "./converters/type-declarations/convertUnionTypeDeclaration";
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";

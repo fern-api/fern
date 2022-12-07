@@ -1,0 +1,87 @@
+types:
+  StringAlias:
+    type: string
+    examples:
+      - I am a string
+      - 14
+      - key: some value
+  IntegerAlias1: integer
+  IntegerAlias2:
+    type: integer
+    examples:
+      - 1
+      - 2.0
+      - 3.14
+  LongAlias:
+    type: long
+    examples:
+      - 1
+      - 9120830129830912
+      - hello
+  DoubleAlias:
+    type: double
+    examples:
+      - 1
+      - 3.14
+      - false
+  BooleanAlias:
+    type: boolean
+    examples:
+      - true
+      - 100
+      - false
+  DateTimeAlias:
+    type: datetime
+    examples:
+      - 4/13/2002
+      - "2022-12-06T23:13:15+00:00"
+      - "2022-12-06T23:13:15Z"
+      - "20221206T231315Z"
+  UnknownAlias:
+    type: unknown
+    examples:
+      - 213
+      - hello
+      - key: value
+  UuidAlias:
+    type: uuid
+    examples:
+      - my-id
+      - 123e4567-e89b-12d3-a456-426614174000
+  ListAlias:
+    type: list<string>
+    examples:
+      - - hello
+        - world
+      - - hello
+        - 3.14
+      - hello
+  SetAlias:
+    type: set<string>
+    examples:
+      - key: value
+      - - hello
+        - world
+      - - hello
+        - hello
+      - - hello
+        - 3.14
+  MapAlias:
+    type: map<string, integer>
+    examples:
+      - key: 4
+        otherKey: 42
+      - key: 1
+        lastKey: 3.15
+      - - hello
+  OptionalAlias:
+    type: optional<double>
+    examples:
+      - hello
+      - null
+      - 3.0
+  LiteralAlias:
+    type: literal<"hello">
+    examples:
+      - hello
+      - goodbye
