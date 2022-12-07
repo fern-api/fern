@@ -12,6 +12,7 @@ export interface FernFileContext {
     fernFilepath: FernFilepath;
     fernFilepathV2: FernFilepathV2;
     imports: Record<string, RelativeFilePath>;
+    serviceFile: ServiceFileSchema;
     parseTypeReference: (type: string | { type: string }) => TypeReference;
     casingsGenerator: CasingsGenerator;
 }
@@ -30,6 +31,7 @@ export function constructFernFileContext({
         fernFilepath: relativeFilepath != null ? convertToFernFilepath({ relativeFilepath, casingsGenerator }) : [],
         fernFilepathV2: relativeFilepath != null ? convertToFernFilepathV2({ relativeFilepath, casingsGenerator }) : [],
         imports: mapValues(serviceFile.imports ?? {}, RelativeFilePath.of),
+        serviceFile,
         parseTypeReference: (type) => {
             const typeAsString = typeof type === "string" ? type : type.type;
             return parseInlineType({ type: typeAsString, file });

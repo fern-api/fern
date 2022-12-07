@@ -1,4 +1,5 @@
 import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { validateAliasExample } from "./validateAliasExample";
@@ -7,15 +8,19 @@ import { validateObjectExample } from "./validateObjectExample";
 import { validateUnionExample } from "./validateUnionExample";
 
 export function validateTypeExample({
+    typeName,
     typeDeclaration,
     file,
     typeResolver,
     example,
+    workspace,
 }: {
+    typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
     example: RawSchemas.TypeExampleSchema;
+    workspace: Workspace;
 }): RuleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
@@ -24,6 +29,7 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 example,
+                workspace,
             });
         },
         enum: (rawEnum) => {
@@ -34,8 +40,12 @@ export function validateTypeExample({
         },
         object: (rawObject) => {
             return validateObjectExample({
+                typeName,
                 rawObject,
                 example,
+                file,
+                typeResolver,
+                workspace,
             });
         },
         union: () => {

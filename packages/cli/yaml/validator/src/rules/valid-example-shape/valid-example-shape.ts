@@ -10,8 +10,9 @@ export const ValidExampleShapeRule: Rule = {
 
         return {
             serviceFile: {
-                typeExample: ({ typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
+                typeExample: ({ typeName, typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
                     return validateTypeExample({
+                        typeName,
                         typeDeclaration,
                         example,
                         file: constructFernFileContext({
@@ -20,6 +21,7 @@ export const ValidExampleShapeRule: Rule = {
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                         typeResolver,
+                        workspace,
                     });
                 },
             },

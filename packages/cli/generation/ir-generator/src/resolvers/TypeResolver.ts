@@ -12,8 +12,9 @@ export interface TypeResolver {
     getDeclarationOfNamedType: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }) => { declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined;
+    }) => { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined;
     getDeclarationOfNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => {
+        typeName: string;
         declaration: RawSchemas.TypeDeclarationSchema;
         file: FernFileContext;
     };
@@ -38,7 +39,7 @@ export class TypeResolverImpl implements TypeResolver {
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): { declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } {
+    }): { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } {
         const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file });
         if (declaration == null) {
             throw new Error("Cannot find declaration of type: " + referenceToNamedType);
@@ -52,7 +53,7 @@ export class TypeResolverImpl implements TypeResolver {
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): { declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined {
+    }): { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToNamedType,
             referencedIn: file.relativeFilepath,
@@ -72,6 +73,7 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         return {
+            typeName: parsedReference.typeName,
             declaration,
             file: constructFernFileContext({
                 relativeFilepath: parsedReference.relativeFilepath,
@@ -223,6 +225,7 @@ export class TypeResolverImpl implements TypeResolver {
 
         return {
             _type: "named",
+            rawName: maybeDeclaration.typeName,
             name: parsedTypeReference,
             declaration,
             filepath: fileOfResolvedDeclaration.relativeFilepath,

@@ -1,9 +1,11 @@
 import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { PrimitiveType } from "@fern-fern/ir-model/types";
 import { isArray, isPlainObject } from "lodash-es";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
+import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
 import { validateTypeExample } from "./validateTypeExample";
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
@@ -18,11 +20,13 @@ export function validateTypeReferenceExample({
     example,
     typeResolver,
     file,
+    workspace,
 }: {
     rawTypeReference: string;
     example: RawSchemas.TypeExampleSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
+    workspace: Workspace;
 }): RuleViolation[] {
     return visitRawTypeReference(rawTypeReference, {
         primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
@@ -38,15 +42,17 @@ export function validateTypeReferenceExample({
             }
 
             return validateTypeExample({
+                typeName: declaration.typeName,
                 typeDeclaration: declaration.declaration,
                 file: declaration.file,
                 example,
                 typeResolver,
+                workspace,
             });
         },
         map: ({ keyType, valueType }) => {
             if (!isPlainObject(example)) {
-                return getRuleViolations(example, "a map");
+                return getRuleViolationsForMisshapenExample(example, "a map");
             }
             return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
                 ...validateTypeReferenceExample({
@@ -54,18 +60,20 @@ export function validateTypeReferenceExample({
                     example: exampleKey,
                     typeResolver,
                     file,
+                    workspace,
                 }),
                 ...validateTypeReferenceExample({
                     rawTypeReference: valueType,
                     example: exampleValue,
                     typeResolver,
                     file,
+                    workspace,
                 }),
             ]);
         },
         list: (itemType) => {
             if (!isArray(example)) {
-                return getRuleViolations(example, "a list");
+                return getRuleViolationsForMisshapenExample(example, "a list");
             }
             return example.flatMap((exampleItem) =>
                 validateTypeReferenceExample({
@@ -73,12 +81,13 @@ export function validateTypeReferenceExample({
                     example: exampleItem,
                     typeResolver,
                     file,
+                    workspace,
                 })
             );
         },
         set: (itemType) => {
             if (!isArray(example)) {
-                return getRuleViolations(example, "a list");
+                return getRuleViolationsForMisshapenExample(example, "a list");
             }
 
             const duplicates = getDuplicates(example);
@@ -99,6 +108,7 @@ export function validateTypeReferenceExample({
                     example: exampleItem,
                     typeResolver,
                     file,
+                    workspace,
                 })
             );
         },
@@ -111,6 +121,7 @@ export function validateTypeReferenceExample({
                 example,
                 typeResolver,
                 file,
+                workspace,
             });
         },
         unknown: () => {
@@ -162,18 +173,6 @@ function createValidator(
         if (validate(example)) {
             return [];
         }
-        return getRuleViolations(example, expectedTypeIncludingArticle);
+        return getRuleViolationsForMisshapenExample(example, expectedTypeIncludingArticle);
     };
-}
-
-function getRuleViolations(
-    example: RawSchemas.TypeExampleSchema,
-    expectedTypeIncludingArticle: string
-): RuleViolation[] {
-    return [
-        {
-            severity: "error",
-            message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${JSON.stringify(example)}`,
-        },
-    ];
 }

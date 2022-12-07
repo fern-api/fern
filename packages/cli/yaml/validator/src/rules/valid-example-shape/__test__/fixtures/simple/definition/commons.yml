@@ -1,0 +1,8 @@
+types:
+  ObjectWithFooAndBar:
+    extends: ObjectWithBar
+    properties:
+      foo: string
+  ObjectWithBar:
+    properties:
+      bar: integer

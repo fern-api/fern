@@ -10,11 +10,9 @@ import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
+    convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
-    ObjectPropertyPath,
-    ObjectPropertyPathPart,
-    ObjectPropertyWithPath,
-} from "./getAllPropertiesForObject";
+} from "../../utils/getAllPropertiesForObject";
 
 export const NoDuplicateFieldNamesRule: Rule = {
     name: "no-duplicate-field-names",
@@ -118,7 +116,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             continue;
                                         }
                                         const propertiesOnObject = getAllPropertiesForObject({
-                                            typeName: resolvedType.name.nameV3.unsafeName.originalValue,
+                                            typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
                                             serviceFile,
@@ -174,36 +172,4 @@ function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[
         }
         return duplicates;
     }, []);
-}
-
-function convertObjectPropertyWithPathToString({
-    property,
-    prefixBreadcrumbs = [],
-}: {
-    property: ObjectPropertyWithPath;
-    prefixBreadcrumbs?: string[];
-}): string {
-    const parts = [
-        ...prefixBreadcrumbs,
-        ...convertObjectPropertyPathToStrings(property.path),
-        property.finalPropertyKey,
-    ];
-    return parts.join(" -> ");
-}
-
-function convertObjectPropertyPathToStrings(path: ObjectPropertyPath): string[] {
-    return path.map(convertObjectPropertyPathPartToString);
-}
-
-function convertObjectPropertyPathPartToString(part: ObjectPropertyPathPart): string {
-    return [getPrefixForObjectPropertyPathPart(part), part.name].join(" ");
-}
-
-function getPrefixForObjectPropertyPathPart(part: ObjectPropertyPathPart): string {
-    switch (part.followedVia) {
-        case "alias":
-            return "(alias of)";
-        case "extension":
-            return "(extends)";
-    }
 }

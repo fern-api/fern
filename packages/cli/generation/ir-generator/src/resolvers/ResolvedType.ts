@@ -19,6 +19,7 @@ export declare namespace ResolvedType {
 
     interface Named {
         _type: "named";
+        rawName: string;
         name: DeclaredTypeName;
         declaration: RawSchemas.ObjectSchema | RawSchemas.UnionSchema | RawSchemas.EnumSchema;
         filepath: RelativeFilePath;

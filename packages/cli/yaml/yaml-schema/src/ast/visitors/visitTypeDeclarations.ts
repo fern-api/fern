@@ -21,15 +21,17 @@ export async function visitTypeDeclarations({
         const nodePathForType = [...nodePath, typeName];
         await visitor.typeName?.(typeName, nodePathForType);
         await visitor.typeDeclaration?.({ typeName, declaration }, nodePathForType);
-        await visitTypeDeclaration({ declaration, visitor, nodePathForType });
+        await visitTypeDeclaration({ typeName, declaration, visitor, nodePathForType });
     }
 }
 
 export async function visitTypeDeclaration({
+    typeName,
     declaration,
     visitor,
     nodePathForType,
 }: {
+    typeName: string;
     declaration: TypeDeclarationSchema;
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForType: NodePath;
@@ -39,7 +41,7 @@ export async function visitTypeDeclaration({
             return;
         }
         for (const [arrayIndex, example] of examples.entries()) {
-            await visitor.typeExample?.({ typeDeclaration: declaration, example }, [
+            await visitor.typeExample?.({ typeName, typeDeclaration: declaration, example }, [
                 ...nodePathForType,
                 { key: "examples", arrayIndex },
             ]);

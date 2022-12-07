@@ -115,6 +115,7 @@ describe("valid-example-shape", () => {
                 message: 'Expected example to be "hello". Example is: "goodbye"',
                 nodePath: ["types", "LiteralAlias", { key: "examples", arrayIndex: 1 }],
             },
+
             // enum.yml
             {
                 severity: "error",
@@ -142,6 +143,46 @@ describe("valid-example-shape", () => {
   - BLUE
   - purple`,
                 nodePath: ["types", "Color", { key: "examples", arrayIndex: 4 }],
+            },
+
+            // object.yml
+            {
+                severity: "error",
+                relativeFilepath: "object.yml",
+                message:
+                    'Example is missing required property "foo". Object1 -> (extends) commons.ObjectWithFooAndBar -> foo',
+                nodePath: ["types", "Object1", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "object.yml",
+                message:
+                    'Example is missing required property "bar". Object1 -> (extends) commons.ObjectWithFooAndBar -> (extends) ObjectWithBar -> bar',
+                nodePath: ["types", "Object1", { key: "examples", arrayIndex: 3 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "object.yml",
+                message: "Expected example to be an integer. Example is: true",
+                nodePath: ["types", "Object1", { key: "examples", arrayIndex: 4 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "object.yml",
+                message: 'Example is missing required property "a"',
+                nodePath: ["types", "Object1", { key: "examples", arrayIndex: 5 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "object.yml",
+                message: "Expected example to be a string. Example is: 100",
+                nodePath: ["types", "Object1", { key: "examples", arrayIndex: 6 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "object.yml",
+                message: 'Unexpected key "random-property"',
+                nodePath: ["types", "Object1", { key: "examples", arrayIndex: 7 }],
             },
         ];
 

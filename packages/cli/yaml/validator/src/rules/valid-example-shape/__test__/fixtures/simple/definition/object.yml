@@ -1,0 +1,54 @@
+imports:
+  commons: commons.yml
+  alias: alias.yml
+
+types:
+  Object1:
+    extends: commons.ObjectWithFooAndBar
+    properties:
+      a: boolean
+      b: alias.DoubleAlias
+      c: optional<string>
+    examples:
+      # valid
+      - foo: hello
+        bar: 123
+        a: true
+        b: 3.14
+      # valid
+      - foo: hello
+        bar: 123
+        a: true
+        b: 3.14
+      # missing extended property (foo)
+      - bar: 123
+        a: true
+        b: 3.14
+        c: world
+      # missing twice-extended property (bar)
+      - foo: hello
+        a: true
+        b: 3.14
+      # invalid type for twice-extended property (bar)
+      - foo: hello
+        bar: true
+        a: true
+        b: 3.14
+        c: world
+      # missing property (a)
+      - foo: hello
+        bar: 123
+        b: 3.14
+        c: world
+      # invalid type for property (c)
+      - foo: hello
+        bar: 123
+        a: true
+        b: 3.14
+        c: 100
+      # additional property
+      - foo: hello
+        bar: 123
+        a: true
+        b: 3.14
+        random-property: yo
