@@ -70,7 +70,7 @@ export function validateObjectExample({
         if (propertyWithPath == null) {
             violations.push({
                 severity: "error",
-                message: `Unexpected key "${exampleKey}"`,
+                message: `Unexpected property "${exampleKey}"`,
             });
         } else {
             const serviceFile = workspace.serviceFiles[propertyWithPath.filepathOfDeclaration];

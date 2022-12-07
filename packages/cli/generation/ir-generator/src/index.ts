@@ -4,6 +4,7 @@ export { getEnumName } from "./converters/type-declarations/convertEnumTypeDecla
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
 export {
     getSingleUnionTypeName,
+    getUnionDiscriminant,
     getUnionDiscriminantName,
 } from "./converters/type-declarations/convertUnionTypeDeclaration";
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";

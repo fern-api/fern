@@ -48,8 +48,15 @@ export function validateTypeExample({
                 workspace,
             });
         },
-        union: () => {
-            return validateUnionExample();
+        union: (rawUnion) => {
+            return validateUnionExample({
+                typeName,
+                rawUnion,
+                example,
+                file,
+                typeResolver,
+                workspace,
+            });
         },
     });
 }
