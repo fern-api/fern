@@ -32,8 +32,11 @@ export function validateTypeExample({
                 example,
             });
         },
-        object: () => {
-            return validateObjectExample();
+        object: (rawObject) => {
+            return validateObjectExample({
+                rawObject,
+                example,
+            });
         },
         union: () => {
             return validateUnionExample();

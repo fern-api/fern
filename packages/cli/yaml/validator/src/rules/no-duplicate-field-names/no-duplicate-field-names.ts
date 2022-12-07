@@ -44,6 +44,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
                         object: (objectDeclaration) => {
                             const allProperties = getAllPropertiesForObject({
+                                typeName,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
                                 serviceFile: contents,
@@ -117,6 +118,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             continue;
                                         }
                                         const propertiesOnObject = getAllPropertiesForObject({
+                                            typeName: resolvedType.name.nameV3.unsafeName.originalValue,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
                                             serviceFile,

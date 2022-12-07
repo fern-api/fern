@@ -17,7 +17,10 @@ export interface ObjectPropertyPathPart {
     followedVia: "alias" | "extension";
 }
 
+export type TypeName = string;
+
 export function getAllPropertiesForObject({
+    typeName,
     objectDeclaration,
     filepathOfDeclaration,
     serviceFile,
@@ -25,15 +28,25 @@ export function getAllPropertiesForObject({
     typeResolver,
     // used only for recursive calls
     path = [],
+    seen = {},
 }: {
+    typeName: TypeName;
     objectDeclaration: RawSchemas.ObjectSchema;
     filepathOfDeclaration: RelativeFilePath;
     serviceFile: RawSchemas.ServiceFileSchema;
     workspace: Workspace;
     typeResolver: TypeResolver;
     path?: ObjectPropertyPath;
+    seen?: Record<RelativeFilePath, Set<TypeName>>;
 }): ObjectPropertyWithPath[] {
     const properties: ObjectPropertyWithPath[] = [];
+
+    // prevent infinite looping
+    const seenAtFilepath = (seen[filepathOfDeclaration] ??= new Set());
+    if (seenAtFilepath.has(typeName)) {
+        return properties;
+    }
+    seenAtFilepath.add(typeName);
 
     if (objectDeclaration.properties != null) {
         for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
@@ -66,6 +79,7 @@ export function getAllPropertiesForObject({
                 if (serviceFile != null) {
                     properties.push(
                         ...getAllPropertiesForObject({
+                            typeName: resolvedTypeOfExtension.name.nameV3.unsafeName.originalValue,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
                             serviceFile,
@@ -84,6 +98,7 @@ export function getAllPropertiesForObject({
                                     })
                                 ),
                             ],
+                            seen,
                         })
                     );
                 }
