@@ -171,7 +171,7 @@ public abstract class UnionTypeSpecGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .returns(ParameterizedTypeName.get(
                             ClassName.get(Optional.class),
-                            subType.getUnionSubTypeTypeName().get()))
+                            subType.getUnionSubTypeTypeName().get().box()))
                     .beginControlFlow("if ($L())", subType.getIsMethodName())
                     .addStatement(
                             "return $T.of((($T) value).$L)",
