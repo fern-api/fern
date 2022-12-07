@@ -12,15 +12,15 @@ export const NoMissingErrorDiscriminantRule: Rule = {
 
         return {
             rootApiFile: {
-                errorDiscriminant: (errorDiscriminant) => {
-                    if (errorDiscriminant != null) {
+                errorDiscrimination: (errorDiscrimination) => {
+                    if (errorDiscrimination != null) {
                         return [];
                     }
 
                     return [
                         {
                             severity: "error",
-                            message: "Error discriminant is required because this API includes error declarations.",
+                            message: "error-discrimination is required because this API has declared errors.",
                         },
                     ];
                 },

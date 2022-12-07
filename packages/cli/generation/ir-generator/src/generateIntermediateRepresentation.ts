@@ -60,8 +60,9 @@ export async function generateIntermediateRepresentation({
         defaultEnvironment: workspace.rootApiFile["default-environment"],
         environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile }),
         errorDiscriminant:
-            workspace.rootApiFile["error-discriminant"] != null
-                ? casingsGenerator.generateName(workspace.rootApiFile["error-discriminant"])
+            workspace.rootApiFile["error-discrimination"] != null &&
+            workspace.rootApiFile["error-discrimination"].strategy === "property"
+                ? casingsGenerator.generateName(workspace.rootApiFile["error-discrimination"]["property-name"])
                 : undefined,
     };
 
@@ -95,12 +96,17 @@ export async function generateIntermediateRepresentation({
                 if (errors == null) {
                     return;
                 }
+                const errorDiscriminationSchema = workspace.rootApiFile["error-discrimination"];
+                if (errorDiscriminationSchema == null) {
+                    throw new Error("Please specify error-discrimination in api.yml.");
+                }
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                     const convertedErrorDeclaration = convertErrorDeclaration({
                         errorName,
                         errorDeclaration,
                         file,
                         typeResolver,
+                        errorDiscriminationSchema,
                     });
                     audienceIrGraph?.addError(convertedErrorDeclaration);
                     intermediateRepresentation.errors.push(convertedErrorDeclaration);

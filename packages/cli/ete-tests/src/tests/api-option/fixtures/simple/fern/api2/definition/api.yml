@@ -1,3 +1,5 @@
 name: my-api-2
 
-error-discriminant: error
+error-discrimination:
+  strategy: property
+  property-name: error

@@ -11,7 +11,10 @@ types:
       discriminantValue:
         type: commons.WireStringWithAllCasings
         docs: this is deprecated. use discriminantValueV2 instead
-      discriminantValueV2: commons.NameAndWireValue
+      discriminantValueV2:
+        type: commons.NameAndWireValue
+        docs: this id deprecated. use discriminantValueV3 instead
+      discriminantValueV3: ErrorDeclarationDiscriminantValue
       type:
         docs: this is deprecated. use typeV3 instead.
         type: types.Type
@@ -21,6 +24,10 @@ types:
       typeV3: optional<types.TypeReference>
       http: optional<HttpErrorConfiguration>
       statusCode: integer
+  ErrorDeclarationDiscriminantValue:
+    union:
+      property: commons.NameAndWireValue
+      statusCode: {}
   DeclaredErrorName:
     properties:
       fernFilepath:

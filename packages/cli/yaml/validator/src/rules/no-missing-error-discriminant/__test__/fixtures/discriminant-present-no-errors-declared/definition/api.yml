@@ -1,3 +1,5 @@
 name: simple-api
 
-error-discriminant: hello
+error-discrimination:
+  strategy: property
+  property-name: hello

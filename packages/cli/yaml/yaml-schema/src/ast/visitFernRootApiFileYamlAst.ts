@@ -16,8 +16,8 @@ export async function visitFernRootApiFileYamlAst(
         },
         headers: noop,
         environments: noop,
-        "error-discriminant": async (errorDiscriminant) => {
-            await visitor.errorDiscriminant?.(errorDiscriminant, ["error-discriminant"]);
+        "error-discrimination": async (errorDiscrimination) => {
+            await visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"]);
         },
         audiences: noop,
     });

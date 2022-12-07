@@ -5,7 +5,9 @@ import NoComplexQueryParamsRule from "./rules/no-complex-query-params";
 import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
 import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
 import NoDuplicateFieldNamesRule from "./rules/no-duplicate-field-names";
+import NoErrorStatusCodeConflict from "./rules/no-error-status-code-conflict";
 import NoGetRequestBody from "./rules/no-get-request-body";
+import NoMissingAuthRule from "./rules/no-missing-auth";
 import NoMissingErrorDiscriminant from "./rules/no-missing-error-discriminant";
 import NoObjectSinglePropertyKey from "./rules/no-object-single-property-key";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
@@ -32,6 +34,8 @@ export function getAllRules(): Rule[] {
         ValidDefaultEnvironmentRule,
         NoMissingErrorDiscriminant,
         ValidExampleShapeRule,
+        NoErrorStatusCodeConflict,
+        NoMissingAuthRule,
     ];
 }
 
