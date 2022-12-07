@@ -49,9 +49,8 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TestSubmissionStatusV2.Partial], TestSubmissionStatusV2.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators._RootValidator]] = []
         _updates_pre_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators.UpdatesValidator]] = []
         _updates_post_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators.UpdatesValidator]] = []
         _problem_id_pre_validators: typing.ClassVar[
@@ -74,11 +73,15 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestSubmissionStatusV2.Partial], TestSubmissionStatusV2.Partial]
-        ) -> typing.Callable[[TestSubmissionStatusV2.Partial], TestSubmissionStatusV2.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestSubmissionStatusV2.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -123,22 +126,22 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "updates":
                     if pre:
-                        cls._updates_post_validators.append(validator)
+                        cls._updates_pre_validators.append(validator)
                     else:
                         cls._updates_post_validators.append(validator)
                 if field_name == "problem_id":
                     if pre:
-                        cls._problem_id_post_validators.append(validator)
+                        cls._problem_id_pre_validators.append(validator)
                     else:
                         cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_version":
                     if pre:
-                        cls._problem_version_post_validators.append(validator)
+                        cls._problem_version_pre_validators.append(validator)
                     else:
                         cls._problem_version_post_validators.append(validator)
                 if field_name == "problem_info":
                     if pre:
-                        cls._problem_info_post_validators.append(validator)
+                        cls._problem_info_pre_validators.append(validator)
                     else:
                         cls._problem_info_post_validators.append(validator)
                 return validator
@@ -163,9 +166,19 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
             def __call__(self, __v: ProblemInfoV2, __values: TestSubmissionStatusV2.Partial) -> ProblemInfoV2:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestSubmissionStatusV2.Partial) -> TestSubmissionStatusV2.Partial:
-        for validator in TestSubmissionStatusV2.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestSubmissionStatusV2.Partial) -> TestSubmissionStatusV2.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestSubmissionStatusV2.Partial) -> TestSubmissionStatusV2.Partial:
+        for validator in TestSubmissionStatusV2.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestSubmissionStatusV2.Partial) -> TestSubmissionStatusV2.Partial:
+        for validator in TestSubmissionStatusV2.Validators._post_validators:
             values = validator(values)
         return values
 

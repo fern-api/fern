@@ -36,9 +36,8 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseWithExpectedResult.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestCaseWithExpectedResult.Validators._RootValidator]] = []
         _test_case_pre_validators: typing.ClassVar[
             typing.List[TestCaseWithExpectedResult.Validators.TestCaseValidator]
         ] = []
@@ -53,11 +52,15 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]
-        ) -> typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestCaseWithExpectedResult.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -84,12 +87,12 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "test_case":
                     if pre:
-                        cls._test_case_post_validators.append(validator)
+                        cls._test_case_pre_validators.append(validator)
                     else:
                         cls._test_case_post_validators.append(validator)
                 if field_name == "expected_result":
                     if pre:
-                        cls._expected_result_post_validators.append(validator)
+                        cls._expected_result_pre_validators.append(validator)
                     else:
                         cls._expected_result_post_validators.append(validator)
                 return validator
@@ -104,9 +107,19 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
             def __call__(self, __v: VariableValue, __values: TestCaseWithExpectedResult.Partial) -> VariableValue:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestCaseWithExpectedResult.Partial) -> TestCaseWithExpectedResult.Partial:
-        for validator in TestCaseWithExpectedResult.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestCaseWithExpectedResult.Partial) -> TestCaseWithExpectedResult.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestCaseWithExpectedResult.Partial) -> TestCaseWithExpectedResult.Partial:
+        for validator in TestCaseWithExpectedResult.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestCaseWithExpectedResult.Partial) -> TestCaseWithExpectedResult.Partial:
+        for validator in TestCaseWithExpectedResult.Validators._post_validators:
             values = validator(values)
         return values
 

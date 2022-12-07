@@ -35,20 +35,23 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators._RootValidator]] = []
         _result_pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
         _result_post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
         _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]
-        ) -> typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestCaseResultWithStdout.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -73,12 +76,12 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "result":
                     if pre:
-                        cls._result_post_validators.append(validator)
+                        cls._result_pre_validators.append(validator)
                     else:
                         cls._result_post_validators.append(validator)
                 if field_name == "stdout":
                     if pre:
-                        cls._stdout_post_validators.append(validator)
+                        cls._stdout_pre_validators.append(validator)
                     else:
                         cls._stdout_post_validators.append(validator)
                 return validator
@@ -93,9 +96,19 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
             def __call__(self, __v: str, __values: TestCaseResultWithStdout.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
-        for validator in TestCaseResultWithStdout.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
+        for validator in TestCaseResultWithStdout.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
+        for validator in TestCaseResultWithStdout.Validators._post_validators:
             values = validator(values)
         return values
 

@@ -32,7 +32,7 @@ class ProblemId(pydantic.BaseModel):
         def validate(cls, validator: typing.Callable[[str], str]) -> None:
             cls._validators.append(validator)
 
-    @pydantic.root_validator
+    @pydantic.root_validator(pre=False)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(str, values.get("__root__"))
         for validator in ProblemId.Validators._validators:

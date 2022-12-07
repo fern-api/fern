@@ -89,7 +89,8 @@ class ProblemInfoV2(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators._RootValidator]] = []
         _problem_id_pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemIdValidator]] = []
         _problem_id_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemIdValidator]] = []
         _problem_description_pre_validators: typing.ClassVar[
@@ -132,11 +133,15 @@ class ProblemInfoV2(pydantic.BaseModel):
         _is_public_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.IsPublicValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]
-        ) -> typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ProblemInfoV2.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -232,52 +237,52 @@ class ProblemInfoV2(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
                     if pre:
-                        cls._problem_id_post_validators.append(validator)
+                        cls._problem_id_pre_validators.append(validator)
                     else:
                         cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_description":
                     if pre:
-                        cls._problem_description_post_validators.append(validator)
+                        cls._problem_description_pre_validators.append(validator)
                     else:
                         cls._problem_description_post_validators.append(validator)
                 if field_name == "problem_name":
                     if pre:
-                        cls._problem_name_post_validators.append(validator)
+                        cls._problem_name_pre_validators.append(validator)
                     else:
                         cls._problem_name_post_validators.append(validator)
                 if field_name == "problem_version":
                     if pre:
-                        cls._problem_version_post_validators.append(validator)
+                        cls._problem_version_pre_validators.append(validator)
                     else:
                         cls._problem_version_post_validators.append(validator)
                 if field_name == "supported_languages":
                     if pre:
-                        cls._supported_languages_post_validators.append(validator)
+                        cls._supported_languages_pre_validators.append(validator)
                     else:
                         cls._supported_languages_post_validators.append(validator)
                 if field_name == "custom_files":
                     if pre:
-                        cls._custom_files_post_validators.append(validator)
+                        cls._custom_files_pre_validators.append(validator)
                     else:
                         cls._custom_files_post_validators.append(validator)
                 if field_name == "generated_files":
                     if pre:
-                        cls._generated_files_post_validators.append(validator)
+                        cls._generated_files_pre_validators.append(validator)
                     else:
                         cls._generated_files_post_validators.append(validator)
                 if field_name == "custom_test_case_templates":
                     if pre:
-                        cls._custom_test_case_templates_post_validators.append(validator)
+                        cls._custom_test_case_templates_pre_validators.append(validator)
                     else:
                         cls._custom_test_case_templates_post_validators.append(validator)
                 if field_name == "testcases":
                     if pre:
-                        cls._testcases_post_validators.append(validator)
+                        cls._testcases_pre_validators.append(validator)
                     else:
                         cls._testcases_post_validators.append(validator)
                 if field_name == "is_public":
                     if pre:
-                        cls._is_public_post_validators.append(validator)
+                        cls._is_public_pre_validators.append(validator)
                     else:
                         cls._is_public_post_validators.append(validator)
                 return validator
@@ -328,9 +333,19 @@ class ProblemInfoV2(pydantic.BaseModel):
             def __call__(self, __v: bool, __values: ProblemInfoV2.Partial) -> bool:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ProblemInfoV2.Partial) -> ProblemInfoV2.Partial:
-        for validator in ProblemInfoV2.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ProblemInfoV2.Partial) -> ProblemInfoV2.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ProblemInfoV2.Partial) -> ProblemInfoV2.Partial:
+        for validator in ProblemInfoV2.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ProblemInfoV2.Partial) -> ProblemInfoV2.Partial:
+        for validator in ProblemInfoV2.Validators._post_validators:
             values = validator(values)
         return values
 

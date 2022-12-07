@@ -55,7 +55,7 @@ class CreateProblemError(pydantic.BaseModel):
         ) -> None:
             cls._validators.append(validator)
 
-    @pydantic.root_validator
+    @pydantic.root_validator(pre=False)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(typing.Union[_CreateProblemError.Generic], values.get("__root__"))
         for validator in CreateProblemError.Validators._validators:

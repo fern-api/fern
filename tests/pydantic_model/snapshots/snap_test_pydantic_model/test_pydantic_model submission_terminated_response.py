@@ -21,20 +21,33 @@ class TerminatedResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TerminatedResponse.Partial], TerminatedResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TerminatedResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TerminatedResponse.Validators._RootValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TerminatedResponse.Partial], TerminatedResponse.Partial]
-        ) -> typing.Callable[[TerminatedResponse.Partial], TerminatedResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TerminatedResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
 
-    @pydantic.root_validator
-    def _validate(cls, values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
-        for validator in TerminatedResponse.Validators._validators:
+            return decorator
+
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
+        for validator in TerminatedResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
+        for validator in TerminatedResponse.Validators._post_validators:
             values = validator(values)
         return values
 

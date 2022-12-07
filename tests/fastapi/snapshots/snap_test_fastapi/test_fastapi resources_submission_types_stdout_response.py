@@ -35,9 +35,8 @@ class StdoutResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[StdoutResponse.Partial], StdoutResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[StdoutResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[StdoutResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[StdoutResponse.Validators.SubmissionIdValidator]
         ] = []
@@ -48,11 +47,15 @@ class StdoutResponse(pydantic.BaseModel):
         _stdout_post_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.StdoutValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[StdoutResponse.Partial], StdoutResponse.Partial]
-        ) -> typing.Callable[[StdoutResponse.Partial], StdoutResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> StdoutResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -75,12 +78,12 @@ class StdoutResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
                     if pre:
-                        cls._submission_id_post_validators.append(validator)
+                        cls._submission_id_pre_validators.append(validator)
                     else:
                         cls._submission_id_post_validators.append(validator)
                 if field_name == "stdout":
                     if pre:
-                        cls._stdout_post_validators.append(validator)
+                        cls._stdout_pre_validators.append(validator)
                     else:
                         cls._stdout_post_validators.append(validator)
                 return validator
@@ -95,9 +98,19 @@ class StdoutResponse(pydantic.BaseModel):
             def __call__(self, __v: str, __values: StdoutResponse.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: StdoutResponse.Partial) -> StdoutResponse.Partial:
-        for validator in StdoutResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: StdoutResponse.Partial) -> StdoutResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: StdoutResponse.Partial) -> StdoutResponse.Partial:
+        for validator in StdoutResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: StdoutResponse.Partial) -> StdoutResponse.Partial:
+        for validator in StdoutResponse.Validators._post_validators:
             values = validator(values)
         return values
 

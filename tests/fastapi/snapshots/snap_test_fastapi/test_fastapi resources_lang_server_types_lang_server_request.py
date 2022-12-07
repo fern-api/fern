@@ -27,18 +27,21 @@ class LangServerRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[LangServerRequest.Partial], LangServerRequest.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[LangServerRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[LangServerRequest.Validators._RootValidator]] = []
         _request_pre_validators: typing.ClassVar[typing.List[LangServerRequest.Validators.RequestValidator]] = []
         _request_post_validators: typing.ClassVar[typing.List[LangServerRequest.Validators.RequestValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[LangServerRequest.Partial], LangServerRequest.Partial]
-        ) -> typing.Callable[[LangServerRequest.Partial], LangServerRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> LangServerRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -54,7 +57,7 @@ class LangServerRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "request":
                     if pre:
-                        cls._request_post_validators.append(validator)
+                        cls._request_pre_validators.append(validator)
                     else:
                         cls._request_post_validators.append(validator)
                 return validator
@@ -65,9 +68,19 @@ class LangServerRequest(pydantic.BaseModel):
             def __call__(self, __v: typing.Any, __values: LangServerRequest.Partial) -> typing.Any:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
-        for validator in LangServerRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: LangServerRequest.Partial) -> LangServerRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
+        for validator in LangServerRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
+        for validator in LangServerRequest.Validators._post_validators:
             values = validator(values)
         return values
 

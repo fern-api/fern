@@ -35,7 +35,8 @@ class ProblemFiles(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemFiles.Partial], ProblemFiles.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._RootValidator]] = []
         _solution_file_pre_validators: typing.ClassVar[typing.List[ProblemFiles.Validators.SolutionFileValidator]] = []
         _solution_file_post_validators: typing.ClassVar[typing.List[ProblemFiles.Validators.SolutionFileValidator]] = []
         _read_only_files_pre_validators: typing.ClassVar[
@@ -46,11 +47,15 @@ class ProblemFiles(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ProblemFiles.Partial], ProblemFiles.Partial]
-        ) -> typing.Callable[[ProblemFiles.Partial], ProblemFiles.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ProblemFiles.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -75,12 +80,12 @@ class ProblemFiles(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "solution_file":
                     if pre:
-                        cls._solution_file_post_validators.append(validator)
+                        cls._solution_file_pre_validators.append(validator)
                     else:
                         cls._solution_file_post_validators.append(validator)
                 if field_name == "read_only_files":
                     if pre:
-                        cls._read_only_files_post_validators.append(validator)
+                        cls._read_only_files_pre_validators.append(validator)
                     else:
                         cls._read_only_files_post_validators.append(validator)
                 return validator
@@ -95,9 +100,19 @@ class ProblemFiles(pydantic.BaseModel):
             def __call__(self, __v: typing.List[FileInfo], __values: ProblemFiles.Partial) -> typing.List[FileInfo]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ProblemFiles.Partial) -> ProblemFiles.Partial:
-        for validator in ProblemFiles.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ProblemFiles.Partial) -> ProblemFiles.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ProblemFiles.Partial) -> ProblemFiles.Partial:
+        for validator in ProblemFiles.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ProblemFiles.Partial) -> ProblemFiles.Partial:
+        for validator in ProblemFiles.Validators._post_validators:
             values = validator(values)
         return values
 

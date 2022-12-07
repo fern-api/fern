@@ -29,16 +29,21 @@ class StopRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[StopRequest.Partial], StopRequest.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[StopRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[StopRequest.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[typing.List[StopRequest.Validators.SubmissionIdValidator]] = []
         _submission_id_post_validators: typing.ClassVar[typing.List[StopRequest.Validators.SubmissionIdValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[StopRequest.Partial], StopRequest.Partial]
-        ) -> typing.Callable[[StopRequest.Partial], StopRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> StopRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -54,7 +59,7 @@ class StopRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
                     if pre:
-                        cls._submission_id_post_validators.append(validator)
+                        cls._submission_id_pre_validators.append(validator)
                     else:
                         cls._submission_id_post_validators.append(validator)
                 return validator
@@ -65,9 +70,19 @@ class StopRequest(pydantic.BaseModel):
             def __call__(self, __v: SubmissionId, __values: StopRequest.Partial) -> SubmissionId:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: StopRequest.Partial) -> StopRequest.Partial:
-        for validator in StopRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: StopRequest.Partial) -> StopRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: StopRequest.Partial) -> StopRequest.Partial:
+        for validator in StopRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: StopRequest.Partial) -> StopRequest.Partial:
+        for validator in StopRequest.Validators._post_validators:
             values = validator(values)
         return values
 

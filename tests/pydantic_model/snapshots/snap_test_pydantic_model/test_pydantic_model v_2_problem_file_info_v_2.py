@@ -45,7 +45,8 @@ class FileInfoV2(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[FileInfoV2.Partial], FileInfoV2.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators._RootValidator]] = []
         _filename_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.FilenameValidator]] = []
         _filename_post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.FilenameValidator]] = []
         _directory_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.DirectoryValidator]] = []
@@ -56,11 +57,15 @@ class FileInfoV2(pydantic.BaseModel):
         _editable_post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.EditableValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[FileInfoV2.Partial], FileInfoV2.Partial]
-        ) -> typing.Callable[[FileInfoV2.Partial], FileInfoV2.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> FileInfoV2.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -95,22 +100,22 @@ class FileInfoV2(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "filename":
                     if pre:
-                        cls._filename_post_validators.append(validator)
+                        cls._filename_pre_validators.append(validator)
                     else:
                         cls._filename_post_validators.append(validator)
                 if field_name == "directory":
                     if pre:
-                        cls._directory_post_validators.append(validator)
+                        cls._directory_pre_validators.append(validator)
                     else:
                         cls._directory_post_validators.append(validator)
                 if field_name == "contents":
                     if pre:
-                        cls._contents_post_validators.append(validator)
+                        cls._contents_pre_validators.append(validator)
                     else:
                         cls._contents_post_validators.append(validator)
                 if field_name == "editable":
                     if pre:
-                        cls._editable_post_validators.append(validator)
+                        cls._editable_pre_validators.append(validator)
                     else:
                         cls._editable_post_validators.append(validator)
                 return validator
@@ -133,9 +138,19 @@ class FileInfoV2(pydantic.BaseModel):
             def __call__(self, __v: bool, __values: FileInfoV2.Partial) -> bool:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: FileInfoV2.Partial) -> FileInfoV2.Partial:
-        for validator in FileInfoV2.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: FileInfoV2.Partial) -> FileInfoV2.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: FileInfoV2.Partial) -> FileInfoV2.Partial:
+        for validator in FileInfoV2.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: FileInfoV2.Partial) -> FileInfoV2.Partial:
+        for validator in FileInfoV2.Validators._post_validators:
             values = validator(values)
         return values
 

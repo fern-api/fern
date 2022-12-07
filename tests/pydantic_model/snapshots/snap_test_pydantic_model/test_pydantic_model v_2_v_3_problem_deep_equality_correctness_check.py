@@ -29,9 +29,8 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[DeepEqualityCorrectnessCheck.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[DeepEqualityCorrectnessCheck.Validators._RootValidator]] = []
         _expected_value_parameter_id_pre_validators: typing.ClassVar[
             typing.List[DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator]
         ] = []
@@ -40,12 +39,15 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial],
-        ) -> typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> DeepEqualityCorrectnessCheck.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -62,7 +64,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_value_parameter_id":
                     if pre:
-                        cls._expected_value_parameter_id_post_validators.append(validator)
+                        cls._expected_value_parameter_id_pre_validators.append(validator)
                     else:
                         cls._expected_value_parameter_id_post_validators.append(validator)
                 return validator
@@ -73,9 +75,19 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
             def __call__(self, __v: ParameterId, __values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: DeepEqualityCorrectnessCheck.Partial) -> DeepEqualityCorrectnessCheck.Partial:
-        for validator in DeepEqualityCorrectnessCheck.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: DeepEqualityCorrectnessCheck.Partial) -> DeepEqualityCorrectnessCheck.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: DeepEqualityCorrectnessCheck.Partial) -> DeepEqualityCorrectnessCheck.Partial:
+        for validator in DeepEqualityCorrectnessCheck.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: DeepEqualityCorrectnessCheck.Partial) -> DeepEqualityCorrectnessCheck.Partial:
+        for validator in DeepEqualityCorrectnessCheck.Validators._post_validators:
             values = validator(values)
         return values
 

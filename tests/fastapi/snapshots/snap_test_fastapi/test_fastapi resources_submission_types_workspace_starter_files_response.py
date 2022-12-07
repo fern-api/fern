@@ -30,9 +30,8 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponse.Validators._RootValidator]] = []
         _files_pre_validators: typing.ClassVar[
             typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]
         ] = []
@@ -41,12 +40,15 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial],
-        ) -> typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> WorkspaceStarterFilesResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -63,7 +65,7 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
                     if pre:
-                        cls._files_post_validators.append(validator)
+                        cls._files_pre_validators.append(validator)
                     else:
                         cls._files_post_validators.append(validator)
                 return validator
@@ -76,9 +78,21 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
             ) -> typing.Dict[Language, WorkspaceFiles]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: WorkspaceStarterFilesResponse.Partial) -> WorkspaceStarterFilesResponse.Partial:
-        for validator in WorkspaceStarterFilesResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: WorkspaceStarterFilesResponse.Partial
+            ) -> WorkspaceStarterFilesResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: WorkspaceStarterFilesResponse.Partial) -> WorkspaceStarterFilesResponse.Partial:
+        for validator in WorkspaceStarterFilesResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: WorkspaceStarterFilesResponse.Partial) -> WorkspaceStarterFilesResponse.Partial:
+        for validator in WorkspaceStarterFilesResponse.Validators._post_validators:
             values = validator(values)
         return values
 

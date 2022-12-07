@@ -27,9 +27,8 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceTracedUpdate.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[WorkspaceTracedUpdate.Validators._RootValidator]] = []
         _trace_responses_size_pre_validators: typing.ClassVar[
             typing.List[WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator]
         ] = []
@@ -38,11 +37,15 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]
-        ) -> typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> WorkspaceTracedUpdate.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -59,7 +62,7 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "trace_responses_size":
                     if pre:
-                        cls._trace_responses_size_post_validators.append(validator)
+                        cls._trace_responses_size_pre_validators.append(validator)
                     else:
                         cls._trace_responses_size_post_validators.append(validator)
                 return validator
@@ -70,9 +73,19 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
             def __call__(self, __v: int, __values: WorkspaceTracedUpdate.Partial) -> int:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: WorkspaceTracedUpdate.Partial) -> WorkspaceTracedUpdate.Partial:
-        for validator in WorkspaceTracedUpdate.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: WorkspaceTracedUpdate.Partial) -> WorkspaceTracedUpdate.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: WorkspaceTracedUpdate.Partial) -> WorkspaceTracedUpdate.Partial:
+        for validator in WorkspaceTracedUpdate.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: WorkspaceTracedUpdate.Partial) -> WorkspaceTracedUpdate.Partial:
+        for validator in WorkspaceTracedUpdate.Validators._post_validators:
             values = validator(values)
         return values
 

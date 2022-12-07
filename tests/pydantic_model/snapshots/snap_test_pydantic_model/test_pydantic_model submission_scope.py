@@ -29,16 +29,21 @@ class Scope(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[Scope.Partial], Scope.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[Scope.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Scope.Validators._RootValidator]] = []
         _variables_pre_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
         _variables_post_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[Scope.Partial], Scope.Partial]
-        ) -> typing.Callable[[Scope.Partial], Scope.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> Scope.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -52,7 +57,7 @@ class Scope(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "variables":
                     if pre:
-                        cls._variables_post_validators.append(validator)
+                        cls._variables_pre_validators.append(validator)
                     else:
                         cls._variables_post_validators.append(validator)
                 return validator
@@ -65,9 +70,19 @@ class Scope(pydantic.BaseModel):
             ) -> typing.Dict[str, DebugVariableValue]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: Scope.Partial) -> Scope.Partial:
-        for validator in Scope.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: Scope.Partial) -> Scope.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: Scope.Partial) -> Scope.Partial:
+        for validator in Scope.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: Scope.Partial) -> Scope.Partial:
+        for validator in Scope.Validators._post_validators:
             values = validator(values)
         return values
 

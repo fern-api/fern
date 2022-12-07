@@ -36,9 +36,8 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[StoreTracedTestCaseRequest.Partial], StoreTracedTestCaseRequest.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators._RootValidator]] = []
         _result_pre_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators.ResultValidator]] = []
         _result_post_validators: typing.ClassVar[
             typing.List[StoreTracedTestCaseRequest.Validators.ResultValidator]
@@ -51,11 +50,15 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[StoreTracedTestCaseRequest.Partial], StoreTracedTestCaseRequest.Partial]
-        ) -> typing.Callable[[StoreTracedTestCaseRequest.Partial], StoreTracedTestCaseRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> StoreTracedTestCaseRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -82,12 +85,12 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "result":
                     if pre:
-                        cls._result_post_validators.append(validator)
+                        cls._result_pre_validators.append(validator)
                     else:
                         cls._result_post_validators.append(validator)
                 if field_name == "trace_responses":
                     if pre:
-                        cls._trace_responses_post_validators.append(validator)
+                        cls._trace_responses_pre_validators.append(validator)
                     else:
                         cls._trace_responses_post_validators.append(validator)
                 return validator
@@ -106,9 +109,19 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
             ) -> typing.List[TraceResponse]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
-        for validator in StoreTracedTestCaseRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
+        for validator in StoreTracedTestCaseRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
+        for validator in StoreTracedTestCaseRequest.Validators._post_validators:
             values = validator(values)
         return values
 

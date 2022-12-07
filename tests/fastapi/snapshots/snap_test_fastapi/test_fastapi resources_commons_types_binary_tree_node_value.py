@@ -47,9 +47,8 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[BinaryTreeNodeValue.Partial], BinaryTreeNodeValue.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._RootValidator]] = []
         _node_id_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
         _node_id_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
         _val_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.ValValidator]] = []
@@ -60,11 +59,15 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         _left_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[BinaryTreeNodeValue.Partial], BinaryTreeNodeValue.Partial]
-        ) -> typing.Callable[[BinaryTreeNodeValue.Partial], BinaryTreeNodeValue.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> BinaryTreeNodeValue.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -107,22 +110,22 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "node_id":
                     if pre:
-                        cls._node_id_post_validators.append(validator)
+                        cls._node_id_pre_validators.append(validator)
                     else:
                         cls._node_id_post_validators.append(validator)
                 if field_name == "val":
                     if pre:
-                        cls._val_post_validators.append(validator)
+                        cls._val_pre_validators.append(validator)
                     else:
                         cls._val_post_validators.append(validator)
                 if field_name == "right":
                     if pre:
-                        cls._right_post_validators.append(validator)
+                        cls._right_pre_validators.append(validator)
                     else:
                         cls._right_post_validators.append(validator)
                 if field_name == "left":
                     if pre:
-                        cls._left_post_validators.append(validator)
+                        cls._left_pre_validators.append(validator)
                     else:
                         cls._left_post_validators.append(validator)
                 return validator
@@ -149,9 +152,19 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
             ) -> typing.Optional[NodeId]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: BinaryTreeNodeValue.Partial) -> BinaryTreeNodeValue.Partial:
-        for validator in BinaryTreeNodeValue.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: BinaryTreeNodeValue.Partial) -> BinaryTreeNodeValue.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: BinaryTreeNodeValue.Partial) -> BinaryTreeNodeValue.Partial:
+        for validator in BinaryTreeNodeValue.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: BinaryTreeNodeValue.Partial) -> BinaryTreeNodeValue.Partial:
+        for validator in BinaryTreeNodeValue.Validators._post_validators:
             values = validator(values)
         return values
 

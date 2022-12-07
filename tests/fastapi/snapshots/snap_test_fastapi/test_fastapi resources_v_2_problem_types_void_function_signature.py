@@ -29,9 +29,8 @@ class VoidFunctionSignature(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[VoidFunctionSignature.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[VoidFunctionSignature.Validators._RootValidator]] = []
         _parameters_pre_validators: typing.ClassVar[
             typing.List[VoidFunctionSignature.Validators.ParametersValidator]
         ] = []
@@ -40,11 +39,15 @@ class VoidFunctionSignature(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]
-        ) -> typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> VoidFunctionSignature.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -60,7 +63,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
                     if pre:
-                        cls._parameters_post_validators.append(validator)
+                        cls._parameters_pre_validators.append(validator)
                     else:
                         cls._parameters_post_validators.append(validator)
                 return validator
@@ -73,9 +76,19 @@ class VoidFunctionSignature(pydantic.BaseModel):
             ) -> typing.List[Parameter]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: VoidFunctionSignature.Partial) -> VoidFunctionSignature.Partial:
-        for validator in VoidFunctionSignature.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: VoidFunctionSignature.Partial) -> VoidFunctionSignature.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: VoidFunctionSignature.Partial) -> VoidFunctionSignature.Partial:
+        for validator in VoidFunctionSignature.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: VoidFunctionSignature.Partial) -> VoidFunctionSignature.Partial:
+        for validator in VoidFunctionSignature.Validators._post_validators:
             values = validator(values)
         return values
 

@@ -33,11 +33,8 @@ class LightweightStackframeInformation(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[[LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial]
-            ]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[LightweightStackframeInformation.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[LightweightStackframeInformation.Validators._RootValidator]] = []
         _num_stack_frames_pre_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.NumStackFramesValidator]
         ] = []
@@ -52,14 +49,15 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial
-            ],
-        ) -> typing.Callable[[LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> LightweightStackframeInformation.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -86,12 +84,12 @@ class LightweightStackframeInformation(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "num_stack_frames":
                     if pre:
-                        cls._num_stack_frames_post_validators.append(validator)
+                        cls._num_stack_frames_pre_validators.append(validator)
                     else:
                         cls._num_stack_frames_post_validators.append(validator)
                 if field_name == "top_stack_frame_method_name":
                     if pre:
-                        cls._top_stack_frame_method_name_post_validators.append(validator)
+                        cls._top_stack_frame_method_name_pre_validators.append(validator)
                     else:
                         cls._top_stack_frame_method_name_post_validators.append(validator)
                 return validator
@@ -106,9 +104,25 @@ class LightweightStackframeInformation(pydantic.BaseModel):
             def __call__(self, __v: str, __values: LightweightStackframeInformation.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: LightweightStackframeInformation.Partial) -> LightweightStackframeInformation.Partial:
-        for validator in LightweightStackframeInformation.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: LightweightStackframeInformation.Partial
+            ) -> LightweightStackframeInformation.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(
+        cls, values: LightweightStackframeInformation.Partial
+    ) -> LightweightStackframeInformation.Partial:
+        for validator in LightweightStackframeInformation.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(
+        cls, values: LightweightStackframeInformation.Partial
+    ) -> LightweightStackframeInformation.Partial:
+        for validator in LightweightStackframeInformation.Validators._post_validators:
             values = validator(values)
         return values
 

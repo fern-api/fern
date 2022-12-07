@@ -36,9 +36,8 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[GradedTestCaseUpdate.Partial], GradedTestCaseUpdate.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators._RootValidator]] = []
         _test_case_id_pre_validators: typing.ClassVar[
             typing.List[GradedTestCaseUpdate.Validators.TestCaseIdValidator]
         ] = []
@@ -49,11 +48,15 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
         _grade_post_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators.GradeValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[GradedTestCaseUpdate.Partial], GradedTestCaseUpdate.Partial]
-        ) -> typing.Callable[[GradedTestCaseUpdate.Partial], GradedTestCaseUpdate.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GradedTestCaseUpdate.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -78,12 +81,12 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "test_case_id":
                     if pre:
-                        cls._test_case_id_post_validators.append(validator)
+                        cls._test_case_id_pre_validators.append(validator)
                     else:
                         cls._test_case_id_post_validators.append(validator)
                 if field_name == "grade":
                     if pre:
-                        cls._grade_post_validators.append(validator)
+                        cls._grade_pre_validators.append(validator)
                     else:
                         cls._grade_post_validators.append(validator)
                 return validator
@@ -98,9 +101,19 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
             def __call__(self, __v: TestCaseGrade, __values: GradedTestCaseUpdate.Partial) -> TestCaseGrade:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GradedTestCaseUpdate.Partial) -> GradedTestCaseUpdate.Partial:
-        for validator in GradedTestCaseUpdate.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: GradedTestCaseUpdate.Partial) -> GradedTestCaseUpdate.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GradedTestCaseUpdate.Partial) -> GradedTestCaseUpdate.Partial:
+        for validator in GradedTestCaseUpdate.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GradedTestCaseUpdate.Partial) -> GradedTestCaseUpdate.Partial:
+        for validator in GradedTestCaseUpdate.Validators._post_validators:
             values = validator(values)
         return values
 

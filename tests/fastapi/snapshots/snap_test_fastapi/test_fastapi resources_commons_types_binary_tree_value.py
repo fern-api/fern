@@ -36,20 +36,23 @@ class BinaryTreeValue(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[BinaryTreeValue.Partial], BinaryTreeValue.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators._RootValidator]] = []
         _root_pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.RootValidator]] = []
         _root_post_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.RootValidator]] = []
         _nodes_pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.NodesValidator]] = []
         _nodes_post_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.NodesValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[BinaryTreeValue.Partial], BinaryTreeValue.Partial]
-        ) -> typing.Callable[[BinaryTreeValue.Partial], BinaryTreeValue.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> BinaryTreeValue.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -70,12 +73,12 @@ class BinaryTreeValue(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "root":
                     if pre:
-                        cls._root_post_validators.append(validator)
+                        cls._root_pre_validators.append(validator)
                     else:
                         cls._root_post_validators.append(validator)
                 if field_name == "nodes":
                     if pre:
-                        cls._nodes_post_validators.append(validator)
+                        cls._nodes_pre_validators.append(validator)
                     else:
                         cls._nodes_post_validators.append(validator)
                 return validator
@@ -94,9 +97,19 @@ class BinaryTreeValue(pydantic.BaseModel):
             ) -> typing.Dict[NodeId, BinaryTreeNodeValue]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: BinaryTreeValue.Partial) -> BinaryTreeValue.Partial:
-        for validator in BinaryTreeValue.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: BinaryTreeValue.Partial) -> BinaryTreeValue.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: BinaryTreeValue.Partial) -> BinaryTreeValue.Partial:
+        for validator in BinaryTreeValue.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: BinaryTreeValue.Partial) -> BinaryTreeValue.Partial:
+        for validator in BinaryTreeValue.Validators._post_validators:
             values = validator(values)
         return values
 

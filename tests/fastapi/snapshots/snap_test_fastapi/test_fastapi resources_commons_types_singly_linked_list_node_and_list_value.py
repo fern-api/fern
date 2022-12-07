@@ -36,11 +36,8 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[[SinglyLinkedListNodeAndListValue.Partial], SinglyLinkedListNodeAndListValue.Partial]
-            ]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeAndListValue.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeAndListValue.Validators._RootValidator]] = []
         _node_id_pre_validators: typing.ClassVar[
             typing.List[SinglyLinkedListNodeAndListValue.Validators.NodeIdValidator]
         ] = []
@@ -55,14 +52,15 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [SinglyLinkedListNodeAndListValue.Partial], SinglyLinkedListNodeAndListValue.Partial
-            ],
-        ) -> typing.Callable[[SinglyLinkedListNodeAndListValue.Partial], SinglyLinkedListNodeAndListValue.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> SinglyLinkedListNodeAndListValue.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -89,12 +87,12 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "node_id":
                     if pre:
-                        cls._node_id_post_validators.append(validator)
+                        cls._node_id_pre_validators.append(validator)
                     else:
                         cls._node_id_post_validators.append(validator)
                 if field_name == "full_list":
                     if pre:
-                        cls._full_list_post_validators.append(validator)
+                        cls._full_list_pre_validators.append(validator)
                     else:
                         cls._full_list_post_validators.append(validator)
                 return validator
@@ -111,9 +109,25 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
             ) -> SinglyLinkedListValue:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: SinglyLinkedListNodeAndListValue.Partial) -> SinglyLinkedListNodeAndListValue.Partial:
-        for validator in SinglyLinkedListNodeAndListValue.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: SinglyLinkedListNodeAndListValue.Partial
+            ) -> SinglyLinkedListNodeAndListValue.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(
+        cls, values: SinglyLinkedListNodeAndListValue.Partial
+    ) -> SinglyLinkedListNodeAndListValue.Partial:
+        for validator in SinglyLinkedListNodeAndListValue.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(
+        cls, values: SinglyLinkedListNodeAndListValue.Partial
+    ) -> SinglyLinkedListNodeAndListValue.Partial:
+        for validator in SinglyLinkedListNodeAndListValue.Validators._post_validators:
             values = validator(values)
         return values
 

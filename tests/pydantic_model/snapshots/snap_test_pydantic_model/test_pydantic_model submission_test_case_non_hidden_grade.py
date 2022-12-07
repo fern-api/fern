@@ -48,9 +48,8 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._RootValidator]] = []
         _passed_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
         _actual_result_pre_validators: typing.ClassVar[
@@ -69,11 +68,15 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         _stdout_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]
-        ) -> typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestCaseNonHiddenGrade.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -117,22 +120,22 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "passed":
                     if pre:
-                        cls._passed_post_validators.append(validator)
+                        cls._passed_pre_validators.append(validator)
                     else:
                         cls._passed_post_validators.append(validator)
                 if field_name == "actual_result":
                     if pre:
-                        cls._actual_result_post_validators.append(validator)
+                        cls._actual_result_pre_validators.append(validator)
                     else:
                         cls._actual_result_post_validators.append(validator)
                 if field_name == "exception":
                     if pre:
-                        cls._exception_post_validators.append(validator)
+                        cls._exception_pre_validators.append(validator)
                     else:
                         cls._exception_post_validators.append(validator)
                 if field_name == "stdout":
                     if pre:
-                        cls._stdout_post_validators.append(validator)
+                        cls._stdout_pre_validators.append(validator)
                     else:
                         cls._stdout_post_validators.append(validator)
                 return validator
@@ -159,9 +162,19 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
             def __call__(self, __v: str, __values: TestCaseNonHiddenGrade.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
-        for validator in TestCaseNonHiddenGrade.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
+        for validator in TestCaseNonHiddenGrade.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
+        for validator in TestCaseNonHiddenGrade.Validators._post_validators:
             values = validator(values)
         return values
 

@@ -55,9 +55,8 @@ class RecordingResponseNotification(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[RecordingResponseNotification.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[RecordingResponseNotification.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.SubmissionIdValidator]
         ] = []
@@ -90,12 +89,15 @@ class RecordingResponseNotification(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial],
-        ) -> typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> RecordingResponseNotification.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -152,27 +154,27 @@ class RecordingResponseNotification(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
                     if pre:
-                        cls._submission_id_post_validators.append(validator)
+                        cls._submission_id_pre_validators.append(validator)
                     else:
                         cls._submission_id_post_validators.append(validator)
                 if field_name == "test_case_id":
                     if pre:
-                        cls._test_case_id_post_validators.append(validator)
+                        cls._test_case_id_pre_validators.append(validator)
                     else:
                         cls._test_case_id_post_validators.append(validator)
                 if field_name == "line_number":
                     if pre:
-                        cls._line_number_post_validators.append(validator)
+                        cls._line_number_pre_validators.append(validator)
                     else:
                         cls._line_number_post_validators.append(validator)
                 if field_name == "lightweight_stack_info":
                     if pre:
-                        cls._lightweight_stack_info_post_validators.append(validator)
+                        cls._lightweight_stack_info_pre_validators.append(validator)
                     else:
                         cls._lightweight_stack_info_post_validators.append(validator)
                 if field_name == "traced_file":
                     if pre:
-                        cls._traced_file_post_validators.append(validator)
+                        cls._traced_file_pre_validators.append(validator)
                     else:
                         cls._traced_file_post_validators.append(validator)
                 return validator
@@ -205,9 +207,21 @@ class RecordingResponseNotification(pydantic.BaseModel):
             ) -> typing.Optional[TracedFile]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: RecordingResponseNotification.Partial) -> RecordingResponseNotification.Partial:
-        for validator in RecordingResponseNotification.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: RecordingResponseNotification.Partial
+            ) -> RecordingResponseNotification.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: RecordingResponseNotification.Partial) -> RecordingResponseNotification.Partial:
+        for validator in RecordingResponseNotification.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: RecordingResponseNotification.Partial) -> RecordingResponseNotification.Partial:
+        for validator in RecordingResponseNotification.Validators._post_validators:
             values = validator(values)
         return values
 

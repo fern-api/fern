@@ -41,11 +41,8 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[[GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial]
-            ]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GetExecutionSessionStateResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GetExecutionSessionStateResponse.Validators._RootValidator]] = []
         _states_pre_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.StatesValidator]
         ] = []
@@ -66,14 +63,15 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial
-            ],
-        ) -> typing.Callable[[GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GetExecutionSessionStateResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -110,17 +108,17 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "states":
                     if pre:
-                        cls._states_post_validators.append(validator)
+                        cls._states_pre_validators.append(validator)
                     else:
                         cls._states_post_validators.append(validator)
                 if field_name == "num_warming_instances":
                     if pre:
-                        cls._num_warming_instances_post_validators.append(validator)
+                        cls._num_warming_instances_pre_validators.append(validator)
                     else:
                         cls._num_warming_instances_post_validators.append(validator)
                 if field_name == "warming_session_ids":
                     if pre:
-                        cls._warming_session_ids_post_validators.append(validator)
+                        cls._warming_session_ids_pre_validators.append(validator)
                     else:
                         cls._warming_session_ids_post_validators.append(validator)
                 return validator
@@ -145,9 +143,25 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
             ) -> typing.List[str]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GetExecutionSessionStateResponse.Partial) -> GetExecutionSessionStateResponse.Partial:
-        for validator in GetExecutionSessionStateResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: GetExecutionSessionStateResponse.Partial
+            ) -> GetExecutionSessionStateResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(
+        cls, values: GetExecutionSessionStateResponse.Partial
+    ) -> GetExecutionSessionStateResponse.Partial:
+        for validator in GetExecutionSessionStateResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(
+        cls, values: GetExecutionSessionStateResponse.Partial
+    ) -> GetExecutionSessionStateResponse.Partial:
+        for validator in GetExecutionSessionStateResponse.Validators._post_validators:
             values = validator(values)
         return values
 

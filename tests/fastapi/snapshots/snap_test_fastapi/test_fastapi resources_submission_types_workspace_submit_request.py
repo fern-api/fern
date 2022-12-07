@@ -49,9 +49,8 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[WorkspaceSubmitRequest.Partial], WorkspaceSubmitRequest.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[WorkspaceSubmitRequest.Validators.SubmissionIdValidator]
         ] = []
@@ -72,11 +71,15 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         _user_id_post_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.UserIdValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[WorkspaceSubmitRequest.Partial], WorkspaceSubmitRequest.Partial]
-        ) -> typing.Callable[[WorkspaceSubmitRequest.Partial], WorkspaceSubmitRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> WorkspaceSubmitRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -121,22 +124,22 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
                     if pre:
-                        cls._submission_id_post_validators.append(validator)
+                        cls._submission_id_pre_validators.append(validator)
                     else:
                         cls._submission_id_post_validators.append(validator)
                 if field_name == "language":
                     if pre:
-                        cls._language_post_validators.append(validator)
+                        cls._language_pre_validators.append(validator)
                     else:
                         cls._language_post_validators.append(validator)
                 if field_name == "submission_files":
                     if pre:
-                        cls._submission_files_post_validators.append(validator)
+                        cls._submission_files_pre_validators.append(validator)
                     else:
                         cls._submission_files_post_validators.append(validator)
                 if field_name == "user_id":
                     if pre:
-                        cls._user_id_post_validators.append(validator)
+                        cls._user_id_pre_validators.append(validator)
                     else:
                         cls._user_id_post_validators.append(validator)
                 return validator
@@ -163,9 +166,19 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
             ) -> typing.Optional[str]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: WorkspaceSubmitRequest.Partial) -> WorkspaceSubmitRequest.Partial:
-        for validator in WorkspaceSubmitRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: WorkspaceSubmitRequest.Partial) -> WorkspaceSubmitRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: WorkspaceSubmitRequest.Partial) -> WorkspaceSubmitRequest.Partial:
+        for validator in WorkspaceSubmitRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: WorkspaceSubmitRequest.Partial) -> WorkspaceSubmitRequest.Partial:
+        for validator in WorkspaceSubmitRequest.Validators._post_validators:
             values = validator(values)
         return values
 

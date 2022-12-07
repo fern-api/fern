@@ -49,9 +49,8 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators._RootValidator]] = []
         _template_id_pre_validators: typing.ClassVar[
             typing.List[BasicTestCaseTemplate.Validators.TemplateIdValidator]
         ] = []
@@ -74,11 +73,15 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]
-        ) -> typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> BasicTestCaseTemplate.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -123,22 +126,22 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template_id":
                     if pre:
-                        cls._template_id_post_validators.append(validator)
+                        cls._template_id_pre_validators.append(validator)
                     else:
                         cls._template_id_post_validators.append(validator)
                 if field_name == "name":
                     if pre:
-                        cls._name_post_validators.append(validator)
+                        cls._name_pre_validators.append(validator)
                     else:
                         cls._name_post_validators.append(validator)
                 if field_name == "description":
                     if pre:
-                        cls._description_post_validators.append(validator)
+                        cls._description_pre_validators.append(validator)
                     else:
                         cls._description_post_validators.append(validator)
                 if field_name == "expected_value_parameter_id":
                     if pre:
-                        cls._expected_value_parameter_id_post_validators.append(validator)
+                        cls._expected_value_parameter_id_pre_validators.append(validator)
                     else:
                         cls._expected_value_parameter_id_post_validators.append(validator)
                 return validator
@@ -163,9 +166,19 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
             def __call__(self, __v: ParameterId, __values: BasicTestCaseTemplate.Partial) -> ParameterId:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: BasicTestCaseTemplate.Partial) -> BasicTestCaseTemplate.Partial:
-        for validator in BasicTestCaseTemplate.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: BasicTestCaseTemplate.Partial) -> BasicTestCaseTemplate.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: BasicTestCaseTemplate.Partial) -> BasicTestCaseTemplate.Partial:
+        for validator in BasicTestCaseTemplate.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: BasicTestCaseTemplate.Partial) -> BasicTestCaseTemplate.Partial:
+        for validator in BasicTestCaseTemplate.Validators._post_validators:
             values = validator(values)
         return values
 

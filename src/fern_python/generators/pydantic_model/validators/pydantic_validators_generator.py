@@ -34,7 +34,8 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
         self._add_validators_to_validators_class(validators_class=validators_class)
 
     def _add_validators_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
-        self._root_validator_generator.add_class_var_to_validators_class(validators_class=validators_class)
+        for pre in [True, False]:
+            self._root_validator_generator.add_class_var_to_validators_class(validators_class=validators_class, pre=pre)
 
         for generator in self._field_validator_generators:
             for pre in [True, False]:
@@ -46,6 +47,8 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
             self._add_field_validator_decorator_to_validators_class(validators_class=validators_class)
             for generator in self._field_validator_generators:
                 validators_class.add_class(declaration=generator.get_protocol_declaration())
+
+        validators_class.add_class(declaration=self._root_validator_generator.get_protocol_declaration())
 
     def _add_field_validator_decorator_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
         validators_class.add_method(
@@ -113,7 +116,7 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
             function_definition=AST.Reference(
                 qualified_name_excluding_import=(
                     "cls",
-                    generator.get_validator_class_var(False),
+                    generator.get_validator_class_var(pre),
                     "append",
                 )
             ),

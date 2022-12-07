@@ -29,7 +29,8 @@ class InternalError(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[InternalError.Partial], InternalError.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[InternalError.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[InternalError.Validators._RootValidator]] = []
         _exception_info_pre_validators: typing.ClassVar[
             typing.List[InternalError.Validators.ExceptionInfoValidator]
         ] = []
@@ -38,11 +39,15 @@ class InternalError(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[InternalError.Partial], InternalError.Partial]
-        ) -> typing.Callable[[InternalError.Partial], InternalError.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> InternalError.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -58,7 +63,7 @@ class InternalError(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_info":
                     if pre:
-                        cls._exception_info_post_validators.append(validator)
+                        cls._exception_info_pre_validators.append(validator)
                     else:
                         cls._exception_info_post_validators.append(validator)
                 return validator
@@ -69,9 +74,19 @@ class InternalError(pydantic.BaseModel):
             def __call__(self, __v: ExceptionInfo, __values: InternalError.Partial) -> ExceptionInfo:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: InternalError.Partial) -> InternalError.Partial:
-        for validator in InternalError.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: InternalError.Partial) -> InternalError.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: InternalError.Partial) -> InternalError.Partial:
+        for validator in InternalError.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: InternalError.Partial) -> InternalError.Partial:
+        for validator in InternalError.Validators._post_validators:
             values = validator(values)
         return values
 

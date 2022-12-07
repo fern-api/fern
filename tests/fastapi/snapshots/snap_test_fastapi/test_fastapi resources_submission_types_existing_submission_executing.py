@@ -29,9 +29,8 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[ExistingSubmissionExecuting.Partial], ExistingSubmissionExecuting.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[ExistingSubmissionExecuting.Validators.SubmissionIdValidator]
         ] = []
@@ -40,11 +39,15 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ExistingSubmissionExecuting.Partial], ExistingSubmissionExecuting.Partial]
-        ) -> typing.Callable[[ExistingSubmissionExecuting.Partial], ExistingSubmissionExecuting.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ExistingSubmissionExecuting.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -61,7 +64,7 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
                     if pre:
-                        cls._submission_id_post_validators.append(validator)
+                        cls._submission_id_pre_validators.append(validator)
                     else:
                         cls._submission_id_post_validators.append(validator)
                 return validator
@@ -72,9 +75,19 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
             def __call__(self, __v: SubmissionId, __values: ExistingSubmissionExecuting.Partial) -> SubmissionId:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
-        for validator in ExistingSubmissionExecuting.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
+        for validator in ExistingSubmissionExecuting.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
+        for validator in ExistingSubmissionExecuting.Validators._post_validators:
             values = validator(values)
         return values
 

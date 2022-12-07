@@ -89,7 +89,8 @@ class ProblemInfo(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemInfo.Partial], ProblemInfo.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators._RootValidator]] = []
         _problem_id_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemIdValidator]] = []
         _problem_id_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemIdValidator]] = []
         _problem_description_pre_validators: typing.ClassVar[
@@ -124,11 +125,15 @@ class ProblemInfo(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ProblemInfo.Partial], ProblemInfo.Partial]
-        ) -> typing.Callable[[ProblemInfo.Partial], ProblemInfo.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ProblemInfo.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -216,52 +221,52 @@ class ProblemInfo(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
                     if pre:
-                        cls._problem_id_post_validators.append(validator)
+                        cls._problem_id_pre_validators.append(validator)
                     else:
                         cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_description":
                     if pre:
-                        cls._problem_description_post_validators.append(validator)
+                        cls._problem_description_pre_validators.append(validator)
                     else:
                         cls._problem_description_post_validators.append(validator)
                 if field_name == "problem_name":
                     if pre:
-                        cls._problem_name_post_validators.append(validator)
+                        cls._problem_name_pre_validators.append(validator)
                     else:
                         cls._problem_name_post_validators.append(validator)
                 if field_name == "problem_version":
                     if pre:
-                        cls._problem_version_post_validators.append(validator)
+                        cls._problem_version_pre_validators.append(validator)
                     else:
                         cls._problem_version_post_validators.append(validator)
                 if field_name == "files":
                     if pre:
-                        cls._files_post_validators.append(validator)
+                        cls._files_pre_validators.append(validator)
                     else:
                         cls._files_post_validators.append(validator)
                 if field_name == "input_params":
                     if pre:
-                        cls._input_params_post_validators.append(validator)
+                        cls._input_params_pre_validators.append(validator)
                     else:
                         cls._input_params_post_validators.append(validator)
                 if field_name == "output_type":
                     if pre:
-                        cls._output_type_post_validators.append(validator)
+                        cls._output_type_pre_validators.append(validator)
                     else:
                         cls._output_type_post_validators.append(validator)
                 if field_name == "testcases":
                     if pre:
-                        cls._testcases_post_validators.append(validator)
+                        cls._testcases_pre_validators.append(validator)
                     else:
                         cls._testcases_post_validators.append(validator)
                 if field_name == "method_name":
                     if pre:
-                        cls._method_name_post_validators.append(validator)
+                        cls._method_name_pre_validators.append(validator)
                     else:
                         cls._method_name_post_validators.append(validator)
                 if field_name == "supports_custom_test_cases":
                     if pre:
-                        cls._supports_custom_test_cases_post_validators.append(validator)
+                        cls._supports_custom_test_cases_pre_validators.append(validator)
                     else:
                         cls._supports_custom_test_cases_post_validators.append(validator)
                 return validator
@@ -314,9 +319,19 @@ class ProblemInfo(pydantic.BaseModel):
             def __call__(self, __v: bool, __values: ProblemInfo.Partial) -> bool:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ProblemInfo.Partial) -> ProblemInfo.Partial:
-        for validator in ProblemInfo.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ProblemInfo.Partial) -> ProblemInfo.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ProblemInfo.Partial) -> ProblemInfo.Partial:
+        for validator in ProblemInfo.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ProblemInfo.Partial) -> ProblemInfo.Partial:
+        for validator in ProblemInfo.Validators._post_validators:
             values = validator(values)
         return values
 

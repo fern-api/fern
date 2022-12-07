@@ -27,7 +27,8 @@ class DebugMapValue(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[DebugMapValue.Partial], DebugMapValue.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._RootValidator]] = []
         _key_value_pairs_pre_validators: typing.ClassVar[
             typing.List[DebugMapValue.Validators.KeyValuePairsValidator]
         ] = []
@@ -36,11 +37,15 @@ class DebugMapValue(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[DebugMapValue.Partial], DebugMapValue.Partial]
-        ) -> typing.Callable[[DebugMapValue.Partial], DebugMapValue.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> DebugMapValue.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -56,7 +61,7 @@ class DebugMapValue(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key_value_pairs":
                     if pre:
-                        cls._key_value_pairs_post_validators.append(validator)
+                        cls._key_value_pairs_pre_validators.append(validator)
                     else:
                         cls._key_value_pairs_post_validators.append(validator)
                 return validator
@@ -69,9 +74,19 @@ class DebugMapValue(pydantic.BaseModel):
             ) -> typing.List[DebugKeyValuePairs]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: DebugMapValue.Partial) -> DebugMapValue.Partial:
-        for validator in DebugMapValue.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: DebugMapValue.Partial) -> DebugMapValue.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: DebugMapValue.Partial) -> DebugMapValue.Partial:
+        for validator in DebugMapValue.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: DebugMapValue.Partial) -> DebugMapValue.Partial:
+        for validator in DebugMapValue.Validators._post_validators:
             values = validator(values)
         return values
 

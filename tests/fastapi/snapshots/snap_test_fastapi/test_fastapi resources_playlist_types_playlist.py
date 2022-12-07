@@ -37,18 +37,23 @@ class Playlist(PlaylistCreateRequest):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[Playlist.Partial], Playlist.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[Playlist.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Playlist.Validators._RootValidator]] = []
         _playlist_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
         _playlist_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
         _owner_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
         _owner_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[Playlist.Partial], Playlist.Partial]
-        ) -> typing.Callable[[Playlist.Partial], Playlist.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> Playlist.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -69,12 +74,12 @@ class Playlist(PlaylistCreateRequest):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "playlist_id":
                     if pre:
-                        cls._playlist_id_post_validators.append(validator)
+                        cls._playlist_id_pre_validators.append(validator)
                     else:
                         cls._playlist_id_post_validators.append(validator)
                 if field_name == "owner_id":
                     if pre:
-                        cls._owner_id_post_validators.append(validator)
+                        cls._owner_id_pre_validators.append(validator)
                     else:
                         cls._owner_id_post_validators.append(validator)
                 return validator
@@ -89,9 +94,19 @@ class Playlist(PlaylistCreateRequest):
             def __call__(self, __v: UserId, __values: Playlist.Partial) -> UserId:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: Playlist.Partial) -> Playlist.Partial:
-        for validator in Playlist.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: Playlist.Partial) -> Playlist.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: Playlist.Partial) -> Playlist.Partial:
+        for validator in Playlist.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: Playlist.Partial) -> Playlist.Partial:
+        for validator in Playlist.Validators._post_validators:
             values = validator(values)
         return values
 

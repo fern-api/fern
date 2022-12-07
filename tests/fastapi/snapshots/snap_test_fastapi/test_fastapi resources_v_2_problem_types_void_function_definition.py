@@ -36,9 +36,8 @@ class VoidFunctionDefinition(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators._RootValidator]] = []
         _parameters_pre_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinition.Validators.ParametersValidator]
         ] = []
@@ -49,11 +48,15 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         _code_post_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]
-        ) -> typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> VoidFunctionDefinition.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -79,12 +82,12 @@ class VoidFunctionDefinition(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
                     if pre:
-                        cls._parameters_post_validators.append(validator)
+                        cls._parameters_pre_validators.append(validator)
                     else:
                         cls._parameters_post_validators.append(validator)
                 if field_name == "code":
                     if pre:
-                        cls._code_post_validators.append(validator)
+                        cls._code_pre_validators.append(validator)
                     else:
                         cls._code_post_validators.append(validator)
                 return validator
@@ -103,9 +106,19 @@ class VoidFunctionDefinition(pydantic.BaseModel):
             ) -> FunctionImplementationForMultipleLanguages:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: VoidFunctionDefinition.Partial) -> VoidFunctionDefinition.Partial:
-        for validator in VoidFunctionDefinition.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: VoidFunctionDefinition.Partial) -> VoidFunctionDefinition.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: VoidFunctionDefinition.Partial) -> VoidFunctionDefinition.Partial:
+        for validator in VoidFunctionDefinition.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: VoidFunctionDefinition.Partial) -> VoidFunctionDefinition.Partial:
+        for validator in VoidFunctionDefinition.Validators._post_validators:
             values = validator(values)
         return values
 

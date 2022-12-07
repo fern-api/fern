@@ -163,7 +163,7 @@ class PydanticModel:
         )
 
     def add_root_validator(
-        self, *, validator_name: str, body: AST.CodeWriter, should_use_partial_type: bool = False
+        self, *, validator_name: str, body: AST.CodeWriter, should_use_partial_type: bool = False, pre: bool = False
     ) -> None:
         value_type = (
             AST.TypeHint(type=self.get_reference_to_partial_class())
@@ -182,7 +182,7 @@ class PydanticModel:
                     return_type=value_type,
                 ),
                 body=body,
-                decorators=[Pydantic.root_validator],
+                decorators=[Pydantic.root_validator(pre=pre)],
             ),
         )
 

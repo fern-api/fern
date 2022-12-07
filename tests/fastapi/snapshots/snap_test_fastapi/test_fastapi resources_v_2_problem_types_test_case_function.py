@@ -69,7 +69,7 @@ class TestCaseFunction(pydantic.BaseModel):
         ) -> None:
             cls._validators.append(validator)
 
-    @pydantic.root_validator
+    @pydantic.root_validator(pre=False)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(
             typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom], values.get("__root__")

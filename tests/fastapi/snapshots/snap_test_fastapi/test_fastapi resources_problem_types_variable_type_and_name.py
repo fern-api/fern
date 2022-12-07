@@ -35,9 +35,8 @@ class VariableTypeAndName(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[VariableTypeAndName.Partial], VariableTypeAndName.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators._RootValidator]] = []
         _variable_type_pre_validators: typing.ClassVar[
             typing.List[VariableTypeAndName.Validators.VariableTypeValidator]
         ] = []
@@ -48,11 +47,15 @@ class VariableTypeAndName(pydantic.BaseModel):
         _name_post_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators.NameValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[VariableTypeAndName.Partial], VariableTypeAndName.Partial]
-        ) -> typing.Callable[[VariableTypeAndName.Partial], VariableTypeAndName.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> VariableTypeAndName.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -77,12 +80,12 @@ class VariableTypeAndName(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "variable_type":
                     if pre:
-                        cls._variable_type_post_validators.append(validator)
+                        cls._variable_type_pre_validators.append(validator)
                     else:
                         cls._variable_type_post_validators.append(validator)
                 if field_name == "name":
                     if pre:
-                        cls._name_post_validators.append(validator)
+                        cls._name_pre_validators.append(validator)
                     else:
                         cls._name_post_validators.append(validator)
                 return validator
@@ -97,9 +100,19 @@ class VariableTypeAndName(pydantic.BaseModel):
             def __call__(self, __v: str, __values: VariableTypeAndName.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
-        for validator in VariableTypeAndName.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
+        for validator in VariableTypeAndName.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
+        for validator in VariableTypeAndName.Validators._post_validators:
             values = validator(values)
         return values
 

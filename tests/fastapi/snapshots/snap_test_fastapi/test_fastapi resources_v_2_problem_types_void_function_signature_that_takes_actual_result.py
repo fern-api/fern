@@ -36,13 +36,11 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[
-                    [VoidFunctionSignatureThatTakesActualResult.Partial],
-                    VoidFunctionSignatureThatTakesActualResult.Partial,
-                ]
-            ]
+        _pre_validators: typing.ClassVar[
+            typing.List[VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator]
+        ] = []
+        _post_validators: typing.ClassVar[
+            typing.List[VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator]
         ] = []
         _parameters_pre_validators: typing.ClassVar[
             typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator]
@@ -58,16 +56,15 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [VoidFunctionSignatureThatTakesActualResult.Partial], VoidFunctionSignatureThatTakesActualResult.Partial
-            ],
-        ) -> typing.Callable[
-            [VoidFunctionSignatureThatTakesActualResult.Partial], VoidFunctionSignatureThatTakesActualResult.Partial
-        ]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -94,12 +91,12 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
                     if pre:
-                        cls._parameters_post_validators.append(validator)
+                        cls._parameters_pre_validators.append(validator)
                     else:
                         cls._parameters_post_validators.append(validator)
                 if field_name == "actual_result_type":
                     if pre:
-                        cls._actual_result_type_post_validators.append(validator)
+                        cls._actual_result_type_pre_validators.append(validator)
                     else:
                         cls._actual_result_type_post_validators.append(validator)
                 return validator
@@ -118,11 +115,25 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
             ) -> VariableType:
                 ...
 
-    @pydantic.root_validator
-    def _validate(
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: VoidFunctionSignatureThatTakesActualResult.Partial
+            ) -> VoidFunctionSignatureThatTakesActualResult.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(
         cls, values: VoidFunctionSignatureThatTakesActualResult.Partial
     ) -> VoidFunctionSignatureThatTakesActualResult.Partial:
-        for validator in VoidFunctionSignatureThatTakesActualResult.Validators._validators:
+        for validator in VoidFunctionSignatureThatTakesActualResult.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(
+        cls, values: VoidFunctionSignatureThatTakesActualResult.Partial
+    ) -> VoidFunctionSignatureThatTakesActualResult.Partial:
+        for validator in VoidFunctionSignatureThatTakesActualResult.Validators._post_validators:
             values = validator(values)
         return values
 

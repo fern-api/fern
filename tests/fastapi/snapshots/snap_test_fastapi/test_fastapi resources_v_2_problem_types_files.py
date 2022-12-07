@@ -29,16 +29,21 @@ class Files(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[Files.Partial], Files.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[Files.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Files.Validators._RootValidator]] = []
         _files_pre_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
         _files_post_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[Files.Partial], Files.Partial]
-        ) -> typing.Callable[[Files.Partial], Files.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> Files.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -52,7 +57,7 @@ class Files(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
                     if pre:
-                        cls._files_post_validators.append(validator)
+                        cls._files_pre_validators.append(validator)
                     else:
                         cls._files_post_validators.append(validator)
                 return validator
@@ -63,9 +68,19 @@ class Files(pydantic.BaseModel):
             def __call__(self, __v: typing.List[FileInfoV2], __values: Files.Partial) -> typing.List[FileInfoV2]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: Files.Partial) -> Files.Partial:
-        for validator in Files.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: Files.Partial) -> Files.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: Files.Partial) -> Files.Partial:
+        for validator in Files.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: Files.Partial) -> Files.Partial:
+        for validator in Files.Validators._post_validators:
             values = validator(values)
         return values
 

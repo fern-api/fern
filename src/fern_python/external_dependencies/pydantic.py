@@ -24,7 +24,12 @@ class Pydantic:
     class Extra:
         forbid = AST.Expression(_export("Extra", "forbid"))
 
-    root_validator = AST.ReferenceNode(_export("root_validator"))
+    @staticmethod
+    def root_validator(pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=_export("root_validator"),
+            args=[AST.Expression(expression=f'pre={"True" if pre else "False"}')],
+        )
 
     @staticmethod
     def validator(field_name: str, pre: bool = False) -> AST.FunctionInvocation:

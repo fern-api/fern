@@ -51,7 +51,7 @@ class Test(pydantic.BaseModel):
         ) -> None:
             cls._validators.append(validator)
 
-    @pydantic.root_validator
+    @pydantic.root_validator(pre=False)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(typing.Union[_Test.And, _Test.Or], values.get("__root__"))
         for validator in Test.Validators._validators:

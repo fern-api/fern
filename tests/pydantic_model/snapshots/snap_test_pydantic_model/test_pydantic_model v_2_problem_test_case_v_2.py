@@ -51,7 +51,8 @@ class TestCaseV2(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[TestCaseV2.Partial], TestCaseV2.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseV2.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestCaseV2.Validators._RootValidator]] = []
         _metadata_pre_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.MetadataValidator]] = []
         _metadata_post_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.MetadataValidator]] = []
         _implementation_pre_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.ImplementationValidator]] = []
@@ -64,11 +65,15 @@ class TestCaseV2(pydantic.BaseModel):
         _expects_post_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.ExpectsValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestCaseV2.Partial], TestCaseV2.Partial]
-        ) -> typing.Callable[[TestCaseV2.Partial], TestCaseV2.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestCaseV2.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -105,22 +110,22 @@ class TestCaseV2(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "metadata":
                     if pre:
-                        cls._metadata_post_validators.append(validator)
+                        cls._metadata_pre_validators.append(validator)
                     else:
                         cls._metadata_post_validators.append(validator)
                 if field_name == "implementation":
                     if pre:
-                        cls._implementation_post_validators.append(validator)
+                        cls._implementation_pre_validators.append(validator)
                     else:
                         cls._implementation_post_validators.append(validator)
                 if field_name == "arguments":
                     if pre:
-                        cls._arguments_post_validators.append(validator)
+                        cls._arguments_pre_validators.append(validator)
                     else:
                         cls._arguments_post_validators.append(validator)
                 if field_name == "expects":
                     if pre:
-                        cls._expects_post_validators.append(validator)
+                        cls._expects_pre_validators.append(validator)
                     else:
                         cls._expects_post_validators.append(validator)
                 return validator
@@ -149,9 +154,19 @@ class TestCaseV2(pydantic.BaseModel):
             ) -> typing.Optional[TestCaseExpects]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestCaseV2.Partial) -> TestCaseV2.Partial:
-        for validator in TestCaseV2.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestCaseV2.Partial) -> TestCaseV2.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestCaseV2.Partial) -> TestCaseV2.Partial:
+        for validator in TestCaseV2.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestCaseV2.Partial) -> TestCaseV2.Partial:
+        for validator in TestCaseV2.Validators._post_validators:
             values = validator(values)
         return values
 

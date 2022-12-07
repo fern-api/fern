@@ -29,9 +29,8 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._RootValidator]] = []
         _updates_pre_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]
         ] = []
@@ -40,11 +39,15 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]
-        ) -> typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> WorkspaceSubmissionStatusV2.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -61,7 +64,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "updates":
                     if pre:
-                        cls._updates_post_validators.append(validator)
+                        cls._updates_pre_validators.append(validator)
                     else:
                         cls._updates_post_validators.append(validator)
                 return validator
@@ -74,9 +77,19 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
             ) -> typing.List[WorkspaceSubmissionUpdate]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: WorkspaceSubmissionStatusV2.Partial) -> WorkspaceSubmissionStatusV2.Partial:
-        for validator in WorkspaceSubmissionStatusV2.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: WorkspaceSubmissionStatusV2.Partial) -> WorkspaceSubmissionStatusV2.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: WorkspaceSubmissionStatusV2.Partial) -> WorkspaceSubmissionStatusV2.Partial:
+        for validator in WorkspaceSubmissionStatusV2.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: WorkspaceSubmissionStatusV2.Partial) -> WorkspaceSubmissionStatusV2.Partial:
+        for validator in WorkspaceSubmissionStatusV2.Validators._post_validators:
             values = validator(values)
         return values
 

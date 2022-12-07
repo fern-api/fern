@@ -36,11 +36,8 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[[GetGeneratedTestCaseFileRequest.Partial], GetGeneratedTestCaseFileRequest.Partial]
-            ]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GetGeneratedTestCaseFileRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GetGeneratedTestCaseFileRequest.Validators._RootValidator]] = []
         _template_pre_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseFileRequest.Validators.TemplateValidator]
         ] = []
@@ -55,14 +52,15 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [GetGeneratedTestCaseFileRequest.Partial], GetGeneratedTestCaseFileRequest.Partial
-            ],
-        ) -> typing.Callable[[GetGeneratedTestCaseFileRequest.Partial], GetGeneratedTestCaseFileRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GetGeneratedTestCaseFileRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -89,12 +87,12 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template":
                     if pre:
-                        cls._template_post_validators.append(validator)
+                        cls._template_pre_validators.append(validator)
                     else:
                         cls._template_post_validators.append(validator)
                 if field_name == "test_case":
                     if pre:
-                        cls._test_case_post_validators.append(validator)
+                        cls._test_case_pre_validators.append(validator)
                     else:
                         cls._test_case_post_validators.append(validator)
                 return validator
@@ -111,9 +109,21 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
             def __call__(self, __v: TestCaseV2, __values: GetGeneratedTestCaseFileRequest.Partial) -> TestCaseV2:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GetGeneratedTestCaseFileRequest.Partial) -> GetGeneratedTestCaseFileRequest.Partial:
-        for validator in GetGeneratedTestCaseFileRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: GetGeneratedTestCaseFileRequest.Partial
+            ) -> GetGeneratedTestCaseFileRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GetGeneratedTestCaseFileRequest.Partial) -> GetGeneratedTestCaseFileRequest.Partial:
+        for validator in GetGeneratedTestCaseFileRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GetGeneratedTestCaseFileRequest.Partial) -> GetGeneratedTestCaseFileRequest.Partial:
+        for validator in GetGeneratedTestCaseFileRequest.Validators._post_validators:
             values = validator(values)
         return values
 

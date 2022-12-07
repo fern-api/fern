@@ -30,9 +30,8 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GetBasicSolutionFileResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GetBasicSolutionFileResponse.Validators._RootValidator]] = []
         _solution_file_by_language_pre_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator]
         ] = []
@@ -41,12 +40,15 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial],
-        ) -> typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GetBasicSolutionFileResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -63,7 +65,7 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "solution_file_by_language":
                     if pre:
-                        cls._solution_file_by_language_post_validators.append(validator)
+                        cls._solution_file_by_language_pre_validators.append(validator)
                     else:
                         cls._solution_file_by_language_post_validators.append(validator)
                 return validator
@@ -76,9 +78,19 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
             ) -> typing.Dict[Language, FileInfoV2]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GetBasicSolutionFileResponse.Partial) -> GetBasicSolutionFileResponse.Partial:
-        for validator in GetBasicSolutionFileResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: GetBasicSolutionFileResponse.Partial) -> GetBasicSolutionFileResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GetBasicSolutionFileResponse.Partial) -> GetBasicSolutionFileResponse.Partial:
+        for validator in GetBasicSolutionFileResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GetBasicSolutionFileResponse.Partial) -> GetBasicSolutionFileResponse.Partial:
+        for validator in GetBasicSolutionFileResponse.Validators._post_validators:
             values = validator(values)
         return values
 

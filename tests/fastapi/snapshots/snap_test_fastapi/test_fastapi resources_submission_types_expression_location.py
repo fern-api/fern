@@ -33,20 +33,23 @@ class ExpressionLocation(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._RootValidator]] = []
         _start_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
         _start_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
         _offset_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
         _offset_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]
-        ) -> typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ExpressionLocation.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -71,12 +74,12 @@ class ExpressionLocation(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "start":
                     if pre:
-                        cls._start_post_validators.append(validator)
+                        cls._start_pre_validators.append(validator)
                     else:
                         cls._start_post_validators.append(validator)
                 if field_name == "offset":
                     if pre:
-                        cls._offset_post_validators.append(validator)
+                        cls._offset_pre_validators.append(validator)
                     else:
                         cls._offset_post_validators.append(validator)
                 return validator
@@ -91,9 +94,19 @@ class ExpressionLocation(pydantic.BaseModel):
             def __call__(self, __v: int, __values: ExpressionLocation.Partial) -> int:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ExpressionLocation.Partial) -> ExpressionLocation.Partial:
-        for validator in ExpressionLocation.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ExpressionLocation.Partial) -> ExpressionLocation.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ExpressionLocation.Partial) -> ExpressionLocation.Partial:
+        for validator in ExpressionLocation.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ExpressionLocation.Partial) -> ExpressionLocation.Partial:
+        for validator in ExpressionLocation.Validators._post_validators:
             values = validator(values)
         return values
 

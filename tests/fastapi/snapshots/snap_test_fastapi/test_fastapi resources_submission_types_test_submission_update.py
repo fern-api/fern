@@ -36,9 +36,8 @@ class TestSubmissionUpdate(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TestSubmissionUpdate.Partial], TestSubmissionUpdate.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TestSubmissionUpdate.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestSubmissionUpdate.Validators._RootValidator]] = []
         _update_time_pre_validators: typing.ClassVar[
             typing.List[TestSubmissionUpdate.Validators.UpdateTimeValidator]
         ] = []
@@ -53,11 +52,15 @@ class TestSubmissionUpdate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestSubmissionUpdate.Partial], TestSubmissionUpdate.Partial]
-        ) -> typing.Callable[[TestSubmissionUpdate.Partial], TestSubmissionUpdate.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestSubmissionUpdate.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -82,12 +85,12 @@ class TestSubmissionUpdate(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "update_time":
                     if pre:
-                        cls._update_time_post_validators.append(validator)
+                        cls._update_time_pre_validators.append(validator)
                     else:
                         cls._update_time_post_validators.append(validator)
                 if field_name == "update_info":
                     if pre:
-                        cls._update_info_post_validators.append(validator)
+                        cls._update_info_pre_validators.append(validator)
                     else:
                         cls._update_info_post_validators.append(validator)
                 return validator
@@ -104,9 +107,19 @@ class TestSubmissionUpdate(pydantic.BaseModel):
             ) -> TestSubmissionUpdateInfo:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestSubmissionUpdate.Partial) -> TestSubmissionUpdate.Partial:
-        for validator in TestSubmissionUpdate.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestSubmissionUpdate.Partial) -> TestSubmissionUpdate.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestSubmissionUpdate.Partial) -> TestSubmissionUpdate.Partial:
+        for validator in TestSubmissionUpdate.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestSubmissionUpdate.Partial) -> TestSubmissionUpdate.Partial:
+        for validator in TestSubmissionUpdate.Validators._post_validators:
             values = validator(values)
         return values
 

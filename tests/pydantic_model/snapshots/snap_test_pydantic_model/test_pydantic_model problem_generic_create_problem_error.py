@@ -39,9 +39,8 @@ class GenericCreateProblemError(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._RootValidator]] = []
         _message_pre_validators: typing.ClassVar[
             typing.List[GenericCreateProblemError.Validators.MessageValidator]
         ] = []
@@ -58,11 +57,15 @@ class GenericCreateProblemError(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]
-        ) -> typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GenericCreateProblemError.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -98,17 +101,17 @@ class GenericCreateProblemError(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "message":
                     if pre:
-                        cls._message_post_validators.append(validator)
+                        cls._message_pre_validators.append(validator)
                     else:
                         cls._message_post_validators.append(validator)
                 if field_name == "type":
                     if pre:
-                        cls._type_post_validators.append(validator)
+                        cls._type_pre_validators.append(validator)
                     else:
                         cls._type_post_validators.append(validator)
                 if field_name == "stacktrace":
                     if pre:
-                        cls._stacktrace_post_validators.append(validator)
+                        cls._stacktrace_pre_validators.append(validator)
                     else:
                         cls._stacktrace_post_validators.append(validator)
                 return validator
@@ -127,9 +130,19 @@ class GenericCreateProblemError(pydantic.BaseModel):
             def __call__(self, __v: str, __values: GenericCreateProblemError.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GenericCreateProblemError.Partial) -> GenericCreateProblemError.Partial:
-        for validator in GenericCreateProblemError.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: GenericCreateProblemError.Partial) -> GenericCreateProblemError.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GenericCreateProblemError.Partial) -> GenericCreateProblemError.Partial:
+        for validator in GenericCreateProblemError.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GenericCreateProblemError.Partial) -> GenericCreateProblemError.Partial:
+        for validator in GenericCreateProblemError.Validators._post_validators:
             values = validator(values)
         return values
 

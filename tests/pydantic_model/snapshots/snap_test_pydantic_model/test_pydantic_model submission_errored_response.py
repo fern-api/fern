@@ -36,9 +36,8 @@ class ErroredResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[ErroredResponse.Partial], ErroredResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[ErroredResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ErroredResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[ErroredResponse.Validators.SubmissionIdValidator]
         ] = []
@@ -49,11 +48,15 @@ class ErroredResponse(pydantic.BaseModel):
         _error_info_post_validators: typing.ClassVar[typing.List[ErroredResponse.Validators.ErrorInfoValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ErroredResponse.Partial], ErroredResponse.Partial]
-        ) -> typing.Callable[[ErroredResponse.Partial], ErroredResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ErroredResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -78,12 +81,12 @@ class ErroredResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
                     if pre:
-                        cls._submission_id_post_validators.append(validator)
+                        cls._submission_id_pre_validators.append(validator)
                     else:
                         cls._submission_id_post_validators.append(validator)
                 if field_name == "error_info":
                     if pre:
-                        cls._error_info_post_validators.append(validator)
+                        cls._error_info_pre_validators.append(validator)
                     else:
                         cls._error_info_post_validators.append(validator)
                 return validator
@@ -98,9 +101,19 @@ class ErroredResponse(pydantic.BaseModel):
             def __call__(self, __v: ErrorInfo, __values: ErroredResponse.Partial) -> ErrorInfo:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
-        for validator in ErroredResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ErroredResponse.Partial) -> ErroredResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
+        for validator in ErroredResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
+        for validator in ErroredResponse.Validators._post_validators:
             values = validator(values)
         return values
 

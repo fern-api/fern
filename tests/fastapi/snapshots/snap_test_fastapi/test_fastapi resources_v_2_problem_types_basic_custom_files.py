@@ -50,9 +50,8 @@ class BasicCustomFiles(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._RootValidator]] = []
         _method_name_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
         _method_name_post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
         _signature_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
@@ -71,11 +70,15 @@ class BasicCustomFiles(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]
-        ) -> typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> BasicCustomFiles.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -119,22 +122,22 @@ class BasicCustomFiles(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "method_name":
                     if pre:
-                        cls._method_name_post_validators.append(validator)
+                        cls._method_name_pre_validators.append(validator)
                     else:
                         cls._method_name_post_validators.append(validator)
                 if field_name == "signature":
                     if pre:
-                        cls._signature_post_validators.append(validator)
+                        cls._signature_pre_validators.append(validator)
                     else:
                         cls._signature_post_validators.append(validator)
                 if field_name == "additional_files":
                     if pre:
-                        cls._additional_files_post_validators.append(validator)
+                        cls._additional_files_pre_validators.append(validator)
                     else:
                         cls._additional_files_post_validators.append(validator)
                 if field_name == "basic_test_case_template":
                     if pre:
-                        cls._basic_test_case_template_post_validators.append(validator)
+                        cls._basic_test_case_template_pre_validators.append(validator)
                     else:
                         cls._basic_test_case_template_post_validators.append(validator)
                 return validator
@@ -161,9 +164,19 @@ class BasicCustomFiles(pydantic.BaseModel):
             def __call__(self, __v: BasicTestCaseTemplate, __values: BasicCustomFiles.Partial) -> BasicTestCaseTemplate:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
-        for validator in BasicCustomFiles.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
+        for validator in BasicCustomFiles.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
+        for validator in BasicCustomFiles.Validators._post_validators:
             values = validator(values)
         return values
 

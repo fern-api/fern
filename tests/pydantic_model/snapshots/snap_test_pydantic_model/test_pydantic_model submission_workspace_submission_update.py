@@ -36,9 +36,8 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionUpdate.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionUpdate.Validators._RootValidator]] = []
         _update_time_pre_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator]
         ] = []
@@ -53,11 +52,15 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]
-        ) -> typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> WorkspaceSubmissionUpdate.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -84,12 +87,12 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "update_time":
                     if pre:
-                        cls._update_time_post_validators.append(validator)
+                        cls._update_time_pre_validators.append(validator)
                     else:
                         cls._update_time_post_validators.append(validator)
                 if field_name == "update_info":
                     if pre:
-                        cls._update_info_post_validators.append(validator)
+                        cls._update_info_pre_validators.append(validator)
                     else:
                         cls._update_info_post_validators.append(validator)
                 return validator
@@ -106,9 +109,19 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
             ) -> WorkspaceSubmissionUpdateInfo:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
-        for validator in WorkspaceSubmissionUpdate.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
+        for validator in WorkspaceSubmissionUpdate.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
+        for validator in WorkspaceSubmissionUpdate.Validators._post_validators:
             values = validator(values)
         return values
 

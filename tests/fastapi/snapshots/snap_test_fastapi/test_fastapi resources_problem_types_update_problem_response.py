@@ -27,9 +27,8 @@ class UpdateProblemResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[UpdateProblemResponse.Partial], UpdateProblemResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[UpdateProblemResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[UpdateProblemResponse.Validators._RootValidator]] = []
         _problem_version_pre_validators: typing.ClassVar[
             typing.List[UpdateProblemResponse.Validators.ProblemVersionValidator]
         ] = []
@@ -38,11 +37,15 @@ class UpdateProblemResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[UpdateProblemResponse.Partial], UpdateProblemResponse.Partial]
-        ) -> typing.Callable[[UpdateProblemResponse.Partial], UpdateProblemResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> UpdateProblemResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -59,7 +62,7 @@ class UpdateProblemResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_version":
                     if pre:
-                        cls._problem_version_post_validators.append(validator)
+                        cls._problem_version_pre_validators.append(validator)
                     else:
                         cls._problem_version_post_validators.append(validator)
                 return validator
@@ -70,9 +73,19 @@ class UpdateProblemResponse(pydantic.BaseModel):
             def __call__(self, __v: int, __values: UpdateProblemResponse.Partial) -> int:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: UpdateProblemResponse.Partial) -> UpdateProblemResponse.Partial:
-        for validator in UpdateProblemResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: UpdateProblemResponse.Partial) -> UpdateProblemResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: UpdateProblemResponse.Partial) -> UpdateProblemResponse.Partial:
+        for validator in UpdateProblemResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: UpdateProblemResponse.Partial) -> UpdateProblemResponse.Partial:
+        for validator in UpdateProblemResponse.Validators._post_validators:
             values = validator(values)
         return values
 

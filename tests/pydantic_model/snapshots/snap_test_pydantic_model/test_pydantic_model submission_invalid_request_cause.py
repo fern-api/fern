@@ -121,7 +121,7 @@ class InvalidRequestCause(pydantic.BaseModel):
         ) -> None:
             cls._validators.append(validator)
 
-    @pydantic.root_validator
+    @pydantic.root_validator(pre=False)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(
             typing.Union[

@@ -36,12 +36,11 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[
-                    [TestCaseWithActualResultImplementation.Partial], TestCaseWithActualResultImplementation.Partial
-                ]
-            ]
+        _pre_validators: typing.ClassVar[
+            typing.List[TestCaseWithActualResultImplementation.Validators._RootValidator]
+        ] = []
+        _post_validators: typing.ClassVar[
+            typing.List[TestCaseWithActualResultImplementation.Validators._RootValidator]
         ] = []
         _get_actual_result_pre_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.GetActualResultValidator]
@@ -57,16 +56,15 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [TestCaseWithActualResultImplementation.Partial], TestCaseWithActualResultImplementation.Partial
-            ],
-        ) -> typing.Callable[
-            [TestCaseWithActualResultImplementation.Partial], TestCaseWithActualResultImplementation.Partial
-        ]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestCaseWithActualResultImplementation.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -93,12 +91,12 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "get_actual_result":
                     if pre:
-                        cls._get_actual_result_post_validators.append(validator)
+                        cls._get_actual_result_pre_validators.append(validator)
                     else:
                         cls._get_actual_result_post_validators.append(validator)
                 if field_name == "assert_correctness_check":
                     if pre:
-                        cls._assert_correctness_check_post_validators.append(validator)
+                        cls._assert_correctness_check_pre_validators.append(validator)
                     else:
                         cls._assert_correctness_check_post_validators.append(validator)
                 return validator
@@ -117,11 +115,25 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
             ) -> AssertCorrectnessCheck:
                 ...
 
-    @pydantic.root_validator
-    def _validate(
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: TestCaseWithActualResultImplementation.Partial
+            ) -> TestCaseWithActualResultImplementation.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(
         cls, values: TestCaseWithActualResultImplementation.Partial
     ) -> TestCaseWithActualResultImplementation.Partial:
-        for validator in TestCaseWithActualResultImplementation.Validators._validators:
+        for validator in TestCaseWithActualResultImplementation.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(
+        cls, values: TestCaseWithActualResultImplementation.Partial
+    ) -> TestCaseWithActualResultImplementation.Partial:
+        for validator in TestCaseWithActualResultImplementation.Validators._post_validators:
             values = validator(values)
         return values
 

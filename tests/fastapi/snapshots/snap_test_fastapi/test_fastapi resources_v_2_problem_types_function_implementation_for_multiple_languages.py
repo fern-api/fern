@@ -30,13 +30,11 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[
-                    [FunctionImplementationForMultipleLanguages.Partial],
-                    FunctionImplementationForMultipleLanguages.Partial,
-                ]
-            ]
+        _pre_validators: typing.ClassVar[
+            typing.List[FunctionImplementationForMultipleLanguages.Validators._RootValidator]
+        ] = []
+        _post_validators: typing.ClassVar[
+            typing.List[FunctionImplementationForMultipleLanguages.Validators._RootValidator]
         ] = []
         _code_by_language_pre_validators: typing.ClassVar[
             typing.List[FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator]
@@ -46,16 +44,15 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls,
-            validator: typing.Callable[
-                [FunctionImplementationForMultipleLanguages.Partial], FunctionImplementationForMultipleLanguages.Partial
-            ],
-        ) -> typing.Callable[
-            [FunctionImplementationForMultipleLanguages.Partial], FunctionImplementationForMultipleLanguages.Partial
-        ]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> FunctionImplementationForMultipleLanguages.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -72,7 +69,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "code_by_language":
                     if pre:
-                        cls._code_by_language_post_validators.append(validator)
+                        cls._code_by_language_pre_validators.append(validator)
                     else:
                         cls._code_by_language_post_validators.append(validator)
                 return validator
@@ -87,11 +84,25 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
             ) -> typing.Dict[Language, FunctionImplementation]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __values: FunctionImplementationForMultipleLanguages.Partial
+            ) -> FunctionImplementationForMultipleLanguages.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(
         cls, values: FunctionImplementationForMultipleLanguages.Partial
     ) -> FunctionImplementationForMultipleLanguages.Partial:
-        for validator in FunctionImplementationForMultipleLanguages.Validators._validators:
+        for validator in FunctionImplementationForMultipleLanguages.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(
+        cls, values: FunctionImplementationForMultipleLanguages.Partial
+    ) -> FunctionImplementationForMultipleLanguages.Partial:
+        for validator in FunctionImplementationForMultipleLanguages.Validators._post_validators:
             values = validator(values)
         return values
 

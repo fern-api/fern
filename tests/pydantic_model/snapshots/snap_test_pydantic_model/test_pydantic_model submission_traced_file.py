@@ -33,18 +33,23 @@ class TracedFile(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[TracedFile.Partial], TracedFile.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[TracedFile.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TracedFile.Validators._RootValidator]] = []
         _filename_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
         _filename_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
         _directory_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
         _directory_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TracedFile.Partial], TracedFile.Partial]
-        ) -> typing.Callable[[TracedFile.Partial], TracedFile.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TracedFile.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -65,12 +70,12 @@ class TracedFile(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "filename":
                     if pre:
-                        cls._filename_post_validators.append(validator)
+                        cls._filename_pre_validators.append(validator)
                     else:
                         cls._filename_post_validators.append(validator)
                 if field_name == "directory":
                     if pre:
-                        cls._directory_post_validators.append(validator)
+                        cls._directory_pre_validators.append(validator)
                     else:
                         cls._directory_post_validators.append(validator)
                 return validator
@@ -85,9 +90,19 @@ class TracedFile(pydantic.BaseModel):
             def __call__(self, __v: str, __values: TracedFile.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TracedFile.Partial) -> TracedFile.Partial:
-        for validator in TracedFile.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TracedFile.Partial) -> TracedFile.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TracedFile.Partial) -> TracedFile.Partial:
+        for validator in TracedFile.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TracedFile.Partial) -> TracedFile.Partial:
+        for validator in TracedFile.Validators._post_validators:
             values = validator(values)
         return values
 

@@ -42,9 +42,8 @@ class GeneratedFiles(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[GeneratedFiles.Partial], GeneratedFiles.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators._RootValidator]] = []
         _generated_test_case_files_pre_validators: typing.ClassVar[
             typing.List[GeneratedFiles.Validators.GeneratedTestCaseFilesValidator]
         ] = []
@@ -61,11 +60,15 @@ class GeneratedFiles(pydantic.BaseModel):
         _other_post_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators.OtherValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[GeneratedFiles.Partial], GeneratedFiles.Partial]
-        ) -> typing.Callable[[GeneratedFiles.Partial], GeneratedFiles.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GeneratedFiles.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -99,17 +102,17 @@ class GeneratedFiles(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "generated_test_case_files":
                     if pre:
-                        cls._generated_test_case_files_post_validators.append(validator)
+                        cls._generated_test_case_files_pre_validators.append(validator)
                     else:
                         cls._generated_test_case_files_post_validators.append(validator)
                 if field_name == "generated_template_files":
                     if pre:
-                        cls._generated_template_files_post_validators.append(validator)
+                        cls._generated_template_files_pre_validators.append(validator)
                     else:
                         cls._generated_template_files_post_validators.append(validator)
                 if field_name == "other":
                     if pre:
-                        cls._other_post_validators.append(validator)
+                        cls._other_pre_validators.append(validator)
                     else:
                         cls._other_post_validators.append(validator)
                 return validator
@@ -134,9 +137,19 @@ class GeneratedFiles(pydantic.BaseModel):
             ) -> typing.Dict[Language, Files]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
-        for validator in GeneratedFiles.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
+        for validator in GeneratedFiles.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
+        for validator in GeneratedFiles.Validators._post_validators:
             values = validator(values)
         return values
 

@@ -35,9 +35,8 @@ class StackInformation(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[StackInformation.Partial], StackInformation.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[StackInformation.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[StackInformation.Validators._RootValidator]] = []
         _num_stack_frames_pre_validators: typing.ClassVar[
             typing.List[StackInformation.Validators.NumStackFramesValidator]
         ] = []
@@ -52,11 +51,15 @@ class StackInformation(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[StackInformation.Partial], StackInformation.Partial]
-        ) -> typing.Callable[[StackInformation.Partial], StackInformation.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> StackInformation.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -81,12 +84,12 @@ class StackInformation(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "num_stack_frames":
                     if pre:
-                        cls._num_stack_frames_post_validators.append(validator)
+                        cls._num_stack_frames_pre_validators.append(validator)
                     else:
                         cls._num_stack_frames_post_validators.append(validator)
                 if field_name == "top_stack_frame":
                     if pre:
-                        cls._top_stack_frame_post_validators.append(validator)
+                        cls._top_stack_frame_pre_validators.append(validator)
                     else:
                         cls._top_stack_frame_post_validators.append(validator)
                 return validator
@@ -103,9 +106,19 @@ class StackInformation(pydantic.BaseModel):
             ) -> typing.Optional[StackFrame]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: StackInformation.Partial) -> StackInformation.Partial:
-        for validator in StackInformation.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: StackInformation.Partial) -> StackInformation.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: StackInformation.Partial) -> StackInformation.Partial:
+        for validator in StackInformation.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: StackInformation.Partial) -> StackInformation.Partial:
+        for validator in StackInformation.Validators._post_validators:
             values = validator(values)
         return values
 

@@ -29,9 +29,8 @@ class SubmissionIdNotFound(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[SubmissionIdNotFound.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[SubmissionIdNotFound.Validators._RootValidator]] = []
         _missing_submission_id_pre_validators: typing.ClassVar[
             typing.List[SubmissionIdNotFound.Validators.MissingSubmissionIdValidator]
         ] = []
@@ -40,11 +39,15 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]
-        ) -> typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> SubmissionIdNotFound.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -61,7 +64,7 @@ class SubmissionIdNotFound(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "missing_submission_id":
                     if pre:
-                        cls._missing_submission_id_post_validators.append(validator)
+                        cls._missing_submission_id_pre_validators.append(validator)
                     else:
                         cls._missing_submission_id_post_validators.append(validator)
                 return validator
@@ -72,9 +75,19 @@ class SubmissionIdNotFound(pydantic.BaseModel):
             def __call__(self, __v: SubmissionId, __values: SubmissionIdNotFound.Partial) -> SubmissionId:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
-        for validator in SubmissionIdNotFound.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
+        for validator in SubmissionIdNotFound.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
+        for validator in SubmissionIdNotFound.Validators._post_validators:
             values = validator(values)
         return values
 

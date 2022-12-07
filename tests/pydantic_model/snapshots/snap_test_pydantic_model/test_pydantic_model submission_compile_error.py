@@ -27,16 +27,21 @@ class CompileError(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[CompileError.Partial], CompileError.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[CompileError.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[CompileError.Validators._RootValidator]] = []
         _message_pre_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
         _message_post_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[CompileError.Partial], CompileError.Partial]
-        ) -> typing.Callable[[CompileError.Partial], CompileError.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> CompileError.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -50,7 +55,7 @@ class CompileError(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "message":
                     if pre:
-                        cls._message_post_validators.append(validator)
+                        cls._message_pre_validators.append(validator)
                     else:
                         cls._message_post_validators.append(validator)
                 return validator
@@ -61,9 +66,19 @@ class CompileError(pydantic.BaseModel):
             def __call__(self, __v: str, __values: CompileError.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: CompileError.Partial) -> CompileError.Partial:
-        for validator in CompileError.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: CompileError.Partial) -> CompileError.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: CompileError.Partial) -> CompileError.Partial:
+        for validator in CompileError.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: CompileError.Partial) -> CompileError.Partial:
+        for validator in CompileError.Validators._post_validators:
             values = validator(values)
         return values
 

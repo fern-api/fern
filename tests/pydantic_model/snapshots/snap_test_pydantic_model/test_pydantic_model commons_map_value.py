@@ -27,16 +27,21 @@ class MapValue(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[MapValue.Partial], MapValue.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[MapValue.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[MapValue.Validators._RootValidator]] = []
         _key_value_pairs_pre_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
         _key_value_pairs_post_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[MapValue.Partial], MapValue.Partial]
-        ) -> typing.Callable[[MapValue.Partial], MapValue.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> MapValue.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -50,7 +55,7 @@ class MapValue(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key_value_pairs":
                     if pre:
-                        cls._key_value_pairs_post_validators.append(validator)
+                        cls._key_value_pairs_pre_validators.append(validator)
                     else:
                         cls._key_value_pairs_post_validators.append(validator)
                 return validator
@@ -61,9 +66,19 @@ class MapValue(pydantic.BaseModel):
             def __call__(self, __v: typing.List[KeyValuePair], __values: MapValue.Partial) -> typing.List[KeyValuePair]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: MapValue.Partial) -> MapValue.Partial:
-        for validator in MapValue.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: MapValue.Partial) -> MapValue.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: MapValue.Partial) -> MapValue.Partial:
+        for validator in MapValue.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: MapValue.Partial) -> MapValue.Partial:
+        for validator in MapValue.Validators._post_validators:
             values = validator(values)
         return values
 

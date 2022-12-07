@@ -60,9 +60,8 @@ class ExecutionSessionState(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators._RootValidator]] = []
         _last_time_contacted_pre_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.LastTimeContactedValidator]
         ] = []
@@ -93,11 +92,15 @@ class ExecutionSessionState(pydantic.BaseModel):
         _status_post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]
-        ) -> typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> ExecutionSessionState.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -160,32 +163,32 @@ class ExecutionSessionState(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "last_time_contacted":
                     if pre:
-                        cls._last_time_contacted_post_validators.append(validator)
+                        cls._last_time_contacted_pre_validators.append(validator)
                     else:
                         cls._last_time_contacted_post_validators.append(validator)
                 if field_name == "session_id":
                     if pre:
-                        cls._session_id_post_validators.append(validator)
+                        cls._session_id_pre_validators.append(validator)
                     else:
                         cls._session_id_post_validators.append(validator)
                 if field_name == "is_warm_instance":
                     if pre:
-                        cls._is_warm_instance_post_validators.append(validator)
+                        cls._is_warm_instance_pre_validators.append(validator)
                     else:
                         cls._is_warm_instance_post_validators.append(validator)
                 if field_name == "aws_task_id":
                     if pre:
-                        cls._aws_task_id_post_validators.append(validator)
+                        cls._aws_task_id_pre_validators.append(validator)
                     else:
                         cls._aws_task_id_post_validators.append(validator)
                 if field_name == "language":
                     if pre:
-                        cls._language_post_validators.append(validator)
+                        cls._language_pre_validators.append(validator)
                     else:
                         cls._language_post_validators.append(validator)
                 if field_name == "status":
                     if pre:
-                        cls._status_post_validators.append(validator)
+                        cls._status_pre_validators.append(validator)
                     else:
                         cls._status_post_validators.append(validator)
                 return validator
@@ -222,9 +225,19 @@ class ExecutionSessionState(pydantic.BaseModel):
             ) -> ExecutionSessionStatus:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
-        for validator in ExecutionSessionState.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
+        for validator in ExecutionSessionState.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
+        for validator in ExecutionSessionState.Validators._post_validators:
             values = validator(values)
         return values
 

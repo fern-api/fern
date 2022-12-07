@@ -80,9 +80,8 @@ class CreateProblemRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[CreateProblemRequest.Partial], CreateProblemRequest.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[CreateProblemRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[CreateProblemRequest.Validators._RootValidator]] = []
         _problem_name_pre_validators: typing.ClassVar[
             typing.List[CreateProblemRequest.Validators.ProblemNameValidator]
         ] = []
@@ -121,11 +120,15 @@ class CreateProblemRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[CreateProblemRequest.Partial], CreateProblemRequest.Partial]
-        ) -> typing.Callable[[CreateProblemRequest.Partial], CreateProblemRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> CreateProblemRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -196,37 +199,37 @@ class CreateProblemRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_name":
                     if pre:
-                        cls._problem_name_post_validators.append(validator)
+                        cls._problem_name_pre_validators.append(validator)
                     else:
                         cls._problem_name_post_validators.append(validator)
                 if field_name == "problem_description":
                     if pre:
-                        cls._problem_description_post_validators.append(validator)
+                        cls._problem_description_pre_validators.append(validator)
                     else:
                         cls._problem_description_post_validators.append(validator)
                 if field_name == "files":
                     if pre:
-                        cls._files_post_validators.append(validator)
+                        cls._files_pre_validators.append(validator)
                     else:
                         cls._files_post_validators.append(validator)
                 if field_name == "input_params":
                     if pre:
-                        cls._input_params_post_validators.append(validator)
+                        cls._input_params_pre_validators.append(validator)
                     else:
                         cls._input_params_post_validators.append(validator)
                 if field_name == "output_type":
                     if pre:
-                        cls._output_type_post_validators.append(validator)
+                        cls._output_type_pre_validators.append(validator)
                     else:
                         cls._output_type_post_validators.append(validator)
                 if field_name == "testcases":
                     if pre:
-                        cls._testcases_post_validators.append(validator)
+                        cls._testcases_pre_validators.append(validator)
                     else:
                         cls._testcases_post_validators.append(validator)
                 if field_name == "method_name":
                     if pre:
-                        cls._method_name_post_validators.append(validator)
+                        cls._method_name_pre_validators.append(validator)
                     else:
                         cls._method_name_post_validators.append(validator)
                 return validator
@@ -267,9 +270,19 @@ class CreateProblemRequest(pydantic.BaseModel):
             def __call__(self, __v: str, __values: CreateProblemRequest.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: CreateProblemRequest.Partial) -> CreateProblemRequest.Partial:
-        for validator in CreateProblemRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: CreateProblemRequest.Partial) -> CreateProblemRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: CreateProblemRequest.Partial) -> CreateProblemRequest.Partial:
+        for validator in CreateProblemRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: CreateProblemRequest.Partial) -> CreateProblemRequest.Partial:
+        for validator in CreateProblemRequest.Validators._post_validators:
             values = validator(values)
         return values
 

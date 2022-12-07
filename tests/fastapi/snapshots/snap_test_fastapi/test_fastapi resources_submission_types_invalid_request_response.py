@@ -36,20 +36,23 @@ class InvalidRequestResponse(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._RootValidator]] = []
         _request_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
         _request_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
         _cause_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
         _cause_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]
-        ) -> typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> InvalidRequestResponse.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -74,12 +77,12 @@ class InvalidRequestResponse(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "request":
                     if pre:
-                        cls._request_post_validators.append(validator)
+                        cls._request_pre_validators.append(validator)
                     else:
                         cls._request_post_validators.append(validator)
                 if field_name == "cause":
                     if pre:
-                        cls._cause_post_validators.append(validator)
+                        cls._cause_pre_validators.append(validator)
                     else:
                         cls._cause_post_validators.append(validator)
                 return validator
@@ -96,9 +99,19 @@ class InvalidRequestResponse(pydantic.BaseModel):
             ) -> InvalidRequestCause:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: InvalidRequestResponse.Partial) -> InvalidRequestResponse.Partial:
-        for validator in InvalidRequestResponse.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: InvalidRequestResponse.Partial) -> InvalidRequestResponse.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: InvalidRequestResponse.Partial) -> InvalidRequestResponse.Partial:
+        for validator in InvalidRequestResponse.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: InvalidRequestResponse.Partial) -> InvalidRequestResponse.Partial:
+        for validator in InvalidRequestResponse.Validators._post_validators:
             values = validator(values)
         return values
 

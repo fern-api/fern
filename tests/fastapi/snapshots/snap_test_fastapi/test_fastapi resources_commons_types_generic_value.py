@@ -33,7 +33,8 @@ class GenericValue(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[GenericValue.Partial], GenericValue.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[GenericValue.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GenericValue.Validators._RootValidator]] = []
         _stringified_type_pre_validators: typing.ClassVar[
             typing.List[GenericValue.Validators.StringifiedTypeValidator]
         ] = []
@@ -48,11 +49,15 @@ class GenericValue(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[GenericValue.Partial], GenericValue.Partial]
-        ) -> typing.Callable[[GenericValue.Partial], GenericValue.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GenericValue.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -77,12 +82,12 @@ class GenericValue(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "stringified_type":
                     if pre:
-                        cls._stringified_type_post_validators.append(validator)
+                        cls._stringified_type_pre_validators.append(validator)
                     else:
                         cls._stringified_type_post_validators.append(validator)
                 if field_name == "stringified_value":
                     if pre:
-                        cls._stringified_value_post_validators.append(validator)
+                        cls._stringified_value_pre_validators.append(validator)
                     else:
                         cls._stringified_value_post_validators.append(validator)
                 return validator
@@ -97,9 +102,19 @@ class GenericValue(pydantic.BaseModel):
             def __call__(self, __v: str, __values: GenericValue.Partial) -> str:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GenericValue.Partial) -> GenericValue.Partial:
-        for validator in GenericValue.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: GenericValue.Partial) -> GenericValue.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GenericValue.Partial) -> GenericValue.Partial:
+        for validator in GenericValue.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GenericValue.Partial) -> GenericValue.Partial:
+        for validator in GenericValue.Validators._post_validators:
             values = validator(values)
         return values
 

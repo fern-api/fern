@@ -35,20 +35,23 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[UpdatePlaylistRequest.Partial], UpdatePlaylistRequest.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators._RootValidator]] = []
         _name_pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.NameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.NameValidator]] = []
         _problems_pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.ProblemsValidator]] = []
         _problems_post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.ProblemsValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[UpdatePlaylistRequest.Partial], UpdatePlaylistRequest.Partial]
-        ) -> typing.Callable[[UpdatePlaylistRequest.Partial], UpdatePlaylistRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> UpdatePlaylistRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -73,12 +76,12 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "name":
                     if pre:
-                        cls._name_post_validators.append(validator)
+                        cls._name_pre_validators.append(validator)
                     else:
                         cls._name_post_validators.append(validator)
                 if field_name == "problems":
                     if pre:
-                        cls._problems_post_validators.append(validator)
+                        cls._problems_pre_validators.append(validator)
                     else:
                         cls._problems_post_validators.append(validator)
                 return validator
@@ -95,9 +98,19 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
             ) -> typing.List[ProblemId]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: UpdatePlaylistRequest.Partial) -> UpdatePlaylistRequest.Partial:
-        for validator in UpdatePlaylistRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: UpdatePlaylistRequest.Partial) -> UpdatePlaylistRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: UpdatePlaylistRequest.Partial) -> UpdatePlaylistRequest.Partial:
+        for validator in UpdatePlaylistRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: UpdatePlaylistRequest.Partial) -> UpdatePlaylistRequest.Partial:
+        for validator in UpdatePlaylistRequest.Validators._post_validators:
             values = validator(values)
         return values
 

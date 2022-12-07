@@ -29,9 +29,8 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[GetFunctionSignatureRequest.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[GetFunctionSignatureRequest.Validators._RootValidator]] = []
         _function_signature_pre_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureRequest.Validators.FunctionSignatureValidator]
         ] = []
@@ -40,11 +39,15 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]
-        ) -> typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> GetFunctionSignatureRequest.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -61,7 +64,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "function_signature":
                     if pre:
-                        cls._function_signature_post_validators.append(validator)
+                        cls._function_signature_pre_validators.append(validator)
                     else:
                         cls._function_signature_post_validators.append(validator)
                 return validator
@@ -74,9 +77,19 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
             ) -> FunctionSignature:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: GetFunctionSignatureRequest.Partial) -> GetFunctionSignatureRequest.Partial:
-        for validator in GetFunctionSignatureRequest.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: GetFunctionSignatureRequest.Partial) -> GetFunctionSignatureRequest.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: GetFunctionSignatureRequest.Partial) -> GetFunctionSignatureRequest.Partial:
+        for validator in GetFunctionSignatureRequest.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: GetFunctionSignatureRequest.Partial) -> GetFunctionSignatureRequest.Partial:
+        for validator in GetFunctionSignatureRequest.Validators._post_validators:
             values = validator(values)
         return values
 

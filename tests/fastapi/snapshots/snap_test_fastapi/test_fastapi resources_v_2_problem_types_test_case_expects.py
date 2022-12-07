@@ -27,9 +27,8 @@ class TestCaseExpects(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[
-            typing.List[typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseExpects.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[TestCaseExpects.Validators._RootValidator]] = []
         _expected_stdout_pre_validators: typing.ClassVar[
             typing.List[TestCaseExpects.Validators.ExpectedStdoutValidator]
         ] = []
@@ -38,11 +37,15 @@ class TestCaseExpects(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]
-        ) -> typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> TestCaseExpects.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload  # type: ignore
         @classmethod
@@ -58,7 +61,7 @@ class TestCaseExpects(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_stdout":
                     if pre:
-                        cls._expected_stdout_post_validators.append(validator)
+                        cls._expected_stdout_pre_validators.append(validator)
                     else:
                         cls._expected_stdout_post_validators.append(validator)
                 return validator
@@ -69,9 +72,19 @@ class TestCaseExpects(pydantic.BaseModel):
             def __call__(self, __v: typing.Optional[str], __values: TestCaseExpects.Partial) -> typing.Optional[str]:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: TestCaseExpects.Partial) -> TestCaseExpects.Partial:
-        for validator in TestCaseExpects.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: TestCaseExpects.Partial) -> TestCaseExpects.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: TestCaseExpects.Partial) -> TestCaseExpects.Partial:
+        for validator in TestCaseExpects.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: TestCaseExpects.Partial) -> TestCaseExpects.Partial:
+        for validator in TestCaseExpects.Validators._post_validators:
             values = validator(values)
         return values
 

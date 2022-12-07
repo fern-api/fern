@@ -33,18 +33,23 @@ class KeyValuePair(pydantic.BaseModel):
                 ...
         """
 
-        _validators: typing.ClassVar[typing.List[typing.Callable[[KeyValuePair.Partial], KeyValuePair.Partial]]] = []
+        _pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators._RootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[KeyValuePair.Validators._RootValidator]] = []
         _key_pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.KeyValidator]] = []
         _key_post_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.KeyValidator]] = []
         _value_pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.ValueValidator]] = []
         _value_post_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.ValueValidator]] = []
 
         @classmethod
-        def root(
-            cls, validator: typing.Callable[[KeyValuePair.Partial], KeyValuePair.Partial]
-        ) -> typing.Callable[[KeyValuePair.Partial], KeyValuePair.Partial]:
-            cls._validators.append(validator)
-            return validator
+        def root(cls, *, pre: bool = False) -> KeyValuePair.Validators._RootValidator:
+            def decorator(validator: typing.Any) -> typing.Any:
+                if pre:
+                    cls._pre_validators.append(validator)
+                else:
+                    cls._post_validators.append(validator)
+                return validator
+
+            return decorator
 
         @typing.overload
         @classmethod
@@ -65,12 +70,12 @@ class KeyValuePair(pydantic.BaseModel):
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key":
                     if pre:
-                        cls._key_post_validators.append(validator)
+                        cls._key_pre_validators.append(validator)
                     else:
                         cls._key_post_validators.append(validator)
                 if field_name == "value":
                     if pre:
-                        cls._value_post_validators.append(validator)
+                        cls._value_pre_validators.append(validator)
                     else:
                         cls._value_post_validators.append(validator)
                 return validator
@@ -85,9 +90,19 @@ class KeyValuePair(pydantic.BaseModel):
             def __call__(self, __v: VariableValue, __values: KeyValuePair.Partial) -> VariableValue:
                 ...
 
-    @pydantic.root_validator
-    def _validate(cls, values: KeyValuePair.Partial) -> KeyValuePair.Partial:
-        for validator in KeyValuePair.Validators._validators:
+        class _RootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: KeyValuePair.Partial) -> KeyValuePair.Partial:
+                ...
+
+    @pydantic.root_validator(pre=True)
+    def _pre_validate(cls, values: KeyValuePair.Partial) -> KeyValuePair.Partial:
+        for validator in KeyValuePair.Validators._pre_validators:
+            values = validator(values)
+        return values
+
+    @pydantic.root_validator(pre=False)
+    def _post_validate(cls, values: KeyValuePair.Partial) -> KeyValuePair.Partial:
+        for validator in KeyValuePair.Validators._post_validators:
             values = validator(values)
         return values
 
