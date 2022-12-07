@@ -712,6 +712,47 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
             "screamingSnakeCase": "ERROR"
         }
     },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
+    },
     "sdkConfig": {
         "isAuthMandatory": false
     }
@@ -4301,6 +4342,25 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 "wireValue": "NotFoundError",
                 "type": "property"
             },
+            "discriminantValueV4": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -5331,6 +5391,47 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "screamingSnakeCase": "ERROR"
         }
     },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
+    },
     "sdkConfig": {
         "isAuthMandatory": false
     }
@@ -6048,6 +6149,47 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -9638,6 +9780,25 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 "wireValue": "NotFoundError",
                 "type": "property"
             },
+            "discriminantValueV4": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -10668,6 +10829,47 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "screamingSnakeCase": "ERROR"
         }
     },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
+    },
     "sdkConfig": {
         "isAuthMandatory": false
     }
@@ -11385,6 +11587,47 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -14975,6 +15218,25 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 "wireValue": "NotFoundError",
                 "type": "property"
             },
+            "discriminantValueV4": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -16004,6 +16266,47 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -19594,6 +19897,25 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 "wireValue": "NotFoundError",
                 "type": "property"
             },
+            "discriminantValueV4": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -20623,6 +20945,47 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -24213,6 +24576,25 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 "wireValue": "NotFoundError",
                 "type": "property"
             },
+            "discriminantValueV4": {
+                "name": {
+                    "unsafeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    },
+                    "safeName": {
+                        "originalValue": "NotFoundError",
+                        "camelCase": "notFoundError",
+                        "snakeCase": "not_found_error",
+                        "pascalCase": "NotFoundError",
+                        "screamingSnakeCase": "NOT_FOUND_ERROR"
+                    }
+                },
+                "wireValue": "NotFoundError"
+            },
             "http": {
                 "statusCode": 404
             },
@@ -25242,6 +25624,47 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "pascalCase": "Error",
             "screamingSnakeCase": "ERROR"
         }
+    },
+    "errorDiscriminationStrategy": {
+        "discriminant": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                },
+                "safeName": {
+                    "originalValue": "error",
+                    "camelCase": "error",
+                    "snakeCase": "error",
+                    "pascalCase": "Error",
+                    "screamingSnakeCase": "ERROR"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "unsafeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                },
+                "safeName": {
+                    "originalValue": "content",
+                    "camelCase": "content",
+                    "snakeCase": "content",
+                    "pascalCase": "Content",
+                    "screamingSnakeCase": "CONTENT"
+                }
+            },
+            "wireValue": "content"
+        },
+        "type": "property"
     },
     "sdkConfig": {
         "isAuthMandatory": false

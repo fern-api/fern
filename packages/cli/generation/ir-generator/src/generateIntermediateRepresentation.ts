@@ -8,6 +8,7 @@ import { convertApiAuth } from "./converters/convertApiAuth";
 import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
+import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
 import { convertHttpHeader, convertHttpService } from "./converters/services/convertHttpService";
 import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
@@ -31,7 +32,7 @@ export async function generateIntermediateRepresentation({
 
     const audienceIrGraph = audiences != null ? new AudienceIrGraph(audiences) : undefined;
 
-    const rootApiFile = constructFernFileContext({
+    const rootApiFileContext = constructFernFileContext({
         relativeFilepath: undefined,
         serviceFile: workspace.rootApiFile,
         casingsGenerator,
@@ -41,12 +42,12 @@ export async function generateIntermediateRepresentation({
         apiName: workspace.name,
         auth: convertApiAuth({
             rawApiFileSchema: workspace.rootApiFile,
-            file: rootApiFile,
+            file: rootApiFileContext,
         }),
         headers:
             workspace.rootApiFile.headers != null
                 ? Object.entries(workspace.rootApiFile.headers).map(([headerKey, header]) =>
-                      convertHttpHeader({ headerKey, header, file: rootApiFile })
+                      convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
         types: [],
@@ -64,6 +65,10 @@ export async function generateIntermediateRepresentation({
             workspace.rootApiFile["error-discrimination"].strategy === "property"
                 ? casingsGenerator.generateName(workspace.rootApiFile["error-discrimination"]["property-name"])
                 : undefined,
+        errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
+            workspace.rootApiFile["error-discrimination"],
+            rootApiFileContext
+        ),
     };
 
     const typeResolver = new TypeResolverImpl(workspace);
