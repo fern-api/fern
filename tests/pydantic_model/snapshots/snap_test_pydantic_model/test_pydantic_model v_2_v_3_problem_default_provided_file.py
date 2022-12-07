@@ -39,8 +39,12 @@ class DefaultProvidedFile(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[DefaultProvidedFile.Partial], DefaultProvidedFile.Partial]]
         ] = []
-        _file_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators.FileValidator]] = []
-        _related_types_validators: typing.ClassVar[
+        _file_pre_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators.FileValidator]] = []
+        _file_post_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators.FileValidator]] = []
+        _related_types_pre_validators: typing.ClassVar[
+            typing.List[DefaultProvidedFile.Validators.RelatedTypesValidator]
+        ] = []
+        _related_types_post_validators: typing.ClassVar[
             typing.List[DefaultProvidedFile.Validators.RelatedTypesValidator]
         ] = []
 
@@ -70,12 +74,18 @@ class DefaultProvidedFile(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "file":
-                    cls._file_validators.append(validator)
+                    if pre:
+                        cls._file_post_validators.append(validator)
+                    else:
+                        cls._file_post_validators.append(validator)
                 if field_name == "related_types":
-                    cls._related_types_validators.append(validator)
+                    if pre:
+                        cls._related_types_post_validators.append(validator)
+                    else:
+                        cls._related_types_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -96,17 +106,31 @@ class DefaultProvidedFile(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("file")
-    def _validate_file(cls, v: FileInfoV2, values: DefaultProvidedFile.Partial) -> FileInfoV2:
-        for validator in DefaultProvidedFile.Validators._file_validators:
+    @pydantic.validator("file", pre=True)
+    def _pre_validate_file(cls, v: FileInfoV2, values: DefaultProvidedFile.Partial) -> FileInfoV2:
+        for validator in DefaultProvidedFile.Validators._file_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("related_types")
-    def _validate_related_types(
+    @pydantic.validator("file", pre=False)
+    def _post_validate_file(cls, v: FileInfoV2, values: DefaultProvidedFile.Partial) -> FileInfoV2:
+        for validator in DefaultProvidedFile.Validators._file_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("related_types", pre=True)
+    def _pre_validate_related_types(
         cls, v: typing.List[VariableType], values: DefaultProvidedFile.Partial
     ) -> typing.List[VariableType]:
-        for validator in DefaultProvidedFile.Validators._related_types_validators:
+        for validator in DefaultProvidedFile.Validators._related_types_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("related_types", pre=False)
+    def _post_validate_related_types(
+        cls, v: typing.List[VariableType], values: DefaultProvidedFile.Partial
+    ) -> typing.List[VariableType]:
+        for validator in DefaultProvidedFile.Validators._related_types_post_validators:
             v = validator(v, values)
         return v
 

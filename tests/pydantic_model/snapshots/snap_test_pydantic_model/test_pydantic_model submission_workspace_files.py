@@ -38,8 +38,14 @@ class WorkspaceFiles(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceFiles.Partial], WorkspaceFiles.Partial]]
         ] = []
-        _main_file_validators: typing.ClassVar[typing.List[WorkspaceFiles.Validators.MainFileValidator]] = []
-        _read_only_files_validators: typing.ClassVar[typing.List[WorkspaceFiles.Validators.ReadOnlyFilesValidator]] = []
+        _main_file_pre_validators: typing.ClassVar[typing.List[WorkspaceFiles.Validators.MainFileValidator]] = []
+        _main_file_post_validators: typing.ClassVar[typing.List[WorkspaceFiles.Validators.MainFileValidator]] = []
+        _read_only_files_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceFiles.Validators.ReadOnlyFilesValidator]
+        ] = []
+        _read_only_files_post_validators: typing.ClassVar[
+            typing.List[WorkspaceFiles.Validators.ReadOnlyFilesValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -67,12 +73,18 @@ class WorkspaceFiles(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "main_file":
-                    cls._main_file_validators.append(validator)
+                    if pre:
+                        cls._main_file_post_validators.append(validator)
+                    else:
+                        cls._main_file_post_validators.append(validator)
                 if field_name == "read_only_files":
-                    cls._read_only_files_validators.append(validator)
+                    if pre:
+                        cls._read_only_files_post_validators.append(validator)
+                    else:
+                        cls._read_only_files_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -91,17 +103,31 @@ class WorkspaceFiles(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("main_file")
-    def _validate_main_file(cls, v: FileInfo, values: WorkspaceFiles.Partial) -> FileInfo:
-        for validator in WorkspaceFiles.Validators._main_file_validators:
+    @pydantic.validator("main_file", pre=True)
+    def _pre_validate_main_file(cls, v: FileInfo, values: WorkspaceFiles.Partial) -> FileInfo:
+        for validator in WorkspaceFiles.Validators._main_file_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("read_only_files")
-    def _validate_read_only_files(
+    @pydantic.validator("main_file", pre=False)
+    def _post_validate_main_file(cls, v: FileInfo, values: WorkspaceFiles.Partial) -> FileInfo:
+        for validator in WorkspaceFiles.Validators._main_file_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("read_only_files", pre=True)
+    def _pre_validate_read_only_files(
         cls, v: typing.List[FileInfo], values: WorkspaceFiles.Partial
     ) -> typing.List[FileInfo]:
-        for validator in WorkspaceFiles.Validators._read_only_files_validators:
+        for validator in WorkspaceFiles.Validators._read_only_files_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("read_only_files", pre=False)
+    def _post_validate_read_only_files(
+        cls, v: typing.List[FileInfo], values: WorkspaceFiles.Partial
+    ) -> typing.List[FileInfo]:
+        for validator in WorkspaceFiles.Validators._read_only_files_post_validators:
             v = validator(v, values)
         return v
 

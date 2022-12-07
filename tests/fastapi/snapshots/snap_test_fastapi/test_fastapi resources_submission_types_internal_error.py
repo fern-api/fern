@@ -30,7 +30,12 @@ class InternalError(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[InternalError.Partial], InternalError.Partial]]] = []
-        _exception_info_validators: typing.ClassVar[typing.List[InternalError.Validators.ExceptionInfoValidator]] = []
+        _exception_info_pre_validators: typing.ClassVar[
+            typing.List[InternalError.Validators.ExceptionInfoValidator]
+        ] = []
+        _exception_info_post_validators: typing.ClassVar[
+            typing.List[InternalError.Validators.ExceptionInfoValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -49,10 +54,13 @@ class InternalError(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_info":
-                    cls._exception_info_validators.append(validator)
+                    if pre:
+                        cls._exception_info_post_validators.append(validator)
+                    else:
+                        cls._exception_info_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -67,9 +75,15 @@ class InternalError(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("exception_info")
-    def _validate_exception_info(cls, v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
-        for validator in InternalError.Validators._exception_info_validators:
+    @pydantic.validator("exception_info", pre=True)
+    def _pre_validate_exception_info(cls, v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
+        for validator in InternalError.Validators._exception_info_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("exception_info", pre=False)
+    def _post_validate_exception_info(cls, v: ExceptionInfo, values: InternalError.Partial) -> ExceptionInfo:
+        for validator in InternalError.Validators._exception_info_post_validators:
             v = validator(v, values)
         return v
 

@@ -28,7 +28,8 @@ class CompileError(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[CompileError.Partial], CompileError.Partial]]] = []
-        _message_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
+        _message_pre_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
+        _message_post_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
 
         @classmethod
         def root(
@@ -45,10 +46,13 @@ class CompileError(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "message":
-                    cls._message_validators.append(validator)
+                    if pre:
+                        cls._message_post_validators.append(validator)
+                    else:
+                        cls._message_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -63,9 +67,15 @@ class CompileError(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("message")
-    def _validate_message(cls, v: str, values: CompileError.Partial) -> str:
-        for validator in CompileError.Validators._message_validators:
+    @pydantic.validator("message", pre=True)
+    def _pre_validate_message(cls, v: str, values: CompileError.Partial) -> str:
+        for validator in CompileError.Validators._message_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("message", pre=False)
+    def _post_validate_message(cls, v: str, values: CompileError.Partial) -> str:
+        for validator in CompileError.Validators._message_post_validators:
             v = validator(v, values)
         return v
 

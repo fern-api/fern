@@ -30,7 +30,10 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceTracedUpdate.Partial], WorkspaceTracedUpdate.Partial]]
         ] = []
-        _trace_responses_size_validators: typing.ClassVar[
+        _trace_responses_size_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator]
+        ] = []
+        _trace_responses_size_post_validators: typing.ClassVar[
             typing.List[WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator]
         ] = []
 
@@ -52,10 +55,13 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "trace_responses_size":
-                    cls._trace_responses_size_validators.append(validator)
+                    if pre:
+                        cls._trace_responses_size_post_validators.append(validator)
+                    else:
+                        cls._trace_responses_size_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -70,9 +76,15 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("trace_responses_size")
-    def _validate_trace_responses_size(cls, v: int, values: WorkspaceTracedUpdate.Partial) -> int:
-        for validator in WorkspaceTracedUpdate.Validators._trace_responses_size_validators:
+    @pydantic.validator("trace_responses_size", pre=True)
+    def _pre_validate_trace_responses_size(cls, v: int, values: WorkspaceTracedUpdate.Partial) -> int:
+        for validator in WorkspaceTracedUpdate.Validators._trace_responses_size_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("trace_responses_size", pre=False)
+    def _post_validate_trace_responses_size(cls, v: int, values: WorkspaceTracedUpdate.Partial) -> int:
+        for validator in WorkspaceTracedUpdate.Validators._trace_responses_size_post_validators:
             v = validator(v, values)
         return v
 

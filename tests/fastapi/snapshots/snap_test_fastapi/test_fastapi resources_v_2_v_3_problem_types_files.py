@@ -30,7 +30,8 @@ class Files(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[Files.Partial], Files.Partial]]] = []
-        _files_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
+        _files_pre_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
+        _files_post_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
 
         @classmethod
         def root(
@@ -47,10 +48,13 @@ class Files(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
-                    cls._files_validators.append(validator)
+                    if pre:
+                        cls._files_post_validators.append(validator)
+                    else:
+                        cls._files_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -65,9 +69,15 @@ class Files(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("files")
-    def _validate_files(cls, v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
-        for validator in Files.Validators._files_validators:
+    @pydantic.validator("files", pre=True)
+    def _pre_validate_files(cls, v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
+        for validator in Files.Validators._files_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("files", pre=False)
+    def _post_validate_files(cls, v: typing.List[FileInfoV2], values: Files.Partial) -> typing.List[FileInfoV2]:
+        for validator in Files.Validators._files_post_validators:
             v = validator(v, values)
         return v
 

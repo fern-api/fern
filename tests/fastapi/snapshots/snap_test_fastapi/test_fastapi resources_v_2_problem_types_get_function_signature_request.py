@@ -32,7 +32,10 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetFunctionSignatureRequest.Partial], GetFunctionSignatureRequest.Partial]]
         ] = []
-        _function_signature_validators: typing.ClassVar[
+        _function_signature_pre_validators: typing.ClassVar[
+            typing.List[GetFunctionSignatureRequest.Validators.FunctionSignatureValidator]
+        ] = []
+        _function_signature_post_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureRequest.Validators.FunctionSignatureValidator]
         ] = []
 
@@ -54,10 +57,13 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "function_signature":
-                    cls._function_signature_validators.append(validator)
+                    if pre:
+                        cls._function_signature_post_validators.append(validator)
+                    else:
+                        cls._function_signature_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -74,11 +80,19 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("function_signature")
-    def _validate_function_signature(
+    @pydantic.validator("function_signature", pre=True)
+    def _pre_validate_function_signature(
         cls, v: FunctionSignature, values: GetFunctionSignatureRequest.Partial
     ) -> FunctionSignature:
-        for validator in GetFunctionSignatureRequest.Validators._function_signature_validators:
+        for validator in GetFunctionSignatureRequest.Validators._function_signature_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("function_signature", pre=False)
+    def _post_validate_function_signature(
+        cls, v: FunctionSignature, values: GetFunctionSignatureRequest.Partial
+    ) -> FunctionSignature:
+        for validator in GetFunctionSignatureRequest.Validators._function_signature_post_validators:
             v = validator(v, values)
         return v
 

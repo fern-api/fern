@@ -45,9 +45,14 @@ class TestCaseTemplate(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseTemplate.Partial], TestCaseTemplate.Partial]]
         ] = []
-        _template_id_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.TemplateIdValidator]] = []
-        _name_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.NameValidator]] = []
-        _implementation_validators: typing.ClassVar[
+        _template_id_pre_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.TemplateIdValidator]] = []
+        _template_id_post_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.TemplateIdValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.NameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[TestCaseTemplate.Validators.NameValidator]] = []
+        _implementation_pre_validators: typing.ClassVar[
+            typing.List[TestCaseTemplate.Validators.ImplementationValidator]
+        ] = []
+        _implementation_post_validators: typing.ClassVar[
             typing.List[TestCaseTemplate.Validators.ImplementationValidator]
         ] = []
 
@@ -84,14 +89,23 @@ class TestCaseTemplate(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template_id":
-                    cls._template_id_validators.append(validator)
+                    if pre:
+                        cls._template_id_post_validators.append(validator)
+                    else:
+                        cls._template_id_post_validators.append(validator)
                 if field_name == "name":
-                    cls._name_validators.append(validator)
+                    if pre:
+                        cls._name_post_validators.append(validator)
+                    else:
+                        cls._name_post_validators.append(validator)
                 if field_name == "implementation":
-                    cls._implementation_validators.append(validator)
+                    if pre:
+                        cls._implementation_post_validators.append(validator)
+                    else:
+                        cls._implementation_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -116,23 +130,43 @@ class TestCaseTemplate(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("template_id")
-    def _validate_template_id(cls, v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
-        for validator in TestCaseTemplate.Validators._template_id_validators:
+    @pydantic.validator("template_id", pre=True)
+    def _pre_validate_template_id(cls, v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
+        for validator in TestCaseTemplate.Validators._template_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("name")
-    def _validate_name(cls, v: str, values: TestCaseTemplate.Partial) -> str:
-        for validator in TestCaseTemplate.Validators._name_validators:
+    @pydantic.validator("template_id", pre=False)
+    def _post_validate_template_id(cls, v: TestCaseTemplateId, values: TestCaseTemplate.Partial) -> TestCaseTemplateId:
+        for validator in TestCaseTemplate.Validators._template_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("implementation")
-    def _validate_implementation(
+    @pydantic.validator("name", pre=True)
+    def _pre_validate_name(cls, v: str, values: TestCaseTemplate.Partial) -> str:
+        for validator in TestCaseTemplate.Validators._name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("name", pre=False)
+    def _post_validate_name(cls, v: str, values: TestCaseTemplate.Partial) -> str:
+        for validator in TestCaseTemplate.Validators._name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("implementation", pre=True)
+    def _pre_validate_implementation(
         cls, v: TestCaseImplementation, values: TestCaseTemplate.Partial
     ) -> TestCaseImplementation:
-        for validator in TestCaseTemplate.Validators._implementation_validators:
+        for validator in TestCaseTemplate.Validators._implementation_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("implementation", pre=False)
+    def _post_validate_implementation(
+        cls, v: TestCaseImplementation, values: TestCaseTemplate.Partial
+    ) -> TestCaseImplementation:
+        for validator in TestCaseTemplate.Validators._implementation_post_validators:
             v = validator(v, values)
         return v
 

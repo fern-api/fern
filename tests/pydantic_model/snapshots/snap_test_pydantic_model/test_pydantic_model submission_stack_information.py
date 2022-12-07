@@ -38,10 +38,16 @@ class StackInformation(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[StackInformation.Partial], StackInformation.Partial]]
         ] = []
-        _num_stack_frames_validators: typing.ClassVar[
+        _num_stack_frames_pre_validators: typing.ClassVar[
             typing.List[StackInformation.Validators.NumStackFramesValidator]
         ] = []
-        _top_stack_frame_validators: typing.ClassVar[
+        _num_stack_frames_post_validators: typing.ClassVar[
+            typing.List[StackInformation.Validators.NumStackFramesValidator]
+        ] = []
+        _top_stack_frame_pre_validators: typing.ClassVar[
+            typing.List[StackInformation.Validators.TopStackFrameValidator]
+        ] = []
+        _top_stack_frame_post_validators: typing.ClassVar[
             typing.List[StackInformation.Validators.TopStackFrameValidator]
         ] = []
 
@@ -71,12 +77,18 @@ class StackInformation(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "num_stack_frames":
-                    cls._num_stack_frames_validators.append(validator)
+                    if pre:
+                        cls._num_stack_frames_post_validators.append(validator)
+                    else:
+                        cls._num_stack_frames_post_validators.append(validator)
                 if field_name == "top_stack_frame":
-                    cls._top_stack_frame_validators.append(validator)
+                    if pre:
+                        cls._top_stack_frame_post_validators.append(validator)
+                    else:
+                        cls._top_stack_frame_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -97,17 +109,31 @@ class StackInformation(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("num_stack_frames")
-    def _validate_num_stack_frames(cls, v: int, values: StackInformation.Partial) -> int:
-        for validator in StackInformation.Validators._num_stack_frames_validators:
+    @pydantic.validator("num_stack_frames", pre=True)
+    def _pre_validate_num_stack_frames(cls, v: int, values: StackInformation.Partial) -> int:
+        for validator in StackInformation.Validators._num_stack_frames_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("top_stack_frame")
-    def _validate_top_stack_frame(
+    @pydantic.validator("num_stack_frames", pre=False)
+    def _post_validate_num_stack_frames(cls, v: int, values: StackInformation.Partial) -> int:
+        for validator in StackInformation.Validators._num_stack_frames_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("top_stack_frame", pre=True)
+    def _pre_validate_top_stack_frame(
         cls, v: typing.Optional[StackFrame], values: StackInformation.Partial
     ) -> typing.Optional[StackFrame]:
-        for validator in StackInformation.Validators._top_stack_frame_validators:
+        for validator in StackInformation.Validators._top_stack_frame_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("top_stack_frame", pre=False)
+    def _post_validate_top_stack_frame(
+        cls, v: typing.Optional[StackFrame], values: StackInformation.Partial
+    ) -> typing.Optional[StackFrame]:
+        for validator in StackInformation.Validators._top_stack_frame_post_validators:
             v = validator(v, values)
         return v
 

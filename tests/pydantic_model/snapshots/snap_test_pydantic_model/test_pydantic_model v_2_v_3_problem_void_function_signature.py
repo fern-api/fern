@@ -32,7 +32,12 @@ class VoidFunctionSignature(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[VoidFunctionSignature.Partial], VoidFunctionSignature.Partial]]
         ] = []
-        _parameters_validators: typing.ClassVar[typing.List[VoidFunctionSignature.Validators.ParametersValidator]] = []
+        _parameters_pre_validators: typing.ClassVar[
+            typing.List[VoidFunctionSignature.Validators.ParametersValidator]
+        ] = []
+        _parameters_post_validators: typing.ClassVar[
+            typing.List[VoidFunctionSignature.Validators.ParametersValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -51,10 +56,13 @@ class VoidFunctionSignature(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
-                    cls._parameters_validators.append(validator)
+                    if pre:
+                        cls._parameters_post_validators.append(validator)
+                    else:
+                        cls._parameters_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -71,11 +79,19 @@ class VoidFunctionSignature(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("parameters")
-    def _validate_parameters(
+    @pydantic.validator("parameters", pre=True)
+    def _pre_validate_parameters(
         cls, v: typing.List[Parameter], values: VoidFunctionSignature.Partial
     ) -> typing.List[Parameter]:
-        for validator in VoidFunctionSignature.Validators._parameters_validators:
+        for validator in VoidFunctionSignature.Validators._parameters_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("parameters", pre=False)
+    def _post_validate_parameters(
+        cls, v: typing.List[Parameter], values: VoidFunctionSignature.Partial
+    ) -> typing.List[Parameter]:
+        for validator in VoidFunctionSignature.Validators._parameters_post_validators:
             v = validator(v, values)
         return v
 

@@ -58,19 +58,34 @@ class RecordingResponseNotification(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[RecordingResponseNotification.Partial], RecordingResponseNotification.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[
+        _submission_id_pre_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.SubmissionIdValidator]
         ] = []
-        _test_case_id_validators: typing.ClassVar[
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[RecordingResponseNotification.Validators.SubmissionIdValidator]
+        ] = []
+        _test_case_id_pre_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.TestCaseIdValidator]
         ] = []
-        _line_number_validators: typing.ClassVar[
+        _test_case_id_post_validators: typing.ClassVar[
+            typing.List[RecordingResponseNotification.Validators.TestCaseIdValidator]
+        ] = []
+        _line_number_pre_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.LineNumberValidator]
         ] = []
-        _lightweight_stack_info_validators: typing.ClassVar[
+        _line_number_post_validators: typing.ClassVar[
+            typing.List[RecordingResponseNotification.Validators.LineNumberValidator]
+        ] = []
+        _lightweight_stack_info_pre_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.LightweightStackInfoValidator]
         ] = []
-        _traced_file_validators: typing.ClassVar[
+        _lightweight_stack_info_post_validators: typing.ClassVar[
+            typing.List[RecordingResponseNotification.Validators.LightweightStackInfoValidator]
+        ] = []
+        _traced_file_pre_validators: typing.ClassVar[
+            typing.List[RecordingResponseNotification.Validators.TracedFileValidator]
+        ] = []
+        _traced_file_post_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.TracedFileValidator]
         ] = []
 
@@ -133,18 +148,33 @@ class RecordingResponseNotification(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "test_case_id":
-                    cls._test_case_id_validators.append(validator)
+                    if pre:
+                        cls._test_case_id_post_validators.append(validator)
+                    else:
+                        cls._test_case_id_post_validators.append(validator)
                 if field_name == "line_number":
-                    cls._line_number_validators.append(validator)
+                    if pre:
+                        cls._line_number_post_validators.append(validator)
+                    else:
+                        cls._line_number_post_validators.append(validator)
                 if field_name == "lightweight_stack_info":
-                    cls._lightweight_stack_info_validators.append(validator)
+                    if pre:
+                        cls._lightweight_stack_info_post_validators.append(validator)
+                    else:
+                        cls._lightweight_stack_info_post_validators.append(validator)
                 if field_name == "traced_file":
-                    cls._traced_file_validators.append(validator)
+                    if pre:
+                        cls._traced_file_post_validators.append(validator)
+                    else:
+                        cls._traced_file_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -181,39 +211,79 @@ class RecordingResponseNotification(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: RecordingResponseNotification.Partial) -> SubmissionId:
-        for validator in RecordingResponseNotification.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(
+        cls, v: SubmissionId, values: RecordingResponseNotification.Partial
+    ) -> SubmissionId:
+        for validator in RecordingResponseNotification.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("test_case_id")
-    def _validate_test_case_id(
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(
+        cls, v: SubmissionId, values: RecordingResponseNotification.Partial
+    ) -> SubmissionId:
+        for validator in RecordingResponseNotification.Validators._submission_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("test_case_id", pre=True)
+    def _pre_validate_test_case_id(
         cls, v: typing.Optional[str], values: RecordingResponseNotification.Partial
     ) -> typing.Optional[str]:
-        for validator in RecordingResponseNotification.Validators._test_case_id_validators:
+        for validator in RecordingResponseNotification.Validators._test_case_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("line_number")
-    def _validate_line_number(cls, v: int, values: RecordingResponseNotification.Partial) -> int:
-        for validator in RecordingResponseNotification.Validators._line_number_validators:
+    @pydantic.validator("test_case_id", pre=False)
+    def _post_validate_test_case_id(
+        cls, v: typing.Optional[str], values: RecordingResponseNotification.Partial
+    ) -> typing.Optional[str]:
+        for validator in RecordingResponseNotification.Validators._test_case_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("lightweight_stack_info")
-    def _validate_lightweight_stack_info(
+    @pydantic.validator("line_number", pre=True)
+    def _pre_validate_line_number(cls, v: int, values: RecordingResponseNotification.Partial) -> int:
+        for validator in RecordingResponseNotification.Validators._line_number_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("line_number", pre=False)
+    def _post_validate_line_number(cls, v: int, values: RecordingResponseNotification.Partial) -> int:
+        for validator in RecordingResponseNotification.Validators._line_number_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("lightweight_stack_info", pre=True)
+    def _pre_validate_lightweight_stack_info(
         cls, v: LightweightStackframeInformation, values: RecordingResponseNotification.Partial
     ) -> LightweightStackframeInformation:
-        for validator in RecordingResponseNotification.Validators._lightweight_stack_info_validators:
+        for validator in RecordingResponseNotification.Validators._lightweight_stack_info_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("traced_file")
-    def _validate_traced_file(
+    @pydantic.validator("lightweight_stack_info", pre=False)
+    def _post_validate_lightweight_stack_info(
+        cls, v: LightweightStackframeInformation, values: RecordingResponseNotification.Partial
+    ) -> LightweightStackframeInformation:
+        for validator in RecordingResponseNotification.Validators._lightweight_stack_info_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("traced_file", pre=True)
+    def _pre_validate_traced_file(
         cls, v: typing.Optional[TracedFile], values: RecordingResponseNotification.Partial
     ) -> typing.Optional[TracedFile]:
-        for validator in RecordingResponseNotification.Validators._traced_file_validators:
+        for validator in RecordingResponseNotification.Validators._traced_file_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("traced_file", pre=False)
+    def _post_validate_traced_file(
+        cls, v: typing.Optional[TracedFile], values: RecordingResponseNotification.Partial
+    ) -> typing.Optional[TracedFile]:
+        for validator in RecordingResponseNotification.Validators._traced_file_post_validators:
             v = validator(v, values)
         return v
 

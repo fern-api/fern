@@ -38,7 +38,10 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
                 ]
             ]
         ] = []
-        _code_by_language_validators: typing.ClassVar[
+        _code_by_language_pre_validators: typing.ClassVar[
+            typing.List[FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator]
+        ] = []
+        _code_by_language_post_validators: typing.ClassVar[
             typing.List[FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator]
         ] = []
 
@@ -65,10 +68,13 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "code_by_language":
-                    cls._code_by_language_validators.append(validator)
+                    if pre:
+                        cls._code_by_language_post_validators.append(validator)
+                    else:
+                        cls._code_by_language_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -89,13 +95,23 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("code_by_language")
-    def _validate_code_by_language(
+    @pydantic.validator("code_by_language", pre=True)
+    def _pre_validate_code_by_language(
         cls,
         v: typing.Dict[Language, FunctionImplementation],
         values: FunctionImplementationForMultipleLanguages.Partial,
     ) -> typing.Dict[Language, FunctionImplementation]:
-        for validator in FunctionImplementationForMultipleLanguages.Validators._code_by_language_validators:
+        for validator in FunctionImplementationForMultipleLanguages.Validators._code_by_language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code_by_language", pre=False)
+    def _post_validate_code_by_language(
+        cls,
+        v: typing.Dict[Language, FunctionImplementation],
+        values: FunctionImplementationForMultipleLanguages.Partial,
+    ) -> typing.Dict[Language, FunctionImplementation]:
+        for validator in FunctionImplementationForMultipleLanguages.Validators._code_by_language_post_validators:
             v = validator(v, values)
         return v
 

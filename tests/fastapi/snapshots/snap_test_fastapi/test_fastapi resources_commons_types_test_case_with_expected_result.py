@@ -39,10 +39,16 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseWithExpectedResult.Partial], TestCaseWithExpectedResult.Partial]]
         ] = []
-        _test_case_validators: typing.ClassVar[
+        _test_case_pre_validators: typing.ClassVar[
             typing.List[TestCaseWithExpectedResult.Validators.TestCaseValidator]
         ] = []
-        _expected_result_validators: typing.ClassVar[
+        _test_case_post_validators: typing.ClassVar[
+            typing.List[TestCaseWithExpectedResult.Validators.TestCaseValidator]
+        ] = []
+        _expected_result_pre_validators: typing.ClassVar[
+            typing.List[TestCaseWithExpectedResult.Validators.ExpectedResultValidator]
+        ] = []
+        _expected_result_post_validators: typing.ClassVar[
             typing.List[TestCaseWithExpectedResult.Validators.ExpectedResultValidator]
         ] = []
 
@@ -74,12 +80,18 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "test_case":
-                    cls._test_case_validators.append(validator)
+                    if pre:
+                        cls._test_case_post_validators.append(validator)
+                    else:
+                        cls._test_case_post_validators.append(validator)
                 if field_name == "expected_result":
-                    cls._expected_result_validators.append(validator)
+                    if pre:
+                        cls._expected_result_post_validators.append(validator)
+                    else:
+                        cls._expected_result_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -98,15 +110,31 @@ class TestCaseWithExpectedResult(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("test_case")
-    def _validate_test_case(cls, v: TestCase, values: TestCaseWithExpectedResult.Partial) -> TestCase:
-        for validator in TestCaseWithExpectedResult.Validators._test_case_validators:
+    @pydantic.validator("test_case", pre=True)
+    def _pre_validate_test_case(cls, v: TestCase, values: TestCaseWithExpectedResult.Partial) -> TestCase:
+        for validator in TestCaseWithExpectedResult.Validators._test_case_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("expected_result")
-    def _validate_expected_result(cls, v: VariableValue, values: TestCaseWithExpectedResult.Partial) -> VariableValue:
-        for validator in TestCaseWithExpectedResult.Validators._expected_result_validators:
+    @pydantic.validator("test_case", pre=False)
+    def _post_validate_test_case(cls, v: TestCase, values: TestCaseWithExpectedResult.Partial) -> TestCase:
+        for validator in TestCaseWithExpectedResult.Validators._test_case_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expected_result", pre=True)
+    def _pre_validate_expected_result(
+        cls, v: VariableValue, values: TestCaseWithExpectedResult.Partial
+    ) -> VariableValue:
+        for validator in TestCaseWithExpectedResult.Validators._expected_result_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expected_result", pre=False)
+    def _post_validate_expected_result(
+        cls, v: VariableValue, values: TestCaseWithExpectedResult.Partial
+    ) -> VariableValue:
+        for validator in TestCaseWithExpectedResult.Validators._expected_result_post_validators:
             v = validator(v, values)
         return v
 

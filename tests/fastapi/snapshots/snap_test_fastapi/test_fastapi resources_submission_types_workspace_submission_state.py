@@ -32,7 +32,8 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceSubmissionState.Partial], WorkspaceSubmissionState.Partial]]
         ] = []
-        _status_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators.StatusValidator]] = []
+        _status_pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators.StatusValidator]] = []
+        _status_post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators.StatusValidator]] = []
 
         @classmethod
         def root(
@@ -51,10 +52,13 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "status":
-                    cls._status_validators.append(validator)
+                    if pre:
+                        cls._status_post_validators.append(validator)
+                    else:
+                        cls._status_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -71,11 +75,19 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("status")
-    def _validate_status(
+    @pydantic.validator("status", pre=True)
+    def _pre_validate_status(
         cls, v: WorkspaceSubmissionStatus, values: WorkspaceSubmissionState.Partial
     ) -> WorkspaceSubmissionStatus:
-        for validator in WorkspaceSubmissionState.Validators._status_validators:
+        for validator in WorkspaceSubmissionState.Validators._status_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=False)
+    def _post_validate_status(
+        cls, v: WorkspaceSubmissionStatus, values: WorkspaceSubmissionState.Partial
+    ) -> WorkspaceSubmissionStatus:
+        for validator in WorkspaceSubmissionState.Validators._status_post_validators:
             v = validator(v, values)
         return v
 

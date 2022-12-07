@@ -45,13 +45,22 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetDefaultStarterFilesRequest.Partial], GetDefaultStarterFilesRequest.Partial]]
         ] = []
-        _input_params_validators: typing.ClassVar[
+        _input_params_pre_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.InputParamsValidator]
         ] = []
-        _output_type_validators: typing.ClassVar[
+        _input_params_post_validators: typing.ClassVar[
+            typing.List[GetDefaultStarterFilesRequest.Validators.InputParamsValidator]
+        ] = []
+        _output_type_pre_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.OutputTypeValidator]
         ] = []
-        _method_name_validators: typing.ClassVar[
+        _output_type_post_validators: typing.ClassVar[
+            typing.List[GetDefaultStarterFilesRequest.Validators.OutputTypeValidator]
+        ] = []
+        _method_name_pre_validators: typing.ClassVar[
+            typing.List[GetDefaultStarterFilesRequest.Validators.MethodNameValidator]
+        ] = []
+        _method_name_post_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.MethodNameValidator]
         ] = []
 
@@ -94,14 +103,23 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "input_params":
-                    cls._input_params_validators.append(validator)
+                    if pre:
+                        cls._input_params_post_validators.append(validator)
+                    else:
+                        cls._input_params_post_validators.append(validator)
                 if field_name == "output_type":
-                    cls._output_type_validators.append(validator)
+                    if pre:
+                        cls._output_type_post_validators.append(validator)
+                    else:
+                        cls._output_type_post_validators.append(validator)
                 if field_name == "method_name":
-                    cls._method_name_validators.append(validator)
+                    if pre:
+                        cls._method_name_post_validators.append(validator)
+                    else:
+                        cls._method_name_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -126,23 +144,43 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("input_params")
-    def _validate_input_params(
+    @pydantic.validator("input_params", pre=True)
+    def _pre_validate_input_params(
         cls, v: typing.List[VariableTypeAndName], values: GetDefaultStarterFilesRequest.Partial
     ) -> typing.List[VariableTypeAndName]:
-        for validator in GetDefaultStarterFilesRequest.Validators._input_params_validators:
+        for validator in GetDefaultStarterFilesRequest.Validators._input_params_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("output_type")
-    def _validate_output_type(cls, v: VariableType, values: GetDefaultStarterFilesRequest.Partial) -> VariableType:
-        for validator in GetDefaultStarterFilesRequest.Validators._output_type_validators:
+    @pydantic.validator("input_params", pre=False)
+    def _post_validate_input_params(
+        cls, v: typing.List[VariableTypeAndName], values: GetDefaultStarterFilesRequest.Partial
+    ) -> typing.List[VariableTypeAndName]:
+        for validator in GetDefaultStarterFilesRequest.Validators._input_params_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("method_name")
-    def _validate_method_name(cls, v: str, values: GetDefaultStarterFilesRequest.Partial) -> str:
-        for validator in GetDefaultStarterFilesRequest.Validators._method_name_validators:
+    @pydantic.validator("output_type", pre=True)
+    def _pre_validate_output_type(cls, v: VariableType, values: GetDefaultStarterFilesRequest.Partial) -> VariableType:
+        for validator in GetDefaultStarterFilesRequest.Validators._output_type_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("output_type", pre=False)
+    def _post_validate_output_type(cls, v: VariableType, values: GetDefaultStarterFilesRequest.Partial) -> VariableType:
+        for validator in GetDefaultStarterFilesRequest.Validators._output_type_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("method_name", pre=True)
+    def _pre_validate_method_name(cls, v: str, values: GetDefaultStarterFilesRequest.Partial) -> str:
+        for validator in GetDefaultStarterFilesRequest.Validators._method_name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("method_name", pre=False)
+    def _post_validate_method_name(cls, v: str, values: GetDefaultStarterFilesRequest.Partial) -> str:
+        for validator in GetDefaultStarterFilesRequest.Validators._method_name_post_validators:
             v = validator(v, values)
         return v
 

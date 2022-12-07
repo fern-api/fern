@@ -63,16 +63,34 @@ class ExecutionSessionState(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[ExecutionSessionState.Partial], ExecutionSessionState.Partial]]
         ] = []
-        _last_time_contacted_validators: typing.ClassVar[
+        _last_time_contacted_pre_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.LastTimeContactedValidator]
         ] = []
-        _session_id_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.SessionIdValidator]] = []
-        _is_warm_instance_validators: typing.ClassVar[
+        _last_time_contacted_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.LastTimeContactedValidator]
+        ] = []
+        _session_id_pre_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.SessionIdValidator]
+        ] = []
+        _session_id_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.SessionIdValidator]
+        ] = []
+        _is_warm_instance_pre_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.IsWarmInstanceValidator]
         ] = []
-        _aws_task_id_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.AwsTaskIdValidator]] = []
-        _language_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.LanguageValidator]] = []
-        _status_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
+        _is_warm_instance_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.IsWarmInstanceValidator]
+        ] = []
+        _aws_task_id_pre_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.AwsTaskIdValidator]
+        ] = []
+        _aws_task_id_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.AwsTaskIdValidator]
+        ] = []
+        _language_pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.LanguageValidator]] = []
+        _language_post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.LanguageValidator]] = []
+        _status_pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
+        _status_post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
 
         @classmethod
         def root(
@@ -138,20 +156,38 @@ class ExecutionSessionState(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "last_time_contacted":
-                    cls._last_time_contacted_validators.append(validator)
+                    if pre:
+                        cls._last_time_contacted_post_validators.append(validator)
+                    else:
+                        cls._last_time_contacted_post_validators.append(validator)
                 if field_name == "session_id":
-                    cls._session_id_validators.append(validator)
+                    if pre:
+                        cls._session_id_post_validators.append(validator)
+                    else:
+                        cls._session_id_post_validators.append(validator)
                 if field_name == "is_warm_instance":
-                    cls._is_warm_instance_validators.append(validator)
+                    if pre:
+                        cls._is_warm_instance_post_validators.append(validator)
+                    else:
+                        cls._is_warm_instance_post_validators.append(validator)
                 if field_name == "aws_task_id":
-                    cls._aws_task_id_validators.append(validator)
+                    if pre:
+                        cls._aws_task_id_post_validators.append(validator)
+                    else:
+                        cls._aws_task_id_post_validators.append(validator)
                 if field_name == "language":
-                    cls._language_validators.append(validator)
+                    if pre:
+                        cls._language_post_validators.append(validator)
+                    else:
+                        cls._language_post_validators.append(validator)
                 if field_name == "status":
-                    cls._status_validators.append(validator)
+                    if pre:
+                        cls._status_post_validators.append(validator)
+                    else:
+                        cls._status_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -192,45 +228,87 @@ class ExecutionSessionState(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("last_time_contacted")
-    def _validate_last_time_contacted(
+    @pydantic.validator("last_time_contacted", pre=True)
+    def _pre_validate_last_time_contacted(
         cls, v: typing.Optional[str], values: ExecutionSessionState.Partial
     ) -> typing.Optional[str]:
-        for validator in ExecutionSessionState.Validators._last_time_contacted_validators:
+        for validator in ExecutionSessionState.Validators._last_time_contacted_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("session_id")
-    def _validate_session_id(cls, v: str, values: ExecutionSessionState.Partial) -> str:
-        for validator in ExecutionSessionState.Validators._session_id_validators:
-            v = validator(v, values)
-        return v
-
-    @pydantic.validator("is_warm_instance")
-    def _validate_is_warm_instance(cls, v: bool, values: ExecutionSessionState.Partial) -> bool:
-        for validator in ExecutionSessionState.Validators._is_warm_instance_validators:
-            v = validator(v, values)
-        return v
-
-    @pydantic.validator("aws_task_id")
-    def _validate_aws_task_id(
+    @pydantic.validator("last_time_contacted", pre=False)
+    def _post_validate_last_time_contacted(
         cls, v: typing.Optional[str], values: ExecutionSessionState.Partial
     ) -> typing.Optional[str]:
-        for validator in ExecutionSessionState.Validators._aws_task_id_validators:
+        for validator in ExecutionSessionState.Validators._last_time_contacted_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("language")
-    def _validate_language(cls, v: Language, values: ExecutionSessionState.Partial) -> Language:
-        for validator in ExecutionSessionState.Validators._language_validators:
+    @pydantic.validator("session_id", pre=True)
+    def _pre_validate_session_id(cls, v: str, values: ExecutionSessionState.Partial) -> str:
+        for validator in ExecutionSessionState.Validators._session_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("status")
-    def _validate_status(
+    @pydantic.validator("session_id", pre=False)
+    def _post_validate_session_id(cls, v: str, values: ExecutionSessionState.Partial) -> str:
+        for validator in ExecutionSessionState.Validators._session_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("is_warm_instance", pre=True)
+    def _pre_validate_is_warm_instance(cls, v: bool, values: ExecutionSessionState.Partial) -> bool:
+        for validator in ExecutionSessionState.Validators._is_warm_instance_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("is_warm_instance", pre=False)
+    def _post_validate_is_warm_instance(cls, v: bool, values: ExecutionSessionState.Partial) -> bool:
+        for validator in ExecutionSessionState.Validators._is_warm_instance_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("aws_task_id", pre=True)
+    def _pre_validate_aws_task_id(
+        cls, v: typing.Optional[str], values: ExecutionSessionState.Partial
+    ) -> typing.Optional[str]:
+        for validator in ExecutionSessionState.Validators._aws_task_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("aws_task_id", pre=False)
+    def _post_validate_aws_task_id(
+        cls, v: typing.Optional[str], values: ExecutionSessionState.Partial
+    ) -> typing.Optional[str]:
+        for validator in ExecutionSessionState.Validators._aws_task_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("language", pre=True)
+    def _pre_validate_language(cls, v: Language, values: ExecutionSessionState.Partial) -> Language:
+        for validator in ExecutionSessionState.Validators._language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("language", pre=False)
+    def _post_validate_language(cls, v: Language, values: ExecutionSessionState.Partial) -> Language:
+        for validator in ExecutionSessionState.Validators._language_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=True)
+    def _pre_validate_status(
         cls, v: ExecutionSessionStatus, values: ExecutionSessionState.Partial
     ) -> ExecutionSessionStatus:
-        for validator in ExecutionSessionState.Validators._status_validators:
+        for validator in ExecutionSessionState.Validators._status_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=False)
+    def _post_validate_status(
+        cls, v: ExecutionSessionStatus, values: ExecutionSessionState.Partial
+    ) -> ExecutionSessionStatus:
+        for validator in ExecutionSessionState.Validators._status_post_validators:
             v = validator(v, values)
         return v
 

@@ -44,9 +44,12 @@ class TestCaseMetadata(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseMetadata.Partial], TestCaseMetadata.Partial]]
         ] = []
-        _id_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.IdValidator]] = []
-        _name_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.NameValidator]] = []
-        _hidden_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
+        _id_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.IdValidator]] = []
+        _id_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.IdValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.NameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.NameValidator]] = []
+        _hidden_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
+        _hidden_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
 
         @classmethod
         def root(
@@ -79,14 +82,23 @@ class TestCaseMetadata(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "id":
-                    cls._id_validators.append(validator)
+                    if pre:
+                        cls._id_post_validators.append(validator)
+                    else:
+                        cls._id_post_validators.append(validator)
                 if field_name == "name":
-                    cls._name_validators.append(validator)
+                    if pre:
+                        cls._name_post_validators.append(validator)
+                    else:
+                        cls._name_post_validators.append(validator)
                 if field_name == "hidden":
-                    cls._hidden_validators.append(validator)
+                    if pre:
+                        cls._hidden_post_validators.append(validator)
+                    else:
+                        cls._hidden_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -109,21 +121,39 @@ class TestCaseMetadata(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("id")
-    def _validate_id(cls, v: TestCaseId, values: TestCaseMetadata.Partial) -> TestCaseId:
-        for validator in TestCaseMetadata.Validators._id_validators:
+    @pydantic.validator("id", pre=True)
+    def _pre_validate_id(cls, v: TestCaseId, values: TestCaseMetadata.Partial) -> TestCaseId:
+        for validator in TestCaseMetadata.Validators._id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("name")
-    def _validate_name(cls, v: str, values: TestCaseMetadata.Partial) -> str:
-        for validator in TestCaseMetadata.Validators._name_validators:
+    @pydantic.validator("id", pre=False)
+    def _post_validate_id(cls, v: TestCaseId, values: TestCaseMetadata.Partial) -> TestCaseId:
+        for validator in TestCaseMetadata.Validators._id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("hidden")
-    def _validate_hidden(cls, v: bool, values: TestCaseMetadata.Partial) -> bool:
-        for validator in TestCaseMetadata.Validators._hidden_validators:
+    @pydantic.validator("name", pre=True)
+    def _pre_validate_name(cls, v: str, values: TestCaseMetadata.Partial) -> str:
+        for validator in TestCaseMetadata.Validators._name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("name", pre=False)
+    def _post_validate_name(cls, v: str, values: TestCaseMetadata.Partial) -> str:
+        for validator in TestCaseMetadata.Validators._name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("hidden", pre=True)
+    def _pre_validate_hidden(cls, v: bool, values: TestCaseMetadata.Partial) -> bool:
+        for validator in TestCaseMetadata.Validators._hidden_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("hidden", pre=False)
+    def _post_validate_hidden(cls, v: bool, values: TestCaseMetadata.Partial) -> bool:
+        for validator in TestCaseMetadata.Validators._hidden_post_validators:
             v = validator(v, values)
         return v
 

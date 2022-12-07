@@ -40,11 +40,22 @@ class ExceptionInfo(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[ExceptionInfo.Partial], ExceptionInfo.Partial]]] = []
-        _exception_type_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators.ExceptionTypeValidator]] = []
-        _exception_message_validators: typing.ClassVar[
+        _exception_type_pre_validators: typing.ClassVar[
+            typing.List[ExceptionInfo.Validators.ExceptionTypeValidator]
+        ] = []
+        _exception_type_post_validators: typing.ClassVar[
+            typing.List[ExceptionInfo.Validators.ExceptionTypeValidator]
+        ] = []
+        _exception_message_pre_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionMessageValidator]
         ] = []
-        _exception_stacktrace_validators: typing.ClassVar[
+        _exception_message_post_validators: typing.ClassVar[
+            typing.List[ExceptionInfo.Validators.ExceptionMessageValidator]
+        ] = []
+        _exception_stacktrace_pre_validators: typing.ClassVar[
+            typing.List[ExceptionInfo.Validators.ExceptionStacktraceValidator]
+        ] = []
+        _exception_stacktrace_post_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionStacktraceValidator]
         ] = []
 
@@ -84,14 +95,23 @@ class ExceptionInfo(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_type":
-                    cls._exception_type_validators.append(validator)
+                    if pre:
+                        cls._exception_type_post_validators.append(validator)
+                    else:
+                        cls._exception_type_post_validators.append(validator)
                 if field_name == "exception_message":
-                    cls._exception_message_validators.append(validator)
+                    if pre:
+                        cls._exception_message_post_validators.append(validator)
+                    else:
+                        cls._exception_message_post_validators.append(validator)
                 if field_name == "exception_stacktrace":
-                    cls._exception_stacktrace_validators.append(validator)
+                    if pre:
+                        cls._exception_stacktrace_post_validators.append(validator)
+                    else:
+                        cls._exception_stacktrace_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -114,21 +134,39 @@ class ExceptionInfo(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("exception_type")
-    def _validate_exception_type(cls, v: str, values: ExceptionInfo.Partial) -> str:
-        for validator in ExceptionInfo.Validators._exception_type_validators:
+    @pydantic.validator("exception_type", pre=True)
+    def _pre_validate_exception_type(cls, v: str, values: ExceptionInfo.Partial) -> str:
+        for validator in ExceptionInfo.Validators._exception_type_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("exception_message")
-    def _validate_exception_message(cls, v: str, values: ExceptionInfo.Partial) -> str:
-        for validator in ExceptionInfo.Validators._exception_message_validators:
+    @pydantic.validator("exception_type", pre=False)
+    def _post_validate_exception_type(cls, v: str, values: ExceptionInfo.Partial) -> str:
+        for validator in ExceptionInfo.Validators._exception_type_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("exception_stacktrace")
-    def _validate_exception_stacktrace(cls, v: str, values: ExceptionInfo.Partial) -> str:
-        for validator in ExceptionInfo.Validators._exception_stacktrace_validators:
+    @pydantic.validator("exception_message", pre=True)
+    def _pre_validate_exception_message(cls, v: str, values: ExceptionInfo.Partial) -> str:
+        for validator in ExceptionInfo.Validators._exception_message_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("exception_message", pre=False)
+    def _post_validate_exception_message(cls, v: str, values: ExceptionInfo.Partial) -> str:
+        for validator in ExceptionInfo.Validators._exception_message_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("exception_stacktrace", pre=True)
+    def _pre_validate_exception_stacktrace(cls, v: str, values: ExceptionInfo.Partial) -> str:
+        for validator in ExceptionInfo.Validators._exception_stacktrace_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("exception_stacktrace", pre=False)
+    def _post_validate_exception_stacktrace(cls, v: str, values: ExceptionInfo.Partial) -> str:
+        for validator in ExceptionInfo.Validators._exception_stacktrace_post_validators:
             v = validator(v, values)
         return v
 

@@ -43,9 +43,12 @@ class Parameter(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[Parameter.Partial], Parameter.Partial]]] = []
-        _parameter_id_validators: typing.ClassVar[typing.List[Parameter.Validators.ParameterIdValidator]] = []
-        _name_validators: typing.ClassVar[typing.List[Parameter.Validators.NameValidator]] = []
-        _variable_type_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
+        _parameter_id_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.ParameterIdValidator]] = []
+        _parameter_id_post_validators: typing.ClassVar[typing.List[Parameter.Validators.ParameterIdValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.NameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[Parameter.Validators.NameValidator]] = []
+        _variable_type_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
+        _variable_type_post_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
 
         @classmethod
         def root(
@@ -76,14 +79,23 @@ class Parameter(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameter_id":
-                    cls._parameter_id_validators.append(validator)
+                    if pre:
+                        cls._parameter_id_post_validators.append(validator)
+                    else:
+                        cls._parameter_id_post_validators.append(validator)
                 if field_name == "name":
-                    cls._name_validators.append(validator)
+                    if pre:
+                        cls._name_post_validators.append(validator)
+                    else:
+                        cls._name_post_validators.append(validator)
                 if field_name == "variable_type":
-                    cls._variable_type_validators.append(validator)
+                    if pre:
+                        cls._variable_type_post_validators.append(validator)
+                    else:
+                        cls._variable_type_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -106,21 +118,39 @@ class Parameter(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("parameter_id")
-    def _validate_parameter_id(cls, v: ParameterId, values: Parameter.Partial) -> ParameterId:
-        for validator in Parameter.Validators._parameter_id_validators:
+    @pydantic.validator("parameter_id", pre=True)
+    def _pre_validate_parameter_id(cls, v: ParameterId, values: Parameter.Partial) -> ParameterId:
+        for validator in Parameter.Validators._parameter_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("name")
-    def _validate_name(cls, v: str, values: Parameter.Partial) -> str:
-        for validator in Parameter.Validators._name_validators:
+    @pydantic.validator("parameter_id", pre=False)
+    def _post_validate_parameter_id(cls, v: ParameterId, values: Parameter.Partial) -> ParameterId:
+        for validator in Parameter.Validators._parameter_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("variable_type")
-    def _validate_variable_type(cls, v: VariableType, values: Parameter.Partial) -> VariableType:
-        for validator in Parameter.Validators._variable_type_validators:
+    @pydantic.validator("name", pre=True)
+    def _pre_validate_name(cls, v: str, values: Parameter.Partial) -> str:
+        for validator in Parameter.Validators._name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("name", pre=False)
+    def _post_validate_name(cls, v: str, values: Parameter.Partial) -> str:
+        for validator in Parameter.Validators._name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("variable_type", pre=True)
+    def _pre_validate_variable_type(cls, v: VariableType, values: Parameter.Partial) -> VariableType:
+        for validator in Parameter.Validators._variable_type_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("variable_type", pre=False)
+    def _post_validate_variable_type(cls, v: VariableType, values: Parameter.Partial) -> VariableType:
+        for validator in Parameter.Validators._variable_type_post_validators:
             v = validator(v, values)
         return v
 

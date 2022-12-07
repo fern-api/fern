@@ -42,9 +42,18 @@ class GenericCreateProblemError(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GenericCreateProblemError.Partial], GenericCreateProblemError.Partial]]
         ] = []
-        _message_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.MessageValidator]] = []
-        _type_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.TypeValidator]] = []
-        _stacktrace_validators: typing.ClassVar[
+        _message_pre_validators: typing.ClassVar[
+            typing.List[GenericCreateProblemError.Validators.MessageValidator]
+        ] = []
+        _message_post_validators: typing.ClassVar[
+            typing.List[GenericCreateProblemError.Validators.MessageValidator]
+        ] = []
+        _type_pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.TypeValidator]] = []
+        _type_post_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.TypeValidator]] = []
+        _stacktrace_pre_validators: typing.ClassVar[
+            typing.List[GenericCreateProblemError.Validators.StacktraceValidator]
+        ] = []
+        _stacktrace_post_validators: typing.ClassVar[
             typing.List[GenericCreateProblemError.Validators.StacktraceValidator]
         ] = []
 
@@ -85,14 +94,23 @@ class GenericCreateProblemError(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "message":
-                    cls._message_validators.append(validator)
+                    if pre:
+                        cls._message_post_validators.append(validator)
+                    else:
+                        cls._message_post_validators.append(validator)
                 if field_name == "type":
-                    cls._type_validators.append(validator)
+                    if pre:
+                        cls._type_post_validators.append(validator)
+                    else:
+                        cls._type_post_validators.append(validator)
                 if field_name == "stacktrace":
-                    cls._stacktrace_validators.append(validator)
+                    if pre:
+                        cls._stacktrace_post_validators.append(validator)
+                    else:
+                        cls._stacktrace_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -115,21 +133,39 @@ class GenericCreateProblemError(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("message")
-    def _validate_message(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
-        for validator in GenericCreateProblemError.Validators._message_validators:
+    @pydantic.validator("message", pre=True)
+    def _pre_validate_message(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
+        for validator in GenericCreateProblemError.Validators._message_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("type")
-    def _validate_type(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
-        for validator in GenericCreateProblemError.Validators._type_validators:
+    @pydantic.validator("message", pre=False)
+    def _post_validate_message(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
+        for validator in GenericCreateProblemError.Validators._message_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stacktrace")
-    def _validate_stacktrace(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
-        for validator in GenericCreateProblemError.Validators._stacktrace_validators:
+    @pydantic.validator("type", pre=True)
+    def _pre_validate_type(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
+        for validator in GenericCreateProblemError.Validators._type_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("type", pre=False)
+    def _post_validate_type(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
+        for validator in GenericCreateProblemError.Validators._type_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stacktrace", pre=True)
+    def _pre_validate_stacktrace(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
+        for validator in GenericCreateProblemError.Validators._stacktrace_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stacktrace", pre=False)
+    def _post_validate_stacktrace(cls, v: str, values: GenericCreateProblemError.Partial) -> str:
+        for validator in GenericCreateProblemError.Validators._stacktrace_post_validators:
             v = validator(v, values)
         return v
 

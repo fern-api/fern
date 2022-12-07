@@ -34,8 +34,10 @@ class MapType(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[MapType.Partial], MapType.Partial]]] = []
-        _key_type_validators: typing.ClassVar[typing.List[MapType.Validators.KeyTypeValidator]] = []
-        _value_type_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
+        _key_type_pre_validators: typing.ClassVar[typing.List[MapType.Validators.KeyTypeValidator]] = []
+        _key_type_post_validators: typing.ClassVar[typing.List[MapType.Validators.KeyTypeValidator]] = []
+        _value_type_pre_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
+        _value_type_post_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
 
         @classmethod
         def root(
@@ -59,12 +61,18 @@ class MapType(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key_type":
-                    cls._key_type_validators.append(validator)
+                    if pre:
+                        cls._key_type_post_validators.append(validator)
+                    else:
+                        cls._key_type_post_validators.append(validator)
                 if field_name == "value_type":
-                    cls._value_type_validators.append(validator)
+                    if pre:
+                        cls._value_type_post_validators.append(validator)
+                    else:
+                        cls._value_type_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -83,15 +91,27 @@ class MapType(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("key_type")
-    def _validate_key_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:
-        for validator in MapType.Validators._key_type_validators:
+    @pydantic.validator("key_type", pre=True)
+    def _pre_validate_key_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:
+        for validator in MapType.Validators._key_type_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("value_type")
-    def _validate_value_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:
-        for validator in MapType.Validators._value_type_validators:
+    @pydantic.validator("key_type", pre=False)
+    def _post_validate_key_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:
+        for validator in MapType.Validators._key_type_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("value_type", pre=True)
+    def _pre_validate_value_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:
+        for validator in MapType.Validators._value_type_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("value_type", pre=False)
+    def _post_validate_value_type(cls, v: VariableType, values: MapType.Partial) -> VariableType:
+        for validator in MapType.Validators._value_type_post_validators:
             v = validator(v, values)
         return v
 

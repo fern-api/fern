@@ -36,7 +36,10 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
                 ]
             ]
         ] = []
-        _template_validators: typing.ClassVar[
+        _template_pre_validators: typing.ClassVar[
+            typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator]
+        ] = []
+        _template_post_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator]
         ] = []
 
@@ -63,10 +66,13 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template":
-                    cls._template_validators.append(validator)
+                    if pre:
+                        cls._template_post_validators.append(validator)
+                    else:
+                        cls._template_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -85,11 +91,19 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("template")
-    def _validate_template(
+    @pydantic.validator("template", pre=True)
+    def _pre_validate_template(
         cls, v: TestCaseTemplate, values: GetGeneratedTestCaseTemplateFileRequest.Partial
     ) -> TestCaseTemplate:
-        for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._template_validators:
+        for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._template_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("template", pre=False)
+    def _post_validate_template(
+        cls, v: TestCaseTemplate, values: GetGeneratedTestCaseTemplateFileRequest.Partial
+    ) -> TestCaseTemplate:
+        for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._template_post_validators:
             v = validator(v, values)
         return v
 

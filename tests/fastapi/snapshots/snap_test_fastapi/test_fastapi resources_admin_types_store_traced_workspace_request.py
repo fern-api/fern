@@ -41,10 +41,16 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[StoreTracedWorkspaceRequest.Partial], StoreTracedWorkspaceRequest.Partial]]
         ] = []
-        _workspace_run_details_validators: typing.ClassVar[
+        _workspace_run_details_pre_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator]
         ] = []
-        _trace_responses_validators: typing.ClassVar[
+        _workspace_run_details_post_validators: typing.ClassVar[
+            typing.List[StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator]
+        ] = []
+        _trace_responses_pre_validators: typing.ClassVar[
+            typing.List[StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator]
+        ] = []
+        _trace_responses_post_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator]
         ] = []
 
@@ -76,12 +82,18 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "workspace_run_details":
-                    cls._workspace_run_details_validators.append(validator)
+                    if pre:
+                        cls._workspace_run_details_post_validators.append(validator)
+                    else:
+                        cls._workspace_run_details_post_validators.append(validator)
                 if field_name == "trace_responses":
-                    cls._trace_responses_validators.append(validator)
+                    if pre:
+                        cls._trace_responses_post_validators.append(validator)
+                    else:
+                        cls._trace_responses_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -104,19 +116,35 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("workspace_run_details")
-    def _validate_workspace_run_details(
+    @pydantic.validator("workspace_run_details", pre=True)
+    def _pre_validate_workspace_run_details(
         cls, v: WorkspaceRunDetails, values: StoreTracedWorkspaceRequest.Partial
     ) -> WorkspaceRunDetails:
-        for validator in StoreTracedWorkspaceRequest.Validators._workspace_run_details_validators:
+        for validator in StoreTracedWorkspaceRequest.Validators._workspace_run_details_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("trace_responses")
-    def _validate_trace_responses(
+    @pydantic.validator("workspace_run_details", pre=False)
+    def _post_validate_workspace_run_details(
+        cls, v: WorkspaceRunDetails, values: StoreTracedWorkspaceRequest.Partial
+    ) -> WorkspaceRunDetails:
+        for validator in StoreTracedWorkspaceRequest.Validators._workspace_run_details_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("trace_responses", pre=True)
+    def _pre_validate_trace_responses(
         cls, v: typing.List[TraceResponse], values: StoreTracedWorkspaceRequest.Partial
     ) -> typing.List[TraceResponse]:
-        for validator in StoreTracedWorkspaceRequest.Validators._trace_responses_validators:
+        for validator in StoreTracedWorkspaceRequest.Validators._trace_responses_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("trace_responses", pre=False)
+    def _post_validate_trace_responses(
+        cls, v: typing.List[TraceResponse], values: StoreTracedWorkspaceRequest.Partial
+    ) -> typing.List[TraceResponse]:
+        for validator in StoreTracedWorkspaceRequest.Validators._trace_responses_post_validators:
             v = validator(v, values)
         return v
 

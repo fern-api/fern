@@ -36,8 +36,10 @@ class Migration(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[Migration.Partial], Migration.Partial]]] = []
-        _name_validators: typing.ClassVar[typing.List[Migration.Validators.NameValidator]] = []
-        _status_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Migration.Validators.NameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[Migration.Validators.NameValidator]] = []
+        _status_pre_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
+        _status_post_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
 
         @classmethod
         def root(
@@ -61,12 +63,18 @@ class Migration(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "name":
-                    cls._name_validators.append(validator)
+                    if pre:
+                        cls._name_post_validators.append(validator)
+                    else:
+                        cls._name_post_validators.append(validator)
                 if field_name == "status":
-                    cls._status_validators.append(validator)
+                    if pre:
+                        cls._status_post_validators.append(validator)
+                    else:
+                        cls._status_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -85,15 +93,27 @@ class Migration(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("name")
-    def _validate_name(cls, v: str, values: Migration.Partial) -> str:
-        for validator in Migration.Validators._name_validators:
+    @pydantic.validator("name", pre=True)
+    def _pre_validate_name(cls, v: str, values: Migration.Partial) -> str:
+        for validator in Migration.Validators._name_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("status")
-    def _validate_status(cls, v: MigrationStatus, values: Migration.Partial) -> MigrationStatus:
-        for validator in Migration.Validators._status_validators:
+    @pydantic.validator("name", pre=False)
+    def _post_validate_name(cls, v: str, values: Migration.Partial) -> str:
+        for validator in Migration.Validators._name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=True)
+    def _pre_validate_status(cls, v: MigrationStatus, values: Migration.Partial) -> MigrationStatus:
+        for validator in Migration.Validators._status_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=False)
+    def _post_validate_status(cls, v: MigrationStatus, values: Migration.Partial) -> MigrationStatus:
+        for validator in Migration.Validators._status_post_validators:
             v = validator(v, values)
         return v
 

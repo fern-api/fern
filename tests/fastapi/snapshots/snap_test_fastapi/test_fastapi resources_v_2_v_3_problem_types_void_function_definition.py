@@ -39,8 +39,14 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[VoidFunctionDefinition.Partial], VoidFunctionDefinition.Partial]]
         ] = []
-        _parameters_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.ParametersValidator]] = []
-        _code_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
+        _parameters_pre_validators: typing.ClassVar[
+            typing.List[VoidFunctionDefinition.Validators.ParametersValidator]
+        ] = []
+        _parameters_post_validators: typing.ClassVar[
+            typing.List[VoidFunctionDefinition.Validators.ParametersValidator]
+        ] = []
+        _code_pre_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
+        _code_post_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
 
         @classmethod
         def root(
@@ -69,12 +75,18 @@ class VoidFunctionDefinition(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
-                    cls._parameters_validators.append(validator)
+                    if pre:
+                        cls._parameters_post_validators.append(validator)
+                    else:
+                        cls._parameters_post_validators.append(validator)
                 if field_name == "code":
-                    cls._code_validators.append(validator)
+                    if pre:
+                        cls._code_post_validators.append(validator)
+                    else:
+                        cls._code_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -97,19 +109,35 @@ class VoidFunctionDefinition(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("parameters")
-    def _validate_parameters(
+    @pydantic.validator("parameters", pre=True)
+    def _pre_validate_parameters(
         cls, v: typing.List[Parameter], values: VoidFunctionDefinition.Partial
     ) -> typing.List[Parameter]:
-        for validator in VoidFunctionDefinition.Validators._parameters_validators:
+        for validator in VoidFunctionDefinition.Validators._parameters_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("code")
-    def _validate_code(
+    @pydantic.validator("parameters", pre=False)
+    def _post_validate_parameters(
+        cls, v: typing.List[Parameter], values: VoidFunctionDefinition.Partial
+    ) -> typing.List[Parameter]:
+        for validator in VoidFunctionDefinition.Validators._parameters_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code", pre=True)
+    def _pre_validate_code(
         cls, v: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinition.Partial
     ) -> FunctionImplementationForMultipleLanguages:
-        for validator in VoidFunctionDefinition.Validators._code_validators:
+        for validator in VoidFunctionDefinition.Validators._code_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code", pre=False)
+    def _post_validate_code(
+        cls, v: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinition.Partial
+    ) -> FunctionImplementationForMultipleLanguages:
+        for validator in VoidFunctionDefinition.Validators._code_post_validators:
             v = validator(v, values)
         return v
 

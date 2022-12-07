@@ -39,10 +39,16 @@ class TestCaseImplementation(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseImplementation.Partial], TestCaseImplementation.Partial]]
         ] = []
-        _description_validators: typing.ClassVar[
+        _description_pre_validators: typing.ClassVar[
             typing.List[TestCaseImplementation.Validators.DescriptionValidator]
         ] = []
-        _function_validators: typing.ClassVar[typing.List[TestCaseImplementation.Validators.FunctionValidator]] = []
+        _description_post_validators: typing.ClassVar[
+            typing.List[TestCaseImplementation.Validators.DescriptionValidator]
+        ] = []
+        _function_pre_validators: typing.ClassVar[typing.List[TestCaseImplementation.Validators.FunctionValidator]] = []
+        _function_post_validators: typing.ClassVar[
+            typing.List[TestCaseImplementation.Validators.FunctionValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -71,12 +77,18 @@ class TestCaseImplementation(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "description":
-                    cls._description_validators.append(validator)
+                    if pre:
+                        cls._description_post_validators.append(validator)
+                    else:
+                        cls._description_post_validators.append(validator)
                 if field_name == "function":
-                    cls._function_validators.append(validator)
+                    if pre:
+                        cls._function_post_validators.append(validator)
+                    else:
+                        cls._function_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -97,17 +109,31 @@ class TestCaseImplementation(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("description")
-    def _validate_description(
+    @pydantic.validator("description", pre=True)
+    def _pre_validate_description(
         cls, v: TestCaseImplementationDescription, values: TestCaseImplementation.Partial
     ) -> TestCaseImplementationDescription:
-        for validator in TestCaseImplementation.Validators._description_validators:
+        for validator in TestCaseImplementation.Validators._description_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("function")
-    def _validate_function(cls, v: TestCaseFunction, values: TestCaseImplementation.Partial) -> TestCaseFunction:
-        for validator in TestCaseImplementation.Validators._function_validators:
+    @pydantic.validator("description", pre=False)
+    def _post_validate_description(
+        cls, v: TestCaseImplementationDescription, values: TestCaseImplementation.Partial
+    ) -> TestCaseImplementationDescription:
+        for validator in TestCaseImplementation.Validators._description_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("function", pre=True)
+    def _pre_validate_function(cls, v: TestCaseFunction, values: TestCaseImplementation.Partial) -> TestCaseFunction:
+        for validator in TestCaseImplementation.Validators._function_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("function", pre=False)
+    def _post_validate_function(cls, v: TestCaseFunction, values: TestCaseImplementation.Partial) -> TestCaseFunction:
+        for validator in TestCaseImplementation.Validators._function_post_validators:
             v = validator(v, values)
         return v
 

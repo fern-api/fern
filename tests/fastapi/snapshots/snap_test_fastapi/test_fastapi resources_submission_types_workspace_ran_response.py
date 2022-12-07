@@ -39,10 +39,18 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceRanResponse.Partial], WorkspaceRanResponse.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[
+        _submission_id_pre_validators: typing.ClassVar[
             typing.List[WorkspaceRanResponse.Validators.SubmissionIdValidator]
         ] = []
-        _run_details_validators: typing.ClassVar[typing.List[WorkspaceRanResponse.Validators.RunDetailsValidator]] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[WorkspaceRanResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _run_details_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceRanResponse.Validators.RunDetailsValidator]
+        ] = []
+        _run_details_post_validators: typing.ClassVar[
+            typing.List[WorkspaceRanResponse.Validators.RunDetailsValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -71,12 +79,18 @@ class WorkspaceRanResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "run_details":
-                    cls._run_details_validators.append(validator)
+                    if pre:
+                        cls._run_details_post_validators.append(validator)
+                    else:
+                        cls._run_details_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -95,15 +109,31 @@ class WorkspaceRanResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
-        for validator in WorkspaceRanResponse.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
+        for validator in WorkspaceRanResponse.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("run_details")
-    def _validate_run_details(cls, v: WorkspaceRunDetails, values: WorkspaceRanResponse.Partial) -> WorkspaceRunDetails:
-        for validator in WorkspaceRanResponse.Validators._run_details_validators:
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: WorkspaceRanResponse.Partial) -> SubmissionId:
+        for validator in WorkspaceRanResponse.Validators._submission_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("run_details", pre=True)
+    def _pre_validate_run_details(
+        cls, v: WorkspaceRunDetails, values: WorkspaceRanResponse.Partial
+    ) -> WorkspaceRunDetails:
+        for validator in WorkspaceRanResponse.Validators._run_details_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("run_details", pre=False)
+    def _post_validate_run_details(
+        cls, v: WorkspaceRunDetails, values: WorkspaceRanResponse.Partial
+    ) -> WorkspaceRunDetails:
+        for validator in WorkspaceRanResponse.Validators._run_details_post_validators:
             v = validator(v, values)
         return v
 

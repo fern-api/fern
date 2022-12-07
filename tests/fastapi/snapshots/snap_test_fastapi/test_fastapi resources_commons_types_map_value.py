@@ -28,7 +28,8 @@ class MapValue(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[MapValue.Partial], MapValue.Partial]]] = []
-        _key_value_pairs_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
+        _key_value_pairs_pre_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
+        _key_value_pairs_post_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
 
         @classmethod
         def root(
@@ -45,10 +46,13 @@ class MapValue(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key_value_pairs":
-                    cls._key_value_pairs_validators.append(validator)
+                    if pre:
+                        cls._key_value_pairs_post_validators.append(validator)
+                    else:
+                        cls._key_value_pairs_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -63,11 +67,19 @@ class MapValue(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("key_value_pairs")
-    def _validate_key_value_pairs(
+    @pydantic.validator("key_value_pairs", pre=True)
+    def _pre_validate_key_value_pairs(
         cls, v: typing.List[KeyValuePair], values: MapValue.Partial
     ) -> typing.List[KeyValuePair]:
-        for validator in MapValue.Validators._key_value_pairs_validators:
+        for validator in MapValue.Validators._key_value_pairs_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("key_value_pairs", pre=False)
+    def _post_validate_key_value_pairs(
+        cls, v: typing.List[KeyValuePair], values: MapValue.Partial
+    ) -> typing.List[KeyValuePair]:
+        for validator in MapValue.Validators._key_value_pairs_post_validators:
             v = validator(v, values)
         return v
 

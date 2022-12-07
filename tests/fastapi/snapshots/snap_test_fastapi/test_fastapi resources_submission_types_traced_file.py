@@ -34,8 +34,10 @@ class TracedFile(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[TracedFile.Partial], TracedFile.Partial]]] = []
-        _filename_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
-        _directory_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
+        _filename_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
+        _filename_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
+        _directory_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
+        _directory_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
 
         @classmethod
         def root(
@@ -59,12 +61,18 @@ class TracedFile(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "filename":
-                    cls._filename_validators.append(validator)
+                    if pre:
+                        cls._filename_post_validators.append(validator)
+                    else:
+                        cls._filename_post_validators.append(validator)
                 if field_name == "directory":
-                    cls._directory_validators.append(validator)
+                    if pre:
+                        cls._directory_post_validators.append(validator)
+                    else:
+                        cls._directory_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -83,15 +91,27 @@ class TracedFile(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("filename")
-    def _validate_filename(cls, v: str, values: TracedFile.Partial) -> str:
-        for validator in TracedFile.Validators._filename_validators:
+    @pydantic.validator("filename", pre=True)
+    def _pre_validate_filename(cls, v: str, values: TracedFile.Partial) -> str:
+        for validator in TracedFile.Validators._filename_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("directory")
-    def _validate_directory(cls, v: str, values: TracedFile.Partial) -> str:
-        for validator in TracedFile.Validators._directory_validators:
+    @pydantic.validator("filename", pre=False)
+    def _post_validate_filename(cls, v: str, values: TracedFile.Partial) -> str:
+        for validator in TracedFile.Validators._filename_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("directory", pre=True)
+    def _pre_validate_directory(cls, v: str, values: TracedFile.Partial) -> str:
+        for validator in TracedFile.Validators._directory_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("directory", pre=False)
+    def _post_validate_directory(cls, v: str, values: TracedFile.Partial) -> str:
+        for validator in TracedFile.Validators._directory_post_validators:
             v = validator(v, values)
         return v
 

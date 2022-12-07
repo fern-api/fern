@@ -32,7 +32,10 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[SubmissionIdNotFound.Partial], SubmissionIdNotFound.Partial]]
         ] = []
-        _missing_submission_id_validators: typing.ClassVar[
+        _missing_submission_id_pre_validators: typing.ClassVar[
+            typing.List[SubmissionIdNotFound.Validators.MissingSubmissionIdValidator]
+        ] = []
+        _missing_submission_id_post_validators: typing.ClassVar[
             typing.List[SubmissionIdNotFound.Validators.MissingSubmissionIdValidator]
         ] = []
 
@@ -54,10 +57,13 @@ class SubmissionIdNotFound(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "missing_submission_id":
-                    cls._missing_submission_id_validators.append(validator)
+                    if pre:
+                        cls._missing_submission_id_post_validators.append(validator)
+                    else:
+                        cls._missing_submission_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -72,9 +78,17 @@ class SubmissionIdNotFound(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("missing_submission_id")
-    def _validate_missing_submission_id(cls, v: SubmissionId, values: SubmissionIdNotFound.Partial) -> SubmissionId:
-        for validator in SubmissionIdNotFound.Validators._missing_submission_id_validators:
+    @pydantic.validator("missing_submission_id", pre=True)
+    def _pre_validate_missing_submission_id(cls, v: SubmissionId, values: SubmissionIdNotFound.Partial) -> SubmissionId:
+        for validator in SubmissionIdNotFound.Validators._missing_submission_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("missing_submission_id", pre=False)
+    def _post_validate_missing_submission_id(
+        cls, v: SubmissionId, values: SubmissionIdNotFound.Partial
+    ) -> SubmissionId:
+        for validator in SubmissionIdNotFound.Validators._missing_submission_id_post_validators:
             v = validator(v, values)
         return v
 

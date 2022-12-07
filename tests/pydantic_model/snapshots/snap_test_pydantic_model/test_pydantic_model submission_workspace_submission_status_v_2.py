@@ -32,7 +32,12 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceSubmissionStatusV2.Partial], WorkspaceSubmissionStatusV2.Partial]]
         ] = []
-        _updates_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]] = []
+        _updates_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]
+        ] = []
+        _updates_post_validators: typing.ClassVar[
+            typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -52,10 +57,13 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "updates":
-                    cls._updates_validators.append(validator)
+                    if pre:
+                        cls._updates_post_validators.append(validator)
+                    else:
+                        cls._updates_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -72,11 +80,19 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("updates")
-    def _validate_updates(
+    @pydantic.validator("updates", pre=True)
+    def _pre_validate_updates(
         cls, v: typing.List[WorkspaceSubmissionUpdate], values: WorkspaceSubmissionStatusV2.Partial
     ) -> typing.List[WorkspaceSubmissionUpdate]:
-        for validator in WorkspaceSubmissionStatusV2.Validators._updates_validators:
+        for validator in WorkspaceSubmissionStatusV2.Validators._updates_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("updates", pre=False)
+    def _post_validate_updates(
+        cls, v: typing.List[WorkspaceSubmissionUpdate], values: WorkspaceSubmissionStatusV2.Partial
+    ) -> typing.List[WorkspaceSubmissionUpdate]:
+        for validator in WorkspaceSubmissionStatusV2.Validators._updates_post_validators:
             v = validator(v, values)
         return v
 

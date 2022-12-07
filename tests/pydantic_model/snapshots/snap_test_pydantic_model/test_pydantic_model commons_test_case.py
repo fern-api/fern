@@ -36,8 +36,10 @@ class TestCase(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[TestCase.Partial], TestCase.Partial]]] = []
-        _id_validators: typing.ClassVar[typing.List[TestCase.Validators.IdValidator]] = []
-        _params_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
+        _id_pre_validators: typing.ClassVar[typing.List[TestCase.Validators.IdValidator]] = []
+        _id_post_validators: typing.ClassVar[typing.List[TestCase.Validators.IdValidator]] = []
+        _params_pre_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
+        _params_post_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
 
         @classmethod
         def root(
@@ -61,12 +63,18 @@ class TestCase(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "id":
-                    cls._id_validators.append(validator)
+                    if pre:
+                        cls._id_post_validators.append(validator)
+                    else:
+                        cls._id_post_validators.append(validator)
                 if field_name == "params":
-                    cls._params_validators.append(validator)
+                    if pre:
+                        cls._params_post_validators.append(validator)
+                    else:
+                        cls._params_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -87,15 +95,31 @@ class TestCase(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("id")
-    def _validate_id(cls, v: str, values: TestCase.Partial) -> str:
-        for validator in TestCase.Validators._id_validators:
+    @pydantic.validator("id", pre=True)
+    def _pre_validate_id(cls, v: str, values: TestCase.Partial) -> str:
+        for validator in TestCase.Validators._id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("params")
-    def _validate_params(cls, v: typing.List[VariableValue], values: TestCase.Partial) -> typing.List[VariableValue]:
-        for validator in TestCase.Validators._params_validators:
+    @pydantic.validator("id", pre=False)
+    def _post_validate_id(cls, v: str, values: TestCase.Partial) -> str:
+        for validator in TestCase.Validators._id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("params", pre=True)
+    def _pre_validate_params(
+        cls, v: typing.List[VariableValue], values: TestCase.Partial
+    ) -> typing.List[VariableValue]:
+        for validator in TestCase.Validators._params_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("params", pre=False)
+    def _post_validate_params(
+        cls, v: typing.List[VariableValue], values: TestCase.Partial
+    ) -> typing.List[VariableValue]:
+        for validator in TestCase.Validators._params_post_validators:
             v = validator(v, values)
         return v
 

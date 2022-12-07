@@ -51,16 +51,28 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[LightweightProblemInfoV2.Partial], LightweightProblemInfoV2.Partial]]
         ] = []
-        _problem_id_validators: typing.ClassVar[
+        _problem_id_pre_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemIdValidator]
         ] = []
-        _problem_name_validators: typing.ClassVar[
+        _problem_id_post_validators: typing.ClassVar[
+            typing.List[LightweightProblemInfoV2.Validators.ProblemIdValidator]
+        ] = []
+        _problem_name_pre_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemNameValidator]
         ] = []
-        _problem_version_validators: typing.ClassVar[
+        _problem_name_post_validators: typing.ClassVar[
+            typing.List[LightweightProblemInfoV2.Validators.ProblemNameValidator]
+        ] = []
+        _problem_version_pre_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemVersionValidator]
         ] = []
-        _variable_types_validators: typing.ClassVar[
+        _problem_version_post_validators: typing.ClassVar[
+            typing.List[LightweightProblemInfoV2.Validators.ProblemVersionValidator]
+        ] = []
+        _variable_types_pre_validators: typing.ClassVar[
+            typing.List[LightweightProblemInfoV2.Validators.VariableTypesValidator]
+        ] = []
+        _variable_types_post_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.VariableTypesValidator]
         ] = []
 
@@ -112,16 +124,28 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
-                    cls._problem_id_validators.append(validator)
+                    if pre:
+                        cls._problem_id_post_validators.append(validator)
+                    else:
+                        cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_name":
-                    cls._problem_name_validators.append(validator)
+                    if pre:
+                        cls._problem_name_post_validators.append(validator)
+                    else:
+                        cls._problem_name_post_validators.append(validator)
                 if field_name == "problem_version":
-                    cls._problem_version_validators.append(validator)
+                    if pre:
+                        cls._problem_version_post_validators.append(validator)
+                    else:
+                        cls._problem_version_post_validators.append(validator)
                 if field_name == "variable_types":
-                    cls._variable_types_validators.append(validator)
+                    if pre:
+                        cls._variable_types_post_validators.append(validator)
+                    else:
+                        cls._variable_types_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -150,29 +174,55 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("problem_id")
-    def _validate_problem_id(cls, v: ProblemId, values: LightweightProblemInfoV2.Partial) -> ProblemId:
-        for validator in LightweightProblemInfoV2.Validators._problem_id_validators:
+    @pydantic.validator("problem_id", pre=True)
+    def _pre_validate_problem_id(cls, v: ProblemId, values: LightweightProblemInfoV2.Partial) -> ProblemId:
+        for validator in LightweightProblemInfoV2.Validators._problem_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_name")
-    def _validate_problem_name(cls, v: str, values: LightweightProblemInfoV2.Partial) -> str:
-        for validator in LightweightProblemInfoV2.Validators._problem_name_validators:
+    @pydantic.validator("problem_id", pre=False)
+    def _post_validate_problem_id(cls, v: ProblemId, values: LightweightProblemInfoV2.Partial) -> ProblemId:
+        for validator in LightweightProblemInfoV2.Validators._problem_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_version")
-    def _validate_problem_version(cls, v: int, values: LightweightProblemInfoV2.Partial) -> int:
-        for validator in LightweightProblemInfoV2.Validators._problem_version_validators:
+    @pydantic.validator("problem_name", pre=True)
+    def _pre_validate_problem_name(cls, v: str, values: LightweightProblemInfoV2.Partial) -> str:
+        for validator in LightweightProblemInfoV2.Validators._problem_name_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("variable_types")
-    def _validate_variable_types(
+    @pydantic.validator("problem_name", pre=False)
+    def _post_validate_problem_name(cls, v: str, values: LightweightProblemInfoV2.Partial) -> str:
+        for validator in LightweightProblemInfoV2.Validators._problem_name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=True)
+    def _pre_validate_problem_version(cls, v: int, values: LightweightProblemInfoV2.Partial) -> int:
+        for validator in LightweightProblemInfoV2.Validators._problem_version_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=False)
+    def _post_validate_problem_version(cls, v: int, values: LightweightProblemInfoV2.Partial) -> int:
+        for validator in LightweightProblemInfoV2.Validators._problem_version_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("variable_types", pre=True)
+    def _pre_validate_variable_types(
         cls, v: typing.List[VariableType], values: LightweightProblemInfoV2.Partial
     ) -> typing.List[VariableType]:
-        for validator in LightweightProblemInfoV2.Validators._variable_types_validators:
+        for validator in LightweightProblemInfoV2.Validators._variable_types_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("variable_types", pre=False)
+    def _post_validate_variable_types(
+        cls, v: typing.List[VariableType], values: LightweightProblemInfoV2.Partial
+    ) -> typing.List[VariableType]:
+        for validator in LightweightProblemInfoV2.Validators._variable_types_post_validators:
             v = validator(v, values)
         return v
 

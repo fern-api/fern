@@ -39,10 +39,16 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[CustomTestCasesUnsupported.Partial], CustomTestCasesUnsupported.Partial]]
         ] = []
-        _problem_id_validators: typing.ClassVar[
+        _problem_id_pre_validators: typing.ClassVar[
             typing.List[CustomTestCasesUnsupported.Validators.ProblemIdValidator]
         ] = []
-        _submission_id_validators: typing.ClassVar[
+        _problem_id_post_validators: typing.ClassVar[
+            typing.List[CustomTestCasesUnsupported.Validators.ProblemIdValidator]
+        ] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[CustomTestCasesUnsupported.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
             typing.List[CustomTestCasesUnsupported.Validators.SubmissionIdValidator]
         ] = []
 
@@ -74,12 +80,18 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
-                    cls._problem_id_validators.append(validator)
+                    if pre:
+                        cls._problem_id_post_validators.append(validator)
+                    else:
+                        cls._problem_id_post_validators.append(validator)
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -98,15 +110,27 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("problem_id")
-    def _validate_problem_id(cls, v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
-        for validator in CustomTestCasesUnsupported.Validators._problem_id_validators:
+    @pydantic.validator("problem_id", pre=True)
+    def _pre_validate_problem_id(cls, v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
+        for validator in CustomTestCasesUnsupported.Validators._problem_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
-        for validator in CustomTestCasesUnsupported.Validators._submission_id_validators:
+    @pydantic.validator("problem_id", pre=False)
+    def _post_validate_problem_id(cls, v: ProblemId, values: CustomTestCasesUnsupported.Partial) -> ProblemId:
+        for validator in CustomTestCasesUnsupported.Validators._problem_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
+        for validator in CustomTestCasesUnsupported.Validators._submission_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: CustomTestCasesUnsupported.Partial) -> SubmissionId:
+        for validator in CustomTestCasesUnsupported.Validators._submission_id_post_validators:
             v = validator(v, values)
         return v
 

@@ -38,8 +38,10 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseResultWithStdout.Partial], TestCaseResultWithStdout.Partial]]
         ] = []
-        _result_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
-        _stdout_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
+        _result_pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
+        _result_post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
+        _stdout_post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
 
         @classmethod
         def root(
@@ -67,12 +69,18 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "result":
-                    cls._result_validators.append(validator)
+                    if pre:
+                        cls._result_post_validators.append(validator)
+                    else:
+                        cls._result_post_validators.append(validator)
                 if field_name == "stdout":
-                    cls._stdout_validators.append(validator)
+                    if pre:
+                        cls._stdout_post_validators.append(validator)
+                    else:
+                        cls._stdout_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -91,15 +99,27 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("result")
-    def _validate_result(cls, v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
-        for validator in TestCaseResultWithStdout.Validators._result_validators:
+    @pydantic.validator("result", pre=True)
+    def _pre_validate_result(cls, v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
+        for validator in TestCaseResultWithStdout.Validators._result_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stdout")
-    def _validate_stdout(cls, v: str, values: TestCaseResultWithStdout.Partial) -> str:
-        for validator in TestCaseResultWithStdout.Validators._stdout_validators:
+    @pydantic.validator("result", pre=False)
+    def _post_validate_result(cls, v: TestCaseResult, values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
+        for validator in TestCaseResultWithStdout.Validators._result_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=True)
+    def _pre_validate_stdout(cls, v: str, values: TestCaseResultWithStdout.Partial) -> str:
+        for validator in TestCaseResultWithStdout.Validators._stdout_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=False)
+    def _post_validate_stdout(cls, v: str, values: TestCaseResultWithStdout.Partial) -> str:
+        for validator in TestCaseResultWithStdout.Validators._stdout_post_validators:
             v = validator(v, values)
         return v
 

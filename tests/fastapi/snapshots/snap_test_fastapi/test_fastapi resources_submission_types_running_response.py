@@ -39,8 +39,14 @@ class RunningResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[RunningResponse.Partial], RunningResponse.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[typing.List[RunningResponse.Validators.SubmissionIdValidator]] = []
-        _state_validators: typing.ClassVar[typing.List[RunningResponse.Validators.StateValidator]] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[RunningResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[RunningResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _state_pre_validators: typing.ClassVar[typing.List[RunningResponse.Validators.StateValidator]] = []
+        _state_post_validators: typing.ClassVar[typing.List[RunningResponse.Validators.StateValidator]] = []
 
         @classmethod
         def root(
@@ -66,12 +72,18 @@ class RunningResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "state":
-                    cls._state_validators.append(validator)
+                    if pre:
+                        cls._state_post_validators.append(validator)
+                    else:
+                        cls._state_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -92,15 +104,27 @@ class RunningResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
-        for validator in RunningResponse.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
+        for validator in RunningResponse.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("state")
-    def _validate_state(cls, v: RunningSubmissionState, values: RunningResponse.Partial) -> RunningSubmissionState:
-        for validator in RunningResponse.Validators._state_validators:
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: RunningResponse.Partial) -> SubmissionId:
+        for validator in RunningResponse.Validators._submission_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("state", pre=True)
+    def _pre_validate_state(cls, v: RunningSubmissionState, values: RunningResponse.Partial) -> RunningSubmissionState:
+        for validator in RunningResponse.Validators._state_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("state", pre=False)
+    def _post_validate_state(cls, v: RunningSubmissionState, values: RunningResponse.Partial) -> RunningSubmissionState:
+        for validator in RunningResponse.Validators._state_post_validators:
             v = validator(v, values)
         return v
 

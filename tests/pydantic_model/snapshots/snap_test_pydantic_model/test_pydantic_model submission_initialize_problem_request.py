@@ -38,10 +38,16 @@ class InitializeProblemRequest(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[InitializeProblemRequest.Partial], InitializeProblemRequest.Partial]]
         ] = []
-        _problem_id_validators: typing.ClassVar[
+        _problem_id_pre_validators: typing.ClassVar[
             typing.List[InitializeProblemRequest.Validators.ProblemIdValidator]
         ] = []
-        _problem_version_validators: typing.ClassVar[
+        _problem_id_post_validators: typing.ClassVar[
+            typing.List[InitializeProblemRequest.Validators.ProblemIdValidator]
+        ] = []
+        _problem_version_pre_validators: typing.ClassVar[
+            typing.List[InitializeProblemRequest.Validators.ProblemVersionValidator]
+        ] = []
+        _problem_version_post_validators: typing.ClassVar[
             typing.List[InitializeProblemRequest.Validators.ProblemVersionValidator]
         ] = []
 
@@ -73,12 +79,18 @@ class InitializeProblemRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
-                    cls._problem_id_validators.append(validator)
+                    if pre:
+                        cls._problem_id_post_validators.append(validator)
+                    else:
+                        cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_version":
-                    cls._problem_version_validators.append(validator)
+                    if pre:
+                        cls._problem_version_post_validators.append(validator)
+                    else:
+                        cls._problem_version_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -99,17 +111,31 @@ class InitializeProblemRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("problem_id")
-    def _validate_problem_id(cls, v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
-        for validator in InitializeProblemRequest.Validators._problem_id_validators:
+    @pydantic.validator("problem_id", pre=True)
+    def _pre_validate_problem_id(cls, v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
+        for validator in InitializeProblemRequest.Validators._problem_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_version")
-    def _validate_problem_version(
+    @pydantic.validator("problem_id", pre=False)
+    def _post_validate_problem_id(cls, v: ProblemId, values: InitializeProblemRequest.Partial) -> ProblemId:
+        for validator in InitializeProblemRequest.Validators._problem_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=True)
+    def _pre_validate_problem_version(
         cls, v: typing.Optional[int], values: InitializeProblemRequest.Partial
     ) -> typing.Optional[int]:
-        for validator in InitializeProblemRequest.Validators._problem_version_validators:
+        for validator in InitializeProblemRequest.Validators._problem_version_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=False)
+    def _post_validate_problem_version(
+        cls, v: typing.Optional[int], values: InitializeProblemRequest.Partial
+    ) -> typing.Optional[int]:
+        for validator in InitializeProblemRequest.Validators._problem_version_post_validators:
             v = validator(v, values)
         return v
 

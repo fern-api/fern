@@ -30,7 +30,10 @@ class TestCaseExpects(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseExpects.Partial], TestCaseExpects.Partial]]
         ] = []
-        _expected_stdout_validators: typing.ClassVar[
+        _expected_stdout_pre_validators: typing.ClassVar[
+            typing.List[TestCaseExpects.Validators.ExpectedStdoutValidator]
+        ] = []
+        _expected_stdout_post_validators: typing.ClassVar[
             typing.List[TestCaseExpects.Validators.ExpectedStdoutValidator]
         ] = []
 
@@ -51,10 +54,13 @@ class TestCaseExpects(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_stdout":
-                    cls._expected_stdout_validators.append(validator)
+                    if pre:
+                        cls._expected_stdout_post_validators.append(validator)
+                    else:
+                        cls._expected_stdout_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -69,11 +75,19 @@ class TestCaseExpects(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("expected_stdout")
-    def _validate_expected_stdout(
+    @pydantic.validator("expected_stdout", pre=True)
+    def _pre_validate_expected_stdout(
         cls, v: typing.Optional[str], values: TestCaseExpects.Partial
     ) -> typing.Optional[str]:
-        for validator in TestCaseExpects.Validators._expected_stdout_validators:
+        for validator in TestCaseExpects.Validators._expected_stdout_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expected_stdout", pre=False)
+    def _post_validate_expected_stdout(
+        cls, v: typing.Optional[str], values: TestCaseExpects.Partial
+    ) -> typing.Optional[str]:
+        for validator in TestCaseExpects.Validators._expected_stdout_post_validators:
             v = validator(v, values)
         return v
 

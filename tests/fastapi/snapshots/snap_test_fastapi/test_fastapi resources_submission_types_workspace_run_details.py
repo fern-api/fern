@@ -45,11 +45,16 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceRunDetails.Partial], WorkspaceRunDetails.Partial]]
         ] = []
-        _exception_v_2_validators: typing.ClassVar[
+        _exception_v_2_pre_validators: typing.ClassVar[
             typing.List[WorkspaceRunDetails.Validators.ExceptionV2Validator]
         ] = []
-        _exception_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.ExceptionValidator]] = []
-        _stdout_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
+        _exception_v_2_post_validators: typing.ClassVar[
+            typing.List[WorkspaceRunDetails.Validators.ExceptionV2Validator]
+        ] = []
+        _exception_pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.ExceptionValidator]] = []
+        _exception_post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.ExceptionValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
+        _stdout_post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
 
         @classmethod
         def root(
@@ -86,14 +91,23 @@ class WorkspaceRunDetails(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "exception_v_2":
-                    cls._exception_v_2_validators.append(validator)
+                    if pre:
+                        cls._exception_v_2_post_validators.append(validator)
+                    else:
+                        cls._exception_v_2_post_validators.append(validator)
                 if field_name == "exception":
-                    cls._exception_validators.append(validator)
+                    if pre:
+                        cls._exception_post_validators.append(validator)
+                    else:
+                        cls._exception_post_validators.append(validator)
                 if field_name == "stdout":
-                    cls._stdout_validators.append(validator)
+                    if pre:
+                        cls._stdout_post_validators.append(validator)
+                    else:
+                        cls._stdout_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -120,25 +134,47 @@ class WorkspaceRunDetails(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("exception_v_2")
-    def _validate_exception_v_2(
+    @pydantic.validator("exception_v_2", pre=True)
+    def _pre_validate_exception_v_2(
         cls, v: typing.Optional[ExceptionV2], values: WorkspaceRunDetails.Partial
     ) -> typing.Optional[ExceptionV2]:
-        for validator in WorkspaceRunDetails.Validators._exception_v_2_validators:
+        for validator in WorkspaceRunDetails.Validators._exception_v_2_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("exception")
-    def _validate_exception(
+    @pydantic.validator("exception_v_2", pre=False)
+    def _post_validate_exception_v_2(
+        cls, v: typing.Optional[ExceptionV2], values: WorkspaceRunDetails.Partial
+    ) -> typing.Optional[ExceptionV2]:
+        for validator in WorkspaceRunDetails.Validators._exception_v_2_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("exception", pre=True)
+    def _pre_validate_exception(
         cls, v: typing.Optional[ExceptionInfo], values: WorkspaceRunDetails.Partial
     ) -> typing.Optional[ExceptionInfo]:
-        for validator in WorkspaceRunDetails.Validators._exception_validators:
+        for validator in WorkspaceRunDetails.Validators._exception_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stdout")
-    def _validate_stdout(cls, v: str, values: WorkspaceRunDetails.Partial) -> str:
-        for validator in WorkspaceRunDetails.Validators._stdout_validators:
+    @pydantic.validator("exception", pre=False)
+    def _post_validate_exception(
+        cls, v: typing.Optional[ExceptionInfo], values: WorkspaceRunDetails.Partial
+    ) -> typing.Optional[ExceptionInfo]:
+        for validator in WorkspaceRunDetails.Validators._exception_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=True)
+    def _pre_validate_stdout(cls, v: str, values: WorkspaceRunDetails.Partial) -> str:
+        for validator in WorkspaceRunDetails.Validators._stdout_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=False)
+    def _post_validate_stdout(cls, v: str, values: WorkspaceRunDetails.Partial) -> str:
+        for validator in WorkspaceRunDetails.Validators._stdout_post_validators:
             v = validator(v, values)
         return v
 

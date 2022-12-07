@@ -32,7 +32,10 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetFunctionSignatureResponse.Partial], GetFunctionSignatureResponse.Partial]]
         ] = []
-        _function_by_language_validators: typing.ClassVar[
+        _function_by_language_pre_validators: typing.ClassVar[
+            typing.List[GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator]
+        ] = []
+        _function_by_language_post_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator]
         ] = []
 
@@ -55,10 +58,13 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "function_by_language":
-                    cls._function_by_language_validators.append(validator)
+                    if pre:
+                        cls._function_by_language_post_validators.append(validator)
+                    else:
+                        cls._function_by_language_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -75,11 +81,19 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("function_by_language")
-    def _validate_function_by_language(
+    @pydantic.validator("function_by_language", pre=True)
+    def _pre_validate_function_by_language(
         cls, v: typing.Dict[Language, str], values: GetFunctionSignatureResponse.Partial
     ) -> typing.Dict[Language, str]:
-        for validator in GetFunctionSignatureResponse.Validators._function_by_language_validators:
+        for validator in GetFunctionSignatureResponse.Validators._function_by_language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("function_by_language", pre=False)
+    def _post_validate_function_by_language(
+        cls, v: typing.Dict[Language, str], values: GetFunctionSignatureResponse.Partial
+    ) -> typing.Dict[Language, str]:
+        for validator in GetFunctionSignatureResponse.Validators._function_by_language_post_validators:
             v = validator(v, values)
         return v
 

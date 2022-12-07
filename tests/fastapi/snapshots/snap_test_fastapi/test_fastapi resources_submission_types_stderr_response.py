@@ -38,8 +38,14 @@ class StderrResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[StderrResponse.Partial], StderrResponse.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[typing.List[StderrResponse.Validators.SubmissionIdValidator]] = []
-        _stderr_validators: typing.ClassVar[typing.List[StderrResponse.Validators.StderrValidator]] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[StderrResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[StderrResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _stderr_pre_validators: typing.ClassVar[typing.List[StderrResponse.Validators.StderrValidator]] = []
+        _stderr_post_validators: typing.ClassVar[typing.List[StderrResponse.Validators.StderrValidator]] = []
 
         @classmethod
         def root(
@@ -65,12 +71,18 @@ class StderrResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "stderr":
-                    cls._stderr_validators.append(validator)
+                    if pre:
+                        cls._stderr_post_validators.append(validator)
+                    else:
+                        cls._stderr_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -89,15 +101,27 @@ class StderrResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: StderrResponse.Partial) -> SubmissionId:
-        for validator in StderrResponse.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: StderrResponse.Partial) -> SubmissionId:
+        for validator in StderrResponse.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stderr")
-    def _validate_stderr(cls, v: str, values: StderrResponse.Partial) -> str:
-        for validator in StderrResponse.Validators._stderr_validators:
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: StderrResponse.Partial) -> SubmissionId:
+        for validator in StderrResponse.Validators._submission_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stderr", pre=True)
+    def _pre_validate_stderr(cls, v: str, values: StderrResponse.Partial) -> str:
+        for validator in StderrResponse.Validators._stderr_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stderr", pre=False)
+    def _post_validate_stderr(cls, v: str, values: StderrResponse.Partial) -> str:
+        for validator in StderrResponse.Validators._stderr_post_validators:
             v = validator(v, values)
         return v
 

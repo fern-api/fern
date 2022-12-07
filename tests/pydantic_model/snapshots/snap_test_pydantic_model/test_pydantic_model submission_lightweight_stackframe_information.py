@@ -38,10 +38,16 @@ class LightweightStackframeInformation(pydantic.BaseModel):
                 typing.Callable[[LightweightStackframeInformation.Partial], LightweightStackframeInformation.Partial]
             ]
         ] = []
-        _num_stack_frames_validators: typing.ClassVar[
+        _num_stack_frames_pre_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.NumStackFramesValidator]
         ] = []
-        _top_stack_frame_method_name_validators: typing.ClassVar[
+        _num_stack_frames_post_validators: typing.ClassVar[
+            typing.List[LightweightStackframeInformation.Validators.NumStackFramesValidator]
+        ] = []
+        _top_stack_frame_method_name_pre_validators: typing.ClassVar[
+            typing.List[LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator]
+        ] = []
+        _top_stack_frame_method_name_post_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator]
         ] = []
 
@@ -76,12 +82,18 @@ class LightweightStackframeInformation(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "num_stack_frames":
-                    cls._num_stack_frames_validators.append(validator)
+                    if pre:
+                        cls._num_stack_frames_post_validators.append(validator)
+                    else:
+                        cls._num_stack_frames_post_validators.append(validator)
                 if field_name == "top_stack_frame_method_name":
-                    cls._top_stack_frame_method_name_validators.append(validator)
+                    if pre:
+                        cls._top_stack_frame_method_name_post_validators.append(validator)
+                    else:
+                        cls._top_stack_frame_method_name_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -100,15 +112,29 @@ class LightweightStackframeInformation(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("num_stack_frames")
-    def _validate_num_stack_frames(cls, v: int, values: LightweightStackframeInformation.Partial) -> int:
-        for validator in LightweightStackframeInformation.Validators._num_stack_frames_validators:
+    @pydantic.validator("num_stack_frames", pre=True)
+    def _pre_validate_num_stack_frames(cls, v: int, values: LightweightStackframeInformation.Partial) -> int:
+        for validator in LightweightStackframeInformation.Validators._num_stack_frames_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("top_stack_frame_method_name")
-    def _validate_top_stack_frame_method_name(cls, v: str, values: LightweightStackframeInformation.Partial) -> str:
-        for validator in LightweightStackframeInformation.Validators._top_stack_frame_method_name_validators:
+    @pydantic.validator("num_stack_frames", pre=False)
+    def _post_validate_num_stack_frames(cls, v: int, values: LightweightStackframeInformation.Partial) -> int:
+        for validator in LightweightStackframeInformation.Validators._num_stack_frames_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("top_stack_frame_method_name", pre=True)
+    def _pre_validate_top_stack_frame_method_name(cls, v: str, values: LightweightStackframeInformation.Partial) -> str:
+        for validator in LightweightStackframeInformation.Validators._top_stack_frame_method_name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("top_stack_frame_method_name", pre=False)
+    def _post_validate_top_stack_frame_method_name(
+        cls, v: str, values: LightweightStackframeInformation.Partial
+    ) -> str:
+        for validator in LightweightStackframeInformation.Validators._top_stack_frame_method_name_post_validators:
             v = validator(v, values)
         return v
 

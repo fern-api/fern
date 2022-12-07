@@ -51,12 +51,22 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseNonHiddenGrade.Partial], TestCaseNonHiddenGrade.Partial]]
         ] = []
-        _passed_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
-        _actual_result_validators: typing.ClassVar[
+        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
+        _passed_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
+        _actual_result_pre_validators: typing.ClassVar[
             typing.List[TestCaseNonHiddenGrade.Validators.ActualResultValidator]
         ] = []
-        _exception_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.ExceptionValidator]] = []
-        _stdout_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
+        _actual_result_post_validators: typing.ClassVar[
+            typing.List[TestCaseNonHiddenGrade.Validators.ActualResultValidator]
+        ] = []
+        _exception_pre_validators: typing.ClassVar[
+            typing.List[TestCaseNonHiddenGrade.Validators.ExceptionValidator]
+        ] = []
+        _exception_post_validators: typing.ClassVar[
+            typing.List[TestCaseNonHiddenGrade.Validators.ExceptionValidator]
+        ] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
+        _stdout_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
 
         @classmethod
         def root(
@@ -103,16 +113,28 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "passed":
-                    cls._passed_validators.append(validator)
+                    if pre:
+                        cls._passed_post_validators.append(validator)
+                    else:
+                        cls._passed_post_validators.append(validator)
                 if field_name == "actual_result":
-                    cls._actual_result_validators.append(validator)
+                    if pre:
+                        cls._actual_result_post_validators.append(validator)
+                    else:
+                        cls._actual_result_post_validators.append(validator)
                 if field_name == "exception":
-                    cls._exception_validators.append(validator)
+                    if pre:
+                        cls._exception_post_validators.append(validator)
+                    else:
+                        cls._exception_post_validators.append(validator)
                 if field_name == "stdout":
-                    cls._stdout_validators.append(validator)
+                    if pre:
+                        cls._stdout_post_validators.append(validator)
+                    else:
+                        cls._stdout_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -143,31 +165,59 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("passed")
-    def _validate_passed(cls, v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
-        for validator in TestCaseNonHiddenGrade.Validators._passed_validators:
+    @pydantic.validator("passed", pre=True)
+    def _pre_validate_passed(cls, v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
+        for validator in TestCaseNonHiddenGrade.Validators._passed_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("actual_result")
-    def _validate_actual_result(
+    @pydantic.validator("passed", pre=False)
+    def _post_validate_passed(cls, v: bool, values: TestCaseNonHiddenGrade.Partial) -> bool:
+        for validator in TestCaseNonHiddenGrade.Validators._passed_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("actual_result", pre=True)
+    def _pre_validate_actual_result(
         cls, v: typing.Optional[VariableValue], values: TestCaseNonHiddenGrade.Partial
     ) -> typing.Optional[VariableValue]:
-        for validator in TestCaseNonHiddenGrade.Validators._actual_result_validators:
+        for validator in TestCaseNonHiddenGrade.Validators._actual_result_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("exception")
-    def _validate_exception(
+    @pydantic.validator("actual_result", pre=False)
+    def _post_validate_actual_result(
+        cls, v: typing.Optional[VariableValue], values: TestCaseNonHiddenGrade.Partial
+    ) -> typing.Optional[VariableValue]:
+        for validator in TestCaseNonHiddenGrade.Validators._actual_result_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("exception", pre=True)
+    def _pre_validate_exception(
         cls, v: typing.Optional[ExceptionV2], values: TestCaseNonHiddenGrade.Partial
     ) -> typing.Optional[ExceptionV2]:
-        for validator in TestCaseNonHiddenGrade.Validators._exception_validators:
+        for validator in TestCaseNonHiddenGrade.Validators._exception_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stdout")
-    def _validate_stdout(cls, v: str, values: TestCaseNonHiddenGrade.Partial) -> str:
-        for validator in TestCaseNonHiddenGrade.Validators._stdout_validators:
+    @pydantic.validator("exception", pre=False)
+    def _post_validate_exception(
+        cls, v: typing.Optional[ExceptionV2], values: TestCaseNonHiddenGrade.Partial
+    ) -> typing.Optional[ExceptionV2]:
+        for validator in TestCaseNonHiddenGrade.Validators._exception_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=True)
+    def _pre_validate_stdout(cls, v: str, values: TestCaseNonHiddenGrade.Partial) -> str:
+        for validator in TestCaseNonHiddenGrade.Validators._stdout_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=False)
+    def _post_validate_stdout(cls, v: str, values: TestCaseNonHiddenGrade.Partial) -> str:
+        for validator in TestCaseNonHiddenGrade.Validators._stdout_post_validators:
             v = validator(v, values)
         return v
 

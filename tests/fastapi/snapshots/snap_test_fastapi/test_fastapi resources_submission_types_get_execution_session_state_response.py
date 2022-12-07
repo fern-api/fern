@@ -46,13 +46,22 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 typing.Callable[[GetExecutionSessionStateResponse.Partial], GetExecutionSessionStateResponse.Partial]
             ]
         ] = []
-        _states_validators: typing.ClassVar[
+        _states_pre_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.StatesValidator]
         ] = []
-        _num_warming_instances_validators: typing.ClassVar[
+        _states_post_validators: typing.ClassVar[
+            typing.List[GetExecutionSessionStateResponse.Validators.StatesValidator]
+        ] = []
+        _num_warming_instances_pre_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.NumWarmingInstancesValidator]
         ] = []
-        _warming_session_ids_validators: typing.ClassVar[
+        _num_warming_instances_post_validators: typing.ClassVar[
+            typing.List[GetExecutionSessionStateResponse.Validators.NumWarmingInstancesValidator]
+        ] = []
+        _warming_session_ids_pre_validators: typing.ClassVar[
+            typing.List[GetExecutionSessionStateResponse.Validators.WarmingSessionIdsValidator]
+        ] = []
+        _warming_session_ids_post_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.WarmingSessionIdsValidator]
         ] = []
 
@@ -97,14 +106,23 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "states":
-                    cls._states_validators.append(validator)
+                    if pre:
+                        cls._states_post_validators.append(validator)
+                    else:
+                        cls._states_post_validators.append(validator)
                 if field_name == "num_warming_instances":
-                    cls._num_warming_instances_validators.append(validator)
+                    if pre:
+                        cls._num_warming_instances_post_validators.append(validator)
+                    else:
+                        cls._num_warming_instances_post_validators.append(validator)
                 if field_name == "warming_session_ids":
-                    cls._warming_session_ids_validators.append(validator)
+                    if pre:
+                        cls._warming_session_ids_post_validators.append(validator)
+                    else:
+                        cls._warming_session_ids_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -133,27 +151,51 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("states")
-    def _validate_states(
+    @pydantic.validator("states", pre=True)
+    def _pre_validate_states(
         cls, v: typing.Dict[str, ExecutionSessionState], values: GetExecutionSessionStateResponse.Partial
     ) -> typing.Dict[str, ExecutionSessionState]:
-        for validator in GetExecutionSessionStateResponse.Validators._states_validators:
+        for validator in GetExecutionSessionStateResponse.Validators._states_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("num_warming_instances")
-    def _validate_num_warming_instances(
+    @pydantic.validator("states", pre=False)
+    def _post_validate_states(
+        cls, v: typing.Dict[str, ExecutionSessionState], values: GetExecutionSessionStateResponse.Partial
+    ) -> typing.Dict[str, ExecutionSessionState]:
+        for validator in GetExecutionSessionStateResponse.Validators._states_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("num_warming_instances", pre=True)
+    def _pre_validate_num_warming_instances(
         cls, v: typing.Optional[int], values: GetExecutionSessionStateResponse.Partial
     ) -> typing.Optional[int]:
-        for validator in GetExecutionSessionStateResponse.Validators._num_warming_instances_validators:
+        for validator in GetExecutionSessionStateResponse.Validators._num_warming_instances_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("warming_session_ids")
-    def _validate_warming_session_ids(
+    @pydantic.validator("num_warming_instances", pre=False)
+    def _post_validate_num_warming_instances(
+        cls, v: typing.Optional[int], values: GetExecutionSessionStateResponse.Partial
+    ) -> typing.Optional[int]:
+        for validator in GetExecutionSessionStateResponse.Validators._num_warming_instances_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("warming_session_ids", pre=True)
+    def _pre_validate_warming_session_ids(
         cls, v: typing.List[str], values: GetExecutionSessionStateResponse.Partial
     ) -> typing.List[str]:
-        for validator in GetExecutionSessionStateResponse.Validators._warming_session_ids_validators:
+        for validator in GetExecutionSessionStateResponse.Validators._warming_session_ids_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("warming_session_ids", pre=False)
+    def _post_validate_warming_session_ids(
+        cls, v: typing.List[str], values: GetExecutionSessionStateResponse.Partial
+    ) -> typing.List[str]:
+        for validator in GetExecutionSessionStateResponse.Validators._warming_session_ids_post_validators:
             v = validator(v, values)
         return v
 

@@ -36,8 +36,10 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[DebugKeyValuePairs.Partial], DebugKeyValuePairs.Partial]]
         ] = []
-        _key_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.KeyValidator]] = []
-        _value_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.ValueValidator]] = []
+        _key_pre_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.KeyValidator]] = []
+        _key_post_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.KeyValidator]] = []
+        _value_pre_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.ValueValidator]] = []
+        _value_post_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.ValueValidator]] = []
 
         @classmethod
         def root(
@@ -63,12 +65,18 @@ class DebugKeyValuePairs(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "key":
-                    cls._key_validators.append(validator)
+                    if pre:
+                        cls._key_post_validators.append(validator)
+                    else:
+                        cls._key_post_validators.append(validator)
                 if field_name == "value":
-                    cls._value_validators.append(validator)
+                    if pre:
+                        cls._value_post_validators.append(validator)
+                    else:
+                        cls._value_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -87,15 +95,27 @@ class DebugKeyValuePairs(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("key")
-    def _validate_key(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
-        for validator in DebugKeyValuePairs.Validators._key_validators:
+    @pydantic.validator("key", pre=True)
+    def _pre_validate_key(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+        for validator in DebugKeyValuePairs.Validators._key_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("value")
-    def _validate_value(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
-        for validator in DebugKeyValuePairs.Validators._value_validators:
+    @pydantic.validator("key", pre=False)
+    def _post_validate_key(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+        for validator in DebugKeyValuePairs.Validators._key_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("value", pre=True)
+    def _pre_validate_value(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+        for validator in DebugKeyValuePairs.Validators._value_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("value", pre=False)
+    def _post_validate_value(cls, v: DebugVariableValue, values: DebugKeyValuePairs.Partial) -> DebugVariableValue:
+        for validator in DebugKeyValuePairs.Validators._value_post_validators:
             v = validator(v, values)
         return v
 

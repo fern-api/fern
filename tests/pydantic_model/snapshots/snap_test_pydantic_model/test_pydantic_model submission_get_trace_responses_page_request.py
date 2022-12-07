@@ -30,7 +30,12 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetTraceResponsesPageRequest.Partial], GetTraceResponsesPageRequest.Partial]]
         ] = []
-        _offset_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]] = []
+        _offset_pre_validators: typing.ClassVar[
+            typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]
+        ] = []
+        _offset_post_validators: typing.ClassVar[
+            typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -51,10 +56,13 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "offset":
-                    cls._offset_validators.append(validator)
+                    if pre:
+                        cls._offset_post_validators.append(validator)
+                    else:
+                        cls._offset_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -71,11 +79,19 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("offset")
-    def _validate_offset(
+    @pydantic.validator("offset", pre=True)
+    def _pre_validate_offset(
         cls, v: typing.Optional[int], values: GetTraceResponsesPageRequest.Partial
     ) -> typing.Optional[int]:
-        for validator in GetTraceResponsesPageRequest.Validators._offset_validators:
+        for validator in GetTraceResponsesPageRequest.Validators._offset_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("offset", pre=False)
+    def _post_validate_offset(
+        cls, v: typing.Optional[int], values: GetTraceResponsesPageRequest.Partial
+    ) -> typing.Optional[int]:
+        for validator in GetTraceResponsesPageRequest.Validators._offset_post_validators:
             v = validator(v, values)
         return v
 

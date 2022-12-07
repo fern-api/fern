@@ -35,7 +35,12 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
                 typing.Callable[[GetDefaultStarterFilesResponse.Partial], GetDefaultStarterFilesResponse.Partial]
             ]
         ] = []
-        _files_validators: typing.ClassVar[typing.List[GetDefaultStarterFilesResponse.Validators.FilesValidator]] = []
+        _files_pre_validators: typing.ClassVar[
+            typing.List[GetDefaultStarterFilesResponse.Validators.FilesValidator]
+        ] = []
+        _files_post_validators: typing.ClassVar[
+            typing.List[GetDefaultStarterFilesResponse.Validators.FilesValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -58,10 +63,13 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
-                    cls._files_validators.append(validator)
+                    if pre:
+                        cls._files_post_validators.append(validator)
+                    else:
+                        cls._files_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -78,11 +86,19 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("files")
-    def _validate_files(
+    @pydantic.validator("files", pre=True)
+    def _pre_validate_files(
         cls, v: typing.Dict[Language, ProblemFiles], values: GetDefaultStarterFilesResponse.Partial
     ) -> typing.Dict[Language, ProblemFiles]:
-        for validator in GetDefaultStarterFilesResponse.Validators._files_validators:
+        for validator in GetDefaultStarterFilesResponse.Validators._files_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("files", pre=False)
+    def _post_validate_files(
+        cls, v: typing.Dict[Language, ProblemFiles], values: GetDefaultStarterFilesResponse.Partial
+    ) -> typing.Dict[Language, ProblemFiles]:
+        for validator in GetDefaultStarterFilesResponse.Validators._files_post_validators:
             v = validator(v, values)
         return v
 

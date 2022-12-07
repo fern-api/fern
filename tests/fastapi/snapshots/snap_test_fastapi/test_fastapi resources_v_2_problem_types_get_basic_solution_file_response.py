@@ -33,7 +33,10 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetBasicSolutionFileResponse.Partial], GetBasicSolutionFileResponse.Partial]]
         ] = []
-        _solution_file_by_language_validators: typing.ClassVar[
+        _solution_file_by_language_pre_validators: typing.ClassVar[
+            typing.List[GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator]
+        ] = []
+        _solution_file_by_language_post_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator]
         ] = []
 
@@ -56,10 +59,13 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "solution_file_by_language":
-                    cls._solution_file_by_language_validators.append(validator)
+                    if pre:
+                        cls._solution_file_by_language_post_validators.append(validator)
+                    else:
+                        cls._solution_file_by_language_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -76,11 +82,19 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("solution_file_by_language")
-    def _validate_solution_file_by_language(
+    @pydantic.validator("solution_file_by_language", pre=True)
+    def _pre_validate_solution_file_by_language(
         cls, v: typing.Dict[Language, FileInfoV2], values: GetBasicSolutionFileResponse.Partial
     ) -> typing.Dict[Language, FileInfoV2]:
-        for validator in GetBasicSolutionFileResponse.Validators._solution_file_by_language_validators:
+        for validator in GetBasicSolutionFileResponse.Validators._solution_file_by_language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("solution_file_by_language", pre=False)
+    def _post_validate_solution_file_by_language(
+        cls, v: typing.Dict[Language, FileInfoV2], values: GetBasicSolutionFileResponse.Partial
+    ) -> typing.Dict[Language, FileInfoV2]:
+        for validator in GetBasicSolutionFileResponse.Validators._solution_file_by_language_post_validators:
             v = validator(v, values)
         return v
 

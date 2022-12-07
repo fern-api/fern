@@ -38,10 +38,16 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetBasicSolutionFileRequest.Partial], GetBasicSolutionFileRequest.Partial]]
         ] = []
-        _method_name_validators: typing.ClassVar[
+        _method_name_pre_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileRequest.Validators.MethodNameValidator]
         ] = []
-        _signature_validators: typing.ClassVar[
+        _method_name_post_validators: typing.ClassVar[
+            typing.List[GetBasicSolutionFileRequest.Validators.MethodNameValidator]
+        ] = []
+        _signature_pre_validators: typing.ClassVar[
+            typing.List[GetBasicSolutionFileRequest.Validators.SignatureValidator]
+        ] = []
+        _signature_post_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileRequest.Validators.SignatureValidator]
         ] = []
 
@@ -73,12 +79,18 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "method_name":
-                    cls._method_name_validators.append(validator)
+                    if pre:
+                        cls._method_name_post_validators.append(validator)
+                    else:
+                        cls._method_name_post_validators.append(validator)
                 if field_name == "signature":
-                    cls._signature_validators.append(validator)
+                    if pre:
+                        cls._signature_post_validators.append(validator)
+                    else:
+                        cls._signature_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -99,17 +111,31 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("method_name")
-    def _validate_method_name(cls, v: str, values: GetBasicSolutionFileRequest.Partial) -> str:
-        for validator in GetBasicSolutionFileRequest.Validators._method_name_validators:
+    @pydantic.validator("method_name", pre=True)
+    def _pre_validate_method_name(cls, v: str, values: GetBasicSolutionFileRequest.Partial) -> str:
+        for validator in GetBasicSolutionFileRequest.Validators._method_name_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("signature")
-    def _validate_signature(
+    @pydantic.validator("method_name", pre=False)
+    def _post_validate_method_name(cls, v: str, values: GetBasicSolutionFileRequest.Partial) -> str:
+        for validator in GetBasicSolutionFileRequest.Validators._method_name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("signature", pre=True)
+    def _pre_validate_signature(
         cls, v: NonVoidFunctionSignature, values: GetBasicSolutionFileRequest.Partial
     ) -> NonVoidFunctionSignature:
-        for validator in GetBasicSolutionFileRequest.Validators._signature_validators:
+        for validator in GetBasicSolutionFileRequest.Validators._signature_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("signature", pre=False)
+    def _post_validate_signature(
+        cls, v: NonVoidFunctionSignature, values: GetBasicSolutionFileRequest.Partial
+    ) -> NonVoidFunctionSignature:
+        for validator in GetBasicSolutionFileRequest.Validators._signature_post_validators:
             v = validator(v, values)
         return v
 

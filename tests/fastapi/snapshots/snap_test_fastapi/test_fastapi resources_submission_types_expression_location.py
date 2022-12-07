@@ -36,8 +36,10 @@ class ExpressionLocation(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[ExpressionLocation.Partial], ExpressionLocation.Partial]]
         ] = []
-        _start_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
-        _offset_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
+        _start_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
+        _start_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
+        _offset_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
+        _offset_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
 
         @classmethod
         def root(
@@ -65,12 +67,18 @@ class ExpressionLocation(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "start":
-                    cls._start_validators.append(validator)
+                    if pre:
+                        cls._start_post_validators.append(validator)
+                    else:
+                        cls._start_post_validators.append(validator)
                 if field_name == "offset":
-                    cls._offset_validators.append(validator)
+                    if pre:
+                        cls._offset_post_validators.append(validator)
+                    else:
+                        cls._offset_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -89,15 +97,27 @@ class ExpressionLocation(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("start")
-    def _validate_start(cls, v: int, values: ExpressionLocation.Partial) -> int:
-        for validator in ExpressionLocation.Validators._start_validators:
+    @pydantic.validator("start", pre=True)
+    def _pre_validate_start(cls, v: int, values: ExpressionLocation.Partial) -> int:
+        for validator in ExpressionLocation.Validators._start_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("offset")
-    def _validate_offset(cls, v: int, values: ExpressionLocation.Partial) -> int:
-        for validator in ExpressionLocation.Validators._offset_validators:
+    @pydantic.validator("start", pre=False)
+    def _post_validate_start(cls, v: int, values: ExpressionLocation.Partial) -> int:
+        for validator in ExpressionLocation.Validators._start_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("offset", pre=True)
+    def _pre_validate_offset(cls, v: int, values: ExpressionLocation.Partial) -> int:
+        for validator in ExpressionLocation.Validators._offset_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("offset", pre=False)
+    def _post_validate_offset(cls, v: int, values: ExpressionLocation.Partial) -> int:
+        for validator in ExpressionLocation.Validators._offset_post_validators:
             v = validator(v, values)
         return v
 

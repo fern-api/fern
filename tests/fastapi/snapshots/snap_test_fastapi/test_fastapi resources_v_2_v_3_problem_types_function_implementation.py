@@ -36,8 +36,10 @@ class FunctionImplementation(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[FunctionImplementation.Partial], FunctionImplementation.Partial]]
         ] = []
-        _impl_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImplValidator]] = []
-        _imports_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
+        _impl_pre_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImplValidator]] = []
+        _impl_post_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImplValidator]] = []
+        _imports_pre_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
+        _imports_post_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
 
         @classmethod
         def root(
@@ -65,12 +67,18 @@ class FunctionImplementation(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "impl":
-                    cls._impl_validators.append(validator)
+                    if pre:
+                        cls._impl_post_validators.append(validator)
+                    else:
+                        cls._impl_post_validators.append(validator)
                 if field_name == "imports":
-                    cls._imports_validators.append(validator)
+                    if pre:
+                        cls._imports_post_validators.append(validator)
+                    else:
+                        cls._imports_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -91,15 +99,31 @@ class FunctionImplementation(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("impl")
-    def _validate_impl(cls, v: str, values: FunctionImplementation.Partial) -> str:
-        for validator in FunctionImplementation.Validators._impl_validators:
+    @pydantic.validator("impl", pre=True)
+    def _pre_validate_impl(cls, v: str, values: FunctionImplementation.Partial) -> str:
+        for validator in FunctionImplementation.Validators._impl_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("imports")
-    def _validate_imports(cls, v: typing.Optional[str], values: FunctionImplementation.Partial) -> typing.Optional[str]:
-        for validator in FunctionImplementation.Validators._imports_validators:
+    @pydantic.validator("impl", pre=False)
+    def _post_validate_impl(cls, v: str, values: FunctionImplementation.Partial) -> str:
+        for validator in FunctionImplementation.Validators._impl_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("imports", pre=True)
+    def _pre_validate_imports(
+        cls, v: typing.Optional[str], values: FunctionImplementation.Partial
+    ) -> typing.Optional[str]:
+        for validator in FunctionImplementation.Validators._imports_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("imports", pre=False)
+    def _post_validate_imports(
+        cls, v: typing.Optional[str], values: FunctionImplementation.Partial
+    ) -> typing.Optional[str]:
+        for validator in FunctionImplementation.Validators._imports_post_validators:
             v = validator(v, values)
         return v
 

@@ -48,10 +48,16 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
                 ]
             ]
         ] = []
-        _additional_parameters_validators: typing.ClassVar[
+        _additional_parameters_pre_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator]
         ] = []
-        _code_validators: typing.ClassVar[
+        _additional_parameters_post_validators: typing.ClassVar[
+            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator]
+        ] = []
+        _code_pre_validators: typing.ClassVar[
+            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator]
+        ] = []
+        _code_post_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator]
         ] = []
 
@@ -89,12 +95,18 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "additional_parameters":
-                    cls._additional_parameters_validators.append(validator)
+                    if pre:
+                        cls._additional_parameters_post_validators.append(validator)
+                    else:
+                        cls._additional_parameters_post_validators.append(validator)
                 if field_name == "code":
-                    cls._code_validators.append(validator)
+                    if pre:
+                        cls._code_post_validators.append(validator)
+                    else:
+                        cls._code_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -121,19 +133,35 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("additional_parameters")
-    def _validate_additional_parameters(
+    @pydantic.validator("additional_parameters", pre=True)
+    def _pre_validate_additional_parameters(
         cls, v: typing.List[Parameter], values: VoidFunctionDefinitionThatTakesActualResult.Partial
     ) -> typing.List[Parameter]:
-        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._additional_parameters_validators:
+        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._additional_parameters_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("code")
-    def _validate_code(
+    @pydantic.validator("additional_parameters", pre=False)
+    def _post_validate_additional_parameters(
+        cls, v: typing.List[Parameter], values: VoidFunctionDefinitionThatTakesActualResult.Partial
+    ) -> typing.List[Parameter]:
+        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._additional_parameters_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code", pre=True)
+    def _pre_validate_code(
         cls, v: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinitionThatTakesActualResult.Partial
     ) -> FunctionImplementationForMultipleLanguages:
-        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._code_validators:
+        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._code_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code", pre=False)
+    def _post_validate_code(
+        cls, v: FunctionImplementationForMultipleLanguages, values: VoidFunctionDefinitionThatTakesActualResult.Partial
+    ) -> FunctionImplementationForMultipleLanguages:
+        for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._code_post_validators:
             v = validator(v, values)
         return v
 

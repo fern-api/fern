@@ -50,10 +50,14 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[BinaryTreeNodeValue.Partial], BinaryTreeNodeValue.Partial]]
         ] = []
-        _node_id_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
-        _val_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.ValValidator]] = []
-        _right_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.RightValidator]] = []
-        _left_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
+        _node_id_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
+        _node_id_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
+        _val_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.ValValidator]] = []
+        _val_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.ValValidator]] = []
+        _right_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.RightValidator]] = []
+        _right_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.RightValidator]] = []
+        _left_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
+        _left_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
 
         @classmethod
         def root(
@@ -99,16 +103,28 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "node_id":
-                    cls._node_id_validators.append(validator)
+                    if pre:
+                        cls._node_id_post_validators.append(validator)
+                    else:
+                        cls._node_id_post_validators.append(validator)
                 if field_name == "val":
-                    cls._val_validators.append(validator)
+                    if pre:
+                        cls._val_post_validators.append(validator)
+                    else:
+                        cls._val_post_validators.append(validator)
                 if field_name == "right":
-                    cls._right_validators.append(validator)
+                    if pre:
+                        cls._right_post_validators.append(validator)
+                    else:
+                        cls._right_post_validators.append(validator)
                 if field_name == "left":
-                    cls._left_validators.append(validator)
+                    if pre:
+                        cls._left_post_validators.append(validator)
+                    else:
+                        cls._left_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -139,29 +155,59 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("node_id")
-    def _validate_node_id(cls, v: NodeId, values: BinaryTreeNodeValue.Partial) -> NodeId:
-        for validator in BinaryTreeNodeValue.Validators._node_id_validators:
+    @pydantic.validator("node_id", pre=True)
+    def _pre_validate_node_id(cls, v: NodeId, values: BinaryTreeNodeValue.Partial) -> NodeId:
+        for validator in BinaryTreeNodeValue.Validators._node_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("val")
-    def _validate_val(cls, v: float, values: BinaryTreeNodeValue.Partial) -> float:
-        for validator in BinaryTreeNodeValue.Validators._val_validators:
+    @pydantic.validator("node_id", pre=False)
+    def _post_validate_node_id(cls, v: NodeId, values: BinaryTreeNodeValue.Partial) -> NodeId:
+        for validator in BinaryTreeNodeValue.Validators._node_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("right")
-    def _validate_right(
+    @pydantic.validator("val", pre=True)
+    def _pre_validate_val(cls, v: float, values: BinaryTreeNodeValue.Partial) -> float:
+        for validator in BinaryTreeNodeValue.Validators._val_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("val", pre=False)
+    def _post_validate_val(cls, v: float, values: BinaryTreeNodeValue.Partial) -> float:
+        for validator in BinaryTreeNodeValue.Validators._val_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("right", pre=True)
+    def _pre_validate_right(
         cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial
     ) -> typing.Optional[NodeId]:
-        for validator in BinaryTreeNodeValue.Validators._right_validators:
+        for validator in BinaryTreeNodeValue.Validators._right_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("left")
-    def _validate_left(cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial) -> typing.Optional[NodeId]:
-        for validator in BinaryTreeNodeValue.Validators._left_validators:
+    @pydantic.validator("right", pre=False)
+    def _post_validate_right(
+        cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial
+    ) -> typing.Optional[NodeId]:
+        for validator in BinaryTreeNodeValue.Validators._right_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("left", pre=True)
+    def _pre_validate_left(
+        cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial
+    ) -> typing.Optional[NodeId]:
+        for validator in BinaryTreeNodeValue.Validators._left_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("left", pre=False)
+    def _post_validate_left(
+        cls, v: typing.Optional[NodeId], values: BinaryTreeNodeValue.Partial
+    ) -> typing.Optional[NodeId]:
+        for validator in BinaryTreeNodeValue.Validators._left_post_validators:
             v = validator(v, values)
         return v
 

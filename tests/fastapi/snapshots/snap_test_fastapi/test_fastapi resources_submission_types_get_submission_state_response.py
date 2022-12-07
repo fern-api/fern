@@ -52,14 +52,28 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GetSubmissionStateResponse.Partial], GetSubmissionStateResponse.Partial]]
         ] = []
-        _time_submitted_validators: typing.ClassVar[
+        _time_submitted_pre_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.TimeSubmittedValidator]
         ] = []
-        _submission_validators: typing.ClassVar[
+        _time_submitted_post_validators: typing.ClassVar[
+            typing.List[GetSubmissionStateResponse.Validators.TimeSubmittedValidator]
+        ] = []
+        _submission_pre_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.SubmissionValidator]
         ] = []
-        _language_validators: typing.ClassVar[typing.List[GetSubmissionStateResponse.Validators.LanguageValidator]] = []
-        _submission_type_state_validators: typing.ClassVar[
+        _submission_post_validators: typing.ClassVar[
+            typing.List[GetSubmissionStateResponse.Validators.SubmissionValidator]
+        ] = []
+        _language_pre_validators: typing.ClassVar[
+            typing.List[GetSubmissionStateResponse.Validators.LanguageValidator]
+        ] = []
+        _language_post_validators: typing.ClassVar[
+            typing.List[GetSubmissionStateResponse.Validators.LanguageValidator]
+        ] = []
+        _submission_type_state_pre_validators: typing.ClassVar[
+            typing.List[GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator]
+        ] = []
+        _submission_type_state_post_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator]
         ] = []
 
@@ -111,16 +125,28 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "time_submitted":
-                    cls._time_submitted_validators.append(validator)
+                    if pre:
+                        cls._time_submitted_post_validators.append(validator)
+                    else:
+                        cls._time_submitted_post_validators.append(validator)
                 if field_name == "submission":
-                    cls._submission_validators.append(validator)
+                    if pre:
+                        cls._submission_post_validators.append(validator)
+                    else:
+                        cls._submission_post_validators.append(validator)
                 if field_name == "language":
-                    cls._language_validators.append(validator)
+                    if pre:
+                        cls._language_post_validators.append(validator)
+                    else:
+                        cls._language_post_validators.append(validator)
                 if field_name == "submission_type_state":
-                    cls._submission_type_state_validators.append(validator)
+                    if pre:
+                        cls._submission_type_state_post_validators.append(validator)
+                    else:
+                        cls._submission_type_state_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -151,31 +177,59 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("time_submitted")
-    def _validate_time_submitted(
+    @pydantic.validator("time_submitted", pre=True)
+    def _pre_validate_time_submitted(
         cls, v: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial
     ) -> typing.Optional[dt.datetime]:
-        for validator in GetSubmissionStateResponse.Validators._time_submitted_validators:
+        for validator in GetSubmissionStateResponse.Validators._time_submitted_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("submission")
-    def _validate_submission(cls, v: str, values: GetSubmissionStateResponse.Partial) -> str:
-        for validator in GetSubmissionStateResponse.Validators._submission_validators:
+    @pydantic.validator("time_submitted", pre=False)
+    def _post_validate_time_submitted(
+        cls, v: typing.Optional[dt.datetime], values: GetSubmissionStateResponse.Partial
+    ) -> typing.Optional[dt.datetime]:
+        for validator in GetSubmissionStateResponse.Validators._time_submitted_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("language")
-    def _validate_language(cls, v: Language, values: GetSubmissionStateResponse.Partial) -> Language:
-        for validator in GetSubmissionStateResponse.Validators._language_validators:
+    @pydantic.validator("submission", pre=True)
+    def _pre_validate_submission(cls, v: str, values: GetSubmissionStateResponse.Partial) -> str:
+        for validator in GetSubmissionStateResponse.Validators._submission_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("submission_type_state")
-    def _validate_submission_type_state(
+    @pydantic.validator("submission", pre=False)
+    def _post_validate_submission(cls, v: str, values: GetSubmissionStateResponse.Partial) -> str:
+        for validator in GetSubmissionStateResponse.Validators._submission_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("language", pre=True)
+    def _pre_validate_language(cls, v: Language, values: GetSubmissionStateResponse.Partial) -> Language:
+        for validator in GetSubmissionStateResponse.Validators._language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("language", pre=False)
+    def _post_validate_language(cls, v: Language, values: GetSubmissionStateResponse.Partial) -> Language:
+        for validator in GetSubmissionStateResponse.Validators._language_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("submission_type_state", pre=True)
+    def _pre_validate_submission_type_state(
         cls, v: SubmissionTypeState, values: GetSubmissionStateResponse.Partial
     ) -> SubmissionTypeState:
-        for validator in GetSubmissionStateResponse.Validators._submission_type_state_validators:
+        for validator in GetSubmissionStateResponse.Validators._submission_type_state_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("submission_type_state", pre=False)
+    def _post_validate_submission_type_state(
+        cls, v: SubmissionTypeState, values: GetSubmissionStateResponse.Partial
+    ) -> SubmissionTypeState:
+        for validator in GetSubmissionStateResponse.Validators._submission_type_state_post_validators:
             v = validator(v, values)
         return v
 

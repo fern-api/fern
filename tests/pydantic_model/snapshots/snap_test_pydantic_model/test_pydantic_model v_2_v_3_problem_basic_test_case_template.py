@@ -52,12 +52,24 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[BasicTestCaseTemplate.Partial], BasicTestCaseTemplate.Partial]]
         ] = []
-        _template_id_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators.TemplateIdValidator]] = []
-        _name_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators.NameValidator]] = []
-        _description_validators: typing.ClassVar[
+        _template_id_pre_validators: typing.ClassVar[
+            typing.List[BasicTestCaseTemplate.Validators.TemplateIdValidator]
+        ] = []
+        _template_id_post_validators: typing.ClassVar[
+            typing.List[BasicTestCaseTemplate.Validators.TemplateIdValidator]
+        ] = []
+        _name_pre_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators.NameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[BasicTestCaseTemplate.Validators.NameValidator]] = []
+        _description_pre_validators: typing.ClassVar[
             typing.List[BasicTestCaseTemplate.Validators.DescriptionValidator]
         ] = []
-        _expected_value_parameter_id_validators: typing.ClassVar[
+        _description_post_validators: typing.ClassVar[
+            typing.List[BasicTestCaseTemplate.Validators.DescriptionValidator]
+        ] = []
+        _expected_value_parameter_id_pre_validators: typing.ClassVar[
+            typing.List[BasicTestCaseTemplate.Validators.ExpectedValueParameterIdValidator]
+        ] = []
+        _expected_value_parameter_id_post_validators: typing.ClassVar[
             typing.List[BasicTestCaseTemplate.Validators.ExpectedValueParameterIdValidator]
         ] = []
 
@@ -107,16 +119,28 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "template_id":
-                    cls._template_id_validators.append(validator)
+                    if pre:
+                        cls._template_id_post_validators.append(validator)
+                    else:
+                        cls._template_id_post_validators.append(validator)
                 if field_name == "name":
-                    cls._name_validators.append(validator)
+                    if pre:
+                        cls._name_post_validators.append(validator)
+                    else:
+                        cls._name_post_validators.append(validator)
                 if field_name == "description":
-                    cls._description_validators.append(validator)
+                    if pre:
+                        cls._description_post_validators.append(validator)
+                    else:
+                        cls._description_post_validators.append(validator)
                 if field_name == "expected_value_parameter_id":
-                    cls._expected_value_parameter_id_validators.append(validator)
+                    if pre:
+                        cls._expected_value_parameter_id_post_validators.append(validator)
+                    else:
+                        cls._expected_value_parameter_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -145,31 +169,63 @@ class BasicTestCaseTemplate(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("template_id")
-    def _validate_template_id(cls, v: TestCaseTemplateId, values: BasicTestCaseTemplate.Partial) -> TestCaseTemplateId:
-        for validator in BasicTestCaseTemplate.Validators._template_id_validators:
+    @pydantic.validator("template_id", pre=True)
+    def _pre_validate_template_id(
+        cls, v: TestCaseTemplateId, values: BasicTestCaseTemplate.Partial
+    ) -> TestCaseTemplateId:
+        for validator in BasicTestCaseTemplate.Validators._template_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("name")
-    def _validate_name(cls, v: str, values: BasicTestCaseTemplate.Partial) -> str:
-        for validator in BasicTestCaseTemplate.Validators._name_validators:
+    @pydantic.validator("template_id", pre=False)
+    def _post_validate_template_id(
+        cls, v: TestCaseTemplateId, values: BasicTestCaseTemplate.Partial
+    ) -> TestCaseTemplateId:
+        for validator in BasicTestCaseTemplate.Validators._template_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("description")
-    def _validate_description(
+    @pydantic.validator("name", pre=True)
+    def _pre_validate_name(cls, v: str, values: BasicTestCaseTemplate.Partial) -> str:
+        for validator in BasicTestCaseTemplate.Validators._name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("name", pre=False)
+    def _post_validate_name(cls, v: str, values: BasicTestCaseTemplate.Partial) -> str:
+        for validator in BasicTestCaseTemplate.Validators._name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("description", pre=True)
+    def _pre_validate_description(
         cls, v: TestCaseImplementationDescription, values: BasicTestCaseTemplate.Partial
     ) -> TestCaseImplementationDescription:
-        for validator in BasicTestCaseTemplate.Validators._description_validators:
+        for validator in BasicTestCaseTemplate.Validators._description_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("expected_value_parameter_id")
-    def _validate_expected_value_parameter_id(
+    @pydantic.validator("description", pre=False)
+    def _post_validate_description(
+        cls, v: TestCaseImplementationDescription, values: BasicTestCaseTemplate.Partial
+    ) -> TestCaseImplementationDescription:
+        for validator in BasicTestCaseTemplate.Validators._description_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expected_value_parameter_id", pre=True)
+    def _pre_validate_expected_value_parameter_id(
         cls, v: ParameterId, values: BasicTestCaseTemplate.Partial
     ) -> ParameterId:
-        for validator in BasicTestCaseTemplate.Validators._expected_value_parameter_id_validators:
+        for validator in BasicTestCaseTemplate.Validators._expected_value_parameter_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expected_value_parameter_id", pre=False)
+    def _post_validate_expected_value_parameter_id(
+        cls, v: ParameterId, values: BasicTestCaseTemplate.Partial
+    ) -> ParameterId:
+        for validator in BasicTestCaseTemplate.Validators._expected_value_parameter_id_post_validators:
             v = validator(v, values)
         return v
 

@@ -40,8 +40,14 @@ class GradedResponseV2(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[GradedResponseV2.Partial], GradedResponseV2.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[typing.List[GradedResponseV2.Validators.SubmissionIdValidator]] = []
-        _test_cases_validators: typing.ClassVar[typing.List[GradedResponseV2.Validators.TestCasesValidator]] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[GradedResponseV2.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[GradedResponseV2.Validators.SubmissionIdValidator]
+        ] = []
+        _test_cases_pre_validators: typing.ClassVar[typing.List[GradedResponseV2.Validators.TestCasesValidator]] = []
+        _test_cases_post_validators: typing.ClassVar[typing.List[GradedResponseV2.Validators.TestCasesValidator]] = []
 
         @classmethod
         def root(
@@ -69,12 +75,18 @@ class GradedResponseV2(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "test_cases":
-                    cls._test_cases_validators.append(validator)
+                    if pre:
+                        cls._test_cases_post_validators.append(validator)
+                    else:
+                        cls._test_cases_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -95,17 +107,31 @@ class GradedResponseV2(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: GradedResponseV2.Partial) -> SubmissionId:
-        for validator in GradedResponseV2.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: GradedResponseV2.Partial) -> SubmissionId:
+        for validator in GradedResponseV2.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("test_cases")
-    def _validate_test_cases(
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: GradedResponseV2.Partial) -> SubmissionId:
+        for validator in GradedResponseV2.Validators._submission_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("test_cases", pre=True)
+    def _pre_validate_test_cases(
         cls, v: typing.Dict[TestCaseId, TestCaseGrade], values: GradedResponseV2.Partial
     ) -> typing.Dict[TestCaseId, TestCaseGrade]:
-        for validator in GradedResponseV2.Validators._test_cases_validators:
+        for validator in GradedResponseV2.Validators._test_cases_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("test_cases", pre=False)
+    def _post_validate_test_cases(
+        cls, v: typing.Dict[TestCaseId, TestCaseGrade], values: GradedResponseV2.Partial
+    ) -> typing.Dict[TestCaseId, TestCaseGrade]:
+        for validator in GradedResponseV2.Validators._test_cases_post_validators:
             v = validator(v, values)
         return v
 

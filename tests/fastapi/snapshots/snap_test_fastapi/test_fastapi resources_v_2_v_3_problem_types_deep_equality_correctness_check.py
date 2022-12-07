@@ -32,7 +32,10 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[DeepEqualityCorrectnessCheck.Partial], DeepEqualityCorrectnessCheck.Partial]]
         ] = []
-        _expected_value_parameter_id_validators: typing.ClassVar[
+        _expected_value_parameter_id_pre_validators: typing.ClassVar[
+            typing.List[DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator]
+        ] = []
+        _expected_value_parameter_id_post_validators: typing.ClassVar[
             typing.List[DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator]
         ] = []
 
@@ -55,10 +58,13 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_value_parameter_id":
-                    cls._expected_value_parameter_id_validators.append(validator)
+                    if pre:
+                        cls._expected_value_parameter_id_post_validators.append(validator)
+                    else:
+                        cls._expected_value_parameter_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -73,11 +79,19 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("expected_value_parameter_id")
-    def _validate_expected_value_parameter_id(
+    @pydantic.validator("expected_value_parameter_id", pre=True)
+    def _pre_validate_expected_value_parameter_id(
         cls, v: ParameterId, values: DeepEqualityCorrectnessCheck.Partial
     ) -> ParameterId:
-        for validator in DeepEqualityCorrectnessCheck.Validators._expected_value_parameter_id_validators:
+        for validator in DeepEqualityCorrectnessCheck.Validators._expected_value_parameter_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expected_value_parameter_id", pre=False)
+    def _post_validate_expected_value_parameter_id(
+        cls, v: ParameterId, values: DeepEqualityCorrectnessCheck.Partial
+    ) -> ParameterId:
+        for validator in DeepEqualityCorrectnessCheck.Validators._expected_value_parameter_id_post_validators:
             v = validator(v, values)
         return v
 

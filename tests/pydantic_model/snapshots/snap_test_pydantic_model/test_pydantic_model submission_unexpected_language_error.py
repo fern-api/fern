@@ -38,10 +38,16 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[UnexpectedLanguageError.Partial], UnexpectedLanguageError.Partial]]
         ] = []
-        _expected_language_validators: typing.ClassVar[
+        _expected_language_pre_validators: typing.ClassVar[
             typing.List[UnexpectedLanguageError.Validators.ExpectedLanguageValidator]
         ] = []
-        _actual_language_validators: typing.ClassVar[
+        _expected_language_post_validators: typing.ClassVar[
+            typing.List[UnexpectedLanguageError.Validators.ExpectedLanguageValidator]
+        ] = []
+        _actual_language_pre_validators: typing.ClassVar[
+            typing.List[UnexpectedLanguageError.Validators.ActualLanguageValidator]
+        ] = []
+        _actual_language_post_validators: typing.ClassVar[
             typing.List[UnexpectedLanguageError.Validators.ActualLanguageValidator]
         ] = []
 
@@ -73,12 +79,18 @@ class UnexpectedLanguageError(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "expected_language":
-                    cls._expected_language_validators.append(validator)
+                    if pre:
+                        cls._expected_language_post_validators.append(validator)
+                    else:
+                        cls._expected_language_post_validators.append(validator)
                 if field_name == "actual_language":
-                    cls._actual_language_validators.append(validator)
+                    if pre:
+                        cls._actual_language_post_validators.append(validator)
+                    else:
+                        cls._actual_language_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -97,15 +109,27 @@ class UnexpectedLanguageError(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("expected_language")
-    def _validate_expected_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
-        for validator in UnexpectedLanguageError.Validators._expected_language_validators:
+    @pydantic.validator("expected_language", pre=True)
+    def _pre_validate_expected_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
+        for validator in UnexpectedLanguageError.Validators._expected_language_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("actual_language")
-    def _validate_actual_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
-        for validator in UnexpectedLanguageError.Validators._actual_language_validators:
+    @pydantic.validator("expected_language", pre=False)
+    def _post_validate_expected_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
+        for validator in UnexpectedLanguageError.Validators._expected_language_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("actual_language", pre=True)
+    def _pre_validate_actual_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
+        for validator in UnexpectedLanguageError.Validators._actual_language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("actual_language", pre=False)
+    def _post_validate_actual_language(cls, v: Language, values: UnexpectedLanguageError.Partial) -> Language:
+        for validator in UnexpectedLanguageError.Validators._actual_language_post_validators:
             v = validator(v, values)
         return v
 

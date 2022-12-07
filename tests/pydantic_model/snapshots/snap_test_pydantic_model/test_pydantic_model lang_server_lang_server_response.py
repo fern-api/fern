@@ -30,7 +30,8 @@ class LangServerResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[LangServerResponse.Partial], LangServerResponse.Partial]]
         ] = []
-        _response_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
+        _response_pre_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
+        _response_post_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
 
         @classmethod
         def root(
@@ -49,10 +50,13 @@ class LangServerResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "response":
-                    cls._response_validators.append(validator)
+                    if pre:
+                        cls._response_post_validators.append(validator)
+                    else:
+                        cls._response_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -67,9 +71,15 @@ class LangServerResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("response")
-    def _validate_response(cls, v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
-        for validator in LangServerResponse.Validators._response_validators:
+    @pydantic.validator("response", pre=True)
+    def _pre_validate_response(cls, v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
+        for validator in LangServerResponse.Validators._response_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("response", pre=False)
+    def _post_validate_response(cls, v: typing.Any, values: LangServerResponse.Partial) -> typing.Any:
+        for validator in LangServerResponse.Validators._response_post_validators:
             v = validator(v, values)
         return v
 

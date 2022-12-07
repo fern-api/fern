@@ -37,7 +37,8 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
         self._root_validator_generator.add_class_var_to_validators_class(validators_class=validators_class)
 
         for generator in self._field_validator_generators:
-            validators_class.add_class_var(generator.get_class_var_for_validators_class())
+            for pre in [True, False]:
+                validators_class.add_class_var(generator.get_class_var_for_validators_class(pre))
 
         self._root_validator_generator.add_decorator_to_validators_class(validators_class=validators_class)
 
@@ -58,6 +59,13 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                             type_hint=AST.TypeHint.str_(),
                         )
                     ],
+                    named_parameters=[
+                        AST.FunctionParameter(
+                            name=FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT,
+                            type_hint=AST.TypeHint.bool_(),
+                            initializer=AST.Expression("False"),
+                        )
+                    ],
                     return_type=AST.TypeHint.any(),
                 ),
                 body=AST.CodeWriter(self._write_add_field_validator_body),
@@ -76,17 +84,15 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                 writer.write(f'"{generator.field.name}":')
                 writer.write_line()
                 with writer.indent():
-                    append_statement = AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            qualified_name_excluding_import=(
-                                "cls",
-                                generator.get_validator_class_var(),
-                                "append",
-                            )
-                        ),
-                        args=[AST.Expression(FieldValidatorGenerator._VALIDATOR_PARAMETER_NAME)],
-                    )
-                    writer.write_node(append_statement)
+                    writer.write_line(f"if {FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT}:")
+                    with writer.indent():
+                        append_statement = self._get_validator_append_statement(generator, True)
+                        writer.write_node(append_statement)
+                    writer.write_newline_if_last_line_not()
+                    writer.write_line("else:")
+                    with writer.indent():
+                        append_statement = self._get_validator_append_statement(generator, False)
+                        writer.write_node(append_statement)
                 writer.write_line()
             writer.write(f"return {FieldValidatorGenerator._VALIDATOR_PARAMETER_NAME}")
 
@@ -101,6 +107,18 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
 
         writer.write_node(decorator)
         writer.write(f"return {DECORATOR_FUNCTION_NAME}")
+
+    def _get_validator_append_statement(self, generator: FieldValidatorGenerator, pre: bool) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(
+                    "cls",
+                    generator.get_validator_class_var(False),
+                    "append",
+                )
+            ),
+            args=[AST.Expression(FieldValidatorGenerator._VALIDATOR_PARAMETER_NAME)],
+        )
 
     def _get_validator_generators(self) -> Sequence[ValidatorGenerator]:
         root_list: List[ValidatorGenerator] = [self._root_validator_generator]

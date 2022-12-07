@@ -38,8 +38,14 @@ class StdoutResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[StdoutResponse.Partial], StdoutResponse.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.SubmissionIdValidator]] = []
-        _stdout_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.StdoutValidator]] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[StdoutResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[StdoutResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.StdoutValidator]] = []
+        _stdout_post_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.StdoutValidator]] = []
 
         @classmethod
         def root(
@@ -65,12 +71,18 @@ class StdoutResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "stdout":
-                    cls._stdout_validators.append(validator)
+                    if pre:
+                        cls._stdout_post_validators.append(validator)
+                    else:
+                        cls._stdout_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -89,15 +101,27 @@ class StdoutResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: StdoutResponse.Partial) -> SubmissionId:
-        for validator in StdoutResponse.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: StdoutResponse.Partial) -> SubmissionId:
+        for validator in StdoutResponse.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stdout")
-    def _validate_stdout(cls, v: str, values: StdoutResponse.Partial) -> str:
-        for validator in StdoutResponse.Validators._stdout_validators:
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: StdoutResponse.Partial) -> SubmissionId:
+        for validator in StdoutResponse.Validators._submission_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=True)
+    def _pre_validate_stdout(cls, v: str, values: StdoutResponse.Partial) -> str:
+        for validator in StdoutResponse.Validators._stdout_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=False)
+    def _post_validate_stdout(cls, v: str, values: StdoutResponse.Partial) -> str:
+        for validator in StdoutResponse.Validators._stdout_post_validators:
             v = validator(v, values)
         return v
 

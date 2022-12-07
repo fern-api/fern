@@ -39,8 +39,10 @@ class InvalidRequestResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[InvalidRequestResponse.Partial], InvalidRequestResponse.Partial]]
         ] = []
-        _request_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
-        _cause_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
+        _request_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
+        _request_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
+        _cause_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
+        _cause_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
 
         @classmethod
         def root(
@@ -68,12 +70,18 @@ class InvalidRequestResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "request":
-                    cls._request_validators.append(validator)
+                    if pre:
+                        cls._request_post_validators.append(validator)
+                    else:
+                        cls._request_post_validators.append(validator)
                 if field_name == "cause":
-                    cls._cause_validators.append(validator)
+                    if pre:
+                        cls._cause_post_validators.append(validator)
+                    else:
+                        cls._cause_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -94,15 +102,29 @@ class InvalidRequestResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("request")
-    def _validate_request(cls, v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
-        for validator in InvalidRequestResponse.Validators._request_validators:
+    @pydantic.validator("request", pre=True)
+    def _pre_validate_request(cls, v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
+        for validator in InvalidRequestResponse.Validators._request_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("cause")
-    def _validate_cause(cls, v: InvalidRequestCause, values: InvalidRequestResponse.Partial) -> InvalidRequestCause:
-        for validator in InvalidRequestResponse.Validators._cause_validators:
+    @pydantic.validator("request", pre=False)
+    def _post_validate_request(cls, v: SubmissionRequest, values: InvalidRequestResponse.Partial) -> SubmissionRequest:
+        for validator in InvalidRequestResponse.Validators._request_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("cause", pre=True)
+    def _pre_validate_cause(cls, v: InvalidRequestCause, values: InvalidRequestResponse.Partial) -> InvalidRequestCause:
+        for validator in InvalidRequestResponse.Validators._cause_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("cause", pre=False)
+    def _post_validate_cause(
+        cls, v: InvalidRequestCause, values: InvalidRequestResponse.Partial
+    ) -> InvalidRequestCause:
+        for validator in InvalidRequestResponse.Validators._cause_post_validators:
             v = validator(v, values)
         return v
 

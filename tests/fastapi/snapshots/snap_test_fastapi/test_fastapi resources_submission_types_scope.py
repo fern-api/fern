@@ -30,7 +30,8 @@ class Scope(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[Scope.Partial], Scope.Partial]]] = []
-        _variables_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
+        _variables_pre_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
+        _variables_post_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
 
         @classmethod
         def root(
@@ -47,10 +48,13 @@ class Scope(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "variables":
-                    cls._variables_validators.append(validator)
+                    if pre:
+                        cls._variables_post_validators.append(validator)
+                    else:
+                        cls._variables_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -67,11 +71,19 @@ class Scope(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("variables")
-    def _validate_variables(
+    @pydantic.validator("variables", pre=True)
+    def _pre_validate_variables(
         cls, v: typing.Dict[str, DebugVariableValue], values: Scope.Partial
     ) -> typing.Dict[str, DebugVariableValue]:
-        for validator in Scope.Validators._variables_validators:
+        for validator in Scope.Validators._variables_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("variables", pre=False)
+    def _post_validate_variables(
+        cls, v: typing.Dict[str, DebugVariableValue], values: Scope.Partial
+    ) -> typing.Dict[str, DebugVariableValue]:
+        for validator in Scope.Validators._variables_post_validators:
             v = validator(v, values)
         return v
 

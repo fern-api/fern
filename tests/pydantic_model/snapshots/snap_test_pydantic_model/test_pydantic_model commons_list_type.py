@@ -39,8 +39,10 @@ class ListType(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[ListType.Partial], ListType.Partial]]] = []
-        _value_type_validators: typing.ClassVar[typing.List[ListType.Validators.ValueTypeValidator]] = []
-        _is_fixed_length_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
+        _value_type_pre_validators: typing.ClassVar[typing.List[ListType.Validators.ValueTypeValidator]] = []
+        _value_type_post_validators: typing.ClassVar[typing.List[ListType.Validators.ValueTypeValidator]] = []
+        _is_fixed_length_pre_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
+        _is_fixed_length_post_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
 
         @classmethod
         def root(
@@ -64,12 +66,18 @@ class ListType(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "value_type":
-                    cls._value_type_validators.append(validator)
+                    if pre:
+                        cls._value_type_post_validators.append(validator)
+                    else:
+                        cls._value_type_post_validators.append(validator)
                 if field_name == "is_fixed_length":
-                    cls._is_fixed_length_validators.append(validator)
+                    if pre:
+                        cls._is_fixed_length_post_validators.append(validator)
+                    else:
+                        cls._is_fixed_length_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -88,15 +96,29 @@ class ListType(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("value_type")
-    def _validate_value_type(cls, v: VariableType, values: ListType.Partial) -> VariableType:
-        for validator in ListType.Validators._value_type_validators:
+    @pydantic.validator("value_type", pre=True)
+    def _pre_validate_value_type(cls, v: VariableType, values: ListType.Partial) -> VariableType:
+        for validator in ListType.Validators._value_type_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("is_fixed_length")
-    def _validate_is_fixed_length(cls, v: typing.Optional[bool], values: ListType.Partial) -> typing.Optional[bool]:
-        for validator in ListType.Validators._is_fixed_length_validators:
+    @pydantic.validator("value_type", pre=False)
+    def _post_validate_value_type(cls, v: VariableType, values: ListType.Partial) -> VariableType:
+        for validator in ListType.Validators._value_type_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("is_fixed_length", pre=True)
+    def _pre_validate_is_fixed_length(cls, v: typing.Optional[bool], values: ListType.Partial) -> typing.Optional[bool]:
+        for validator in ListType.Validators._is_fixed_length_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("is_fixed_length", pre=False)
+    def _post_validate_is_fixed_length(
+        cls, v: typing.Optional[bool], values: ListType.Partial
+    ) -> typing.Optional[bool]:
+        for validator in ListType.Validators._is_fixed_length_post_validators:
             v = validator(v, values)
         return v
 

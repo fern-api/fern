@@ -137,6 +137,7 @@ class PydanticModel:
         field_name: str,
         field_type: AST.TypeHint,
         body: AST.CodeWriter,
+        pre: bool = False,
     ) -> None:
         self._class_declaration.add_method(
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
@@ -157,7 +158,7 @@ class PydanticModel:
                     return_type=field_type,
                 ),
                 body=body,
-                decorators=[Pydantic.validator(field_name)],
+                decorators=[Pydantic.validator(field_name, pre)],
             ),
         )
 

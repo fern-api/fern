@@ -32,7 +32,10 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[ExistingSubmissionExecuting.Partial], ExistingSubmissionExecuting.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[ExistingSubmissionExecuting.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
             typing.List[ExistingSubmissionExecuting.Validators.SubmissionIdValidator]
         ] = []
 
@@ -54,10 +57,13 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -72,9 +78,15 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: ExistingSubmissionExecuting.Partial) -> SubmissionId:
-        for validator in ExistingSubmissionExecuting.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: ExistingSubmissionExecuting.Partial) -> SubmissionId:
+        for validator in ExistingSubmissionExecuting.Validators._submission_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: ExistingSubmissionExecuting.Partial) -> SubmissionId:
+        for validator in ExistingSubmissionExecuting.Validators._submission_id_post_validators:
             v = validator(v, values)
         return v
 

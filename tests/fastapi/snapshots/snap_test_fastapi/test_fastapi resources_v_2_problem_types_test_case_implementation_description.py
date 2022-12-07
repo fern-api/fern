@@ -34,7 +34,10 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
                 typing.Callable[[TestCaseImplementationDescription.Partial], TestCaseImplementationDescription.Partial]
             ]
         ] = []
-        _boards_validators: typing.ClassVar[
+        _boards_pre_validators: typing.ClassVar[
+            typing.List[TestCaseImplementationDescription.Validators.BoardsValidator]
+        ] = []
+        _boards_post_validators: typing.ClassVar[
             typing.List[TestCaseImplementationDescription.Validators.BoardsValidator]
         ] = []
 
@@ -59,10 +62,13 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "boards":
-                    cls._boards_validators.append(validator)
+                    if pre:
+                        cls._boards_post_validators.append(validator)
+                    else:
+                        cls._boards_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -81,11 +87,19 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("boards")
-    def _validate_boards(
+    @pydantic.validator("boards", pre=True)
+    def _pre_validate_boards(
         cls, v: typing.List[TestCaseImplementationDescriptionBoard], values: TestCaseImplementationDescription.Partial
     ) -> typing.List[TestCaseImplementationDescriptionBoard]:
-        for validator in TestCaseImplementationDescription.Validators._boards_validators:
+        for validator in TestCaseImplementationDescription.Validators._boards_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("boards", pre=False)
+    def _post_validate_boards(
+        cls, v: typing.List[TestCaseImplementationDescriptionBoard], values: TestCaseImplementationDescription.Partial
+    ) -> typing.List[TestCaseImplementationDescriptionBoard]:
+        for validator in TestCaseImplementationDescription.Validators._boards_post_validators:
             v = validator(v, values)
         return v
 

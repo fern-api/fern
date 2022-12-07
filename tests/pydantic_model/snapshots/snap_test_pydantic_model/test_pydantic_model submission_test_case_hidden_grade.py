@@ -30,7 +30,8 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[TestCaseHiddenGrade.Partial], TestCaseHiddenGrade.Partial]]
         ] = []
-        _passed_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
+        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
+        _passed_post_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
 
         @classmethod
         def root(
@@ -49,10 +50,13 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "passed":
-                    cls._passed_validators.append(validator)
+                    if pre:
+                        cls._passed_post_validators.append(validator)
+                    else:
+                        cls._passed_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -67,9 +71,15 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("passed")
-    def _validate_passed(cls, v: bool, values: TestCaseHiddenGrade.Partial) -> bool:
-        for validator in TestCaseHiddenGrade.Validators._passed_validators:
+    @pydantic.validator("passed", pre=True)
+    def _pre_validate_passed(cls, v: bool, values: TestCaseHiddenGrade.Partial) -> bool:
+        for validator in TestCaseHiddenGrade.Validators._passed_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("passed", pre=False)
+    def _post_validate_passed(cls, v: bool, values: TestCaseHiddenGrade.Partial) -> bool:
+        for validator in TestCaseHiddenGrade.Validators._passed_post_validators:
             v = validator(v, values)
         return v
 

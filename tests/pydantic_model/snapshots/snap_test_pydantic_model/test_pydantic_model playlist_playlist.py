@@ -38,8 +38,10 @@ class Playlist(PlaylistCreateRequest):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[Playlist.Partial], Playlist.Partial]]] = []
-        _playlist_id_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
-        _owner_id_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
+        _playlist_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
+        _playlist_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
+        _owner_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
+        _owner_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
 
         @classmethod
         def root(
@@ -63,12 +65,18 @@ class Playlist(PlaylistCreateRequest):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "playlist_id":
-                    cls._playlist_id_validators.append(validator)
+                    if pre:
+                        cls._playlist_id_post_validators.append(validator)
+                    else:
+                        cls._playlist_id_post_validators.append(validator)
                 if field_name == "owner_id":
-                    cls._owner_id_validators.append(validator)
+                    if pre:
+                        cls._owner_id_post_validators.append(validator)
+                    else:
+                        cls._owner_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -87,15 +95,27 @@ class Playlist(PlaylistCreateRequest):
             values = validator(values)
         return values
 
-    @pydantic.validator("playlist_id")
-    def _validate_playlist_id(cls, v: PlaylistId, values: Playlist.Partial) -> PlaylistId:
-        for validator in Playlist.Validators._playlist_id_validators:
+    @pydantic.validator("playlist_id", pre=True)
+    def _pre_validate_playlist_id(cls, v: PlaylistId, values: Playlist.Partial) -> PlaylistId:
+        for validator in Playlist.Validators._playlist_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("owner_id")
-    def _validate_owner_id(cls, v: UserId, values: Playlist.Partial) -> UserId:
-        for validator in Playlist.Validators._owner_id_validators:
+    @pydantic.validator("playlist_id", pre=False)
+    def _post_validate_playlist_id(cls, v: PlaylistId, values: Playlist.Partial) -> PlaylistId:
+        for validator in Playlist.Validators._playlist_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("owner_id", pre=True)
+    def _pre_validate_owner_id(cls, v: UserId, values: Playlist.Partial) -> UserId:
+        for validator in Playlist.Validators._owner_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("owner_id", pre=False)
+    def _post_validate_owner_id(cls, v: UserId, values: Playlist.Partial) -> UserId:
+        for validator in Playlist.Validators._owner_id_post_validators:
             v = validator(v, values)
         return v
 

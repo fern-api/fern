@@ -39,10 +39,14 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[NonVoidFunctionDefinition.Partial], NonVoidFunctionDefinition.Partial]]
         ] = []
-        _signature_validators: typing.ClassVar[
+        _signature_pre_validators: typing.ClassVar[
             typing.List[NonVoidFunctionDefinition.Validators.SignatureValidator]
         ] = []
-        _code_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
+        _signature_post_validators: typing.ClassVar[
+            typing.List[NonVoidFunctionDefinition.Validators.SignatureValidator]
+        ] = []
+        _code_pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
+        _code_post_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
 
         @classmethod
         def root(
@@ -71,12 +75,18 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "signature":
-                    cls._signature_validators.append(validator)
+                    if pre:
+                        cls._signature_post_validators.append(validator)
+                    else:
+                        cls._signature_post_validators.append(validator)
                 if field_name == "code":
-                    cls._code_validators.append(validator)
+                    if pre:
+                        cls._code_post_validators.append(validator)
+                    else:
+                        cls._code_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -99,19 +109,35 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("signature")
-    def _validate_signature(
+    @pydantic.validator("signature", pre=True)
+    def _pre_validate_signature(
         cls, v: NonVoidFunctionSignature, values: NonVoidFunctionDefinition.Partial
     ) -> NonVoidFunctionSignature:
-        for validator in NonVoidFunctionDefinition.Validators._signature_validators:
+        for validator in NonVoidFunctionDefinition.Validators._signature_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("code")
-    def _validate_code(
+    @pydantic.validator("signature", pre=False)
+    def _post_validate_signature(
+        cls, v: NonVoidFunctionSignature, values: NonVoidFunctionDefinition.Partial
+    ) -> NonVoidFunctionSignature:
+        for validator in NonVoidFunctionDefinition.Validators._signature_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code", pre=True)
+    def _pre_validate_code(
         cls, v: FunctionImplementationForMultipleLanguages, values: NonVoidFunctionDefinition.Partial
     ) -> FunctionImplementationForMultipleLanguages:
-        for validator in NonVoidFunctionDefinition.Validators._code_validators:
+        for validator in NonVoidFunctionDefinition.Validators._code_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("code", pre=False)
+    def _post_validate_code(
+        cls, v: FunctionImplementationForMultipleLanguages, values: NonVoidFunctionDefinition.Partial
+    ) -> FunctionImplementationForMultipleLanguages:
+        for validator in NonVoidFunctionDefinition.Validators._code_post_validators:
             v = validator(v, values)
         return v
 

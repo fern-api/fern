@@ -27,8 +27,8 @@ class Pydantic:
     root_validator = AST.ReferenceNode(_export("root_validator"))
 
     @staticmethod
-    def validator(field_name: str) -> AST.FunctionInvocation:
+    def validator(field_name: str, pre: bool = False) -> AST.FunctionInvocation:
         return AST.FunctionInvocation(
             function_definition=_export("validator"),
-            args=[AST.Expression(expression=f'"{field_name}"')],
+            args=[AST.Expression(expression=f'"{field_name}", pre={"True" if pre else "False"}')],
         )

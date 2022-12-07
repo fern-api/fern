@@ -51,14 +51,26 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[ExecutionSessionResponse.Partial], ExecutionSessionResponse.Partial]]
         ] = []
-        _session_id_validators: typing.ClassVar[
+        _session_id_pre_validators: typing.ClassVar[
             typing.List[ExecutionSessionResponse.Validators.SessionIdValidator]
         ] = []
-        _execution_session_url_validators: typing.ClassVar[
+        _session_id_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionResponse.Validators.SessionIdValidator]
+        ] = []
+        _execution_session_url_pre_validators: typing.ClassVar[
             typing.List[ExecutionSessionResponse.Validators.ExecutionSessionUrlValidator]
         ] = []
-        _language_validators: typing.ClassVar[typing.List[ExecutionSessionResponse.Validators.LanguageValidator]] = []
-        _status_validators: typing.ClassVar[typing.List[ExecutionSessionResponse.Validators.StatusValidator]] = []
+        _execution_session_url_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionResponse.Validators.ExecutionSessionUrlValidator]
+        ] = []
+        _language_pre_validators: typing.ClassVar[
+            typing.List[ExecutionSessionResponse.Validators.LanguageValidator]
+        ] = []
+        _language_post_validators: typing.ClassVar[
+            typing.List[ExecutionSessionResponse.Validators.LanguageValidator]
+        ] = []
+        _status_pre_validators: typing.ClassVar[typing.List[ExecutionSessionResponse.Validators.StatusValidator]] = []
+        _status_post_validators: typing.ClassVar[typing.List[ExecutionSessionResponse.Validators.StatusValidator]] = []
 
         @classmethod
         def root(
@@ -107,16 +119,28 @@ class ExecutionSessionResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "session_id":
-                    cls._session_id_validators.append(validator)
+                    if pre:
+                        cls._session_id_post_validators.append(validator)
+                    else:
+                        cls._session_id_post_validators.append(validator)
                 if field_name == "execution_session_url":
-                    cls._execution_session_url_validators.append(validator)
+                    if pre:
+                        cls._execution_session_url_post_validators.append(validator)
+                    else:
+                        cls._execution_session_url_post_validators.append(validator)
                 if field_name == "language":
-                    cls._language_validators.append(validator)
+                    if pre:
+                        cls._language_post_validators.append(validator)
+                    else:
+                        cls._language_post_validators.append(validator)
                 if field_name == "status":
-                    cls._status_validators.append(validator)
+                    if pre:
+                        cls._status_post_validators.append(validator)
+                    else:
+                        cls._status_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -147,31 +171,59 @@ class ExecutionSessionResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("session_id")
-    def _validate_session_id(cls, v: str, values: ExecutionSessionResponse.Partial) -> str:
-        for validator in ExecutionSessionResponse.Validators._session_id_validators:
+    @pydantic.validator("session_id", pre=True)
+    def _pre_validate_session_id(cls, v: str, values: ExecutionSessionResponse.Partial) -> str:
+        for validator in ExecutionSessionResponse.Validators._session_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("execution_session_url")
-    def _validate_execution_session_url(
+    @pydantic.validator("session_id", pre=False)
+    def _post_validate_session_id(cls, v: str, values: ExecutionSessionResponse.Partial) -> str:
+        for validator in ExecutionSessionResponse.Validators._session_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("execution_session_url", pre=True)
+    def _pre_validate_execution_session_url(
         cls, v: typing.Optional[str], values: ExecutionSessionResponse.Partial
     ) -> typing.Optional[str]:
-        for validator in ExecutionSessionResponse.Validators._execution_session_url_validators:
+        for validator in ExecutionSessionResponse.Validators._execution_session_url_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("language")
-    def _validate_language(cls, v: Language, values: ExecutionSessionResponse.Partial) -> Language:
-        for validator in ExecutionSessionResponse.Validators._language_validators:
+    @pydantic.validator("execution_session_url", pre=False)
+    def _post_validate_execution_session_url(
+        cls, v: typing.Optional[str], values: ExecutionSessionResponse.Partial
+    ) -> typing.Optional[str]:
+        for validator in ExecutionSessionResponse.Validators._execution_session_url_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("status")
-    def _validate_status(
+    @pydantic.validator("language", pre=True)
+    def _pre_validate_language(cls, v: Language, values: ExecutionSessionResponse.Partial) -> Language:
+        for validator in ExecutionSessionResponse.Validators._language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("language", pre=False)
+    def _post_validate_language(cls, v: Language, values: ExecutionSessionResponse.Partial) -> Language:
+        for validator in ExecutionSessionResponse.Validators._language_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=True)
+    def _pre_validate_status(
         cls, v: ExecutionSessionStatus, values: ExecutionSessionResponse.Partial
     ) -> ExecutionSessionStatus:
-        for validator in ExecutionSessionResponse.Validators._status_validators:
+        for validator in ExecutionSessionResponse.Validators._status_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("status", pre=False)
+    def _post_validate_status(
+        cls, v: ExecutionSessionStatus, values: ExecutionSessionResponse.Partial
+    ) -> ExecutionSessionStatus:
+        for validator in ExecutionSessionResponse.Validators._status_post_validators:
             v = validator(v, values)
         return v
 

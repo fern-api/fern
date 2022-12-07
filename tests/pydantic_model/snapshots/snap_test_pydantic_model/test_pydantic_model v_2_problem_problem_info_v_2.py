@@ -90,22 +90,46 @@ class ProblemInfoV2(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[ProblemInfoV2.Partial], ProblemInfoV2.Partial]]] = []
-        _problem_id_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemIdValidator]] = []
-        _problem_description_validators: typing.ClassVar[
+        _problem_id_pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemIdValidator]] = []
+        _problem_id_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemIdValidator]] = []
+        _problem_description_pre_validators: typing.ClassVar[
             typing.List[ProblemInfoV2.Validators.ProblemDescriptionValidator]
         ] = []
-        _problem_name_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemNameValidator]] = []
-        _problem_version_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemVersionValidator]] = []
-        _supported_languages_validators: typing.ClassVar[
+        _problem_description_post_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.ProblemDescriptionValidator]
+        ] = []
+        _problem_name_pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemNameValidator]] = []
+        _problem_name_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.ProblemNameValidator]] = []
+        _problem_version_pre_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.ProblemVersionValidator]
+        ] = []
+        _problem_version_post_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.ProblemVersionValidator]
+        ] = []
+        _supported_languages_pre_validators: typing.ClassVar[
             typing.List[ProblemInfoV2.Validators.SupportedLanguagesValidator]
         ] = []
-        _custom_files_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.CustomFilesValidator]] = []
-        _generated_files_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.GeneratedFilesValidator]] = []
-        _custom_test_case_templates_validators: typing.ClassVar[
+        _supported_languages_post_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.SupportedLanguagesValidator]
+        ] = []
+        _custom_files_pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.CustomFilesValidator]] = []
+        _custom_files_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.CustomFilesValidator]] = []
+        _generated_files_pre_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.GeneratedFilesValidator]
+        ] = []
+        _generated_files_post_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.GeneratedFilesValidator]
+        ] = []
+        _custom_test_case_templates_pre_validators: typing.ClassVar[
             typing.List[ProblemInfoV2.Validators.CustomTestCaseTemplatesValidator]
         ] = []
-        _testcases_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.TestcasesValidator]] = []
-        _is_public_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.IsPublicValidator]] = []
+        _custom_test_case_templates_post_validators: typing.ClassVar[
+            typing.List[ProblemInfoV2.Validators.CustomTestCaseTemplatesValidator]
+        ] = []
+        _testcases_pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.TestcasesValidator]] = []
+        _testcases_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.TestcasesValidator]] = []
+        _is_public_pre_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.IsPublicValidator]] = []
+        _is_public_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.IsPublicValidator]] = []
 
         @classmethod
         def root(
@@ -204,28 +228,58 @@ class ProblemInfoV2(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "problem_id":
-                    cls._problem_id_validators.append(validator)
+                    if pre:
+                        cls._problem_id_post_validators.append(validator)
+                    else:
+                        cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_description":
-                    cls._problem_description_validators.append(validator)
+                    if pre:
+                        cls._problem_description_post_validators.append(validator)
+                    else:
+                        cls._problem_description_post_validators.append(validator)
                 if field_name == "problem_name":
-                    cls._problem_name_validators.append(validator)
+                    if pre:
+                        cls._problem_name_post_validators.append(validator)
+                    else:
+                        cls._problem_name_post_validators.append(validator)
                 if field_name == "problem_version":
-                    cls._problem_version_validators.append(validator)
+                    if pre:
+                        cls._problem_version_post_validators.append(validator)
+                    else:
+                        cls._problem_version_post_validators.append(validator)
                 if field_name == "supported_languages":
-                    cls._supported_languages_validators.append(validator)
+                    if pre:
+                        cls._supported_languages_post_validators.append(validator)
+                    else:
+                        cls._supported_languages_post_validators.append(validator)
                 if field_name == "custom_files":
-                    cls._custom_files_validators.append(validator)
+                    if pre:
+                        cls._custom_files_post_validators.append(validator)
+                    else:
+                        cls._custom_files_post_validators.append(validator)
                 if field_name == "generated_files":
-                    cls._generated_files_validators.append(validator)
+                    if pre:
+                        cls._generated_files_post_validators.append(validator)
+                    else:
+                        cls._generated_files_post_validators.append(validator)
                 if field_name == "custom_test_case_templates":
-                    cls._custom_test_case_templates_validators.append(validator)
+                    if pre:
+                        cls._custom_test_case_templates_post_validators.append(validator)
+                    else:
+                        cls._custom_test_case_templates_post_validators.append(validator)
                 if field_name == "testcases":
-                    cls._testcases_validators.append(validator)
+                    if pre:
+                        cls._testcases_post_validators.append(validator)
+                    else:
+                        cls._testcases_post_validators.append(validator)
                 if field_name == "is_public":
-                    cls._is_public_validators.append(validator)
+                    if pre:
+                        cls._is_public_post_validators.append(validator)
+                    else:
+                        cls._is_public_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -280,67 +334,139 @@ class ProblemInfoV2(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("problem_id")
-    def _validate_problem_id(cls, v: ProblemId, values: ProblemInfoV2.Partial) -> ProblemId:
-        for validator in ProblemInfoV2.Validators._problem_id_validators:
+    @pydantic.validator("problem_id", pre=True)
+    def _pre_validate_problem_id(cls, v: ProblemId, values: ProblemInfoV2.Partial) -> ProblemId:
+        for validator in ProblemInfoV2.Validators._problem_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_description")
-    def _validate_problem_description(cls, v: ProblemDescription, values: ProblemInfoV2.Partial) -> ProblemDescription:
-        for validator in ProblemInfoV2.Validators._problem_description_validators:
+    @pydantic.validator("problem_id", pre=False)
+    def _post_validate_problem_id(cls, v: ProblemId, values: ProblemInfoV2.Partial) -> ProblemId:
+        for validator in ProblemInfoV2.Validators._problem_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_name")
-    def _validate_problem_name(cls, v: str, values: ProblemInfoV2.Partial) -> str:
-        for validator in ProblemInfoV2.Validators._problem_name_validators:
+    @pydantic.validator("problem_description", pre=True)
+    def _pre_validate_problem_description(
+        cls, v: ProblemDescription, values: ProblemInfoV2.Partial
+    ) -> ProblemDescription:
+        for validator in ProblemInfoV2.Validators._problem_description_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_version")
-    def _validate_problem_version(cls, v: int, values: ProblemInfoV2.Partial) -> int:
-        for validator in ProblemInfoV2.Validators._problem_version_validators:
+    @pydantic.validator("problem_description", pre=False)
+    def _post_validate_problem_description(
+        cls, v: ProblemDescription, values: ProblemInfoV2.Partial
+    ) -> ProblemDescription:
+        for validator in ProblemInfoV2.Validators._problem_description_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("supported_languages")
-    def _validate_supported_languages(
+    @pydantic.validator("problem_name", pre=True)
+    def _pre_validate_problem_name(cls, v: str, values: ProblemInfoV2.Partial) -> str:
+        for validator in ProblemInfoV2.Validators._problem_name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_name", pre=False)
+    def _post_validate_problem_name(cls, v: str, values: ProblemInfoV2.Partial) -> str:
+        for validator in ProblemInfoV2.Validators._problem_name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=True)
+    def _pre_validate_problem_version(cls, v: int, values: ProblemInfoV2.Partial) -> int:
+        for validator in ProblemInfoV2.Validators._problem_version_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=False)
+    def _post_validate_problem_version(cls, v: int, values: ProblemInfoV2.Partial) -> int:
+        for validator in ProblemInfoV2.Validators._problem_version_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("supported_languages", pre=True)
+    def _pre_validate_supported_languages(
         cls, v: typing.List[Language], values: ProblemInfoV2.Partial
     ) -> typing.List[Language]:
-        for validator in ProblemInfoV2.Validators._supported_languages_validators:
+        for validator in ProblemInfoV2.Validators._supported_languages_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("custom_files")
-    def _validate_custom_files(cls, v: CustomFiles, values: ProblemInfoV2.Partial) -> CustomFiles:
-        for validator in ProblemInfoV2.Validators._custom_files_validators:
+    @pydantic.validator("supported_languages", pre=False)
+    def _post_validate_supported_languages(
+        cls, v: typing.List[Language], values: ProblemInfoV2.Partial
+    ) -> typing.List[Language]:
+        for validator in ProblemInfoV2.Validators._supported_languages_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("generated_files")
-    def _validate_generated_files(cls, v: GeneratedFiles, values: ProblemInfoV2.Partial) -> GeneratedFiles:
-        for validator in ProblemInfoV2.Validators._generated_files_validators:
+    @pydantic.validator("custom_files", pre=True)
+    def _pre_validate_custom_files(cls, v: CustomFiles, values: ProblemInfoV2.Partial) -> CustomFiles:
+        for validator in ProblemInfoV2.Validators._custom_files_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("custom_test_case_templates")
-    def _validate_custom_test_case_templates(
+    @pydantic.validator("custom_files", pre=False)
+    def _post_validate_custom_files(cls, v: CustomFiles, values: ProblemInfoV2.Partial) -> CustomFiles:
+        for validator in ProblemInfoV2.Validators._custom_files_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("generated_files", pre=True)
+    def _pre_validate_generated_files(cls, v: GeneratedFiles, values: ProblemInfoV2.Partial) -> GeneratedFiles:
+        for validator in ProblemInfoV2.Validators._generated_files_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("generated_files", pre=False)
+    def _post_validate_generated_files(cls, v: GeneratedFiles, values: ProblemInfoV2.Partial) -> GeneratedFiles:
+        for validator in ProblemInfoV2.Validators._generated_files_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("custom_test_case_templates", pre=True)
+    def _pre_validate_custom_test_case_templates(
         cls, v: typing.List[TestCaseTemplate], values: ProblemInfoV2.Partial
     ) -> typing.List[TestCaseTemplate]:
-        for validator in ProblemInfoV2.Validators._custom_test_case_templates_validators:
+        for validator in ProblemInfoV2.Validators._custom_test_case_templates_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("testcases")
-    def _validate_testcases(cls, v: typing.List[TestCaseV2], values: ProblemInfoV2.Partial) -> typing.List[TestCaseV2]:
-        for validator in ProblemInfoV2.Validators._testcases_validators:
+    @pydantic.validator("custom_test_case_templates", pre=False)
+    def _post_validate_custom_test_case_templates(
+        cls, v: typing.List[TestCaseTemplate], values: ProblemInfoV2.Partial
+    ) -> typing.List[TestCaseTemplate]:
+        for validator in ProblemInfoV2.Validators._custom_test_case_templates_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("is_public")
-    def _validate_is_public(cls, v: bool, values: ProblemInfoV2.Partial) -> bool:
-        for validator in ProblemInfoV2.Validators._is_public_validators:
+    @pydantic.validator("testcases", pre=True)
+    def _pre_validate_testcases(
+        cls, v: typing.List[TestCaseV2], values: ProblemInfoV2.Partial
+    ) -> typing.List[TestCaseV2]:
+        for validator in ProblemInfoV2.Validators._testcases_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("testcases", pre=False)
+    def _post_validate_testcases(
+        cls, v: typing.List[TestCaseV2], values: ProblemInfoV2.Partial
+    ) -> typing.List[TestCaseV2]:
+        for validator in ProblemInfoV2.Validators._testcases_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("is_public", pre=True)
+    def _pre_validate_is_public(cls, v: bool, values: ProblemInfoV2.Partial) -> bool:
+        for validator in ProblemInfoV2.Validators._is_public_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("is_public", pre=False)
+    def _post_validate_is_public(cls, v: bool, values: ProblemInfoV2.Partial) -> bool:
+        for validator in ProblemInfoV2.Validators._is_public_post_validators:
             v = validator(v, values)
         return v
 

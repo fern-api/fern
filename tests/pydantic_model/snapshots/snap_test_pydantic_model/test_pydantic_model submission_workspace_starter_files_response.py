@@ -33,7 +33,12 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceStarterFilesResponse.Partial], WorkspaceStarterFilesResponse.Partial]]
         ] = []
-        _files_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]] = []
+        _files_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]
+        ] = []
+        _files_post_validators: typing.ClassVar[
+            typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]
+        ] = []
 
         @classmethod
         def root(
@@ -54,10 +59,13 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "files":
-                    cls._files_validators.append(validator)
+                    if pre:
+                        cls._files_post_validators.append(validator)
+                    else:
+                        cls._files_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -74,11 +82,19 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("files")
-    def _validate_files(
+    @pydantic.validator("files", pre=True)
+    def _pre_validate_files(
         cls, v: typing.Dict[Language, WorkspaceFiles], values: WorkspaceStarterFilesResponse.Partial
     ) -> typing.Dict[Language, WorkspaceFiles]:
-        for validator in WorkspaceStarterFilesResponse.Validators._files_validators:
+        for validator in WorkspaceStarterFilesResponse.Validators._files_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("files", pre=False)
+    def _post_validate_files(
+        cls, v: typing.Dict[Language, WorkspaceFiles], values: WorkspaceStarterFilesResponse.Partial
+    ) -> typing.Dict[Language, WorkspaceFiles]:
+        for validator in WorkspaceStarterFilesResponse.Validators._files_post_validators:
             v = validator(v, values)
         return v
 

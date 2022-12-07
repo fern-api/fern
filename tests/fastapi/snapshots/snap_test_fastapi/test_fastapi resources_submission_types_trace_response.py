@@ -63,14 +63,24 @@ class TraceResponse(pydantic.BaseModel):
         """
 
         _validators: typing.ClassVar[typing.List[typing.Callable[[TraceResponse.Partial], TraceResponse.Partial]]] = []
-        _submission_id_validators: typing.ClassVar[typing.List[TraceResponse.Validators.SubmissionIdValidator]] = []
-        _line_number_validators: typing.ClassVar[typing.List[TraceResponse.Validators.LineNumberValidator]] = []
-        _return_value_validators: typing.ClassVar[typing.List[TraceResponse.Validators.ReturnValueValidator]] = []
-        _expression_location_validators: typing.ClassVar[
+        _submission_id_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.SubmissionIdValidator]] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[TraceResponse.Validators.SubmissionIdValidator]
+        ] = []
+        _line_number_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.LineNumberValidator]] = []
+        _line_number_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.LineNumberValidator]] = []
+        _return_value_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.ReturnValueValidator]] = []
+        _return_value_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.ReturnValueValidator]] = []
+        _expression_location_pre_validators: typing.ClassVar[
             typing.List[TraceResponse.Validators.ExpressionLocationValidator]
         ] = []
-        _stack_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StackValidator]] = []
-        _stdout_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
+        _expression_location_post_validators: typing.ClassVar[
+            typing.List[TraceResponse.Validators.ExpressionLocationValidator]
+        ] = []
+        _stack_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StackValidator]] = []
+        _stack_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StackValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
+        _stdout_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
 
         @classmethod
         def root(
@@ -130,20 +140,38 @@ class TraceResponse(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "line_number":
-                    cls._line_number_validators.append(validator)
+                    if pre:
+                        cls._line_number_post_validators.append(validator)
+                    else:
+                        cls._line_number_post_validators.append(validator)
                 if field_name == "return_value":
-                    cls._return_value_validators.append(validator)
+                    if pre:
+                        cls._return_value_post_validators.append(validator)
+                    else:
+                        cls._return_value_post_validators.append(validator)
                 if field_name == "expression_location":
-                    cls._expression_location_validators.append(validator)
+                    if pre:
+                        cls._expression_location_post_validators.append(validator)
+                    else:
+                        cls._expression_location_post_validators.append(validator)
                 if field_name == "stack":
-                    cls._stack_validators.append(validator)
+                    if pre:
+                        cls._stack_post_validators.append(validator)
+                    else:
+                        cls._stack_post_validators.append(validator)
                 if field_name == "stdout":
-                    cls._stdout_validators.append(validator)
+                    if pre:
+                        cls._stdout_post_validators.append(validator)
+                    else:
+                        cls._stdout_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -182,43 +210,83 @@ class TraceResponse(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
-        for validator in TraceResponse.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
+        for validator in TraceResponse.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("line_number")
-    def _validate_line_number(cls, v: int, values: TraceResponse.Partial) -> int:
-        for validator in TraceResponse.Validators._line_number_validators:
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: TraceResponse.Partial) -> SubmissionId:
+        for validator in TraceResponse.Validators._submission_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("return_value")
-    def _validate_return_value(
+    @pydantic.validator("line_number", pre=True)
+    def _pre_validate_line_number(cls, v: int, values: TraceResponse.Partial) -> int:
+        for validator in TraceResponse.Validators._line_number_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("line_number", pre=False)
+    def _post_validate_line_number(cls, v: int, values: TraceResponse.Partial) -> int:
+        for validator in TraceResponse.Validators._line_number_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("return_value", pre=True)
+    def _pre_validate_return_value(
         cls, v: typing.Optional[DebugVariableValue], values: TraceResponse.Partial
     ) -> typing.Optional[DebugVariableValue]:
-        for validator in TraceResponse.Validators._return_value_validators:
+        for validator in TraceResponse.Validators._return_value_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("expression_location")
-    def _validate_expression_location(
+    @pydantic.validator("return_value", pre=False)
+    def _post_validate_return_value(
+        cls, v: typing.Optional[DebugVariableValue], values: TraceResponse.Partial
+    ) -> typing.Optional[DebugVariableValue]:
+        for validator in TraceResponse.Validators._return_value_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("expression_location", pre=True)
+    def _pre_validate_expression_location(
         cls, v: typing.Optional[ExpressionLocation], values: TraceResponse.Partial
     ) -> typing.Optional[ExpressionLocation]:
-        for validator in TraceResponse.Validators._expression_location_validators:
+        for validator in TraceResponse.Validators._expression_location_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stack")
-    def _validate_stack(cls, v: StackInformation, values: TraceResponse.Partial) -> StackInformation:
-        for validator in TraceResponse.Validators._stack_validators:
+    @pydantic.validator("expression_location", pre=False)
+    def _post_validate_expression_location(
+        cls, v: typing.Optional[ExpressionLocation], values: TraceResponse.Partial
+    ) -> typing.Optional[ExpressionLocation]:
+        for validator in TraceResponse.Validators._expression_location_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("stdout")
-    def _validate_stdout(cls, v: typing.Optional[str], values: TraceResponse.Partial) -> typing.Optional[str]:
-        for validator in TraceResponse.Validators._stdout_validators:
+    @pydantic.validator("stack", pre=True)
+    def _pre_validate_stack(cls, v: StackInformation, values: TraceResponse.Partial) -> StackInformation:
+        for validator in TraceResponse.Validators._stack_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stack", pre=False)
+    def _post_validate_stack(cls, v: StackInformation, values: TraceResponse.Partial) -> StackInformation:
+        for validator in TraceResponse.Validators._stack_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=True)
+    def _pre_validate_stdout(cls, v: typing.Optional[str], values: TraceResponse.Partial) -> typing.Optional[str]:
+        for validator in TraceResponse.Validators._stdout_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("stdout", pre=False)
+    def _post_validate_stdout(cls, v: typing.Optional[str], values: TraceResponse.Partial) -> typing.Optional[str]:
+        for validator in TraceResponse.Validators._stdout_post_validators:
             v = validator(v, values)
         return v
 

@@ -65,16 +65,30 @@ class SubmitRequestV2(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[SubmitRequestV2.Partial], SubmitRequestV2.Partial]]
         ] = []
-        _submission_id_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.SubmissionIdValidator]] = []
-        _language_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.LanguageValidator]] = []
-        _submission_files_validators: typing.ClassVar[
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[SubmitRequestV2.Validators.SubmissionIdValidator]
+        ] = []
+        _submission_id_post_validators: typing.ClassVar[
+            typing.List[SubmitRequestV2.Validators.SubmissionIdValidator]
+        ] = []
+        _language_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.LanguageValidator]] = []
+        _language_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.LanguageValidator]] = []
+        _submission_files_pre_validators: typing.ClassVar[
             typing.List[SubmitRequestV2.Validators.SubmissionFilesValidator]
         ] = []
-        _problem_id_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.ProblemIdValidator]] = []
-        _problem_version_validators: typing.ClassVar[
+        _submission_files_post_validators: typing.ClassVar[
+            typing.List[SubmitRequestV2.Validators.SubmissionFilesValidator]
+        ] = []
+        _problem_id_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.ProblemIdValidator]] = []
+        _problem_id_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.ProblemIdValidator]] = []
+        _problem_version_pre_validators: typing.ClassVar[
             typing.List[SubmitRequestV2.Validators.ProblemVersionValidator]
         ] = []
-        _user_id_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
+        _problem_version_post_validators: typing.ClassVar[
+            typing.List[SubmitRequestV2.Validators.ProblemVersionValidator]
+        ] = []
+        _user_id_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
+        _user_id_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
 
         @classmethod
         def root(
@@ -136,20 +150,38 @@ class SubmitRequestV2(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "submission_id":
-                    cls._submission_id_validators.append(validator)
+                    if pre:
+                        cls._submission_id_post_validators.append(validator)
+                    else:
+                        cls._submission_id_post_validators.append(validator)
                 if field_name == "language":
-                    cls._language_validators.append(validator)
+                    if pre:
+                        cls._language_post_validators.append(validator)
+                    else:
+                        cls._language_post_validators.append(validator)
                 if field_name == "submission_files":
-                    cls._submission_files_validators.append(validator)
+                    if pre:
+                        cls._submission_files_post_validators.append(validator)
+                    else:
+                        cls._submission_files_post_validators.append(validator)
                 if field_name == "problem_id":
-                    cls._problem_id_validators.append(validator)
+                    if pre:
+                        cls._problem_id_post_validators.append(validator)
+                    else:
+                        cls._problem_id_post_validators.append(validator)
                 if field_name == "problem_version":
-                    cls._problem_version_validators.append(validator)
+                    if pre:
+                        cls._problem_version_post_validators.append(validator)
+                    else:
+                        cls._problem_version_post_validators.append(validator)
                 if field_name == "user_id":
-                    cls._user_id_validators.append(validator)
+                    if pre:
+                        cls._user_id_post_validators.append(validator)
+                    else:
+                        cls._user_id_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -186,43 +218,83 @@ class SubmitRequestV2(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("submission_id")
-    def _validate_submission_id(cls, v: SubmissionId, values: SubmitRequestV2.Partial) -> SubmissionId:
-        for validator in SubmitRequestV2.Validators._submission_id_validators:
+    @pydantic.validator("submission_id", pre=True)
+    def _pre_validate_submission_id(cls, v: SubmissionId, values: SubmitRequestV2.Partial) -> SubmissionId:
+        for validator in SubmitRequestV2.Validators._submission_id_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("language")
-    def _validate_language(cls, v: Language, values: SubmitRequestV2.Partial) -> Language:
-        for validator in SubmitRequestV2.Validators._language_validators:
+    @pydantic.validator("submission_id", pre=False)
+    def _post_validate_submission_id(cls, v: SubmissionId, values: SubmitRequestV2.Partial) -> SubmissionId:
+        for validator in SubmitRequestV2.Validators._submission_id_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("submission_files")
-    def _validate_submission_files(
+    @pydantic.validator("language", pre=True)
+    def _pre_validate_language(cls, v: Language, values: SubmitRequestV2.Partial) -> Language:
+        for validator in SubmitRequestV2.Validators._language_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("language", pre=False)
+    def _post_validate_language(cls, v: Language, values: SubmitRequestV2.Partial) -> Language:
+        for validator in SubmitRequestV2.Validators._language_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("submission_files", pre=True)
+    def _pre_validate_submission_files(
         cls, v: typing.List[SubmissionFileInfo], values: SubmitRequestV2.Partial
     ) -> typing.List[SubmissionFileInfo]:
-        for validator in SubmitRequestV2.Validators._submission_files_validators:
+        for validator in SubmitRequestV2.Validators._submission_files_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_id")
-    def _validate_problem_id(cls, v: ProblemId, values: SubmitRequestV2.Partial) -> ProblemId:
-        for validator in SubmitRequestV2.Validators._problem_id_validators:
+    @pydantic.validator("submission_files", pre=False)
+    def _post_validate_submission_files(
+        cls, v: typing.List[SubmissionFileInfo], values: SubmitRequestV2.Partial
+    ) -> typing.List[SubmissionFileInfo]:
+        for validator in SubmitRequestV2.Validators._submission_files_post_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("problem_version")
-    def _validate_problem_version(
+    @pydantic.validator("problem_id", pre=True)
+    def _pre_validate_problem_id(cls, v: ProblemId, values: SubmitRequestV2.Partial) -> ProblemId:
+        for validator in SubmitRequestV2.Validators._problem_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_id", pre=False)
+    def _post_validate_problem_id(cls, v: ProblemId, values: SubmitRequestV2.Partial) -> ProblemId:
+        for validator in SubmitRequestV2.Validators._problem_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problem_version", pre=True)
+    def _pre_validate_problem_version(
         cls, v: typing.Optional[int], values: SubmitRequestV2.Partial
     ) -> typing.Optional[int]:
-        for validator in SubmitRequestV2.Validators._problem_version_validators:
+        for validator in SubmitRequestV2.Validators._problem_version_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("user_id")
-    def _validate_user_id(cls, v: typing.Optional[str], values: SubmitRequestV2.Partial) -> typing.Optional[str]:
-        for validator in SubmitRequestV2.Validators._user_id_validators:
+    @pydantic.validator("problem_version", pre=False)
+    def _post_validate_problem_version(
+        cls, v: typing.Optional[int], values: SubmitRequestV2.Partial
+    ) -> typing.Optional[int]:
+        for validator in SubmitRequestV2.Validators._problem_version_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("user_id", pre=True)
+    def _pre_validate_user_id(cls, v: typing.Optional[str], values: SubmitRequestV2.Partial) -> typing.Optional[str]:
+        for validator in SubmitRequestV2.Validators._user_id_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("user_id", pre=False)
+    def _post_validate_user_id(cls, v: typing.Optional[str], values: SubmitRequestV2.Partial) -> typing.Optional[str]:
+        for validator in SubmitRequestV2.Validators._user_id_post_validators:
             v = validator(v, values)
         return v
 

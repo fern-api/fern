@@ -53,12 +53,20 @@ class BasicCustomFiles(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[BasicCustomFiles.Partial], BasicCustomFiles.Partial]]
         ] = []
-        _method_name_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
-        _signature_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
-        _additional_files_validators: typing.ClassVar[
+        _method_name_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
+        _method_name_post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
+        _signature_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
+        _signature_post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
+        _additional_files_pre_validators: typing.ClassVar[
             typing.List[BasicCustomFiles.Validators.AdditionalFilesValidator]
         ] = []
-        _basic_test_case_template_validators: typing.ClassVar[
+        _additional_files_post_validators: typing.ClassVar[
+            typing.List[BasicCustomFiles.Validators.AdditionalFilesValidator]
+        ] = []
+        _basic_test_case_template_pre_validators: typing.ClassVar[
+            typing.List[BasicCustomFiles.Validators.BasicTestCaseTemplateValidator]
+        ] = []
+        _basic_test_case_template_post_validators: typing.ClassVar[
             typing.List[BasicCustomFiles.Validators.BasicTestCaseTemplateValidator]
         ] = []
 
@@ -107,16 +115,28 @@ class BasicCustomFiles(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "method_name":
-                    cls._method_name_validators.append(validator)
+                    if pre:
+                        cls._method_name_post_validators.append(validator)
+                    else:
+                        cls._method_name_post_validators.append(validator)
                 if field_name == "signature":
-                    cls._signature_validators.append(validator)
+                    if pre:
+                        cls._signature_post_validators.append(validator)
+                    else:
+                        cls._signature_post_validators.append(validator)
                 if field_name == "additional_files":
-                    cls._additional_files_validators.append(validator)
+                    if pre:
+                        cls._additional_files_post_validators.append(validator)
+                    else:
+                        cls._additional_files_post_validators.append(validator)
                 if field_name == "basic_test_case_template":
-                    cls._basic_test_case_template_validators.append(validator)
+                    if pre:
+                        cls._basic_test_case_template_post_validators.append(validator)
+                    else:
+                        cls._basic_test_case_template_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -147,33 +167,63 @@ class BasicCustomFiles(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("method_name")
-    def _validate_method_name(cls, v: str, values: BasicCustomFiles.Partial) -> str:
-        for validator in BasicCustomFiles.Validators._method_name_validators:
+    @pydantic.validator("method_name", pre=True)
+    def _pre_validate_method_name(cls, v: str, values: BasicCustomFiles.Partial) -> str:
+        for validator in BasicCustomFiles.Validators._method_name_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("signature")
-    def _validate_signature(
+    @pydantic.validator("method_name", pre=False)
+    def _post_validate_method_name(cls, v: str, values: BasicCustomFiles.Partial) -> str:
+        for validator in BasicCustomFiles.Validators._method_name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("signature", pre=True)
+    def _pre_validate_signature(
         cls, v: NonVoidFunctionSignature, values: BasicCustomFiles.Partial
     ) -> NonVoidFunctionSignature:
-        for validator in BasicCustomFiles.Validators._signature_validators:
+        for validator in BasicCustomFiles.Validators._signature_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("additional_files")
-    def _validate_additional_files(
+    @pydantic.validator("signature", pre=False)
+    def _post_validate_signature(
+        cls, v: NonVoidFunctionSignature, values: BasicCustomFiles.Partial
+    ) -> NonVoidFunctionSignature:
+        for validator in BasicCustomFiles.Validators._signature_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("additional_files", pre=True)
+    def _pre_validate_additional_files(
         cls, v: typing.Dict[Language, Files], values: BasicCustomFiles.Partial
     ) -> typing.Dict[Language, Files]:
-        for validator in BasicCustomFiles.Validators._additional_files_validators:
+        for validator in BasicCustomFiles.Validators._additional_files_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("basic_test_case_template")
-    def _validate_basic_test_case_template(
+    @pydantic.validator("additional_files", pre=False)
+    def _post_validate_additional_files(
+        cls, v: typing.Dict[Language, Files], values: BasicCustomFiles.Partial
+    ) -> typing.Dict[Language, Files]:
+        for validator in BasicCustomFiles.Validators._additional_files_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("basic_test_case_template", pre=True)
+    def _pre_validate_basic_test_case_template(
         cls, v: BasicTestCaseTemplate, values: BasicCustomFiles.Partial
     ) -> BasicTestCaseTemplate:
-        for validator in BasicCustomFiles.Validators._basic_test_case_template_validators:
+        for validator in BasicCustomFiles.Validators._basic_test_case_template_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("basic_test_case_template", pre=False)
+    def _post_validate_basic_test_case_template(
+        cls, v: BasicTestCaseTemplate, values: BasicCustomFiles.Partial
+    ) -> BasicTestCaseTemplate:
+        for validator in BasicCustomFiles.Validators._basic_test_case_template_post_validators:
             v = validator(v, values)
         return v
 

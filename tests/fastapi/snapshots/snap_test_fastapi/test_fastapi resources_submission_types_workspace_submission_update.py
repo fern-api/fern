@@ -39,10 +39,16 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[WorkspaceSubmissionUpdate.Partial], WorkspaceSubmissionUpdate.Partial]]
         ] = []
-        _update_time_validators: typing.ClassVar[
+        _update_time_pre_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator]
         ] = []
-        _update_info_validators: typing.ClassVar[
+        _update_time_post_validators: typing.ClassVar[
+            typing.List[WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator]
+        ] = []
+        _update_info_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator]
+        ] = []
+        _update_info_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator]
         ] = []
 
@@ -74,12 +80,18 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "update_time":
-                    cls._update_time_validators.append(validator)
+                    if pre:
+                        cls._update_time_post_validators.append(validator)
+                    else:
+                        cls._update_time_post_validators.append(validator)
                 if field_name == "update_info":
-                    cls._update_info_validators.append(validator)
+                    if pre:
+                        cls._update_info_post_validators.append(validator)
+                    else:
+                        cls._update_info_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -100,17 +112,31 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("update_time")
-    def _validate_update_time(cls, v: dt.datetime, values: WorkspaceSubmissionUpdate.Partial) -> dt.datetime:
-        for validator in WorkspaceSubmissionUpdate.Validators._update_time_validators:
+    @pydantic.validator("update_time", pre=True)
+    def _pre_validate_update_time(cls, v: dt.datetime, values: WorkspaceSubmissionUpdate.Partial) -> dt.datetime:
+        for validator in WorkspaceSubmissionUpdate.Validators._update_time_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("update_info")
-    def _validate_update_info(
+    @pydantic.validator("update_time", pre=False)
+    def _post_validate_update_time(cls, v: dt.datetime, values: WorkspaceSubmissionUpdate.Partial) -> dt.datetime:
+        for validator in WorkspaceSubmissionUpdate.Validators._update_time_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("update_info", pre=True)
+    def _pre_validate_update_info(
         cls, v: WorkspaceSubmissionUpdateInfo, values: WorkspaceSubmissionUpdate.Partial
     ) -> WorkspaceSubmissionUpdateInfo:
-        for validator in WorkspaceSubmissionUpdate.Validators._update_info_validators:
+        for validator in WorkspaceSubmissionUpdate.Validators._update_info_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("update_info", pre=False)
+    def _post_validate_update_info(
+        cls, v: WorkspaceSubmissionUpdateInfo, values: WorkspaceSubmissionUpdate.Partial
+    ) -> WorkspaceSubmissionUpdateInfo:
+        for validator in WorkspaceSubmissionUpdate.Validators._update_info_post_validators:
             v = validator(v, values)
         return v
 

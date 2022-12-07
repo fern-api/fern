@@ -1,6 +1,7 @@
 from typing import Tuple
 
 from fern_python.codegen import AST
+from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from .validator_generator import ValidatorGenerator
@@ -11,6 +12,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
     _CALLABLE_PARAMETER_PREFIX = "__"
 
     _DECORATOR_FIELD_NAME_ARGUMENT = "field_name"
+    _DECORATOR_PRE_ARGUMENT = "pre"
     _VALIDATOR_PARAMETER_NAME = "validator"
 
     def __init__(self, field: PydanticField, model: PydanticModel, reference_to_validators_class: Tuple[str, ...]):
@@ -18,42 +20,49 @@ class FieldValidatorGenerator(ValidatorGenerator):
         self.field = field
 
     def add_validator_to_model(self) -> None:
-        self._model.add_field_validator(
-            validator_name=f"_validate_{self.field.name}",
-            field_name=self.field.name,
-            field_type=self.field.type_hint,
-            body=AST.CodeWriter(self._write_validator_body),
-        )
-
-    def get_validator_class_var(self) -> str:
-        return f"_{self.field.name}_validators"
-
-    def _write_validator_body(self, writer: AST.NodeWriter) -> None:
-        field_value_parameter_name = PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME
-
-        INDIVIDUAL_VALIDATOR_NAME = "validator"
-        writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
-        writer.write_line(".".join((*self._reference_to_validators_class, self.get_validator_class_var())) + ":")
-
-        with writer.indent():
-            writer.write(f"{field_value_parameter_name} = ")
-            writer.write_node(
-                AST.FunctionInvocation(
-                    function_definition=AST.Reference(
-                        qualified_name_excluding_import=(INDIVIDUAL_VALIDATOR_NAME,),
-                    ),
-                    args=[
-                        AST.Expression(field_value_parameter_name),
-                        AST.Expression(PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME),
-                    ],
-                )
+        for pre in [True, False]:
+            prefix = "pre" if pre else "post"
+            self._model.add_field_validator(
+                validator_name=f"_{prefix}_validate_{self.field.name}",
+                field_name=self.field.name,
+                field_type=self.field.type_hint,
+                body=AST.CodeWriter(self._get_write_validator_body(pre)),
+                pre=pre,
             )
-            writer.write_line()
-        writer.write_line(f"return {field_value_parameter_name}")
 
-    def get_class_var_for_validators_class(self) -> AST.VariableDeclaration:
+    def get_validator_class_var(self, pre: bool) -> str:
+        prefix = "pre" if pre else "post"
+        return f"_{self.field.name}_{prefix}_validators"
+
+    def _get_write_validator_body(self, pre: bool) -> CodeWriterFunction:
+        def _write_validator_body(writer: AST.NodeWriter) -> None:
+            field_value_parameter_name = PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME
+
+            INDIVIDUAL_VALIDATOR_NAME = "validator"
+            writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")
+            writer.write_line(".".join((*self._reference_to_validators_class, self.get_validator_class_var(pre))) + ":")
+
+            with writer.indent():
+                writer.write(f"{field_value_parameter_name} = ")
+                writer.write_node(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            qualified_name_excluding_import=(INDIVIDUAL_VALIDATOR_NAME,),
+                        ),
+                        args=[
+                            AST.Expression(field_value_parameter_name),
+                            AST.Expression(PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME),
+                        ],
+                    )
+                )
+                writer.write_line()
+            writer.write_line(f"return {field_value_parameter_name}")
+
+        return _write_validator_body
+
+    def get_class_var_for_validators_class(self, pre: bool) -> AST.VariableDeclaration:
         return AST.VariableDeclaration(
-            name=self.get_validator_class_var(),
+            name=self.get_validator_class_var(pre),
             type_hint=AST.TypeHint.class_var(AST.TypeHint.list(self._get_type_of_validator())),
             initializer=AST.Expression("[]"),
         )

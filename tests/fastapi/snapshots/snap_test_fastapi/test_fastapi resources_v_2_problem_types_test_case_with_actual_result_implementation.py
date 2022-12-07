@@ -43,10 +43,16 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
                 ]
             ]
         ] = []
-        _get_actual_result_validators: typing.ClassVar[
+        _get_actual_result_pre_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.GetActualResultValidator]
         ] = []
-        _assert_correctness_check_validators: typing.ClassVar[
+        _get_actual_result_post_validators: typing.ClassVar[
+            typing.List[TestCaseWithActualResultImplementation.Validators.GetActualResultValidator]
+        ] = []
+        _assert_correctness_check_pre_validators: typing.ClassVar[
+            typing.List[TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator]
+        ] = []
+        _assert_correctness_check_post_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator]
         ] = []
 
@@ -83,12 +89,18 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "get_actual_result":
-                    cls._get_actual_result_validators.append(validator)
+                    if pre:
+                        cls._get_actual_result_post_validators.append(validator)
+                    else:
+                        cls._get_actual_result_post_validators.append(validator)
                 if field_name == "assert_correctness_check":
-                    cls._assert_correctness_check_validators.append(validator)
+                    if pre:
+                        cls._assert_correctness_check_post_validators.append(validator)
+                    else:
+                        cls._assert_correctness_check_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -113,19 +125,35 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("get_actual_result")
-    def _validate_get_actual_result(
+    @pydantic.validator("get_actual_result", pre=True)
+    def _pre_validate_get_actual_result(
         cls, v: NonVoidFunctionDefinition, values: TestCaseWithActualResultImplementation.Partial
     ) -> NonVoidFunctionDefinition:
-        for validator in TestCaseWithActualResultImplementation.Validators._get_actual_result_validators:
+        for validator in TestCaseWithActualResultImplementation.Validators._get_actual_result_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("assert_correctness_check")
-    def _validate_assert_correctness_check(
+    @pydantic.validator("get_actual_result", pre=False)
+    def _post_validate_get_actual_result(
+        cls, v: NonVoidFunctionDefinition, values: TestCaseWithActualResultImplementation.Partial
+    ) -> NonVoidFunctionDefinition:
+        for validator in TestCaseWithActualResultImplementation.Validators._get_actual_result_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("assert_correctness_check", pre=True)
+    def _pre_validate_assert_correctness_check(
         cls, v: AssertCorrectnessCheck, values: TestCaseWithActualResultImplementation.Partial
     ) -> AssertCorrectnessCheck:
-        for validator in TestCaseWithActualResultImplementation.Validators._assert_correctness_check_validators:
+        for validator in TestCaseWithActualResultImplementation.Validators._assert_correctness_check_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("assert_correctness_check", pre=False)
+    def _post_validate_assert_correctness_check(
+        cls, v: AssertCorrectnessCheck, values: TestCaseWithActualResultImplementation.Partial
+    ) -> AssertCorrectnessCheck:
+        for validator in TestCaseWithActualResultImplementation.Validators._assert_correctness_check_post_validators:
             v = validator(v, values)
         return v
 

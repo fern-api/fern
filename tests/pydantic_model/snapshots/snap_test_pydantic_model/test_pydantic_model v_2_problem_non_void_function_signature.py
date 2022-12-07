@@ -39,10 +39,16 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         _validators: typing.ClassVar[
             typing.List[typing.Callable[[NonVoidFunctionSignature.Partial], NonVoidFunctionSignature.Partial]]
         ] = []
-        _parameters_validators: typing.ClassVar[
+        _parameters_pre_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.ParametersValidator]
         ] = []
-        _return_type_validators: typing.ClassVar[
+        _parameters_post_validators: typing.ClassVar[
+            typing.List[NonVoidFunctionSignature.Validators.ParametersValidator]
+        ] = []
+        _return_type_pre_validators: typing.ClassVar[
+            typing.List[NonVoidFunctionSignature.Validators.ReturnTypeValidator]
+        ] = []
+        _return_type_post_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.ReturnTypeValidator]
         ] = []
 
@@ -74,12 +80,18 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
             ...
 
         @classmethod
-        def field(cls, field_name: str) -> typing.Any:
+        def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
                 if field_name == "parameters":
-                    cls._parameters_validators.append(validator)
+                    if pre:
+                        cls._parameters_post_validators.append(validator)
+                    else:
+                        cls._parameters_post_validators.append(validator)
                 if field_name == "return_type":
-                    cls._return_type_validators.append(validator)
+                    if pre:
+                        cls._return_type_post_validators.append(validator)
+                    else:
+                        cls._return_type_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -100,17 +112,31 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
             values = validator(values)
         return values
 
-    @pydantic.validator("parameters")
-    def _validate_parameters(
+    @pydantic.validator("parameters", pre=True)
+    def _pre_validate_parameters(
         cls, v: typing.List[Parameter], values: NonVoidFunctionSignature.Partial
     ) -> typing.List[Parameter]:
-        for validator in NonVoidFunctionSignature.Validators._parameters_validators:
+        for validator in NonVoidFunctionSignature.Validators._parameters_pre_validators:
             v = validator(v, values)
         return v
 
-    @pydantic.validator("return_type")
-    def _validate_return_type(cls, v: VariableType, values: NonVoidFunctionSignature.Partial) -> VariableType:
-        for validator in NonVoidFunctionSignature.Validators._return_type_validators:
+    @pydantic.validator("parameters", pre=False)
+    def _post_validate_parameters(
+        cls, v: typing.List[Parameter], values: NonVoidFunctionSignature.Partial
+    ) -> typing.List[Parameter]:
+        for validator in NonVoidFunctionSignature.Validators._parameters_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("return_type", pre=True)
+    def _pre_validate_return_type(cls, v: VariableType, values: NonVoidFunctionSignature.Partial) -> VariableType:
+        for validator in NonVoidFunctionSignature.Validators._return_type_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("return_type", pre=False)
+    def _post_validate_return_type(cls, v: VariableType, values: NonVoidFunctionSignature.Partial) -> VariableType:
+        for validator in NonVoidFunctionSignature.Validators._return_type_post_validators:
             v = validator(v, values)
         return v
 
