@@ -17,6 +17,24 @@
                     "type": "object",
                     "properties": {
                       "docs": { "type": "string" },
+                      "availability": {
+                        "anyOf": [
+                          { "type": "string", "enum": ["in-development", "pre-release", "deprecated"] },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "status": {
+                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability/anyOf/0"
+                              },
+                              "message": { "type": "string" }
+                            },
+                            "required": ["status"],
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "audiences": { "type": "array", "items": { "type": "string" } },
+                      "examples": { "type": "array" },
                       "extends": {
                         "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
                       },
@@ -33,22 +51,11 @@
                                   "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                 },
                                 "availability": {
-                                  "anyOf": [
-                                    { "type": "string", "enum": ["in-development", "pre-release", "deprecated"] },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "status": {
-                                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability/anyOf/0"
-                                        },
-                                        "message": { "type": "string" }
-                                      },
-                                      "required": ["status"],
-                                      "additionalProperties": false
-                                    }
-                                  ]
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                                 },
-                                "audiences": { "type": "array", "items": { "type": "string" } },
+                                "audiences": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                },
                                 "name": { "type": "string" }
                               },
                               "required": ["type"],
@@ -65,6 +72,15 @@
                     "type": "object",
                     "properties": {
                       "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                      "availability": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                      },
+                      "audiences": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                      },
+                      "examples": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                      },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                       },
@@ -84,6 +100,13 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                  },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                  },
+                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "union": {
                     "type": "object",
                     "additionalProperties": {
@@ -133,6 +156,13 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                  },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                  },
+                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "type": { "type": "string" }
                 },
                 "required": ["type"],
@@ -142,6 +172,13 @@
                 "type": "object",
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                  },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                  },
+                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
                   "enum": {
                     "type": "array",
                     "items": {
@@ -152,12 +189,6 @@
                           "properties": {
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
-                            },
-                            "availability": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
-                            },
-                            "audiences": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
                             },
                             "name": { "type": "string" },
                             "value": { "type": "string" }
@@ -185,10 +216,10 @@
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "auth": { "type": "boolean" },
                   "base-path": { "type": "string" },
@@ -205,10 +236,10 @@
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
                             "availability": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                             },
                             "audiences": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                             }
                           },
                           "required": ["type"],
@@ -230,10 +261,10 @@
                       "properties": {
                         "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                         "availability": {
-                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                         },
                         "audiences": {
-                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                         },
                         "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                         "path": { "type": "string" },
@@ -256,10 +287,10 @@
                                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                   },
                                   "availability": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                                   },
                                   "audiences": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                                   },
                                   "name": {
                                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/name"
@@ -348,10 +379,10 @@
                 "properties": {
                   "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/availability"
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/audiences"
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "auth": { "$ref": "#/properties/services/properties/http/additionalProperties/properties/auth" },
                   "path": { "type": "string" },
