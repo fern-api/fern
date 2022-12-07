@@ -19,6 +19,7 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.ir.FernConstants;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.SingleUnionType;
@@ -118,18 +119,47 @@ public final class UnionGenerator extends AbstractFileGenerator {
         }
 
         @Override
-        public String getCamelCaseName() {
-            return singleUnionType.getDiscriminantValue().getCamelCase();
+        public Optional<NameAndWireValue> getDiscriminant() {
+            return Optional.of(this.singleUnionType.getDiscriminantValueV2());
         }
 
         @Override
-        public String getPascalCaseName() {
-            return singleUnionType.getDiscriminantValue().getPascalCase();
+        public String getVisitMethodName() {
+            return "visit"
+                    + this.singleUnionType
+                            .getDiscriminantValueV2()
+                            .getName()
+                            .getUnsafeName()
+                            .getPascalCase();
         }
 
         @Override
-        public Optional<String> getDiscriminantValue() {
-            return Optional.of(singleUnionType.getDiscriminantValue().getWireValue());
+        public String getIsMethodName() {
+            return "is"
+                    + this.singleUnionType
+                            .getDiscriminantValueV2()
+                            .getName()
+                            .getUnsafeName()
+                            .getPascalCase();
+        }
+
+        @Override
+        public String getGetMethodName() {
+            return "get"
+                    + this.singleUnionType
+                            .getDiscriminantValueV2()
+                            .getName()
+                            .getUnsafeName()
+                            .getPascalCase();
+        }
+
+        @Override
+        public String getVisitorParameterName() {
+            return this.singleUnionType
+                    .getDiscriminantValueV2()
+                    .getName()
+                    .getSafeName()
+                    .getCamelCase();
         }
 
         @Override
@@ -219,6 +249,26 @@ public final class UnionGenerator extends AbstractFileGenerator {
             return valueFieldSpec.map(fieldSpec -> fieldSpec.name).orElse("value");
         }
 
+        @Override
+        public Optional<MethodSpec> getStaticFactory() {
+            MethodSpec.Builder staticFactoryBuilder = MethodSpec.methodBuilder(getVisitorParameterName())
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(getUnionClassName());
+            if (getUnionSubTypeTypeName().isPresent()) {
+                staticFactoryBuilder
+                        .addParameter(getUnionSubTypeTypeName().get(), getValueFieldName())
+                        .addStatement(
+                                "return new $T(new $T($L))",
+                                getUnionClassName(),
+                                getUnionSubTypeWrapperClass(),
+                                getValueFieldName());
+            } else {
+                staticFactoryBuilder.addStatement(
+                        "return new $T(new $T())", getUnionClassName(), getUnionSubTypeWrapperClass());
+            }
+            return Optional.of(staticFactoryBuilder.build());
+        }
+
         private Optional<FieldSpec> getValueField() {
             return singleUnionType.getShape().visit(new SingleUnionTypeProperties.Visitor<>() {
 
@@ -273,13 +323,8 @@ public final class UnionGenerator extends AbstractFileGenerator {
         }
 
         @Override
-        public String getCamelCaseName() {
-            return "unknown";
-        }
-
-        @Override
-        public String getPascalCaseName() {
-            return "Unknown";
+        public Optional<NameAndWireValue> getDiscriminant() {
+            return Optional.empty();
         }
 
         @Override
@@ -298,8 +343,8 @@ public final class UnionGenerator extends AbstractFileGenerator {
         }
 
         @Override
-        public Optional<String> getDiscriminantValue() {
-            return Optional.empty();
+        public String getVisitorParameterName() {
+            return "unknownType";
         }
 
         @Override
@@ -309,7 +354,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
         @Override
         public ClassName getUnionSubTypeWrapperClass() {
-            return getUnionClassName().nestedClass("_" + getPascalCaseName() + "Value");
+            return getUnionClassName().nestedClass("_UnknownValue");
         }
 
         @Override

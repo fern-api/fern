@@ -17,9 +17,9 @@
 package com.fern.java.generators.union;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
-import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -52,11 +52,7 @@ public abstract class UnionSubType {
         return unionClassName;
     }
 
-    public abstract String getCamelCaseName();
-
-    public abstract String getPascalCaseName();
-
-    public abstract Optional<String> getDiscriminantValue();
+    public abstract Optional<NameAndWireValue> getDiscriminant();
 
     public abstract Optional<TypeName> getUnionSubTypeTypeName();
 
@@ -71,49 +67,25 @@ public abstract class UnionSubType {
         return "value";
     }
 
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public Optional<MethodSpec> getStaticFactory() {
-        MethodSpec.Builder staticFactoryBuilder = MethodSpec.methodBuilder(
-                        KeyWordUtils.getKeyWordCompatibleName(getCamelCaseName()))
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(unionClassName);
-        if (getUnionSubTypeTypeName().isPresent()) {
-            staticFactoryBuilder
-                    .addParameter(getUnionSubTypeTypeName().get(), getValueFieldName())
-                    .addStatement(
-                            "return new $T(new $T($L))",
-                            unionClassName,
-                            getUnionSubTypeWrapperClass(),
-                            getValueFieldName());
-        } else {
-            staticFactoryBuilder.addStatement("return new $T(new $T())", unionClassName, getUnionSubTypeWrapperClass());
-        }
-        return Optional.of(staticFactoryBuilder.build());
-    }
+    public abstract Optional<MethodSpec> getStaticFactory();
+
+    public abstract String getVisitMethodName();
+
+    public abstract String getIsMethodName();
 
     @SuppressWarnings("checkstyle:DesignForExtension")
-    public String getVisitMethodName() {
-        return "visit" + getPascalCaseName();
-    }
+    public abstract String getGetMethodName();
 
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public String getIsMethodName() {
-        return "is" + getPascalCaseName();
-    }
-
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public String getGetMethodName() {
-        return "get" + getPascalCaseName();
-    }
+    public abstract String getVisitorParameterName();
 
     public final MethodSpec getVisitorInterfaceVisitMethod() {
         MethodSpec.Builder visitMethodBuilder = MethodSpec.methodBuilder(getVisitMethodName())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .returns(TypeVariableName.get("T"));
         if (getUnionSubTypeTypeName().isPresent()) {
-            visitMethodBuilder.addParameter(ParameterSpec.builder(
-                            getUnionSubTypeTypeName().get(), KeyWordUtils.getKeyWordCompatibleName(getCamelCaseName()))
-                    .build());
+            visitMethodBuilder.addParameter(
+                    ParameterSpec.builder(getUnionSubTypeTypeName().get(), getVisitorParameterName())
+                            .build());
         }
         return visitMethodBuilder.build();
     }
@@ -152,9 +124,9 @@ public abstract class UnionSubType {
         TypeSpec.Builder unionSubTypeBuilder = TypeSpec.classBuilder(subTypeWrapperClassName)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                 .addSuperinterface(unionWrapperInterface);
-        if (getDiscriminantValue().isPresent()) {
+        if (getDiscriminant().isPresent()) {
             unionSubTypeBuilder.addAnnotation(AnnotationSpec.builder(JsonTypeName.class)
-                    .addMember("value", "$S", getDiscriminantValue().get())
+                    .addMember("value", "$S", getDiscriminant().get().getWireValue())
                     .build());
         }
         EqualsMethod equalsMethod = getEqualsMethod();

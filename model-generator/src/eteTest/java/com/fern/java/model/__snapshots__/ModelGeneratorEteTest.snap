@@ -416,7 +416,7 @@ public final class Author {
 
     T visitName(String name);
 
-    T _visitUnknown(Object unknown);
+    T _visitUnknown(Object unknownType);
   }
 
   @JsonTypeInfo(

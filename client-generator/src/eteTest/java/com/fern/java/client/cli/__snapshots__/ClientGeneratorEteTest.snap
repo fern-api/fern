@@ -762,19 +762,19 @@ public final class GetAuthException extends Exception {
     return new GetAuthException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -797,7 +797,7 @@ public final class GetAuthException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -1423,19 +1423,19 @@ public final class CreatePostException extends Exception {
     return new CreatePostException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -1458,7 +1458,7 @@ public final class CreatePostException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -1546,7 +1546,7 @@ public final class GetPostException extends Exception {
     return value instanceof PostNotFoundErrorValue;
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
@@ -1557,8 +1557,8 @@ public final class GetPostException extends Exception {
     return Optional.empty();
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
@@ -1567,7 +1567,7 @@ public final class GetPostException extends Exception {
   public interface Visitor<T> {
     T visitPostNotFoundError(PostNotFoundError postNotFoundError);
 
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -1641,7 +1641,7 @@ public final class GetPostException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -1748,7 +1748,7 @@ public final class Author {
 
     T visitName(String name);
 
-    T _visitUnknown(Object unknown);
+    T _visitUnknown(Object unknownType);
   }
 
   @JsonTypeInfo(
@@ -2961,19 +2961,19 @@ public final class GetDummyException extends Exception {
     return new GetDummyException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -2996,7 +2996,7 @@ public final class GetDummyException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -3072,19 +3072,19 @@ public final class HealthException extends Exception {
     return new HealthException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -3107,7 +3107,7 @@ public final class HealthException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -4213,19 +4213,19 @@ public final class AddException extends Exception {
     return new AddException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -4248,7 +4248,7 @@ public final class AddException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -4323,19 +4323,19 @@ public final class DeleteException extends Exception {
     return new DeleteException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -4358,7 +4358,7 @@ public final class DeleteException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -4434,19 +4434,19 @@ public final class GetDeviceException extends Exception {
     return new GetDeviceException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -4469,7 +4469,7 @@ public final class GetDeviceException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -4545,19 +4545,19 @@ public final class UpdateException extends Exception {
     return new UpdateException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -4580,7 +4580,7 @@ public final class UpdateException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -5752,19 +5752,19 @@ public final class SendBulkException extends Exception {
     return new SendBulkException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -5787,7 +5787,7 @@ public final class SendBulkException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -5863,19 +5863,19 @@ public final class SendException extends Exception {
     return new SendException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -5898,7 +5898,7 @@ public final class SendException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -10021,19 +10021,19 @@ public final class CreateOrUpdateException extends Exception {
     return new CreateOrUpdateException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -10056,7 +10056,7 @@ public final class CreateOrUpdateException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override
@@ -10132,19 +10132,19 @@ public final class GetException extends Exception {
     return new GetException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -10167,7 +10167,7 @@ public final class GetException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override

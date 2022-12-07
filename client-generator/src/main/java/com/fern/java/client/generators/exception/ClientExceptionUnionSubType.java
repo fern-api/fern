@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.errors.HttpErrorConfiguration;
 import com.fern.ir.model.ir.FernConstants;
@@ -64,18 +65,8 @@ public final class ClientExceptionUnionSubType extends UnionSubType {
     }
 
     @Override
-    public String getCamelCaseName() {
-        return errorDeclaration.getDiscriminantValue().getCamelCase();
-    }
-
-    @Override
-    public String getPascalCaseName() {
-        return errorDeclaration.getDiscriminantValue().getPascalCase();
-    }
-
-    @Override
-    public Optional<String> getDiscriminantValue() {
-        return Optional.of(errorDeclaration.getDiscriminantValue().getWireValue());
+    public Optional<NameAndWireValue> getDiscriminant() {
+        return Optional.of(errorDeclaration.getDiscriminantValueV2());
     }
 
     @Override
@@ -100,7 +91,11 @@ public final class ClientExceptionUnionSubType extends UnionSubType {
 
     @Override
     public Optional<MethodSpec> getStaticFactory() {
-        return Optional.of(MethodSpec.methodBuilder(getCamelCaseName())
+        return Optional.of(MethodSpec.methodBuilder(this.errorDeclaration
+                        .getDiscriminantValueV2()
+                        .getName()
+                        .getSafeName()
+                        .getCamelCase())
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(getUnionClassName())
                 .addParameter(getUnionSubTypeTypeName().get(), getValueFieldName())
@@ -114,6 +109,45 @@ public final class ClientExceptionUnionSubType extends UnionSubType {
                                 .map(HttpErrorConfiguration::getStatusCode)
                                 .orElse(400))
                 .build());
+    }
+
+    @Override
+    public String getVisitMethodName() {
+        return "visit"
+                + this.errorDeclaration
+                        .getDiscriminantValueV2()
+                        .getName()
+                        .getUnsafeName()
+                        .getPascalCase();
+    }
+
+    @Override
+    public String getIsMethodName() {
+        return "is"
+                + this.errorDeclaration
+                        .getDiscriminantValueV2()
+                        .getName()
+                        .getUnsafeName()
+                        .getPascalCase();
+    }
+
+    @Override
+    public String getGetMethodName() {
+        return "get"
+                + this.errorDeclaration
+                        .getDiscriminantValueV2()
+                        .getName()
+                        .getUnsafeName()
+                        .getPascalCase();
+    }
+
+    @Override
+    public String getVisitorParameterName() {
+        return this.errorDeclaration
+                .getDiscriminantValueV2()
+                .getName()
+                .getSafeName()
+                .getCamelCase();
     }
 
     private FieldSpec getValueField() {

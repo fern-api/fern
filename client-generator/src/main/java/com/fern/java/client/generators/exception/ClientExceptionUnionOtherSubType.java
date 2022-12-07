@@ -19,6 +19,7 @@ package com.fern.java.client.generators.exception;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.java.generators.union.UnionSubType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -43,17 +44,7 @@ public final class ClientExceptionUnionOtherSubType extends UnionSubType {
     }
 
     @Override
-    public String getCamelCaseName() {
-        return "other";
-    }
-
-    @Override
-    public String getPascalCaseName() {
-        return "Other";
-    }
-
-    @Override
-    public Optional<String> getDiscriminantValue() {
+    public Optional<NameAndWireValue> getDiscriminant() {
         return Optional.empty();
     }
 
@@ -79,7 +70,7 @@ public final class ClientExceptionUnionOtherSubType extends UnionSubType {
 
     @Override
     public Optional<MethodSpec> getStaticFactory() {
-        return Optional.of(MethodSpec.methodBuilder(getCamelCaseName())
+        return Optional.of(MethodSpec.methodBuilder("other")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(getUnionClassName())
                 .addParameter(getUnionSubTypeTypeName().get(), getValueFieldName())
@@ -91,6 +82,26 @@ public final class ClientExceptionUnionOtherSubType extends UnionSubType {
                         getValueFieldName(),
                         "statusCode")
                 .build());
+    }
+
+    @Override
+    public String getVisitMethodName() {
+        return "_visitOther";
+    }
+
+    @Override
+    public String getIsMethodName() {
+        return "_isOther";
+    }
+
+    @Override
+    public String getGetMethodName() {
+        return "_getOther";
+    }
+
+    @Override
+    public String getVisitorParameterName() {
+        return "otherType";
     }
 
     private FieldSpec getValueField() {
