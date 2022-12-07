@@ -13,13 +13,15 @@ export function validateEnumExample({
         return [];
     }
 
-    const validEnumValuesStr = wireValues.map((wireValue) => `"${wireValue}"`).join(", ");
+    const validEnumValuesLines = wireValues.map((wireValue) => `  - ${wireValue}`).join("\n");
 
     if (typeof example !== "string") {
         return [
             {
                 severity: "error",
-                message: `This example is not valid. Enum values are: ${validEnumValuesStr}.`,
+                message:
+                    `This example is not valid. Example is: ${JSON.stringify(example)}. Enum values are:\n` +
+                    validEnumValuesLines,
             },
         ];
     }
@@ -27,7 +29,7 @@ export function validateEnumExample({
     return [
         {
             severity: "error",
-            message: `"${example}" is not a valid example for this enum. Enum values are: ${validEnumValuesStr}.`,
+            message: `"${example}" is not a valid example for this enum. Enum values are:\n` + validEnumValuesLines,
         },
     ];
 }

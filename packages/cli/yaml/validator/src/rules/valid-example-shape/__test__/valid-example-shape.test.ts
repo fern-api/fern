@@ -11,22 +11,136 @@ describe("valid-example-shape", () => {
         });
 
         const expectedViolations: ValidationViolation[] = [
+            // alias.yml
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be a string. Example is: 14",
+                nodePath: ["types", "StringAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be a string. Example is: {"key":"some value"}',
+                nodePath: ["types", "StringAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be an integer. Example is: 3.14",
+                nodePath: ["types", "IntegerAlias2", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be an integer. Example is: "hello"',
+                nodePath: ["types", "LongAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be a double. Example is: false",
+                nodePath: ["types", "DoubleAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be a boolean. Example is: 100",
+                nodePath: ["types", "BooleanAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be an ISO 8601 timestamp. Example is: "4/13/2002"',
+                nodePath: ["types", "DateTimeAlias", { key: "examples", arrayIndex: 0 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be a UUID. Example is: "my-id"',
+                nodePath: ["types", "UuidAlias", { key: "examples", arrayIndex: 0 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be a string. Example is: 3.14",
+                nodePath: ["types", "ListAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be a list. Example is: "hello"',
+                nodePath: ["types", "ListAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be a list. Example is: {"key":"value"}',
+                nodePath: ["types", "SetAlias", { key: "examples", arrayIndex: 0 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: `Set has duplicate elements:
+  - "hello"`,
+                nodePath: ["types", "SetAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be a string. Example is: 3.14",
+                nodePath: ["types", "SetAlias", { key: "examples", arrayIndex: 3 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: "Expected example to be an integer. Example is: 3.15",
+                nodePath: ["types", "MapAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be a map. Example is: ["hello"]',
+                nodePath: ["types", "MapAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be a double. Example is: "hello"',
+                nodePath: ["types", "OptionalAlias", { key: "examples", arrayIndex: 0 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: "alias.yml",
+                message: 'Expected example to be "hello". Example is: "goodbye"',
+                nodePath: ["types", "LiteralAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            // enum.yml
             {
                 severity: "error",
                 relativeFilepath: "enum.yml",
-                message: '"Blue" is not a valid example for this enum. Enum values are: "Red", "BLUE", "purple".',
+                message: `"Blue" is not a valid example for this enum. Enum values are:
+  - Red
+  - BLUE
+  - purple`,
                 nodePath: ["types", "Color", { key: "examples", arrayIndex: 1 }],
             },
             {
                 severity: "error",
                 relativeFilepath: "enum.yml",
-                message: '"PURPLE" is not a valid example for this enum. Enum values are: "Red", "BLUE", "purple".',
+                message: `"PURPLE" is not a valid example for this enum. Enum values are:
+  - Red
+  - BLUE
+  - purple`,
                 nodePath: ["types", "Color", { key: "examples", arrayIndex: 3 }],
             },
             {
                 severity: "error",
                 relativeFilepath: "enum.yml",
-                message: 'This example is not valid. Enum values are: "Red", "BLUE", "purple".',
+                message: `This example is not valid. Example is: {"key":"value"}. Enum values are:
+  - Red
+  - BLUE
+  - purple`,
                 nodePath: ["types", "Color", { key: "examples", arrayIndex: 4 }],
             },
         ];
