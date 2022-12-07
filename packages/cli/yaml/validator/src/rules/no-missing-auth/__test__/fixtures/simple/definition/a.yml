@@ -1,0 +1,10 @@
+services:
+  http:
+    AService:
+      auth: false
+      base-path: /
+      endpoints:
+        foo:
+          auth: true
+          path: /
+          method: POST

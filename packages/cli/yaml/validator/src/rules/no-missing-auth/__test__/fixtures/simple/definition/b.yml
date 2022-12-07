@@ -1,0 +1,9 @@
+services:
+  http:
+    BService:
+      auth: true
+      base-path: /
+      endpoints:
+        foo:
+          path: /
+          method: POST
