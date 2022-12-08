@@ -183,24 +183,28 @@ class Playlist(PlaylistCreateRequest):
 
     @pydantic.validator("name", pre=True)
     def _pre_validate_name(cls, v: str, values: Playlist.Partial) -> str:
+        v = super()._pre_validate_name(v, values)
         for validator in Playlist.Validators._name_pre_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("name", pre=False)
     def _post_validate_name(cls, v: str, values: Playlist.Partial) -> str:
+        v = super()._post_validate_name(v, values)
         for validator in Playlist.Validators._name_post_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("problems", pre=True)
     def _pre_validate_problems(cls, v: typing.List[ProblemId], values: Playlist.Partial) -> typing.List[ProblemId]:
+        v = super()._pre_validate_problems(v, values)
         for validator in Playlist.Validators._problems_pre_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("problems", pre=False)
     def _post_validate_problems(cls, v: typing.List[ProblemId], values: Playlist.Partial) -> typing.List[ProblemId]:
+        v = super()._post_validate_problems(v, values)
         for validator in Playlist.Validators._problems_post_validators:
             v = validator(v, values)
         return v

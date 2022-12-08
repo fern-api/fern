@@ -15,18 +15,26 @@ class FieldValidatorGenerator(ValidatorGenerator):
     _DECORATOR_PRE_ARGUMENT = "pre"
     _VALIDATOR_PARAMETER_NAME = "validator"
 
-    def __init__(self, field: PydanticField, model: PydanticModel, reference_to_validators_class: Tuple[str, ...]):
+    def __init__(
+        self,
+        field: PydanticField,
+        model: PydanticModel,
+        reference_to_validators_class: Tuple[str, ...],
+        extended: bool = False,
+    ):
         super().__init__(model=model, reference_to_validators_class=reference_to_validators_class)
         self.field = field
+        self.extended = extended
 
     def add_validator_to_model(self) -> None:
         for pre in [True, False]:
             prefix = "pre" if pre else "post"
+            validator_name = f"_{prefix}_validate_{self.field.name}"
             self._model.add_field_validator(
                 validator_name=f"_{prefix}_validate_{self.field.name}",
                 field_name=self.field.name,
                 field_type=self.field.type_hint,
-                body=AST.CodeWriter(self._get_write_validator_body(pre)),
+                body=AST.CodeWriter(self._get_write_validator_body(pre, validator_name)),
                 pre=pre,
             )
 
@@ -34,9 +42,16 @@ class FieldValidatorGenerator(ValidatorGenerator):
         prefix = "pre" if pre else "post"
         return f"_{self.field.name}_{prefix}_validators"
 
-    def _get_write_validator_body(self, pre: bool) -> CodeWriterFunction:
+    def _get_write_validator_body(self, pre: bool, validator_method_name: str) -> CodeWriterFunction:
         def _write_validator_body(writer: AST.NodeWriter) -> None:
             field_value_parameter_name = PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME
+
+            if self.extended:
+                writer.write(f"{field_value_parameter_name} = ")
+                writer.write_line(
+                    f"super().{validator_method_name}"
+                    f"({field_value_parameter_name}, {PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME})"
+                )
 
             INDIVIDUAL_VALIDATOR_NAME = "validator"
             writer.write(f"for {INDIVIDUAL_VALIDATOR_NAME} in ")

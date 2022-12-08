@@ -19,18 +19,23 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
         super().__init__(model=model)
         reference_to_validators_class = self._get_reference_to_validators_class()
 
-        all_fields: List[PydanticField] = []
-        all_fields.extend(model.get_public_fields())
-        all_fields.extend(extended_pydantic_fields)
-
-        self._field_validator_generators = [
-            FieldValidatorGenerator(
+        self._field_validator_generators = []
+        for field in model.get_public_fields():
+            field_validator_generator = FieldValidatorGenerator(
                 field=field,
                 model=self._model,
                 reference_to_validators_class=reference_to_validators_class,
             )
-            for field in all_fields
-        ]
+            self._field_validator_generators.append(field_validator_generator)
+        for field in extended_pydantic_fields:
+            field_validator_generator = FieldValidatorGenerator(
+                field=field,
+                model=self._model,
+                reference_to_validators_class=reference_to_validators_class,
+                extended=True,
+            )
+            self._field_validator_generators.append(field_validator_generator)
+
         self._root_validator_generator = RootValidatorGenerator(
             model=self._model,
             reference_to_validators_class=reference_to_validators_class,
