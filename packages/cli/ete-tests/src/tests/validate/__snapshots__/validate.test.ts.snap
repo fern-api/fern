@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`validate simple 1`] = `
-"[simple-api]: other.yml -> types -> MyType
+"[simple-api]: api.yml -> error-discrimination
+              error-discrimination is required because this API has declared errors.
+[simple-api]: other.yml -> types -> MyType
               Type MissingType is not defined."
 `;

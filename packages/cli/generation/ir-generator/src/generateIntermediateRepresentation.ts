@@ -103,7 +103,7 @@ export async function generateIntermediateRepresentation({
                 }
                 const errorDiscriminationSchema = workspace.rootApiFile["error-discrimination"];
                 if (errorDiscriminationSchema == null) {
-                    throw new Error("Please specify error-discrimination in api.yml.");
+                    throw new Error("error-discrimination is missing in api.yml but there are declared errors.");
                 }
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                     const convertedErrorDeclaration = convertErrorDeclaration({

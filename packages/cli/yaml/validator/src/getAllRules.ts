@@ -40,5 +40,5 @@ export function getAllRules(): Rule[] {
 }
 
 export function getAllEnabledRules(): Rule[] {
-    return getAllRules().filter(({ disabled = false }) => !disabled);
+    return getAllRules().filter(({ DISABLE_RULE: disabled = false }) => !disabled);
 }
