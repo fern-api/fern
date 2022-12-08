@@ -57,7 +57,7 @@ class DoublyLinkedListValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["head"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["head"], *, pre: bool = False
         ) -> typing.Callable[
             [DoublyLinkedListValue.Validators.HeadValidator], DoublyLinkedListValue.Validators.HeadValidator
         ]:
@@ -66,7 +66,7 @@ class DoublyLinkedListValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["nodes"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["nodes"], *, pre: bool = False
         ) -> typing.Callable[
             [DoublyLinkedListValue.Validators.NodesValidator], DoublyLinkedListValue.Validators.NodesValidator
         ]:

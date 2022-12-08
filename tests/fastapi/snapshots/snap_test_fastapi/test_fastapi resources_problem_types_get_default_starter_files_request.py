@@ -77,7 +77,7 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesRequest.Validators.InputParamsValidator],
             GetDefaultStarterFilesRequest.Validators.InputParamsValidator,
@@ -87,7 +87,7 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesRequest.Validators.OutputTypeValidator],
             GetDefaultStarterFilesRequest.Validators.OutputTypeValidator,
@@ -97,7 +97,7 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesRequest.Validators.MethodNameValidator],
             GetDefaultStarterFilesRequest.Validators.MethodNameValidator,

@@ -52,7 +52,7 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
         ) -> typing.Callable[
             [ExistingSubmissionExecuting.Validators.SubmissionIdValidator],
             ExistingSubmissionExecuting.Validators.SubmissionIdValidator,

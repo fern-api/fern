@@ -59,14 +59,14 @@ class ListType(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["value_type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["value_type"], *, pre: bool = False
         ) -> typing.Callable[[ListType.Validators.ValueTypeValidator], ListType.Validators.ValueTypeValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["is_fixed_length"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["is_fixed_length"], *, pre: bool = False
         ) -> typing.Callable[[ListType.Validators.IsFixedLengthValidator], ListType.Validators.IsFixedLengthValidator]:
             ...
 

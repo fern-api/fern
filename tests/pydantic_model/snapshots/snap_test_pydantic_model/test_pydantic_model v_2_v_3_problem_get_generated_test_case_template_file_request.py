@@ -56,7 +56,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["template"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["template"], *, pre: bool = False
         ) -> typing.Callable[
             [GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator],
             GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator,

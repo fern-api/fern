@@ -54,14 +54,14 @@ class FileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool = False
         ) -> typing.Callable[[FileInfo.Validators.FilenameValidator], FileInfo.Validators.FilenameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool = False
         ) -> typing.Callable[[FileInfo.Validators.ContentsValidator], FileInfo.Validators.ContentsValidator]:
             ...
 

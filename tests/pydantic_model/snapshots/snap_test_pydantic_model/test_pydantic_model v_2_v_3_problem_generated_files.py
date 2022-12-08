@@ -73,7 +73,7 @@ class GeneratedFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["generated_test_case_files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["generated_test_case_files"], *, pre: bool = False
         ) -> typing.Callable[
             [GeneratedFiles.Validators.GeneratedTestCaseFilesValidator],
             GeneratedFiles.Validators.GeneratedTestCaseFilesValidator,
@@ -83,7 +83,7 @@ class GeneratedFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["generated_template_files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["generated_template_files"], *, pre: bool = False
         ) -> typing.Callable[
             [GeneratedFiles.Validators.GeneratedTemplateFilesValidator],
             GeneratedFiles.Validators.GeneratedTemplateFilesValidator,
@@ -93,7 +93,7 @@ class GeneratedFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["other"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["other"], *, pre: bool = False
         ) -> typing.Callable[[GeneratedFiles.Validators.OtherValidator], GeneratedFiles.Validators.OtherValidator]:
             ...
 

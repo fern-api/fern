@@ -50,7 +50,7 @@ class UpdateProblemResponse(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
         ) -> typing.Callable[
             [UpdateProblemResponse.Validators.ProblemVersionValidator],
             UpdateProblemResponse.Validators.ProblemVersionValidator,

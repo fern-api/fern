@@ -69,7 +69,7 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool = False
         ) -> typing.Callable[
             [VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator],
             VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator,
@@ -79,7 +79,7 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_result_type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["actual_result_type"], *, pre: bool = False
         ) -> typing.Callable[
             [VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator],
             VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator,

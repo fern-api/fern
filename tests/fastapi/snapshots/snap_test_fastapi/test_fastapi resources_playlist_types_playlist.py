@@ -58,14 +58,14 @@ class Playlist(PlaylistCreateRequest):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["playlist_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["playlist_id"], *, pre: bool = False
         ) -> typing.Callable[[Playlist.Validators.PlaylistIdValidator], Playlist.Validators.PlaylistIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["owner_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["owner_id"], *, pre: bool = False
         ) -> typing.Callable[[Playlist.Validators.OwnerIdValidator], Playlist.Validators.OwnerIdValidator]:
             ...
 

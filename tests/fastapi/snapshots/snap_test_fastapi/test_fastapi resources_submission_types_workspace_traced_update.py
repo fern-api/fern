@@ -50,7 +50,7 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator],
             WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator,

@@ -63,7 +63,7 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["result"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["result"], *, pre: bool = False
         ) -> typing.Callable[
             [StoreTracedTestCaseRequest.Validators.ResultValidator],
             StoreTracedTestCaseRequest.Validators.ResultValidator,
@@ -73,7 +73,7 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool = False
         ) -> typing.Callable[
             [StoreTracedTestCaseRequest.Validators.TraceResponsesValidator],
             StoreTracedTestCaseRequest.Validators.TraceResponsesValidator,

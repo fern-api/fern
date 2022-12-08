@@ -65,7 +65,7 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool = False
         ) -> typing.Callable[
             [BinaryTreeNodeAndTreeValue.Validators.NodeIdValidator],
             BinaryTreeNodeAndTreeValue.Validators.NodeIdValidator,
@@ -75,7 +75,7 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["full_tree"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["full_tree"], *, pre: bool = False
         ) -> typing.Callable[
             [BinaryTreeNodeAndTreeValue.Validators.FullTreeValidator],
             BinaryTreeNodeAndTreeValue.Validators.FullTreeValidator,

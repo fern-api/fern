@@ -65,7 +65,7 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["update_time"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["update_time"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator],
             WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator,
@@ -75,7 +75,7 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["update_info"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["update_info"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator],
             WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator,

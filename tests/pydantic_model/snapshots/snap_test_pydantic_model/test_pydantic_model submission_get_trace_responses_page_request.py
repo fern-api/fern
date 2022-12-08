@@ -50,7 +50,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool = False
         ) -> typing.Callable[
             [GetTraceResponsesPageRequest.Validators.OffsetValidator],
             GetTraceResponsesPageRequest.Validators.OffsetValidator,

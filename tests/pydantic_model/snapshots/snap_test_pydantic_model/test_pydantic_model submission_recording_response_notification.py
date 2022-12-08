@@ -102,7 +102,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.SubmissionIdValidator],
             RecordingResponseNotification.Validators.SubmissionIdValidator,
@@ -112,7 +112,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.TestCaseIdValidator],
             RecordingResponseNotification.Validators.TestCaseIdValidator,
@@ -122,7 +122,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.LineNumberValidator],
             RecordingResponseNotification.Validators.LineNumberValidator,
@@ -132,7 +132,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["lightweight_stack_info"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["lightweight_stack_info"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.LightweightStackInfoValidator],
             RecordingResponseNotification.Validators.LightweightStackInfoValidator,
@@ -142,7 +142,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["traced_file"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["traced_file"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.TracedFileValidator],
             RecordingResponseNotification.Validators.TracedFileValidator,

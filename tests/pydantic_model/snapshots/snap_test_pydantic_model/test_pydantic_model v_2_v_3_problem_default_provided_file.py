@@ -61,7 +61,7 @@ class DefaultProvidedFile(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["file"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["file"], *, pre: bool = False
         ) -> typing.Callable[
             [DefaultProvidedFile.Validators.FileValidator], DefaultProvidedFile.Validators.FileValidator
         ]:
@@ -70,7 +70,7 @@ class DefaultProvidedFile(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["related_types"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["related_types"], *, pre: bool = False
         ) -> typing.Callable[
             [DefaultProvidedFile.Validators.RelatedTypesValidator], DefaultProvidedFile.Validators.RelatedTypesValidator
         ]:

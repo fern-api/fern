@@ -61,7 +61,7 @@ class RunningResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
         ) -> typing.Callable[
             [RunningResponse.Validators.SubmissionIdValidator], RunningResponse.Validators.SubmissionIdValidator
         ]:
@@ -70,7 +70,7 @@ class RunningResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["state"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["state"], *, pre: bool = False
         ) -> typing.Callable[[RunningResponse.Validators.StateValidator], RunningResponse.Validators.StateValidator]:
             ...
 

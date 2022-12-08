@@ -61,7 +61,7 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["signature"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: bool = False
         ) -> typing.Callable[
             [NonVoidFunctionDefinition.Validators.SignatureValidator],
             NonVoidFunctionDefinition.Validators.SignatureValidator,
@@ -71,7 +71,7 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["code"], *, pre: bool = False
         ) -> typing.Callable[
             [NonVoidFunctionDefinition.Validators.CodeValidator], NonVoidFunctionDefinition.Validators.CodeValidator
         ]:

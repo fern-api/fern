@@ -69,7 +69,7 @@ class TestCaseTemplate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["template_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["template_id"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseTemplate.Validators.TemplateIdValidator], TestCaseTemplate.Validators.TemplateIdValidator
         ]:
@@ -78,14 +78,14 @@ class TestCaseTemplate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
         ) -> typing.Callable[[TestCaseTemplate.Validators.NameValidator], TestCaseTemplate.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["implementation"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["implementation"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseTemplate.Validators.ImplementationValidator], TestCaseTemplate.Validators.ImplementationValidator
         ]:

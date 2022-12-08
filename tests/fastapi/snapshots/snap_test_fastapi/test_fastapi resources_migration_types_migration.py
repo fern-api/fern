@@ -56,14 +56,14 @@ class Migration(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
         ) -> typing.Callable[[Migration.Validators.NameValidator], Migration.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["status"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["status"], *, pre: bool = False
         ) -> typing.Callable[[Migration.Validators.StatusValidator], Migration.Validators.StatusValidator]:
             ...
 

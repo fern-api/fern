@@ -133,7 +133,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.ProblemNameValidator], CreateProblemRequest.Validators.ProblemNameValidator
         ]:
@@ -142,7 +142,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.ProblemDescriptionValidator],
             CreateProblemRequest.Validators.ProblemDescriptionValidator,
@@ -152,7 +152,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.FilesValidator], CreateProblemRequest.Validators.FilesValidator
         ]:
@@ -161,7 +161,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.InputParamsValidator], CreateProblemRequest.Validators.InputParamsValidator
         ]:
@@ -170,7 +170,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.OutputTypeValidator], CreateProblemRequest.Validators.OutputTypeValidator
         ]:
@@ -179,7 +179,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["testcases"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["testcases"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.TestcasesValidator], CreateProblemRequest.Validators.TestcasesValidator
         ]:
@@ -188,7 +188,7 @@ class CreateProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
         ) -> typing.Callable[
             [CreateProblemRequest.Validators.MethodNameValidator], CreateProblemRequest.Validators.MethodNameValidator
         ]:

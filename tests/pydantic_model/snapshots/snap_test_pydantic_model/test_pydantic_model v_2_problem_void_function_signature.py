@@ -52,7 +52,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool = False
         ) -> typing.Callable[
             [VoidFunctionSignature.Validators.ParametersValidator], VoidFunctionSignature.Validators.ParametersValidator
         ]:

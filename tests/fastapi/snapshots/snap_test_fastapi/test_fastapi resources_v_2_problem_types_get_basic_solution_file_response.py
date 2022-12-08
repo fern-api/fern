@@ -53,7 +53,7 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["solution_file_by_language"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["solution_file_by_language"], *, pre: bool = False
         ) -> typing.Callable[
             [GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator],
             GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator,

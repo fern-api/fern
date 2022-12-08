@@ -60,7 +60,7 @@ class WorkspaceFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["main_file"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["main_file"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceFiles.Validators.MainFileValidator], WorkspaceFiles.Validators.MainFileValidator
         ]:
@@ -69,7 +69,7 @@ class WorkspaceFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["read_only_files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["read_only_files"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceFiles.Validators.ReadOnlyFilesValidator], WorkspaceFiles.Validators.ReadOnlyFilesValidator
         ]:

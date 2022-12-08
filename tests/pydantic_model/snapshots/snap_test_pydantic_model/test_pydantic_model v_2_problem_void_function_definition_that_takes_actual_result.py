@@ -73,7 +73,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["additional_parameters"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["additional_parameters"], *, pre: bool = False
         ) -> typing.Callable[
             [VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator],
             VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator,
@@ -83,7 +83,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["code"], *, pre: bool = False
         ) -> typing.Callable[
             [VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator],
             VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator,

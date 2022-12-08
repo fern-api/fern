@@ -56,7 +56,7 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
         ) -> typing.Callable[
             [UpdatePlaylistRequest.Validators.NameValidator], UpdatePlaylistRequest.Validators.NameValidator
         ]:
@@ -65,7 +65,7 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problems"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problems"], *, pre: bool = False
         ) -> typing.Callable[
             [UpdatePlaylistRequest.Validators.ProblemsValidator], UpdatePlaylistRequest.Validators.ProblemsValidator
         ]:

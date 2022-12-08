@@ -64,7 +64,7 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordedTestCaseUpdate.Validators.TestCaseIdValidator],
             RecordedTestCaseUpdate.Validators.TestCaseIdValidator,
@@ -74,7 +74,7 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool = False
         ) -> typing.Callable[
             [RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator],
             RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator,

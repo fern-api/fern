@@ -48,7 +48,7 @@ class Scope(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variables"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["variables"], *, pre: bool = False
         ) -> typing.Callable[[Scope.Validators.VariablesValidator], Scope.Validators.VariablesValidator]:
             ...
 

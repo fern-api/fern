@@ -64,21 +64,21 @@ class TestCaseMetadata(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["id"], *, pre: bool = False
         ) -> typing.Callable[[TestCaseMetadata.Validators.IdValidator], TestCaseMetadata.Validators.IdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
         ) -> typing.Callable[[TestCaseMetadata.Validators.NameValidator], TestCaseMetadata.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["hidden"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["hidden"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseMetadata.Validators.HiddenValidator], TestCaseMetadata.Validators.HiddenValidator
         ]:

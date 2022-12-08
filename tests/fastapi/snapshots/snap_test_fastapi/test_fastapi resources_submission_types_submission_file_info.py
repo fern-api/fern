@@ -62,7 +62,7 @@ class SubmissionFileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool = False
         ) -> typing.Callable[
             [SubmissionFileInfo.Validators.DirectoryValidator], SubmissionFileInfo.Validators.DirectoryValidator
         ]:
@@ -71,7 +71,7 @@ class SubmissionFileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool = False
         ) -> typing.Callable[
             [SubmissionFileInfo.Validators.FilenameValidator], SubmissionFileInfo.Validators.FilenameValidator
         ]:
@@ -80,7 +80,7 @@ class SubmissionFileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool = False
         ) -> typing.Callable[
             [SubmissionFileInfo.Validators.ContentsValidator], SubmissionFileInfo.Validators.ContentsValidator
         ]:

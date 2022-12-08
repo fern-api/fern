@@ -72,7 +72,7 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.NodeIdValidator], BinaryTreeNodeValue.Validators.NodeIdValidator
         ]:
@@ -81,7 +81,7 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["val"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["val"], *, pre: bool = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.ValValidator], BinaryTreeNodeValue.Validators.ValValidator
         ]:
@@ -90,7 +90,7 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["right"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["right"], *, pre: bool = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.RightValidator], BinaryTreeNodeValue.Validators.RightValidator
         ]:
@@ -99,7 +99,7 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["left"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["left"], *, pre: bool = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.LeftValidator], BinaryTreeNodeValue.Validators.LeftValidator
         ]:

@@ -86,7 +86,7 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["updates"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["updates"], *, pre: bool = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.UpdatesValidator], TestSubmissionStatusV2.Validators.UpdatesValidator
         ]:
@@ -95,7 +95,7 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.ProblemIdValidator], TestSubmissionStatusV2.Validators.ProblemIdValidator
         ]:
@@ -104,7 +104,7 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.ProblemVersionValidator],
             TestSubmissionStatusV2.Validators.ProblemVersionValidator,
@@ -114,7 +114,7 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_info"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_info"], *, pre: bool = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.ProblemInfoValidator],
             TestSubmissionStatusV2.Validators.ProblemInfoValidator,

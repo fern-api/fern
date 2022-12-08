@@ -57,14 +57,14 @@ class BinaryTreeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["root"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["root"], *, pre: bool = False
         ) -> typing.Callable[[BinaryTreeValue.Validators.RootValidator], BinaryTreeValue.Validators.RootValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["nodes"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["nodes"], *, pre: bool = False
         ) -> typing.Callable[[BinaryTreeValue.Validators.NodesValidator], BinaryTreeValue.Validators.NodesValidator]:
             ...
 

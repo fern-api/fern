@@ -78,14 +78,14 @@ class TestCaseV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["metadata"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["metadata"], *, pre: bool = False
         ) -> typing.Callable[[TestCaseV2.Validators.MetadataValidator], TestCaseV2.Validators.MetadataValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["implementation"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["implementation"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseV2.Validators.ImplementationValidator], TestCaseV2.Validators.ImplementationValidator
         ]:
@@ -94,14 +94,14 @@ class TestCaseV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["arguments"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["arguments"], *, pre: bool = False
         ) -> typing.Callable[[TestCaseV2.Validators.ArgumentsValidator], TestCaseV2.Validators.ArgumentsValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expects"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["expects"], *, pre: bool = False
         ) -> typing.Callable[[TestCaseV2.Validators.ExpectsValidator], TestCaseV2.Validators.ExpectsValidator]:
             ...
 

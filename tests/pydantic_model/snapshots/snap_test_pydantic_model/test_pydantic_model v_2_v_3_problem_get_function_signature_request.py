@@ -52,7 +52,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["function_signature"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["function_signature"], *, pre: bool = False
         ) -> typing.Callable[
             [GetFunctionSignatureRequest.Validators.FunctionSignatureValidator],
             GetFunctionSignatureRequest.Validators.FunctionSignatureValidator,

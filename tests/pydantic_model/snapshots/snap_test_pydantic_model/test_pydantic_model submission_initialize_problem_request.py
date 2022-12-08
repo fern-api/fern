@@ -64,7 +64,7 @@ class InitializeProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
         ) -> typing.Callable[
             [InitializeProblemRequest.Validators.ProblemIdValidator],
             InitializeProblemRequest.Validators.ProblemIdValidator,
@@ -74,7 +74,7 @@ class InitializeProblemRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
         ) -> typing.Callable[
             [InitializeProblemRequest.Validators.ProblemVersionValidator],
             InitializeProblemRequest.Validators.ProblemVersionValidator,

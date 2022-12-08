@@ -65,7 +65,7 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceRanResponse.Validators.SubmissionIdValidator],
             WorkspaceRanResponse.Validators.SubmissionIdValidator,
@@ -75,7 +75,7 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["run_details"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["run_details"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceRanResponse.Validators.RunDetailsValidator], WorkspaceRanResponse.Validators.RunDetailsValidator
         ]:

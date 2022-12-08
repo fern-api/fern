@@ -65,7 +65,7 @@ class TraceResponsesPage(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool = False
         ) -> typing.Callable[
             [TraceResponsesPage.Validators.OffsetValidator], TraceResponsesPage.Validators.OffsetValidator
         ]:
@@ -74,7 +74,7 @@ class TraceResponsesPage(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool = False
         ) -> typing.Callable[
             [TraceResponsesPage.Validators.TraceResponsesValidator],
             TraceResponsesPage.Validators.TraceResponsesValidator,

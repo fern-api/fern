@@ -65,21 +65,21 @@ class Parameter(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameter_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["parameter_id"], *, pre: bool = False
         ) -> typing.Callable[[Parameter.Validators.ParameterIdValidator], Parameter.Validators.ParameterIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
         ) -> typing.Callable[[Parameter.Validators.NameValidator], Parameter.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: bool = False
         ) -> typing.Callable[[Parameter.Validators.VariableTypeValidator], Parameter.Validators.VariableTypeValidator]:
             ...
 

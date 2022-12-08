@@ -70,7 +70,7 @@ class GenericCreateProblemError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["message"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["message"], *, pre: bool = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators.MessageValidator],
             GenericCreateProblemError.Validators.MessageValidator,
@@ -80,7 +80,7 @@ class GenericCreateProblemError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["type"], *, pre: bool = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators.TypeValidator], GenericCreateProblemError.Validators.TypeValidator
         ]:
@@ -89,7 +89,7 @@ class GenericCreateProblemError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stacktrace"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["stacktrace"], *, pre: bool = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators.StacktraceValidator],
             GenericCreateProblemError.Validators.StacktraceValidator,

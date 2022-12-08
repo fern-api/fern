@@ -48,7 +48,7 @@ class Files(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
         ) -> typing.Callable[[Files.Validators.FilesValidator], Files.Validators.FilesValidator]:
             ...
 

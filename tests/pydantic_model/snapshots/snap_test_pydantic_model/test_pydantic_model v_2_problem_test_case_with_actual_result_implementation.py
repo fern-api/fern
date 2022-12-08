@@ -69,7 +69,7 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["get_actual_result"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["get_actual_result"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseWithActualResultImplementation.Validators.GetActualResultValidator],
             TestCaseWithActualResultImplementation.Validators.GetActualResultValidator,
@@ -79,7 +79,7 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["assert_correctness_check"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["assert_correctness_check"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator],
             TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator,

@@ -84,7 +84,7 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.SubmissionIdValidator],
             WorkspaceSubmitRequest.Validators.SubmissionIdValidator,
@@ -94,7 +94,7 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["language"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.LanguageValidator], WorkspaceSubmitRequest.Validators.LanguageValidator
         ]:
@@ -103,7 +103,7 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["submission_files"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.SubmissionFilesValidator],
             WorkspaceSubmitRequest.Validators.SubmissionFilesValidator,
@@ -113,7 +113,7 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["user_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["user_id"], *, pre: bool = False
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.UserIdValidator], WorkspaceSubmitRequest.Validators.UserIdValidator
         ]:

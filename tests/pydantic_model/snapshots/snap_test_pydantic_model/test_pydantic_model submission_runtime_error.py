@@ -46,7 +46,7 @@ class RuntimeError(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["message"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["message"], *, pre: bool = False
         ) -> typing.Callable[[RuntimeError.Validators.MessageValidator], RuntimeError.Validators.MessageValidator]:
             ...
 

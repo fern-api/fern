@@ -57,7 +57,7 @@ class InvalidRequestResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["request"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["request"], *, pre: bool = False
         ) -> typing.Callable[
             [InvalidRequestResponse.Validators.RequestValidator], InvalidRequestResponse.Validators.RequestValidator
         ]:
@@ -66,7 +66,7 @@ class InvalidRequestResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["cause"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["cause"], *, pre: bool = False
         ) -> typing.Callable[
             [InvalidRequestResponse.Validators.CauseValidator], InvalidRequestResponse.Validators.CauseValidator
         ]:

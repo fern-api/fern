@@ -52,7 +52,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"], *, pre: bool = False
         ) -> typing.Callable[
             [DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator],
             DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator,

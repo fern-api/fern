@@ -74,7 +74,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.NodeIdValidator], DoublyLinkedListNodeValue.Validators.NodeIdValidator
         ]:
@@ -83,7 +83,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["val"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["val"], *, pre: bool = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.ValValidator], DoublyLinkedListNodeValue.Validators.ValValidator
         ]:
@@ -92,7 +92,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["next"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["next"], *, pre: bool = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.NextValidator], DoublyLinkedListNodeValue.Validators.NextValidator
         ]:
@@ -101,7 +101,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["prev"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["prev"], *, pre: bool = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.PrevValidator], DoublyLinkedListNodeValue.Validators.PrevValidator
         ]:

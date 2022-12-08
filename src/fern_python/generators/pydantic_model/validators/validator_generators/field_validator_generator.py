@@ -79,6 +79,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
                 AST.FunctionParameter(
                     name=FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT,
                     type_hint=AST.TypeHint.bool_(),
+                    initializer=AST.Expression("False"),
                 )
             ],
             return_type=AST.TypeHint.callable([self._get_type_of_validator()], self._get_type_of_validator()),

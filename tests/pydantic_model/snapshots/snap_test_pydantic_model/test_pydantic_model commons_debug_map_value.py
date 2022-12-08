@@ -50,7 +50,7 @@ class DebugMapValue(pydantic.BaseModel):
         @typing.overload  # type: ignore
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key_value_pairs"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["key_value_pairs"], *, pre: bool = False
         ) -> typing.Callable[
             [DebugMapValue.Validators.KeyValuePairsValidator], DebugMapValue.Validators.KeyValuePairsValidator
         ]:

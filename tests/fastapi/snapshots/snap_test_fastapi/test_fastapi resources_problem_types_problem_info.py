@@ -138,14 +138,14 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
         ) -> typing.Callable[[ProblemInfo.Validators.ProblemIdValidator], ProblemInfo.Validators.ProblemIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: bool = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.ProblemDescriptionValidator], ProblemInfo.Validators.ProblemDescriptionValidator
         ]:
@@ -154,7 +154,7 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.ProblemNameValidator], ProblemInfo.Validators.ProblemNameValidator
         ]:
@@ -163,7 +163,7 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.ProblemVersionValidator], ProblemInfo.Validators.ProblemVersionValidator
         ]:
@@ -172,14 +172,14 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
         ) -> typing.Callable[[ProblemInfo.Validators.FilesValidator], ProblemInfo.Validators.FilesValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.InputParamsValidator], ProblemInfo.Validators.InputParamsValidator
         ]:
@@ -188,28 +188,28 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool = False
         ) -> typing.Callable[[ProblemInfo.Validators.OutputTypeValidator], ProblemInfo.Validators.OutputTypeValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["testcases"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["testcases"], *, pre: bool = False
         ) -> typing.Callable[[ProblemInfo.Validators.TestcasesValidator], ProblemInfo.Validators.TestcasesValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
         ) -> typing.Callable[[ProblemInfo.Validators.MethodNameValidator], ProblemInfo.Validators.MethodNameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["supports_custom_test_cases"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["supports_custom_test_cases"], *, pre: bool = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.SupportsCustomTestCasesValidator],
             ProblemInfo.Validators.SupportsCustomTestCasesValidator,

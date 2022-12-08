@@ -63,7 +63,7 @@ class TestCaseImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["description"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["description"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseImplementation.Validators.DescriptionValidator],
             TestCaseImplementation.Validators.DescriptionValidator,
@@ -73,7 +73,7 @@ class TestCaseImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["function"], *, pre: bool
+            cls, field_name: typing_extensions.Literal["function"], *, pre: bool = False
         ) -> typing.Callable[
             [TestCaseImplementation.Validators.FunctionValidator], TestCaseImplementation.Validators.FunctionValidator
         ]:
