@@ -377,29 +377,35 @@ export class GeneratedEndpointImplementation {
             ts.factory.createCaseBlock(
                 this.endpoint.errors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+                    const generatedErrorSchema = context.errorSchema.getGeneratedErrorSchema(error.error);
                     return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
                         ts.factory.createReturnStatement(
-                            context.endpointTypes
-                                .getGeneratedEndpointTypes(this.service.name, this.endpoint.id)
-                                .getErrorUnion()
-                                .build({
-                                    discriminantValueToBuild: errorDeclaration.statusCode,
-                                    builderArgument:
-                                        errorDeclaration.typeV3 != null
-                                            ? context.base.coreUtilities.zurg.Schema._fromExpression(
-                                                  context.errorSchema
-                                                      .getReferenceToErrorSchema(error.error)
-                                                      .getExpression()
-                                              ).parse(
-                                                  ts.factory.createPropertyAccessExpression(
-                                                      referenceToError,
-                                                      context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError
-                                                          .body
+                            context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                context.endpointTypes
+                                    .getGeneratedEndpointTypes(this.service.name, this.endpoint.id)
+                                    .getErrorUnion()
+                                    .build({
+                                        discriminantValueToBuild: errorDeclaration.statusCode,
+                                        builderArgument:
+                                            generatedErrorSchema != null
+                                                ? context.base.coreUtilities.zurg.Schema._fromExpression(
+                                                      context.errorSchema
+                                                          .getReferenceToErrorSchema(error.error)
+                                                          .getExpression()
+                                                  ).parse(
+                                                      ts.factory.createAsExpression(
+                                                          ts.factory.createPropertyAccessExpression(
+                                                              referenceToError,
+                                                              context.base.coreUtilities.fetcher.Fetcher
+                                                                  .FailedStatusCodeError.body
+                                                          ),
+                                                          generatedErrorSchema.getReferenceToRawShape(context)
+                                                      )
                                                   )
-                                              )
-                                            : undefined,
-                                    context,
-                                })
+                                                : undefined,
+                                        context,
+                                    })
+                            )
                         ),
                     ]);
                 })

@@ -1507,9 +1507,14 @@ export class Client {
     if (response.error.reason === \\"status-code\\") {
       switch (response.error.statusCode) {
         case 400:
-          return FernApi.owner.create.Error.ownerAlreadyExistsError(
-            await serializers.OwnerAlreadyExistsError.parse(response.error.body)
-          );
+          return {
+            ok: false,
+            error: FernApi.owner.create.Error.ownerAlreadyExistsError(
+              await serializers.OwnerAlreadyExistsError.parse(
+                response.error.body as serializers.OwnerAlreadyExistsError.Raw
+              )
+            ),
+          };
       }
     }
 
@@ -1537,7 +1542,10 @@ export class Client {
     if (response.error.reason === \\"status-code\\") {
       switch (response.error.statusCode) {
         case 404:
-          return FernApi.owner.get.Error.ownerNotFoundError();
+          return {
+            ok: false,
+            error: FernApi.owner.get.Error.ownerNotFoundError(),
+          };
       }
     }
 
@@ -1566,7 +1574,10 @@ export class Client {
     if (response.error.reason === \\"status-code\\") {
       switch (response.error.statusCode) {
         case 404:
-          return FernApi.owner.update.Error.ownerNotFoundError();
+          return {
+            ok: false,
+            error: FernApi.owner.update.Error.ownerNotFoundError(),
+          };
       }
     }
 
@@ -1955,7 +1966,10 @@ export class Client {
     if (response.error.reason === \\"status-code\\") {
       switch (response.error.statusCode) {
         case 404:
-          return FernApi.token.create.Error.ownerNotFoundError();
+          return {
+            ok: false,
+            error: FernApi.token.create.Error.ownerNotFoundError(),
+          };
       }
     }
 
@@ -1988,7 +2002,10 @@ export class Client {
     if (response.error.reason === \\"status-code\\") {
       switch (response.error.statusCode) {
         case 404:
-          return FernApi.token.getTokenMetadata.Error.tokenNotFoundError();
+          return {
+            ok: false,
+            error: FernApi.token.getTokenMetadata.Error.tokenNotFoundError(),
+          };
       }
     }
 
@@ -2020,7 +2037,10 @@ export class Client {
     if (response.error.reason === \\"status-code\\") {
       switch (response.error.statusCode) {
         case 404:
-          return FernApi.token.getTokensForOwner.Error.ownerNotFoundError();
+          return {
+            ok: false,
+            error: FernApi.token.getTokensForOwner.Error.ownerNotFoundError(),
+          };
       }
     }
 
