@@ -24,7 +24,7 @@ class GradedResponseV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GradedResponseV2.Validators.root
+            @GradedResponseV2.Validators.root()
             def validate(values: GradedResponseV2.Partial) -> GradedResponseV2.Partial:
                 ...
 

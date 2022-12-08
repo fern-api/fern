@@ -25,7 +25,7 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @WorkspaceRunDetails.Validators.root
+            @WorkspaceRunDetails.Validators.root()
             def validate(values: WorkspaceRunDetails.Partial) -> WorkspaceRunDetails.Partial:
                 ...
 

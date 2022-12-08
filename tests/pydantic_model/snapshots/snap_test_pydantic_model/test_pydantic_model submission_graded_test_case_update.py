@@ -23,7 +23,7 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GradedTestCaseUpdate.Validators.root
+            @GradedTestCaseUpdate.Validators.root()
             def validate(values: GradedTestCaseUpdate.Partial) -> GradedTestCaseUpdate.Partial:
                 ...
 

@@ -18,7 +18,7 @@ class LangServerResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @LangServerResponse.Validators.root
+            @LangServerResponse.Validators.root()
             def validate(values: LangServerResponse.Partial) -> LangServerResponse.Partial:
                 ...
 

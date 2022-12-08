@@ -20,7 +20,7 @@ class TracedFile(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TracedFile.Validators.root
+            @TracedFile.Validators.root()
             def validate(values: TracedFile.Partial) -> TracedFile.Partial:
                 ...
 

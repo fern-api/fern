@@ -29,7 +29,7 @@ class BasicCustomFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @BasicCustomFiles.Validators.root
+            @BasicCustomFiles.Validators.root()
             def validate(values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
                 ...
 

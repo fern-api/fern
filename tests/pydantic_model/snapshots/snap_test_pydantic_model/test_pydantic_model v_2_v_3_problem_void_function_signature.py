@@ -20,7 +20,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @VoidFunctionSignature.Validators.root
+            @VoidFunctionSignature.Validators.root()
             def validate(values: VoidFunctionSignature.Partial) -> VoidFunctionSignature.Partial:
                 ...
 

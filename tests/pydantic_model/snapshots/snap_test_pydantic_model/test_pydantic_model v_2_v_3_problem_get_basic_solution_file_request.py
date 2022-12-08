@@ -22,7 +22,7 @@ class GetBasicSolutionFileRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GetBasicSolutionFileRequest.Validators.root
+            @GetBasicSolutionFileRequest.Validators.root()
             def validate(values: GetBasicSolutionFileRequest.Partial) -> GetBasicSolutionFileRequest.Partial:
                 ...
 

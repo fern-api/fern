@@ -22,7 +22,7 @@ class Migration(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @Migration.Validators.root
+            @Migration.Validators.root()
             def validate(values: Migration.Partial) -> Migration.Partial:
                 ...
 

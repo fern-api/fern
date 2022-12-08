@@ -22,7 +22,7 @@ class SubmissionFileInfo(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @SubmissionFileInfo.Validators.root
+            @SubmissionFileInfo.Validators.root()
             def validate(values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
                 ...
 

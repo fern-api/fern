@@ -27,7 +27,7 @@ class ExecutionSessionResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ExecutionSessionResponse.Validators.root
+            @ExecutionSessionResponse.Validators.root()
             def validate(values: ExecutionSessionResponse.Partial) -> ExecutionSessionResponse.Partial:
                 ...
 

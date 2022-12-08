@@ -25,7 +25,7 @@ class ListType(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ListType.Validators.root
+            @ListType.Validators.root()
             def validate(values: ListType.Partial) -> ListType.Partial:
                 ...
 

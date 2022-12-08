@@ -22,7 +22,7 @@ class WorkspaceFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @WorkspaceFiles.Validators.root
+            @WorkspaceFiles.Validators.root()
             def validate(values: WorkspaceFiles.Partial) -> WorkspaceFiles.Partial:
                 ...
 

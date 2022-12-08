@@ -20,7 +20,7 @@ class Scope(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @Scope.Validators.root
+            @Scope.Validators.root()
             def validate(values: Scope.Partial) -> Scope.Partial:
                 ...
 

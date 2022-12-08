@@ -23,7 +23,7 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @VoidFunctionSignatureThatTakesActualResult.Validators.root
+            @VoidFunctionSignatureThatTakesActualResult.Validators.root()
             def validate(values: VoidFunctionSignatureThatTakesActualResult.Partial) -> VoidFunctionSignatureThatTakesActualResult.Partial:
                 ...
 

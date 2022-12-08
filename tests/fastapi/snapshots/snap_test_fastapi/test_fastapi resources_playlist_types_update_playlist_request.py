@@ -22,7 +22,7 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @UpdatePlaylistRequest.Validators.root
+            @UpdatePlaylistRequest.Validators.root()
             def validate(values: UpdatePlaylistRequest.Partial) -> UpdatePlaylistRequest.Partial:
                 ...
 

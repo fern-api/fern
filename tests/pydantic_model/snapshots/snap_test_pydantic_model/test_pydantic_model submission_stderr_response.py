@@ -22,7 +22,7 @@ class StderrResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StderrResponse.Validators.root
+            @StderrResponse.Validators.root()
             def validate(values: StderrResponse.Partial) -> StderrResponse.Partial:
                 ...
 

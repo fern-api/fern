@@ -23,7 +23,7 @@ class DefaultProvidedFile(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @DefaultProvidedFile.Validators.root
+            @DefaultProvidedFile.Validators.root()
             def validate(values: DefaultProvidedFile.Partial) -> DefaultProvidedFile.Partial:
                 ...
 

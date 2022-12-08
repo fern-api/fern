@@ -20,7 +20,7 @@ class FinishedResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @FinishedResponse.Validators.root
+            @FinishedResponse.Validators.root()
             def validate(values: FinishedResponse.Partial) -> FinishedResponse.Partial:
                 ...
 

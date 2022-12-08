@@ -27,7 +27,7 @@ class TraceResponsesPageV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TraceResponsesPageV2.Validators.root
+            @TraceResponsesPageV2.Validators.root()
             def validate(values: TraceResponsesPageV2.Partial) -> TraceResponsesPageV2.Partial:
                 ...
 

@@ -25,7 +25,7 @@ class GeneratedFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GeneratedFiles.Validators.root
+            @GeneratedFiles.Validators.root()
             def validate(values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
                 ...
 

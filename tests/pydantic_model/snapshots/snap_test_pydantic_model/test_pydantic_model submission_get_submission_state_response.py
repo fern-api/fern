@@ -28,7 +28,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GetSubmissionStateResponse.Validators.root
+            @GetSubmissionStateResponse.Validators.root()
             def validate(values: GetSubmissionStateResponse.Partial) -> GetSubmissionStateResponse.Partial:
                 ...
 

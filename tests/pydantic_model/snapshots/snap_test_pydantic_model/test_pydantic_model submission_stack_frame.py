@@ -24,7 +24,7 @@ class StackFrame(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StackFrame.Validators.root
+            @StackFrame.Validators.root()
             def validate(values: StackFrame.Partial) -> StackFrame.Partial:
                 ...
 

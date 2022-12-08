@@ -33,7 +33,7 @@ class ExecutionSessionState(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ExecutionSessionState.Validators.root
+            @ExecutionSessionState.Validators.root()
             def validate(values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
                 ...
 

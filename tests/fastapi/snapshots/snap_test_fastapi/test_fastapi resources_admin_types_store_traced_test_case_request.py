@@ -23,7 +23,7 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StoreTracedTestCaseRequest.Validators.root
+            @StoreTracedTestCaseRequest.Validators.root()
             def validate(values: StoreTracedTestCaseRequest.Partial) -> StoreTracedTestCaseRequest.Partial:
                 ...
 

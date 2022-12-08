@@ -23,7 +23,7 @@ class BinaryTreeNodeAndTreeValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @BinaryTreeNodeAndTreeValue.Validators.root
+            @BinaryTreeNodeAndTreeValue.Validators.root()
             def validate(values: BinaryTreeNodeAndTreeValue.Partial) -> BinaryTreeNodeAndTreeValue.Partial:
                 ...
 

@@ -23,7 +23,7 @@ class RunningResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @RunningResponse.Validators.root
+            @RunningResponse.Validators.root()
             def validate(values: RunningResponse.Partial) -> RunningResponse.Partial:
                 ...
 

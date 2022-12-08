@@ -23,7 +23,7 @@ class GradedResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GradedResponse.Validators.root
+            @GradedResponse.Validators.root()
             def validate(values: GradedResponse.Partial) -> GradedResponse.Partial:
                 ...
 

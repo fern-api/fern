@@ -18,7 +18,7 @@ class UpdateProblemResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @UpdateProblemResponse.Validators.root
+            @UpdateProblemResponse.Validators.root()
             def validate(values: UpdateProblemResponse.Partial) -> UpdateProblemResponse.Partial:
                 ...
 

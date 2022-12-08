@@ -23,7 +23,7 @@ class BuildingExecutorResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @BuildingExecutorResponse.Validators.root
+            @BuildingExecutorResponse.Validators.root()
             def validate(values: BuildingExecutorResponse.Partial) -> BuildingExecutorResponse.Partial:
                 ...
 

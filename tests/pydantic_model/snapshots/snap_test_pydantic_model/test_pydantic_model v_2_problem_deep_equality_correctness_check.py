@@ -20,7 +20,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @DeepEqualityCorrectnessCheck.Validators.root
+            @DeepEqualityCorrectnessCheck.Validators.root()
             def validate(values: DeepEqualityCorrectnessCheck.Partial) -> DeepEqualityCorrectnessCheck.Partial:
                 ...
 

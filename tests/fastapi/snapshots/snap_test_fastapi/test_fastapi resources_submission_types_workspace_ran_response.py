@@ -23,7 +23,7 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @WorkspaceRanResponse.Validators.root
+            @WorkspaceRanResponse.Validators.root()
             def validate(values: WorkspaceRanResponse.Partial) -> WorkspaceRanResponse.Partial:
                 ...
 

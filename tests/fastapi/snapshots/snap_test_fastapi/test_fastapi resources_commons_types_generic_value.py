@@ -20,7 +20,7 @@ class GenericValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GenericValue.Validators.root
+            @GenericValue.Validators.root()
             def validate(values: GenericValue.Partial) -> GenericValue.Partial:
                 ...
 

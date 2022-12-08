@@ -22,7 +22,7 @@ class StdoutResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StdoutResponse.Validators.root
+            @StdoutResponse.Validators.root()
             def validate(values: StdoutResponse.Partial) -> StdoutResponse.Partial:
                 ...
 

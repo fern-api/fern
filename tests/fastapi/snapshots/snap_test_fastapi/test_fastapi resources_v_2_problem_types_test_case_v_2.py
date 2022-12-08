@@ -30,7 +30,7 @@ class TestCaseV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseV2.Validators.root
+            @TestCaseV2.Validators.root()
             def validate(values: TestCaseV2.Partial) -> TestCaseV2.Partial:
                 ...
 

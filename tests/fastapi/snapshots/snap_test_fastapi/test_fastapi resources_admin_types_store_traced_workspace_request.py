@@ -25,7 +25,7 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StoreTracedWorkspaceRequest.Validators.root
+            @StoreTracedWorkspaceRequest.Validators.root()
             def validate(values: StoreTracedWorkspaceRequest.Partial) -> StoreTracedWorkspaceRequest.Partial:
                 ...
 

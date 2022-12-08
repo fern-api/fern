@@ -23,7 +23,7 @@ class DoublyLinkedListValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @DoublyLinkedListValue.Validators.root
+            @DoublyLinkedListValue.Validators.root()
             def validate(values: DoublyLinkedListValue.Partial) -> DoublyLinkedListValue.Partial:
                 ...
 

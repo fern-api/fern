@@ -25,7 +25,7 @@ class Parameter(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @Parameter.Validators.root
+            @Parameter.Validators.root()
             def validate(values: Parameter.Partial) -> Parameter.Partial:
                 ...
 

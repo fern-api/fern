@@ -20,7 +20,7 @@ class FunctionImplementation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @FunctionImplementation.Validators.root
+            @FunctionImplementation.Validators.root()
             def validate(values: FunctionImplementation.Partial) -> FunctionImplementation.Partial:
                 ...
 

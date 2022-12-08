@@ -23,7 +23,7 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GetGeneratedTestCaseFileRequest.Validators.root
+            @GetGeneratedTestCaseFileRequest.Validators.root()
             def validate(values: GetGeneratedTestCaseFileRequest.Partial) -> GetGeneratedTestCaseFileRequest.Partial:
                 ...
 

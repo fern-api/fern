@@ -22,7 +22,7 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseResultWithStdout.Validators.root
+            @TestCaseResultWithStdout.Validators.root()
             def validate(values: TestCaseResultWithStdout.Partial) -> TestCaseResultWithStdout.Partial:
                 ...
 

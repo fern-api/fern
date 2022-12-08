@@ -27,7 +27,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @VoidFunctionDefinitionThatTakesActualResult.Validators.root
+            @VoidFunctionDefinitionThatTakesActualResult.Validators.root()
             def validate(values: VoidFunctionDefinitionThatTakesActualResult.Partial) -> VoidFunctionDefinitionThatTakesActualResult.Partial:
                 ...
 

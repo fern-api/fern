@@ -20,7 +20,7 @@ class ExpressionLocation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ExpressionLocation.Validators.root
+            @ExpressionLocation.Validators.root()
             def validate(values: ExpressionLocation.Partial) -> ExpressionLocation.Partial:
                 ...
 

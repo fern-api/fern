@@ -18,7 +18,7 @@ class MapValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @MapValue.Validators.root
+            @MapValue.Validators.root()
             def validate(values: MapValue.Partial) -> MapValue.Partial:
                 ...
 

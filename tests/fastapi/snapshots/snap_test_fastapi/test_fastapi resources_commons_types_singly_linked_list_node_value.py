@@ -24,7 +24,7 @@ class SinglyLinkedListNodeValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @SinglyLinkedListNodeValue.Validators.root
+            @SinglyLinkedListNodeValue.Validators.root()
             def validate(values: SinglyLinkedListNodeValue.Partial) -> SinglyLinkedListNodeValue.Partial:
                 ...
 

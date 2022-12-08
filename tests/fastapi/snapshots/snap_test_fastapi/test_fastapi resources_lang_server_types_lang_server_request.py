@@ -18,7 +18,7 @@ class LangServerRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @LangServerRequest.Validators.root
+            @LangServerRequest.Validators.root()
             def validate(values: LangServerRequest.Partial) -> LangServerRequest.Partial:
                 ...
 

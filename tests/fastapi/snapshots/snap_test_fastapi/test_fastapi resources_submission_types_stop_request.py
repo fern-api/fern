@@ -20,7 +20,7 @@ class StopRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StopRequest.Validators.root
+            @StopRequest.Validators.root()
             def validate(values: StopRequest.Partial) -> StopRequest.Partial:
                 ...
 

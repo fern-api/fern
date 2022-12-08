@@ -24,7 +24,7 @@ class Playlist(PlaylistCreateRequest):
         """
         Use this class to add validators to the Pydantic model.
 
-            @Playlist.Validators.root
+            @Playlist.Validators.root()
             def validate(values: Playlist.Partial) -> Playlist.Partial:
                 ...
 

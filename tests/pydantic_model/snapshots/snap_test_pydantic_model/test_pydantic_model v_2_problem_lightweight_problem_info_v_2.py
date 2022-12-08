@@ -27,7 +27,7 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @LightweightProblemInfoV2.Validators.root
+            @LightweightProblemInfoV2.Validators.root()
             def validate(values: LightweightProblemInfoV2.Partial) -> LightweightProblemInfoV2.Partial:
                 ...
 

@@ -18,7 +18,7 @@ class CompileError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @CompileError.Validators.root
+            @CompileError.Validators.root()
             def validate(values: CompileError.Partial) -> CompileError.Partial:
                 ...
 

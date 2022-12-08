@@ -30,7 +30,7 @@ class RecordingResponseNotification(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @RecordingResponseNotification.Validators.root
+            @RecordingResponseNotification.Validators.root()
             def validate(values: RecordingResponseNotification.Partial) -> RecordingResponseNotification.Partial:
                 ...
 

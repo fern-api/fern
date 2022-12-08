@@ -20,7 +20,7 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @SubmissionIdNotFound.Validators.root
+            @SubmissionIdNotFound.Validators.root()
             def validate(values: SubmissionIdNotFound.Partial) -> SubmissionIdNotFound.Partial:
                 ...
 

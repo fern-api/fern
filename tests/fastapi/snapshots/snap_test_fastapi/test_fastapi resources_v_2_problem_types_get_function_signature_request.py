@@ -20,7 +20,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GetFunctionSignatureRequest.Validators.root
+            @GetFunctionSignatureRequest.Validators.root()
             def validate(values: GetFunctionSignatureRequest.Partial) -> GetFunctionSignatureRequest.Partial:
                 ...
 

@@ -18,7 +18,7 @@ class DebugMapValue(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @DebugMapValue.Validators.root
+            @DebugMapValue.Validators.root()
             def validate(values: DebugMapValue.Partial) -> DebugMapValue.Partial:
                 ...
 

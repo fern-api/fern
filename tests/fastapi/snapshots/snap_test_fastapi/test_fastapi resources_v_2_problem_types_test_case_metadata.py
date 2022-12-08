@@ -24,7 +24,7 @@ class TestCaseMetadata(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseMetadata.Validators.root
+            @TestCaseMetadata.Validators.root()
             def validate(values: TestCaseMetadata.Partial) -> TestCaseMetadata.Partial:
                 ...
 

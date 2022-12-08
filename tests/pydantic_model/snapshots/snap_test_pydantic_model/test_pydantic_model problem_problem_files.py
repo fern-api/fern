@@ -22,7 +22,7 @@ class ProblemFiles(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ProblemFiles.Validators.root
+            @ProblemFiles.Validators.root()
             def validate(values: ProblemFiles.Partial) -> ProblemFiles.Partial:
                 ...
 

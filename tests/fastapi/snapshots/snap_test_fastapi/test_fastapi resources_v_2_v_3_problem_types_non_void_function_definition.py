@@ -23,7 +23,7 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @NonVoidFunctionDefinition.Validators.root
+            @NonVoidFunctionDefinition.Validators.root()
             def validate(values: NonVoidFunctionDefinition.Partial) -> NonVoidFunctionDefinition.Partial:
                 ...
 

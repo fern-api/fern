@@ -22,7 +22,7 @@ class ExceptionInfo(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ExceptionInfo.Validators.root
+            @ExceptionInfo.Validators.root()
             def validate(values: ExceptionInfo.Partial) -> ExceptionInfo.Partial:
                 ...
 

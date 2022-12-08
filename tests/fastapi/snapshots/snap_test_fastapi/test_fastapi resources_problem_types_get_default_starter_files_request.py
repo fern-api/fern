@@ -25,7 +25,7 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GetDefaultStarterFilesRequest.Validators.root
+            @GetDefaultStarterFilesRequest.Validators.root()
             def validate(values: GetDefaultStarterFilesRequest.Partial) -> GetDefaultStarterFilesRequest.Partial:
                 ...
 

@@ -20,7 +20,7 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @LightweightStackframeInformation.Validators.root
+            @LightweightStackframeInformation.Validators.root()
             def validate(values: LightweightStackframeInformation.Partial) -> LightweightStackframeInformation.Partial:
                 ...
 

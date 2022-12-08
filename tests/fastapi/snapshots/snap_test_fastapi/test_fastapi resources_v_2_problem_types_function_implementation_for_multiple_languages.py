@@ -21,7 +21,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @FunctionImplementationForMultipleLanguages.Validators.root
+            @FunctionImplementationForMultipleLanguages.Validators.root()
             def validate(values: FunctionImplementationForMultipleLanguages.Partial) -> FunctionImplementationForMultipleLanguages.Partial:
                 ...
 

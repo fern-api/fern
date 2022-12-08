@@ -21,7 +21,7 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @WorkspaceStarterFilesResponseV2.Validators.root
+            @WorkspaceStarterFilesResponseV2.Validators.root()
             def validate(values: WorkspaceStarterFilesResponseV2.Partial) -> WorkspaceStarterFilesResponseV2.Partial:
                 ...
 

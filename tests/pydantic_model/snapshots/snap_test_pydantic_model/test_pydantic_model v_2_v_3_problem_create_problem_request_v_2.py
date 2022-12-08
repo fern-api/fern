@@ -36,7 +36,7 @@ class CreateProblemRequestV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @CreateProblemRequestV2.Validators.root
+            @CreateProblemRequestV2.Validators.root()
             def validate(values: CreateProblemRequestV2.Partial) -> CreateProblemRequestV2.Partial:
                 ...
 

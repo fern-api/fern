@@ -27,7 +27,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseNonHiddenGrade.Validators.root
+            @TestCaseNonHiddenGrade.Validators.root()
             def validate(values: TestCaseNonHiddenGrade.Partial) -> TestCaseNonHiddenGrade.Partial:
                 ...
 

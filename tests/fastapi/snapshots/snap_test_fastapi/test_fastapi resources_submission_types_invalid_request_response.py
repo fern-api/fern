@@ -23,7 +23,7 @@ class InvalidRequestResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @InvalidRequestResponse.Validators.root
+            @InvalidRequestResponse.Validators.root()
             def validate(values: InvalidRequestResponse.Partial) -> InvalidRequestResponse.Partial:
                 ...
 

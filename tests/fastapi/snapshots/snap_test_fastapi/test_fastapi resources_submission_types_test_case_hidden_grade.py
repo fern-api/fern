@@ -18,7 +18,7 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseHiddenGrade.Validators.root
+            @TestCaseHiddenGrade.Validators.root()
             def validate(values: TestCaseHiddenGrade.Partial) -> TestCaseHiddenGrade.Partial:
                 ...
 

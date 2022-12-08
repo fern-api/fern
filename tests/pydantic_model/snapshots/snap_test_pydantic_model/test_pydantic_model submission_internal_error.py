@@ -20,7 +20,7 @@ class InternalError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @InternalError.Validators.root
+            @InternalError.Validators.root()
             def validate(values: InternalError.Partial) -> InternalError.Partial:
                 ...
 

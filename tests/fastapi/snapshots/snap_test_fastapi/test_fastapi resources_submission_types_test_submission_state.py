@@ -28,7 +28,7 @@ class TestSubmissionState(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestSubmissionState.Validators.root
+            @TestSubmissionState.Validators.root()
             def validate(values: TestSubmissionState.Partial) -> TestSubmissionState.Partial:
                 ...
 

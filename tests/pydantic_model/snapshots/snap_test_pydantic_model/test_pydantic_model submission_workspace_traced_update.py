@@ -18,7 +18,7 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @WorkspaceTracedUpdate.Validators.root
+            @WorkspaceTracedUpdate.Validators.root()
             def validate(values: WorkspaceTracedUpdate.Partial) -> WorkspaceTracedUpdate.Partial:
                 ...
 

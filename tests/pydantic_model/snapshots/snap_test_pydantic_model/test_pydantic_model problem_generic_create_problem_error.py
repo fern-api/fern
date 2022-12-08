@@ -22,7 +22,7 @@ class GenericCreateProblemError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GenericCreateProblemError.Validators.root
+            @GenericCreateProblemError.Validators.root()
             def validate(values: GenericCreateProblemError.Partial) -> GenericCreateProblemError.Partial:
                 ...
 

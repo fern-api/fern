@@ -24,7 +24,7 @@ class FileInfoV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @FileInfoV2.Validators.root
+            @FileInfoV2.Validators.root()
             def validate(values: FileInfoV2.Partial) -> FileInfoV2.Partial:
                 ...
 

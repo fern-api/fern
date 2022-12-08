@@ -20,7 +20,7 @@ class MapType(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @MapType.Validators.root
+            @MapType.Validators.root()
             def validate(values: MapType.Partial) -> MapType.Partial:
                 ...
 

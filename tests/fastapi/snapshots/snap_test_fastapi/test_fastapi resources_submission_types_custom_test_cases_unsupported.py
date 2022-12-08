@@ -23,7 +23,7 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @CustomTestCasesUnsupported.Validators.root
+            @CustomTestCasesUnsupported.Validators.root()
             def validate(values: CustomTestCasesUnsupported.Partial) -> CustomTestCasesUnsupported.Partial:
                 ...
 

@@ -16,7 +16,7 @@ class TerminatedResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TerminatedResponse.Validators.root
+            @TerminatedResponse.Validators.root()
             def validate(values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:
                 ...
         """

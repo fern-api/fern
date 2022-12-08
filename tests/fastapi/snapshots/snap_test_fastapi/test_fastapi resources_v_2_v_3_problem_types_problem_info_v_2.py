@@ -44,7 +44,7 @@ class ProblemInfoV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ProblemInfoV2.Validators.root
+            @ProblemInfoV2.Validators.root()
             def validate(values: ProblemInfoV2.Partial) -> ProblemInfoV2.Partial:
                 ...
 

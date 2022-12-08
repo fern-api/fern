@@ -23,7 +23,7 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @NonVoidFunctionSignature.Validators.root
+            @NonVoidFunctionSignature.Validators.root()
             def validate(values: NonVoidFunctionSignature.Partial) -> NonVoidFunctionSignature.Partial:
                 ...
 

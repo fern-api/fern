@@ -22,7 +22,7 @@ class VariableTypeAndName(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @VariableTypeAndName.Validators.root
+            @VariableTypeAndName.Validators.root()
             def validate(values: VariableTypeAndName.Partial) -> VariableTypeAndName.Partial:
                 ...
 

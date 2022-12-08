@@ -23,7 +23,7 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @VoidFunctionDefinition.Validators.root
+            @VoidFunctionDefinition.Validators.root()
             def validate(values: VoidFunctionDefinition.Partial) -> VoidFunctionDefinition.Partial:
                 ...
 

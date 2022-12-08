@@ -144,7 +144,7 @@ class RootValidatorGenerator(ValidatorGenerator):
 
         with writer.indent():
             writer.write("@")
-            writer.write_line(reference_to_decorator)
+            writer.write_line(f"{reference_to_decorator}()")
 
             writer.write("def validate(values: ")
             writer.write_reference(reference_to_partial)

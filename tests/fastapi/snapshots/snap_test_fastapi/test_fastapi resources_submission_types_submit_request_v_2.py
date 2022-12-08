@@ -33,7 +33,7 @@ class SubmitRequestV2(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @SubmitRequestV2.Validators.root
+            @SubmitRequestV2.Validators.root()
             def validate(values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
                 ...
 

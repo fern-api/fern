@@ -22,7 +22,7 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @RecordedTestCaseUpdate.Validators.root
+            @RecordedTestCaseUpdate.Validators.root()
             def validate(values: RecordedTestCaseUpdate.Partial) -> RecordedTestCaseUpdate.Partial:
                 ...
 

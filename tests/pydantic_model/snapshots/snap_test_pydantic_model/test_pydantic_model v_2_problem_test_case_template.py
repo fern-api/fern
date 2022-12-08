@@ -25,7 +25,7 @@ class TestCaseTemplate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseTemplate.Validators.root
+            @TestCaseTemplate.Validators.root()
             def validate(values: TestCaseTemplate.Partial) -> TestCaseTemplate.Partial:
                 ...
 

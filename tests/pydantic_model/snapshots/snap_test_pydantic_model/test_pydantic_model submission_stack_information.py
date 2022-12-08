@@ -22,7 +22,7 @@ class StackInformation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StackInformation.Validators.root
+            @StackInformation.Validators.root()
             def validate(values: StackInformation.Partial) -> StackInformation.Partial:
                 ...
 

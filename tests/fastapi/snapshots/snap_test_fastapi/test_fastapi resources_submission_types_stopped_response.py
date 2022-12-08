@@ -20,7 +20,7 @@ class StoppedResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @StoppedResponse.Validators.root
+            @StoppedResponse.Validators.root()
             def validate(values: StoppedResponse.Partial) -> StoppedResponse.Partial:
                 ...
 

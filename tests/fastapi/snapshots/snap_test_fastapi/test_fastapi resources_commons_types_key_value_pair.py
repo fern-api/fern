@@ -20,7 +20,7 @@ class KeyValuePair(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @KeyValuePair.Validators.root
+            @KeyValuePair.Validators.root()
             def validate(values: KeyValuePair.Partial) -> KeyValuePair.Partial:
                 ...
 

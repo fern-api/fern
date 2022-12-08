@@ -22,7 +22,7 @@ class TracedTestCase(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TracedTestCase.Validators.root
+            @TracedTestCase.Validators.root()
             def validate(values: TracedTestCase.Partial) -> TracedTestCase.Partial:
                 ...
 

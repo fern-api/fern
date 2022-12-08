@@ -20,7 +20,7 @@ class ProblemDescription(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ProblemDescription.Validators.root
+            @ProblemDescription.Validators.root()
             def validate(values: ProblemDescription.Partial) -> ProblemDescription.Partial:
                 ...
 

@@ -23,7 +23,7 @@ class ErroredResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ErroredResponse.Validators.root
+            @ErroredResponse.Validators.root()
             def validate(values: ErroredResponse.Partial) -> ErroredResponse.Partial:
                 ...
 

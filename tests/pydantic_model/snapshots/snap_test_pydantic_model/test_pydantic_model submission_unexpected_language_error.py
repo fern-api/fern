@@ -22,7 +22,7 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @UnexpectedLanguageError.Validators.root
+            @UnexpectedLanguageError.Validators.root()
             def validate(values: UnexpectedLanguageError.Partial) -> UnexpectedLanguageError.Partial:
                 ...
 

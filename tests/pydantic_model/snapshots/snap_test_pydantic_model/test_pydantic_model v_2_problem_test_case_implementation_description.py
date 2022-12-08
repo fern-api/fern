@@ -20,7 +20,7 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseImplementationDescription.Validators.root
+            @TestCaseImplementationDescription.Validators.root()
             def validate(values: TestCaseImplementationDescription.Partial) -> TestCaseImplementationDescription.Partial:
                 ...
 

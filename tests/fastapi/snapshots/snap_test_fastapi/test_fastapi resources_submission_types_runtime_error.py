@@ -18,7 +18,7 @@ class RuntimeError(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @RuntimeError.Validators.root
+            @RuntimeError.Validators.root()
             def validate(values: RuntimeError.Partial) -> RuntimeError.Partial:
                 ...
 

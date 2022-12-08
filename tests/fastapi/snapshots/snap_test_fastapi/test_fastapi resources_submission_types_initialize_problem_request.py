@@ -22,7 +22,7 @@ class InitializeProblemRequest(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @InitializeProblemRequest.Validators.root
+            @InitializeProblemRequest.Validators.root()
             def validate(values: InitializeProblemRequest.Partial) -> InitializeProblemRequest.Partial:
                 ...
 

@@ -24,7 +24,7 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @GetExecutionSessionStateResponse.Validators.root
+            @GetExecutionSessionStateResponse.Validators.root()
             def validate(values: GetExecutionSessionStateResponse.Partial) -> GetExecutionSessionStateResponse.Partial:
                 ...
 

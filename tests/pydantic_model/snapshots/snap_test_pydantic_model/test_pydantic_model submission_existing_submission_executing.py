@@ -20,7 +20,7 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @ExistingSubmissionExecuting.Validators.root
+            @ExistingSubmissionExecuting.Validators.root()
             def validate(values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
                 ...
 

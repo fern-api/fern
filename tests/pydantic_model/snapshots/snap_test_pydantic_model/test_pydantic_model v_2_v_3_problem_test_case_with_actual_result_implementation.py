@@ -23,7 +23,7 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @TestCaseWithActualResultImplementation.Validators.root
+            @TestCaseWithActualResultImplementation.Validators.root()
             def validate(values: TestCaseWithActualResultImplementation.Partial) -> TestCaseWithActualResultImplementation.Partial:
                 ...
 

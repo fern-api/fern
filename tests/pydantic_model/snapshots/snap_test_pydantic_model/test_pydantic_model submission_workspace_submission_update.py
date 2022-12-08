@@ -23,7 +23,7 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         """
         Use this class to add validators to the Pydantic model.
 
-            @WorkspaceSubmissionUpdate.Validators.root
+            @WorkspaceSubmissionUpdate.Validators.root()
             def validate(values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
                 ...
 
