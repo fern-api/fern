@@ -16,14 +16,16 @@ export function itSchema<Raw, Parsed>(
         raw,
         parsed,
         opts,
+        only = false,
     }: {
         raw: Raw;
         parsed: Parsed;
         opts?: SchemaOptions;
+        only?: boolean;
     }
 ): void {
     // eslint-disable-next-line jest/valid-title
-    describe(title, () => {
+    (only ? describe.only : describe)(title, () => {
         itParse("parse()", schema, { raw, parsed, opts });
         itJson("json()", schema, { raw, parsed, opts });
     });

@@ -7,7 +7,10 @@ export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
     ObjectLikeSchema<Raw, Parsed> &
     ObjectUtils<Raw, Parsed>;
 
-export type BaseObjectSchema<Raw, Parsed> = BaseObjectLikeSchema<Raw, Parsed>;
+export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+    _getRawProperties: () => Promise<(keyof Raw)[]>;
+    _getParsedProperties: () => Promise<(keyof Parsed)[]>;
+}
 
 export interface ObjectUtils<Raw, Parsed> {
     extend: <RawExtension, ParsedExtension>(

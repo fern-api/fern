@@ -1,7 +1,8 @@
-import { itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itSchema, itSchemaIdentity } from "../../../__test__/utils/itSchema";
 import { stringLiteral } from "../../literals";
 import { boolean, string } from "../../primitives";
 import { object } from "../object";
+import { property } from "../property";
 
 describe("extend", () => {
     itSchemaIdentity(
@@ -42,6 +43,38 @@ describe("extend", () => {
         } as const,
         {
             title: "extensions can be extended",
+        }
+    );
+
+    itSchema(
+        "converts nested object",
+        object({
+            item: object({
+                helloWorld: property("hello_world", string()),
+            }),
+        }).extend(
+            object({
+                goodbye: property("goodbye_raw", string()),
+            })
+        ),
+        {
+            raw: { item: { hello_world: "yo" }, goodbye_raw: "peace" },
+            parsed: { item: { helloWorld: "yo" }, goodbye: "peace" },
+        }
+    );
+
+    itSchema(
+        "extensions work with raw/parsed property name conversions",
+        object({
+            item: property("item_raw", string()),
+        }).extend(
+            object({
+                goodbye: property("goodbye_raw", string()),
+            })
+        ),
+        {
+            raw: { item_raw: "hi", goodbye_raw: "peace" },
+            parsed: { item: "hi", goodbye: "peace" },
         }
     );
 

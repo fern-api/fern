@@ -538,7 +538,7 @@ export * from \\"./union\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "export { lazy } from \\"./lazy\\";
+                        "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
 export { lazyObject } from \\"./lazyObject\\";
 ",
                         "name": "index.ts",
@@ -548,10 +548,9 @@ export { lazyObject } from \\"./lazyObject\\";
                         "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
-type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
+export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType | Promise<SchemaType>;
 
-export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
+export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed> {
   const baseSchema = constructLazyBaseSchema(getter);
   return {
     ...baseSchema,
@@ -559,19 +558,25 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
   };
 }
 
-export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-  const getSchema = async () => {
-    const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
-    if (castedGetter.__zurg_memoized == null) {
-      castedGetter.__zurg_memoized = await getter();
-    }
-    return castedGetter.__zurg_memoized;
-  };
-
+export function constructLazyBaseSchema<Raw, Parsed>(
+  getter: SchemaGetter<Schema<Raw, Parsed>>
+): BaseSchema<Raw, Parsed> {
   return {
-    parse: async (raw) => (await getSchema()).parse(raw),
-    json: async (parsed) => (await getSchema()).json(parsed),
+    parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
+    json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
   };
+}
+
+type MemoizedGetter<SchemaType extends Schema<any, any>> = SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
+
+export async function getMemoizedSchema<SchemaType extends Schema<any, any>>(
+  getter: SchemaGetter<SchemaType>
+): Promise<SchemaType> {
+  const castedGetter = getter as MemoizedGetter<SchemaType>;
+  if (castedGetter.__zurg_memoized == null) {
+    castedGetter.__zurg_memoized = await getter();
+  }
+  return castedGetter.__zurg_memoized;
 }
 ",
                         "name": "lazy.ts",
@@ -580,16 +585,16 @@ export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>
                       Object {
                         "contents": "import { getObjectUtils } from \\"../object\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
-import { ObjectSchema } from \\"../object/types\\";
+import { BaseObjectSchema, ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
-import { constructLazyBaseSchema } from \\"./lazy\\";
+import { constructLazyBaseSchema, getMemoizedSchema, SchemaGetter } from \\"./lazy\\";
 
-type Getter<Raw, Parsed> = () => ObjectSchema<Raw, Parsed> | Promise<ObjectSchema<Raw, Parsed>>;
-
-export function lazyObject<Raw, Parsed>(getter: Getter<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
-  const baseSchema = {
+export function lazyObject<Raw, Parsed>(getter: SchemaGetter<ObjectSchema<Raw, Parsed>>): ObjectSchema<Raw, Parsed> {
+  const baseSchema: BaseObjectSchema<Raw, Parsed> = {
     ...OBJECT_LIKE_BRAND,
     ...constructLazyBaseSchema(getter),
+    _getRawProperties: async () => (await getMemoizedSchema(getter))._getRawProperties(),
+    _getParsedProperties: async () => (await getMemoizedSchema(getter))._getParsedProperties(),
   };
 
   return {
@@ -687,6 +692,9 @@ export {
                       Object {
                         "contents": "import { Schema } from \\"../../Schema\\";
 import { entries } from \\"../../utils/entries\\";
+import { filterObject } from \\"../../utils/filterObject\\";
+import { keys } from \\"../../utils/keys\\";
+import { partition } from \\"../../utils/partition\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { isProperty } from \\"./property\\";
@@ -711,6 +719,14 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 ): inferObjectSchemaFromPropertySchemas<T> {
   const baseSchema: BaseObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectFromPropertySchemas<T>> = {
     ...OBJECT_LIKE_BRAND,
+    _getRawProperties: () =>
+      Promise.resolve(
+        Object.entries(schemas).map(([parsedKey, propertySchema]) =>
+          isProperty(propertySchema) ? propertySchema.rawKey : parsedKey
+        ) as unknown as (keyof inferRawObjectFromPropertySchemas<T>)[]
+      ),
+    _getParsedProperties: () =>
+      Promise.resolve(keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[]),
 
     parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
       const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
@@ -779,14 +795,34 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
     extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
       const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
         ...OBJECT_LIKE_BRAND,
-        parse: async (raw, opts) => ({
-          ...(await schema.parse(raw, opts)),
-          ...(await extension.parse(raw, opts)),
-        }),
-        json: async (parsed, opts) => ({
-          ...(await schema.json(parsed, opts)),
-          ...(await extension.json(parsed, opts)),
-        }),
+        _getParsedProperties: async () => [
+          ...(await schema._getParsedProperties()),
+          ...(await extension._getParsedProperties()),
+        ],
+        _getRawProperties: async () => [
+          ...(await schema._getRawProperties()),
+          ...(await extension._getRawProperties()),
+        ],
+        parse: async (raw, opts) => {
+          const rawExtensionPropertiesSet = new Set(await extension._getRawProperties());
+          const [extensionProperties, otherProperties] = partition(keys(raw), (key) =>
+            rawExtensionPropertiesSet.has(key as keyof RawExtension)
+          );
+          return {
+            ...(await schema.parse(filterObject(raw, otherProperties), opts)),
+            ...(await extension.parse(filterObject(raw, extensionProperties), opts)),
+          };
+        },
+        json: async (parsed, opts) => {
+          const parsedExtensionPropertiesSet = new Set(await extension._getParsedProperties());
+          const [extensionProperties, otherProperties] = partition(keys(parsed), (key) =>
+            parsedExtensionPropertiesSet.has(key as keyof ParsedExtension)
+          );
+          return {
+            ...(await schema.json(filterObject(parsed, otherProperties), opts)),
+            ...(await extension.json(filterObject(parsed, extensionProperties), opts)),
+          };
+        },
       };
 
       return {
@@ -840,7 +876,10 @@ export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
   ObjectLikeSchema<Raw, Parsed> &
   ObjectUtils<Raw, Parsed>;
 
-export type BaseObjectSchema<Raw, Parsed> = BaseObjectLikeSchema<Raw, Parsed>;
+export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+  _getRawProperties: () => Promise<(keyof Raw)[]>;
+  _getParsedProperties: () => Promise<(keyof Parsed)[]>;
+}
 
 export interface ObjectUtils<Raw, Parsed> {
   extend: <RawExtension, ParsedExtension>(
@@ -1400,11 +1439,43 @@ export type RequiredKeys<T> = {
                     "type": "file",
                   },
                   Object {
+                    "contents": "export function filterObject<T, K extends keyof T>(obj: T, keysToInclude: K[]): Pick<T, K> {
+  const keysToIncludeSet = new Set(keysToInclude);
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    if (keysToIncludeSet.has(key as K)) {
+      acc[key as K] = value;
+    }
+    return acc;
+    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+  }, {} as Pick<T, K>);
+}
+",
+                    "name": "filterObject.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "export function keys<T>(object: T): (keyof T)[] {
   return Object.keys(object) as (keyof T)[];
 }
 ",
                     "name": "keys.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
+  const trueItems: T[] = [],
+    falseItems: T[] = [];
+  for (const item of items) {
+    if (predicate(item)) {
+      trueItems.push(item);
+    } else {
+      falseItems.push(item);
+    }
+  }
+  return [trueItems, falseItems];
+}
+",
+                    "name": "partition.ts",
                     "type": "file",
                   },
                 ],
@@ -3333,7 +3404,7 @@ export * from \\"./union\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "export { lazy } from \\"./lazy\\";
+                        "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
 export { lazyObject } from \\"./lazyObject\\";
 ",
                         "name": "index.ts",
@@ -3343,10 +3414,9 @@ export { lazyObject } from \\"./lazyObject\\";
                         "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
-type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
+export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType | Promise<SchemaType>;
 
-export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
+export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed> {
   const baseSchema = constructLazyBaseSchema(getter);
   return {
     ...baseSchema,
@@ -3354,19 +3424,25 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
   };
 }
 
-export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-  const getSchema = async () => {
-    const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
-    if (castedGetter.__zurg_memoized == null) {
-      castedGetter.__zurg_memoized = await getter();
-    }
-    return castedGetter.__zurg_memoized;
-  };
-
+export function constructLazyBaseSchema<Raw, Parsed>(
+  getter: SchemaGetter<Schema<Raw, Parsed>>
+): BaseSchema<Raw, Parsed> {
   return {
-    parse: async (raw) => (await getSchema()).parse(raw),
-    json: async (parsed) => (await getSchema()).json(parsed),
+    parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
+    json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
   };
+}
+
+type MemoizedGetter<SchemaType extends Schema<any, any>> = SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
+
+export async function getMemoizedSchema<SchemaType extends Schema<any, any>>(
+  getter: SchemaGetter<SchemaType>
+): Promise<SchemaType> {
+  const castedGetter = getter as MemoizedGetter<SchemaType>;
+  if (castedGetter.__zurg_memoized == null) {
+    castedGetter.__zurg_memoized = await getter();
+  }
+  return castedGetter.__zurg_memoized;
 }
 ",
                         "name": "lazy.ts",
@@ -3375,16 +3451,16 @@ export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>
                       Object {
                         "contents": "import { getObjectUtils } from \\"../object\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
-import { ObjectSchema } from \\"../object/types\\";
+import { BaseObjectSchema, ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
-import { constructLazyBaseSchema } from \\"./lazy\\";
+import { constructLazyBaseSchema, getMemoizedSchema, SchemaGetter } from \\"./lazy\\";
 
-type Getter<Raw, Parsed> = () => ObjectSchema<Raw, Parsed> | Promise<ObjectSchema<Raw, Parsed>>;
-
-export function lazyObject<Raw, Parsed>(getter: Getter<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
-  const baseSchema = {
+export function lazyObject<Raw, Parsed>(getter: SchemaGetter<ObjectSchema<Raw, Parsed>>): ObjectSchema<Raw, Parsed> {
+  const baseSchema: BaseObjectSchema<Raw, Parsed> = {
     ...OBJECT_LIKE_BRAND,
     ...constructLazyBaseSchema(getter),
+    _getRawProperties: async () => (await getMemoizedSchema(getter))._getRawProperties(),
+    _getParsedProperties: async () => (await getMemoizedSchema(getter))._getParsedProperties(),
   };
 
   return {
@@ -3482,6 +3558,9 @@ export {
                       Object {
                         "contents": "import { Schema } from \\"../../Schema\\";
 import { entries } from \\"../../utils/entries\\";
+import { filterObject } from \\"../../utils/filterObject\\";
+import { keys } from \\"../../utils/keys\\";
+import { partition } from \\"../../utils/partition\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { isProperty } from \\"./property\\";
@@ -3506,6 +3585,14 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 ): inferObjectSchemaFromPropertySchemas<T> {
   const baseSchema: BaseObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectFromPropertySchemas<T>> = {
     ...OBJECT_LIKE_BRAND,
+    _getRawProperties: () =>
+      Promise.resolve(
+        Object.entries(schemas).map(([parsedKey, propertySchema]) =>
+          isProperty(propertySchema) ? propertySchema.rawKey : parsedKey
+        ) as unknown as (keyof inferRawObjectFromPropertySchemas<T>)[]
+      ),
+    _getParsedProperties: () =>
+      Promise.resolve(keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[]),
 
     parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
       const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
@@ -3574,14 +3661,34 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
     extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
       const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
         ...OBJECT_LIKE_BRAND,
-        parse: async (raw, opts) => ({
-          ...(await schema.parse(raw, opts)),
-          ...(await extension.parse(raw, opts)),
-        }),
-        json: async (parsed, opts) => ({
-          ...(await schema.json(parsed, opts)),
-          ...(await extension.json(parsed, opts)),
-        }),
+        _getParsedProperties: async () => [
+          ...(await schema._getParsedProperties()),
+          ...(await extension._getParsedProperties()),
+        ],
+        _getRawProperties: async () => [
+          ...(await schema._getRawProperties()),
+          ...(await extension._getRawProperties()),
+        ],
+        parse: async (raw, opts) => {
+          const rawExtensionPropertiesSet = new Set(await extension._getRawProperties());
+          const [extensionProperties, otherProperties] = partition(keys(raw), (key) =>
+            rawExtensionPropertiesSet.has(key as keyof RawExtension)
+          );
+          return {
+            ...(await schema.parse(filterObject(raw, otherProperties), opts)),
+            ...(await extension.parse(filterObject(raw, extensionProperties), opts)),
+          };
+        },
+        json: async (parsed, opts) => {
+          const parsedExtensionPropertiesSet = new Set(await extension._getParsedProperties());
+          const [extensionProperties, otherProperties] = partition(keys(parsed), (key) =>
+            parsedExtensionPropertiesSet.has(key as keyof ParsedExtension)
+          );
+          return {
+            ...(await schema.json(filterObject(parsed, otherProperties), opts)),
+            ...(await extension.json(filterObject(parsed, extensionProperties), opts)),
+          };
+        },
       };
 
       return {
@@ -3635,7 +3742,10 @@ export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
   ObjectLikeSchema<Raw, Parsed> &
   ObjectUtils<Raw, Parsed>;
 
-export type BaseObjectSchema<Raw, Parsed> = BaseObjectLikeSchema<Raw, Parsed>;
+export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+  _getRawProperties: () => Promise<(keyof Raw)[]>;
+  _getParsedProperties: () => Promise<(keyof Parsed)[]>;
+}
 
 export interface ObjectUtils<Raw, Parsed> {
   extend: <RawExtension, ParsedExtension>(
@@ -4195,11 +4305,43 @@ export type RequiredKeys<T> = {
                     "type": "file",
                   },
                   Object {
+                    "contents": "export function filterObject<T, K extends keyof T>(obj: T, keysToInclude: K[]): Pick<T, K> {
+  const keysToIncludeSet = new Set(keysToInclude);
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    if (keysToIncludeSet.has(key as K)) {
+      acc[key as K] = value;
+    }
+    return acc;
+    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+  }, {} as Pick<T, K>);
+}
+",
+                    "name": "filterObject.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "export function keys<T>(object: T): (keyof T)[] {
   return Object.keys(object) as (keyof T)[];
 }
 ",
                     "name": "keys.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
+  const trueItems: T[] = [],
+    falseItems: T[] = [];
+  for (const item of items) {
+    if (predicate(item)) {
+      trueItems.push(item);
+    } else {
+      falseItems.push(item);
+    }
+  }
+  return [trueItems, falseItems];
+}
+",
+                    "name": "partition.ts",
                     "type": "file",
                   },
                 ],
@@ -4959,7 +5101,7 @@ export * from \\"./union\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "export { lazy } from \\"./lazy\\";
+                        "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
 export { lazyObject } from \\"./lazyObject\\";
 ",
                         "name": "index.ts",
@@ -4969,10 +5111,9 @@ export { lazyObject } from \\"./lazyObject\\";
                         "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
-type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
+export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType | Promise<SchemaType>;
 
-export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
+export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed> {
   const baseSchema = constructLazyBaseSchema(getter);
   return {
     ...baseSchema,
@@ -4980,19 +5121,25 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
   };
 }
 
-export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-  const getSchema = async () => {
-    const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
-    if (castedGetter.__zurg_memoized == null) {
-      castedGetter.__zurg_memoized = await getter();
-    }
-    return castedGetter.__zurg_memoized;
-  };
-
+export function constructLazyBaseSchema<Raw, Parsed>(
+  getter: SchemaGetter<Schema<Raw, Parsed>>
+): BaseSchema<Raw, Parsed> {
   return {
-    parse: async (raw) => (await getSchema()).parse(raw),
-    json: async (parsed) => (await getSchema()).json(parsed),
+    parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
+    json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
   };
+}
+
+type MemoizedGetter<SchemaType extends Schema<any, any>> = SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
+
+export async function getMemoizedSchema<SchemaType extends Schema<any, any>>(
+  getter: SchemaGetter<SchemaType>
+): Promise<SchemaType> {
+  const castedGetter = getter as MemoizedGetter<SchemaType>;
+  if (castedGetter.__zurg_memoized == null) {
+    castedGetter.__zurg_memoized = await getter();
+  }
+  return castedGetter.__zurg_memoized;
 }
 ",
                         "name": "lazy.ts",
@@ -5001,16 +5148,16 @@ export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>
                       Object {
                         "contents": "import { getObjectUtils } from \\"../object\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
-import { ObjectSchema } from \\"../object/types\\";
+import { BaseObjectSchema, ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
-import { constructLazyBaseSchema } from \\"./lazy\\";
+import { constructLazyBaseSchema, getMemoizedSchema, SchemaGetter } from \\"./lazy\\";
 
-type Getter<Raw, Parsed> = () => ObjectSchema<Raw, Parsed> | Promise<ObjectSchema<Raw, Parsed>>;
-
-export function lazyObject<Raw, Parsed>(getter: Getter<Raw, Parsed>): ObjectSchema<Raw, Parsed> {
-  const baseSchema = {
+export function lazyObject<Raw, Parsed>(getter: SchemaGetter<ObjectSchema<Raw, Parsed>>): ObjectSchema<Raw, Parsed> {
+  const baseSchema: BaseObjectSchema<Raw, Parsed> = {
     ...OBJECT_LIKE_BRAND,
     ...constructLazyBaseSchema(getter),
+    _getRawProperties: async () => (await getMemoizedSchema(getter))._getRawProperties(),
+    _getParsedProperties: async () => (await getMemoizedSchema(getter))._getParsedProperties(),
   };
 
   return {
@@ -5108,6 +5255,9 @@ export {
                       Object {
                         "contents": "import { Schema } from \\"../../Schema\\";
 import { entries } from \\"../../utils/entries\\";
+import { filterObject } from \\"../../utils/filterObject\\";
+import { keys } from \\"../../utils/keys\\";
+import { partition } from \\"../../utils/partition\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { isProperty } from \\"./property\\";
@@ -5132,6 +5282,14 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 ): inferObjectSchemaFromPropertySchemas<T> {
   const baseSchema: BaseObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectFromPropertySchemas<T>> = {
     ...OBJECT_LIKE_BRAND,
+    _getRawProperties: () =>
+      Promise.resolve(
+        Object.entries(schemas).map(([parsedKey, propertySchema]) =>
+          isProperty(propertySchema) ? propertySchema.rawKey : parsedKey
+        ) as unknown as (keyof inferRawObjectFromPropertySchemas<T>)[]
+      ),
+    _getParsedProperties: () =>
+      Promise.resolve(keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[]),
 
     parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
       const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
@@ -5200,14 +5358,34 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
     extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
       const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
         ...OBJECT_LIKE_BRAND,
-        parse: async (raw, opts) => ({
-          ...(await schema.parse(raw, opts)),
-          ...(await extension.parse(raw, opts)),
-        }),
-        json: async (parsed, opts) => ({
-          ...(await schema.json(parsed, opts)),
-          ...(await extension.json(parsed, opts)),
-        }),
+        _getParsedProperties: async () => [
+          ...(await schema._getParsedProperties()),
+          ...(await extension._getParsedProperties()),
+        ],
+        _getRawProperties: async () => [
+          ...(await schema._getRawProperties()),
+          ...(await extension._getRawProperties()),
+        ],
+        parse: async (raw, opts) => {
+          const rawExtensionPropertiesSet = new Set(await extension._getRawProperties());
+          const [extensionProperties, otherProperties] = partition(keys(raw), (key) =>
+            rawExtensionPropertiesSet.has(key as keyof RawExtension)
+          );
+          return {
+            ...(await schema.parse(filterObject(raw, otherProperties), opts)),
+            ...(await extension.parse(filterObject(raw, extensionProperties), opts)),
+          };
+        },
+        json: async (parsed, opts) => {
+          const parsedExtensionPropertiesSet = new Set(await extension._getParsedProperties());
+          const [extensionProperties, otherProperties] = partition(keys(parsed), (key) =>
+            parsedExtensionPropertiesSet.has(key as keyof ParsedExtension)
+          );
+          return {
+            ...(await schema.json(filterObject(parsed, otherProperties), opts)),
+            ...(await extension.json(filterObject(parsed, extensionProperties), opts)),
+          };
+        },
       };
 
       return {
@@ -5261,7 +5439,10 @@ export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
   ObjectLikeSchema<Raw, Parsed> &
   ObjectUtils<Raw, Parsed>;
 
-export type BaseObjectSchema<Raw, Parsed> = BaseObjectLikeSchema<Raw, Parsed>;
+export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+  _getRawProperties: () => Promise<(keyof Raw)[]>;
+  _getParsedProperties: () => Promise<(keyof Parsed)[]>;
+}
 
 export interface ObjectUtils<Raw, Parsed> {
   extend: <RawExtension, ParsedExtension>(
@@ -5821,11 +6002,43 @@ export type RequiredKeys<T> = {
                     "type": "file",
                   },
                   Object {
+                    "contents": "export function filterObject<T, K extends keyof T>(obj: T, keysToInclude: K[]): Pick<T, K> {
+  const keysToIncludeSet = new Set(keysToInclude);
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    if (keysToIncludeSet.has(key as K)) {
+      acc[key as K] = value;
+    }
+    return acc;
+    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+  }, {} as Pick<T, K>);
+}
+",
+                    "name": "filterObject.ts",
+                    "type": "file",
+                  },
+                  Object {
                     "contents": "export function keys<T>(object: T): (keyof T)[] {
   return Object.keys(object) as (keyof T)[];
 }
 ",
                     "name": "keys.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
+  const trueItems: T[] = [],
+    falseItems: T[] = [];
+  for (const item of items) {
+    if (predicate(item)) {
+      trueItems.push(item);
+    } else {
+      falseItems.push(item);
+    }
+  }
+  return [trueItems, falseItems];
+}
+",
+                    "name": "partition.ts",
                     "type": "file",
                   },
                 ],

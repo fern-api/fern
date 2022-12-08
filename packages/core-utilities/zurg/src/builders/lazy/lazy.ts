@@ -1,10 +1,9 @@
 import { BaseSchema, Schema } from "../../Schema";
 import { getSchemaUtils } from "../schema-utils";
 
-type Getter<Raw, Parsed> = () => Schema<Raw, Parsed> | Promise<Schema<Raw, Parsed>>;
-type MemoizedGetter<Raw, Parsed> = Getter<Raw, Parsed> & { __zurg_memoized?: Schema<Raw, Parsed> };
+export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType | Promise<SchemaType>;
 
-export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Parsed> {
+export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed> {
     const baseSchema = constructLazyBaseSchema(getter);
     return {
         ...baseSchema,
@@ -12,17 +11,23 @@ export function lazy<Raw, Parsed>(getter: Getter<Raw, Parsed>): Schema<Raw, Pars
     };
 }
 
-export function constructLazyBaseSchema<Raw, Parsed>(getter: Getter<Raw, Parsed>): BaseSchema<Raw, Parsed> {
-    const getSchema = async () => {
-        const castedGetter = getter as MemoizedGetter<Raw, Parsed>;
-        if (castedGetter.__zurg_memoized == null) {
-            castedGetter.__zurg_memoized = await getter();
-        }
-        return castedGetter.__zurg_memoized;
-    };
-
+export function constructLazyBaseSchema<Raw, Parsed>(
+    getter: SchemaGetter<Schema<Raw, Parsed>>
+): BaseSchema<Raw, Parsed> {
     return {
-        parse: async (raw) => (await getSchema()).parse(raw),
-        json: async (parsed) => (await getSchema()).json(parsed),
+        parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
+        json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
     };
+}
+
+type MemoizedGetter<SchemaType extends Schema<any, any>> = SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
+
+export async function getMemoizedSchema<SchemaType extends Schema<any, any>>(
+    getter: SchemaGetter<SchemaType>
+): Promise<SchemaType> {
+    const castedGetter = getter as MemoizedGetter<SchemaType>;
+    if (castedGetter.__zurg_memoized == null) {
+        castedGetter.__zurg_memoized = await getter();
+    }
+    return castedGetter.__zurg_memoized;
 }
