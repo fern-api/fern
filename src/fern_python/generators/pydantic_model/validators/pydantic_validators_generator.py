@@ -2,6 +2,7 @@ from typing import List, Sequence
 
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
+from fern_python.pydantic_codegen.pydantic_field import PydanticField
 
 from .validator_generators import (
     FieldValidatorGenerator,
@@ -14,16 +15,21 @@ from .validators_generator import ValidatorsGenerator
 class PydanticValidatorsGenerator(ValidatorsGenerator):
     _DECORATOR_FUNCTION_NAME = "field"
 
-    def __init__(self, model: PydanticModel):
+    def __init__(self, model: PydanticModel, extended_pydantic_fields: List[PydanticField]):
         super().__init__(model=model)
         reference_to_validators_class = self._get_reference_to_validators_class()
+
+        all_fields: List[PydanticField] = []
+        all_fields.extend(model.get_public_fields())
+        all_fields.extend(extended_pydantic_fields)
+
         self._field_validator_generators = [
             FieldValidatorGenerator(
                 field=field,
                 model=self._model,
                 reference_to_validators_class=reference_to_validators_class,
             )
-            for field in model.get_public_fields()
+            for field in all_fields
         ]
         self._root_validator_generator = RootValidatorGenerator(
             model=self._model,

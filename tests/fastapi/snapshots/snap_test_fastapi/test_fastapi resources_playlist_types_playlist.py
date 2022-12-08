@@ -7,6 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...commons.types.problem_id import ProblemId
 from ...commons.types.user_id import UserId
 from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
@@ -35,6 +36,14 @@ class Playlist(PlaylistCreateRequest):
             @Playlist.Validators.field("owner_id")
             def validate_owner_id(owner_id: UserId, values: Playlist.Partial) -> UserId:
                 ...
+
+            @Playlist.Validators.field("name")
+            def validate_name(name: str, values: Playlist.Partial) -> str:
+                ...
+
+            @Playlist.Validators.field("problems")
+            def validate_problems(problems: typing.List[ProblemId], values: Playlist.Partial) -> typing.List[ProblemId]:
+                ...
         """
 
         _pre_validators: typing.ClassVar[typing.List[Playlist.Validators._RootValidator]] = []
@@ -43,6 +52,10 @@ class Playlist(PlaylistCreateRequest):
         _playlist_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
         _owner_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
         _owner_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.NameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[Playlist.Validators.NameValidator]] = []
+        _problems_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.ProblemsValidator]] = []
+        _problems_post_validators: typing.ClassVar[typing.List[Playlist.Validators.ProblemsValidator]] = []
 
         @classmethod
         def root(
@@ -71,6 +84,20 @@ class Playlist(PlaylistCreateRequest):
         ) -> typing.Callable[[Playlist.Validators.OwnerIdValidator], Playlist.Validators.OwnerIdValidator]:
             ...
 
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+        ) -> typing.Callable[[Playlist.Validators.NameValidator], Playlist.Validators.NameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problems"], *, pre: bool = False
+        ) -> typing.Callable[[Playlist.Validators.ProblemsValidator], Playlist.Validators.ProblemsValidator]:
+            ...
+
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -84,6 +111,16 @@ class Playlist(PlaylistCreateRequest):
                         cls._owner_id_pre_validators.append(validator)
                     else:
                         cls._owner_id_post_validators.append(validator)
+                if field_name == "name":
+                    if pre:
+                        cls._name_pre_validators.append(validator)
+                    else:
+                        cls._name_post_validators.append(validator)
+                if field_name == "problems":
+                    if pre:
+                        cls._problems_pre_validators.append(validator)
+                    else:
+                        cls._problems_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -94,6 +131,14 @@ class Playlist(PlaylistCreateRequest):
 
         class OwnerIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: UserId, __values: Playlist.Partial) -> UserId:
+                ...
+
+        class NameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: str, __values: Playlist.Partial) -> str:
+                ...
+
+        class ProblemsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.List[ProblemId], __values: Playlist.Partial) -> typing.List[ProblemId]:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):
@@ -133,6 +178,30 @@ class Playlist(PlaylistCreateRequest):
     @pydantic.validator("owner_id", pre=False)
     def _post_validate_owner_id(cls, v: UserId, values: Playlist.Partial) -> UserId:
         for validator in Playlist.Validators._owner_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("name", pre=True)
+    def _pre_validate_name(cls, v: str, values: Playlist.Partial) -> str:
+        for validator in Playlist.Validators._name_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("name", pre=False)
+    def _post_validate_name(cls, v: str, values: Playlist.Partial) -> str:
+        for validator in Playlist.Validators._name_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problems", pre=True)
+    def _pre_validate_problems(cls, v: typing.List[ProblemId], values: Playlist.Partial) -> typing.List[ProblemId]:
+        for validator in Playlist.Validators._problems_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("problems", pre=False)
+    def _post_validate_problems(cls, v: typing.List[ProblemId], values: Playlist.Partial) -> typing.List[ProblemId]:
+        for validator in Playlist.Validators._problems_post_validators:
             v = validator(v, values)
         return v
 

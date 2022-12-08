@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from types import TracebackType
-from typing import Optional, Sequence, Tuple, Type
+from typing import List, Optional, Sequence, Tuple, Type
 
 import fern.ir.pydantic as ir_types
 
@@ -46,6 +46,7 @@ class FernAwarePydanticModel:
         self._context = context
         self._custom_config = custom_config
         self._source_file = source_file
+        self._extends = extends
         self._pydantic_model = PydanticModel(
             name=self.get_class_name(),
             source_file=source_file,
@@ -72,13 +73,11 @@ class FernAwarePydanticModel:
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
     ) -> PydanticField:
-        field = PydanticField(
+        field = self._create_pydantic_field(
             name=name,
             pascal_case_field_name=pascal_case_field_name,
-            type_hint=self.get_type_hint_for_type_reference(
-                type_reference,
-            ),
             json_field_name=json_field_name,
+            type_reference=type_reference,
             description=description,
         )
         self._pydantic_model.add_field(field)
@@ -204,7 +203,47 @@ class FernAwarePydanticModel:
                 root_type=root_type,
             )
         else:
-            return PydanticValidatorsGenerator(model=self._pydantic_model)
+            return PydanticValidatorsGenerator(
+                model=self._pydantic_model,
+                extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
+            )
+
+    def _get_extended_pydantic_fields(self, extends: Sequence[ir_types.DeclaredTypeName]) -> List[PydanticField]:
+        extended_fields: List[PydanticField] = []
+        for extended in extends:
+            extended_declaration = self._context.get_declaration_for_type_name(extended)
+            shape_union = extended_declaration.shape.get_as_union()
+            if shape_union.type == "object":
+                for property in shape_union.properties:
+                    field = self._create_pydantic_field(
+                        name=property.name.snake_case,
+                        pascal_case_field_name=property.name.pascal_case,
+                        json_field_name=property.name.wire_value,
+                        type_reference=property.value_type,
+                        description=property.docs,
+                    )
+                    extended_fields.append(field)
+                extended_fields.extend(self._get_extended_pydantic_fields(shape_union.extends))
+        return extended_fields
+
+    def _create_pydantic_field(
+        self,
+        *,
+        name: str,
+        pascal_case_field_name: str,
+        json_field_name: str,
+        type_reference: ir_types.TypeReference,
+        description: Optional[str] = None,
+    ) -> PydanticField:
+        return PydanticField(
+            name=name,
+            pascal_case_field_name=pascal_case_field_name,
+            type_hint=self.get_type_hint_for_type_reference(
+                type_reference,
+            ),
+            json_field_name=json_field_name,
+            description=description,
+        )
 
     def _override_json(self) -> None:
         def write_json_body(writer: AST.NodeWriter) -> None:
