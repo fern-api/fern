@@ -40,8 +40,15 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GetBasicSolutionFileResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [GetBasicSolutionFileResponse.Validators._RootValidator],
+            GetBasicSolutionFileResponse.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: GetBasicSolutionFileResponse.Validators._RootValidator,
+            ) -> GetBasicSolutionFileResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

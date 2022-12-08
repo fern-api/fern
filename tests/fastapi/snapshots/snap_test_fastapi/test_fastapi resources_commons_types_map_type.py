@@ -41,8 +41,10 @@ class MapType(pydantic.BaseModel):
         _value_type_post_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> MapType.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[MapType.Validators._RootValidator], MapType.Validators._RootValidator]:
+            def decorator(validator: MapType.Validators._RootValidator) -> MapType.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

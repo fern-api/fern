@@ -41,8 +41,14 @@ class FunctionImplementation(pydantic.BaseModel):
         _imports_post_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> FunctionImplementation.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [FunctionImplementation.Validators._RootValidator], FunctionImplementation.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: FunctionImplementation.Validators._RootValidator,
+            ) -> FunctionImplementation.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

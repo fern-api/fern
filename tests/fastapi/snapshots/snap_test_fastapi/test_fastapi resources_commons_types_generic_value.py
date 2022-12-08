@@ -49,8 +49,10 @@ class GenericValue(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GenericValue.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[GenericValue.Validators._RootValidator], GenericValue.Validators._RootValidator]:
+            def decorator(validator: GenericValue.Validators._RootValidator) -> GenericValue.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -52,8 +52,14 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> WorkspaceRanResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [WorkspaceRanResponse.Validators._RootValidator], WorkspaceRanResponse.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: WorkspaceRanResponse.Validators._RootValidator,
+            ) -> WorkspaceRanResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

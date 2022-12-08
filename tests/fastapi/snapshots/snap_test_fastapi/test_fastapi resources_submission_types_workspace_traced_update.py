@@ -37,8 +37,14 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> WorkspaceTracedUpdate.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [WorkspaceTracedUpdate.Validators._RootValidator], WorkspaceTracedUpdate.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: WorkspaceTracedUpdate.Validators._RootValidator,
+            ) -> WorkspaceTracedUpdate.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

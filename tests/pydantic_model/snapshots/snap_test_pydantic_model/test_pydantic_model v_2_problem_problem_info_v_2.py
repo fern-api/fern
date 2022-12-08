@@ -133,8 +133,12 @@ class ProblemInfoV2(pydantic.BaseModel):
         _is_public_post_validators: typing.ClassVar[typing.List[ProblemInfoV2.Validators.IsPublicValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ProblemInfoV2.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[ProblemInfoV2.Validators._RootValidator], ProblemInfoV2.Validators._RootValidator]:
+            def decorator(
+                validator: ProblemInfoV2.Validators._RootValidator,
+            ) -> ProblemInfoV2.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

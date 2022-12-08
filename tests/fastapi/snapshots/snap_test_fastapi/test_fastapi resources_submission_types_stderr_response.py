@@ -47,8 +47,12 @@ class StderrResponse(pydantic.BaseModel):
         _stderr_post_validators: typing.ClassVar[typing.List[StderrResponse.Validators.StderrValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> StderrResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[StderrResponse.Validators._RootValidator], StderrResponse.Validators._RootValidator]:
+            def decorator(
+                validator: StderrResponse.Validators._RootValidator,
+            ) -> StderrResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -56,8 +56,12 @@ class TestCaseTemplate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TestCaseTemplate.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[TestCaseTemplate.Validators._RootValidator], TestCaseTemplate.Validators._RootValidator]:
+            def decorator(
+                validator: TestCaseTemplate.Validators._RootValidator,
+            ) -> TestCaseTemplate.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

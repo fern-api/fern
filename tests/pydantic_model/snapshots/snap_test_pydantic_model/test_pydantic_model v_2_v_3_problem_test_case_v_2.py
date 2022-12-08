@@ -65,8 +65,10 @@ class TestCaseV2(pydantic.BaseModel):
         _expects_post_validators: typing.ClassVar[typing.List[TestCaseV2.Validators.ExpectsValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TestCaseV2.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[TestCaseV2.Validators._RootValidator], TestCaseV2.Validators._RootValidator]:
+            def decorator(validator: TestCaseV2.Validators._RootValidator) -> TestCaseV2.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -35,8 +35,10 @@ class Scope(pydantic.BaseModel):
         _variables_post_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> Scope.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[Scope.Validators._RootValidator], Scope.Validators._RootValidator]:
+            def decorator(validator: Scope.Validators._RootValidator) -> Scope.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

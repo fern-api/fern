@@ -52,8 +52,15 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> SinglyLinkedListNodeAndListValue.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [SinglyLinkedListNodeAndListValue.Validators._RootValidator],
+            SinglyLinkedListNodeAndListValue.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: SinglyLinkedListNodeAndListValue.Validators._RootValidator,
+            ) -> SinglyLinkedListNodeAndListValue.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

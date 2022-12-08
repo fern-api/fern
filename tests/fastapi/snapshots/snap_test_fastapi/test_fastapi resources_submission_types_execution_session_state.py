@@ -94,8 +94,14 @@ class ExecutionSessionState(pydantic.BaseModel):
         _status_post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ExecutionSessionState.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators._RootValidator], ExecutionSessionState.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: ExecutionSessionState.Validators._RootValidator,
+            ) -> ExecutionSessionState.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

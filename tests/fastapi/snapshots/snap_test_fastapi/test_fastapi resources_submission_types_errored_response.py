@@ -48,8 +48,12 @@ class ErroredResponse(pydantic.BaseModel):
         _error_info_post_validators: typing.ClassVar[typing.List[ErroredResponse.Validators.ErrorInfoValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ErroredResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[ErroredResponse.Validators._RootValidator], ErroredResponse.Validators._RootValidator]:
+            def decorator(
+                validator: ErroredResponse.Validators._RootValidator,
+            ) -> ErroredResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

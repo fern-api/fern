@@ -33,8 +33,10 @@ class RuntimeError(pydantic.BaseModel):
         _message_post_validators: typing.ClassVar[typing.List[RuntimeError.Validators.MessageValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> RuntimeError.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[RuntimeError.Validators._RootValidator], RuntimeError.Validators._RootValidator]:
+            def decorator(validator: RuntimeError.Validators._RootValidator) -> RuntimeError.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

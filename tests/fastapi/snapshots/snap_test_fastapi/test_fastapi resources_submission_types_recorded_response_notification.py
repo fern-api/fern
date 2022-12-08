@@ -63,8 +63,15 @@ class RecordedResponseNotification(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> RecordedResponseNotification.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [RecordedResponseNotification.Validators._RootValidator],
+            RecordedResponseNotification.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: RecordedResponseNotification.Validators._RootValidator,
+            ) -> RecordedResponseNotification.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

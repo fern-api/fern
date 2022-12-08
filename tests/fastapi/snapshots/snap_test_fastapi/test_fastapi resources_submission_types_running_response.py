@@ -48,8 +48,12 @@ class RunningResponse(pydantic.BaseModel):
         _state_post_validators: typing.ClassVar[typing.List[RunningResponse.Validators.StateValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> RunningResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[RunningResponse.Validators._RootValidator], RunningResponse.Validators._RootValidator]:
+            def decorator(
+                validator: RunningResponse.Validators._RootValidator,
+            ) -> RunningResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -46,8 +46,10 @@ class ListType(pydantic.BaseModel):
         _is_fixed_length_post_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ListType.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[ListType.Validators._RootValidator], ListType.Validators._RootValidator]:
+            def decorator(validator: ListType.Validators._RootValidator) -> ListType.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

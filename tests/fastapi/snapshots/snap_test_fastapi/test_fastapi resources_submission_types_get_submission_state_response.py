@@ -77,8 +77,14 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GetSubmissionStateResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [GetSubmissionStateResponse.Validators._RootValidator], GetSubmissionStateResponse.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: GetSubmissionStateResponse.Validators._RootValidator,
+            ) -> GetSubmissionStateResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

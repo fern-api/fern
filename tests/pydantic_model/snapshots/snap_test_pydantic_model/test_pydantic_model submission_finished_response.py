@@ -39,8 +39,12 @@ class FinishedResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> FinishedResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[FinishedResponse.Validators._RootValidator], FinishedResponse.Validators._RootValidator]:
+            def decorator(
+                validator: FinishedResponse.Validators._RootValidator,
+            ) -> FinishedResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

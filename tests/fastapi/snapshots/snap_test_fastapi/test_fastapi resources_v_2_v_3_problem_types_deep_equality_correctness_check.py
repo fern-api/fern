@@ -39,8 +39,15 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> DeepEqualityCorrectnessCheck.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [DeepEqualityCorrectnessCheck.Validators._RootValidator],
+            DeepEqualityCorrectnessCheck.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: DeepEqualityCorrectnessCheck.Validators._RootValidator,
+            ) -> DeepEqualityCorrectnessCheck.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

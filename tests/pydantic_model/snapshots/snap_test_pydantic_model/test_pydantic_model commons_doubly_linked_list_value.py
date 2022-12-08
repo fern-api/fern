@@ -44,8 +44,14 @@ class DoublyLinkedListValue(pydantic.BaseModel):
         _nodes_post_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.NodesValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> DoublyLinkedListValue.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [DoublyLinkedListValue.Validators._RootValidator], DoublyLinkedListValue.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: DoublyLinkedListValue.Validators._RootValidator,
+            ) -> DoublyLinkedListValue.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

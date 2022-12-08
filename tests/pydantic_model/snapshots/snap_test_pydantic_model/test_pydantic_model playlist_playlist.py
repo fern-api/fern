@@ -45,8 +45,10 @@ class Playlist(PlaylistCreateRequest):
         _owner_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> Playlist.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[Playlist.Validators._RootValidator], Playlist.Validators._RootValidator]:
+            def decorator(validator: Playlist.Validators._RootValidator) -> Playlist.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

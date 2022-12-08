@@ -60,8 +60,12 @@ class GeneratedFiles(pydantic.BaseModel):
         _other_post_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators.OtherValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GeneratedFiles.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[GeneratedFiles.Validators._RootValidator], GeneratedFiles.Validators._RootValidator]:
+            def decorator(
+                validator: GeneratedFiles.Validators._RootValidator,
+            ) -> GeneratedFiles.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

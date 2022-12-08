@@ -54,8 +54,15 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> StoreTracedWorkspaceRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [StoreTracedWorkspaceRequest.Validators._RootValidator],
+            StoreTracedWorkspaceRequest.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: StoreTracedWorkspaceRequest.Validators._RootValidator,
+            ) -> StoreTracedWorkspaceRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -59,8 +59,14 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         _left_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> BinaryTreeNodeValue.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [BinaryTreeNodeValue.Validators._RootValidator], BinaryTreeNodeValue.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: BinaryTreeNodeValue.Validators._RootValidator,
+            ) -> BinaryTreeNodeValue.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

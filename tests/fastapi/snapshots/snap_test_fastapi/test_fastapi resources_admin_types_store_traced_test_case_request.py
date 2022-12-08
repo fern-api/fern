@@ -50,8 +50,14 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> StoreTracedTestCaseRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [StoreTracedTestCaseRequest.Validators._RootValidator], StoreTracedTestCaseRequest.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: StoreTracedTestCaseRequest.Validators._RootValidator,
+            ) -> StoreTracedTestCaseRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

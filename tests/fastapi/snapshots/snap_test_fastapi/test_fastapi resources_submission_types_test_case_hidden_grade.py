@@ -33,8 +33,14 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TestCaseHiddenGrade.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [TestCaseHiddenGrade.Validators._RootValidator], TestCaseHiddenGrade.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: TestCaseHiddenGrade.Validators._RootValidator,
+            ) -> TestCaseHiddenGrade.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

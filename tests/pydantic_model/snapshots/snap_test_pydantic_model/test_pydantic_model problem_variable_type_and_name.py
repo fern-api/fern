@@ -47,8 +47,14 @@ class VariableTypeAndName(pydantic.BaseModel):
         _name_post_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators.NameValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> VariableTypeAndName.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [VariableTypeAndName.Validators._RootValidator], VariableTypeAndName.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: VariableTypeAndName.Validators._RootValidator,
+            ) -> VariableTypeAndName.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

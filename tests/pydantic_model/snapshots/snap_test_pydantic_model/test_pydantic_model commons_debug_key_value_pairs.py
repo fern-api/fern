@@ -41,8 +41,14 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         _value_post_validators: typing.ClassVar[typing.List[DebugKeyValuePairs.Validators.ValueValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> DebugKeyValuePairs.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [DebugKeyValuePairs.Validators._RootValidator], DebugKeyValuePairs.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: DebugKeyValuePairs.Validators._RootValidator,
+            ) -> DebugKeyValuePairs.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

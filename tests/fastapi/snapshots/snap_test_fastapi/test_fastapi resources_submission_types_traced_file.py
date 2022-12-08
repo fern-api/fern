@@ -41,8 +41,10 @@ class TracedFile(pydantic.BaseModel):
         _directory_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TracedFile.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[TracedFile.Validators._RootValidator], TracedFile.Validators._RootValidator]:
+            def decorator(validator: TracedFile.Validators._RootValidator) -> TracedFile.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

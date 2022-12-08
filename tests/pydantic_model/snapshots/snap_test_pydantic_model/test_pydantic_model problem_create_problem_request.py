@@ -110,8 +110,14 @@ class CreateProblemRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> CreateProblemRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [CreateProblemRequest.Validators._RootValidator], CreateProblemRequest.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: CreateProblemRequest.Validators._RootValidator,
+            ) -> CreateProblemRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

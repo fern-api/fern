@@ -43,8 +43,10 @@ class TestCase(pydantic.BaseModel):
         _params_post_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TestCase.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[TestCase.Validators._RootValidator], TestCase.Validators._RootValidator]:
+            def decorator(validator: TestCase.Validators._RootValidator) -> TestCase.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

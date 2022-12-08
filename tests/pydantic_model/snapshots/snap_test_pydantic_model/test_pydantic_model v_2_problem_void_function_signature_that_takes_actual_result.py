@@ -56,8 +56,15 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator],
+            VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator,
+            ) -> VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

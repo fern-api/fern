@@ -48,8 +48,14 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         _code_post_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> VoidFunctionDefinition.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [VoidFunctionDefinition.Validators._RootValidator], VoidFunctionDefinition.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: VoidFunctionDefinition.Validators._RootValidator,
+            ) -> VoidFunctionDefinition.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

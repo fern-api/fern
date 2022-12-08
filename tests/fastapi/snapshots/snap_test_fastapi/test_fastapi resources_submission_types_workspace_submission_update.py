@@ -52,8 +52,14 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> WorkspaceSubmissionUpdate.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [WorkspaceSubmissionUpdate.Validators._RootValidator], WorkspaceSubmissionUpdate.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: WorkspaceSubmissionUpdate.Validators._RootValidator,
+            ) -> WorkspaceSubmissionUpdate.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

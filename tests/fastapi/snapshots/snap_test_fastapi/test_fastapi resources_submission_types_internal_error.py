@@ -39,8 +39,12 @@ class InternalError(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> InternalError.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[InternalError.Validators._RootValidator], InternalError.Validators._RootValidator]:
+            def decorator(
+                validator: InternalError.Validators._RootValidator,
+            ) -> InternalError.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

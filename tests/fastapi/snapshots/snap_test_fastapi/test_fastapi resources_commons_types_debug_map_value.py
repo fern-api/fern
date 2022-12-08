@@ -37,8 +37,12 @@ class DebugMapValue(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> DebugMapValue.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[DebugMapValue.Validators._RootValidator], DebugMapValue.Validators._RootValidator]:
+            def decorator(
+                validator: DebugMapValue.Validators._RootValidator,
+            ) -> DebugMapValue.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

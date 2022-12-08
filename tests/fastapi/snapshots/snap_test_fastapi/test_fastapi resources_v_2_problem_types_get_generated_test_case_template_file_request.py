@@ -43,8 +43,15 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator],
+            GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator,
+            ) -> GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

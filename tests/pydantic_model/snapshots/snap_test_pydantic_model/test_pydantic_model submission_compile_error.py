@@ -33,8 +33,10 @@ class CompileError(pydantic.BaseModel):
         _message_post_validators: typing.ClassVar[typing.List[CompileError.Validators.MessageValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> CompileError.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[CompileError.Validators._RootValidator], CompileError.Validators._RootValidator]:
+            def decorator(validator: CompileError.Validators._RootValidator) -> CompileError.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

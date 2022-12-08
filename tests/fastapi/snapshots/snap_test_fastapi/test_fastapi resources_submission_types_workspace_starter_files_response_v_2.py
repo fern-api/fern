@@ -40,8 +40,15 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> WorkspaceStarterFilesResponseV2.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [WorkspaceStarterFilesResponseV2.Validators._RootValidator],
+            WorkspaceStarterFilesResponseV2.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: WorkspaceStarterFilesResponseV2.Validators._RootValidator,
+            ) -> WorkspaceStarterFilesResponseV2.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

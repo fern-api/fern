@@ -51,8 +51,12 @@ class TestCaseMetadata(pydantic.BaseModel):
         _hidden_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TestCaseMetadata.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[TestCaseMetadata.Validators._RootValidator], TestCaseMetadata.Validators._RootValidator]:
+            def decorator(
+                validator: TestCaseMetadata.Validators._RootValidator,
+            ) -> TestCaseMetadata.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

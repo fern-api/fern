@@ -33,8 +33,14 @@ class LangServerResponse(pydantic.BaseModel):
         _response_post_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> LangServerResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [LangServerResponse.Validators._RootValidator], LangServerResponse.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: LangServerResponse.Validators._RootValidator,
+            ) -> LangServerResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

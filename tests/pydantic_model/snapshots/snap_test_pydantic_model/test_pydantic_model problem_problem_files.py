@@ -47,8 +47,10 @@ class ProblemFiles(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ProblemFiles.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[ProblemFiles.Validators._RootValidator], ProblemFiles.Validators._RootValidator]:
+            def decorator(validator: ProblemFiles.Validators._RootValidator) -> ProblemFiles.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

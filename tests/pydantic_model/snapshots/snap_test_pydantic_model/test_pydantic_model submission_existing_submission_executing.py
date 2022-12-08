@@ -39,8 +39,15 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ExistingSubmissionExecuting.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [ExistingSubmissionExecuting.Validators._RootValidator],
+            ExistingSubmissionExecuting.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: ExistingSubmissionExecuting.Validators._RootValidator,
+            ) -> ExistingSubmissionExecuting.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -44,8 +44,14 @@ class InvalidRequestResponse(pydantic.BaseModel):
         _cause_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> InvalidRequestResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [InvalidRequestResponse.Validators._RootValidator], InvalidRequestResponse.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: InvalidRequestResponse.Validators._RootValidator,
+            ) -> InvalidRequestResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

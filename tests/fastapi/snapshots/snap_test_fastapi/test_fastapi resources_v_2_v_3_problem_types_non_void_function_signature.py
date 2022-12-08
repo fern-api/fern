@@ -52,8 +52,14 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> NonVoidFunctionSignature.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [NonVoidFunctionSignature.Validators._RootValidator], NonVoidFunctionSignature.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: NonVoidFunctionSignature.Validators._RootValidator,
+            ) -> NonVoidFunctionSignature.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

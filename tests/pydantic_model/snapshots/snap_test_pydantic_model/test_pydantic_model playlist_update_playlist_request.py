@@ -43,8 +43,14 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         _problems_post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.ProblemsValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> UpdatePlaylistRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [UpdatePlaylistRequest.Validators._RootValidator], UpdatePlaylistRequest.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: UpdatePlaylistRequest.Validators._RootValidator,
+            ) -> UpdatePlaylistRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

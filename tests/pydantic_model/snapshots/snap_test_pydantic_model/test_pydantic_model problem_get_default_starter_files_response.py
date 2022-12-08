@@ -40,8 +40,15 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GetDefaultStarterFilesResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [GetDefaultStarterFilesResponse.Validators._RootValidator],
+            GetDefaultStarterFilesResponse.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: GetDefaultStarterFilesResponse.Validators._RootValidator,
+            ) -> GetDefaultStarterFilesResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -90,8 +90,12 @@ class SubmitRequestV2(pydantic.BaseModel):
         _user_id_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> SubmitRequestV2.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[SubmitRequestV2.Validators._RootValidator], SubmitRequestV2.Validators._RootValidator]:
+            def decorator(
+                validator: SubmitRequestV2.Validators._RootValidator,
+            ) -> SubmitRequestV2.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

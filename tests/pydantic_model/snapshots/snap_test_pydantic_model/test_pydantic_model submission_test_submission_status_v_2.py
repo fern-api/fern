@@ -73,8 +73,14 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TestSubmissionStatusV2.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [TestSubmissionStatusV2.Validators._RootValidator], TestSubmissionStatusV2.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: TestSubmissionStatusV2.Validators._RootValidator,
+            ) -> TestSubmissionStatusV2.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

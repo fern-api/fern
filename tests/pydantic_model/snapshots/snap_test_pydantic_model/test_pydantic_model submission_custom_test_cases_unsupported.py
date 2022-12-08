@@ -52,8 +52,14 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> CustomTestCasesUnsupported.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [CustomTestCasesUnsupported.Validators._RootValidator], CustomTestCasesUnsupported.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: CustomTestCasesUnsupported.Validators._RootValidator,
+            ) -> CustomTestCasesUnsupported.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

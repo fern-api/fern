@@ -79,7 +79,7 @@ class RootValidatorGenerator(ValidatorGenerator):
                             initializer=AST.Expression("False"),
                         )
                     ],
-                    return_type=self._get_type_of_validator(),
+                    return_type=AST.TypeHint.callable([self._get_type_of_validator()], self._get_type_of_validator()),
                 ),
                 body=AST.CodeWriter(self._write_root_validator_body),
             ),
@@ -105,8 +105,8 @@ class RootValidatorGenerator(ValidatorGenerator):
         decorator = AST.FunctionDeclaration(
             name=DECORATOR_FUNCTION_NAME,
             signature=AST.FunctionSignature(
-                parameters=[AST.FunctionParameter(name="validator", type_hint=AST.TypeHint.any())],
-                return_type=AST.TypeHint.any(),
+                parameters=[AST.FunctionParameter(name="validator", type_hint=self._get_type_of_validator())],
+                return_type=self._get_type_of_validator(),
             ),
             body=AST.CodeWriter(write_decorator_body),
         )

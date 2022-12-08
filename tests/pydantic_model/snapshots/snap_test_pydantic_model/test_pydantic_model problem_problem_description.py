@@ -35,8 +35,14 @@ class ProblemDescription(pydantic.BaseModel):
         _boards_post_validators: typing.ClassVar[typing.List[ProblemDescription.Validators.BoardsValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> ProblemDescription.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [ProblemDescription.Validators._RootValidator], ProblemDescription.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: ProblemDescription.Validators._RootValidator,
+            ) -> ProblemDescription.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

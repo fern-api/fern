@@ -52,8 +52,10 @@ class Parameter(pydantic.BaseModel):
         _variable_type_post_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> Parameter.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[Parameter.Validators._RootValidator], Parameter.Validators._RootValidator]:
+            def decorator(validator: Parameter.Validators._RootValidator) -> Parameter.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

@@ -37,8 +37,15 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         ] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GetTraceResponsesPageRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [GetTraceResponsesPageRequest.Validators._RootValidator],
+            GetTraceResponsesPageRequest.Validators._RootValidator,
+        ]:
+            def decorator(
+                validator: GetTraceResponsesPageRequest.Validators._RootValidator,
+            ) -> GetTraceResponsesPageRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

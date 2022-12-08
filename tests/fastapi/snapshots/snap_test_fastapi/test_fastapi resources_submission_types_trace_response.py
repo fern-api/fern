@@ -84,8 +84,12 @@ class TraceResponse(pydantic.BaseModel):
         _stdout_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> TraceResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[TraceResponse.Validators._RootValidator], TraceResponse.Validators._RootValidator]:
+            def decorator(
+                validator: TraceResponse.Validators._RootValidator,
+            ) -> TraceResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

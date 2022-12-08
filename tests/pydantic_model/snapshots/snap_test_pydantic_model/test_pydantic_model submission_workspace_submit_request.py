@@ -71,8 +71,14 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         _user_id_post_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.UserIdValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> WorkspaceSubmitRequest.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [WorkspaceSubmitRequest.Validators._RootValidator], WorkspaceSubmitRequest.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: WorkspaceSubmitRequest.Validators._RootValidator,
+            ) -> WorkspaceSubmitRequest.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

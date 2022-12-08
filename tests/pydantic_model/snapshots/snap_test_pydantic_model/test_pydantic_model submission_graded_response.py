@@ -48,8 +48,12 @@ class GradedResponse(pydantic.BaseModel):
         _test_cases_post_validators: typing.ClassVar[typing.List[GradedResponse.Validators.TestCasesValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> GradedResponse.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[GradedResponse.Validators._RootValidator], GradedResponse.Validators._RootValidator]:
+            def decorator(
+                validator: GradedResponse.Validators._RootValidator,
+            ) -> GradedResponse.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

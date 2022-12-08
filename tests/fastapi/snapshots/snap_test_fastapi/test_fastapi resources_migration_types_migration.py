@@ -43,8 +43,10 @@ class Migration(pydantic.BaseModel):
         _status_post_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> Migration.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[[Migration.Validators._RootValidator], Migration.Validators._RootValidator]:
+            def decorator(validator: Migration.Validators._RootValidator) -> Migration.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

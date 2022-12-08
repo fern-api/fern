@@ -49,8 +49,14 @@ class SubmissionFileInfo(pydantic.BaseModel):
         _contents_post_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.ContentsValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> SubmissionFileInfo.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [SubmissionFileInfo.Validators._RootValidator], SubmissionFileInfo.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: SubmissionFileInfo.Validators._RootValidator,
+            ) -> SubmissionFileInfo.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:

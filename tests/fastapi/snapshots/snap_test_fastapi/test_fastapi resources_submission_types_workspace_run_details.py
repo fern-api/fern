@@ -56,8 +56,14 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         _stdout_post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
 
         @classmethod
-        def root(cls, *, pre: bool = False) -> WorkspaceRunDetails.Validators._RootValidator:
-            def decorator(validator: typing.Any) -> typing.Any:
+        def root(
+            cls, *, pre: bool = False
+        ) -> typing.Callable[
+            [WorkspaceRunDetails.Validators._RootValidator], WorkspaceRunDetails.Validators._RootValidator
+        ]:
+            def decorator(
+                validator: WorkspaceRunDetails.Validators._RootValidator,
+            ) -> WorkspaceRunDetails.Validators._RootValidator:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
