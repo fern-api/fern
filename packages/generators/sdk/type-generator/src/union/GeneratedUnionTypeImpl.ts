@@ -31,7 +31,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
             typeName: this.typeName,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             docs: this.docs,
-            discriminant: this.shape.discriminantV2,
+            discriminant: this.shape.discriminantV2.camelCase,
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,

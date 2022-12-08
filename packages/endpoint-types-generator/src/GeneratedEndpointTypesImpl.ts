@@ -1,6 +1,8 @@
+import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpHeader, HttpService, QueryParameter } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
@@ -15,19 +17,22 @@ export declare namespace GeneratedEndpointTypesImpl {
     export interface Init {
         service: HttpService;
         endpoint: HttpEndpoint;
+        errorResolver: ErrorResolver;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }
 }
 
 export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
     private static RESPONSE_INTERFACE_NAME = "Response";
     private static ERROR_INTERFACE_NAME = "Error";
+    private static STATUS_CODE_DISCRIMINANT = "statusCode";
 
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private request: GeneratedEndpointRequest;
     private errorUnion: GeneratedUnionImpl<EndpointTypesContext>;
 
-    constructor({ service, endpoint }: GeneratedEndpointTypesImpl.Init) {
+    constructor({ service, endpoint, errorResolver, errorDiscriminationStrategy }: GeneratedEndpointTypesImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
 
@@ -38,10 +43,10 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator();
         this.errorUnion = new GeneratedUnionImpl<EndpointTypesContext>({
             typeName: GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME,
-            discriminant: endpoint.errorsV2.discriminant,
+            discriminant: this.getErrorUnionDiscriminant(errorDiscriminationStrategy),
             docs: undefined,
-            parsedSingleUnionTypes: endpoint.errorsV2.types.map(
-                (error) => new ParsedSingleUnionTypeForError({ errors: endpoint.errorsV2, error })
+            parsedSingleUnionTypes: endpoint.errors.map(
+                (error) => new ParsedSingleUnionTypeForError({ error, errorResolver, errorDiscriminationStrategy })
             ),
             getReferenceToUnion: (context) =>
                 context.endpointTypes.getReferenceToEndpointTypeExport(
@@ -53,6 +58,16 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
                 builderParameterName: unknownErrorSingleUnionTypeGenerator.getBuilderParameterName(),
             }),
+        });
+    }
+
+    private getErrorUnionDiscriminant(errorDiscriminationStrategy: ErrorDiscriminationStrategy): string {
+        return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+            property: ({ discriminant }) => discriminant.name.unsafeName.camelCase,
+            statusCode: () => GeneratedEndpointTypesImpl.STATUS_CODE_DISCRIMINANT,
+            _unknown: () => {
+                throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
+            },
         });
     }
 

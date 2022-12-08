@@ -4,8 +4,8 @@ import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
 export interface ParsedSingleUnionType<Context extends WithBaseContextMixin> {
     getDocs(): string | null | undefined;
-    getDiscriminantValue(): string | undefined;
-    getDiscriminantValueOrThrow(): string;
+    getDiscriminantValue(): string | number | undefined;
+    getDiscriminantValueOrThrow(): string | number;
     getInterfaceName(): string;
     getInterfaceDeclaration(
         context: Context,

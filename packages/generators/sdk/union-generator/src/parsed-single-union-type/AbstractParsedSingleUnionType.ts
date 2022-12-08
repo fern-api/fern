@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
@@ -210,12 +211,19 @@ export abstract class AbstractParsedSingleUnionType<Context extends WithBaseCont
 
     public getDiscriminantValueType(): ts.TypeNode {
         const discriminantValue = this.getDiscriminantValue();
-        return discriminantValue != null
-            ? ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue))
-            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+        if (discriminantValue == null) {
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+        }
+        if (typeof discriminantValue === "string") {
+            return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue));
+        }
+        if (typeof discriminantValue === "number") {
+            return ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral(discriminantValue));
+        }
+        assertNever(discriminantValue);
     }
 
-    public getDiscriminantValueOrThrow(): string {
+    public getDiscriminantValueOrThrow(): string | number {
         const discriminantValue = this.getDiscriminantValue();
         if (discriminantValue == null) {
             throw new Error("Discriminant value is not defined");
@@ -234,7 +242,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends WithBaseCont
     }): ts.VariableDeclaration;
 
     public abstract getDocs(): string | null | undefined;
-    public abstract getDiscriminantValue(): string | undefined;
+    public abstract getDiscriminantValue(): string | number | undefined;
     public abstract getInterfaceName(): string;
     public abstract getBuilderName(): string;
     public abstract getVisitorKey(): string;

@@ -52,5 +52,6 @@ services:
 errors:
   OwnerAlreadyExistsError:
     status-code: 400
+    type: OwnerId
   OwnerNotFoundError:
     status-code: 404

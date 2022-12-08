@@ -1459,6 +1459,7 @@ export { FernApiClient } from \\"./Client\\";
 export * from \\"./owner/types\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
+export * from \\"./owner/errors\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -1504,14 +1505,11 @@ export class Client {
     }
 
     if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.owner.create.Error.Raw)?.errorName) {
-        case \\"OwnerAlreadyExistsError\\":
-          return {
-            ok: false,
-            error: await serializers.owner.create.Error.parse(
-              response.error.body as serializers.owner.create.Error.Raw
-            ),
-          };
+      switch (response.error.statusCode) {
+        case 400:
+          return FernApi.owner.create.Error.ownerAlreadyExistsError(
+            await serializers.OwnerAlreadyExistsError.parse(response.error.body)
+          );
       }
     }
 
@@ -1537,12 +1535,9 @@ export class Client {
     }
 
     if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.owner.get.Error.Raw)?.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return {
-            ok: false,
-            error: await serializers.owner.get.Error.parse(response.error.body as serializers.owner.get.Error.Raw),
-          };
+      switch (response.error.statusCode) {
+        case 404:
+          return FernApi.owner.get.Error.ownerNotFoundError();
       }
     }
 
@@ -1569,14 +1564,9 @@ export class Client {
     }
 
     if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.owner.update.Error.Raw)?.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return {
-            ok: false,
-            error: await serializers.owner.update.Error.parse(
-              response.error.body as serializers.owner.update.Error.Raw
-            ),
-          };
+      switch (response.error.statusCode) {
+        case 404:
+          return FernApi.owner.update.Error.ownerNotFoundError();
       }
     }
 
@@ -1603,11 +1593,12 @@ export type Error = FernApi.owner.create.Error.OwnerAlreadyExistsError | FernApi
 
 export declare namespace Error {
   interface OwnerAlreadyExistsError extends _Utils {
-    errorName: \\"OwnerAlreadyExistsError\\";
+    statusCode: 400;
+    content: FernApi.OwnerAlreadyExistsError;
   }
 
   interface _Unknown extends _Utils {
-    errorName: void;
+    statusCode: void;
     content: core.Fetcher.Error;
   }
 
@@ -1616,15 +1607,18 @@ export declare namespace Error {
   }
 
   interface _Visitor<_Result> {
-    ownerAlreadyExistsError: () => _Result;
+    ownerAlreadyExistsError: (value: FernApi.OwnerAlreadyExistsError) => _Result;
     _other: (value: core.Fetcher.Error) => _Result;
   }
 }
 
 export const Error = {
-  ownerAlreadyExistsError: (): FernApi.owner.create.Error.OwnerAlreadyExistsError => {
+  ownerAlreadyExistsError: (
+    value: FernApi.OwnerAlreadyExistsError
+  ): FernApi.owner.create.Error.OwnerAlreadyExistsError => {
     const valueWithoutVisit: Omit<FernApi.owner.create.Error.OwnerAlreadyExistsError, \\"_visit\\"> = {
-      errorName: \\"OwnerAlreadyExistsError\\",
+      content: value,
+      statusCode: 400,
     };
     return core.addNonEnumerableProperty(valueWithoutVisit, \\"_visit\\", function <
       _Result
@@ -1646,9 +1640,9 @@ export const Error = {
     value: FernApi.owner.create.Error,
     visitor: FernApi.owner.create.Error._Visitor<_Result>
   ): _Result => {
-    switch (value.errorName) {
-      case \\"OwnerAlreadyExistsError\\":
-        return visitor.ownerAlreadyExistsError();
+    switch (value.statusCode) {
+      case 400:
+        return visitor.ownerAlreadyExistsError(value.content);
       default:
         return visitor._other(value as any);
     }
@@ -1675,11 +1669,11 @@ export type Error = FernApi.owner.get.Error.OwnerNotFoundError | FernApi.owner.g
 
 export declare namespace Error {
   interface OwnerNotFoundError extends _Utils {
-    errorName: \\"OwnerNotFoundError\\";
+    statusCode: 404;
   }
 
   interface _Unknown extends _Utils {
-    errorName: void;
+    statusCode: void;
     content: core.Fetcher.Error;
   }
 
@@ -1696,7 +1690,7 @@ export declare namespace Error {
 export const Error = {
   ownerNotFoundError: (): FernApi.owner.get.Error.OwnerNotFoundError => {
     const valueWithoutVisit: Omit<FernApi.owner.get.Error.OwnerNotFoundError, \\"_visit\\"> = {
-      errorName: \\"OwnerNotFoundError\\",
+      statusCode: 404,
     };
     return core.addNonEnumerableProperty(valueWithoutVisit, \\"_visit\\", function <
       _Result
@@ -1715,8 +1709,8 @@ export const Error = {
   },
 
   _visit: <_Result>(value: FernApi.owner.get.Error, visitor: FernApi.owner.get.Error._Visitor<_Result>): _Result => {
-    switch (value.errorName) {
-      case \\"OwnerNotFoundError\\":
+    switch (value.statusCode) {
+      case 404:
         return visitor.ownerNotFoundError();
       default:
         return visitor._other(value as any);
@@ -1753,11 +1747,11 @@ export type Error = FernApi.owner.update.Error.OwnerNotFoundError | FernApi.owne
 
 export declare namespace Error {
   interface OwnerNotFoundError extends _Utils {
-    errorName: \\"OwnerNotFoundError\\";
+    statusCode: 404;
   }
 
   interface _Unknown extends _Utils {
-    errorName: void;
+    statusCode: void;
     content: core.Fetcher.Error;
   }
 
@@ -1774,7 +1768,7 @@ export declare namespace Error {
 export const Error = {
   ownerNotFoundError: (): FernApi.owner.update.Error.OwnerNotFoundError => {
     const valueWithoutVisit: Omit<FernApi.owner.update.Error.OwnerNotFoundError, \\"_visit\\"> = {
-      errorName: \\"OwnerNotFoundError\\",
+      statusCode: 404,
     };
     return core.addNonEnumerableProperty(valueWithoutVisit, \\"_visit\\", function <
       _Result
@@ -1796,8 +1790,8 @@ export const Error = {
     value: FernApi.owner.update.Error,
     visitor: FernApi.owner.update.Error._Visitor<_Result>
   ): _Result => {
-    switch (value.errorName) {
-      case \\"OwnerNotFoundError\\":
+    switch (value.statusCode) {
+      case 404:
         return visitor.ownerNotFoundError();
       default:
         return visitor._other(value as any);
@@ -1813,7 +1807,32 @@ export const Error = {
                 "type": "directory",
               },
               Object {
+                "contents": Array [
+                  Object {
+                    "contents": "/**
+ * This file auto-generated by Fern from our API Definition.
+ */
+
+import { FernApi } from \\"@fern/api\\";
+
+export type OwnerAlreadyExistsError = FernApi.OwnerId;
+",
+                    "name": "OwnerAlreadyExistsError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./OwnerAlreadyExistsError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "errors",
+                "type": "directory",
+              },
+              Object {
                 "contents": "export * from \\"./types\\";
+export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                 "name": "index.ts",
@@ -1934,14 +1953,9 @@ export class Client {
     }
 
     if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.token.create.Error.Raw)?.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return {
-            ok: false,
-            error: await serializers.token.create.Error.parse(
-              response.error.body as serializers.token.create.Error.Raw
-            ),
-          };
+      switch (response.error.statusCode) {
+        case 404:
+          return FernApi.token.create.Error.ownerNotFoundError();
       }
     }
 
@@ -1972,14 +1986,9 @@ export class Client {
     }
 
     if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.token.getTokenMetadata.Error.Raw)?.errorName) {
-        case \\"TokenNotFoundError\\":
-          return {
-            ok: false,
-            error: await serializers.token.getTokenMetadata.Error.parse(
-              response.error.body as serializers.token.getTokenMetadata.Error.Raw
-            ),
-          };
+      switch (response.error.statusCode) {
+        case 404:
+          return FernApi.token.getTokenMetadata.Error.tokenNotFoundError();
       }
     }
 
@@ -2009,14 +2018,9 @@ export class Client {
     }
 
     if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.token.getTokensForOwner.Error.Raw)?.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return {
-            ok: false,
-            error: await serializers.token.getTokensForOwner.Error.parse(
-              response.error.body as serializers.token.getTokensForOwner.Error.Raw
-            ),
-          };
+      switch (response.error.statusCode) {
+        case 404:
+          return FernApi.token.getTokensForOwner.Error.ownerNotFoundError();
       }
     }
 
@@ -2043,11 +2047,11 @@ export type Error = FernApi.token.create.Error.OwnerNotFoundError | FernApi.toke
 
 export declare namespace Error {
   interface OwnerNotFoundError extends _Utils {
-    errorName: \\"OwnerNotFoundError\\";
+    statusCode: 404;
   }
 
   interface _Unknown extends _Utils {
-    errorName: void;
+    statusCode: void;
     content: core.Fetcher.Error;
   }
 
@@ -2064,7 +2068,7 @@ export declare namespace Error {
 export const Error = {
   ownerNotFoundError: (): FernApi.token.create.Error.OwnerNotFoundError => {
     const valueWithoutVisit: Omit<FernApi.token.create.Error.OwnerNotFoundError, \\"_visit\\"> = {
-      errorName: \\"OwnerNotFoundError\\",
+      statusCode: 404,
     };
     return core.addNonEnumerableProperty(valueWithoutVisit, \\"_visit\\", function <
       _Result
@@ -2086,8 +2090,8 @@ export const Error = {
     value: FernApi.token.create.Error,
     visitor: FernApi.token.create.Error._Visitor<_Result>
   ): _Result => {
-    switch (value.errorName) {
-      case \\"OwnerNotFoundError\\":
+    switch (value.statusCode) {
+      case 404:
         return visitor.ownerNotFoundError();
       default:
         return visitor._other(value as any);
@@ -2113,11 +2117,11 @@ export type Error =
 
 export declare namespace Error {
   interface TokenNotFoundError extends _Utils {
-    errorName: \\"TokenNotFoundError\\";
+    statusCode: 404;
   }
 
   interface _Unknown extends _Utils {
-    errorName: void;
+    statusCode: void;
     content: core.Fetcher.Error;
   }
 
@@ -2134,7 +2138,7 @@ export declare namespace Error {
 export const Error = {
   tokenNotFoundError: (): FernApi.token.getTokenMetadata.Error.TokenNotFoundError => {
     const valueWithoutVisit: Omit<FernApi.token.getTokenMetadata.Error.TokenNotFoundError, \\"_visit\\"> = {
-      errorName: \\"TokenNotFoundError\\",
+      statusCode: 404,
     };
     return core.addNonEnumerableProperty(valueWithoutVisit, \\"_visit\\", function <
       _Result
@@ -2156,8 +2160,8 @@ export const Error = {
     value: FernApi.token.getTokenMetadata.Error,
     visitor: FernApi.token.getTokenMetadata.Error._Visitor<_Result>
   ): _Result => {
-    switch (value.errorName) {
-      case \\"TokenNotFoundError\\":
+    switch (value.statusCode) {
+      case 404:
         return visitor.tokenNotFoundError();
       default:
         return visitor._other(value as any);
@@ -2187,11 +2191,11 @@ export type Error =
 
 export declare namespace Error {
   interface OwnerNotFoundError extends _Utils {
-    errorName: \\"OwnerNotFoundError\\";
+    statusCode: 404;
   }
 
   interface _Unknown extends _Utils {
-    errorName: void;
+    statusCode: void;
     content: core.Fetcher.Error;
   }
 
@@ -2208,7 +2212,7 @@ export declare namespace Error {
 export const Error = {
   ownerNotFoundError: (): FernApi.token.getTokensForOwner.Error.OwnerNotFoundError => {
     const valueWithoutVisit: Omit<FernApi.token.getTokensForOwner.Error.OwnerNotFoundError, \\"_visit\\"> = {
-      errorName: \\"OwnerNotFoundError\\",
+      statusCode: 404,
     };
     return core.addNonEnumerableProperty(valueWithoutVisit, \\"_visit\\", function <
       _Result
@@ -2230,8 +2234,8 @@ export const Error = {
     value: FernApi.token.getTokensForOwner.Error,
     visitor: FernApi.token.getTokensForOwner.Error._Visitor<_Result>
   ): _Result => {
-    switch (value.errorName) {
-      case \\"OwnerNotFoundError\\":
+    switch (value.statusCode) {
+      case 404:
         return visitor.ownerNotFoundError();
       default:
         return visitor._other(value as any);
@@ -2466,6 +2470,7 @@ export * from \\"./TokenStatus\\";
 export * from \\"./owner/types\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
+export * from \\"./owner/errors\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -2489,28 +2494,6 @@ export const Request: core.schemas.Schema<serializers.owner.create.Request.Raw, 
 export declare namespace Request {
   type Raw = serializers.CreateOwnerRequest.Raw;
 }
-
-export const Error: core.schemas.Schema<serializers.owner.create.Error.Raw, FernApi.owner.create.Error> = core.schemas
-  .union(\\"errorName\\", {
-    OwnerAlreadyExistsError: core.schemas.object({}),
-  })
-  .transform<FernApi.owner.create.Error>({
-    parse: (value) => {
-      switch (value.errorName) {
-        case \\"OwnerAlreadyExistsError\\":
-          return FernApi.owner.create.Error.ownerAlreadyExistsError();
-      }
-    },
-    json: (value) => value as any,
-  });
-
-export declare namespace Error {
-  type Raw = Error.OwnerAlreadyExistsError;
-
-  interface OwnerAlreadyExistsError {
-    errorName: \\"OwnerAlreadyExistsError\\";
-  }
-}
 ",
                     "name": "create.ts",
                     "type": "file",
@@ -2530,28 +2513,6 @@ export const Response: core.schemas.Schema<serializers.owner.get.Response.Raw, F
 
 export declare namespace Response {
   type Raw = serializers.Owner.Raw;
-}
-
-export const Error: core.schemas.Schema<serializers.owner.get.Error.Raw, FernApi.owner.get.Error> = core.schemas
-  .union(\\"errorName\\", {
-    OwnerNotFoundError: core.schemas.object({}),
-  })
-  .transform<FernApi.owner.get.Error>({
-    parse: (value) => {
-      switch (value.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return FernApi.owner.get.Error.ownerNotFoundError();
-      }
-    },
-    json: (value) => value as any,
-  });
-
-export declare namespace Error {
-  type Raw = Error.OwnerNotFoundError;
-
-  interface OwnerNotFoundError {
-    errorName: \\"OwnerNotFoundError\\";
-  }
 }
 ",
                     "name": "get.ts",
@@ -2587,28 +2548,6 @@ export const Response: core.schemas.Schema<serializers.owner.update.Response.Raw
 export declare namespace Response {
   type Raw = serializers.Owner.Raw;
 }
-
-export const Error: core.schemas.Schema<serializers.owner.update.Error.Raw, FernApi.owner.update.Error> = core.schemas
-  .union(\\"errorName\\", {
-    OwnerNotFoundError: core.schemas.object({}),
-  })
-  .transform<FernApi.owner.update.Error>({
-    parse: (value) => {
-      switch (value.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return FernApi.owner.update.Error.ownerNotFoundError();
-      }
-    },
-    json: (value) => value as any,
-  });
-
-export declare namespace Error {
-  type Raw = Error.OwnerNotFoundError;
-
-  interface OwnerNotFoundError {
-    errorName: \\"OwnerNotFoundError\\";
-  }
-}
 ",
                     "name": "update.ts",
                     "type": "file",
@@ -2618,7 +2557,41 @@ export declare namespace Error {
                 "type": "directory",
               },
               Object {
+                "contents": Array [
+                  Object {
+                    "contents": "/**
+ * This file auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from \\"../..\\";
+import { FernApi } from \\"@fern/api\\";
+import * as core from \\"../../../core\\";
+
+export const OwnerAlreadyExistsError: core.schemas.Schema<
+  serializers.OwnerAlreadyExistsError.Raw,
+  FernApi.OwnerAlreadyExistsError
+> = core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId);
+
+export declare namespace OwnerAlreadyExistsError {
+  type Raw = serializers.OwnerId.Raw;
+}
+",
+                    "name": "OwnerAlreadyExistsError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./OwnerAlreadyExistsError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "errors",
+                "type": "directory",
+              },
+              Object {
                 "contents": "export * from \\"./types\\";
+export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                 "name": "index.ts",
@@ -2763,28 +2736,6 @@ export const Response: core.schemas.Schema<serializers.token.create.Response.Raw
 export declare namespace Response {
   type Raw = serializers.CreateTokenResponse.Raw;
 }
-
-export const Error: core.schemas.Schema<serializers.token.create.Error.Raw, FernApi.token.create.Error> = core.schemas
-  .union(\\"errorName\\", {
-    OwnerNotFoundError: core.schemas.object({}),
-  })
-  .transform<FernApi.token.create.Error>({
-    parse: (value) => {
-      switch (value.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return FernApi.token.create.Error.ownerNotFoundError();
-      }
-    },
-    json: (value) => value as any,
-  });
-
-export declare namespace Error {
-  type Raw = Error.OwnerNotFoundError;
-
-  interface OwnerNotFoundError {
-    errorName: \\"OwnerNotFoundError\\";
-  }
-}
 ",
                     "name": "create.ts",
                     "type": "file",
@@ -2813,31 +2764,6 @@ export const Response: core.schemas.Schema<serializers.token.getTokenMetadata.Re
 export declare namespace Response {
   type Raw = serializers.TokenMetadata.Raw;
 }
-
-export const Error: core.schemas.Schema<
-  serializers.token.getTokenMetadata.Error.Raw,
-  FernApi.token.getTokenMetadata.Error
-> = core.schemas
-  .union(\\"errorName\\", {
-    TokenNotFoundError: core.schemas.object({}),
-  })
-  .transform<FernApi.token.getTokenMetadata.Error>({
-    parse: (value) => {
-      switch (value.errorName) {
-        case \\"TokenNotFoundError\\":
-          return FernApi.token.getTokenMetadata.Error.tokenNotFoundError();
-      }
-    },
-    json: (value) => value as any,
-  });
-
-export declare namespace Error {
-  type Raw = Error.TokenNotFoundError;
-
-  interface TokenNotFoundError {
-    errorName: \\"TokenNotFoundError\\";
-  }
-}
 ",
                     "name": "getTokenMetadata.ts",
                     "type": "file",
@@ -2856,31 +2782,6 @@ export const Response: core.schemas.Schema<serializers.token.getTokensForOwner.R
 
 export declare namespace Response {
   type Raw = serializers.TokenMetadata.Raw[];
-}
-
-export const Error: core.schemas.Schema<
-  serializers.token.getTokensForOwner.Error.Raw,
-  FernApi.token.getTokensForOwner.Error
-> = core.schemas
-  .union(\\"errorName\\", {
-    OwnerNotFoundError: core.schemas.object({}),
-  })
-  .transform<FernApi.token.getTokensForOwner.Error>({
-    parse: (value) => {
-      switch (value.errorName) {
-        case \\"OwnerNotFoundError\\":
-          return FernApi.token.getTokensForOwner.Error.ownerNotFoundError();
-      }
-    },
-    json: (value) => value as any,
-  });
-
-export declare namespace Error {
-  type Raw = Error.OwnerNotFoundError;
-
-  interface OwnerNotFoundError {
-    errorName: \\"OwnerNotFoundError\\";
-  }
 }
 ",
                     "name": "getTokensForOwner.ts",

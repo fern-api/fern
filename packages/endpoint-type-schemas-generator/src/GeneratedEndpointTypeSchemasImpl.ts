@@ -1,15 +1,19 @@
+import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
+import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
+import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema";
 
 export declare namespace GeneratedEndpointTypeSchemasImpl {
     export interface Init {
         service: HttpService;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }
 }
 
@@ -21,7 +25,12 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     private generatedResponseSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedErrorSchema: GeneratedEndpointErrorSchema;
 
-    constructor({ service, endpoint, errorResolver }: GeneratedEndpointTypeSchemasImpl.Init) {
+    constructor({
+        service,
+        endpoint,
+        errorResolver,
+        errorDiscriminationStrategy,
+    }: GeneratedEndpointTypeSchemasImpl.Init) {
         this.generatedRequestSchema =
             endpoint.request.typeV2 != null
                 ? new GeneratedEndpointTypeSchema({
@@ -40,7 +49,32 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
                       type: endpoint.response.typeV2,
                   })
                 : undefined;
-        this.generatedErrorSchema = new GeneratedEndpointErrorSchema({ service, endpoint, errorResolver });
+        this.generatedErrorSchema = this.getGeneratedEndpointErrorSchema({
+            service,
+            endpoint,
+            errorResolver,
+            errorDiscriminationStrategy,
+        });
+    }
+
+    private getGeneratedEndpointErrorSchema({
+        service,
+        endpoint,
+        errorResolver,
+        errorDiscriminationStrategy,
+    }: {
+        service: HttpService;
+        endpoint: HttpEndpoint;
+        errorResolver: ErrorResolver;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    }): GeneratedEndpointErrorSchema {
+        return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+            property: () => new GeneratedEndpointErrorSchemaImpl({ service, endpoint, errorResolver }),
+            statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
+            _unknown: () => {
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+            },
+        });
     }
 
     public writeToFile(context: EndpointTypeSchemasContext): void {

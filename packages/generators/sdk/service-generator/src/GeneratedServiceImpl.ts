@@ -1,7 +1,9 @@
 import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
+import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpHeader } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { AugmentedService } from "@fern-typescript/commons-v2";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedService, ServiceContext } from "@fern-typescript/sdk-declaration-handler";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedHeader } from "./FetcherArgsBuilder";
@@ -14,6 +16,8 @@ export declare namespace GeneratedServiceImpl {
         apiHeaders: HttpHeader[];
         service: AugmentedService;
         serviceClassName: string;
+        errorResolver: ErrorResolver;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }
 }
 
@@ -33,7 +37,14 @@ export class GeneratedServiceImpl implements GeneratedService {
     private generatedEndpointImplementations: GeneratedEndpointImplementation[];
     private generatedWrappedServices: GeneratedWrappedService[];
 
-    constructor({ serviceClassName, service, apiAuth, apiHeaders }: GeneratedServiceImpl.Init) {
+    constructor({
+        serviceClassName,
+        service,
+        apiAuth,
+        apiHeaders,
+        errorResolver,
+        errorDiscriminationStrategy,
+    }: GeneratedServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
         this.apiHeaders = apiHeaders;
@@ -48,6 +59,8 @@ export class GeneratedServiceImpl implements GeneratedService {
                         endpoint,
                         service: originalService,
                         generatedService: this,
+                        errorResolver,
+                        errorDiscriminationStrategy,
                     })
             );
         }

@@ -1,5 +1,7 @@
+import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpPath, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     GeneratedEndpointTypes,
     GeneratedEndpointTypeSchemas,
@@ -24,6 +26,8 @@ export declare namespace GeneratedEndpointImplementation {
         service: HttpService;
         endpoint: HttpEndpoint;
         generatedService: GeneratedServiceImpl;
+        errorResolver: ErrorResolver;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }
 }
 
@@ -34,11 +38,21 @@ export class GeneratedEndpointImplementation {
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private generatedService: GeneratedServiceImpl;
+    private errorResolver: ErrorResolver;
+    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
 
-    constructor({ service, endpoint, generatedService }: GeneratedEndpointImplementation.Init) {
+    constructor({
+        service,
+        endpoint,
+        generatedService,
+        errorResolver,
+        errorDiscriminationStrategy,
+    }: GeneratedEndpointImplementation.Init) {
         this.service = service;
         this.endpoint = endpoint;
         this.generatedService = generatedService;
+        this.errorResolver = errorResolver;
+        this.errorDiscriminationStrategy = errorDiscriminationStrategy;
     }
 
     public getImplementation(context: ServiceContext): OptionalKind<MethodDeclarationStructure> {
@@ -238,22 +252,13 @@ export class GeneratedEndpointImplementation {
     }
 
     private getReturnResponseForKnownErrors(context: ServiceContext): ts.Statement[] {
-        const allErrorsButLast = [...this.endpoint.errors];
-        const lastError = allErrorsButLast.pop();
-
-        if (lastError == null) {
+        if (this.endpoint.errors.length === 0) {
             return [];
         }
-
-        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
 
         const referenceToError = ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME),
             context.base.coreUtilities.fetcher.APIResponse.FailedResponse.error
-        );
-        const referenceToErrorBody = ts.factory.createPropertyAccessExpression(
-            referenceToError,
-            context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
         );
 
         const ifStatement = ts.factory.createIfStatement(
@@ -269,50 +274,137 @@ export class GeneratedEndpointImplementation {
             ),
             ts.factory.createBlock(
                 [
-                    ts.factory.createSwitchStatement(
-                        ts.factory.createPropertyAccessChain(
-                            ts.factory.createAsExpression(
-                                referenceToErrorBody,
-                                generatedEndpointTypeSchemas.getReferenceToRawError(context)
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            this.endpoint.errorsV2.discriminant.wireValue
-                        ),
-                        ts.factory.createCaseBlock([
-                            ...allErrorsButLast.map((error) =>
-                                ts.factory.createCaseClause(
-                                    ts.factory.createStringLiteral(
-                                        context.error.getErrorDeclaration(error.error).discriminantValueV2.wireValue
-                                    ),
-                                    []
-                                )
-                            ),
-                            ts.factory.createCaseClause(
-                                ts.factory.createStringLiteral(
-                                    context.error.getErrorDeclaration(lastError.error).discriminantValueV2.wireValue
-                                ),
-                                [
-                                    ts.factory.createReturnStatement(
-                                        context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                                            generatedEndpointTypeSchemas.deserializeError(
-                                                ts.factory.createAsExpression(
-                                                    referenceToErrorBody,
-                                                    generatedEndpointTypeSchemas.getReferenceToRawError(context)
-                                                ),
-                                                context
-                                            )
-                                        )
-                                    ),
-                                ]
-                            ),
-                        ])
-                    ),
+                    this.getSwitchStatementForErrors({
+                        referenceToError,
+                        context,
+                    }),
                 ],
                 true
             )
         );
 
         return [ifStatement];
+    }
+
+    private getSwitchStatementForErrors({
+        referenceToError,
+        context,
+    }: {
+        referenceToError: ts.Expression;
+        context: ServiceContext;
+    }) {
+        return ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
+            property: () => this.getSwitchStatementForPropertyDiscriminatedErrors({ referenceToError, context }),
+            statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors({ referenceToError, context }),
+            _unknown: () => {
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+            },
+        });
+    }
+
+    private getSwitchStatementForPropertyDiscriminatedErrors({
+        referenceToError,
+        context,
+    }: {
+        referenceToError: ts.Expression;
+        context: ServiceContext;
+    }) {
+        const allErrorsButLast = [...this.endpoint.errors];
+        const lastError = allErrorsButLast.pop();
+
+        if (lastError == null) {
+            throw new Error("Cannot generate switch because there are no errors defined");
+        }
+
+        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
+        const referenceToErrorBody = ts.factory.createPropertyAccessExpression(
+            referenceToError,
+            context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
+        );
+
+        return ts.factory.createSwitchStatement(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createAsExpression(
+                    referenceToErrorBody,
+                    generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                this.endpoint.errorsV2.discriminant.wireValue
+            ),
+            ts.factory.createCaseBlock([
+                ...allErrorsButLast.map((error) =>
+                    ts.factory.createCaseClause(
+                        ts.factory.createStringLiteral(
+                            context.error.getErrorDeclaration(error.error).discriminantValueV2.wireValue
+                        ),
+                        []
+                    )
+                ),
+                ts.factory.createCaseClause(
+                    ts.factory.createStringLiteral(
+                        context.error.getErrorDeclaration(lastError.error).discriminantValueV2.wireValue
+                    ),
+                    [
+                        ts.factory.createReturnStatement(
+                            context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                generatedEndpointTypeSchemas.deserializeError(
+                                    ts.factory.createAsExpression(
+                                        referenceToErrorBody,
+                                        generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                                    ),
+                                    context
+                                )
+                            )
+                        ),
+                    ]
+                ),
+            ])
+        );
+    }
+
+    private getSwitchStatementForStatusCodeDiscriminatedErrors({
+        referenceToError,
+        context,
+    }: {
+        referenceToError: ts.Expression;
+        context: ServiceContext;
+    }) {
+        return ts.factory.createSwitchStatement(
+            ts.factory.createPropertyAccessExpression(
+                referenceToError,
+                context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
+            ),
+            ts.factory.createCaseBlock(
+                this.endpoint.errors.map((error) => {
+                    const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+                    return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
+                        ts.factory.createReturnStatement(
+                            context.endpointTypes
+                                .getGeneratedEndpointTypes(this.service.name, this.endpoint.id)
+                                .getErrorUnion()
+                                .build({
+                                    discriminantValueToBuild: errorDeclaration.statusCode,
+                                    builderArgument:
+                                        errorDeclaration.typeV3 != null
+                                            ? context.base.coreUtilities.zurg.Schema._fromExpression(
+                                                  context.errorSchema
+                                                      .getReferenceToErrorSchema(error.error)
+                                                      .getExpression()
+                                              ).parse(
+                                                  ts.factory.createPropertyAccessExpression(
+                                                      referenceToError,
+                                                      context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError
+                                                          .body
+                                                  )
+                                              )
+                                            : undefined,
+                                    context,
+                                })
+                        ),
+                    ]);
+                })
+            )
+        );
     }
 
     private getReturnResponseForUnknownError(context: ServiceContext): ts.Statement {

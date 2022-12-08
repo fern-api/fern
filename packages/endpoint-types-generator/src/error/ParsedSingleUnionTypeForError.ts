@@ -1,4 +1,7 @@
-import { ResponseErrorShape, ResponseErrorsV2, ResponseErrorV2 } from "@fern-fern/ir-model/services/commons";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { ResponseError } from "@fern-fern/ir-model/services/commons";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
 import {
     AbstractKnownSingleUnionType,
@@ -9,58 +12,87 @@ import {
 
 export declare namespace ParsedSingleUnionTypeForError {
     export interface Init {
-        errors: ResponseErrorsV2;
-        error: ResponseErrorV2;
+        error: ResponseError;
+        errorResolver: ErrorResolver;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }
 }
 
 export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<EndpointTypesContext> {
-    protected errors: ResponseErrorsV2;
-    protected error: ResponseErrorV2;
+    private errorDeclaration: ErrorDeclaration;
+    private responseError: ResponseError;
+    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
 
-    constructor({ error, errors }: ParsedSingleUnionTypeForError.Init) {
+    constructor({ error, errorDiscriminationStrategy, errorResolver }: ParsedSingleUnionTypeForError.Init) {
+        const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
-            singleUnionType: ResponseErrorShape._visit<SingleUnionTypeGenerator<EndpointTypesContext>>(error.shape, {
-                noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
-                singleProperty: (singleProperty) =>
-                    new SinglePropertySingleUnionTypeGenerator<EndpointTypesContext>({
-                        propertyName: singleProperty.name.camelCase,
-                        getReferenceToPropertyType: (context) => {
-                            const typeNode = context.error.getReferenceToError(singleProperty.error).getTypeNode();
-                            return {
-                                isOptional: false,
-                                typeNode,
-                                typeNodeWithoutUndefined: typeNode,
-                            };
-                        },
-                    }),
-                _unknown: () => {
-                    throw new Error("Unknown ResponseErrorShape: " + error.shape.type);
-                },
-            }),
+            singleUnionType: getSingleUnionTypeGenerator({ error, errorDiscriminationStrategy, errorDeclaration }),
         });
 
-        this.error = error;
-        this.errors = errors;
+        this.errorDiscriminationStrategy = errorDiscriminationStrategy;
+        this.responseError = error;
+        this.errorDeclaration = errorDeclaration;
     }
 
     public getDocs(): string | null | undefined {
-        return this.error.docs;
+        return this.responseError.docs;
     }
 
     public getInterfaceName(): string {
-        return this.error.discriminantValue.pascalCase;
+        return this.errorDeclaration.discriminantValueV4.name.unsafeName.pascalCase;
     }
 
-    public getDiscriminantValue(): string {
-        return this.error.discriminantValue.wireValue;
+    public getDiscriminantValue(): string | number {
+        return ErrorDiscriminationStrategy._visit<string | number>(this.errorDiscriminationStrategy, {
+            property: () => this.errorDeclaration.discriminantValueV4.wireValue,
+            statusCode: () => this.errorDeclaration.statusCode,
+            _unknown: () => {
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+            },
+        });
     }
 
     public getBuilderName(): string {
-        return this.error.discriminantValue.camelCase;
+        return this.errorDeclaration.discriminantValueV4.name.unsafeName.camelCase;
     }
 
     public getVisitorKey(): string {
-        return this.error.discriminantValue.camelCase;
+        return this.errorDeclaration.discriminantValueV4.name.unsafeName.camelCase;
     }
+}
+
+const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
+
+function getSingleUnionTypeGenerator({
+    error,
+    errorDiscriminationStrategy,
+    errorDeclaration,
+}: {
+    error: ResponseError;
+    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    errorDeclaration: ErrorDeclaration;
+}): SingleUnionTypeGenerator<EndpointTypesContext> {
+    if (errorDeclaration.typeV2 == null) {
+        return new NoPropertiesSingleUnionTypeGenerator();
+    }
+
+    const propertyName = ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+        property: ({ contentProperty }) => contentProperty.name.unsafeName.camelCase,
+        statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
+        _unknown: () => {
+            throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+        },
+    });
+
+    return new SinglePropertySingleUnionTypeGenerator<EndpointTypesContext>({
+        propertyName,
+        getReferenceToPropertyType: (context) => {
+            const typeNode = context.error.getReferenceToError(error.error).getTypeNode();
+            return {
+                isOptional: false,
+                typeNode,
+                typeNodeWithoutUndefined: typeNode,
+            };
+        },
+    });
 }

@@ -1,4 +1,3 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import {
     FernWriters,
     getTextOfTsNode,
@@ -20,7 +19,7 @@ import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUn
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends WithBaseContextMixin> {
         typeName: string;
-        discriminant: WireStringWithAllCasings;
+        discriminant: string;
         docs: string | null | undefined;
         parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
         unknownSingleUnionType: ParsedSingleUnionType<Context>;
@@ -38,8 +37,8 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     public static readonly VISIT_UTIL_PROPERTY_NAME = "_visit";
 
     public readonly getReferenceToUnion: (context: Context) => Reference;
+    public readonly discriminant: string;
 
-    private discriminantWithAllCasings: WireStringWithAllCasings;
     private docs: string | null | undefined;
     private typeName: string;
     private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
@@ -54,7 +53,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         getReferenceToUnion,
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
-        this.discriminantWithAllCasings = discriminant;
+        this.discriminant = discriminant;
         this.docs = docs;
         this.typeName = typeName;
         this.parsedSingleUnionTypes = parsedSingleUnionTypes;
@@ -67,12 +66,33 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         this.writeConst(context);
     }
 
-    public get discriminant(): string {
-        return this.discriminantWithAllCasings.camelCase;
-    }
-
     public getReferenceTo(context: Context): ts.TypeNode {
         return this.getReferenceToUnion(context).getTypeNode();
+    }
+
+    public build({
+        discriminantValueToBuild,
+        builderArgument,
+        context,
+    }: {
+        discriminantValueToBuild: string | number;
+        builderArgument: ts.Expression | undefined;
+        context: Context;
+    }): ts.Expression {
+        const singleUnionType = this.parsedSingleUnionTypes.find(
+            (singleUnionType) => singleUnionType.getDiscriminantValue() === discriminantValueToBuild
+        );
+        if (singleUnionType == null) {
+            throw new Error(`No single union type exists for discriminant value "${discriminantValueToBuild}"`);
+        }
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                this.getReferenceToUnion(context).getExpression(),
+                singleUnionType.getBuilderName()
+            ),
+            undefined,
+            builderArgument != null ? [builderArgument] : []
+        );
     }
 
     public buildFromExistingValue({
@@ -80,7 +100,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         existingValue,
         context,
     }: {
-        discriminantValueToBuild: string;
+        discriminantValueToBuild: string | number;
         existingValue: ts.Expression;
         context: Context;
     }): ts.Expression {
@@ -90,7 +110,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         if (singleUnionType == null) {
             throw new Error(`No single union type exists for discriminant value "${discriminantValueToBuild}"`);
         }
-        return this.buildSingleUnionType({
+        return this.buildSingleUnionTypeFromExistingValue({
             existingValue,
             context,
             singleUnionType,
@@ -98,14 +118,14 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     }
 
     public buildUnknown({ existingValue, context }: { existingValue: ts.Expression; context: Context }): ts.Expression {
-        return this.buildSingleUnionType({
+        return this.buildSingleUnionTypeFromExistingValue({
             existingValue,
             context,
             singleUnionType: this.unknownSingleUnionType,
         });
     }
 
-    private buildSingleUnionType({
+    private buildSingleUnionTypeFromExistingValue({
         singleUnionType,
         context,
         existingValue,
@@ -334,9 +354,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
                                 ts.factory.createCaseBlock([
                                     ...this.parsedSingleUnionTypes.map((parsedSingleUnionType) =>
                                         ts.factory.createCaseClause(
-                                            ts.factory.createStringLiteral(
-                                                parsedSingleUnionType.getDiscriminantValue()
-                                            ),
+                                            parsedSingleUnionType.getDiscriminantValueAsExpression(),
                                             [
                                                 ts.factory.createReturnStatement(
                                                     parsedSingleUnionType.invokeVisitMethod({

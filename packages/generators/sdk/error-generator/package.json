@@ -25,7 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.347",
+    "@fern-fern/ir-model": "0.0.357",
     "@fern-typescript/sdk-declaration-handler": "workspace:*",
     "@fern-typescript/type-generator": "workspace:*"
   },

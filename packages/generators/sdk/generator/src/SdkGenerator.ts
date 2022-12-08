@@ -166,13 +166,18 @@ export class SdkGenerator {
         this.typeSchemaGenerator = new TypeSchemaGenerator();
         this.errorGenerator = new ErrorGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.errorSchemaGenerator = new ErrorSchemaGenerator();
-        this.endpointTypesGenerator = new EndpointTypesGenerator();
+        this.endpointTypesGenerator = new EndpointTypesGenerator({
+            errorResolver: this.errorResolver,
+            intermediateRepresentation,
+        });
         this.endpointTypeSchemasGenerator = new EndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
+            intermediateRepresentation,
         });
         this.environmentsGenerator = new EnvironmentsGenerator();
         this.serviceGenerator = new ServiceGenerator({
             intermediateRepresentation: this.intermediateRepresentation,
+            errorResolver: this.errorResolver,
         });
 
         this.generatePackage = async () => {

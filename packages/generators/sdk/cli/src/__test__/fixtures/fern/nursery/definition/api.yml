@@ -3,3 +3,6 @@ headers:
   X-API-Version:
     type: string
     name: apiVersion
+
+error-discrimination:
+  strategy: status-code

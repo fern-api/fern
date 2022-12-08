@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
@@ -8,7 +9,7 @@ export abstract class AbstractKnownSingleUnionType<Context extends WithBaseConte
     extends AbstractParsedSingleUnionType<Context>
     implements KnownSingleUnionType<Context>
 {
-    public abstract override getDiscriminantValue(): string;
+    public abstract override getDiscriminantValue(): string | number;
 
     protected getVariableWithoutVisitDeclaration({
         referenceToTypeWithoutVisit,
@@ -28,11 +29,22 @@ export abstract class AbstractKnownSingleUnionType<Context extends WithBaseConte
                     ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
                     ts.factory.createPropertyAssignment(
                         generatedUnion.discriminant,
-                        ts.factory.createStringLiteral(this.getDiscriminantValueOrThrow())
+                        this.getDiscriminantValueAsExpression()
                     ),
                 ],
                 true
             )
         );
+    }
+
+    public getDiscriminantValueAsExpression(): ts.Expression {
+        const discriminantValue = this.getDiscriminantValueOrThrow();
+        if (typeof discriminantValue === "string") {
+            return ts.factory.createStringLiteral(discriminantValue);
+        }
+        if (typeof discriminantValue === "number") {
+            return ts.factory.createNumericLiteral(discriminantValue);
+        }
+        assertNever(discriminantValue);
     }
 }
