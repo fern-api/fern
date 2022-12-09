@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/sdk-declaration-handler",
+  "name": "@fern-typescript/contexts",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/sdk/declaration-handler"
+    "directory": "packages/generators/sdk/contexts"
   },
   "files": [
     "lib"

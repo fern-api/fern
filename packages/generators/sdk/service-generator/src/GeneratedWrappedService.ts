@@ -1,6 +1,6 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { Reference, ServiceContext } from "@fern-typescript/sdk-declaration-handler";
+import { Reference, ServiceContext } from "@fern-typescript/contexts";
 import { ClassDeclaration, Scope, ts } from "ts-morph";
 import { GeneratedServiceImpl } from "./GeneratedServiceImpl";
 

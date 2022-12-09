@@ -2,9 +2,5 @@
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [
-    { "path": "../../../deprecated/commons" },
-    { "path": "../declaration-handler" },
-    { "path": "../union-generator" }
-  ]
+  "references": [{ "path": "../../../deprecated/commons" }, { "path": "../contexts" }, { "path": "../union-generator" }]
 }

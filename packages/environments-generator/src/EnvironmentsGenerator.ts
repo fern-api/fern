@@ -1,5 +1,5 @@
 import { Environment, EnvironmentId } from "@fern-fern/ir-model/environment";
-import { GeneratedEnvironments } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedEnvironments } from "@fern-typescript/contexts";
 import { GeneratedEnvironmentsImpl } from "./GeneratedEnvironmentsImpl";
 
 export declare namespace EnvironmentsGenerator {

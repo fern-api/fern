@@ -1,6 +1,6 @@
 import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/services/http";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export interface GeneratedEndpointRequest {

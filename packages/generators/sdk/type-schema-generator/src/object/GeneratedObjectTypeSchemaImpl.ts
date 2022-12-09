@@ -2,7 +2,7 @@ import { ObjectTypeDeclaration } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { GeneratedObjectTypeSchema, TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedObjectTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
@@ -22,7 +22,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
             this.shape.properties.map((property) => ({
                 key: {
                     raw: property.nameV2.wireValue,
-                    parsed: generatedType.getPropertyKey(property),
+                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.nameV2.wireValue }),
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType),
             }))

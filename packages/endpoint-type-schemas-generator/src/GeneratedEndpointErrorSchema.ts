@@ -1,5 +1,5 @@
 import { Zurg } from "@fern-typescript/commons-v2";
-import { EndpointTypeSchemasContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export interface GeneratedEndpointErrorSchema {

@@ -1,13 +1,8 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { Zurg } from "@fern-typescript/commons-v2";
+import { CoreUtilities, ErrorSchemaContextMixin, GeneratedErrorSchema, Reference } from "@fern-typescript/contexts";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import {
-    CoreUtilities,
-    ErrorSchemaContextMixin,
-    GeneratedErrorSchema,
-    Reference,
-} from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { ErrorDeclarationReferencer } from "../../declaration-referencers/ErrorDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";

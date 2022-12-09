@@ -1,12 +1,8 @@
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpPath, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEndpointTypes, GeneratedEndpointTypeSchemas, ServiceContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import {
-    GeneratedEndpointTypes,
-    GeneratedEndpointTypeSchemas,
-    ServiceContext,
-} from "@fern-typescript/sdk-declaration-handler";
 import {
     MethodDeclarationStructure,
     OptionalKind,

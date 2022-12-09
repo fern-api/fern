@@ -1,4 +1,4 @@
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

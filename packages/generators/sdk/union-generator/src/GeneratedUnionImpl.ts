@@ -5,7 +5,7 @@ import {
     maybeAddDocs,
     ObjectWriter,
 } from "@fern-typescript/commons";
-import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     OptionalKind,
@@ -20,7 +20,7 @@ export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends WithBaseContextMixin> {
         typeName: string;
         discriminant: string;
-        docs: string | null | undefined;
+        getDocs: ((context: Context) => string | null | undefined) | undefined;
         parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
         unknownSingleUnionType: ParsedSingleUnionType<Context>;
         getReferenceToUnion: (context: Context) => Reference;
@@ -39,7 +39,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     public readonly getReferenceToUnion: (context: Context) => Reference;
     public readonly discriminant: string;
 
-    private docs: string | null | undefined;
+    private getDocs: ((context: Context) => string | null | undefined) | undefined;
     private typeName: string;
     private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
     private unknownSingleUnionType: ParsedSingleUnionType<Context>;
@@ -47,14 +47,14 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     constructor({
         typeName,
         discriminant,
-        docs,
+        getDocs,
         parsedSingleUnionTypes,
         unknownSingleUnionType,
         getReferenceToUnion,
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
-        this.docs = docs;
+        this.getDocs = getDocs;
         this.typeName = typeName;
         this.parsedSingleUnionTypes = parsedSingleUnionTypes;
         this.unknownSingleUnionType = unknownSingleUnionType;
@@ -159,7 +159,9 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
             ),
             isExported: true,
         });
-        maybeAddDocs(typeAlias, this.docs);
+        if (this.getDocs != null) {
+            maybeAddDocs(typeAlias, this.getDocs(context));
+        }
     }
 
     public getReferenceToSingleUnionType(

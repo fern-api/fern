@@ -1,10 +1,6 @@
 import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons-v2";
-import {
-    GeneratedUnionType,
-    GeneratedUnionTypeSchema,
-    TypeSchemaContext,
-} from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedUnionType, GeneratedUnionTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
 import {
     GeneratedUnionSchema,
     RawNoPropertiesSingleUnionType,

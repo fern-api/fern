@@ -5,6 +5,6 @@
   "references": [
     { "path": "../../../commons-v2" },
     { "path": "../../../deprecated/commons" },
-    { "path": "../declaration-handler" }
+    { "path": "../contexts" }
   ]
 }

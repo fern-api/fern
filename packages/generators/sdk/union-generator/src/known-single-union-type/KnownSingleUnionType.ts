@@ -1,4 +1,4 @@
-import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { ParsedSingleUnionType } from "../parsed-single-union-type/ParsedSingleUnionType";
 

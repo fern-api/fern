@@ -1,7 +1,7 @@
 import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ErrorContextMixin, GeneratedError, Reference } from "@fern-typescript/contexts";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ErrorContextMixin, GeneratedError, Reference } from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { ErrorDeclarationReferencer } from "../../declaration-referencers/ErrorDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";

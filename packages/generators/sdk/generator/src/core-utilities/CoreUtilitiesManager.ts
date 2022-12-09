@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CoreUtilities } from "@fern-typescript/sdk-declaration-handler";
+import { CoreUtilities } from "@fern-typescript/contexts";
 import { cp, rm } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";

@@ -1,7 +1,7 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { EndpointTypeSchemasContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

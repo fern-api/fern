@@ -33,7 +33,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.46",
     "@fern-fern/ir-model": "0.0.357",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/sdk-declaration-handler": "workspace:*",
+    "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",
     "execa": "^5.1.1",
     "lodash-es": "^4.17.21",

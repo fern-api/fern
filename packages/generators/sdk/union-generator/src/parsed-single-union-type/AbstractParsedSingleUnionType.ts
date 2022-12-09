@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";

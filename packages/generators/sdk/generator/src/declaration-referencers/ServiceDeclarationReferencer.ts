@@ -1,5 +1,5 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { Reference } from "@fern-typescript/sdk-declaration-handler";
+import { Reference } from "@fern-typescript/contexts";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { AbstractServiceDeclarationReferencer } from "./AbstractServiceDeclarationReferencer";

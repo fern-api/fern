@@ -1,4 +1,4 @@
-import { WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { WithBaseContextMixin } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 

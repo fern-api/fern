@@ -28,8 +28,8 @@
     "@fern-fern/ir-model": "0.0.357",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
+    "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
-    "@fern-typescript/sdk-declaration-handler": "workspace:*",
     "ts-morph": "^15.1.0",
     "url-join": "4.0.1"
   },

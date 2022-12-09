@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { GeneratedEndpointTypeSchemas } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedEndpointTypeSchemasImpl } from "./GeneratedEndpointTypeSchemasImpl";
 
 export declare namespace EndpointTypeSchemasGenerator {

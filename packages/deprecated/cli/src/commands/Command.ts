@@ -1,6 +1,6 @@
 import { Values } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratorContext } from "@fern-typescript/contexts";
 import { Volume } from "memfs/lib/volume";
 import { NpmPackage } from "./constructNpmPackageForCommand";
 

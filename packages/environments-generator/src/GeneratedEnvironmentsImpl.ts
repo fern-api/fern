@@ -1,6 +1,6 @@
 import { Environment, EnvironmentId } from "@fern-fern/ir-model/environment";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/sdk-declaration-handler";
+import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedEnvironmentsImpl {

@@ -1,12 +1,18 @@
-import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    DeclaredTypeName,
+    ExampleTypeReference,
+    ResolvedTypeReference,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
+import { GeneratedType, GeneratedTypeReferenceExample, Reference, TypeContextMixin } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
-import { GeneratedType, Reference, TypeContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToStringExpressionConverter,
 } from "@fern-typescript/type-reference-converters";
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
@@ -18,6 +24,7 @@ export declare namespace TypeContextMixinImpl {
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
+        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     }
 }
 
@@ -29,6 +36,7 @@ export class TypeContextMixinImpl implements TypeContextMixin {
     private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
     private typeResolver: TypeResolver;
     private typeGenerator: TypeGenerator;
+    private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
 
     constructor({
         sourceFile,
@@ -36,12 +44,14 @@ export class TypeContextMixinImpl implements TypeContextMixin {
         typeResolver,
         typeDeclarationReferencer,
         typeGenerator,
+        typeReferenceExampleGenerator,
     }: TypeContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeGenerator = typeGenerator;
+        this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
@@ -79,6 +89,7 @@ export class TypeContextMixinImpl implements TypeContextMixin {
             shape: typeDeclaration.shape,
             docs: typeDeclaration.docs ?? undefined,
             typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+            examples: typeDeclaration.examples,
             fernFilepath: typeDeclaration.name.fernFilepathV2,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
         });
@@ -86,5 +97,9 @@ export class TypeContextMixinImpl implements TypeContextMixin {
 
     public stringify(valueToStringify: ts.Expression, valueType: TypeReference): ts.Expression {
         return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify).expression;
+    }
+
+    public getGeneratedExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {
+        return this.typeReferenceExampleGenerator.generateExample(example);
     }
 }

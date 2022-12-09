@@ -27,7 +27,7 @@
   "dependencies": {
     "@fern-fern/ir-model": "0.0.357",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/sdk-declaration-handler": "workspace:*",
+    "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/union-generator": "workspace:*",
     "ts-morph": "^15.1.0"
   },

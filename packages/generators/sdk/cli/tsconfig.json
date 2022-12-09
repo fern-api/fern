@@ -3,9 +3,5 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    { "path": "../../../deprecated/commons" },
-    { "path": "../declaration-handler" },
-    { "path": "../generator" }
-  ]
+  "references": [{ "path": "../../../deprecated/commons" }, { "path": "../contexts" }, { "path": "../generator" }]
 }

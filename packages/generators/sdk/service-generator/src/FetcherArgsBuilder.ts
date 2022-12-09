@@ -1,5 +1,5 @@
 import { HttpMethod } from "@fern-fern/ir-model/services/http";
-import { Fetcher } from "@fern-typescript/sdk-declaration-handler";
+import { Fetcher } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export interface GeneratedQueryParameter {

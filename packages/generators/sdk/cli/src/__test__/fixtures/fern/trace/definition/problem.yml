@@ -25,10 +25,20 @@ types:
       html: string
       variable: commons.VariableValue
       testCaseId: string
+    examples:
+      - type: html
+        value: "<div>hello world</div>"
+      - type: testCaseId
+        value: test-case-id-1
   ProblemFiles:
     properties:
       solutionFile: commons.FileInfo
       readOnlyFiles: list<commons.FileInfo>
+    examples:
+      - solutionFile:
+          filename: "hello.txt"
+          contents: "I'm some file content"
+        readOnlyFiles: []
   VariableTypeAndName:
     properties:
       variableType: commons.VariableType

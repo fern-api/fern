@@ -3,7 +3,7 @@ import { TypeReference } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { EndpointTypeSchemasContext, Reference } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypeSchemasContext, Reference } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedEndpointTypeSchema {

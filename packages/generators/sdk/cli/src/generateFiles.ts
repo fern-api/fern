@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratorContext } from "@fern-typescript/contexts";
 import { PackageJsonScript, SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";

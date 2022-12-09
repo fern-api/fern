@@ -1,9 +1,5 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import {
-    ErrorSchemaContext,
-    GeneratedErrorSchema,
-    GeneratedTypeSchema,
-} from "@fern-typescript/sdk-declaration-handler";
+import { ErrorSchemaContext, GeneratedErrorSchema, GeneratedTypeSchema } from "@fern-typescript/contexts";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { ts } from "ts-morph";
 

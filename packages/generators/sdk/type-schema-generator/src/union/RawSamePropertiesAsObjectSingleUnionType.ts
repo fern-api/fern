@@ -1,6 +1,6 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { WithTypeSchemaContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { WithTypeSchemaContextMixin } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

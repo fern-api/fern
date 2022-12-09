@@ -14,7 +14,7 @@ import {
     GeneratedUnionTypeSchema,
     Reference,
     TypeSchemaContext,
-} from "@fern-typescript/sdk-declaration-handler";
+} from "@fern-typescript/contexts";
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
 import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";
 import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchemaImpl";

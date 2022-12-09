@@ -4,7 +4,7 @@
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../generators/sdk/declaration-handler" },
+    { "path": "../../generators/sdk/contexts" },
     { "path": "../../testing-utils" },
     { "path": "../client" },
     { "path": "../commons" },

@@ -1,6 +1,6 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { EnvironmentsContext } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
-import { EnvironmentsContext } from "@fern-typescript/sdk-declaration-handler";
 import { EnvironmentEnumDeclarationReferencer } from "../declaration-referencers/EnvironmentEnumDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { EnvironmentsContextMixinImpl } from "./mixins/EnvironmentsContextMixinImpl";

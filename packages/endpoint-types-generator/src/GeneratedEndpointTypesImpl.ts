@@ -2,8 +2,8 @@ import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpHeader, HttpService, QueryParameter } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
+import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
@@ -44,7 +44,7 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
         this.errorUnion = new GeneratedUnionImpl<EndpointTypesContext>({
             typeName: GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME,
             discriminant: this.getErrorUnionDiscriminant(errorDiscriminationStrategy),
-            docs: undefined,
+            getDocs: undefined,
             parsedSingleUnionTypes: endpoint.errors.map(
                 (error) => new ParsedSingleUnionTypeForError({ error, errorResolver, errorDiscriminationStrategy })
             ),

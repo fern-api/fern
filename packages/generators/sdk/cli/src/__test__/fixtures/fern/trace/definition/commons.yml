@@ -1,5 +1,8 @@
 types:
-  UserId: string
+  UserId:
+    type: string
+    examples:
+      - user12345
   ProblemId: string
   NodeId: string
   VariableType:
@@ -128,3 +131,12 @@ types:
       - JAVA
       - JAVASCRIPT
       - PYTHON
+    examples:
+      - JAVA
+
+  RandomUnknownType:
+    type: unknown
+    examples:
+      - foo: hello
+        bar:
+          yo: 123

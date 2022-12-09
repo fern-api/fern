@@ -1,7 +1,7 @@
 import { HttpHeader, PathParameter, QueryParameter } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { AbstractEndpointRequest } from "./AbstractEndpointRequest";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";

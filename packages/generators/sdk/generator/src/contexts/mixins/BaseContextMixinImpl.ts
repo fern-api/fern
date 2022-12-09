@@ -1,5 +1,5 @@
 import { Constants } from "@fern-fern/ir-model/constants";
-import { BaseContextMixin, CoreUtilities, ExternalDependencies } from "@fern-typescript/sdk-declaration-handler";
+import { BaseContextMixin, CoreUtilities, ExternalDependencies } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 import { CoreUtilitiesManager } from "../../core-utilities/CoreUtilitiesManager";
 import { DependencyManager } from "../../dependency-manager/DependencyManager";

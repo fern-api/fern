@@ -2,7 +2,7 @@ import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 

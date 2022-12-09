@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Fetcher } from "@fern-typescript/sdk-declaration-handler";
+import { Fetcher } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";

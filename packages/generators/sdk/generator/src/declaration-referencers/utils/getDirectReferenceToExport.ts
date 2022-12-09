@@ -1,4 +1,4 @@
-import { Reference } from "@fern-typescript/sdk-declaration-handler";
+import { GetReferenceOpts, Reference } from "@fern-typescript/contexts";
 import { SourceFile, ts } from "ts-morph";
 import { convertExportedFilePathToFilePath, ExportedFilePath } from "../../exports-manager/ExportedFilePath";
 import { ImportsManager } from "../../imports-manager/ImportsManager";
@@ -46,16 +46,22 @@ export function getDirectReferenceToExport({
     );
 
     return {
-        getTypeNode: () => {
-            addImport();
+        getTypeNode: ({ isForComment = false }: GetReferenceOpts = {}) => {
+            if (!isForComment) {
+                addImport();
+            }
             return ts.factory.createTypeReferenceNode(entityName);
         },
-        getEntityName: () => {
-            addImport();
+        getEntityName: ({ isForComment = false }: GetReferenceOpts = {}) => {
+            if (!isForComment) {
+                addImport();
+            }
             return entityName;
         },
-        getExpression: () => {
-            addImport();
+        getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
+            if (!isForComment) {
+                addImport();
+            }
             return ts.factory.createIdentifier(importedName);
         },
     };

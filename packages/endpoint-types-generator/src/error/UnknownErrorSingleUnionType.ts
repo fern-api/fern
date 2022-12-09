@@ -1,4 +1,4 @@
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { AbstractUnknownSingleUnionType } from "@fern-typescript/union-generator";
 
 export class UnknownErrorSingleUnionType extends AbstractUnknownSingleUnionType<EndpointTypesContext> {

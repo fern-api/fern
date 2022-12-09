@@ -6,4 +6,5 @@ export { type ErrorSchemaContext } from "./ErrorSchemaContext";
 export * from "./mixins";
 export { type ServiceContext } from "./ServiceContext";
 export { type TypeContext } from "./TypeContext";
+export { type TypeReferenceExampleContext } from "./TypeReferenceExampleContext";
 export { type TypeSchemaContext } from "./TypeSchemaContext";

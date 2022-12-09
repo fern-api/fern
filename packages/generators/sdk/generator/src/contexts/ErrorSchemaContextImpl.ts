@@ -1,8 +1,9 @@
+import { ErrorSchemaContext } from "@fern-typescript/contexts";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { ErrorSchemaContext } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
@@ -19,6 +20,7 @@ export declare namespace ErrorSchemaContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
+        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorDeclarationReferencer: ErrorDeclarationReferencer;
         errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
         errorSchemaGenerator: ErrorSchemaGenerator;
@@ -39,6 +41,7 @@ export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSche
         typeDeclarationReferencer,
         typeSchemaDeclarationReferencer,
         typeSchemaGenerator,
+        typeReferenceExampleGenerator,
         errorDeclarationReferencer,
         errorSchemaDeclarationReferencer,
         errorSchemaGenerator,
@@ -53,6 +56,7 @@ export class ErrorSchemaContextImpl extends BaseContextImpl implements ErrorSche
             typeResolver,
             typeDeclarationReferencer,
             typeGenerator,
+            typeReferenceExampleGenerator,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,

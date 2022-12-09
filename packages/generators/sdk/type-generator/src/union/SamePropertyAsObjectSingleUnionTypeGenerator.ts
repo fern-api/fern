@@ -1,5 +1,5 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
-import { TypeContext } from "@fern-typescript/sdk-declaration-handler";
+import { TypeContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

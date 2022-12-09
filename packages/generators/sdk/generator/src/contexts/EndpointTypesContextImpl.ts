@@ -1,8 +1,9 @@
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
@@ -16,6 +17,7 @@ export declare namespace EndpointTypesContextImpl {
         typeResolver: TypeResolver;
         typeGenerator: TypeGenerator;
         typeDeclarationReferencer: TypeDeclarationReferencer;
+        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorResolver: ErrorResolver;
         errorGenerator: ErrorGenerator;
         errorDeclarationReferencer: ErrorDeclarationReferencer;
@@ -34,6 +36,7 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
         typeResolver,
         typeGenerator,
         typeDeclarationReferencer,
+        typeReferenceExampleGenerator,
         errorGenerator,
         errorResolver,
         errorDeclarationReferencer,
@@ -49,6 +52,7 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
             typeResolver,
             typeDeclarationReferencer,
             typeGenerator,
+            typeReferenceExampleGenerator,
         });
         this.error = new ErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,

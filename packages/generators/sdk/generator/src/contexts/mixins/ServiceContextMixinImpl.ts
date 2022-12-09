@@ -1,6 +1,6 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { GeneratedService, Reference, ServiceContextMixin } from "@fern-typescript/contexts";
 import { ServiceResolver } from "@fern-typescript/resolvers";
-import { GeneratedService, Reference, ServiceContextMixin } from "@fern-typescript/sdk-declaration-handler";
 import { ServiceGenerator } from "@fern-typescript/service-generator";
 import { SourceFile } from "ts-morph";
 import { ServiceDeclarationReferencer } from "../../declaration-referencers/ServiceDeclarationReferencer";

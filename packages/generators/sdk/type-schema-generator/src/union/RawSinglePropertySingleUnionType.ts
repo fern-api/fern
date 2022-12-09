@@ -1,7 +1,7 @@
 import { SingleUnionTypeProperty } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
-import { GeneratedType, WithTypeSchemaContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedType, WithTypeSchemaContextMixin } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

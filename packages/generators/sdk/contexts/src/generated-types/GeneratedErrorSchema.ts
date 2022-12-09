@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 import { ErrorSchemaContext } from "../contexts/ErrorSchemaContext";
-import { BaseGenerated } from "./BaseGenerated";
+import { GeneratedFile } from "./BaseGenerated";
 
-export interface GeneratedErrorSchema extends BaseGenerated<ErrorSchemaContext> {
+export interface GeneratedErrorSchema extends GeneratedFile<ErrorSchemaContext> {
     getReferenceToRawShape: (context: ErrorSchemaContext) => ts.TypeNode;
 }

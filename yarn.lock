@@ -1947,7 +1947,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2070,6 +2070,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/contexts@workspace:*, @fern-typescript/contexts@workspace:packages/generators/sdk/contexts":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/contexts@workspace:packages/generators/sdk/contexts"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/logger": 0.0.248-7-gb4189be0
+    "@fern-fern/ir-model": 0.0.357
+    "@fern-typescript/commons-v2": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/endpoint-type-schemas-generator@workspace:*, @fern-typescript/endpoint-type-schemas-generator@workspace:packages/endpoint-type-schemas-generator":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/endpoint-type-schemas-generator@workspace:packages/endpoint-type-schemas-generator"
@@ -2081,8 +2102,8 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/union-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2105,8 +2126,8 @@ __metadata:
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/union-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2128,7 +2149,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2148,7 +2169,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.357
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/type-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2168,7 +2189,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.357
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/type-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2290,27 +2311,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-declaration-handler@workspace:*, @fern-typescript/sdk-declaration-handler@workspace:packages/generators/sdk/declaration-handler":
-  version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-declaration-handler@workspace:packages/generators/sdk/declaration-handler"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-api/logger": 0.0.248-7-gb4189be0
-    "@fern-fern/ir-model": 0.0.357
-    "@fern-typescript/commons-v2": "workspace:*"
-    "@types/jest": ^28.1.6
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.3
-    eslint: ^8.23.1
-    jest: ^28.1.3
-    prettier: ^2.7.1
-    ts-morph: ^15.1.0
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
 "@fern-typescript/sdk-generator-cli@workspace:packages/generators/sdk/cli":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-generator-cli@workspace:packages/generators/sdk/cli"
@@ -2324,7 +2324,7 @@ __metadata:
     "@fern-fern/generator-exec-sdk": ^0.0.46
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/sdk-generator": "workspace:*"
     "@ts-morph/common": ^0.16.0
     "@types/decompress": ^4.2.4
@@ -2367,16 +2367,17 @@ __metadata:
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/endpoint-type-schemas-generator": "workspace:*"
     "@fern-typescript/endpoint-types-generator": "workspace:*"
     "@fern-typescript/environments-generator": "workspace:*"
     "@fern-typescript/error-generator": "workspace:*"
     "@fern-typescript/error-schema-generator": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/service-generator": "workspace:*"
     "@fern-typescript/type-generator": "workspace:*"
     "@fern-typescript/type-reference-converters": "workspace:*"
+    "@fern-typescript/type-reference-example-generator": "workspace:*"
     "@fern-typescript/type-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2430,8 +2431,8 @@ __metadata:
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     "@types/url-join": 4.0.1
@@ -2521,7 +2522,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/commons": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/union-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2555,6 +2556,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/type-reference-example-generator@workspace:*, @fern-typescript/type-reference-example-generator@workspace:packages/generators/sdk/type-reference-example-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/type-reference-example-generator@workspace:packages/generators/sdk/type-reference-example-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.357
+    "@fern-typescript/contexts": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/type-schema-generator@workspace:*, @fern-typescript/type-schema-generator@workspace:packages/generators/sdk/type-schema-generator":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-schema-generator@workspace:packages/generators/sdk/type-schema-generator"
@@ -2566,7 +2587,7 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/union-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2612,7 +2633,7 @@ __metadata:
     "@fern-api/core-utils": 0.0.248-7-gb4189be0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2635,7 +2656,7 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5946,8 +5967,8 @@ __metadata:
     "@fern-fern/ir-model": 0.0.357
     "@fern-typescript/client": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/model": "workspace:*"
-    "@fern-typescript/sdk-declaration-handler": "workspace:*"
     "@fern-typescript/server": "workspace:*"
     "@fern-typescript/testing-utils": "workspace:*"
     "@ts-morph/common": ^0.16.0

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Reference } from "@fern-typescript/sdk-declaration-handler";
+import { Reference } from "@fern-typescript/contexts";
 import { ExportedDirectory, ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 import { getDirectReferenceToExport } from "./utils/getDirectReferenceToExport";

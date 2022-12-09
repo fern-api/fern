@@ -6,7 +6,7 @@
     { "path": "../abstract-schema-generator" },
     { "path": "../commons-v2" },
     { "path": "../deprecated/commons" },
-    { "path": "../generators/sdk/declaration-handler" },
+    { "path": "../generators/sdk/contexts" },
     { "path": "../generators/sdk/union-schema-generator" },
     { "path": "../resolvers" }
   ]

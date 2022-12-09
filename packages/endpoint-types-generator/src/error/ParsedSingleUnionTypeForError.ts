@@ -1,8 +1,8 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { ResponseError } from "@fern-fern/ir-model/services/commons";
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
 import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,

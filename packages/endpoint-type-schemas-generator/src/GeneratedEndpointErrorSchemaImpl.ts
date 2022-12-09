@@ -1,11 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { Zurg } from "@fern-typescript/commons-v2";
+import { EndpointTypeSchemasContext, EndpointTypesContext, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import {
-    EndpointTypeSchemasContext,
-    EndpointTypesContext,
-    GeneratedUnion,
-} from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ts } from "ts-morph";
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";

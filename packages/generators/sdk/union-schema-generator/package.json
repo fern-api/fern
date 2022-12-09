@@ -29,7 +29,7 @@
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
-    "@fern-typescript/sdk-declaration-handler": "workspace:*",
+    "@fern-typescript/contexts": "workspace:*",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

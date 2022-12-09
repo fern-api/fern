@@ -1,11 +1,7 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { EndpointTypeSchemasContextMixin, GeneratedEndpointTypeSchemas, Reference } from "@fern-typescript/contexts";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
-import {
-    EndpointTypeSchemasContextMixin,
-    GeneratedEndpointTypeSchemas,
-    Reference,
-} from "@fern-typescript/sdk-declaration-handler";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { ImportsManager } from "../../imports-manager/ImportsManager";

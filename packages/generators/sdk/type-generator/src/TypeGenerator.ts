@@ -2,6 +2,7 @@ import { FernFilepathV2 } from "@fern-fern/ir-model/commons";
 import {
     AliasTypeDeclaration,
     EnumTypeDeclaration,
+    ExampleType,
     ObjectTypeDeclaration,
     PrimitiveType,
     Type,
@@ -15,7 +16,7 @@ import {
     GeneratedUnionType,
     Reference,
     TypeContext,
-} from "@fern-typescript/sdk-declaration-handler";
+} from "@fern-typescript/contexts";
 import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
 import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
 import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";
@@ -31,6 +32,7 @@ export declare namespace TypeGenerator {
         export interface Args<Context> {
             typeName: string;
             shape: Type;
+            examples: ExampleType[];
             docs: string | undefined;
             fernFilepath: FernFilepathV2;
             getReferenceToSelf: (context: Context) => Reference;
@@ -47,16 +49,18 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
 
     public generateType({
         shape,
+        examples,
         typeName,
         docs,
         fernFilepath,
         getReferenceToSelf,
     }: TypeGenerator.generateType.Args<Context>): GeneratedType<Context> {
         return Type._visit<GeneratedType<Context>>(shape, {
-            union: (shape) => this.generateUnion({ typeName, shape, docs, fernFilepath, getReferenceToSelf }),
-            object: (shape) => this.generateObject({ typeName, shape, docs, fernFilepath, getReferenceToSelf }),
-            enum: (shape) => this.generateEnum({ typeName, shape, docs, fernFilepath, getReferenceToSelf }),
-            alias: (shape) => this.generateAlias({ typeName, shape, docs, fernFilepath, getReferenceToSelf }),
+            union: (shape) => this.generateUnion({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
+            object: (shape) =>
+                this.generateObject({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
+            enum: (shape) => this.generateEnum({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
+            alias: (shape) => this.generateAlias({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
             _unknown: () => {
                 throw new Error("Unknown type declaration shape: " + shape._type);
             },
@@ -66,60 +70,68 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
     public generateUnion({
         typeName,
         shape,
+        examples,
         docs,
         fernFilepath,
         getReferenceToSelf,
     }: {
         typeName: string;
         shape: UnionTypeDeclaration;
+        examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepathV2;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedUnionType<Context> {
-        return new GeneratedUnionTypeImpl({ typeName, shape, docs, fernFilepath, getReferenceToSelf });
+        return new GeneratedUnionTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
     }
 
     public generateObject({
         typeName,
         shape,
+        examples,
         docs,
         fernFilepath,
         getReferenceToSelf,
     }: {
         typeName: string;
         shape: ObjectTypeDeclaration;
+        examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepathV2;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedObjectType<Context> {
-        return new GeneratedObjectTypeImpl({ typeName, shape, docs, fernFilepath, getReferenceToSelf });
+        return new GeneratedObjectTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
     }
 
     public generateEnum({
         typeName,
         shape,
+        examples,
         docs,
         fernFilepath,
         getReferenceToSelf,
     }: {
         typeName: string;
         shape: EnumTypeDeclaration;
+        examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepathV2;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedEnumType<Context> {
-        return new GeneratedEnumTypeImpl({ typeName, shape, docs, fernFilepath, getReferenceToSelf });
+        return new GeneratedEnumTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
     }
 
     public generateAlias({
         typeName,
         shape,
+        examples,
         docs,
         fernFilepath,
         getReferenceToSelf,
     }: {
         typeName: string;
         shape: AliasTypeDeclaration;
+        examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepathV2;
         getReferenceToSelf: (context: Context) => Reference;
@@ -130,10 +142,11 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
             ? new GeneratedBrandedStringAliasImpl({
                   typeName,
                   shape,
+                  examples,
                   docs,
                   fernFilepath,
                   getReferenceToSelf,
               })
-            : new GeneratedAliasTypeImpl({ typeName, shape, docs, fernFilepath, getReferenceToSelf });
+            : new GeneratedAliasTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
     }
 }

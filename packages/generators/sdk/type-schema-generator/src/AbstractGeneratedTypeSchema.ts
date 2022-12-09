@@ -1,5 +1,5 @@
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { GeneratedType, Reference, WithBaseContextMixin } from "@fern-typescript/sdk-declaration-handler";
+import { GeneratedType, Reference, WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedTypeSchema {

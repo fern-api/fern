@@ -1,5 +1,5 @@
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
-import { EndpointTypesContext } from "@fern-typescript/sdk-declaration-handler";
+import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractEndpointRequest } from "./AbstractEndpointRequest";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";

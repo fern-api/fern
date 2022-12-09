@@ -1,7 +1,7 @@
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/sdk-declaration-handler";
 import { ts } from "ts-morph";
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";

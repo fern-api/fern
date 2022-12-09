@@ -1,6 +1,7 @@
+import { TypeSchemaContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
-import { TypeSchemaContext } from "@fern-typescript/sdk-declaration-handler";
 import { TypeGenerator } from "@fern-typescript/type-generator";
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
@@ -14,6 +15,7 @@ export declare namespace TypeSchemaContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
+        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     }
 }
 
@@ -27,6 +29,7 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
         typeSchemaDeclarationReferencer,
         typeSchemaGenerator,
         typeGenerator,
+        typeReferenceExampleGenerator,
         ...superInit
     }: TypeSchemaContextImpl.Init) {
         super(superInit);
@@ -36,6 +39,7 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
             typeResolver,
             typeGenerator,
             typeDeclarationReferencer,
+            typeReferenceExampleGenerator,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,

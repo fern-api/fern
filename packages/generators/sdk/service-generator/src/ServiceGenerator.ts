@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { AugmentedService } from "@fern-typescript/commons-v2";
+import { GeneratedService } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { GeneratedService } from "@fern-typescript/sdk-declaration-handler";
 import { GeneratedServiceImpl } from "./GeneratedServiceImpl";
 
 export declare namespace ServiceGenerator {

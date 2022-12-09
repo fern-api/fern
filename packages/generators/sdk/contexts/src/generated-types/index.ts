@@ -1,4 +1,4 @@
-export { type BaseGenerated } from "./BaseGenerated";
+export { type GeneratedFile } from "./BaseGenerated";
 export {
     type BrandedGeneratedAliasType,
     type GeneratedAliasType,
@@ -16,6 +16,7 @@ export { type GeneratedObjectType } from "./GeneratedObjectType";
 export { type GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
 export { type GeneratedService } from "./GeneratedService";
 export { type GeneratedType } from "./GeneratedType";
+export { type GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
 export { type GeneratedTypeSchema } from "./GeneratedTypeSchema";
 export { type GeneratedUnion } from "./GeneratedUnion";
 export { type GeneratedUnionType } from "./GeneratedUnionType";
