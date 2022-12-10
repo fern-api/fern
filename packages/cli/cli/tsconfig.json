@@ -14,11 +14,11 @@
     { "path": "../generation/remote-generation/remote-workspace-runner" },
     { "path": "../init" },
     { "path": "../logger" },
-    { "path": "../migrations" },
     { "path": "../project-loader" },
     { "path": "../semver-utils" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
-    { "path": "../yaml/validator" }
+    { "path": "../yaml/validator" },
+    { "path": "../yaml/yaml-migrations" }
   ]
 }
