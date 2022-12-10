@@ -50,7 +50,7 @@ class BasicCustomFiles(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._RootValidator]] = []
         _method_name_pre_validators: typing.ClassVar[
             typing.List[BasicCustomFiles.Validators.PreMethodNameValidator]
@@ -71,13 +71,25 @@ class BasicCustomFiles(pydantic.BaseModel):
             typing.List[BasicCustomFiles.Validators.BasicTestCaseTemplateValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[BasicCustomFiles.Validators._RootValidator], BasicCustomFiles.Validators._RootValidator]:
-            def decorator(
-                validator: BasicCustomFiles.Validators._RootValidator,
-            ) -> BasicCustomFiles.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BasicCustomFiles.Validators._PreRootValidator], BasicCustomFiles.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -231,6 +243,10 @@ class BasicCustomFiles(pydantic.BaseModel):
 
         class BasicTestCaseTemplateValidator(typing_extensions.Protocol):
             def __call__(self, __v: BasicTestCaseTemplate, __values: BasicCustomFiles.Partial) -> BasicTestCaseTemplate:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

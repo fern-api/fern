@@ -49,7 +49,7 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GetSubmissionStateResponse.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[GetSubmissionStateResponse.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetSubmissionStateResponse.Validators._RootValidator]] = []
         _time_submitted_pre_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.PreTimeSubmittedValidator]
@@ -76,15 +76,28 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
             typing.List[GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators._RootValidator], GetSubmissionStateResponse.Validators._RootValidator
         ]:
-            def decorator(
-                validator: GetSubmissionStateResponse.Validators._RootValidator,
-            ) -> GetSubmissionStateResponse.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetSubmissionStateResponse.Validators._PreRootValidator],
+            GetSubmissionStateResponse.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -240,6 +253,10 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
             def __call__(
                 self, __v: SubmissionTypeState, __values: GetSubmissionStateResponse.Partial
             ) -> SubmissionTypeState:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

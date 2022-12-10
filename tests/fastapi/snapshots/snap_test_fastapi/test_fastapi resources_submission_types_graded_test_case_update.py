@@ -36,7 +36,7 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators._RootValidator]] = []
         _test_case_id_pre_validators: typing.ClassVar[
             typing.List[GradedTestCaseUpdate.Validators.PreTestCaseIdValidator]
@@ -47,15 +47,27 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
         _grade_pre_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators.PreGradeValidator]] = []
         _grade_post_validators: typing.ClassVar[typing.List[GradedTestCaseUpdate.Validators.GradeValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GradedTestCaseUpdate.Validators._RootValidator], GradedTestCaseUpdate.Validators._RootValidator
         ]:
-            def decorator(
-                validator: GradedTestCaseUpdate.Validators._RootValidator,
-            ) -> GradedTestCaseUpdate.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GradedTestCaseUpdate.Validators._PreRootValidator], GradedTestCaseUpdate.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -132,6 +144,10 @@ class GradedTestCaseUpdate(pydantic.BaseModel):
 
         class GradeValidator(typing_extensions.Protocol):
             def __call__(self, __v: TestCaseGrade, __values: GradedTestCaseUpdate.Partial) -> TestCaseGrade:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

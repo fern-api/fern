@@ -39,7 +39,7 @@ class ExceptionInfo(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators._RootValidator]] = []
         _exception_type_pre_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.PreExceptionTypeValidator]
@@ -60,13 +60,23 @@ class ExceptionInfo(pydantic.BaseModel):
             typing.List[ExceptionInfo.Validators.ExceptionStacktraceValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ExceptionInfo.Validators._RootValidator], ExceptionInfo.Validators._RootValidator]:
-            def decorator(
-                validator: ExceptionInfo.Validators._RootValidator,
-            ) -> ExceptionInfo.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[ExceptionInfo.Validators._PreRootValidator], ExceptionInfo.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -185,6 +195,10 @@ class ExceptionInfo(pydantic.BaseModel):
 
         class ExceptionStacktraceValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: ExceptionInfo.Partial) -> str:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

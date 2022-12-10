@@ -41,7 +41,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         """
 
         _pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator]
+            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators._PreRootValidator]
         ] = []
         _post_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator]
@@ -59,16 +59,29 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator],
             VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator,
-            ) -> VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionDefinitionThatTakesActualResult.Validators._PreRootValidator],
+            VoidFunctionDefinitionThatTakesActualResult.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -161,6 +174,10 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
                 __v: FunctionImplementationForMultipleLanguages,
                 __values: VoidFunctionDefinitionThatTakesActualResult.Partial,
             ) -> FunctionImplementationForMultipleLanguages:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

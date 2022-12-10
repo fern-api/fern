@@ -33,7 +33,7 @@ class GenericValue(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GenericValue.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[GenericValue.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GenericValue.Validators._RootValidator]] = []
         _stringified_type_pre_validators: typing.ClassVar[
             typing.List[GenericValue.Validators.PreStringifiedTypeValidator]
@@ -48,11 +48,23 @@ class GenericValue(pydantic.BaseModel):
             typing.List[GenericValue.Validators.StringifiedValueValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[GenericValue.Validators._RootValidator], GenericValue.Validators._RootValidator]:
-            def decorator(validator: GenericValue.Validators._RootValidator) -> GenericValue.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[GenericValue.Validators._PreRootValidator], GenericValue.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -134,6 +146,10 @@ class GenericValue(pydantic.BaseModel):
 
         class StringifiedValueValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: GenericValue.Partial) -> str:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

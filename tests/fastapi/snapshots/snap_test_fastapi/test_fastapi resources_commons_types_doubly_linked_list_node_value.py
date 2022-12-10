@@ -47,7 +47,7 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators._RootValidator]] = []
         _node_id_pre_validators: typing.ClassVar[
             typing.List[DoublyLinkedListNodeValue.Validators.PreNodeIdValidator]
@@ -62,15 +62,28 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         _prev_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PrePrevValidator]] = []
         _prev_post_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PrevValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators._RootValidator], DoublyLinkedListNodeValue.Validators._RootValidator
         ]:
-            def decorator(
-                validator: DoublyLinkedListNodeValue.Validators._RootValidator,
-            ) -> DoublyLinkedListNodeValue.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DoublyLinkedListNodeValue.Validators._PreRootValidator],
+            DoublyLinkedListNodeValue.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -215,6 +228,10 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.Optional[NodeId], __values: DoublyLinkedListNodeValue.Partial
             ) -> typing.Optional[NodeId]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -30,7 +30,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         """
 
         _pre_validators: typing.ClassVar[
-            typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator]
+            typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators._PreRootValidator]
         ] = []
         _post_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator]
@@ -42,16 +42,29 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
             typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator],
             GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator,
-            ) -> GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetGeneratedTestCaseTemplateFileRequest.Validators._PreRootValidator],
+            GetGeneratedTestCaseTemplateFileRequest.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -102,6 +115,10 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
             def __call__(
                 self, __v: TestCaseTemplate, __values: GetGeneratedTestCaseTemplateFileRequest.Partial
             ) -> TestCaseTemplate:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

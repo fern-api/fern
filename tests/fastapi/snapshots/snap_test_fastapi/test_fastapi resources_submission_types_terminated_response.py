@@ -21,18 +21,30 @@ class TerminatedResponse(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[TerminatedResponse.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[TerminatedResponse.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TerminatedResponse.Validators._RootValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TerminatedResponse.Validators._RootValidator], TerminatedResponse.Validators._RootValidator
         ]:
-            def decorator(
-                validator: TerminatedResponse.Validators._RootValidator,
-            ) -> TerminatedResponse.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TerminatedResponse.Validators._PreRootValidator], TerminatedResponse.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -40,6 +52,10 @@ class TerminatedResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
+                ...
 
         class _RootValidator(typing_extensions.Protocol):
             def __call__(self, __values: TerminatedResponse.Partial) -> TerminatedResponse.Partial:

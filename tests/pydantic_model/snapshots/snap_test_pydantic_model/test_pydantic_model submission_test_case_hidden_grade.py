@@ -27,20 +27,32 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators._RootValidator]] = []
         _passed_pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PrePassedValidator]] = []
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseHiddenGrade.Validators._RootValidator], TestCaseHiddenGrade.Validators._RootValidator
         ]:
-            def decorator(
-                validator: TestCaseHiddenGrade.Validators._RootValidator,
-            ) -> TestCaseHiddenGrade.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseHiddenGrade.Validators._PreRootValidator], TestCaseHiddenGrade.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -85,6 +97,10 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
 
         class PassedValidator(typing_extensions.Protocol):
             def __call__(self, __v: bool, __values: TestCaseHiddenGrade.Partial) -> bool:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

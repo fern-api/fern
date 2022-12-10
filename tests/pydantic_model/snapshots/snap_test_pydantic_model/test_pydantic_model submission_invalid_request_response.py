@@ -36,7 +36,7 @@ class InvalidRequestResponse(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._RootValidator]] = []
         _request_pre_validators: typing.ClassVar[
             typing.List[InvalidRequestResponse.Validators.PreRequestValidator]
@@ -45,15 +45,27 @@ class InvalidRequestResponse(pydantic.BaseModel):
         _cause_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.PreCauseValidator]] = []
         _cause_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [InvalidRequestResponse.Validators._RootValidator], InvalidRequestResponse.Validators._RootValidator
         ]:
-            def decorator(
-                validator: InvalidRequestResponse.Validators._RootValidator,
-            ) -> InvalidRequestResponse.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [InvalidRequestResponse.Validators._PreRootValidator], InvalidRequestResponse.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -132,6 +144,10 @@ class InvalidRequestResponse(pydantic.BaseModel):
             def __call__(
                 self, __v: InvalidRequestCause, __values: InvalidRequestResponse.Partial
             ) -> InvalidRequestCause:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -27,7 +27,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators._RootValidator]] = []
         _offset_pre_validators: typing.ClassVar[
             typing.List[GetTraceResponsesPageRequest.Validators.PreOffsetValidator]
@@ -36,16 +36,29 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
             typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetTraceResponsesPageRequest.Validators._RootValidator],
             GetTraceResponsesPageRequest.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: GetTraceResponsesPageRequest.Validators._RootValidator,
-            ) -> GetTraceResponsesPageRequest.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetTraceResponsesPageRequest.Validators._PreRootValidator],
+            GetTraceResponsesPageRequest.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -94,6 +107,10 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.Optional[int], __values: GetTraceResponsesPageRequest.Partial
             ) -> typing.Optional[int]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

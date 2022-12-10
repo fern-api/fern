@@ -30,7 +30,7 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponseV2.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponseV2.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponseV2.Validators._RootValidator]] = []
         _files_by_language_pre_validators: typing.ClassVar[
             typing.List[WorkspaceStarterFilesResponseV2.Validators.PreFilesByLanguageValidator]
@@ -39,16 +39,29 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
             typing.List[WorkspaceStarterFilesResponseV2.Validators.FilesByLanguageValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceStarterFilesResponseV2.Validators._RootValidator],
             WorkspaceStarterFilesResponseV2.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: WorkspaceStarterFilesResponseV2.Validators._RootValidator,
-            ) -> WorkspaceStarterFilesResponseV2.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceStarterFilesResponseV2.Validators._PreRootValidator],
+            WorkspaceStarterFilesResponseV2.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -100,6 +113,10 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.Dict[Language, Files], __values: WorkspaceStarterFilesResponseV2.Partial
             ) -> typing.Dict[Language, Files]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

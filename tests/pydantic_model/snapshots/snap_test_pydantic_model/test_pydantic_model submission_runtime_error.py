@@ -27,16 +27,28 @@ class RuntimeError(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[RuntimeError.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[RuntimeError.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[RuntimeError.Validators._RootValidator]] = []
         _message_pre_validators: typing.ClassVar[typing.List[RuntimeError.Validators.PreMessageValidator]] = []
         _message_post_validators: typing.ClassVar[typing.List[RuntimeError.Validators.MessageValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[RuntimeError.Validators._RootValidator], RuntimeError.Validators._RootValidator]:
-            def decorator(validator: RuntimeError.Validators._RootValidator) -> RuntimeError.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[RuntimeError.Validators._PreRootValidator], RuntimeError.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -79,6 +91,10 @@ class RuntimeError(pydantic.BaseModel):
 
         class MessageValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: RuntimeError.Partial) -> str:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

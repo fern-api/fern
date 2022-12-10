@@ -27,7 +27,7 @@ class DebugMapValue(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._RootValidator]] = []
         _key_value_pairs_pre_validators: typing.ClassVar[
             typing.List[DebugMapValue.Validators.PreKeyValuePairsValidator]
@@ -36,13 +36,23 @@ class DebugMapValue(pydantic.BaseModel):
             typing.List[DebugMapValue.Validators.KeyValuePairsValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[DebugMapValue.Validators._RootValidator], DebugMapValue.Validators._RootValidator]:
-            def decorator(
-                validator: DebugMapValue.Validators._RootValidator,
-            ) -> DebugMapValue.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[DebugMapValue.Validators._PreRootValidator], DebugMapValue.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -92,6 +102,10 @@ class DebugMapValue(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.List[DebugKeyValuePairs], __values: DebugMapValue.Partial
             ) -> typing.List[DebugKeyValuePairs]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

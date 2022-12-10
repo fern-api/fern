@@ -42,7 +42,7 @@ class WorkspaceRunDetails(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators._RootValidator]] = []
         _exception_v_2_pre_validators: typing.ClassVar[
             typing.List[WorkspaceRunDetails.Validators.PreExceptionV2Validator]
@@ -57,15 +57,27 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         _stdout_pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators._RootValidator], WorkspaceRunDetails.Validators._RootValidator
         ]:
-            def decorator(
-                validator: WorkspaceRunDetails.Validators._RootValidator,
-            ) -> WorkspaceRunDetails.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceRunDetails.Validators._PreRootValidator], WorkspaceRunDetails.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -180,6 +192,10 @@ class WorkspaceRunDetails(pydantic.BaseModel):
 
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: WorkspaceRunDetails.Partial) -> str:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -41,7 +41,9 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GetExecutionSessionStateResponse.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[
+            typing.List[GetExecutionSessionStateResponse.Validators._PreRootValidator]
+        ] = []
         _post_validators: typing.ClassVar[typing.List[GetExecutionSessionStateResponse.Validators._RootValidator]] = []
         _states_pre_validators: typing.ClassVar[
             typing.List[GetExecutionSessionStateResponse.Validators.PreStatesValidator]
@@ -62,16 +64,29 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
             typing.List[GetExecutionSessionStateResponse.Validators.WarmingSessionIdsValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetExecutionSessionStateResponse.Validators._RootValidator],
             GetExecutionSessionStateResponse.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: GetExecutionSessionStateResponse.Validators._RootValidator,
-            ) -> GetExecutionSessionStateResponse.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetExecutionSessionStateResponse.Validators._PreRootValidator],
+            GetExecutionSessionStateResponse.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -196,6 +211,10 @@ class GetExecutionSessionStateResponse(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.List[str], __values: GetExecutionSessionStateResponse.Partial
             ) -> typing.List[str]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -36,7 +36,7 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators._RootValidator]] = []
         _signature_pre_validators: typing.ClassVar[
             typing.List[NonVoidFunctionDefinition.Validators.PreSignatureValidator]
@@ -47,15 +47,28 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         _code_pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.PreCodeValidator]] = []
         _code_post_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [NonVoidFunctionDefinition.Validators._RootValidator], NonVoidFunctionDefinition.Validators._RootValidator
         ]:
-            def decorator(
-                validator: NonVoidFunctionDefinition.Validators._RootValidator,
-            ) -> NonVoidFunctionDefinition.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [NonVoidFunctionDefinition.Validators._PreRootValidator],
+            NonVoidFunctionDefinition.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -138,6 +151,10 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
             def __call__(
                 self, __v: FunctionImplementationForMultipleLanguages, __values: NonVoidFunctionDefinition.Partial
             ) -> FunctionImplementationForMultipleLanguages:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

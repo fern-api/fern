@@ -36,7 +36,7 @@ class DefaultProvidedFile(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators._RootValidator]] = []
         _file_pre_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators.PreFileValidator]] = []
         _file_post_validators: typing.ClassVar[typing.List[DefaultProvidedFile.Validators.FileValidator]] = []
@@ -47,15 +47,27 @@ class DefaultProvidedFile(pydantic.BaseModel):
             typing.List[DefaultProvidedFile.Validators.RelatedTypesValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DefaultProvidedFile.Validators._RootValidator], DefaultProvidedFile.Validators._RootValidator
         ]:
-            def decorator(
-                validator: DefaultProvidedFile.Validators._RootValidator,
-            ) -> DefaultProvidedFile.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DefaultProvidedFile.Validators._PreRootValidator], DefaultProvidedFile.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -137,6 +149,10 @@ class DefaultProvidedFile(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.List[VariableType], __values: DefaultProvidedFile.Partial
             ) -> typing.List[VariableType]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

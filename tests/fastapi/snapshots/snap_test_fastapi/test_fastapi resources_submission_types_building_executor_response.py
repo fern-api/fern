@@ -36,7 +36,7 @@ class BuildingExecutorResponse(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[BuildingExecutorResponse.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[BuildingExecutorResponse.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[BuildingExecutorResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[BuildingExecutorResponse.Validators.PreSubmissionIdValidator]
@@ -49,15 +49,28 @@ class BuildingExecutorResponse(pydantic.BaseModel):
         ] = []
         _status_post_validators: typing.ClassVar[typing.List[BuildingExecutorResponse.Validators.StatusValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BuildingExecutorResponse.Validators._RootValidator], BuildingExecutorResponse.Validators._RootValidator
         ]:
-            def decorator(
-                validator: BuildingExecutorResponse.Validators._RootValidator,
-            ) -> BuildingExecutorResponse.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BuildingExecutorResponse.Validators._PreRootValidator],
+            BuildingExecutorResponse.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -141,6 +154,10 @@ class BuildingExecutorResponse(pydantic.BaseModel):
             def __call__(
                 self, __v: ExecutionSessionStatus, __values: BuildingExecutorResponse.Partial
             ) -> ExecutionSessionStatus:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

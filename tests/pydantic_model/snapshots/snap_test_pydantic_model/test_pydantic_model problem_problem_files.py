@@ -35,7 +35,7 @@ class ProblemFiles(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._RootValidator]] = []
         _solution_file_pre_validators: typing.ClassVar[
             typing.List[ProblemFiles.Validators.PreSolutionFileValidator]
@@ -48,11 +48,23 @@ class ProblemFiles(pydantic.BaseModel):
             typing.List[ProblemFiles.Validators.ReadOnlyFilesValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ProblemFiles.Validators._RootValidator], ProblemFiles.Validators._RootValidator]:
-            def decorator(validator: ProblemFiles.Validators._RootValidator) -> ProblemFiles.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[ProblemFiles.Validators._PreRootValidator], ProblemFiles.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -134,6 +146,10 @@ class ProblemFiles(pydantic.BaseModel):
 
         class ReadOnlyFilesValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.List[FileInfo], __values: ProblemFiles.Partial) -> typing.List[FileInfo]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

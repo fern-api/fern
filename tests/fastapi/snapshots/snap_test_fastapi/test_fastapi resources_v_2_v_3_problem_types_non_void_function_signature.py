@@ -36,7 +36,7 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[NonVoidFunctionSignature.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[NonVoidFunctionSignature.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[NonVoidFunctionSignature.Validators._RootValidator]] = []
         _parameters_pre_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.PreParametersValidator]
@@ -51,15 +51,28 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
             typing.List[NonVoidFunctionSignature.Validators.ReturnTypeValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [NonVoidFunctionSignature.Validators._RootValidator], NonVoidFunctionSignature.Validators._RootValidator
         ]:
-            def decorator(
-                validator: NonVoidFunctionSignature.Validators._RootValidator,
-            ) -> NonVoidFunctionSignature.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [NonVoidFunctionSignature.Validators._PreRootValidator],
+            NonVoidFunctionSignature.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -141,6 +154,10 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
 
         class ReturnTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableType, __values: NonVoidFunctionSignature.Partial) -> VariableType:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

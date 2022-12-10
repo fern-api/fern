@@ -36,22 +36,34 @@ class DoublyLinkedListValue(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators._RootValidator]] = []
         _head_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.PreHeadValidator]] = []
         _head_post_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.HeadValidator]] = []
         _nodes_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.PreNodesValidator]] = []
         _nodes_post_validators: typing.ClassVar[typing.List[DoublyLinkedListValue.Validators.NodesValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DoublyLinkedListValue.Validators._RootValidator], DoublyLinkedListValue.Validators._RootValidator
         ]:
-            def decorator(
-                validator: DoublyLinkedListValue.Validators._RootValidator,
-            ) -> DoublyLinkedListValue.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DoublyLinkedListValue.Validators._PreRootValidator], DoublyLinkedListValue.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -131,6 +143,10 @@ class DoublyLinkedListValue(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.Dict[NodeId, DoublyLinkedListNodeValue], __values: DoublyLinkedListValue.Partial
             ) -> typing.Dict[NodeId, DoublyLinkedListNodeValue]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -29,18 +29,30 @@ class StopRequest(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[StopRequest.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[StopRequest.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StopRequest.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[StopRequest.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[typing.List[StopRequest.Validators.SubmissionIdValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[StopRequest.Validators._RootValidator], StopRequest.Validators._RootValidator]:
-            def decorator(validator: StopRequest.Validators._RootValidator) -> StopRequest.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[StopRequest.Validators._PreRootValidator], StopRequest.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -88,6 +100,10 @@ class StopRequest(pydantic.BaseModel):
 
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: StopRequest.Partial) -> SubmissionId:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

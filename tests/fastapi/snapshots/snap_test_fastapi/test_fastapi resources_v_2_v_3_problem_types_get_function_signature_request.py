@@ -29,7 +29,7 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GetFunctionSignatureRequest.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[GetFunctionSignatureRequest.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetFunctionSignatureRequest.Validators._RootValidator]] = []
         _function_signature_pre_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureRequest.Validators.PreFunctionSignatureValidator]
@@ -38,16 +38,29 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
             typing.List[GetFunctionSignatureRequest.Validators.FunctionSignatureValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetFunctionSignatureRequest.Validators._RootValidator],
             GetFunctionSignatureRequest.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: GetFunctionSignatureRequest.Validators._RootValidator,
-            ) -> GetFunctionSignatureRequest.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetFunctionSignatureRequest.Validators._PreRootValidator],
+            GetFunctionSignatureRequest.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -99,6 +112,10 @@ class GetFunctionSignatureRequest(pydantic.BaseModel):
             def __call__(
                 self, __v: FunctionSignature, __values: GetFunctionSignatureRequest.Partial
             ) -> FunctionSignature:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

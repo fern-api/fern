@@ -48,7 +48,7 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._RootValidator]] = []
         _passed_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PrePassedValidator]] = []
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
@@ -67,15 +67,27 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators._RootValidator], TestCaseNonHiddenGrade.Validators._RootValidator
         ]:
-            def decorator(
-                validator: TestCaseNonHiddenGrade.Validators._RootValidator,
-            ) -> TestCaseNonHiddenGrade.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseNonHiddenGrade.Validators._PreRootValidator], TestCaseNonHiddenGrade.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -223,6 +235,10 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
 
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: TestCaseNonHiddenGrade.Partial) -> str:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

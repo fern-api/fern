@@ -47,7 +47,7 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._RootValidator]] = []
         _node_id_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.PreNodeIdValidator]] = []
         _node_id_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
@@ -58,15 +58,27 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         _left_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.PreLeftValidator]] = []
         _left_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators._RootValidator], BinaryTreeNodeValue.Validators._RootValidator
         ]:
-            def decorator(
-                validator: BinaryTreeNodeValue.Validators._RootValidator,
-            ) -> BinaryTreeNodeValue.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeNodeValue.Validators._PreRootValidator], BinaryTreeNodeValue.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -208,6 +220,10 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.Optional[NodeId], __values: BinaryTreeNodeValue.Partial
             ) -> typing.Optional[NodeId]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -35,7 +35,7 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[RecordedTestCaseUpdate.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[RecordedTestCaseUpdate.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[RecordedTestCaseUpdate.Validators._RootValidator]] = []
         _test_case_id_pre_validators: typing.ClassVar[
             typing.List[RecordedTestCaseUpdate.Validators.PreTestCaseIdValidator]
@@ -50,15 +50,27 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
             typing.List[RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [RecordedTestCaseUpdate.Validators._RootValidator], RecordedTestCaseUpdate.Validators._RootValidator
         ]:
-            def decorator(
-                validator: RecordedTestCaseUpdate.Validators._RootValidator,
-            ) -> RecordedTestCaseUpdate.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordedTestCaseUpdate.Validators._PreRootValidator], RecordedTestCaseUpdate.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -141,6 +153,10 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
 
         class TraceResponsesSizeValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: RecordedTestCaseUpdate.Partial) -> int:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

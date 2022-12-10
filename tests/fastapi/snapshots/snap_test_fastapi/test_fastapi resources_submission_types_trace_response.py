@@ -62,7 +62,7 @@ class TraceResponse(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TraceResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[TraceResponse.Validators.PreSubmissionIdValidator]
@@ -87,13 +87,23 @@ class TraceResponse(pydantic.BaseModel):
         _stdout_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TraceResponse.Validators._RootValidator], TraceResponse.Validators._RootValidator]:
-            def decorator(
-                validator: TraceResponse.Validators._RootValidator,
-            ) -> TraceResponse.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[TraceResponse.Validators._PreRootValidator], TraceResponse.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -298,6 +308,10 @@ class TraceResponse(pydantic.BaseModel):
 
         class StdoutValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.Optional[str], __values: TraceResponse.Partial) -> typing.Optional[str]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -39,7 +39,7 @@ class GenericCreateProblemError(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._RootValidator]] = []
         _message_pre_validators: typing.ClassVar[
             typing.List[GenericCreateProblemError.Validators.PreMessageValidator]
@@ -56,15 +56,28 @@ class GenericCreateProblemError(pydantic.BaseModel):
             typing.List[GenericCreateProblemError.Validators.StacktraceValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators._RootValidator], GenericCreateProblemError.Validators._RootValidator
         ]:
-            def decorator(
-                validator: GenericCreateProblemError.Validators._RootValidator,
-            ) -> GenericCreateProblemError.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GenericCreateProblemError.Validators._PreRootValidator],
+            GenericCreateProblemError.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -176,6 +189,10 @@ class GenericCreateProblemError(pydantic.BaseModel):
 
         class StacktraceValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: GenericCreateProblemError.Partial) -> str:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

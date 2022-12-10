@@ -33,22 +33,34 @@ class ExpressionLocation(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._RootValidator]] = []
         _start_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.PreStartValidator]] = []
         _start_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
         _offset_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.PreOffsetValidator]] = []
         _offset_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExpressionLocation.Validators._RootValidator], ExpressionLocation.Validators._RootValidator
         ]:
-            def decorator(
-                validator: ExpressionLocation.Validators._RootValidator,
-            ) -> ExpressionLocation.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExpressionLocation.Validators._PreRootValidator], ExpressionLocation.Validators._PreRootValidator
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -124,6 +136,10 @@ class ExpressionLocation(pydantic.BaseModel):
 
         class OffsetValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: ExpressionLocation.Partial) -> int:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

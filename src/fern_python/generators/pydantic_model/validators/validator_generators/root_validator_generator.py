@@ -9,7 +9,6 @@ class RootValidatorGenerator(ValidatorGenerator):
     _DECORATOR_FUNCTION_NAME = "root"
     _DECORATOR_PRE_ARGUMENT = "pre"
 
-    _ROOT_VALIDATOR_PROTOCOL_NAME = "_RootValidator"
     _CALLABLE_PARAMETER_PREFIX = "__"
     _VALIDATOR_PARAMETER_NAME = "validator"
 
@@ -58,7 +57,7 @@ class RootValidatorGenerator(ValidatorGenerator):
         validators_class.add_class_var(
             AST.VariableDeclaration(
                 name=self._get_validator_class_var(pre),
-                type_hint=AST.TypeHint.class_var(AST.TypeHint.list(self._get_type_of_validator())),
+                type_hint=AST.TypeHint.class_var(AST.TypeHint.list(self._get_type_of_validator(pre))),
                 initializer=AST.Expression("[]"),
             )
         )
@@ -79,11 +78,28 @@ class RootValidatorGenerator(ValidatorGenerator):
                             initializer=AST.Expression("False"),
                         )
                     ],
-                    return_type=AST.TypeHint.callable([self._get_type_of_validator()], self._get_type_of_validator()),
+                    return_type=AST.TypeHint.any(),
                 ),
                 body=AST.CodeWriter(self._write_root_validator_body),
+                overloads=[
+                    self._get_overload_for_validators_class(False),
+                    self._get_overload_for_validators_class(True),
+                ],
             ),
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
+        )
+
+    def _get_overload_for_validators_class(self, pre: bool) -> AST.FunctionSignature:
+        pre_literal_value = "True" if pre else "False"
+        return AST.FunctionSignature(
+            named_parameters=[
+                AST.FunctionParameter(
+                    name=RootValidatorGenerator._DECORATOR_PRE_ARGUMENT,
+                    type_hint=AST.TypeHint.literal(AST.Expression(pre_literal_value)),
+                    initializer=AST.Expression("False") if not pre else None,
+                )
+            ],
+            return_type=AST.TypeHint.callable([self._get_type_of_validator(pre)], self._get_type_of_validator(pre)),
         )
 
     def _write_root_validator_body(self, writer: AST.NodeWriter) -> None:
@@ -105,8 +121,8 @@ class RootValidatorGenerator(ValidatorGenerator):
         decorator = AST.FunctionDeclaration(
             name=DECORATOR_FUNCTION_NAME,
             signature=AST.FunctionSignature(
-                parameters=[AST.FunctionParameter(name="validator", type_hint=self._get_type_of_validator())],
-                return_type=self._get_type_of_validator(),
+                parameters=[AST.FunctionParameter(name="validator", type_hint=AST.TypeHint.any())],
+                return_type=AST.TypeHint.any(),
             ),
             body=AST.CodeWriter(write_decorator_body),
         )
@@ -126,13 +142,17 @@ class RootValidatorGenerator(ValidatorGenerator):
             args=[AST.Expression(RootValidatorGenerator._VALIDATOR_PARAMETER_NAME)],
         )
 
-    def _get_type_of_validator(self) -> AST.TypeHint:
+    def _get_type_of_validator(self, pre: bool) -> AST.TypeHint:
         return AST.TypeHint(
             type=AST.ClassReference(
                 qualified_name_excluding_import=self._reference_to_validators_class
-                + (RootValidatorGenerator._ROOT_VALIDATOR_PROTOCOL_NAME,)
+                + (self._get_root_validator_protocol_name(pre),)
             )
         )
+
+    def _get_root_validator_protocol_name(self, pre: bool) -> str:
+        prefix = "Pre" if pre else ""
+        return f"_{prefix}RootValidator"
 
     def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
 
@@ -155,9 +175,9 @@ class RootValidatorGenerator(ValidatorGenerator):
             with writer.indent():
                 writer.write_line("...")
 
-    def get_protocol_declaration(self) -> AST.ClassDeclaration:
+    def get_protocol_declaration(self, pre: bool) -> AST.ClassDeclaration:
         validator_protocol = AST.ClassDeclaration(
-            name=RootValidatorGenerator._ROOT_VALIDATOR_PROTOCOL_NAME,
+            name=self._get_root_validator_protocol_name(pre),
             extends=[
                 AST.ClassReference(
                     import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
@@ -174,10 +194,14 @@ class RootValidatorGenerator(ValidatorGenerator):
                         AST.FunctionParameter(
                             name=RootValidatorGenerator._CALLABLE_PARAMETER_PREFIX
                             + PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME,
-                            type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
+                            type_hint=AST.TypeHint.any()
+                            if pre
+                            else AST.TypeHint(type=self._model.get_reference_to_partial_class()),
                         ),
                     ],
-                    return_type=AST.TypeHint(self._model.get_reference_to_partial_class()),
+                    return_type=AST.TypeHint.any()
+                    if pre
+                    else AST.TypeHint(self._model.get_reference_to_partial_class()),
                 ),
                 body=AST.CodeWriter("..."),
             )

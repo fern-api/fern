@@ -41,7 +41,7 @@ class StackFrame(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[StackFrame.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[StackFrame.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StackFrame.Validators._RootValidator]] = []
         _method_name_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.PreMethodNameValidator]] = []
         _method_name_post_validators: typing.ClassVar[typing.List[StackFrame.Validators.MethodNameValidator]] = []
@@ -50,11 +50,23 @@ class StackFrame(pydantic.BaseModel):
         _scopes_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.PreScopesValidator]] = []
         _scopes_post_validators: typing.ClassVar[typing.List[StackFrame.Validators.ScopesValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[StackFrame.Validators._RootValidator], StackFrame.Validators._RootValidator]:
-            def decorator(validator: StackFrame.Validators._RootValidator) -> StackFrame.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[StackFrame.Validators._PreRootValidator], StackFrame.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -153,6 +165,10 @@ class StackFrame(pydantic.BaseModel):
 
         class ScopesValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.List[Scope], __values: StackFrame.Partial) -> typing.List[Scope]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

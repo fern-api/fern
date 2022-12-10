@@ -36,7 +36,9 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeAndListValue.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[
+            typing.List[SinglyLinkedListNodeAndListValue.Validators._PreRootValidator]
+        ] = []
         _post_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeAndListValue.Validators._RootValidator]] = []
         _node_id_pre_validators: typing.ClassVar[
             typing.List[SinglyLinkedListNodeAndListValue.Validators.PreNodeIdValidator]
@@ -51,16 +53,29 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
             typing.List[SinglyLinkedListNodeAndListValue.Validators.FullListValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SinglyLinkedListNodeAndListValue.Validators._RootValidator],
             SinglyLinkedListNodeAndListValue.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: SinglyLinkedListNodeAndListValue.Validators._RootValidator,
-            ) -> SinglyLinkedListNodeAndListValue.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SinglyLinkedListNodeAndListValue.Validators._PreRootValidator],
+            SinglyLinkedListNodeAndListValue.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -142,6 +157,10 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
             def __call__(
                 self, __v: SinglyLinkedListValue, __values: SinglyLinkedListNodeAndListValue.Partial
             ) -> SinglyLinkedListValue:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

@@ -31,7 +31,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
         """
 
         _pre_validators: typing.ClassVar[
-            typing.List[FunctionImplementationForMultipleLanguages.Validators._RootValidator]
+            typing.List[FunctionImplementationForMultipleLanguages.Validators._PreRootValidator]
         ] = []
         _post_validators: typing.ClassVar[
             typing.List[FunctionImplementationForMultipleLanguages.Validators._RootValidator]
@@ -43,16 +43,29 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
             typing.List[FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [FunctionImplementationForMultipleLanguages.Validators._RootValidator],
             FunctionImplementationForMultipleLanguages.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: FunctionImplementationForMultipleLanguages.Validators._RootValidator,
-            ) -> FunctionImplementationForMultipleLanguages.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [FunctionImplementationForMultipleLanguages.Validators._PreRootValidator],
+            FunctionImplementationForMultipleLanguages.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -108,6 +121,10 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
                 __v: typing.Dict[Language, FunctionImplementation],
                 __values: FunctionImplementationForMultipleLanguages.Partial,
             ) -> typing.Dict[Language, FunctionImplementation]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

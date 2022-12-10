@@ -38,7 +38,7 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[StoreTracedWorkspaceRequest.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[StoreTracedWorkspaceRequest.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StoreTracedWorkspaceRequest.Validators._RootValidator]] = []
         _workspace_run_details_pre_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.PreWorkspaceRunDetailsValidator]
@@ -53,16 +53,29 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
             typing.List[StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [StoreTracedWorkspaceRequest.Validators._RootValidator],
             StoreTracedWorkspaceRequest.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: StoreTracedWorkspaceRequest.Validators._RootValidator,
-            ) -> StoreTracedWorkspaceRequest.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StoreTracedWorkspaceRequest.Validators._PreRootValidator],
+            StoreTracedWorkspaceRequest.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -152,6 +165,10 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.List[TraceResponse], __values: StoreTracedWorkspaceRequest.Partial
             ) -> typing.List[TraceResponse]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

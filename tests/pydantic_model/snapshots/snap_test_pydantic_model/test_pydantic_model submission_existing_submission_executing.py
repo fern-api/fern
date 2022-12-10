@@ -29,7 +29,7 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
             typing.List[ExistingSubmissionExecuting.Validators.PreSubmissionIdValidator]
@@ -38,16 +38,29 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
             typing.List[ExistingSubmissionExecuting.Validators.SubmissionIdValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExistingSubmissionExecuting.Validators._RootValidator],
             ExistingSubmissionExecuting.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: ExistingSubmissionExecuting.Validators._RootValidator,
-            ) -> ExistingSubmissionExecuting.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExistingSubmissionExecuting.Validators._PreRootValidator],
+            ExistingSubmissionExecuting.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -97,6 +110,10 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
 
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: ExistingSubmissionExecuting.Partial) -> SubmissionId:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

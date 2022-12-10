@@ -29,7 +29,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._RootValidator]] = []
         _updates_pre_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionStatusV2.Validators.PreUpdatesValidator]
@@ -38,16 +38,29 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
             typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]
         ] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmissionStatusV2.Validators._RootValidator],
             WorkspaceSubmissionStatusV2.Validators._RootValidator,
         ]:
-            def decorator(
-                validator: WorkspaceSubmissionStatusV2.Validators._RootValidator,
-            ) -> WorkspaceSubmissionStatusV2.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmissionStatusV2.Validators._PreRootValidator],
+            WorkspaceSubmissionStatusV2.Validators._PreRootValidator,
+        ]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -96,6 +109,10 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.List[WorkspaceSubmissionUpdate], __values: WorkspaceSubmissionStatusV2.Partial
             ) -> typing.List[WorkspaceSubmissionUpdate]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):

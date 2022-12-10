@@ -29,16 +29,28 @@ class Scope(pydantic.BaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[typing.List[Scope.Validators._RootValidator]] = []
+        _pre_validators: typing.ClassVar[typing.List[Scope.Validators._PreRootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[Scope.Validators._RootValidator]] = []
         _variables_pre_validators: typing.ClassVar[typing.List[Scope.Validators.PreVariablesValidator]] = []
         _variables_post_validators: typing.ClassVar[typing.List[Scope.Validators.VariablesValidator]] = []
 
+        @typing.overload
         @classmethod
         def root(
-            cls, *, pre: bool = False
+            cls, *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Scope.Validators._RootValidator], Scope.Validators._RootValidator]:
-            def decorator(validator: Scope.Validators._RootValidator) -> Scope.Validators._RootValidator:
+            ...
+
+        @typing.overload
+        @classmethod
+        def root(
+            cls, *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Scope.Validators._PreRootValidator], Scope.Validators._PreRootValidator]:
+            ...
+
+        @classmethod
+        def root(cls, *, pre: bool = False) -> typing.Any:
+            def decorator(validator: typing.Any) -> typing.Any:
                 if pre:
                     cls._pre_validators.append(validator)
                 else:
@@ -81,6 +93,10 @@ class Scope(pydantic.BaseModel):
             def __call__(
                 self, __v: typing.Dict[str, DebugVariableValue], __values: Scope.Partial
             ) -> typing.Dict[str, DebugVariableValue]:
+                ...
+
+        class _PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __values: typing.Any) -> typing.Any:
                 ...
 
         class _RootValidator(typing_extensions.Protocol):
