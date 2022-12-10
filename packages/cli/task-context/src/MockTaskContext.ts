@@ -1,11 +1,13 @@
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER, NOOP_LOGGER } from "@fern-api/logger";
 import { FernCliError } from "./FernCliError";
 import { TaskContext, TaskResult } from "./TaskContext";
 
-export function createMockTaskContext(): TaskContext {
+export function createMockTaskContext({
+    shouldSuppressOutput = false,
+}: { shouldSuppressOutput?: boolean } = {}): TaskContext {
     let result = TaskResult.Success;
     const context = {
-        logger: CONSOLE_LOGGER,
+        logger: shouldSuppressOutput ? NOOP_LOGGER : CONSOLE_LOGGER,
         takeOverTerminal: () => {
             throw new Error("Not implemented");
         },
