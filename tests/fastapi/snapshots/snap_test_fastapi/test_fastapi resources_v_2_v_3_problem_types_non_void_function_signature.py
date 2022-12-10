@@ -39,13 +39,13 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[NonVoidFunctionSignature.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[NonVoidFunctionSignature.Validators._RootValidator]] = []
         _parameters_pre_validators: typing.ClassVar[
-            typing.List[NonVoidFunctionSignature.Validators.ParametersValidator]
+            typing.List[NonVoidFunctionSignature.Validators.PreParametersValidator]
         ] = []
         _parameters_post_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.ParametersValidator]
         ] = []
         _return_type_pre_validators: typing.ClassVar[
-            typing.List[NonVoidFunctionSignature.Validators.ReturnTypeValidator]
+            typing.List[NonVoidFunctionSignature.Validators.PreReturnTypeValidator]
         ] = []
         _return_type_post_validators: typing.ClassVar[
             typing.List[NonVoidFunctionSignature.Validators.ReturnTypeValidator]
@@ -71,7 +71,17 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [NonVoidFunctionSignature.Validators.PreParametersValidator],
+            NonVoidFunctionSignature.Validators.PreParametersValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [NonVoidFunctionSignature.Validators.ParametersValidator],
             NonVoidFunctionSignature.Validators.ParametersValidator,
@@ -81,7 +91,17 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["return_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["return_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [NonVoidFunctionSignature.Validators.PreReturnTypeValidator],
+            NonVoidFunctionSignature.Validators.PreReturnTypeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["return_type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [NonVoidFunctionSignature.Validators.ReturnTypeValidator],
             NonVoidFunctionSignature.Validators.ReturnTypeValidator,
@@ -105,10 +125,18 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
 
             return decorator
 
+        class PreParametersValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: NonVoidFunctionSignature.Partial) -> typing.Any:
+                ...
+
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[Parameter], __values: NonVoidFunctionSignature.Partial
             ) -> typing.List[Parameter]:
+                ...
+
+        class PreReturnTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: NonVoidFunctionSignature.Partial) -> typing.Any:
                 ...
 
         class ReturnTypeValidator(typing_extensions.Protocol):

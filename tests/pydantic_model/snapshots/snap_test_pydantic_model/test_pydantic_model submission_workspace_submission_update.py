@@ -39,13 +39,13 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionUpdate.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionUpdate.Validators._RootValidator]] = []
         _update_time_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator]
+            typing.List[WorkspaceSubmissionUpdate.Validators.PreUpdateTimeValidator]
         ] = []
         _update_time_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator]
         ] = []
         _update_info_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator]
+            typing.List[WorkspaceSubmissionUpdate.Validators.PreUpdateInfoValidator]
         ] = []
         _update_info_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator]
@@ -71,7 +71,17 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["update_time"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["update_time"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmissionUpdate.Validators.PreUpdateTimeValidator],
+            WorkspaceSubmissionUpdate.Validators.PreUpdateTimeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["update_time"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator],
             WorkspaceSubmissionUpdate.Validators.UpdateTimeValidator,
@@ -81,7 +91,17 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["update_info"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["update_info"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmissionUpdate.Validators.PreUpdateInfoValidator],
+            WorkspaceSubmissionUpdate.Validators.PreUpdateInfoValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["update_info"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator],
             WorkspaceSubmissionUpdate.Validators.UpdateInfoValidator,
@@ -105,8 +125,16 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
 
             return decorator
 
+        class PreUpdateTimeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmissionUpdate.Partial) -> typing.Any:
+                ...
+
         class UpdateTimeValidator(typing_extensions.Protocol):
             def __call__(self, __v: dt.datetime, __values: WorkspaceSubmissionUpdate.Partial) -> dt.datetime:
+                ...
+
+        class PreUpdateInfoValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmissionUpdate.Partial) -> typing.Any:
                 ...
 
         class UpdateInfoValidator(typing_extensions.Protocol):

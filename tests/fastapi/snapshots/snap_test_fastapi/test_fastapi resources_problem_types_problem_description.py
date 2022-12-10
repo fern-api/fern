@@ -31,7 +31,7 @@ class ProblemDescription(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[ProblemDescription.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ProblemDescription.Validators._RootValidator]] = []
-        _boards_pre_validators: typing.ClassVar[typing.List[ProblemDescription.Validators.BoardsValidator]] = []
+        _boards_pre_validators: typing.ClassVar[typing.List[ProblemDescription.Validators.PreBoardsValidator]] = []
         _boards_post_validators: typing.ClassVar[typing.List[ProblemDescription.Validators.BoardsValidator]] = []
 
         @classmethod
@@ -51,10 +51,19 @@ class ProblemDescription(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["boards"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["boards"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemDescription.Validators.PreBoardsValidator], ProblemDescription.Validators.PreBoardsValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["boards"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ProblemDescription.Validators.BoardsValidator], ProblemDescription.Validators.BoardsValidator
         ]:
@@ -71,6 +80,10 @@ class ProblemDescription(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreBoardsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemDescription.Partial) -> typing.Any:
+                ...
 
         class BoardsValidator(typing_extensions.Protocol):
             def __call__(

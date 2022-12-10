@@ -57,11 +57,17 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
         if len(self._field_validator_generators) > 0:
             self._add_field_validator_decorator_to_validators_class(validators_class=validators_class)
             for generator in self._field_validator_generators:
-                validators_class.add_class(declaration=generator.get_protocol_declaration())
+                for pre in [True, False]:
+                    validators_class.add_class(declaration=generator.get_protocol_declaration(pre))
 
         validators_class.add_class(declaration=self._root_validator_generator.get_protocol_declaration())
 
     def _add_field_validator_decorator_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
+        overloads = []
+        for generator in self._field_validator_generators:
+            overloads.append(generator.get_overload_for_validators_class(True))
+            overloads.append(generator.get_overload_for_validators_class(False))
+
         validators_class.add_method(
             decorator=AST.ClassMethodDecorator.CLASS_METHOD,
             declaration=AST.FunctionDeclaration(
@@ -83,9 +89,7 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                     return_type=AST.TypeHint.any(),
                 ),
                 body=AST.CodeWriter(self._write_add_field_validator_body),
-                overloads=[
-                    generator.get_overload_for_validators_class() for generator in self._field_validator_generators
-                ],
+                overloads=overloads,
             ),
         )
 

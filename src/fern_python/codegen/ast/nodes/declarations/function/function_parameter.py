@@ -1,10 +1,12 @@
+from typing import Optional
+
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...expressions import Expression
 from ...type_hint import TypeHint
 
 
 class FunctionParameter(AstNode):
-    def __init__(self, name: str, type_hint: TypeHint = None, initializer: Expression = None):
+    def __init__(self, name: str, type_hint: Optional[TypeHint] = None, initializer: Optional[Expression] = None):
         self.name = name
         self.type_hint = type_hint
         self.initializer = initializer

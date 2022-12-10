@@ -51,23 +51,25 @@ class TestSubmissionState(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators._RootValidator]] = []
-        _problem_id_pre_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators.ProblemIdValidator]] = []
+        _problem_id_pre_validators: typing.ClassVar[
+            typing.List[TestSubmissionState.Validators.PreProblemIdValidator]
+        ] = []
         _problem_id_post_validators: typing.ClassVar[
             typing.List[TestSubmissionState.Validators.ProblemIdValidator]
         ] = []
         _default_test_cases_pre_validators: typing.ClassVar[
-            typing.List[TestSubmissionState.Validators.DefaultTestCasesValidator]
+            typing.List[TestSubmissionState.Validators.PreDefaultTestCasesValidator]
         ] = []
         _default_test_cases_post_validators: typing.ClassVar[
             typing.List[TestSubmissionState.Validators.DefaultTestCasesValidator]
         ] = []
         _custom_test_cases_pre_validators: typing.ClassVar[
-            typing.List[TestSubmissionState.Validators.CustomTestCasesValidator]
+            typing.List[TestSubmissionState.Validators.PreCustomTestCasesValidator]
         ] = []
         _custom_test_cases_post_validators: typing.ClassVar[
             typing.List[TestSubmissionState.Validators.CustomTestCasesValidator]
         ] = []
-        _status_pre_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators.StatusValidator]] = []
+        _status_pre_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators.PreStatusValidator]] = []
         _status_post_validators: typing.ClassVar[typing.List[TestSubmissionState.Validators.StatusValidator]] = []
 
         @classmethod
@@ -90,7 +92,16 @@ class TestSubmissionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionState.Validators.PreProblemIdValidator], TestSubmissionState.Validators.PreProblemIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestSubmissionState.Validators.ProblemIdValidator], TestSubmissionState.Validators.ProblemIdValidator
         ]:
@@ -99,7 +110,20 @@ class TestSubmissionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["default_test_cases"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["default_test_cases"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionState.Validators.PreDefaultTestCasesValidator],
+            TestSubmissionState.Validators.PreDefaultTestCasesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["default_test_cases"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestSubmissionState.Validators.DefaultTestCasesValidator],
             TestSubmissionState.Validators.DefaultTestCasesValidator,
@@ -109,7 +133,20 @@ class TestSubmissionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["custom_test_cases"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["custom_test_cases"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionState.Validators.PreCustomTestCasesValidator],
+            TestSubmissionState.Validators.PreCustomTestCasesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["custom_test_cases"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestSubmissionState.Validators.CustomTestCasesValidator],
             TestSubmissionState.Validators.CustomTestCasesValidator,
@@ -119,7 +156,16 @@ class TestSubmissionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["status"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionState.Validators.PreStatusValidator], TestSubmissionState.Validators.PreStatusValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestSubmissionState.Validators.StatusValidator], TestSubmissionState.Validators.StatusValidator
         ]:
@@ -152,8 +198,16 @@ class TestSubmissionState(pydantic.BaseModel):
 
             return decorator
 
+        class PreProblemIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionState.Partial) -> typing.Any:
+                ...
+
         class ProblemIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemId, __values: TestSubmissionState.Partial) -> ProblemId:
+                ...
+
+        class PreDefaultTestCasesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionState.Partial) -> typing.Any:
                 ...
 
         class DefaultTestCasesValidator(typing_extensions.Protocol):
@@ -162,10 +216,18 @@ class TestSubmissionState(pydantic.BaseModel):
             ) -> typing.List[TestCase]:
                 ...
 
+        class PreCustomTestCasesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionState.Partial) -> typing.Any:
+                ...
+
         class CustomTestCasesValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[TestCase], __values: TestSubmissionState.Partial
             ) -> typing.List[TestCase]:
+                ...
+
+        class PreStatusValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionState.Partial) -> typing.Any:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):

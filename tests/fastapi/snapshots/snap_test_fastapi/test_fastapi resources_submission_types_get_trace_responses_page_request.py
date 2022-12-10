@@ -30,7 +30,7 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetTraceResponsesPageRequest.Validators._RootValidator]] = []
         _offset_pre_validators: typing.ClassVar[
-            typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]
+            typing.List[GetTraceResponsesPageRequest.Validators.PreOffsetValidator]
         ] = []
         _offset_post_validators: typing.ClassVar[
             typing.List[GetTraceResponsesPageRequest.Validators.OffsetValidator]
@@ -54,10 +54,20 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetTraceResponsesPageRequest.Validators.PreOffsetValidator],
+            GetTraceResponsesPageRequest.Validators.PreOffsetValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetTraceResponsesPageRequest.Validators.OffsetValidator],
             GetTraceResponsesPageRequest.Validators.OffsetValidator,
@@ -75,6 +85,10 @@ class GetTraceResponsesPageRequest(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreOffsetValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetTraceResponsesPageRequest.Partial) -> typing.Any:
+                ...
 
         class OffsetValidator(typing_extensions.Protocol):
             def __call__(

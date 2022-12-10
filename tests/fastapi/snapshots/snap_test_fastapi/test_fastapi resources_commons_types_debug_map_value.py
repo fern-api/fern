@@ -30,7 +30,7 @@ class DebugMapValue(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DebugMapValue.Validators._RootValidator]] = []
         _key_value_pairs_pre_validators: typing.ClassVar[
-            typing.List[DebugMapValue.Validators.KeyValuePairsValidator]
+            typing.List[DebugMapValue.Validators.PreKeyValuePairsValidator]
         ] = []
         _key_value_pairs_post_validators: typing.ClassVar[
             typing.List[DebugMapValue.Validators.KeyValuePairsValidator]
@@ -51,10 +51,22 @@ class DebugMapValue(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key_value_pairs"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["key_value_pairs"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DebugMapValue.Validators.PreKeyValuePairsValidator], DebugMapValue.Validators.PreKeyValuePairsValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["key_value_pairs"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [DebugMapValue.Validators.KeyValuePairsValidator], DebugMapValue.Validators.KeyValuePairsValidator
         ]:
@@ -71,6 +83,10 @@ class DebugMapValue(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreKeyValuePairsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: DebugMapValue.Partial) -> typing.Any:
+                ...
 
         class KeyValuePairsValidator(typing_extensions.Protocol):
             def __call__(

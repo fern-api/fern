@@ -36,13 +36,13 @@ class GenericValue(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GenericValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GenericValue.Validators._RootValidator]] = []
         _stringified_type_pre_validators: typing.ClassVar[
-            typing.List[GenericValue.Validators.StringifiedTypeValidator]
+            typing.List[GenericValue.Validators.PreStringifiedTypeValidator]
         ] = []
         _stringified_type_post_validators: typing.ClassVar[
             typing.List[GenericValue.Validators.StringifiedTypeValidator]
         ] = []
         _stringified_value_pre_validators: typing.ClassVar[
-            typing.List[GenericValue.Validators.StringifiedValueValidator]
+            typing.List[GenericValue.Validators.PreStringifiedValueValidator]
         ] = []
         _stringified_value_post_validators: typing.ClassVar[
             typing.List[GenericValue.Validators.StringifiedValueValidator]
@@ -64,7 +64,19 @@ class GenericValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stringified_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stringified_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GenericValue.Validators.PreStringifiedTypeValidator], GenericValue.Validators.PreStringifiedTypeValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["stringified_type"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GenericValue.Validators.StringifiedTypeValidator], GenericValue.Validators.StringifiedTypeValidator
         ]:
@@ -73,7 +85,19 @@ class GenericValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stringified_value"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stringified_value"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GenericValue.Validators.PreStringifiedValueValidator], GenericValue.Validators.PreStringifiedValueValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["stringified_value"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GenericValue.Validators.StringifiedValueValidator], GenericValue.Validators.StringifiedValueValidator
         ]:
@@ -96,8 +120,16 @@ class GenericValue(pydantic.BaseModel):
 
             return decorator
 
+        class PreStringifiedTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GenericValue.Partial) -> typing.Any:
+                ...
+
         class StringifiedTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.Optional[str], __values: GenericValue.Partial) -> typing.Optional[str]:
+                ...
+
+        class PreStringifiedValueValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GenericValue.Partial) -> typing.Any:
                 ...
 
         class StringifiedValueValidator(typing_extensions.Protocol):

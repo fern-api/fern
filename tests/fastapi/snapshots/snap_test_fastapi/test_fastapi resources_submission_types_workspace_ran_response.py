@@ -39,13 +39,13 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceRanResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceRanResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceRanResponse.Validators.SubmissionIdValidator]
+            typing.List[WorkspaceRanResponse.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[WorkspaceRanResponse.Validators.SubmissionIdValidator]
         ] = []
         _run_details_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceRanResponse.Validators.RunDetailsValidator]
+            typing.List[WorkspaceRanResponse.Validators.PreRunDetailsValidator]
         ] = []
         _run_details_post_validators: typing.ClassVar[
             typing.List[WorkspaceRanResponse.Validators.RunDetailsValidator]
@@ -71,7 +71,20 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceRanResponse.Validators.PreSubmissionIdValidator],
+            WorkspaceRanResponse.Validators.PreSubmissionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [WorkspaceRanResponse.Validators.SubmissionIdValidator],
             WorkspaceRanResponse.Validators.SubmissionIdValidator,
@@ -81,7 +94,17 @@ class WorkspaceRanResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["run_details"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["run_details"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceRanResponse.Validators.PreRunDetailsValidator],
+            WorkspaceRanResponse.Validators.PreRunDetailsValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["run_details"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceRanResponse.Validators.RunDetailsValidator], WorkspaceRanResponse.Validators.RunDetailsValidator
         ]:
@@ -104,8 +127,16 @@ class WorkspaceRanResponse(pydantic.BaseModel):
 
             return decorator
 
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceRanResponse.Partial) -> typing.Any:
+                ...
+
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: WorkspaceRanResponse.Partial) -> SubmissionId:
+                ...
+
+        class PreRunDetailsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceRanResponse.Partial) -> typing.Any:
                 ...
 
         class RunDetailsValidator(typing_extensions.Protocol):

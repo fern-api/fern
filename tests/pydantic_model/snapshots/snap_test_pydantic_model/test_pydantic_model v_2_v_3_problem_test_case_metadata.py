@@ -43,11 +43,11 @@ class TestCaseMetadata(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators._RootValidator]] = []
-        _id_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.IdValidator]] = []
+        _id_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.PreIdValidator]] = []
         _id_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.IdValidator]] = []
-        _name_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.NameValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.NameValidator]] = []
-        _hidden_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
+        _hidden_pre_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.PreHiddenValidator]] = []
         _hidden_post_validators: typing.ClassVar[typing.List[TestCaseMetadata.Validators.HiddenValidator]] = []
 
         @classmethod
@@ -68,21 +68,46 @@ class TestCaseMetadata(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[TestCaseMetadata.Validators.PreIdValidator], TestCaseMetadata.Validators.PreIdValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TestCaseMetadata.Validators.IdValidator], TestCaseMetadata.Validators.IdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseMetadata.Validators.PreNameValidator], TestCaseMetadata.Validators.PreNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TestCaseMetadata.Validators.NameValidator], TestCaseMetadata.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["hidden"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["hidden"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseMetadata.Validators.PreHiddenValidator], TestCaseMetadata.Validators.PreHiddenValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["hidden"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseMetadata.Validators.HiddenValidator], TestCaseMetadata.Validators.HiddenValidator
         ]:
@@ -110,12 +135,24 @@ class TestCaseMetadata(pydantic.BaseModel):
 
             return decorator
 
+        class PreIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseMetadata.Partial) -> typing.Any:
+                ...
+
         class IdValidator(typing_extensions.Protocol):
             def __call__(self, __v: TestCaseId, __values: TestCaseMetadata.Partial) -> TestCaseId:
                 ...
 
+        class PreNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseMetadata.Partial) -> typing.Any:
+                ...
+
         class NameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: TestCaseMetadata.Partial) -> str:
+                ...
+
+        class PreHiddenValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseMetadata.Partial) -> typing.Any:
                 ...
 
         class HiddenValidator(typing_extensions.Protocol):

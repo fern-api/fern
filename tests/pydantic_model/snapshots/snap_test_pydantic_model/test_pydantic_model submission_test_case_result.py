@@ -45,18 +45,18 @@ class TestCaseResult(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[TestCaseResult.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseResult.Validators._RootValidator]] = []
         _expected_result_pre_validators: typing.ClassVar[
-            typing.List[TestCaseResult.Validators.ExpectedResultValidator]
+            typing.List[TestCaseResult.Validators.PreExpectedResultValidator]
         ] = []
         _expected_result_post_validators: typing.ClassVar[
             typing.List[TestCaseResult.Validators.ExpectedResultValidator]
         ] = []
         _actual_result_pre_validators: typing.ClassVar[
-            typing.List[TestCaseResult.Validators.ActualResultValidator]
+            typing.List[TestCaseResult.Validators.PreActualResultValidator]
         ] = []
         _actual_result_post_validators: typing.ClassVar[
             typing.List[TestCaseResult.Validators.ActualResultValidator]
         ] = []
-        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseResult.Validators.PassedValidator]] = []
+        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseResult.Validators.PrePassedValidator]] = []
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseResult.Validators.PassedValidator]] = []
 
         @classmethod
@@ -77,7 +77,19 @@ class TestCaseResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_result"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["expected_result"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseResult.Validators.PreExpectedResultValidator], TestCaseResult.Validators.PreExpectedResultValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["expected_result"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestCaseResult.Validators.ExpectedResultValidator], TestCaseResult.Validators.ExpectedResultValidator
         ]:
@@ -86,7 +98,19 @@ class TestCaseResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_result"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["actual_result"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseResult.Validators.PreActualResultValidator], TestCaseResult.Validators.PreActualResultValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["actual_result"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestCaseResult.Validators.ActualResultValidator], TestCaseResult.Validators.ActualResultValidator
         ]:
@@ -95,7 +119,16 @@ class TestCaseResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["passed"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseResult.Validators.PrePassedValidator], TestCaseResult.Validators.PrePassedValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TestCaseResult.Validators.PassedValidator], TestCaseResult.Validators.PassedValidator]:
             ...
 
@@ -121,12 +154,24 @@ class TestCaseResult(pydantic.BaseModel):
 
             return decorator
 
+        class PreExpectedResultValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseResult.Partial) -> typing.Any:
+                ...
+
         class ExpectedResultValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableValue, __values: TestCaseResult.Partial) -> VariableValue:
                 ...
 
+        class PreActualResultValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseResult.Partial) -> typing.Any:
+                ...
+
         class ActualResultValidator(typing_extensions.Protocol):
             def __call__(self, __v: ActualResult, __values: TestCaseResult.Partial) -> ActualResult:
+                ...
+
+        class PrePassedValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseResult.Partial) -> typing.Any:
                 ...
 
         class PassedValidator(typing_extensions.Protocol):

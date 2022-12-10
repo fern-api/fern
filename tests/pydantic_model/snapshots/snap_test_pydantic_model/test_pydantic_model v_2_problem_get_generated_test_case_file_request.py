@@ -39,13 +39,13 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetGeneratedTestCaseFileRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetGeneratedTestCaseFileRequest.Validators._RootValidator]] = []
         _template_pre_validators: typing.ClassVar[
-            typing.List[GetGeneratedTestCaseFileRequest.Validators.TemplateValidator]
+            typing.List[GetGeneratedTestCaseFileRequest.Validators.PreTemplateValidator]
         ] = []
         _template_post_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseFileRequest.Validators.TemplateValidator]
         ] = []
         _test_case_pre_validators: typing.ClassVar[
-            typing.List[GetGeneratedTestCaseFileRequest.Validators.TestCaseValidator]
+            typing.List[GetGeneratedTestCaseFileRequest.Validators.PreTestCaseValidator]
         ] = []
         _test_case_post_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseFileRequest.Validators.TestCaseValidator]
@@ -72,7 +72,17 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["template"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["template"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetGeneratedTestCaseFileRequest.Validators.PreTemplateValidator],
+            GetGeneratedTestCaseFileRequest.Validators.PreTemplateValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["template"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetGeneratedTestCaseFileRequest.Validators.TemplateValidator],
             GetGeneratedTestCaseFileRequest.Validators.TemplateValidator,
@@ -82,7 +92,17 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["test_case"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetGeneratedTestCaseFileRequest.Validators.PreTestCaseValidator],
+            GetGeneratedTestCaseFileRequest.Validators.PreTestCaseValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetGeneratedTestCaseFileRequest.Validators.TestCaseValidator],
             GetGeneratedTestCaseFileRequest.Validators.TestCaseValidator,
@@ -106,10 +126,18 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
 
             return decorator
 
+        class PreTemplateValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetGeneratedTestCaseFileRequest.Partial) -> typing.Any:
+                ...
+
         class TemplateValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[TestCaseTemplate], __values: GetGeneratedTestCaseFileRequest.Partial
             ) -> typing.Optional[TestCaseTemplate]:
+                ...
+
+        class PreTestCaseValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetGeneratedTestCaseFileRequest.Partial) -> typing.Any:
                 ...
 
         class TestCaseValidator(typing_extensions.Protocol):

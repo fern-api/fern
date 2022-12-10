@@ -30,7 +30,7 @@ class UpdateProblemResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[UpdateProblemResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[UpdateProblemResponse.Validators._RootValidator]] = []
         _problem_version_pre_validators: typing.ClassVar[
-            typing.List[UpdateProblemResponse.Validators.ProblemVersionValidator]
+            typing.List[UpdateProblemResponse.Validators.PreProblemVersionValidator]
         ] = []
         _problem_version_post_validators: typing.ClassVar[
             typing.List[UpdateProblemResponse.Validators.ProblemVersionValidator]
@@ -53,10 +53,23 @@ class UpdateProblemResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [UpdateProblemResponse.Validators.PreProblemVersionValidator],
+            UpdateProblemResponse.Validators.PreProblemVersionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["problem_version"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [UpdateProblemResponse.Validators.ProblemVersionValidator],
             UpdateProblemResponse.Validators.ProblemVersionValidator,
@@ -74,6 +87,10 @@ class UpdateProblemResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreProblemVersionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: UpdateProblemResponse.Partial) -> typing.Any:
+                ...
 
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: UpdateProblemResponse.Partial) -> int:

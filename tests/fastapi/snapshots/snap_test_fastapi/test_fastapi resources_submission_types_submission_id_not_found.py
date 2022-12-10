@@ -32,7 +32,7 @@ class SubmissionIdNotFound(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[SubmissionIdNotFound.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[SubmissionIdNotFound.Validators._RootValidator]] = []
         _missing_submission_id_pre_validators: typing.ClassVar[
-            typing.List[SubmissionIdNotFound.Validators.MissingSubmissionIdValidator]
+            typing.List[SubmissionIdNotFound.Validators.PreMissingSubmissionIdValidator]
         ] = []
         _missing_submission_id_post_validators: typing.ClassVar[
             typing.List[SubmissionIdNotFound.Validators.MissingSubmissionIdValidator]
@@ -55,10 +55,23 @@ class SubmissionIdNotFound(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["missing_submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["missing_submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmissionIdNotFound.Validators.PreMissingSubmissionIdValidator],
+            SubmissionIdNotFound.Validators.PreMissingSubmissionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["missing_submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [SubmissionIdNotFound.Validators.MissingSubmissionIdValidator],
             SubmissionIdNotFound.Validators.MissingSubmissionIdValidator,
@@ -76,6 +89,10 @@ class SubmissionIdNotFound(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreMissingSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmissionIdNotFound.Partial) -> typing.Any:
+                ...
 
         class MissingSubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: SubmissionIdNotFound.Partial) -> SubmissionId:

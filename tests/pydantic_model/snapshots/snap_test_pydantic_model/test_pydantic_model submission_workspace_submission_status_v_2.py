@@ -32,7 +32,7 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionStatusV2.Validators._RootValidator]] = []
         _updates_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]
+            typing.List[WorkspaceSubmissionStatusV2.Validators.PreUpdatesValidator]
         ] = []
         _updates_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmissionStatusV2.Validators.UpdatesValidator]
@@ -56,10 +56,20 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["updates"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["updates"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmissionStatusV2.Validators.PreUpdatesValidator],
+            WorkspaceSubmissionStatusV2.Validators.PreUpdatesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["updates"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmissionStatusV2.Validators.UpdatesValidator],
             WorkspaceSubmissionStatusV2.Validators.UpdatesValidator,
@@ -77,6 +87,10 @@ class WorkspaceSubmissionStatusV2(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreUpdatesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmissionStatusV2.Partial) -> typing.Any:
+                ...
 
         class UpdatesValidator(typing_extensions.Protocol):
             def __call__(

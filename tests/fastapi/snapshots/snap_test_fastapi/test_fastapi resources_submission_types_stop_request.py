@@ -31,7 +31,9 @@ class StopRequest(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[StopRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StopRequest.Validators._RootValidator]] = []
-        _submission_id_pre_validators: typing.ClassVar[typing.List[StopRequest.Validators.SubmissionIdValidator]] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[StopRequest.Validators.PreSubmissionIdValidator]
+        ] = []
         _submission_id_post_validators: typing.ClassVar[typing.List[StopRequest.Validators.SubmissionIdValidator]] = []
 
         @classmethod
@@ -47,10 +49,22 @@ class StopRequest(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StopRequest.Validators.PreSubmissionIdValidator], StopRequest.Validators.PreSubmissionIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [StopRequest.Validators.SubmissionIdValidator], StopRequest.Validators.SubmissionIdValidator
         ]:
@@ -67,6 +81,10 @@ class StopRequest(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StopRequest.Partial) -> typing.Any:
+                ...
 
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: StopRequest.Partial) -> SubmissionId:

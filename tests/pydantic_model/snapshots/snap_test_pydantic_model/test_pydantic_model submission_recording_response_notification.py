@@ -58,31 +58,31 @@ class RecordingResponseNotification(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[RecordingResponseNotification.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[RecordingResponseNotification.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[RecordingResponseNotification.Validators.SubmissionIdValidator]
+            typing.List[RecordingResponseNotification.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.SubmissionIdValidator]
         ] = []
         _test_case_id_pre_validators: typing.ClassVar[
-            typing.List[RecordingResponseNotification.Validators.TestCaseIdValidator]
+            typing.List[RecordingResponseNotification.Validators.PreTestCaseIdValidator]
         ] = []
         _test_case_id_post_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.TestCaseIdValidator]
         ] = []
         _line_number_pre_validators: typing.ClassVar[
-            typing.List[RecordingResponseNotification.Validators.LineNumberValidator]
+            typing.List[RecordingResponseNotification.Validators.PreLineNumberValidator]
         ] = []
         _line_number_post_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.LineNumberValidator]
         ] = []
         _lightweight_stack_info_pre_validators: typing.ClassVar[
-            typing.List[RecordingResponseNotification.Validators.LightweightStackInfoValidator]
+            typing.List[RecordingResponseNotification.Validators.PreLightweightStackInfoValidator]
         ] = []
         _lightweight_stack_info_post_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.LightweightStackInfoValidator]
         ] = []
         _traced_file_pre_validators: typing.ClassVar[
-            typing.List[RecordingResponseNotification.Validators.TracedFileValidator]
+            typing.List[RecordingResponseNotification.Validators.PreTracedFileValidator]
         ] = []
         _traced_file_post_validators: typing.ClassVar[
             typing.List[RecordingResponseNotification.Validators.TracedFileValidator]
@@ -109,7 +109,20 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordingResponseNotification.Validators.PreSubmissionIdValidator],
+            RecordingResponseNotification.Validators.PreSubmissionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.SubmissionIdValidator],
             RecordingResponseNotification.Validators.SubmissionIdValidator,
@@ -119,7 +132,17 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordingResponseNotification.Validators.PreTestCaseIdValidator],
+            RecordingResponseNotification.Validators.PreTestCaseIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.TestCaseIdValidator],
             RecordingResponseNotification.Validators.TestCaseIdValidator,
@@ -129,7 +152,17 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordingResponseNotification.Validators.PreLineNumberValidator],
+            RecordingResponseNotification.Validators.PreLineNumberValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.LineNumberValidator],
             RecordingResponseNotification.Validators.LineNumberValidator,
@@ -139,7 +172,23 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["lightweight_stack_info"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["lightweight_stack_info"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [RecordingResponseNotification.Validators.PreLightweightStackInfoValidator],
+            RecordingResponseNotification.Validators.PreLightweightStackInfoValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["lightweight_stack_info"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.LightweightStackInfoValidator],
             RecordingResponseNotification.Validators.LightweightStackInfoValidator,
@@ -149,7 +198,17 @@ class RecordingResponseNotification(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["traced_file"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["traced_file"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordingResponseNotification.Validators.PreTracedFileValidator],
+            RecordingResponseNotification.Validators.PreTracedFileValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["traced_file"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [RecordingResponseNotification.Validators.TracedFileValidator],
             RecordingResponseNotification.Validators.TracedFileValidator,
@@ -188,8 +247,16 @@ class RecordingResponseNotification(pydantic.BaseModel):
 
             return decorator
 
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordingResponseNotification.Partial) -> typing.Any:
+                ...
+
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: RecordingResponseNotification.Partial) -> SubmissionId:
+                ...
+
+        class PreTestCaseIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordingResponseNotification.Partial) -> typing.Any:
                 ...
 
         class TestCaseIdValidator(typing_extensions.Protocol):
@@ -198,14 +265,26 @@ class RecordingResponseNotification(pydantic.BaseModel):
             ) -> typing.Optional[str]:
                 ...
 
+        class PreLineNumberValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordingResponseNotification.Partial) -> typing.Any:
+                ...
+
         class LineNumberValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: RecordingResponseNotification.Partial) -> int:
+                ...
+
+        class PreLightweightStackInfoValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordingResponseNotification.Partial) -> typing.Any:
                 ...
 
         class LightweightStackInfoValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: LightweightStackframeInformation, __values: RecordingResponseNotification.Partial
             ) -> LightweightStackframeInformation:
+                ...
+
+        class PreTracedFileValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordingResponseNotification.Partial) -> typing.Any:
                 ...
 
         class TracedFileValidator(typing_extensions.Protocol):

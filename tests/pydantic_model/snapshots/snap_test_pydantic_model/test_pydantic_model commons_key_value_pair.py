@@ -35,9 +35,9 @@ class KeyValuePair(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[KeyValuePair.Validators._RootValidator]] = []
-        _key_pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.KeyValidator]] = []
+        _key_pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.PreKeyValidator]] = []
         _key_post_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.KeyValidator]] = []
-        _value_pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.ValueValidator]] = []
+        _value_pre_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.PreValueValidator]] = []
         _value_post_validators: typing.ClassVar[typing.List[KeyValuePair.Validators.ValueValidator]] = []
 
         @classmethod
@@ -56,14 +56,28 @@ class KeyValuePair(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["key"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[KeyValuePair.Validators.PreKeyValidator], KeyValuePair.Validators.PreKeyValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["key"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[KeyValuePair.Validators.KeyValidator], KeyValuePair.Validators.KeyValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["value"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["value"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[KeyValuePair.Validators.PreValueValidator], KeyValuePair.Validators.PreValueValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["value"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[KeyValuePair.Validators.ValueValidator], KeyValuePair.Validators.ValueValidator]:
             ...
 
@@ -84,8 +98,16 @@ class KeyValuePair(pydantic.BaseModel):
 
             return decorator
 
+        class PreKeyValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: KeyValuePair.Partial) -> typing.Any:
+                ...
+
         class KeyValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableValue, __values: KeyValuePair.Partial) -> VariableValue:
+                ...
+
+        class PreValueValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: KeyValuePair.Partial) -> typing.Any:
                 ...
 
         class ValueValidator(typing_extensions.Protocol):

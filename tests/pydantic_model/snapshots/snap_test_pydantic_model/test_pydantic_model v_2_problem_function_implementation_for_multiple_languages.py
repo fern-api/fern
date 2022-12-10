@@ -37,7 +37,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
             typing.List[FunctionImplementationForMultipleLanguages.Validators._RootValidator]
         ] = []
         _code_by_language_pre_validators: typing.ClassVar[
-            typing.List[FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator]
+            typing.List[FunctionImplementationForMultipleLanguages.Validators.PreCodeByLanguageValidator]
         ] = []
         _code_by_language_post_validators: typing.ClassVar[
             typing.List[FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator]
@@ -61,10 +61,23 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code_by_language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["code_by_language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [FunctionImplementationForMultipleLanguages.Validators.PreCodeByLanguageValidator],
+            FunctionImplementationForMultipleLanguages.Validators.PreCodeByLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["code_by_language"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator],
             FunctionImplementationForMultipleLanguages.Validators.CodeByLanguageValidator,
@@ -82,6 +95,12 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreCodeByLanguageValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing.Any, __values: FunctionImplementationForMultipleLanguages.Partial
+            ) -> typing.Any:
+                ...
 
         class CodeByLanguageValidator(typing_extensions.Protocol):
             def __call__(

@@ -48,13 +48,13 @@ class Playlist(PlaylistCreateRequest):
 
         _pre_validators: typing.ClassVar[typing.List[Playlist.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[Playlist.Validators._RootValidator]] = []
-        _playlist_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
+        _playlist_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PrePlaylistIdValidator]] = []
         _playlist_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
-        _owner_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
+        _owner_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreOwnerIdValidator]] = []
         _owner_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
-        _name_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.NameValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[Playlist.Validators.NameValidator]] = []
-        _problems_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.ProblemsValidator]] = []
+        _problems_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreProblemsValidator]] = []
         _problems_post_validators: typing.ClassVar[typing.List[Playlist.Validators.ProblemsValidator]] = []
 
         @classmethod
@@ -73,28 +73,56 @@ class Playlist(PlaylistCreateRequest):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["playlist_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["playlist_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Playlist.Validators.PrePlaylistIdValidator], Playlist.Validators.PrePlaylistIdValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["playlist_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Playlist.Validators.PlaylistIdValidator], Playlist.Validators.PlaylistIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["owner_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["owner_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Playlist.Validators.PreOwnerIdValidator], Playlist.Validators.PreOwnerIdValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["owner_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Playlist.Validators.OwnerIdValidator], Playlist.Validators.OwnerIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Playlist.Validators.PreNameValidator], Playlist.Validators.PreNameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Playlist.Validators.NameValidator], Playlist.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problems"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problems"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Playlist.Validators.PreProblemsValidator], Playlist.Validators.PreProblemsValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problems"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Playlist.Validators.ProblemsValidator], Playlist.Validators.ProblemsValidator]:
             ...
 
@@ -125,16 +153,32 @@ class Playlist(PlaylistCreateRequest):
 
             return decorator
 
+        class PrePlaylistIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Playlist.Partial) -> typing.Any:
+                ...
+
         class PlaylistIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: PlaylistId, __values: Playlist.Partial) -> PlaylistId:
+                ...
+
+        class PreOwnerIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Playlist.Partial) -> typing.Any:
                 ...
 
         class OwnerIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: UserId, __values: Playlist.Partial) -> UserId:
                 ...
 
+        class PreNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Playlist.Partial) -> typing.Any:
+                ...
+
         class NameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: Playlist.Partial) -> str:
+                ...
+
+        class PreProblemsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Playlist.Partial) -> typing.Any:
                 ...
 
         class ProblemsValidator(typing_extensions.Protocol):

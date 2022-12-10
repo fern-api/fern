@@ -51,22 +51,24 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators._RootValidator]] = []
-        _updates_pre_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators.UpdatesValidator]] = []
+        _updates_pre_validators: typing.ClassVar[
+            typing.List[TestSubmissionStatusV2.Validators.PreUpdatesValidator]
+        ] = []
         _updates_post_validators: typing.ClassVar[typing.List[TestSubmissionStatusV2.Validators.UpdatesValidator]] = []
         _problem_id_pre_validators: typing.ClassVar[
-            typing.List[TestSubmissionStatusV2.Validators.ProblemIdValidator]
+            typing.List[TestSubmissionStatusV2.Validators.PreProblemIdValidator]
         ] = []
         _problem_id_post_validators: typing.ClassVar[
             typing.List[TestSubmissionStatusV2.Validators.ProblemIdValidator]
         ] = []
         _problem_version_pre_validators: typing.ClassVar[
-            typing.List[TestSubmissionStatusV2.Validators.ProblemVersionValidator]
+            typing.List[TestSubmissionStatusV2.Validators.PreProblemVersionValidator]
         ] = []
         _problem_version_post_validators: typing.ClassVar[
             typing.List[TestSubmissionStatusV2.Validators.ProblemVersionValidator]
         ] = []
         _problem_info_pre_validators: typing.ClassVar[
-            typing.List[TestSubmissionStatusV2.Validators.ProblemInfoValidator]
+            typing.List[TestSubmissionStatusV2.Validators.PreProblemInfoValidator]
         ] = []
         _problem_info_post_validators: typing.ClassVar[
             typing.List[TestSubmissionStatusV2.Validators.ProblemInfoValidator]
@@ -92,7 +94,17 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["updates"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["updates"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionStatusV2.Validators.PreUpdatesValidator],
+            TestSubmissionStatusV2.Validators.PreUpdatesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["updates"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.UpdatesValidator], TestSubmissionStatusV2.Validators.UpdatesValidator
         ]:
@@ -101,7 +113,17 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionStatusV2.Validators.PreProblemIdValidator],
+            TestSubmissionStatusV2.Validators.PreProblemIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.ProblemIdValidator], TestSubmissionStatusV2.Validators.ProblemIdValidator
         ]:
@@ -110,7 +132,20 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionStatusV2.Validators.PreProblemVersionValidator],
+            TestSubmissionStatusV2.Validators.PreProblemVersionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["problem_version"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.ProblemVersionValidator],
             TestSubmissionStatusV2.Validators.ProblemVersionValidator,
@@ -120,7 +155,17 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_info"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_info"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestSubmissionStatusV2.Validators.PreProblemInfoValidator],
+            TestSubmissionStatusV2.Validators.PreProblemInfoValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_info"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestSubmissionStatusV2.Validators.ProblemInfoValidator],
             TestSubmissionStatusV2.Validators.ProblemInfoValidator,
@@ -154,18 +199,34 @@ class TestSubmissionStatusV2(pydantic.BaseModel):
 
             return decorator
 
+        class PreUpdatesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionStatusV2.Partial) -> typing.Any:
+                ...
+
         class UpdatesValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[TestSubmissionUpdate], __values: TestSubmissionStatusV2.Partial
             ) -> typing.List[TestSubmissionUpdate]:
                 ...
 
+        class PreProblemIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionStatusV2.Partial) -> typing.Any:
+                ...
+
         class ProblemIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemId, __values: TestSubmissionStatusV2.Partial) -> ProblemId:
                 ...
 
+        class PreProblemVersionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionStatusV2.Partial) -> typing.Any:
+                ...
+
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: TestSubmissionStatusV2.Partial) -> int:
+                ...
+
+        class PreProblemInfoValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestSubmissionStatusV2.Partial) -> typing.Any:
                 ...
 
         class ProblemInfoValidator(typing_extensions.Protocol):

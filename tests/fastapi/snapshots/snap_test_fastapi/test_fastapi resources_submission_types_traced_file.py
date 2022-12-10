@@ -35,9 +35,9 @@ class TracedFile(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TracedFile.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TracedFile.Validators._RootValidator]] = []
-        _filename_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
+        _filename_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.PreFilenameValidator]] = []
         _filename_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.FilenameValidator]] = []
-        _directory_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
+        _directory_pre_validators: typing.ClassVar[typing.List[TracedFile.Validators.PreDirectoryValidator]] = []
         _directory_post_validators: typing.ClassVar[typing.List[TracedFile.Validators.DirectoryValidator]] = []
 
         @classmethod
@@ -56,14 +56,30 @@ class TracedFile(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[TracedFile.Validators.PreFilenameValidator], TracedFile.Validators.PreFilenameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TracedFile.Validators.FilenameValidator], TracedFile.Validators.FilenameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TracedFile.Validators.PreDirectoryValidator], TracedFile.Validators.PreDirectoryValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TracedFile.Validators.DirectoryValidator], TracedFile.Validators.DirectoryValidator]:
             ...
 
@@ -84,8 +100,16 @@ class TracedFile(pydantic.BaseModel):
 
             return decorator
 
+        class PreFilenameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TracedFile.Partial) -> typing.Any:
+                ...
+
         class FilenameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: TracedFile.Partial) -> str:
+                ...
+
+        class PreDirectoryValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TracedFile.Partial) -> typing.Any:
                 ...
 
         class DirectoryValidator(typing_extensions.Protocol):

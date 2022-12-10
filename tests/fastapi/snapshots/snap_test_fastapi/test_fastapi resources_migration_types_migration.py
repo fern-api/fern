@@ -37,9 +37,9 @@ class Migration(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[Migration.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[Migration.Validators._RootValidator]] = []
-        _name_pre_validators: typing.ClassVar[typing.List[Migration.Validators.NameValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Migration.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[Migration.Validators.NameValidator]] = []
-        _status_pre_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
+        _status_pre_validators: typing.ClassVar[typing.List[Migration.Validators.PreStatusValidator]] = []
         _status_post_validators: typing.ClassVar[typing.List[Migration.Validators.StatusValidator]] = []
 
         @classmethod
@@ -58,14 +58,28 @@ class Migration(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Migration.Validators.PreNameValidator], Migration.Validators.PreNameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Migration.Validators.NameValidator], Migration.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["status"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Migration.Validators.PreStatusValidator], Migration.Validators.PreStatusValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Migration.Validators.StatusValidator], Migration.Validators.StatusValidator]:
             ...
 
@@ -86,8 +100,16 @@ class Migration(pydantic.BaseModel):
 
             return decorator
 
+        class PreNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Migration.Partial) -> typing.Any:
+                ...
+
         class NameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: Migration.Partial) -> str:
+                ...
+
+        class PreStatusValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Migration.Partial) -> typing.Any:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):

@@ -32,7 +32,7 @@ class VoidFunctionSignature(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[VoidFunctionSignature.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[VoidFunctionSignature.Validators._RootValidator]] = []
         _parameters_pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionSignature.Validators.ParametersValidator]
+            typing.List[VoidFunctionSignature.Validators.PreParametersValidator]
         ] = []
         _parameters_post_validators: typing.ClassVar[
             typing.List[VoidFunctionSignature.Validators.ParametersValidator]
@@ -55,10 +55,20 @@ class VoidFunctionSignature(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionSignature.Validators.PreParametersValidator],
+            VoidFunctionSignature.Validators.PreParametersValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VoidFunctionSignature.Validators.ParametersValidator], VoidFunctionSignature.Validators.ParametersValidator
         ]:
@@ -75,6 +85,10 @@ class VoidFunctionSignature(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreParametersValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: VoidFunctionSignature.Partial) -> typing.Any:
+                ...
 
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(

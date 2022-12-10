@@ -35,9 +35,11 @@ class FunctionImplementation(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators._RootValidator]] = []
-        _impl_pre_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImplValidator]] = []
+        _impl_pre_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.PreImplValidator]] = []
         _impl_post_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImplValidator]] = []
-        _imports_pre_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
+        _imports_pre_validators: typing.ClassVar[
+            typing.List[FunctionImplementation.Validators.PreImportsValidator]
+        ] = []
         _imports_post_validators: typing.ClassVar[typing.List[FunctionImplementation.Validators.ImportsValidator]] = []
 
         @classmethod
@@ -60,7 +62,16 @@ class FunctionImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["impl"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["impl"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [FunctionImplementation.Validators.PreImplValidator], FunctionImplementation.Validators.PreImplValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["impl"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [FunctionImplementation.Validators.ImplValidator], FunctionImplementation.Validators.ImplValidator
         ]:
@@ -69,7 +80,17 @@ class FunctionImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["imports"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["imports"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [FunctionImplementation.Validators.PreImportsValidator],
+            FunctionImplementation.Validators.PreImportsValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["imports"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [FunctionImplementation.Validators.ImportsValidator], FunctionImplementation.Validators.ImportsValidator
         ]:
@@ -92,8 +113,16 @@ class FunctionImplementation(pydantic.BaseModel):
 
             return decorator
 
+        class PreImplValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FunctionImplementation.Partial) -> typing.Any:
+                ...
+
         class ImplValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: FunctionImplementation.Partial) -> str:
+                ...
+
+        class PreImportsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FunctionImplementation.Partial) -> typing.Any:
                 ...
 
         class ImportsValidator(typing_extensions.Protocol):

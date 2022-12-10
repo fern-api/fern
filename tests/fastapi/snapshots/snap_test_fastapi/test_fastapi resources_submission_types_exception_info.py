@@ -42,19 +42,19 @@ class ExceptionInfo(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExceptionInfo.Validators._RootValidator]] = []
         _exception_type_pre_validators: typing.ClassVar[
-            typing.List[ExceptionInfo.Validators.ExceptionTypeValidator]
+            typing.List[ExceptionInfo.Validators.PreExceptionTypeValidator]
         ] = []
         _exception_type_post_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionTypeValidator]
         ] = []
         _exception_message_pre_validators: typing.ClassVar[
-            typing.List[ExceptionInfo.Validators.ExceptionMessageValidator]
+            typing.List[ExceptionInfo.Validators.PreExceptionMessageValidator]
         ] = []
         _exception_message_post_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionMessageValidator]
         ] = []
         _exception_stacktrace_pre_validators: typing.ClassVar[
-            typing.List[ExceptionInfo.Validators.ExceptionStacktraceValidator]
+            typing.List[ExceptionInfo.Validators.PreExceptionStacktraceValidator]
         ] = []
         _exception_stacktrace_post_validators: typing.ClassVar[
             typing.List[ExceptionInfo.Validators.ExceptionStacktraceValidator]
@@ -78,7 +78,19 @@ class ExceptionInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExceptionInfo.Validators.PreExceptionTypeValidator], ExceptionInfo.Validators.PreExceptionTypeValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["exception_type"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ExceptionInfo.Validators.ExceptionTypeValidator], ExceptionInfo.Validators.ExceptionTypeValidator
         ]:
@@ -87,7 +99,20 @@ class ExceptionInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_message"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception_message"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExceptionInfo.Validators.PreExceptionMessageValidator],
+            ExceptionInfo.Validators.PreExceptionMessageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["exception_message"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ExceptionInfo.Validators.ExceptionMessageValidator], ExceptionInfo.Validators.ExceptionMessageValidator
         ]:
@@ -96,7 +121,20 @@ class ExceptionInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_stacktrace"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception_stacktrace"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExceptionInfo.Validators.PreExceptionStacktraceValidator],
+            ExceptionInfo.Validators.PreExceptionStacktraceValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["exception_stacktrace"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ExceptionInfo.Validators.ExceptionStacktraceValidator],
             ExceptionInfo.Validators.ExceptionStacktraceValidator,
@@ -125,12 +163,24 @@ class ExceptionInfo(pydantic.BaseModel):
 
             return decorator
 
+        class PreExceptionTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExceptionInfo.Partial) -> typing.Any:
+                ...
+
         class ExceptionTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: ExceptionInfo.Partial) -> str:
                 ...
 
+        class PreExceptionMessageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExceptionInfo.Partial) -> typing.Any:
+                ...
+
         class ExceptionMessageValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: ExceptionInfo.Partial) -> str:
+                ...
+
+        class PreExceptionStacktraceValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExceptionInfo.Partial) -> typing.Any:
                 ...
 
         class ExceptionStacktraceValidator(typing_extensions.Protocol):

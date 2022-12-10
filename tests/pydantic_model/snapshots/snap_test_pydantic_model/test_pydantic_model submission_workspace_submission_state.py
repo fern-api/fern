@@ -31,7 +31,9 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators._RootValidator]] = []
-        _status_pre_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators.StatusValidator]] = []
+        _status_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceSubmissionState.Validators.PreStatusValidator]
+        ] = []
         _status_post_validators: typing.ClassVar[typing.List[WorkspaceSubmissionState.Validators.StatusValidator]] = []
 
         @classmethod
@@ -51,10 +53,20 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["status"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmissionState.Validators.PreStatusValidator],
+            WorkspaceSubmissionState.Validators.PreStatusValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmissionState.Validators.StatusValidator], WorkspaceSubmissionState.Validators.StatusValidator
         ]:
@@ -71,6 +83,10 @@ class WorkspaceSubmissionState(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreStatusValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmissionState.Partial) -> typing.Any:
+                ...
 
         class StatusValidator(typing_extensions.Protocol):
             def __call__(

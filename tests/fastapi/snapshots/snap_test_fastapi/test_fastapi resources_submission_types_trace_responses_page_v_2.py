@@ -42,10 +42,10 @@ class TraceResponsesPageV2(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TraceResponsesPageV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TraceResponsesPageV2.Validators._RootValidator]] = []
-        _offset_pre_validators: typing.ClassVar[typing.List[TraceResponsesPageV2.Validators.OffsetValidator]] = []
+        _offset_pre_validators: typing.ClassVar[typing.List[TraceResponsesPageV2.Validators.PreOffsetValidator]] = []
         _offset_post_validators: typing.ClassVar[typing.List[TraceResponsesPageV2.Validators.OffsetValidator]] = []
         _trace_responses_pre_validators: typing.ClassVar[
-            typing.List[TraceResponsesPageV2.Validators.TraceResponsesValidator]
+            typing.List[TraceResponsesPageV2.Validators.PreTraceResponsesValidator]
         ] = []
         _trace_responses_post_validators: typing.ClassVar[
             typing.List[TraceResponsesPageV2.Validators.TraceResponsesValidator]
@@ -71,7 +71,16 @@ class TraceResponsesPageV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponsesPageV2.Validators.PreOffsetValidator], TraceResponsesPageV2.Validators.PreOffsetValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TraceResponsesPageV2.Validators.OffsetValidator], TraceResponsesPageV2.Validators.OffsetValidator
         ]:
@@ -80,7 +89,20 @@ class TraceResponsesPageV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponsesPageV2.Validators.PreTraceResponsesValidator],
+            TraceResponsesPageV2.Validators.PreTraceResponsesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["trace_responses"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TraceResponsesPageV2.Validators.TraceResponsesValidator],
             TraceResponsesPageV2.Validators.TraceResponsesValidator,
@@ -104,10 +126,18 @@ class TraceResponsesPageV2(pydantic.BaseModel):
 
             return decorator
 
+        class PreOffsetValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponsesPageV2.Partial) -> typing.Any:
+                ...
+
         class OffsetValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[int], __values: TraceResponsesPageV2.Partial
             ) -> typing.Optional[int]:
+                ...
+
+        class PreTraceResponsesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponsesPageV2.Partial) -> typing.Any:
                 ...
 
         class TraceResponsesValidator(typing_extensions.Protocol):

@@ -49,15 +49,17 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators._RootValidator]] = []
-        _node_id_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.NodeIdValidator]] = []
+        _node_id_pre_validators: typing.ClassVar[
+            typing.List[DoublyLinkedListNodeValue.Validators.PreNodeIdValidator]
+        ] = []
         _node_id_post_validators: typing.ClassVar[
             typing.List[DoublyLinkedListNodeValue.Validators.NodeIdValidator]
         ] = []
-        _val_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.ValValidator]] = []
+        _val_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PreValValidator]] = []
         _val_post_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.ValValidator]] = []
-        _next_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.NextValidator]] = []
+        _next_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PreNextValidator]] = []
         _next_post_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.NextValidator]] = []
-        _prev_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PrevValidator]] = []
+        _prev_pre_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PrePrevValidator]] = []
         _prev_post_validators: typing.ClassVar[typing.List[DoublyLinkedListNodeValue.Validators.PrevValidator]] = []
 
         @classmethod
@@ -80,7 +82,17 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DoublyLinkedListNodeValue.Validators.PreNodeIdValidator],
+            DoublyLinkedListNodeValue.Validators.PreNodeIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.NodeIdValidator], DoublyLinkedListNodeValue.Validators.NodeIdValidator
         ]:
@@ -89,7 +101,16 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["val"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["val"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DoublyLinkedListNodeValue.Validators.PreValValidator], DoublyLinkedListNodeValue.Validators.PreValValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["val"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.ValValidator], DoublyLinkedListNodeValue.Validators.ValValidator
         ]:
@@ -98,7 +119,17 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["next"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["next"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DoublyLinkedListNodeValue.Validators.PreNextValidator],
+            DoublyLinkedListNodeValue.Validators.PreNextValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["next"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.NextValidator], DoublyLinkedListNodeValue.Validators.NextValidator
         ]:
@@ -107,7 +138,17 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["prev"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["prev"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [DoublyLinkedListNodeValue.Validators.PrePrevValidator],
+            DoublyLinkedListNodeValue.Validators.PrePrevValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["prev"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [DoublyLinkedListNodeValue.Validators.PrevValidator], DoublyLinkedListNodeValue.Validators.PrevValidator
         ]:
@@ -140,18 +181,34 @@ class DoublyLinkedListNodeValue(pydantic.BaseModel):
 
             return decorator
 
+        class PreNodeIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: DoublyLinkedListNodeValue.Partial) -> typing.Any:
+                ...
+
         class NodeIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: NodeId, __values: DoublyLinkedListNodeValue.Partial) -> NodeId:
+                ...
+
+        class PreValValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: DoublyLinkedListNodeValue.Partial) -> typing.Any:
                 ...
 
         class ValValidator(typing_extensions.Protocol):
             def __call__(self, __v: float, __values: DoublyLinkedListNodeValue.Partial) -> float:
                 ...
 
+        class PreNextValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: DoublyLinkedListNodeValue.Partial) -> typing.Any:
+                ...
+
         class NextValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[NodeId], __values: DoublyLinkedListNodeValue.Partial
             ) -> typing.Optional[NodeId]:
+                ...
+
+        class PrePrevValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: DoublyLinkedListNodeValue.Partial) -> typing.Any:
                 ...
 
         class PrevValidator(typing_extensions.Protocol):

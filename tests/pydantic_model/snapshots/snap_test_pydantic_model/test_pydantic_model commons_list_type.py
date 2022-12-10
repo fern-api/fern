@@ -40,9 +40,11 @@ class ListType(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[ListType.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ListType.Validators._RootValidator]] = []
-        _value_type_pre_validators: typing.ClassVar[typing.List[ListType.Validators.ValueTypeValidator]] = []
+        _value_type_pre_validators: typing.ClassVar[typing.List[ListType.Validators.PreValueTypeValidator]] = []
         _value_type_post_validators: typing.ClassVar[typing.List[ListType.Validators.ValueTypeValidator]] = []
-        _is_fixed_length_pre_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
+        _is_fixed_length_pre_validators: typing.ClassVar[
+            typing.List[ListType.Validators.PreIsFixedLengthValidator]
+        ] = []
         _is_fixed_length_post_validators: typing.ClassVar[typing.List[ListType.Validators.IsFixedLengthValidator]] = []
 
         @classmethod
@@ -61,14 +63,33 @@ class ListType(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["value_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["value_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[ListType.Validators.PreValueTypeValidator], ListType.Validators.PreValueTypeValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["value_type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ListType.Validators.ValueTypeValidator], ListType.Validators.ValueTypeValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["is_fixed_length"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["is_fixed_length"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ListType.Validators.PreIsFixedLengthValidator], ListType.Validators.PreIsFixedLengthValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["is_fixed_length"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[[ListType.Validators.IsFixedLengthValidator], ListType.Validators.IsFixedLengthValidator]:
             ...
 
@@ -89,8 +110,16 @@ class ListType(pydantic.BaseModel):
 
             return decorator
 
+        class PreValueTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ListType.Partial) -> typing.Any:
+                ...
+
         class ValueTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableType, __values: ListType.Partial) -> VariableType:
+                ...
+
+        class PreIsFixedLengthValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ListType.Partial) -> typing.Any:
                 ...
 
         class IsFixedLengthValidator(typing_extensions.Protocol):

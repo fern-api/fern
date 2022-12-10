@@ -39,13 +39,13 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[CustomTestCasesUnsupported.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[CustomTestCasesUnsupported.Validators._RootValidator]] = []
         _problem_id_pre_validators: typing.ClassVar[
-            typing.List[CustomTestCasesUnsupported.Validators.ProblemIdValidator]
+            typing.List[CustomTestCasesUnsupported.Validators.PreProblemIdValidator]
         ] = []
         _problem_id_post_validators: typing.ClassVar[
             typing.List[CustomTestCasesUnsupported.Validators.ProblemIdValidator]
         ] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[CustomTestCasesUnsupported.Validators.SubmissionIdValidator]
+            typing.List[CustomTestCasesUnsupported.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[CustomTestCasesUnsupported.Validators.SubmissionIdValidator]
@@ -71,7 +71,17 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [CustomTestCasesUnsupported.Validators.PreProblemIdValidator],
+            CustomTestCasesUnsupported.Validators.PreProblemIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [CustomTestCasesUnsupported.Validators.ProblemIdValidator],
             CustomTestCasesUnsupported.Validators.ProblemIdValidator,
@@ -81,7 +91,20 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [CustomTestCasesUnsupported.Validators.PreSubmissionIdValidator],
+            CustomTestCasesUnsupported.Validators.PreSubmissionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [CustomTestCasesUnsupported.Validators.SubmissionIdValidator],
             CustomTestCasesUnsupported.Validators.SubmissionIdValidator,
@@ -105,8 +128,16 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
 
             return decorator
 
+        class PreProblemIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: CustomTestCasesUnsupported.Partial) -> typing.Any:
+                ...
+
         class ProblemIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemId, __values: CustomTestCasesUnsupported.Partial) -> ProblemId:
+                ...
+
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: CustomTestCasesUnsupported.Partial) -> typing.Any:
                 ...
 
         class SubmissionIdValidator(typing_extensions.Protocol):

@@ -30,7 +30,7 @@ class TestCaseExpects(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[TestCaseExpects.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseExpects.Validators._RootValidator]] = []
         _expected_stdout_pre_validators: typing.ClassVar[
-            typing.List[TestCaseExpects.Validators.ExpectedStdoutValidator]
+            typing.List[TestCaseExpects.Validators.PreExpectedStdoutValidator]
         ] = []
         _expected_stdout_post_validators: typing.ClassVar[
             typing.List[TestCaseExpects.Validators.ExpectedStdoutValidator]
@@ -51,10 +51,23 @@ class TestCaseExpects(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_stdout"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["expected_stdout"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseExpects.Validators.PreExpectedStdoutValidator],
+            TestCaseExpects.Validators.PreExpectedStdoutValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["expected_stdout"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestCaseExpects.Validators.ExpectedStdoutValidator], TestCaseExpects.Validators.ExpectedStdoutValidator
         ]:
@@ -71,6 +84,10 @@ class TestCaseExpects(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreExpectedStdoutValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseExpects.Partial) -> typing.Any:
+                ...
 
         class ExpectedStdoutValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.Optional[str], __values: TestCaseExpects.Partial) -> typing.Optional[str]:

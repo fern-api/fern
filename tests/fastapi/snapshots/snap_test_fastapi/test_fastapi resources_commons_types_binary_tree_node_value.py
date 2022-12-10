@@ -49,13 +49,13 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators._RootValidator]] = []
-        _node_id_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
+        _node_id_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.PreNodeIdValidator]] = []
         _node_id_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.NodeIdValidator]] = []
-        _val_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.ValValidator]] = []
+        _val_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.PreValValidator]] = []
         _val_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.ValValidator]] = []
-        _right_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.RightValidator]] = []
+        _right_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.PreRightValidator]] = []
         _right_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.RightValidator]] = []
-        _left_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
+        _left_pre_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.PreLeftValidator]] = []
         _left_post_validators: typing.ClassVar[typing.List[BinaryTreeNodeValue.Validators.LeftValidator]] = []
 
         @classmethod
@@ -78,7 +78,16 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeNodeValue.Validators.PreNodeIdValidator], BinaryTreeNodeValue.Validators.PreNodeIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.NodeIdValidator], BinaryTreeNodeValue.Validators.NodeIdValidator
         ]:
@@ -87,7 +96,16 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["val"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["val"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeNodeValue.Validators.PreValValidator], BinaryTreeNodeValue.Validators.PreValValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["val"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.ValValidator], BinaryTreeNodeValue.Validators.ValValidator
         ]:
@@ -96,7 +114,16 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["right"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["right"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeNodeValue.Validators.PreRightValidator], BinaryTreeNodeValue.Validators.PreRightValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["right"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.RightValidator], BinaryTreeNodeValue.Validators.RightValidator
         ]:
@@ -105,7 +132,16 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["left"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["left"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeNodeValue.Validators.PreLeftValidator], BinaryTreeNodeValue.Validators.PreLeftValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["left"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BinaryTreeNodeValue.Validators.LeftValidator], BinaryTreeNodeValue.Validators.LeftValidator
         ]:
@@ -138,18 +174,34 @@ class BinaryTreeNodeValue(pydantic.BaseModel):
 
             return decorator
 
+        class PreNodeIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BinaryTreeNodeValue.Partial) -> typing.Any:
+                ...
+
         class NodeIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: NodeId, __values: BinaryTreeNodeValue.Partial) -> NodeId:
+                ...
+
+        class PreValValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BinaryTreeNodeValue.Partial) -> typing.Any:
                 ...
 
         class ValValidator(typing_extensions.Protocol):
             def __call__(self, __v: float, __values: BinaryTreeNodeValue.Partial) -> float:
                 ...
 
+        class PreRightValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BinaryTreeNodeValue.Partial) -> typing.Any:
+                ...
+
         class RightValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[NodeId], __values: BinaryTreeNodeValue.Partial
             ) -> typing.Optional[NodeId]:
+                ...
+
+        class PreLeftValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BinaryTreeNodeValue.Partial) -> typing.Any:
                 ...
 
         class LeftValidator(typing_extensions.Protocol):

@@ -29,7 +29,9 @@ class MapValue(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[MapValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[MapValue.Validators._RootValidator]] = []
-        _key_value_pairs_pre_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
+        _key_value_pairs_pre_validators: typing.ClassVar[
+            typing.List[MapValue.Validators.PreKeyValuePairsValidator]
+        ] = []
         _key_value_pairs_post_validators: typing.ClassVar[typing.List[MapValue.Validators.KeyValuePairsValidator]] = []
 
         @classmethod
@@ -45,10 +47,22 @@ class MapValue(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key_value_pairs"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["key_value_pairs"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [MapValue.Validators.PreKeyValuePairsValidator], MapValue.Validators.PreKeyValuePairsValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["key_value_pairs"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[[MapValue.Validators.KeyValuePairsValidator], MapValue.Validators.KeyValuePairsValidator]:
             ...
 
@@ -63,6 +77,10 @@ class MapValue(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreKeyValuePairsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: MapValue.Partial) -> typing.Any:
+                ...
 
         class KeyValuePairsValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.List[KeyValuePair], __values: MapValue.Partial) -> typing.List[KeyValuePair]:

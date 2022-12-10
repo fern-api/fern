@@ -65,28 +65,28 @@ class SubmitRequestV2(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[SubmitRequestV2.Validators.SubmissionIdValidator]
+            typing.List[SubmitRequestV2.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[SubmitRequestV2.Validators.SubmissionIdValidator]
         ] = []
-        _language_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.LanguageValidator]] = []
+        _language_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.PreLanguageValidator]] = []
         _language_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.LanguageValidator]] = []
         _submission_files_pre_validators: typing.ClassVar[
-            typing.List[SubmitRequestV2.Validators.SubmissionFilesValidator]
+            typing.List[SubmitRequestV2.Validators.PreSubmissionFilesValidator]
         ] = []
         _submission_files_post_validators: typing.ClassVar[
             typing.List[SubmitRequestV2.Validators.SubmissionFilesValidator]
         ] = []
-        _problem_id_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.ProblemIdValidator]] = []
+        _problem_id_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.PreProblemIdValidator]] = []
         _problem_id_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.ProblemIdValidator]] = []
         _problem_version_pre_validators: typing.ClassVar[
-            typing.List[SubmitRequestV2.Validators.ProblemVersionValidator]
+            typing.List[SubmitRequestV2.Validators.PreProblemVersionValidator]
         ] = []
         _problem_version_post_validators: typing.ClassVar[
             typing.List[SubmitRequestV2.Validators.ProblemVersionValidator]
         ] = []
-        _user_id_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
+        _user_id_pre_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.PreUserIdValidator]] = []
         _user_id_post_validators: typing.ClassVar[typing.List[SubmitRequestV2.Validators.UserIdValidator]] = []
 
         @classmethod
@@ -107,7 +107,19 @@ class SubmitRequestV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmitRequestV2.Validators.PreSubmissionIdValidator], SubmitRequestV2.Validators.PreSubmissionIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [SubmitRequestV2.Validators.SubmissionIdValidator], SubmitRequestV2.Validators.SubmissionIdValidator
         ]:
@@ -116,7 +128,16 @@ class SubmitRequestV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmitRequestV2.Validators.PreLanguageValidator], SubmitRequestV2.Validators.PreLanguageValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SubmitRequestV2.Validators.LanguageValidator], SubmitRequestV2.Validators.LanguageValidator
         ]:
@@ -125,7 +146,20 @@ class SubmitRequestV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmitRequestV2.Validators.PreSubmissionFilesValidator],
+            SubmitRequestV2.Validators.PreSubmissionFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_files"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [SubmitRequestV2.Validators.SubmissionFilesValidator], SubmitRequestV2.Validators.SubmissionFilesValidator
         ]:
@@ -134,7 +168,16 @@ class SubmitRequestV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmitRequestV2.Validators.PreProblemIdValidator], SubmitRequestV2.Validators.PreProblemIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SubmitRequestV2.Validators.ProblemIdValidator], SubmitRequestV2.Validators.ProblemIdValidator
         ]:
@@ -143,7 +186,20 @@ class SubmitRequestV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmitRequestV2.Validators.PreProblemVersionValidator],
+            SubmitRequestV2.Validators.PreProblemVersionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["problem_version"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [SubmitRequestV2.Validators.ProblemVersionValidator], SubmitRequestV2.Validators.ProblemVersionValidator
         ]:
@@ -152,7 +208,16 @@ class SubmitRequestV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["user_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["user_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmitRequestV2.Validators.PreUserIdValidator], SubmitRequestV2.Validators.PreUserIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["user_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[SubmitRequestV2.Validators.UserIdValidator], SubmitRequestV2.Validators.UserIdValidator]:
             ...
 
@@ -193,12 +258,24 @@ class SubmitRequestV2(pydantic.BaseModel):
 
             return decorator
 
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmitRequestV2.Partial) -> typing.Any:
+                ...
+
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: SubmitRequestV2.Partial) -> SubmissionId:
                 ...
 
+        class PreLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmitRequestV2.Partial) -> typing.Any:
+                ...
+
         class LanguageValidator(typing_extensions.Protocol):
             def __call__(self, __v: Language, __values: SubmitRequestV2.Partial) -> Language:
+                ...
+
+        class PreSubmissionFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmitRequestV2.Partial) -> typing.Any:
                 ...
 
         class SubmissionFilesValidator(typing_extensions.Protocol):
@@ -207,12 +284,24 @@ class SubmitRequestV2(pydantic.BaseModel):
             ) -> typing.List[SubmissionFileInfo]:
                 ...
 
+        class PreProblemIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmitRequestV2.Partial) -> typing.Any:
+                ...
+
         class ProblemIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemId, __values: SubmitRequestV2.Partial) -> ProblemId:
                 ...
 
+        class PreProblemVersionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmitRequestV2.Partial) -> typing.Any:
+                ...
+
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.Optional[int], __values: SubmitRequestV2.Partial) -> typing.Optional[int]:
+                ...
+
+        class PreUserIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmitRequestV2.Partial) -> typing.Any:
                 ...
 
         class UserIdValidator(typing_extensions.Protocol):

@@ -33,7 +33,7 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetDefaultStarterFilesResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetDefaultStarterFilesResponse.Validators._RootValidator]] = []
         _files_pre_validators: typing.ClassVar[
-            typing.List[GetDefaultStarterFilesResponse.Validators.FilesValidator]
+            typing.List[GetDefaultStarterFilesResponse.Validators.PreFilesValidator]
         ] = []
         _files_post_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesResponse.Validators.FilesValidator]
@@ -57,10 +57,20 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetDefaultStarterFilesResponse.Validators.PreFilesValidator],
+            GetDefaultStarterFilesResponse.Validators.PreFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesResponse.Validators.FilesValidator],
             GetDefaultStarterFilesResponse.Validators.FilesValidator,
@@ -78,6 +88,10 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetDefaultStarterFilesResponse.Partial) -> typing.Any:
+                ...
 
         class FilesValidator(typing_extensions.Protocol):
             def __call__(

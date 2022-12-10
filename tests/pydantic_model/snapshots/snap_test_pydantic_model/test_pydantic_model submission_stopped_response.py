@@ -32,7 +32,7 @@ class StoppedResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[StoppedResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StoppedResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[StoppedResponse.Validators.SubmissionIdValidator]
+            typing.List[StoppedResponse.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[StoppedResponse.Validators.SubmissionIdValidator]
@@ -53,10 +53,22 @@ class StoppedResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StoppedResponse.Validators.PreSubmissionIdValidator], StoppedResponse.Validators.PreSubmissionIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [StoppedResponse.Validators.SubmissionIdValidator], StoppedResponse.Validators.SubmissionIdValidator
         ]:
@@ -73,6 +85,10 @@ class StoppedResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StoppedResponse.Partial) -> typing.Any:
+                ...
 
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: StoppedResponse.Partial) -> SubmissionId:

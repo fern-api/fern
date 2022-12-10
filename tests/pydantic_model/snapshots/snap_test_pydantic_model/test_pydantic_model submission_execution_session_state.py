@@ -63,32 +63,34 @@ class ExecutionSessionState(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators._RootValidator]] = []
         _last_time_contacted_pre_validators: typing.ClassVar[
-            typing.List[ExecutionSessionState.Validators.LastTimeContactedValidator]
+            typing.List[ExecutionSessionState.Validators.PreLastTimeContactedValidator]
         ] = []
         _last_time_contacted_post_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.LastTimeContactedValidator]
         ] = []
         _session_id_pre_validators: typing.ClassVar[
-            typing.List[ExecutionSessionState.Validators.SessionIdValidator]
+            typing.List[ExecutionSessionState.Validators.PreSessionIdValidator]
         ] = []
         _session_id_post_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.SessionIdValidator]
         ] = []
         _is_warm_instance_pre_validators: typing.ClassVar[
-            typing.List[ExecutionSessionState.Validators.IsWarmInstanceValidator]
+            typing.List[ExecutionSessionState.Validators.PreIsWarmInstanceValidator]
         ] = []
         _is_warm_instance_post_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.IsWarmInstanceValidator]
         ] = []
         _aws_task_id_pre_validators: typing.ClassVar[
-            typing.List[ExecutionSessionState.Validators.AwsTaskIdValidator]
+            typing.List[ExecutionSessionState.Validators.PreAwsTaskIdValidator]
         ] = []
         _aws_task_id_post_validators: typing.ClassVar[
             typing.List[ExecutionSessionState.Validators.AwsTaskIdValidator]
         ] = []
-        _language_pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.LanguageValidator]] = []
+        _language_pre_validators: typing.ClassVar[
+            typing.List[ExecutionSessionState.Validators.PreLanguageValidator]
+        ] = []
         _language_post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.LanguageValidator]] = []
-        _status_pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
+        _status_pre_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.PreStatusValidator]] = []
         _status_post_validators: typing.ClassVar[typing.List[ExecutionSessionState.Validators.StatusValidator]] = []
 
         @classmethod
@@ -111,7 +113,20 @@ class ExecutionSessionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["last_time_contacted"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["last_time_contacted"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators.PreLastTimeContactedValidator],
+            ExecutionSessionState.Validators.PreLastTimeContactedValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["last_time_contacted"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ExecutionSessionState.Validators.LastTimeContactedValidator],
             ExecutionSessionState.Validators.LastTimeContactedValidator,
@@ -121,7 +136,17 @@ class ExecutionSessionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["session_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["session_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators.PreSessionIdValidator],
+            ExecutionSessionState.Validators.PreSessionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["session_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExecutionSessionState.Validators.SessionIdValidator], ExecutionSessionState.Validators.SessionIdValidator
         ]:
@@ -130,7 +155,20 @@ class ExecutionSessionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["is_warm_instance"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["is_warm_instance"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators.PreIsWarmInstanceValidator],
+            ExecutionSessionState.Validators.PreIsWarmInstanceValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["is_warm_instance"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ExecutionSessionState.Validators.IsWarmInstanceValidator],
             ExecutionSessionState.Validators.IsWarmInstanceValidator,
@@ -140,7 +178,17 @@ class ExecutionSessionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["aws_task_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["aws_task_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators.PreAwsTaskIdValidator],
+            ExecutionSessionState.Validators.PreAwsTaskIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["aws_task_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExecutionSessionState.Validators.AwsTaskIdValidator], ExecutionSessionState.Validators.AwsTaskIdValidator
         ]:
@@ -149,7 +197,17 @@ class ExecutionSessionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators.PreLanguageValidator],
+            ExecutionSessionState.Validators.PreLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExecutionSessionState.Validators.LanguageValidator], ExecutionSessionState.Validators.LanguageValidator
         ]:
@@ -158,7 +216,16 @@ class ExecutionSessionState(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["status"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExecutionSessionState.Validators.PreStatusValidator], ExecutionSessionState.Validators.PreStatusValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["status"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExecutionSessionState.Validators.StatusValidator], ExecutionSessionState.Validators.StatusValidator
         ]:
@@ -201,18 +268,34 @@ class ExecutionSessionState(pydantic.BaseModel):
 
             return decorator
 
+        class PreLastTimeContactedValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExecutionSessionState.Partial) -> typing.Any:
+                ...
+
         class LastTimeContactedValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[str], __values: ExecutionSessionState.Partial
             ) -> typing.Optional[str]:
                 ...
 
+        class PreSessionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExecutionSessionState.Partial) -> typing.Any:
+                ...
+
         class SessionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: ExecutionSessionState.Partial) -> str:
                 ...
 
+        class PreIsWarmInstanceValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExecutionSessionState.Partial) -> typing.Any:
+                ...
+
         class IsWarmInstanceValidator(typing_extensions.Protocol):
             def __call__(self, __v: bool, __values: ExecutionSessionState.Partial) -> bool:
+                ...
+
+        class PreAwsTaskIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExecutionSessionState.Partial) -> typing.Any:
                 ...
 
         class AwsTaskIdValidator(typing_extensions.Protocol):
@@ -221,8 +304,16 @@ class ExecutionSessionState(pydantic.BaseModel):
             ) -> typing.Optional[str]:
                 ...
 
+        class PreLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExecutionSessionState.Partial) -> typing.Any:
+                ...
+
         class LanguageValidator(typing_extensions.Protocol):
             def __call__(self, __v: Language, __values: ExecutionSessionState.Partial) -> Language:
+                ...
+
+        class PreStatusValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExecutionSessionState.Partial) -> typing.Any:
                 ...
 
         class StatusValidator(typing_extensions.Protocol):

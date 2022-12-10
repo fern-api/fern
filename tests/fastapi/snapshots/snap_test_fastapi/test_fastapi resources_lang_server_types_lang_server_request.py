@@ -29,7 +29,7 @@ class LangServerRequest(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[LangServerRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[LangServerRequest.Validators._RootValidator]] = []
-        _request_pre_validators: typing.ClassVar[typing.List[LangServerRequest.Validators.RequestValidator]] = []
+        _request_pre_validators: typing.ClassVar[typing.List[LangServerRequest.Validators.PreRequestValidator]] = []
         _request_post_validators: typing.ClassVar[typing.List[LangServerRequest.Validators.RequestValidator]] = []
 
         @classmethod
@@ -49,10 +49,19 @@ class LangServerRequest(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["request"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["request"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LangServerRequest.Validators.PreRequestValidator], LangServerRequest.Validators.PreRequestValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["request"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [LangServerRequest.Validators.RequestValidator], LangServerRequest.Validators.RequestValidator
         ]:
@@ -69,6 +78,10 @@ class LangServerRequest(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreRequestValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LangServerRequest.Partial) -> typing.Any:
+                ...
 
         class RequestValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.Any, __values: LangServerRequest.Partial) -> typing.Any:

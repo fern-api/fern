@@ -35,9 +35,9 @@ class FileInfo(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[FileInfo.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[FileInfo.Validators._RootValidator]] = []
-        _filename_pre_validators: typing.ClassVar[typing.List[FileInfo.Validators.FilenameValidator]] = []
+        _filename_pre_validators: typing.ClassVar[typing.List[FileInfo.Validators.PreFilenameValidator]] = []
         _filename_post_validators: typing.ClassVar[typing.List[FileInfo.Validators.FilenameValidator]] = []
-        _contents_pre_validators: typing.ClassVar[typing.List[FileInfo.Validators.ContentsValidator]] = []
+        _contents_pre_validators: typing.ClassVar[typing.List[FileInfo.Validators.PreContentsValidator]] = []
         _contents_post_validators: typing.ClassVar[typing.List[FileInfo.Validators.ContentsValidator]] = []
 
         @classmethod
@@ -56,14 +56,28 @@ class FileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[FileInfo.Validators.PreFilenameValidator], FileInfo.Validators.PreFilenameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[FileInfo.Validators.FilenameValidator], FileInfo.Validators.FilenameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[FileInfo.Validators.PreContentsValidator], FileInfo.Validators.PreContentsValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[FileInfo.Validators.ContentsValidator], FileInfo.Validators.ContentsValidator]:
             ...
 
@@ -84,8 +98,16 @@ class FileInfo(pydantic.BaseModel):
 
             return decorator
 
+        class PreFilenameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FileInfo.Partial) -> typing.Any:
+                ...
+
         class FilenameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: FileInfo.Partial) -> str:
+                ...
+
+        class PreContentsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FileInfo.Partial) -> typing.Any:
                 ...
 
         class ContentsValidator(typing_extensions.Protocol):

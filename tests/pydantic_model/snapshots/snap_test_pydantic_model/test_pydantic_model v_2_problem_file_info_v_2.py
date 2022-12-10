@@ -47,13 +47,13 @@ class FileInfoV2(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators._RootValidator]] = []
-        _filename_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.FilenameValidator]] = []
+        _filename_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.PreFilenameValidator]] = []
         _filename_post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.FilenameValidator]] = []
-        _directory_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.DirectoryValidator]] = []
+        _directory_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.PreDirectoryValidator]] = []
         _directory_post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.DirectoryValidator]] = []
-        _contents_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.ContentsValidator]] = []
+        _contents_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.PreContentsValidator]] = []
         _contents_post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.ContentsValidator]] = []
-        _editable_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.EditableValidator]] = []
+        _editable_pre_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.PreEditableValidator]] = []
         _editable_post_validators: typing.ClassVar[typing.List[FileInfoV2.Validators.EditableValidator]] = []
 
         @classmethod
@@ -72,28 +72,58 @@ class FileInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[FileInfoV2.Validators.PreFilenameValidator], FileInfoV2.Validators.PreFilenameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[FileInfoV2.Validators.FilenameValidator], FileInfoV2.Validators.FilenameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [FileInfoV2.Validators.PreDirectoryValidator], FileInfoV2.Validators.PreDirectoryValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[FileInfoV2.Validators.DirectoryValidator], FileInfoV2.Validators.DirectoryValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[FileInfoV2.Validators.PreContentsValidator], FileInfoV2.Validators.PreContentsValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[FileInfoV2.Validators.ContentsValidator], FileInfoV2.Validators.ContentsValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["editable"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["editable"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[FileInfoV2.Validators.PreEditableValidator], FileInfoV2.Validators.PreEditableValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["editable"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[FileInfoV2.Validators.EditableValidator], FileInfoV2.Validators.EditableValidator]:
             ...
 
@@ -124,16 +154,32 @@ class FileInfoV2(pydantic.BaseModel):
 
             return decorator
 
+        class PreFilenameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FileInfoV2.Partial) -> typing.Any:
+                ...
+
         class FilenameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: FileInfoV2.Partial) -> str:
+                ...
+
+        class PreDirectoryValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FileInfoV2.Partial) -> typing.Any:
                 ...
 
         class DirectoryValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: FileInfoV2.Partial) -> str:
                 ...
 
+        class PreContentsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FileInfoV2.Partial) -> typing.Any:
+                ...
+
         class ContentsValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: FileInfoV2.Partial) -> str:
+                ...
+
+        class PreEditableValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FileInfoV2.Partial) -> typing.Any:
                 ...
 
         class EditableValidator(typing_extensions.Protocol):

@@ -41,11 +41,13 @@ class SubmissionFileInfo(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators._RootValidator]] = []
-        _directory_pre_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.DirectoryValidator]] = []
+        _directory_pre_validators: typing.ClassVar[
+            typing.List[SubmissionFileInfo.Validators.PreDirectoryValidator]
+        ] = []
         _directory_post_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.DirectoryValidator]] = []
-        _filename_pre_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.FilenameValidator]] = []
+        _filename_pre_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.PreFilenameValidator]] = []
         _filename_post_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.FilenameValidator]] = []
-        _contents_pre_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.ContentsValidator]] = []
+        _contents_pre_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.PreContentsValidator]] = []
         _contents_post_validators: typing.ClassVar[typing.List[SubmissionFileInfo.Validators.ContentsValidator]] = []
 
         @classmethod
@@ -68,7 +70,16 @@ class SubmissionFileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["directory"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmissionFileInfo.Validators.PreDirectoryValidator], SubmissionFileInfo.Validators.PreDirectoryValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["directory"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SubmissionFileInfo.Validators.DirectoryValidator], SubmissionFileInfo.Validators.DirectoryValidator
         ]:
@@ -77,7 +88,16 @@ class SubmissionFileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["filename"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmissionFileInfo.Validators.PreFilenameValidator], SubmissionFileInfo.Validators.PreFilenameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["filename"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SubmissionFileInfo.Validators.FilenameValidator], SubmissionFileInfo.Validators.FilenameValidator
         ]:
@@ -86,7 +106,16 @@ class SubmissionFileInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["contents"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SubmissionFileInfo.Validators.PreContentsValidator], SubmissionFileInfo.Validators.PreContentsValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["contents"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SubmissionFileInfo.Validators.ContentsValidator], SubmissionFileInfo.Validators.ContentsValidator
         ]:
@@ -114,12 +143,24 @@ class SubmissionFileInfo(pydantic.BaseModel):
 
             return decorator
 
+        class PreDirectoryValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmissionFileInfo.Partial) -> typing.Any:
+                ...
+
         class DirectoryValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: SubmissionFileInfo.Partial) -> str:
                 ...
 
+        class PreFilenameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmissionFileInfo.Partial) -> typing.Any:
+                ...
+
         class FilenameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: SubmissionFileInfo.Partial) -> str:
+                ...
+
+        class PreContentsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SubmissionFileInfo.Partial) -> typing.Any:
                 ...
 
         class ContentsValidator(typing_extensions.Protocol):

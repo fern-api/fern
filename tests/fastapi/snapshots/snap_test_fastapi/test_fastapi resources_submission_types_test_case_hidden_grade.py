@@ -29,7 +29,7 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators._RootValidator]] = []
-        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
+        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PrePassedValidator]] = []
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseHiddenGrade.Validators.PassedValidator]] = []
 
         @classmethod
@@ -49,10 +49,19 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["passed"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseHiddenGrade.Validators.PrePassedValidator], TestCaseHiddenGrade.Validators.PrePassedValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseHiddenGrade.Validators.PassedValidator], TestCaseHiddenGrade.Validators.PassedValidator
         ]:
@@ -69,6 +78,10 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PrePassedValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseHiddenGrade.Partial) -> typing.Any:
+                ...
 
         class PassedValidator(typing_extensions.Protocol):
             def __call__(self, __v: bool, __values: TestCaseHiddenGrade.Partial) -> bool:

@@ -32,7 +32,7 @@ class InternalError(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[InternalError.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[InternalError.Validators._RootValidator]] = []
         _exception_info_pre_validators: typing.ClassVar[
-            typing.List[InternalError.Validators.ExceptionInfoValidator]
+            typing.List[InternalError.Validators.PreExceptionInfoValidator]
         ] = []
         _exception_info_post_validators: typing.ClassVar[
             typing.List[InternalError.Validators.ExceptionInfoValidator]
@@ -53,10 +53,22 @@ class InternalError(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_info"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception_info"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [InternalError.Validators.PreExceptionInfoValidator], InternalError.Validators.PreExceptionInfoValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["exception_info"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [InternalError.Validators.ExceptionInfoValidator], InternalError.Validators.ExceptionInfoValidator
         ]:
@@ -73,6 +85,10 @@ class InternalError(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreExceptionInfoValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: InternalError.Partial) -> typing.Any:
+                ...
 
         class ExceptionInfoValidator(typing_extensions.Protocol):
             def __call__(self, __v: ExceptionInfo, __values: InternalError.Partial) -> ExceptionInfo:

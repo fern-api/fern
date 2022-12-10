@@ -38,9 +38,9 @@ class BinaryTreeValue(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators._RootValidator]] = []
-        _root_pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.RootValidator]] = []
+        _root_pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.PreRootValidator]] = []
         _root_post_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.RootValidator]] = []
-        _nodes_pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.NodesValidator]] = []
+        _nodes_pre_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.PreNodesValidator]] = []
         _nodes_post_validators: typing.ClassVar[typing.List[BinaryTreeValue.Validators.NodesValidator]] = []
 
         @classmethod
@@ -61,14 +61,32 @@ class BinaryTreeValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["root"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["root"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeValue.Validators.PreRootValidator], BinaryTreeValue.Validators.PreRootValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["root"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[BinaryTreeValue.Validators.RootValidator], BinaryTreeValue.Validators.RootValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["nodes"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["nodes"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BinaryTreeValue.Validators.PreNodesValidator], BinaryTreeValue.Validators.PreNodesValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["nodes"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[BinaryTreeValue.Validators.NodesValidator], BinaryTreeValue.Validators.NodesValidator]:
             ...
 
@@ -89,10 +107,18 @@ class BinaryTreeValue(pydantic.BaseModel):
 
             return decorator
 
+        class PreRootValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BinaryTreeValue.Partial) -> typing.Any:
+                ...
+
         class RootValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[NodeId], __values: BinaryTreeValue.Partial
             ) -> typing.Optional[NodeId]:
+                ...
+
+        class PreNodesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BinaryTreeValue.Partial) -> typing.Any:
                 ...
 
         class NodesValidator(typing_extensions.Protocol):

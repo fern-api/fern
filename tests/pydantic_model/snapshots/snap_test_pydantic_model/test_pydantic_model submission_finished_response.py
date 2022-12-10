@@ -32,7 +32,7 @@ class FinishedResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[FinishedResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[FinishedResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[FinishedResponse.Validators.SubmissionIdValidator]
+            typing.List[FinishedResponse.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[FinishedResponse.Validators.SubmissionIdValidator]
@@ -53,10 +53,22 @@ class FinishedResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [FinishedResponse.Validators.PreSubmissionIdValidator], FinishedResponse.Validators.PreSubmissionIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [FinishedResponse.Validators.SubmissionIdValidator], FinishedResponse.Validators.SubmissionIdValidator
         ]:
@@ -73,6 +85,10 @@ class FinishedResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: FinishedResponse.Partial) -> typing.Any:
+                ...
 
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: FinishedResponse.Partial) -> SubmissionId:

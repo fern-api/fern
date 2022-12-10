@@ -45,19 +45,19 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetDefaultStarterFilesRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetDefaultStarterFilesRequest.Validators._RootValidator]] = []
         _input_params_pre_validators: typing.ClassVar[
-            typing.List[GetDefaultStarterFilesRequest.Validators.InputParamsValidator]
+            typing.List[GetDefaultStarterFilesRequest.Validators.PreInputParamsValidator]
         ] = []
         _input_params_post_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.InputParamsValidator]
         ] = []
         _output_type_pre_validators: typing.ClassVar[
-            typing.List[GetDefaultStarterFilesRequest.Validators.OutputTypeValidator]
+            typing.List[GetDefaultStarterFilesRequest.Validators.PreOutputTypeValidator]
         ] = []
         _output_type_post_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.OutputTypeValidator]
         ] = []
         _method_name_pre_validators: typing.ClassVar[
-            typing.List[GetDefaultStarterFilesRequest.Validators.MethodNameValidator]
+            typing.List[GetDefaultStarterFilesRequest.Validators.PreMethodNameValidator]
         ] = []
         _method_name_post_validators: typing.ClassVar[
             typing.List[GetDefaultStarterFilesRequest.Validators.MethodNameValidator]
@@ -84,7 +84,17 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetDefaultStarterFilesRequest.Validators.PreInputParamsValidator],
+            GetDefaultStarterFilesRequest.Validators.PreInputParamsValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesRequest.Validators.InputParamsValidator],
             GetDefaultStarterFilesRequest.Validators.InputParamsValidator,
@@ -94,7 +104,17 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetDefaultStarterFilesRequest.Validators.PreOutputTypeValidator],
+            GetDefaultStarterFilesRequest.Validators.PreOutputTypeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesRequest.Validators.OutputTypeValidator],
             GetDefaultStarterFilesRequest.Validators.OutputTypeValidator,
@@ -104,7 +124,17 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetDefaultStarterFilesRequest.Validators.PreMethodNameValidator],
+            GetDefaultStarterFilesRequest.Validators.PreMethodNameValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetDefaultStarterFilesRequest.Validators.MethodNameValidator],
             GetDefaultStarterFilesRequest.Validators.MethodNameValidator,
@@ -133,14 +163,26 @@ class GetDefaultStarterFilesRequest(pydantic.BaseModel):
 
             return decorator
 
+        class PreInputParamsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetDefaultStarterFilesRequest.Partial) -> typing.Any:
+                ...
+
         class InputParamsValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[VariableTypeAndName], __values: GetDefaultStarterFilesRequest.Partial
             ) -> typing.List[VariableTypeAndName]:
                 ...
 
+        class PreOutputTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetDefaultStarterFilesRequest.Partial) -> typing.Any:
+                ...
+
         class OutputTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableType, __values: GetDefaultStarterFilesRequest.Partial) -> VariableType:
+                ...
+
+        class PreMethodNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetDefaultStarterFilesRequest.Partial) -> typing.Any:
                 ...
 
         class MethodNameValidator(typing_extensions.Protocol):

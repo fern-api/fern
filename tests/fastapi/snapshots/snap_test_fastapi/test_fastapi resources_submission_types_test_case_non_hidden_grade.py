@@ -50,21 +50,21 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators._RootValidator]] = []
-        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
+        _passed_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PrePassedValidator]] = []
         _passed_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PassedValidator]] = []
         _actual_result_pre_validators: typing.ClassVar[
-            typing.List[TestCaseNonHiddenGrade.Validators.ActualResultValidator]
+            typing.List[TestCaseNonHiddenGrade.Validators.PreActualResultValidator]
         ] = []
         _actual_result_post_validators: typing.ClassVar[
             typing.List[TestCaseNonHiddenGrade.Validators.ActualResultValidator]
         ] = []
         _exception_pre_validators: typing.ClassVar[
-            typing.List[TestCaseNonHiddenGrade.Validators.ExceptionValidator]
+            typing.List[TestCaseNonHiddenGrade.Validators.PreExceptionValidator]
         ] = []
         _exception_post_validators: typing.ClassVar[
             typing.List[TestCaseNonHiddenGrade.Validators.ExceptionValidator]
         ] = []
-        _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[TestCaseNonHiddenGrade.Validators.StdoutValidator]] = []
 
         @classmethod
@@ -87,7 +87,16 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["passed"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseNonHiddenGrade.Validators.PrePassedValidator], TestCaseNonHiddenGrade.Validators.PrePassedValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["passed"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.PassedValidator], TestCaseNonHiddenGrade.Validators.PassedValidator
         ]:
@@ -96,7 +105,20 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_result"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["actual_result"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseNonHiddenGrade.Validators.PreActualResultValidator],
+            TestCaseNonHiddenGrade.Validators.PreActualResultValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["actual_result"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.ActualResultValidator],
             TestCaseNonHiddenGrade.Validators.ActualResultValidator,
@@ -106,7 +128,17 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseNonHiddenGrade.Validators.PreExceptionValidator],
+            TestCaseNonHiddenGrade.Validators.PreExceptionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["exception"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.ExceptionValidator], TestCaseNonHiddenGrade.Validators.ExceptionValidator
         ]:
@@ -115,7 +147,16 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseNonHiddenGrade.Validators.PreStdoutValidator], TestCaseNonHiddenGrade.Validators.PreStdoutValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseNonHiddenGrade.Validators.StdoutValidator], TestCaseNonHiddenGrade.Validators.StdoutValidator
         ]:
@@ -148,8 +189,16 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
 
             return decorator
 
+        class PrePassedValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseNonHiddenGrade.Partial) -> typing.Any:
+                ...
+
         class PassedValidator(typing_extensions.Protocol):
             def __call__(self, __v: bool, __values: TestCaseNonHiddenGrade.Partial) -> bool:
+                ...
+
+        class PreActualResultValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseNonHiddenGrade.Partial) -> typing.Any:
                 ...
 
         class ActualResultValidator(typing_extensions.Protocol):
@@ -158,10 +207,18 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
             ) -> typing.Optional[VariableValue]:
                 ...
 
+        class PreExceptionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseNonHiddenGrade.Partial) -> typing.Any:
+                ...
+
         class ExceptionValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[ExceptionV2], __values: TestCaseNonHiddenGrade.Partial
             ) -> typing.Optional[ExceptionV2]:
+                ...
+
+        class PreStdoutValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseNonHiddenGrade.Partial) -> typing.Any:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):

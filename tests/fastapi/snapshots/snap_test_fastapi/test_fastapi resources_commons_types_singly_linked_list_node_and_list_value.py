@@ -39,13 +39,13 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeAndListValue.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[SinglyLinkedListNodeAndListValue.Validators._RootValidator]] = []
         _node_id_pre_validators: typing.ClassVar[
-            typing.List[SinglyLinkedListNodeAndListValue.Validators.NodeIdValidator]
+            typing.List[SinglyLinkedListNodeAndListValue.Validators.PreNodeIdValidator]
         ] = []
         _node_id_post_validators: typing.ClassVar[
             typing.List[SinglyLinkedListNodeAndListValue.Validators.NodeIdValidator]
         ] = []
         _full_list_pre_validators: typing.ClassVar[
-            typing.List[SinglyLinkedListNodeAndListValue.Validators.FullListValidator]
+            typing.List[SinglyLinkedListNodeAndListValue.Validators.PreFullListValidator]
         ] = []
         _full_list_post_validators: typing.ClassVar[
             typing.List[SinglyLinkedListNodeAndListValue.Validators.FullListValidator]
@@ -72,7 +72,17 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["node_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SinglyLinkedListNodeAndListValue.Validators.PreNodeIdValidator],
+            SinglyLinkedListNodeAndListValue.Validators.PreNodeIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["node_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SinglyLinkedListNodeAndListValue.Validators.NodeIdValidator],
             SinglyLinkedListNodeAndListValue.Validators.NodeIdValidator,
@@ -82,7 +92,17 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["full_list"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["full_list"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [SinglyLinkedListNodeAndListValue.Validators.PreFullListValidator],
+            SinglyLinkedListNodeAndListValue.Validators.PreFullListValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["full_list"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [SinglyLinkedListNodeAndListValue.Validators.FullListValidator],
             SinglyLinkedListNodeAndListValue.Validators.FullListValidator,
@@ -106,8 +126,16 @@ class SinglyLinkedListNodeAndListValue(pydantic.BaseModel):
 
             return decorator
 
+        class PreNodeIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SinglyLinkedListNodeAndListValue.Partial) -> typing.Any:
+                ...
+
         class NodeIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: NodeId, __values: SinglyLinkedListNodeAndListValue.Partial) -> NodeId:
+                ...
+
+        class PreFullListValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: SinglyLinkedListNodeAndListValue.Partial) -> typing.Any:
                 ...
 
         class FullListValidator(typing_extensions.Protocol):

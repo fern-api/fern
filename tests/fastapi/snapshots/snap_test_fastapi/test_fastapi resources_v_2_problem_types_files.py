@@ -31,7 +31,7 @@ class Files(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[Files.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[Files.Validators._RootValidator]] = []
-        _files_pre_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
+        _files_pre_validators: typing.ClassVar[typing.List[Files.Validators.PreFilesValidator]] = []
         _files_post_validators: typing.ClassVar[typing.List[Files.Validators.FilesValidator]] = []
 
         @classmethod
@@ -47,10 +47,17 @@ class Files(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Files.Validators.PreFilesValidator], Files.Validators.PreFilesValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Files.Validators.FilesValidator], Files.Validators.FilesValidator]:
             ...
 
@@ -65,6 +72,10 @@ class Files(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Files.Partial) -> typing.Any:
+                ...
 
         class FilesValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.List[FileInfoV2], __values: Files.Partial) -> typing.List[FileInfoV2]:

@@ -33,7 +33,7 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponseV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponseV2.Validators._RootValidator]] = []
         _files_by_language_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceStarterFilesResponseV2.Validators.FilesByLanguageValidator]
+            typing.List[WorkspaceStarterFilesResponseV2.Validators.PreFilesByLanguageValidator]
         ] = []
         _files_by_language_post_validators: typing.ClassVar[
             typing.List[WorkspaceStarterFilesResponseV2.Validators.FilesByLanguageValidator]
@@ -57,10 +57,23 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files_by_language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["files_by_language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceStarterFilesResponseV2.Validators.PreFilesByLanguageValidator],
+            WorkspaceStarterFilesResponseV2.Validators.PreFilesByLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["files_by_language"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [WorkspaceStarterFilesResponseV2.Validators.FilesByLanguageValidator],
             WorkspaceStarterFilesResponseV2.Validators.FilesByLanguageValidator,
@@ -78,6 +91,10 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreFilesByLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceStarterFilesResponseV2.Partial) -> typing.Any:
+                ...
 
         class FilesByLanguageValidator(typing_extensions.Protocol):
             def __call__(

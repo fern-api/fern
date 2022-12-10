@@ -44,11 +44,11 @@ class Parameter(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[Parameter.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[Parameter.Validators._RootValidator]] = []
-        _parameter_id_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.ParameterIdValidator]] = []
+        _parameter_id_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.PreParameterIdValidator]] = []
         _parameter_id_post_validators: typing.ClassVar[typing.List[Parameter.Validators.ParameterIdValidator]] = []
-        _name_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.NameValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[Parameter.Validators.NameValidator]] = []
-        _variable_type_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
+        _variable_type_pre_validators: typing.ClassVar[typing.List[Parameter.Validators.PreVariableTypeValidator]] = []
         _variable_type_post_validators: typing.ClassVar[typing.List[Parameter.Validators.VariableTypeValidator]] = []
 
         @classmethod
@@ -67,21 +67,49 @@ class Parameter(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameter_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["parameter_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [Parameter.Validators.PreParameterIdValidator], Parameter.Validators.PreParameterIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["parameter_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Parameter.Validators.ParameterIdValidator], Parameter.Validators.ParameterIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Parameter.Validators.PreNameValidator], Parameter.Validators.PreNameValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[Parameter.Validators.NameValidator], Parameter.Validators.NameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [Parameter.Validators.PreVariableTypeValidator], Parameter.Validators.PreVariableTypeValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["variable_type"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[[Parameter.Validators.VariableTypeValidator], Parameter.Validators.VariableTypeValidator]:
             ...
 
@@ -107,12 +135,24 @@ class Parameter(pydantic.BaseModel):
 
             return decorator
 
+        class PreParameterIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Parameter.Partial) -> typing.Any:
+                ...
+
         class ParameterIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ParameterId, __values: Parameter.Partial) -> ParameterId:
                 ...
 
+        class PreNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Parameter.Partial) -> typing.Any:
+                ...
+
         class NameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: Parameter.Partial) -> str:
+                ...
+
+        class PreVariableTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Parameter.Partial) -> typing.Any:
                 ...
 
         class VariableTypeValidator(typing_extensions.Protocol):

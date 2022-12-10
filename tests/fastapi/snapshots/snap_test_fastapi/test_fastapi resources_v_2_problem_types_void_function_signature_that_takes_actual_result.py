@@ -43,13 +43,13 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
             typing.List[VoidFunctionSignatureThatTakesActualResult.Validators._RootValidator]
         ] = []
         _parameters_pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator]
+            typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.PreParametersValidator]
         ] = []
         _parameters_post_validators: typing.ClassVar[
             typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator]
         ] = []
         _actual_result_type_pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator]
+            typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.PreActualResultTypeValidator]
         ] = []
         _actual_result_type_post_validators: typing.ClassVar[
             typing.List[VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator]
@@ -76,7 +76,17 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionSignatureThatTakesActualResult.Validators.PreParametersValidator],
+            VoidFunctionSignatureThatTakesActualResult.Validators.PreParametersValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator],
             VoidFunctionSignatureThatTakesActualResult.Validators.ParametersValidator,
@@ -86,7 +96,20 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_result_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["actual_result_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionSignatureThatTakesActualResult.Validators.PreActualResultTypeValidator],
+            VoidFunctionSignatureThatTakesActualResult.Validators.PreActualResultTypeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["actual_result_type"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator],
             VoidFunctionSignatureThatTakesActualResult.Validators.ActualResultTypeValidator,
@@ -110,10 +133,22 @@ class VoidFunctionSignatureThatTakesActualResult(pydantic.BaseModel):
 
             return decorator
 
+        class PreParametersValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing.Any, __values: VoidFunctionSignatureThatTakesActualResult.Partial
+            ) -> typing.Any:
+                ...
+
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[Parameter], __values: VoidFunctionSignatureThatTakesActualResult.Partial
             ) -> typing.List[Parameter]:
+                ...
+
+        class PreActualResultTypeValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing.Any, __values: VoidFunctionSignatureThatTakesActualResult.Partial
+            ) -> typing.Any:
                 ...
 
         class ActualResultTypeValidator(typing_extensions.Protocol):

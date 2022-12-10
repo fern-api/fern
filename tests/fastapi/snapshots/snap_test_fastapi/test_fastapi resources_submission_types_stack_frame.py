@@ -43,11 +43,11 @@ class StackFrame(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[StackFrame.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StackFrame.Validators._RootValidator]] = []
-        _method_name_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.MethodNameValidator]] = []
+        _method_name_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.PreMethodNameValidator]] = []
         _method_name_post_validators: typing.ClassVar[typing.List[StackFrame.Validators.MethodNameValidator]] = []
-        _line_number_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.LineNumberValidator]] = []
+        _line_number_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.PreLineNumberValidator]] = []
         _line_number_post_validators: typing.ClassVar[typing.List[StackFrame.Validators.LineNumberValidator]] = []
-        _scopes_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.ScopesValidator]] = []
+        _scopes_pre_validators: typing.ClassVar[typing.List[StackFrame.Validators.PreScopesValidator]] = []
         _scopes_post_validators: typing.ClassVar[typing.List[StackFrame.Validators.ScopesValidator]] = []
 
         @classmethod
@@ -66,21 +66,46 @@ class StackFrame(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StackFrame.Validators.PreMethodNameValidator], StackFrame.Validators.PreMethodNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[StackFrame.Validators.MethodNameValidator], StackFrame.Validators.MethodNameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StackFrame.Validators.PreLineNumberValidator], StackFrame.Validators.PreLineNumberValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[StackFrame.Validators.LineNumberValidator], StackFrame.Validators.LineNumberValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["scopes"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["scopes"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[StackFrame.Validators.PreScopesValidator], StackFrame.Validators.PreScopesValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["scopes"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[StackFrame.Validators.ScopesValidator], StackFrame.Validators.ScopesValidator]:
             ...
 
@@ -106,12 +131,24 @@ class StackFrame(pydantic.BaseModel):
 
             return decorator
 
+        class PreMethodNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StackFrame.Partial) -> typing.Any:
+                ...
+
         class MethodNameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: StackFrame.Partial) -> str:
                 ...
 
+        class PreLineNumberValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StackFrame.Partial) -> typing.Any:
+                ...
+
         class LineNumberValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: StackFrame.Partial) -> int:
+                ...
+
+        class PreScopesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StackFrame.Partial) -> typing.Any:
                 ...
 
         class ScopesValidator(typing_extensions.Protocol):

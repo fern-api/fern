@@ -47,13 +47,13 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators._RootValidator]
         ] = []
         _additional_parameters_pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator]
+            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.PreAdditionalParametersValidator]
         ] = []
         _additional_parameters_post_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator]
         ] = []
         _code_pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator]
+            typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.PreCodeValidator]
         ] = []
         _code_post_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator]
@@ -80,7 +80,20 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["additional_parameters"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["additional_parameters"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionDefinitionThatTakesActualResult.Validators.PreAdditionalParametersValidator],
+            VoidFunctionDefinitionThatTakesActualResult.Validators.PreAdditionalParametersValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["additional_parameters"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator],
             VoidFunctionDefinitionThatTakesActualResult.Validators.AdditionalParametersValidator,
@@ -90,7 +103,17 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["code"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionDefinitionThatTakesActualResult.Validators.PreCodeValidator],
+            VoidFunctionDefinitionThatTakesActualResult.Validators.PreCodeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["code"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator],
             VoidFunctionDefinitionThatTakesActualResult.Validators.CodeValidator,
@@ -114,10 +137,22 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
 
             return decorator
 
+        class PreAdditionalParametersValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing.Any, __values: VoidFunctionDefinitionThatTakesActualResult.Partial
+            ) -> typing.Any:
+                ...
+
         class AdditionalParametersValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[Parameter], __values: VoidFunctionDefinitionThatTakesActualResult.Partial
             ) -> typing.List[Parameter]:
+                ...
+
+        class PreCodeValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing.Any, __values: VoidFunctionDefinitionThatTakesActualResult.Partial
+            ) -> typing.Any:
                 ...
 
         class CodeValidator(typing_extensions.Protocol):

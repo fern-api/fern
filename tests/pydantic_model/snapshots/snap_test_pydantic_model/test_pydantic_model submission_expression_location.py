@@ -35,9 +35,9 @@ class ExpressionLocation(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators._RootValidator]] = []
-        _start_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
+        _start_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.PreStartValidator]] = []
         _start_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.StartValidator]] = []
-        _offset_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
+        _offset_pre_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.PreOffsetValidator]] = []
         _offset_post_validators: typing.ClassVar[typing.List[ExpressionLocation.Validators.OffsetValidator]] = []
 
         @classmethod
@@ -60,7 +60,16 @@ class ExpressionLocation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["start"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["start"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExpressionLocation.Validators.PreStartValidator], ExpressionLocation.Validators.PreStartValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["start"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExpressionLocation.Validators.StartValidator], ExpressionLocation.Validators.StartValidator
         ]:
@@ -69,7 +78,16 @@ class ExpressionLocation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["offset"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExpressionLocation.Validators.PreOffsetValidator], ExpressionLocation.Validators.PreOffsetValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["offset"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ExpressionLocation.Validators.OffsetValidator], ExpressionLocation.Validators.OffsetValidator
         ]:
@@ -92,8 +110,16 @@ class ExpressionLocation(pydantic.BaseModel):
 
             return decorator
 
+        class PreStartValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExpressionLocation.Partial) -> typing.Any:
+                ...
+
         class StartValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: ExpressionLocation.Partial) -> int:
+                ...
+
+        class PreOffsetValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExpressionLocation.Partial) -> typing.Any:
                 ...
 
         class OffsetValidator(typing_extensions.Protocol):

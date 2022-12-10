@@ -32,7 +32,7 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ExistingSubmissionExecuting.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[ExistingSubmissionExecuting.Validators.SubmissionIdValidator]
+            typing.List[ExistingSubmissionExecuting.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[ExistingSubmissionExecuting.Validators.SubmissionIdValidator]
@@ -56,10 +56,23 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ExistingSubmissionExecuting.Validators.PreSubmissionIdValidator],
+            ExistingSubmissionExecuting.Validators.PreSubmissionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ExistingSubmissionExecuting.Validators.SubmissionIdValidator],
             ExistingSubmissionExecuting.Validators.SubmissionIdValidator,
@@ -77,6 +90,10 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ExistingSubmissionExecuting.Partial) -> typing.Any:
+                ...
 
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: ExistingSubmissionExecuting.Partial) -> SubmissionId:

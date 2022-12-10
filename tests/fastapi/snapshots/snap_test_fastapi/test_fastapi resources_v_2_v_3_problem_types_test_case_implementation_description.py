@@ -32,7 +32,7 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[TestCaseImplementationDescription.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseImplementationDescription.Validators._RootValidator]] = []
         _boards_pre_validators: typing.ClassVar[
-            typing.List[TestCaseImplementationDescription.Validators.BoardsValidator]
+            typing.List[TestCaseImplementationDescription.Validators.PreBoardsValidator]
         ] = []
         _boards_post_validators: typing.ClassVar[
             typing.List[TestCaseImplementationDescription.Validators.BoardsValidator]
@@ -56,10 +56,20 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["boards"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["boards"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseImplementationDescription.Validators.PreBoardsValidator],
+            TestCaseImplementationDescription.Validators.PreBoardsValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["boards"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseImplementationDescription.Validators.BoardsValidator],
             TestCaseImplementationDescription.Validators.BoardsValidator,
@@ -77,6 +87,10 @@ class TestCaseImplementationDescription(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreBoardsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseImplementationDescription.Partial) -> typing.Any:
+                ...
 
         class BoardsValidator(typing_extensions.Protocol):
             def __call__(

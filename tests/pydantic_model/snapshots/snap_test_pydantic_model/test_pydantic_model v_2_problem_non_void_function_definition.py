@@ -39,12 +39,12 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators._RootValidator]] = []
         _signature_pre_validators: typing.ClassVar[
-            typing.List[NonVoidFunctionDefinition.Validators.SignatureValidator]
+            typing.List[NonVoidFunctionDefinition.Validators.PreSignatureValidator]
         ] = []
         _signature_post_validators: typing.ClassVar[
             typing.List[NonVoidFunctionDefinition.Validators.SignatureValidator]
         ] = []
-        _code_pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
+        _code_pre_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.PreCodeValidator]] = []
         _code_post_validators: typing.ClassVar[typing.List[NonVoidFunctionDefinition.Validators.CodeValidator]] = []
 
         @classmethod
@@ -67,7 +67,17 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["signature"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [NonVoidFunctionDefinition.Validators.PreSignatureValidator],
+            NonVoidFunctionDefinition.Validators.PreSignatureValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [NonVoidFunctionDefinition.Validators.SignatureValidator],
             NonVoidFunctionDefinition.Validators.SignatureValidator,
@@ -77,7 +87,17 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["code"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [NonVoidFunctionDefinition.Validators.PreCodeValidator],
+            NonVoidFunctionDefinition.Validators.PreCodeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["code"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [NonVoidFunctionDefinition.Validators.CodeValidator], NonVoidFunctionDefinition.Validators.CodeValidator
         ]:
@@ -100,10 +120,18 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
 
             return decorator
 
+        class PreSignatureValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: NonVoidFunctionDefinition.Partial) -> typing.Any:
+                ...
+
         class SignatureValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: NonVoidFunctionSignature, __values: NonVoidFunctionDefinition.Partial
             ) -> NonVoidFunctionSignature:
+                ...
+
+        class PreCodeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: NonVoidFunctionDefinition.Partial) -> typing.Any:
                 ...
 
         class CodeValidator(typing_extensions.Protocol):

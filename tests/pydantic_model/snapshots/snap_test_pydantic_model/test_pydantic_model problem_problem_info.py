@@ -91,34 +91,34 @@ class ProblemInfo(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators._RootValidator]] = []
-        _problem_id_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemIdValidator]] = []
+        _problem_id_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreProblemIdValidator]] = []
         _problem_id_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemIdValidator]] = []
         _problem_description_pre_validators: typing.ClassVar[
-            typing.List[ProblemInfo.Validators.ProblemDescriptionValidator]
+            typing.List[ProblemInfo.Validators.PreProblemDescriptionValidator]
         ] = []
         _problem_description_post_validators: typing.ClassVar[
             typing.List[ProblemInfo.Validators.ProblemDescriptionValidator]
         ] = []
-        _problem_name_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemNameValidator]] = []
+        _problem_name_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreProblemNameValidator]] = []
         _problem_name_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.ProblemNameValidator]] = []
         _problem_version_pre_validators: typing.ClassVar[
-            typing.List[ProblemInfo.Validators.ProblemVersionValidator]
+            typing.List[ProblemInfo.Validators.PreProblemVersionValidator]
         ] = []
         _problem_version_post_validators: typing.ClassVar[
             typing.List[ProblemInfo.Validators.ProblemVersionValidator]
         ] = []
-        _files_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.FilesValidator]] = []
+        _files_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreFilesValidator]] = []
         _files_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.FilesValidator]] = []
-        _input_params_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.InputParamsValidator]] = []
+        _input_params_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreInputParamsValidator]] = []
         _input_params_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.InputParamsValidator]] = []
-        _output_type_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.OutputTypeValidator]] = []
+        _output_type_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreOutputTypeValidator]] = []
         _output_type_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.OutputTypeValidator]] = []
-        _testcases_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.TestcasesValidator]] = []
+        _testcases_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreTestcasesValidator]] = []
         _testcases_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.TestcasesValidator]] = []
-        _method_name_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.MethodNameValidator]] = []
+        _method_name_pre_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.PreMethodNameValidator]] = []
         _method_name_post_validators: typing.ClassVar[typing.List[ProblemInfo.Validators.MethodNameValidator]] = []
         _supports_custom_test_cases_pre_validators: typing.ClassVar[
-            typing.List[ProblemInfo.Validators.SupportsCustomTestCasesValidator]
+            typing.List[ProblemInfo.Validators.PreSupportsCustomTestCasesValidator]
         ] = []
         _supports_custom_test_cases_post_validators: typing.ClassVar[
             typing.List[ProblemInfo.Validators.SupportsCustomTestCasesValidator]
@@ -140,14 +140,36 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreProblemIdValidator], ProblemInfo.Validators.PreProblemIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ProblemInfo.Validators.ProblemIdValidator], ProblemInfo.Validators.ProblemIdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_description"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreProblemDescriptionValidator],
+            ProblemInfo.Validators.PreProblemDescriptionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["problem_description"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ProblemInfo.Validators.ProblemDescriptionValidator], ProblemInfo.Validators.ProblemDescriptionValidator
         ]:
@@ -156,7 +178,16 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreProblemNameValidator], ProblemInfo.Validators.PreProblemNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.ProblemNameValidator], ProblemInfo.Validators.ProblemNameValidator
         ]:
@@ -165,7 +196,19 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreProblemVersionValidator], ProblemInfo.Validators.PreProblemVersionValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["problem_version"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ProblemInfo.Validators.ProblemVersionValidator], ProblemInfo.Validators.ProblemVersionValidator
         ]:
@@ -174,14 +217,30 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[ProblemInfo.Validators.PreFilesValidator], ProblemInfo.Validators.PreFilesValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ProblemInfo.Validators.FilesValidator], ProblemInfo.Validators.FilesValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["input_params"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreInputParamsValidator], ProblemInfo.Validators.PreInputParamsValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["input_params"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [ProblemInfo.Validators.InputParamsValidator], ProblemInfo.Validators.InputParamsValidator
         ]:
@@ -190,28 +249,71 @@ class ProblemInfo(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["output_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreOutputTypeValidator], ProblemInfo.Validators.PreOutputTypeValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["output_type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ProblemInfo.Validators.OutputTypeValidator], ProblemInfo.Validators.OutputTypeValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["testcases"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["testcases"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreTestcasesValidator], ProblemInfo.Validators.PreTestcasesValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["testcases"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ProblemInfo.Validators.TestcasesValidator], ProblemInfo.Validators.TestcasesValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreMethodNameValidator], ProblemInfo.Validators.PreMethodNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[ProblemInfo.Validators.MethodNameValidator], ProblemInfo.Validators.MethodNameValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["supports_custom_test_cases"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["supports_custom_test_cases"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [ProblemInfo.Validators.PreSupportsCustomTestCasesValidator],
+            ProblemInfo.Validators.PreSupportsCustomTestCasesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["supports_custom_test_cases"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ProblemInfo.Validators.SupportsCustomTestCasesValidator],
             ProblemInfo.Validators.SupportsCustomTestCasesValidator,
@@ -275,20 +377,40 @@ class ProblemInfo(pydantic.BaseModel):
 
             return decorator
 
+        class PreProblemIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
+                ...
+
         class ProblemIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemId, __values: ProblemInfo.Partial) -> ProblemId:
+                ...
+
+        class PreProblemDescriptionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
                 ...
 
         class ProblemDescriptionValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemDescription, __values: ProblemInfo.Partial) -> ProblemDescription:
                 ...
 
+        class PreProblemNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
+                ...
+
         class ProblemNameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: ProblemInfo.Partial) -> str:
                 ...
 
+        class PreProblemVersionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
+                ...
+
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: ProblemInfo.Partial) -> int:
+                ...
+
+        class PreFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
                 ...
 
         class FilesValidator(typing_extensions.Protocol):
@@ -297,14 +419,26 @@ class ProblemInfo(pydantic.BaseModel):
             ) -> typing.Dict[Language, ProblemFiles]:
                 ...
 
+        class PreInputParamsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
+                ...
+
         class InputParamsValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[VariableTypeAndName], __values: ProblemInfo.Partial
             ) -> typing.List[VariableTypeAndName]:
                 ...
 
+        class PreOutputTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
+                ...
+
         class OutputTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableType, __values: ProblemInfo.Partial) -> VariableType:
+                ...
+
+        class PreTestcasesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
                 ...
 
         class TestcasesValidator(typing_extensions.Protocol):
@@ -313,8 +447,16 @@ class ProblemInfo(pydantic.BaseModel):
             ) -> typing.List[TestCaseWithExpectedResult]:
                 ...
 
+        class PreMethodNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
+                ...
+
         class MethodNameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: ProblemInfo.Partial) -> str:
+                ...
+
+        class PreSupportsCustomTestCasesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemInfo.Partial) -> typing.Any:
                 ...
 
         class SupportsCustomTestCasesValidator(typing_extensions.Protocol):

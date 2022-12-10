@@ -42,15 +42,15 @@ class GenericCreateProblemError(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators._RootValidator]] = []
         _message_pre_validators: typing.ClassVar[
-            typing.List[GenericCreateProblemError.Validators.MessageValidator]
+            typing.List[GenericCreateProblemError.Validators.PreMessageValidator]
         ] = []
         _message_post_validators: typing.ClassVar[
             typing.List[GenericCreateProblemError.Validators.MessageValidator]
         ] = []
-        _type_pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.TypeValidator]] = []
+        _type_pre_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.PreTypeValidator]] = []
         _type_post_validators: typing.ClassVar[typing.List[GenericCreateProblemError.Validators.TypeValidator]] = []
         _stacktrace_pre_validators: typing.ClassVar[
-            typing.List[GenericCreateProblemError.Validators.StacktraceValidator]
+            typing.List[GenericCreateProblemError.Validators.PreStacktraceValidator]
         ] = []
         _stacktrace_post_validators: typing.ClassVar[
             typing.List[GenericCreateProblemError.Validators.StacktraceValidator]
@@ -76,7 +76,17 @@ class GenericCreateProblemError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["message"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["message"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GenericCreateProblemError.Validators.PreMessageValidator],
+            GenericCreateProblemError.Validators.PreMessageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["message"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators.MessageValidator],
             GenericCreateProblemError.Validators.MessageValidator,
@@ -86,7 +96,17 @@ class GenericCreateProblemError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GenericCreateProblemError.Validators.PreTypeValidator],
+            GenericCreateProblemError.Validators.PreTypeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators.TypeValidator], GenericCreateProblemError.Validators.TypeValidator
         ]:
@@ -95,7 +115,17 @@ class GenericCreateProblemError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stacktrace"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stacktrace"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GenericCreateProblemError.Validators.PreStacktraceValidator],
+            GenericCreateProblemError.Validators.PreStacktraceValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stacktrace"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GenericCreateProblemError.Validators.StacktraceValidator],
             GenericCreateProblemError.Validators.StacktraceValidator,
@@ -124,12 +154,24 @@ class GenericCreateProblemError(pydantic.BaseModel):
 
             return decorator
 
+        class PreMessageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GenericCreateProblemError.Partial) -> typing.Any:
+                ...
+
         class MessageValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: GenericCreateProblemError.Partial) -> str:
                 ...
 
+        class PreTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GenericCreateProblemError.Partial) -> typing.Any:
+                ...
+
         class TypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: GenericCreateProblemError.Partial) -> str:
+                ...
+
+        class PreStacktraceValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GenericCreateProblemError.Partial) -> typing.Any:
                 ...
 
         class StacktraceValidator(typing_extensions.Protocol):

@@ -64,23 +64,27 @@ class TraceResponse(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TraceResponse.Validators._RootValidator]] = []
-        _submission_id_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.SubmissionIdValidator]] = []
+        _submission_id_pre_validators: typing.ClassVar[
+            typing.List[TraceResponse.Validators.PreSubmissionIdValidator]
+        ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[TraceResponse.Validators.SubmissionIdValidator]
         ] = []
-        _line_number_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.LineNumberValidator]] = []
+        _line_number_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.PreLineNumberValidator]] = []
         _line_number_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.LineNumberValidator]] = []
-        _return_value_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.ReturnValueValidator]] = []
+        _return_value_pre_validators: typing.ClassVar[
+            typing.List[TraceResponse.Validators.PreReturnValueValidator]
+        ] = []
         _return_value_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.ReturnValueValidator]] = []
         _expression_location_pre_validators: typing.ClassVar[
-            typing.List[TraceResponse.Validators.ExpressionLocationValidator]
+            typing.List[TraceResponse.Validators.PreExpressionLocationValidator]
         ] = []
         _expression_location_post_validators: typing.ClassVar[
             typing.List[TraceResponse.Validators.ExpressionLocationValidator]
         ] = []
-        _stack_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StackValidator]] = []
+        _stack_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.PreStackValidator]] = []
         _stack_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StackValidator]] = []
-        _stdout_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[TraceResponse.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[TraceResponse.Validators.StdoutValidator]] = []
 
         @classmethod
@@ -101,7 +105,19 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponse.Validators.PreSubmissionIdValidator], TraceResponse.Validators.PreSubmissionIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TraceResponse.Validators.SubmissionIdValidator], TraceResponse.Validators.SubmissionIdValidator
         ]:
@@ -110,7 +126,16 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["line_number"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponse.Validators.PreLineNumberValidator], TraceResponse.Validators.PreLineNumberValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["line_number"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TraceResponse.Validators.LineNumberValidator], TraceResponse.Validators.LineNumberValidator
         ]:
@@ -119,7 +144,16 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["return_value"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["return_value"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponse.Validators.PreReturnValueValidator], TraceResponse.Validators.PreReturnValueValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["return_value"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TraceResponse.Validators.ReturnValueValidator], TraceResponse.Validators.ReturnValueValidator
         ]:
@@ -128,7 +162,20 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expression_location"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["expression_location"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponse.Validators.PreExpressionLocationValidator],
+            TraceResponse.Validators.PreExpressionLocationValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["expression_location"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TraceResponse.Validators.ExpressionLocationValidator], TraceResponse.Validators.ExpressionLocationValidator
         ]:
@@ -137,14 +184,30 @@ class TraceResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stack"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stack"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[TraceResponse.Validators.PreStackValidator], TraceResponse.Validators.PreStackValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stack"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TraceResponse.Validators.StackValidator], TraceResponse.Validators.StackValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TraceResponse.Validators.PreStdoutValidator], TraceResponse.Validators.PreStdoutValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TraceResponse.Validators.StdoutValidator], TraceResponse.Validators.StdoutValidator]:
             ...
 
@@ -185,12 +248,24 @@ class TraceResponse(pydantic.BaseModel):
 
             return decorator
 
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponse.Partial) -> typing.Any:
+                ...
+
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: TraceResponse.Partial) -> SubmissionId:
                 ...
 
+        class PreLineNumberValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponse.Partial) -> typing.Any:
+                ...
+
         class LineNumberValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: TraceResponse.Partial) -> int:
+                ...
+
+        class PreReturnValueValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponse.Partial) -> typing.Any:
                 ...
 
         class ReturnValueValidator(typing_extensions.Protocol):
@@ -199,14 +274,26 @@ class TraceResponse(pydantic.BaseModel):
             ) -> typing.Optional[DebugVariableValue]:
                 ...
 
+        class PreExpressionLocationValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponse.Partial) -> typing.Any:
+                ...
+
         class ExpressionLocationValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[ExpressionLocation], __values: TraceResponse.Partial
             ) -> typing.Optional[ExpressionLocation]:
                 ...
 
+        class PreStackValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponse.Partial) -> typing.Any:
+                ...
+
         class StackValidator(typing_extensions.Protocol):
             def __call__(self, __v: StackInformation, __values: TraceResponse.Partial) -> StackInformation:
+                ...
+
+        class PreStdoutValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TraceResponse.Partial) -> typing.Any:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):

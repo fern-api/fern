@@ -33,7 +33,7 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetBasicSolutionFileResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetBasicSolutionFileResponse.Validators._RootValidator]] = []
         _solution_file_by_language_pre_validators: typing.ClassVar[
-            typing.List[GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator]
+            typing.List[GetBasicSolutionFileResponse.Validators.PreSolutionFileByLanguageValidator]
         ] = []
         _solution_file_by_language_post_validators: typing.ClassVar[
             typing.List[GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator]
@@ -57,10 +57,26 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["solution_file_by_language"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["solution_file_by_language"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [GetBasicSolutionFileResponse.Validators.PreSolutionFileByLanguageValidator],
+            GetBasicSolutionFileResponse.Validators.PreSolutionFileByLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["solution_file_by_language"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator],
             GetBasicSolutionFileResponse.Validators.SolutionFileByLanguageValidator,
@@ -78,6 +94,10 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreSolutionFileByLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetBasicSolutionFileResponse.Partial) -> typing.Any:
+                ...
 
         class SolutionFileByLanguageValidator(typing_extensions.Protocol):
             def __call__(

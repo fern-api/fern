@@ -43,13 +43,13 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
             typing.List[TestCaseWithActualResultImplementation.Validators._RootValidator]
         ] = []
         _get_actual_result_pre_validators: typing.ClassVar[
-            typing.List[TestCaseWithActualResultImplementation.Validators.GetActualResultValidator]
+            typing.List[TestCaseWithActualResultImplementation.Validators.PreGetActualResultValidator]
         ] = []
         _get_actual_result_post_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.GetActualResultValidator]
         ] = []
         _assert_correctness_check_pre_validators: typing.ClassVar[
-            typing.List[TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator]
+            typing.List[TestCaseWithActualResultImplementation.Validators.PreAssertCorrectnessCheckValidator]
         ] = []
         _assert_correctness_check_post_validators: typing.ClassVar[
             typing.List[TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator]
@@ -76,7 +76,20 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["get_actual_result"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["get_actual_result"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseWithActualResultImplementation.Validators.PreGetActualResultValidator],
+            TestCaseWithActualResultImplementation.Validators.PreGetActualResultValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["get_actual_result"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestCaseWithActualResultImplementation.Validators.GetActualResultValidator],
             TestCaseWithActualResultImplementation.Validators.GetActualResultValidator,
@@ -86,7 +99,23 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["assert_correctness_check"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["assert_correctness_check"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [TestCaseWithActualResultImplementation.Validators.PreAssertCorrectnessCheckValidator],
+            TestCaseWithActualResultImplementation.Validators.PreAssertCorrectnessCheckValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["assert_correctness_check"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator],
             TestCaseWithActualResultImplementation.Validators.AssertCorrectnessCheckValidator,
@@ -110,10 +139,18 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
 
             return decorator
 
+        class PreGetActualResultValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseWithActualResultImplementation.Partial) -> typing.Any:
+                ...
+
         class GetActualResultValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: NonVoidFunctionDefinition, __values: TestCaseWithActualResultImplementation.Partial
             ) -> NonVoidFunctionDefinition:
+                ...
+
+        class PreAssertCorrectnessCheckValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseWithActualResultImplementation.Partial) -> typing.Any:
                 ...
 
         class AssertCorrectnessCheckValidator(typing_extensions.Protocol):

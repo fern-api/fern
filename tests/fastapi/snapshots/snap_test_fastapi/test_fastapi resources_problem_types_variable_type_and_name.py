@@ -38,12 +38,12 @@ class VariableTypeAndName(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators._RootValidator]] = []
         _variable_type_pre_validators: typing.ClassVar[
-            typing.List[VariableTypeAndName.Validators.VariableTypeValidator]
+            typing.List[VariableTypeAndName.Validators.PreVariableTypeValidator]
         ] = []
         _variable_type_post_validators: typing.ClassVar[
             typing.List[VariableTypeAndName.Validators.VariableTypeValidator]
         ] = []
-        _name_pre_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators.NameValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[VariableTypeAndName.Validators.NameValidator]] = []
 
         @classmethod
@@ -66,7 +66,20 @@ class VariableTypeAndName(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["variable_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VariableTypeAndName.Validators.PreVariableTypeValidator],
+            VariableTypeAndName.Validators.PreVariableTypeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["variable_type"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [VariableTypeAndName.Validators.VariableTypeValidator], VariableTypeAndName.Validators.VariableTypeValidator
         ]:
@@ -75,7 +88,16 @@ class VariableTypeAndName(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VariableTypeAndName.Validators.PreNameValidator], VariableTypeAndName.Validators.PreNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VariableTypeAndName.Validators.NameValidator], VariableTypeAndName.Validators.NameValidator
         ]:
@@ -98,8 +120,16 @@ class VariableTypeAndName(pydantic.BaseModel):
 
             return decorator
 
+        class PreVariableTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: VariableTypeAndName.Partial) -> typing.Any:
+                ...
+
         class VariableTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableType, __values: VariableTypeAndName.Partial) -> VariableType:
+                ...
+
+        class PreNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: VariableTypeAndName.Partial) -> typing.Any:
                 ...
 
         class NameValidator(typing_extensions.Protocol):

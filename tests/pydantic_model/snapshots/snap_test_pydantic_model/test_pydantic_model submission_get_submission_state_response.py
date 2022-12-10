@@ -52,25 +52,25 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetSubmissionStateResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetSubmissionStateResponse.Validators._RootValidator]] = []
         _time_submitted_pre_validators: typing.ClassVar[
-            typing.List[GetSubmissionStateResponse.Validators.TimeSubmittedValidator]
+            typing.List[GetSubmissionStateResponse.Validators.PreTimeSubmittedValidator]
         ] = []
         _time_submitted_post_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.TimeSubmittedValidator]
         ] = []
         _submission_pre_validators: typing.ClassVar[
-            typing.List[GetSubmissionStateResponse.Validators.SubmissionValidator]
+            typing.List[GetSubmissionStateResponse.Validators.PreSubmissionValidator]
         ] = []
         _submission_post_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.SubmissionValidator]
         ] = []
         _language_pre_validators: typing.ClassVar[
-            typing.List[GetSubmissionStateResponse.Validators.LanguageValidator]
+            typing.List[GetSubmissionStateResponse.Validators.PreLanguageValidator]
         ] = []
         _language_post_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.LanguageValidator]
         ] = []
         _submission_type_state_pre_validators: typing.ClassVar[
-            typing.List[GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator]
+            typing.List[GetSubmissionStateResponse.Validators.PreSubmissionTypeStateValidator]
         ] = []
         _submission_type_state_post_validators: typing.ClassVar[
             typing.List[GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator]
@@ -96,7 +96,20 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["time_submitted"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["time_submitted"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetSubmissionStateResponse.Validators.PreTimeSubmittedValidator],
+            GetSubmissionStateResponse.Validators.PreTimeSubmittedValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["time_submitted"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.TimeSubmittedValidator],
             GetSubmissionStateResponse.Validators.TimeSubmittedValidator,
@@ -106,7 +119,17 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetSubmissionStateResponse.Validators.PreSubmissionValidator],
+            GetSubmissionStateResponse.Validators.PreSubmissionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["submission"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.SubmissionValidator],
             GetSubmissionStateResponse.Validators.SubmissionValidator,
@@ -116,7 +139,17 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetSubmissionStateResponse.Validators.PreLanguageValidator],
+            GetSubmissionStateResponse.Validators.PreLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.LanguageValidator],
             GetSubmissionStateResponse.Validators.LanguageValidator,
@@ -126,7 +159,20 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_type_state"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_type_state"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetSubmissionStateResponse.Validators.PreSubmissionTypeStateValidator],
+            GetSubmissionStateResponse.Validators.PreSubmissionTypeStateValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_type_state"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator],
             GetSubmissionStateResponse.Validators.SubmissionTypeStateValidator,
@@ -160,18 +206,34 @@ class GetSubmissionStateResponse(pydantic.BaseModel):
 
             return decorator
 
+        class PreTimeSubmittedValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetSubmissionStateResponse.Partial) -> typing.Any:
+                ...
+
         class TimeSubmittedValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[dt.datetime], __values: GetSubmissionStateResponse.Partial
             ) -> typing.Optional[dt.datetime]:
                 ...
 
+        class PreSubmissionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetSubmissionStateResponse.Partial) -> typing.Any:
+                ...
+
         class SubmissionValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: GetSubmissionStateResponse.Partial) -> str:
                 ...
 
+        class PreLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetSubmissionStateResponse.Partial) -> typing.Any:
+                ...
+
         class LanguageValidator(typing_extensions.Protocol):
             def __call__(self, __v: Language, __values: GetSubmissionStateResponse.Partial) -> Language:
+                ...
+
+        class PreSubmissionTypeStateValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetSubmissionStateResponse.Partial) -> typing.Any:
                 ...
 
         class SubmissionTypeStateValidator(typing_extensions.Protocol):

@@ -51,25 +51,25 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[LightweightProblemInfoV2.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[LightweightProblemInfoV2.Validators._RootValidator]] = []
         _problem_id_pre_validators: typing.ClassVar[
-            typing.List[LightweightProblemInfoV2.Validators.ProblemIdValidator]
+            typing.List[LightweightProblemInfoV2.Validators.PreProblemIdValidator]
         ] = []
         _problem_id_post_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemIdValidator]
         ] = []
         _problem_name_pre_validators: typing.ClassVar[
-            typing.List[LightweightProblemInfoV2.Validators.ProblemNameValidator]
+            typing.List[LightweightProblemInfoV2.Validators.PreProblemNameValidator]
         ] = []
         _problem_name_post_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemNameValidator]
         ] = []
         _problem_version_pre_validators: typing.ClassVar[
-            typing.List[LightweightProblemInfoV2.Validators.ProblemVersionValidator]
+            typing.List[LightweightProblemInfoV2.Validators.PreProblemVersionValidator]
         ] = []
         _problem_version_post_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.ProblemVersionValidator]
         ] = []
         _variable_types_pre_validators: typing.ClassVar[
-            typing.List[LightweightProblemInfoV2.Validators.VariableTypesValidator]
+            typing.List[LightweightProblemInfoV2.Validators.PreVariableTypesValidator]
         ] = []
         _variable_types_post_validators: typing.ClassVar[
             typing.List[LightweightProblemInfoV2.Validators.VariableTypesValidator]
@@ -95,7 +95,17 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LightweightProblemInfoV2.Validators.PreProblemIdValidator],
+            LightweightProblemInfoV2.Validators.PreProblemIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.ProblemIdValidator],
             LightweightProblemInfoV2.Validators.ProblemIdValidator,
@@ -105,7 +115,17 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LightweightProblemInfoV2.Validators.PreProblemNameValidator],
+            LightweightProblemInfoV2.Validators.PreProblemNameValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problem_name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.ProblemNameValidator],
             LightweightProblemInfoV2.Validators.ProblemNameValidator,
@@ -115,7 +135,20 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problem_version"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LightweightProblemInfoV2.Validators.PreProblemVersionValidator],
+            LightweightProblemInfoV2.Validators.PreProblemVersionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["problem_version"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.ProblemVersionValidator],
             LightweightProblemInfoV2.Validators.ProblemVersionValidator,
@@ -125,7 +158,20 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["variable_types"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["variable_types"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LightweightProblemInfoV2.Validators.PreVariableTypesValidator],
+            LightweightProblemInfoV2.Validators.PreVariableTypesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["variable_types"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [LightweightProblemInfoV2.Validators.VariableTypesValidator],
             LightweightProblemInfoV2.Validators.VariableTypesValidator,
@@ -159,16 +205,32 @@ class LightweightProblemInfoV2(pydantic.BaseModel):
 
             return decorator
 
+        class PreProblemIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LightweightProblemInfoV2.Partial) -> typing.Any:
+                ...
+
         class ProblemIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ProblemId, __values: LightweightProblemInfoV2.Partial) -> ProblemId:
+                ...
+
+        class PreProblemNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LightweightProblemInfoV2.Partial) -> typing.Any:
                 ...
 
         class ProblemNameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: LightweightProblemInfoV2.Partial) -> str:
                 ...
 
+        class PreProblemVersionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LightweightProblemInfoV2.Partial) -> typing.Any:
+                ...
+
         class ProblemVersionValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: LightweightProblemInfoV2.Partial) -> int:
+                ...
+
+        class PreVariableTypesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LightweightProblemInfoV2.Partial) -> typing.Any:
                 ...
 
         class VariableTypesValidator(typing_extensions.Protocol):

@@ -38,12 +38,12 @@ class StdoutResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[StdoutResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StdoutResponse.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[StdoutResponse.Validators.SubmissionIdValidator]
+            typing.List[StdoutResponse.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[StdoutResponse.Validators.SubmissionIdValidator]
         ] = []
-        _stdout_pre_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.StdoutValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[StdoutResponse.Validators.StdoutValidator]] = []
 
         @classmethod
@@ -64,7 +64,19 @@ class StdoutResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StdoutResponse.Validators.PreSubmissionIdValidator], StdoutResponse.Validators.PreSubmissionIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [StdoutResponse.Validators.SubmissionIdValidator], StdoutResponse.Validators.SubmissionIdValidator
         ]:
@@ -73,7 +85,16 @@ class StdoutResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StdoutResponse.Validators.PreStdoutValidator], StdoutResponse.Validators.PreStdoutValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[StdoutResponse.Validators.StdoutValidator], StdoutResponse.Validators.StdoutValidator]:
             ...
 
@@ -94,8 +115,16 @@ class StdoutResponse(pydantic.BaseModel):
 
             return decorator
 
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StdoutResponse.Partial) -> typing.Any:
+                ...
+
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: StdoutResponse.Partial) -> SubmissionId:
+                ...
+
+        class PreStdoutValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StdoutResponse.Partial) -> typing.Any:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):

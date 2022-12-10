@@ -39,12 +39,12 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators._RootValidator]] = []
         _parameters_pre_validators: typing.ClassVar[
-            typing.List[VoidFunctionDefinition.Validators.ParametersValidator]
+            typing.List[VoidFunctionDefinition.Validators.PreParametersValidator]
         ] = []
         _parameters_post_validators: typing.ClassVar[
             typing.List[VoidFunctionDefinition.Validators.ParametersValidator]
         ] = []
-        _code_pre_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
+        _code_pre_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.PreCodeValidator]] = []
         _code_post_validators: typing.ClassVar[typing.List[VoidFunctionDefinition.Validators.CodeValidator]] = []
 
         @classmethod
@@ -67,7 +67,17 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["parameters"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionDefinition.Validators.PreParametersValidator],
+            VoidFunctionDefinition.Validators.PreParametersValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["parameters"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VoidFunctionDefinition.Validators.ParametersValidator],
             VoidFunctionDefinition.Validators.ParametersValidator,
@@ -77,7 +87,16 @@ class VoidFunctionDefinition(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["code"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["code"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [VoidFunctionDefinition.Validators.PreCodeValidator], VoidFunctionDefinition.Validators.PreCodeValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["code"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [VoidFunctionDefinition.Validators.CodeValidator], VoidFunctionDefinition.Validators.CodeValidator
         ]:
@@ -100,10 +119,18 @@ class VoidFunctionDefinition(pydantic.BaseModel):
 
             return decorator
 
+        class PreParametersValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: VoidFunctionDefinition.Partial) -> typing.Any:
+                ...
+
         class ParametersValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[Parameter], __values: VoidFunctionDefinition.Partial
             ) -> typing.List[Parameter]:
+                ...
+
+        class PreCodeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: VoidFunctionDefinition.Partial) -> typing.Any:
                 ...
 
         class CodeValidator(typing_extensions.Protocol):

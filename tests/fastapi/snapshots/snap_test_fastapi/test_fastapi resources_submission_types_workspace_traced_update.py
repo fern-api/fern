@@ -30,7 +30,7 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceTracedUpdate.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceTracedUpdate.Validators._RootValidator]] = []
         _trace_responses_size_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator]
+            typing.List[WorkspaceTracedUpdate.Validators.PreTraceResponsesSizeValidator]
         ] = []
         _trace_responses_size_post_validators: typing.ClassVar[
             typing.List[WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator]
@@ -53,10 +53,23 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceTracedUpdate.Validators.PreTraceResponsesSizeValidator],
+            WorkspaceTracedUpdate.Validators.PreTraceResponsesSizeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["trace_responses_size"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator],
             WorkspaceTracedUpdate.Validators.TraceResponsesSizeValidator,
@@ -74,6 +87,10 @@ class WorkspaceTracedUpdate(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreTraceResponsesSizeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceTracedUpdate.Partial) -> typing.Any:
+                ...
 
         class TraceResponsesSizeValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: WorkspaceTracedUpdate.Partial) -> int:

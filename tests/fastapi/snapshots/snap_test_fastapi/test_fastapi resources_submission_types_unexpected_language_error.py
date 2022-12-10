@@ -38,13 +38,13 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[UnexpectedLanguageError.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[UnexpectedLanguageError.Validators._RootValidator]] = []
         _expected_language_pre_validators: typing.ClassVar[
-            typing.List[UnexpectedLanguageError.Validators.ExpectedLanguageValidator]
+            typing.List[UnexpectedLanguageError.Validators.PreExpectedLanguageValidator]
         ] = []
         _expected_language_post_validators: typing.ClassVar[
             typing.List[UnexpectedLanguageError.Validators.ExpectedLanguageValidator]
         ] = []
         _actual_language_pre_validators: typing.ClassVar[
-            typing.List[UnexpectedLanguageError.Validators.ActualLanguageValidator]
+            typing.List[UnexpectedLanguageError.Validators.PreActualLanguageValidator]
         ] = []
         _actual_language_post_validators: typing.ClassVar[
             typing.List[UnexpectedLanguageError.Validators.ActualLanguageValidator]
@@ -70,7 +70,20 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["expected_language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [UnexpectedLanguageError.Validators.PreExpectedLanguageValidator],
+            UnexpectedLanguageError.Validators.PreExpectedLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["expected_language"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [UnexpectedLanguageError.Validators.ExpectedLanguageValidator],
             UnexpectedLanguageError.Validators.ExpectedLanguageValidator,
@@ -80,7 +93,20 @@ class UnexpectedLanguageError(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["actual_language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["actual_language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [UnexpectedLanguageError.Validators.PreActualLanguageValidator],
+            UnexpectedLanguageError.Validators.PreActualLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["actual_language"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [UnexpectedLanguageError.Validators.ActualLanguageValidator],
             UnexpectedLanguageError.Validators.ActualLanguageValidator,
@@ -104,8 +130,16 @@ class UnexpectedLanguageError(pydantic.BaseModel):
 
             return decorator
 
+        class PreExpectedLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: UnexpectedLanguageError.Partial) -> typing.Any:
+                ...
+
         class ExpectedLanguageValidator(typing_extensions.Protocol):
             def __call__(self, __v: Language, __values: UnexpectedLanguageError.Partial) -> Language:
+                ...
+
+        class PreActualLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: UnexpectedLanguageError.Partial) -> typing.Any:
                 ...
 
         class ActualLanguageValidator(typing_extensions.Protocol):

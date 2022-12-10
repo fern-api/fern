@@ -32,7 +32,7 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GetFunctionSignatureResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GetFunctionSignatureResponse.Validators._RootValidator]] = []
         _function_by_language_pre_validators: typing.ClassVar[
-            typing.List[GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator]
+            typing.List[GetFunctionSignatureResponse.Validators.PreFunctionByLanguageValidator]
         ] = []
         _function_by_language_post_validators: typing.ClassVar[
             typing.List[GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator]
@@ -56,10 +56,23 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["function_by_language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["function_by_language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetFunctionSignatureResponse.Validators.PreFunctionByLanguageValidator],
+            GetFunctionSignatureResponse.Validators.PreFunctionByLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["function_by_language"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator],
             GetFunctionSignatureResponse.Validators.FunctionByLanguageValidator,
@@ -77,6 +90,10 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreFunctionByLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GetFunctionSignatureResponse.Partial) -> typing.Any:
+                ...
 
         class FunctionByLanguageValidator(typing_extensions.Protocol):
             def __call__(

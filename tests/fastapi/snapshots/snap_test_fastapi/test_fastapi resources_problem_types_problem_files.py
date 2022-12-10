@@ -37,10 +37,12 @@ class ProblemFiles(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[ProblemFiles.Validators._RootValidator]] = []
-        _solution_file_pre_validators: typing.ClassVar[typing.List[ProblemFiles.Validators.SolutionFileValidator]] = []
+        _solution_file_pre_validators: typing.ClassVar[
+            typing.List[ProblemFiles.Validators.PreSolutionFileValidator]
+        ] = []
         _solution_file_post_validators: typing.ClassVar[typing.List[ProblemFiles.Validators.SolutionFileValidator]] = []
         _read_only_files_pre_validators: typing.ClassVar[
-            typing.List[ProblemFiles.Validators.ReadOnlyFilesValidator]
+            typing.List[ProblemFiles.Validators.PreReadOnlyFilesValidator]
         ] = []
         _read_only_files_post_validators: typing.ClassVar[
             typing.List[ProblemFiles.Validators.ReadOnlyFilesValidator]
@@ -62,7 +64,19 @@ class ProblemFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["solution_file"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["solution_file"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemFiles.Validators.PreSolutionFileValidator], ProblemFiles.Validators.PreSolutionFileValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["solution_file"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ProblemFiles.Validators.SolutionFileValidator], ProblemFiles.Validators.SolutionFileValidator
         ]:
@@ -71,7 +85,19 @@ class ProblemFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["read_only_files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["read_only_files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [ProblemFiles.Validators.PreReadOnlyFilesValidator], ProblemFiles.Validators.PreReadOnlyFilesValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["read_only_files"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [ProblemFiles.Validators.ReadOnlyFilesValidator], ProblemFiles.Validators.ReadOnlyFilesValidator
         ]:
@@ -94,8 +120,16 @@ class ProblemFiles(pydantic.BaseModel):
 
             return decorator
 
+        class PreSolutionFileValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemFiles.Partial) -> typing.Any:
+                ...
+
         class SolutionFileValidator(typing_extensions.Protocol):
             def __call__(self, __v: FileInfo, __values: ProblemFiles.Partial) -> FileInfo:
+                ...
+
+        class PreReadOnlyFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: ProblemFiles.Partial) -> typing.Any:
                 ...
 
         class ReadOnlyFilesValidator(typing_extensions.Protocol):

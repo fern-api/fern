@@ -41,13 +41,13 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[StoreTracedWorkspaceRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StoreTracedWorkspaceRequest.Validators._RootValidator]] = []
         _workspace_run_details_pre_validators: typing.ClassVar[
-            typing.List[StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator]
+            typing.List[StoreTracedWorkspaceRequest.Validators.PreWorkspaceRunDetailsValidator]
         ] = []
         _workspace_run_details_post_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator]
         ] = []
         _trace_responses_pre_validators: typing.ClassVar[
-            typing.List[StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator]
+            typing.List[StoreTracedWorkspaceRequest.Validators.PreTraceResponsesValidator]
         ] = []
         _trace_responses_post_validators: typing.ClassVar[
             typing.List[StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator]
@@ -74,7 +74,20 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["workspace_run_details"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["workspace_run_details"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StoreTracedWorkspaceRequest.Validators.PreWorkspaceRunDetailsValidator],
+            StoreTracedWorkspaceRequest.Validators.PreWorkspaceRunDetailsValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["workspace_run_details"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator],
             StoreTracedWorkspaceRequest.Validators.WorkspaceRunDetailsValidator,
@@ -84,7 +97,20 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StoreTracedWorkspaceRequest.Validators.PreTraceResponsesValidator],
+            StoreTracedWorkspaceRequest.Validators.PreTraceResponsesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["trace_responses"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator],
             StoreTracedWorkspaceRequest.Validators.TraceResponsesValidator,
@@ -108,10 +134,18 @@ class StoreTracedWorkspaceRequest(pydantic.BaseModel):
 
             return decorator
 
+        class PreWorkspaceRunDetailsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StoreTracedWorkspaceRequest.Partial) -> typing.Any:
+                ...
+
         class WorkspaceRunDetailsValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: WorkspaceRunDetails, __values: StoreTracedWorkspaceRequest.Partial
             ) -> WorkspaceRunDetails:
+                ...
+
+        class PreTraceResponsesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StoreTracedWorkspaceRequest.Partial) -> typing.Any:
                 ...
 
         class TraceResponsesValidator(typing_extensions.Protocol):

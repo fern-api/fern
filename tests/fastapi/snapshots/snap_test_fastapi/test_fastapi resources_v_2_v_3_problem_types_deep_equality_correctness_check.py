@@ -32,7 +32,7 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[DeepEqualityCorrectnessCheck.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[DeepEqualityCorrectnessCheck.Validators._RootValidator]] = []
         _expected_value_parameter_id_pre_validators: typing.ClassVar[
-            typing.List[DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator]
+            typing.List[DeepEqualityCorrectnessCheck.Validators.PreExpectedValueParameterIdValidator]
         ] = []
         _expected_value_parameter_id_post_validators: typing.ClassVar[
             typing.List[DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator]
@@ -56,10 +56,26 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["expected_value_parameter_id"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["expected_value_parameter_id"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [DeepEqualityCorrectnessCheck.Validators.PreExpectedValueParameterIdValidator],
+            DeepEqualityCorrectnessCheck.Validators.PreExpectedValueParameterIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["expected_value_parameter_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator],
             DeepEqualityCorrectnessCheck.Validators.ExpectedValueParameterIdValidator,
@@ -77,6 +93,10 @@ class DeepEqualityCorrectnessCheck(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreExpectedValueParameterIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: DeepEqualityCorrectnessCheck.Partial) -> typing.Any:
+                ...
 
         class ExpectedValueParameterIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: ParameterId, __values: DeepEqualityCorrectnessCheck.Partial) -> ParameterId:

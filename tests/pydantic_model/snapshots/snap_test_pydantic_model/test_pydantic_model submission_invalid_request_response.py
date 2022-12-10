@@ -38,9 +38,11 @@ class InvalidRequestResponse(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators._RootValidator]] = []
-        _request_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
+        _request_pre_validators: typing.ClassVar[
+            typing.List[InvalidRequestResponse.Validators.PreRequestValidator]
+        ] = []
         _request_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.RequestValidator]] = []
-        _cause_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
+        _cause_pre_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.PreCauseValidator]] = []
         _cause_post_validators: typing.ClassVar[typing.List[InvalidRequestResponse.Validators.CauseValidator]] = []
 
         @classmethod
@@ -63,7 +65,17 @@ class InvalidRequestResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["request"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["request"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [InvalidRequestResponse.Validators.PreRequestValidator],
+            InvalidRequestResponse.Validators.PreRequestValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["request"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [InvalidRequestResponse.Validators.RequestValidator], InvalidRequestResponse.Validators.RequestValidator
         ]:
@@ -72,7 +84,16 @@ class InvalidRequestResponse(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["cause"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["cause"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [InvalidRequestResponse.Validators.PreCauseValidator], InvalidRequestResponse.Validators.PreCauseValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["cause"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [InvalidRequestResponse.Validators.CauseValidator], InvalidRequestResponse.Validators.CauseValidator
         ]:
@@ -95,8 +116,16 @@ class InvalidRequestResponse(pydantic.BaseModel):
 
             return decorator
 
+        class PreRequestValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: InvalidRequestResponse.Partial) -> typing.Any:
+                ...
+
         class RequestValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionRequest, __values: InvalidRequestResponse.Partial) -> SubmissionRequest:
+                ...
+
+        class PreCauseValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: InvalidRequestResponse.Partial) -> typing.Any:
                 ...
 
         class CauseValidator(typing_extensions.Protocol):

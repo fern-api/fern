@@ -45,14 +45,16 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators._RootValidator]] = []
         _exception_v_2_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceRunDetails.Validators.ExceptionV2Validator]
+            typing.List[WorkspaceRunDetails.Validators.PreExceptionV2Validator]
         ] = []
         _exception_v_2_post_validators: typing.ClassVar[
             typing.List[WorkspaceRunDetails.Validators.ExceptionV2Validator]
         ] = []
-        _exception_pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.ExceptionValidator]] = []
+        _exception_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceRunDetails.Validators.PreExceptionValidator]
+        ] = []
         _exception_post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.ExceptionValidator]] = []
-        _stdout_pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.PreStdoutValidator]] = []
         _stdout_post_validators: typing.ClassVar[typing.List[WorkspaceRunDetails.Validators.StdoutValidator]] = []
 
         @classmethod
@@ -75,7 +77,20 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception_v_2"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception_v_2"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceRunDetails.Validators.PreExceptionV2Validator],
+            WorkspaceRunDetails.Validators.PreExceptionV2Validator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["exception_v_2"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators.ExceptionV2Validator], WorkspaceRunDetails.Validators.ExceptionV2Validator
         ]:
@@ -84,7 +99,16 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["exception"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["exception"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceRunDetails.Validators.PreExceptionValidator], WorkspaceRunDetails.Validators.PreExceptionValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["exception"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators.ExceptionValidator], WorkspaceRunDetails.Validators.ExceptionValidator
         ]:
@@ -93,7 +117,16 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceRunDetails.Validators.PreStdoutValidator], WorkspaceRunDetails.Validators.PreStdoutValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceRunDetails.Validators.StdoutValidator], WorkspaceRunDetails.Validators.StdoutValidator
         ]:
@@ -121,16 +154,28 @@ class WorkspaceRunDetails(pydantic.BaseModel):
 
             return decorator
 
+        class PreExceptionV2Validator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceRunDetails.Partial) -> typing.Any:
+                ...
+
         class ExceptionV2Validator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[ExceptionV2], __values: WorkspaceRunDetails.Partial
             ) -> typing.Optional[ExceptionV2]:
                 ...
 
+        class PreExceptionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceRunDetails.Partial) -> typing.Any:
+                ...
+
         class ExceptionValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Optional[ExceptionInfo], __values: WorkspaceRunDetails.Partial
             ) -> typing.Optional[ExceptionInfo]:
+                ...
+
+        class PreStdoutValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceRunDetails.Partial) -> typing.Any:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):

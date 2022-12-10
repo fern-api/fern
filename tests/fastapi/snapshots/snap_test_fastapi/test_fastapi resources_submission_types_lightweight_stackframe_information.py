@@ -36,13 +36,13 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[LightweightStackframeInformation.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[LightweightStackframeInformation.Validators._RootValidator]] = []
         _num_stack_frames_pre_validators: typing.ClassVar[
-            typing.List[LightweightStackframeInformation.Validators.NumStackFramesValidator]
+            typing.List[LightweightStackframeInformation.Validators.PreNumStackFramesValidator]
         ] = []
         _num_stack_frames_post_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.NumStackFramesValidator]
         ] = []
         _top_stack_frame_method_name_pre_validators: typing.ClassVar[
-            typing.List[LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator]
+            typing.List[LightweightStackframeInformation.Validators.PreTopStackFrameMethodNameValidator]
         ] = []
         _top_stack_frame_method_name_post_validators: typing.ClassVar[
             typing.List[LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator]
@@ -69,7 +69,20 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["num_stack_frames"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["num_stack_frames"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LightweightStackframeInformation.Validators.PreNumStackFramesValidator],
+            LightweightStackframeInformation.Validators.PreNumStackFramesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["num_stack_frames"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [LightweightStackframeInformation.Validators.NumStackFramesValidator],
             LightweightStackframeInformation.Validators.NumStackFramesValidator,
@@ -79,7 +92,23 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["top_stack_frame_method_name"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["top_stack_frame_method_name"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [LightweightStackframeInformation.Validators.PreTopStackFrameMethodNameValidator],
+            LightweightStackframeInformation.Validators.PreTopStackFrameMethodNameValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["top_stack_frame_method_name"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator],
             LightweightStackframeInformation.Validators.TopStackFrameMethodNameValidator,
@@ -103,8 +132,16 @@ class LightweightStackframeInformation(pydantic.BaseModel):
 
             return decorator
 
+        class PreNumStackFramesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LightweightStackframeInformation.Partial) -> typing.Any:
+                ...
+
         class NumStackFramesValidator(typing_extensions.Protocol):
             def __call__(self, __v: int, __values: LightweightStackframeInformation.Partial) -> int:
+                ...
+
+        class PreTopStackFrameMethodNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LightweightStackframeInformation.Partial) -> typing.Any:
                 ...
 
         class TopStackFrameMethodNameValidator(typing_extensions.Protocol):

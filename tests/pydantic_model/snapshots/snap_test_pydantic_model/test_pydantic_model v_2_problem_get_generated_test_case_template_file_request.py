@@ -36,7 +36,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
             typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators._RootValidator]
         ] = []
         _template_pre_validators: typing.ClassVar[
-            typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator]
+            typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.PreTemplateValidator]
         ] = []
         _template_post_validators: typing.ClassVar[
             typing.List[GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator]
@@ -60,10 +60,20 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["template"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["template"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GetGeneratedTestCaseTemplateFileRequest.Validators.PreTemplateValidator],
+            GetGeneratedTestCaseTemplateFileRequest.Validators.PreTemplateValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["template"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator],
             GetGeneratedTestCaseTemplateFileRequest.Validators.TemplateValidator,
@@ -81,6 +91,12 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreTemplateValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing.Any, __values: GetGeneratedTestCaseTemplateFileRequest.Partial
+            ) -> typing.Any:
+                ...
 
         class TemplateValidator(typing_extensions.Protocol):
             def __call__(

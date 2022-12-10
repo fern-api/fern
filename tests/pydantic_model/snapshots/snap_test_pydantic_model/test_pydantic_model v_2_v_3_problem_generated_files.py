@@ -45,18 +45,18 @@ class GeneratedFiles(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators._RootValidator]] = []
         _generated_test_case_files_pre_validators: typing.ClassVar[
-            typing.List[GeneratedFiles.Validators.GeneratedTestCaseFilesValidator]
+            typing.List[GeneratedFiles.Validators.PreGeneratedTestCaseFilesValidator]
         ] = []
         _generated_test_case_files_post_validators: typing.ClassVar[
             typing.List[GeneratedFiles.Validators.GeneratedTestCaseFilesValidator]
         ] = []
         _generated_template_files_pre_validators: typing.ClassVar[
-            typing.List[GeneratedFiles.Validators.GeneratedTemplateFilesValidator]
+            typing.List[GeneratedFiles.Validators.PreGeneratedTemplateFilesValidator]
         ] = []
         _generated_template_files_post_validators: typing.ClassVar[
             typing.List[GeneratedFiles.Validators.GeneratedTemplateFilesValidator]
         ] = []
-        _other_pre_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators.OtherValidator]] = []
+        _other_pre_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators.PreOtherValidator]] = []
         _other_post_validators: typing.ClassVar[typing.List[GeneratedFiles.Validators.OtherValidator]] = []
 
         @classmethod
@@ -77,7 +77,23 @@ class GeneratedFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["generated_test_case_files"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["generated_test_case_files"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [GeneratedFiles.Validators.PreGeneratedTestCaseFilesValidator],
+            GeneratedFiles.Validators.PreGeneratedTestCaseFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["generated_test_case_files"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GeneratedFiles.Validators.GeneratedTestCaseFilesValidator],
             GeneratedFiles.Validators.GeneratedTestCaseFilesValidator,
@@ -87,7 +103,23 @@ class GeneratedFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["generated_template_files"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["generated_template_files"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [GeneratedFiles.Validators.PreGeneratedTemplateFilesValidator],
+            GeneratedFiles.Validators.PreGeneratedTemplateFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["generated_template_files"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [GeneratedFiles.Validators.GeneratedTemplateFilesValidator],
             GeneratedFiles.Validators.GeneratedTemplateFilesValidator,
@@ -97,7 +129,16 @@ class GeneratedFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["other"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["other"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [GeneratedFiles.Validators.PreOtherValidator], GeneratedFiles.Validators.PreOtherValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["other"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[GeneratedFiles.Validators.OtherValidator], GeneratedFiles.Validators.OtherValidator]:
             ...
 
@@ -123,16 +164,28 @@ class GeneratedFiles(pydantic.BaseModel):
 
             return decorator
 
+        class PreGeneratedTestCaseFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GeneratedFiles.Partial) -> typing.Any:
+                ...
+
         class GeneratedTestCaseFilesValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Dict[Language, Files], __values: GeneratedFiles.Partial
             ) -> typing.Dict[Language, Files]:
                 ...
 
+        class PreGeneratedTemplateFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GeneratedFiles.Partial) -> typing.Any:
+                ...
+
         class GeneratedTemplateFilesValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Dict[Language, Files], __values: GeneratedFiles.Partial
             ) -> typing.Dict[Language, Files]:
+                ...
+
+        class PreOtherValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: GeneratedFiles.Partial) -> typing.Any:
                 ...
 
         class OtherValidator(typing_extensions.Protocol):

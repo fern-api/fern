@@ -52,22 +52,24 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators._RootValidator]] = []
         _submission_id_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceSubmitRequest.Validators.SubmissionIdValidator]
+            typing.List[WorkspaceSubmitRequest.Validators.PreSubmissionIdValidator]
         ] = []
         _submission_id_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmitRequest.Validators.SubmissionIdValidator]
         ] = []
-        _language_pre_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.LanguageValidator]] = []
+        _language_pre_validators: typing.ClassVar[
+            typing.List[WorkspaceSubmitRequest.Validators.PreLanguageValidator]
+        ] = []
         _language_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmitRequest.Validators.LanguageValidator]
         ] = []
         _submission_files_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceSubmitRequest.Validators.SubmissionFilesValidator]
+            typing.List[WorkspaceSubmitRequest.Validators.PreSubmissionFilesValidator]
         ] = []
         _submission_files_post_validators: typing.ClassVar[
             typing.List[WorkspaceSubmitRequest.Validators.SubmissionFilesValidator]
         ] = []
-        _user_id_pre_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.UserIdValidator]] = []
+        _user_id_pre_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.PreUserIdValidator]] = []
         _user_id_post_validators: typing.ClassVar[typing.List[WorkspaceSubmitRequest.Validators.UserIdValidator]] = []
 
         @classmethod
@@ -90,7 +92,20 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmitRequest.Validators.PreSubmissionIdValidator],
+            WorkspaceSubmitRequest.Validators.PreSubmissionIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_id"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.SubmissionIdValidator],
             WorkspaceSubmitRequest.Validators.SubmissionIdValidator,
@@ -100,7 +115,17 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["language"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmitRequest.Validators.PreLanguageValidator],
+            WorkspaceSubmitRequest.Validators.PreLanguageValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["language"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.LanguageValidator], WorkspaceSubmitRequest.Validators.LanguageValidator
         ]:
@@ -109,7 +134,20 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["submission_files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["submission_files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmitRequest.Validators.PreSubmissionFilesValidator],
+            WorkspaceSubmitRequest.Validators.PreSubmissionFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["submission_files"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.SubmissionFilesValidator],
             WorkspaceSubmitRequest.Validators.SubmissionFilesValidator,
@@ -119,7 +157,16 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["user_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["user_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceSubmitRequest.Validators.PreUserIdValidator], WorkspaceSubmitRequest.Validators.PreUserIdValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["user_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceSubmitRequest.Validators.UserIdValidator], WorkspaceSubmitRequest.Validators.UserIdValidator
         ]:
@@ -152,18 +199,34 @@ class WorkspaceSubmitRequest(pydantic.BaseModel):
 
             return decorator
 
+        class PreSubmissionIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmitRequest.Partial) -> typing.Any:
+                ...
+
         class SubmissionIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: SubmissionId, __values: WorkspaceSubmitRequest.Partial) -> SubmissionId:
+                ...
+
+        class PreLanguageValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmitRequest.Partial) -> typing.Any:
                 ...
 
         class LanguageValidator(typing_extensions.Protocol):
             def __call__(self, __v: Language, __values: WorkspaceSubmitRequest.Partial) -> Language:
                 ...
 
+        class PreSubmissionFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmitRequest.Partial) -> typing.Any:
+                ...
+
         class SubmissionFilesValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.List[SubmissionFileInfo], __values: WorkspaceSubmitRequest.Partial
             ) -> typing.List[SubmissionFileInfo]:
+                ...
+
+        class PreUserIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceSubmitRequest.Partial) -> typing.Any:
                 ...
 
         class UserIdValidator(typing_extensions.Protocol):

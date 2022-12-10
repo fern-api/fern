@@ -37,9 +37,9 @@ class TestCase(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestCase.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCase.Validators._RootValidator]] = []
-        _id_pre_validators: typing.ClassVar[typing.List[TestCase.Validators.IdValidator]] = []
+        _id_pre_validators: typing.ClassVar[typing.List[TestCase.Validators.PreIdValidator]] = []
         _id_post_validators: typing.ClassVar[typing.List[TestCase.Validators.IdValidator]] = []
-        _params_pre_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
+        _params_pre_validators: typing.ClassVar[typing.List[TestCase.Validators.PreParamsValidator]] = []
         _params_post_validators: typing.ClassVar[typing.List[TestCase.Validators.ParamsValidator]] = []
 
         @classmethod
@@ -58,14 +58,28 @@ class TestCase(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[TestCase.Validators.PreIdValidator], TestCase.Validators.PreIdValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TestCase.Validators.IdValidator], TestCase.Validators.IdValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["params"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["params"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[TestCase.Validators.PreParamsValidator], TestCase.Validators.PreParamsValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["params"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[TestCase.Validators.ParamsValidator], TestCase.Validators.ParamsValidator]:
             ...
 
@@ -86,8 +100,16 @@ class TestCase(pydantic.BaseModel):
 
             return decorator
 
+        class PreIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCase.Partial) -> typing.Any:
+                ...
+
         class IdValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: TestCase.Partial) -> str:
+                ...
+
+        class PreParamsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCase.Partial) -> typing.Any:
                 ...
 
         class ParamsValidator(typing_extensions.Protocol):

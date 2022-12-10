@@ -52,18 +52,20 @@ class BasicCustomFiles(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators._RootValidator]] = []
-        _method_name_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
+        _method_name_pre_validators: typing.ClassVar[
+            typing.List[BasicCustomFiles.Validators.PreMethodNameValidator]
+        ] = []
         _method_name_post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.MethodNameValidator]] = []
-        _signature_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
+        _signature_pre_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.PreSignatureValidator]] = []
         _signature_post_validators: typing.ClassVar[typing.List[BasicCustomFiles.Validators.SignatureValidator]] = []
         _additional_files_pre_validators: typing.ClassVar[
-            typing.List[BasicCustomFiles.Validators.AdditionalFilesValidator]
+            typing.List[BasicCustomFiles.Validators.PreAdditionalFilesValidator]
         ] = []
         _additional_files_post_validators: typing.ClassVar[
             typing.List[BasicCustomFiles.Validators.AdditionalFilesValidator]
         ] = []
         _basic_test_case_template_pre_validators: typing.ClassVar[
-            typing.List[BasicCustomFiles.Validators.BasicTestCaseTemplateValidator]
+            typing.List[BasicCustomFiles.Validators.PreBasicTestCaseTemplateValidator]
         ] = []
         _basic_test_case_template_post_validators: typing.ClassVar[
             typing.List[BasicCustomFiles.Validators.BasicTestCaseTemplateValidator]
@@ -87,7 +89,16 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["method_name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BasicCustomFiles.Validators.PreMethodNameValidator], BasicCustomFiles.Validators.PreMethodNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["method_name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.MethodNameValidator], BasicCustomFiles.Validators.MethodNameValidator
         ]:
@@ -96,7 +107,16 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["signature"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BasicCustomFiles.Validators.PreSignatureValidator], BasicCustomFiles.Validators.PreSignatureValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["signature"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.SignatureValidator], BasicCustomFiles.Validators.SignatureValidator
         ]:
@@ -105,7 +125,20 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["additional_files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["additional_files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [BasicCustomFiles.Validators.PreAdditionalFilesValidator],
+            BasicCustomFiles.Validators.PreAdditionalFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["additional_files"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.AdditionalFilesValidator], BasicCustomFiles.Validators.AdditionalFilesValidator
         ]:
@@ -114,7 +147,23 @@ class BasicCustomFiles(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["basic_test_case_template"], *, pre: bool = False
+            cls,
+            field_name: typing_extensions.Literal["basic_test_case_template"],
+            *,
+            pre: typing_extensions.Literal[True],
+        ) -> typing.Callable[
+            [BasicCustomFiles.Validators.PreBasicTestCaseTemplateValidator],
+            BasicCustomFiles.Validators.PreBasicTestCaseTemplateValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["basic_test_case_template"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [BasicCustomFiles.Validators.BasicTestCaseTemplateValidator],
             BasicCustomFiles.Validators.BasicTestCaseTemplateValidator,
@@ -148,8 +197,16 @@ class BasicCustomFiles(pydantic.BaseModel):
 
             return decorator
 
+        class PreMethodNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BasicCustomFiles.Partial) -> typing.Any:
+                ...
+
         class MethodNameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: BasicCustomFiles.Partial) -> str:
+                ...
+
+        class PreSignatureValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BasicCustomFiles.Partial) -> typing.Any:
                 ...
 
         class SignatureValidator(typing_extensions.Protocol):
@@ -158,10 +215,18 @@ class BasicCustomFiles(pydantic.BaseModel):
             ) -> NonVoidFunctionSignature:
                 ...
 
+        class PreAdditionalFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BasicCustomFiles.Partial) -> typing.Any:
+                ...
+
         class AdditionalFilesValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: typing.Dict[Language, Files], __values: BasicCustomFiles.Partial
             ) -> typing.Dict[Language, Files]:
+                ...
+
+        class PreBasicTestCaseTemplateValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: BasicCustomFiles.Partial) -> typing.Any:
                 ...
 
         class BasicTestCaseTemplateValidator(typing_extensions.Protocol):

@@ -35,9 +35,9 @@ class MapType(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[MapType.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[MapType.Validators._RootValidator]] = []
-        _key_type_pre_validators: typing.ClassVar[typing.List[MapType.Validators.KeyTypeValidator]] = []
+        _key_type_pre_validators: typing.ClassVar[typing.List[MapType.Validators.PreKeyTypeValidator]] = []
         _key_type_post_validators: typing.ClassVar[typing.List[MapType.Validators.KeyTypeValidator]] = []
-        _value_type_pre_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
+        _value_type_pre_validators: typing.ClassVar[typing.List[MapType.Validators.PreValueTypeValidator]] = []
         _value_type_post_validators: typing.ClassVar[typing.List[MapType.Validators.ValueTypeValidator]] = []
 
         @classmethod
@@ -56,14 +56,28 @@ class MapType(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["key_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["key_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[MapType.Validators.PreKeyTypeValidator], MapType.Validators.PreKeyTypeValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["key_type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[MapType.Validators.KeyTypeValidator], MapType.Validators.KeyTypeValidator]:
             ...
 
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["value_type"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["value_type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[MapType.Validators.PreValueTypeValidator], MapType.Validators.PreValueTypeValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["value_type"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[[MapType.Validators.ValueTypeValidator], MapType.Validators.ValueTypeValidator]:
             ...
 
@@ -84,8 +98,16 @@ class MapType(pydantic.BaseModel):
 
             return decorator
 
+        class PreKeyTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: MapType.Partial) -> typing.Any:
+                ...
+
         class KeyTypeValidator(typing_extensions.Protocol):
             def __call__(self, __v: VariableType, __values: MapType.Partial) -> VariableType:
+                ...
+
+        class PreValueTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: MapType.Partial) -> typing.Any:
                 ...
 
         class ValueTypeValidator(typing_extensions.Protocol):

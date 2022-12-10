@@ -38,13 +38,13 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[RecordedTestCaseUpdate.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[RecordedTestCaseUpdate.Validators._RootValidator]] = []
         _test_case_id_pre_validators: typing.ClassVar[
-            typing.List[RecordedTestCaseUpdate.Validators.TestCaseIdValidator]
+            typing.List[RecordedTestCaseUpdate.Validators.PreTestCaseIdValidator]
         ] = []
         _test_case_id_post_validators: typing.ClassVar[
             typing.List[RecordedTestCaseUpdate.Validators.TestCaseIdValidator]
         ] = []
         _trace_responses_size_pre_validators: typing.ClassVar[
-            typing.List[RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator]
+            typing.List[RecordedTestCaseUpdate.Validators.PreTraceResponsesSizeValidator]
         ] = []
         _trace_responses_size_post_validators: typing.ClassVar[
             typing.List[RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator]
@@ -70,7 +70,17 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordedTestCaseUpdate.Validators.PreTestCaseIdValidator],
+            RecordedTestCaseUpdate.Validators.PreTestCaseIdValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["test_case_id"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [RecordedTestCaseUpdate.Validators.TestCaseIdValidator],
             RecordedTestCaseUpdate.Validators.TestCaseIdValidator,
@@ -80,7 +90,20 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["trace_responses_size"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [RecordedTestCaseUpdate.Validators.PreTraceResponsesSizeValidator],
+            RecordedTestCaseUpdate.Validators.PreTraceResponsesSizeValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["trace_responses_size"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator],
             RecordedTestCaseUpdate.Validators.TraceResponsesSizeValidator,
@@ -104,8 +127,16 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
 
             return decorator
 
+        class PreTestCaseIdValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordedTestCaseUpdate.Partial) -> typing.Any:
+                ...
+
         class TestCaseIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: TestCaseId, __values: RecordedTestCaseUpdate.Partial) -> TestCaseId:
+                ...
+
+        class PreTraceResponsesSizeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: RecordedTestCaseUpdate.Partial) -> typing.Any:
                 ...
 
         class TraceResponsesSizeValidator(typing_extensions.Protocol):

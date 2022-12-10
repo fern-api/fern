@@ -38,12 +38,14 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators._RootValidator]] = []
-        _result_pre_validators: typing.ClassVar[typing.List[StoreTracedTestCaseRequest.Validators.ResultValidator]] = []
+        _result_pre_validators: typing.ClassVar[
+            typing.List[StoreTracedTestCaseRequest.Validators.PreResultValidator]
+        ] = []
         _result_post_validators: typing.ClassVar[
             typing.List[StoreTracedTestCaseRequest.Validators.ResultValidator]
         ] = []
         _trace_responses_pre_validators: typing.ClassVar[
-            typing.List[StoreTracedTestCaseRequest.Validators.TraceResponsesValidator]
+            typing.List[StoreTracedTestCaseRequest.Validators.PreTraceResponsesValidator]
         ] = []
         _trace_responses_post_validators: typing.ClassVar[
             typing.List[StoreTracedTestCaseRequest.Validators.TraceResponsesValidator]
@@ -69,7 +71,17 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["result"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["result"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StoreTracedTestCaseRequest.Validators.PreResultValidator],
+            StoreTracedTestCaseRequest.Validators.PreResultValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["result"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [StoreTracedTestCaseRequest.Validators.ResultValidator],
             StoreTracedTestCaseRequest.Validators.ResultValidator,
@@ -79,7 +91,20 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["trace_responses"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [StoreTracedTestCaseRequest.Validators.PreTraceResponsesValidator],
+            StoreTracedTestCaseRequest.Validators.PreTraceResponsesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls,
+            field_name: typing_extensions.Literal["trace_responses"],
+            *,
+            pre: typing_extensions.Literal[False] = False,
         ) -> typing.Callable[
             [StoreTracedTestCaseRequest.Validators.TraceResponsesValidator],
             StoreTracedTestCaseRequest.Validators.TraceResponsesValidator,
@@ -103,10 +128,18 @@ class StoreTracedTestCaseRequest(pydantic.BaseModel):
 
             return decorator
 
+        class PreResultValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StoreTracedTestCaseRequest.Partial) -> typing.Any:
+                ...
+
         class ResultValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: TestCaseResultWithStdout, __values: StoreTracedTestCaseRequest.Partial
             ) -> TestCaseResultWithStdout:
+                ...
+
+        class PreTraceResponsesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: StoreTracedTestCaseRequest.Partial) -> typing.Any:
                 ...
 
         class TraceResponsesValidator(typing_extensions.Protocol):

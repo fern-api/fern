@@ -33,7 +33,7 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[WorkspaceStarterFilesResponse.Validators._RootValidator]] = []
         _files_pre_validators: typing.ClassVar[
-            typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]
+            typing.List[WorkspaceStarterFilesResponse.Validators.PreFilesValidator]
         ] = []
         _files_post_validators: typing.ClassVar[
             typing.List[WorkspaceStarterFilesResponse.Validators.FilesValidator]
@@ -57,10 +57,20 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["files"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [WorkspaceStarterFilesResponse.Validators.PreFilesValidator],
+            WorkspaceStarterFilesResponse.Validators.PreFilesValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["files"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [WorkspaceStarterFilesResponse.Validators.FilesValidator],
             WorkspaceStarterFilesResponse.Validators.FilesValidator,
@@ -78,6 +88,10 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreFilesValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: WorkspaceStarterFilesResponse.Partial) -> typing.Any:
+                ...
 
         class FilesValidator(typing_extensions.Protocol):
             def __call__(

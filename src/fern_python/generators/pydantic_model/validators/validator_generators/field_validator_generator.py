@@ -78,11 +78,12 @@ class FieldValidatorGenerator(ValidatorGenerator):
     def get_class_var_for_validators_class(self, pre: bool) -> AST.VariableDeclaration:
         return AST.VariableDeclaration(
             name=self.get_validator_class_var(pre),
-            type_hint=AST.TypeHint.class_var(AST.TypeHint.list(self._get_type_of_validator())),
+            type_hint=AST.TypeHint.class_var(AST.TypeHint.list(self._get_type_of_validator(pre))),
             initializer=AST.Expression("[]"),
         )
 
-    def get_overload_for_validators_class(self) -> AST.FunctionSignature:
+    def get_overload_for_validators_class(self, pre: bool) -> AST.FunctionSignature:
+        pre_literal_value = "True" if pre else "False"
         return AST.FunctionSignature(
             parameters=[
                 AST.FunctionParameter(
@@ -93,23 +94,24 @@ class FieldValidatorGenerator(ValidatorGenerator):
             named_parameters=[
                 AST.FunctionParameter(
                     name=FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT,
-                    type_hint=AST.TypeHint.bool_(),
-                    initializer=AST.Expression("False"),
+                    type_hint=AST.TypeHint.literal(AST.Expression(pre_literal_value)),
+                    initializer=AST.Expression("False") if not pre else None,
                 )
             ],
-            return_type=AST.TypeHint.callable([self._get_type_of_validator()], self._get_type_of_validator()),
+            return_type=AST.TypeHint.callable([self._get_type_of_validator(pre)], self._get_type_of_validator(pre)),
         )
 
-    def _get_type_of_validator(self) -> AST.TypeHint:
+    def _get_type_of_validator(self, pre: bool) -> AST.TypeHint:
         return AST.TypeHint(
             type=AST.ClassReference(
                 qualified_name_excluding_import=self._reference_to_validators_class
-                + (self.get_validator_protocol_name(),)
+                + (self.get_validator_protocol_name(pre),)
             )
         )
 
-    def get_validator_protocol_name(self) -> str:
-        return f"{self.field.pascal_case_field_name}Validator"
+    def get_validator_protocol_name(self, pre: bool) -> str:
+        prefix = "Pre" if pre else ""
+        return f"{prefix}{self.field.pascal_case_field_name}Validator"
 
     def write_example_for_docstring(
         self,
@@ -142,9 +144,9 @@ class FieldValidatorGenerator(ValidatorGenerator):
             with writer.indent():
                 writer.write_line("...")
 
-    def get_protocol_declaration(self) -> AST.ClassDeclaration:
+    def get_protocol_declaration(self, pre: bool) -> AST.ClassDeclaration:
         validator_protocol = AST.ClassDeclaration(
-            name=self.get_validator_protocol_name(),
+            name=self.get_validator_protocol_name(pre),
             extends=[
                 AST.ClassReference(
                     import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
@@ -152,7 +154,6 @@ class FieldValidatorGenerator(ValidatorGenerator):
                 )
             ],
         )
-
         validator_protocol.add_method(
             declaration=AST.FunctionDeclaration(
                 name="__call__",
@@ -161,7 +162,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
                         AST.FunctionParameter(
                             name=FieldValidatorGenerator._CALLABLE_PARAMETER_PREFIX
                             + PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
-                            type_hint=self.field.type_hint,
+                            type_hint=AST.TypeHint.any() if pre else self.field.type_hint,
                         ),
                         AST.FunctionParameter(
                             name=FieldValidatorGenerator._CALLABLE_PARAMETER_PREFIX
@@ -169,10 +170,9 @@ class FieldValidatorGenerator(ValidatorGenerator):
                             type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
                         ),
                     ],
-                    return_type=self.field.type_hint,
+                    return_type=AST.TypeHint.any() if pre else self.field.type_hint,
                 ),
                 body=AST.CodeWriter("..."),
             )
         )
-
         return validator_protocol

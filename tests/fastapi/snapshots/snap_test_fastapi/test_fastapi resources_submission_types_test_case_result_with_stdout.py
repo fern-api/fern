@@ -37,9 +37,13 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators._RootValidator]] = []
-        _result_pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
+        _result_pre_validators: typing.ClassVar[
+            typing.List[TestCaseResultWithStdout.Validators.PreResultValidator]
+        ] = []
         _result_post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.ResultValidator]] = []
-        _stdout_pre_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
+        _stdout_pre_validators: typing.ClassVar[
+            typing.List[TestCaseResultWithStdout.Validators.PreStdoutValidator]
+        ] = []
         _stdout_post_validators: typing.ClassVar[typing.List[TestCaseResultWithStdout.Validators.StdoutValidator]] = []
 
         @classmethod
@@ -62,7 +66,17 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["result"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["result"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseResultWithStdout.Validators.PreResultValidator],
+            TestCaseResultWithStdout.Validators.PreResultValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["result"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseResultWithStdout.Validators.ResultValidator], TestCaseResultWithStdout.Validators.ResultValidator
         ]:
@@ -71,7 +85,17 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["stdout"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseResultWithStdout.Validators.PreStdoutValidator],
+            TestCaseResultWithStdout.Validators.PreStdoutValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["stdout"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseResultWithStdout.Validators.StdoutValidator], TestCaseResultWithStdout.Validators.StdoutValidator
         ]:
@@ -94,8 +118,16 @@ class TestCaseResultWithStdout(pydantic.BaseModel):
 
             return decorator
 
+        class PreResultValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseResultWithStdout.Partial) -> typing.Any:
+                ...
+
         class ResultValidator(typing_extensions.Protocol):
             def __call__(self, __v: TestCaseResult, __values: TestCaseResultWithStdout.Partial) -> TestCaseResult:
+                ...
+
+        class PreStdoutValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseResultWithStdout.Partial) -> typing.Any:
                 ...
 
         class StdoutValidator(typing_extensions.Protocol):

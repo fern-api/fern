@@ -37,9 +37,11 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators._RootValidator]] = []
-        _name_pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.NameValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.NameValidator]] = []
-        _problems_pre_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.ProblemsValidator]] = []
+        _problems_pre_validators: typing.ClassVar[
+            typing.List[UpdatePlaylistRequest.Validators.PreProblemsValidator]
+        ] = []
         _problems_post_validators: typing.ClassVar[typing.List[UpdatePlaylistRequest.Validators.ProblemsValidator]] = []
 
         @classmethod
@@ -62,7 +64,16 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["name"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [UpdatePlaylistRequest.Validators.PreNameValidator], UpdatePlaylistRequest.Validators.PreNameValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [UpdatePlaylistRequest.Validators.NameValidator], UpdatePlaylistRequest.Validators.NameValidator
         ]:
@@ -71,7 +82,17 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["problems"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["problems"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [UpdatePlaylistRequest.Validators.PreProblemsValidator],
+            UpdatePlaylistRequest.Validators.PreProblemsValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["problems"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [UpdatePlaylistRequest.Validators.ProblemsValidator], UpdatePlaylistRequest.Validators.ProblemsValidator
         ]:
@@ -94,8 +115,16 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
 
             return decorator
 
+        class PreNameValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: UpdatePlaylistRequest.Partial) -> typing.Any:
+                ...
+
         class NameValidator(typing_extensions.Protocol):
             def __call__(self, __v: str, __values: UpdatePlaylistRequest.Partial) -> str:
+                ...
+
+        class PreProblemsValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: UpdatePlaylistRequest.Partial) -> typing.Any:
                 ...
 
         class ProblemsValidator(typing_extensions.Protocol):

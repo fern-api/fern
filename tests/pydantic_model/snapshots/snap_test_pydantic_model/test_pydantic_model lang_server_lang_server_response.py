@@ -29,7 +29,7 @@ class LangServerResponse(pydantic.BaseModel):
 
         _pre_validators: typing.ClassVar[typing.List[LangServerResponse.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[LangServerResponse.Validators._RootValidator]] = []
-        _response_pre_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
+        _response_pre_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.PreResponseValidator]] = []
         _response_post_validators: typing.ClassVar[typing.List[LangServerResponse.Validators.ResponseValidator]] = []
 
         @classmethod
@@ -49,10 +49,19 @@ class LangServerResponse(pydantic.BaseModel):
 
             return decorator
 
-        @typing.overload  # type: ignore
+        @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["response"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["response"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [LangServerResponse.Validators.PreResponseValidator], LangServerResponse.Validators.PreResponseValidator
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["response"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [LangServerResponse.Validators.ResponseValidator], LangServerResponse.Validators.ResponseValidator
         ]:
@@ -69,6 +78,10 @@ class LangServerResponse(pydantic.BaseModel):
                 return validator
 
             return decorator
+
+        class PreResponseValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: LangServerResponse.Partial) -> typing.Any:
+                ...
 
         class ResponseValidator(typing_extensions.Protocol):
             def __call__(self, __v: typing.Any, __values: LangServerResponse.Partial) -> typing.Any:

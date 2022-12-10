@@ -39,12 +39,14 @@ class TestCaseImplementation(pydantic.BaseModel):
         _pre_validators: typing.ClassVar[typing.List[TestCaseImplementation.Validators._RootValidator]] = []
         _post_validators: typing.ClassVar[typing.List[TestCaseImplementation.Validators._RootValidator]] = []
         _description_pre_validators: typing.ClassVar[
-            typing.List[TestCaseImplementation.Validators.DescriptionValidator]
+            typing.List[TestCaseImplementation.Validators.PreDescriptionValidator]
         ] = []
         _description_post_validators: typing.ClassVar[
             typing.List[TestCaseImplementation.Validators.DescriptionValidator]
         ] = []
-        _function_pre_validators: typing.ClassVar[typing.List[TestCaseImplementation.Validators.FunctionValidator]] = []
+        _function_pre_validators: typing.ClassVar[
+            typing.List[TestCaseImplementation.Validators.PreFunctionValidator]
+        ] = []
         _function_post_validators: typing.ClassVar[
             typing.List[TestCaseImplementation.Validators.FunctionValidator]
         ] = []
@@ -69,7 +71,17 @@ class TestCaseImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["description"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["description"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseImplementation.Validators.PreDescriptionValidator],
+            TestCaseImplementation.Validators.PreDescriptionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["description"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseImplementation.Validators.DescriptionValidator],
             TestCaseImplementation.Validators.DescriptionValidator,
@@ -79,7 +91,17 @@ class TestCaseImplementation(pydantic.BaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls, field_name: typing_extensions.Literal["function"], *, pre: bool = False
+            cls, field_name: typing_extensions.Literal["function"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[
+            [TestCaseImplementation.Validators.PreFunctionValidator],
+            TestCaseImplementation.Validators.PreFunctionValidator,
+        ]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["function"], *, pre: typing_extensions.Literal[False] = False
         ) -> typing.Callable[
             [TestCaseImplementation.Validators.FunctionValidator], TestCaseImplementation.Validators.FunctionValidator
         ]:
@@ -102,10 +124,18 @@ class TestCaseImplementation(pydantic.BaseModel):
 
             return decorator
 
+        class PreDescriptionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseImplementation.Partial) -> typing.Any:
+                ...
+
         class DescriptionValidator(typing_extensions.Protocol):
             def __call__(
                 self, __v: TestCaseImplementationDescription, __values: TestCaseImplementation.Partial
             ) -> TestCaseImplementationDescription:
+                ...
+
+        class PreFunctionValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: TestCaseImplementation.Partial) -> typing.Any:
                 ...
 
         class FunctionValidator(typing_extensions.Protocol):
