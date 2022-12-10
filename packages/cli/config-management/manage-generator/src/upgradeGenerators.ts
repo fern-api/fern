@@ -36,13 +36,12 @@ function maybeUpgradeVersion(
 
     if (updatedInvocation != null) {
         const minVersion = getMinimumVersionForGenerator({ generatorName: generatorInvocation.name });
+
+        // use hardcoded version or min-version, whichever is later
         const newVersion =
-            minVersion != null
-                ? isVersionAhead(minVersion, generatorInvocation.version)
-                    ? minVersion
-                    : generatorInvocation.version
-                : // if no min version, use the hardcoded default version
-                  updatedInvocation.version;
+            minVersion != null && isVersionAhead(minVersion, generatorInvocation.version)
+                ? minVersion
+                : updatedInvocation.version;
         if (isVersionAhead(newVersion, generatorInvocation.version)) {
             context.logger.info(
                 chalk.green(`Upgraded ${generatorInvocation.name} from ${generatorInvocation.version} to ${newVersion}`)
