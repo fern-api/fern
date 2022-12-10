@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "chalk": "^5.0.1",

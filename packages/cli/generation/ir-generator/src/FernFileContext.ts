@@ -7,6 +7,9 @@ import { CasingsGenerator } from "./casings/CasingsGenerator";
 import { convertToFernFilepath, convertToFernFilepathV2 } from "./utils/convertToFernFilepath";
 import { parseInlineType } from "./utils/parseInlineType";
 
+/**
+ * here is a description
+ */
 export interface FernFileContext {
     relativeFilepath: RelativeFilePath;
     fernFilepath: FernFilepath;

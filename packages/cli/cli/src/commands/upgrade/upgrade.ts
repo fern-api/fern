@@ -1,7 +1,7 @@
 import { loggingExeca } from "@fern-api/logging-execa";
-import { runMigrations } from "@fern-api/migrations";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { loadProject } from "@fern-api/project-loader";
+import { runMigrations } from "@fern-api/yaml-migrations";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";

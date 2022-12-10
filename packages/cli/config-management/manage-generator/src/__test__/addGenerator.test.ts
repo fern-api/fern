@@ -43,7 +43,7 @@ describe("addGenerator", () => {
             addGenerator({
                 generatorName: "typescript",
                 generatorsConfiguration,
-                context: createMockTaskContext(),
+                context: createMockTaskContext({ shouldSuppressOutput: true }),
             })
         ).toThrow(FernCliError);
     });

@@ -8,9 +8,6 @@ types:
     extends: commons.WithDocs
     properties:
       name: DeclaredErrorName
-      discriminantValue:
-        type: commons.WireStringWithAllCasings
-        docs: this is deprecated. use discriminantValueV4 instead
       discriminantValueV2:
         type: commons.NameAndWireValue
         docs: this is deprecated. use discriminantValueV4 instead

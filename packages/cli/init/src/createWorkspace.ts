@@ -24,16 +24,19 @@ export async function createWorkspace({
     });
 }
 
-const API_WORKSPACE_DEFINITION: GeneratorsConfigurationSchema = {
+const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     groups: {},
 };
 
 async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFilePath }): Promise<void> {
-    await writeFile(filepath, yaml.dump(API_WORKSPACE_DEFINITION));
+    await writeFile(filepath, yaml.dump(GENERATORS_CONFIGURATION));
 }
 
 const ROOT_API: RootApiFileSchema = {
     name: "api",
+    "error-discrimination": {
+        strategy: "status-code",
+    },
 };
 
 async function writeSampleApiDefinition({

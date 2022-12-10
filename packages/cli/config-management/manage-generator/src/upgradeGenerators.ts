@@ -1,4 +1,5 @@
 import { GeneratorInvocationSchema, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { getMinimumVersionForGenerator } from "@fern-api/ir-migrations";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -34,18 +35,23 @@ function maybeUpgradeVersion(
     const updatedInvocation = GENERATOR_INVOCATIONS[generatorInvocation.name];
 
     if (updatedInvocation != null) {
-        if (isVersionAhead(updatedInvocation.version, generatorInvocation.version)) {
+        const minVersion = getMinimumVersionForGenerator({ generatorName: generatorInvocation.name });
+        const newVersion =
+            minVersion != null
+                ? isVersionAhead(minVersion, generatorInvocation.version)
+                    ? minVersion
+                    : generatorInvocation.version
+                : // if no min version, use the hardcoded default version
+                  updatedInvocation.version;
+        if (isVersionAhead(newVersion, generatorInvocation.version)) {
             context.logger.info(
-                chalk.green(
-                    `Upgraded ${generatorInvocation.name} from ${generatorInvocation.version} to ${updatedInvocation.version}`
-                )
+                chalk.green(`Upgraded ${generatorInvocation.name} from ${generatorInvocation.version} to ${newVersion}`)
             );
             return produce(generatorInvocation, (draft) => {
-                draft.version = updatedInvocation.version;
+                draft.version = newVersion;
             });
         }
     } else {
-        context.logger.warn("Unknown generator: " + generatorInvocation.name);
         return generatorInvocation;
     }
 
