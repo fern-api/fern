@@ -5,7 +5,6 @@ import {
     HttpServiceSchema,
     TypeDeclarationSchema,
     TypeExampleSchema,
-    TypeReferenceSchema,
 } from "../schemas";
 import { NodePath } from "./NodePath";
 
@@ -18,7 +17,7 @@ export interface FernServiceFileAstNodeTypes {
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
     typeExample: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: TypeExampleSchema };
-    typeReference: TypeReferenceSchema;
+    typeReference: string;
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema };

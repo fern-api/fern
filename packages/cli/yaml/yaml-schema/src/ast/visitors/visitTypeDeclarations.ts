@@ -20,7 +20,6 @@ export async function visitTypeDeclarations({
     for (const [typeName, declaration] of Object.entries(typeDeclarations)) {
         const nodePathForType = [...nodePath, typeName];
         await visitor.typeName?.(typeName, nodePathForType);
-        await visitor.typeDeclaration?.({ typeName, declaration }, nodePathForType);
         await visitTypeDeclaration({ typeName, declaration, visitor, nodePathForType });
     }
 }
@@ -36,6 +35,8 @@ export async function visitTypeDeclaration({
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForType: NodePath;
 }): Promise<void> {
+    await visitor.typeDeclaration?.({ typeName, declaration }, nodePathForType);
+
     const visitExamples = async (examples: TypeExampleSchema[] | undefined) => {
         if (examples == null) {
             return;
