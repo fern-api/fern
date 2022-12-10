@@ -30,6 +30,8 @@ describe("substituteEnvVariables", () => {
             },
             plugh: "${FOO_VAR}",
         };
-        expect(() => substituteEnvVariables(content, createMockTaskContext())).toThrow(FernCliError);
+        expect(() => substituteEnvVariables(content, createMockTaskContext({ shouldSuppressOutput: true }))).toThrow(
+            FernCliError
+        );
     });
 });

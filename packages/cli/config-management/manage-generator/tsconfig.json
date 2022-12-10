@@ -3,6 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../generation/ir-migrations" },
     { "path": "../../semver-utils" },
     { "path": "../../task-context" },
     { "path": "../generators-configuration" }
