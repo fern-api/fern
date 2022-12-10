@@ -1,4 +1,4 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
+import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -6,14 +6,14 @@ import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace AbstractRawSingleUnionType {
     export interface Init {
-        discriminant: WireStringWithAllCasings;
-        discriminantValue: WireStringWithAllCasings;
+        discriminant: NameAndWireValue;
+        discriminantValue: NameAndWireValue;
     }
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
-    private disciminant: WireStringWithAllCasings;
-    private discriminantValueWithAllCasings: WireStringWithAllCasings;
+    private disciminant: NameAndWireValue;
+    private discriminantValueWithAllCasings: NameAndWireValue;
 
     constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
         this.disciminant = discriminant;
@@ -26,7 +26,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
         return {
-            name: this.discriminantValueWithAllCasings.pascalCase,
+            name: this.discriminantValueWithAllCasings.name.unsafeName.pascalCase,
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {

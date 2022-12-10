@@ -34,7 +34,7 @@ export function generateErrorBody({
         resolvedTypes: [
             ...responseErrors.map((error) => ({
                 docs: error.docs,
-                discriminantValue: modelContext.getErrorDeclarationFromName(error.error).discriminantValue,
+                discriminantValue: modelContext.getErrorDeclarationFromName(error.error).discriminantValueV4,
                 valueType: getValueType({ error, file: errorBodyFile, modelContext }),
             })),
         ],

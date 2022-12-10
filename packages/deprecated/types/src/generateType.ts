@@ -38,7 +38,7 @@ export function generateType({
                 discriminant: unionTypeDeclaration.discriminant,
                 resolvedTypes: unionTypeDeclaration.types.map((singleUnionType) => ({
                     docs: singleUnionType.docs,
-                    discriminantValue: singleUnionType.discriminantValue,
+                    discriminantValue: singleUnionType.discriminantValueV2,
                     valueType: getResolvedValueTypeForSingleUnionType({
                         valueType: singleUnionType.valueType,
                         modelContext,

@@ -1,4 +1,4 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
+import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import { ResolvedTypeReference, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
 import { ImportStrategy } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/model-context";
@@ -9,12 +9,12 @@ import { SourceFile, ts } from "ts-morph";
 export const UNION_TYPE_MODEL_IMPORT_STRATEGY = ImportStrategy.TOP_PACKAGE_IMPORT;
 
 export function getKeyForUnion({ discriminantValue }: ResolvedSingleUnionType): string {
-    return upperFirst(discriminantValue.camelCase);
+    return upperFirst(discriminantValue.name.unsafeName.camelCase);
 }
 
 export interface ResolvedSingleUnionType {
     docs: string | null | undefined;
-    discriminantValue: WireStringWithAllCasings;
+    discriminantValue: NameAndWireValue;
     valueType: ResolvedSingleUnionValueType | undefined;
 }
 

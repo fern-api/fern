@@ -72,7 +72,7 @@ export function generateReturnFailedResponse({
                                             return ts.factory.createPropertyAssignment(
                                                 ts.factory.createIdentifier(
                                                     modelContext.getErrorDeclarationFromName(error.error)
-                                                        .discriminantValue.wireValue
+                                                        .discriminantValueV2.wireValue
                                                 ),
                                                 ts.factory.createArrowFunction(
                                                     undefined,

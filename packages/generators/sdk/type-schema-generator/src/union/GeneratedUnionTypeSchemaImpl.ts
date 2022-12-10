@@ -22,7 +22,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
     constructor(superInit: AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context>) {
         super(superInit);
 
-        const discriminant = this.shape.discriminantV2;
+        const discriminant = this.shape.discriminantV3;
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
             typeName: superInit.typeName,
@@ -31,7 +31,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
             getReferenceToSchema: this.getReferenceToSchema,
             getGeneratedUnion: () => this.getGeneratedUnionType().getGeneratedUnion(),
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
-                const discriminantValue = singleUnionType.discriminantValue;
+                const discriminantValue = singleUnionType.discriminantValueV2;
                 return SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
                     noProperties: () =>
                         new RawNoPropertiesSingleUnionType({

@@ -1,3 +1,4 @@
+import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { EndpointTypeSchemasContext, EndpointTypesContext, GeneratedUnion } from "@fern-typescript/contexts";
@@ -12,6 +13,7 @@ export declare namespace GeneratedEndpointErrorSchemaImpl {
         service: HttpService;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
+        discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
     }
 }
 
@@ -22,15 +24,14 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
     private endpoint: HttpEndpoint;
     private generatedErrorUnionSchema: GeneratedUnionSchema<EndpointTypeSchemasContext>;
 
-    constructor({ service, endpoint, errorResolver }: GeneratedEndpointErrorSchemaImpl.Init) {
+    constructor({ service, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
 
-        const discriminant = endpoint.errorsV2.discriminant;
         this.generatedErrorUnionSchema = new GeneratedUnionSchema<EndpointTypeSchemasContext>({
             typeName: GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME,
             shouldIncludeDefaultCaseInTransform: false,
-            discriminant,
+            discriminant: discriminationStrategy.discriminant,
             getReferenceToSchema: (context) =>
                 context.endpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
                     service.name,
@@ -42,13 +43,13 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
                 const errorDeclaration = errorResolver.getErrorDeclarationFromName(responseError.error);
                 if (errorDeclaration.typeV2 == null) {
                     return new RawNoPropertiesSingleUnionType({
-                        discriminant,
-                        discriminantValue: errorDeclaration.discriminantValue,
+                        discriminant: discriminationStrategy.discriminant,
+                        discriminantValue: errorDeclaration.discriminantValueV4,
                     });
                 } else {
                     return new RawSinglePropertyErrorSingleUnionType({
-                        discriminant,
-                        discriminantValue: errorDeclaration.discriminantValue,
+                        discriminant: discriminationStrategy.discriminant,
+                        discriminantValue: errorDeclaration.discriminantValueV4,
                         errorName: responseError.error,
                     });
                 }

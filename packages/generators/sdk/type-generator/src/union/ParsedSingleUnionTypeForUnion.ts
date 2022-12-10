@@ -1,4 +1,4 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
+import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import {
     SingleUnionType,
     SingleUnionTypeProperties,
@@ -70,8 +70,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
         return this.singleUnionTypeFromUnion.discriminantValue.camelCase;
     }
 
-    protected getDiscriminant(): WireStringWithAllCasings {
-        return this.union.discriminantV2;
+    protected getDiscriminant(): NameAndWireValue {
+        return this.union.discriminantV3;
     }
 
     public static getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {

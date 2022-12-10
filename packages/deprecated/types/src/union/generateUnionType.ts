@@ -203,7 +203,7 @@ function createUtils({
 
     for (const singleUnionType of types) {
         writer.addProperty({
-            key: singleUnionType.discriminantValue.camelCase,
+            key: singleUnionType.discriminantValue.name.unsafeName.camelCase,
             value: getTextOfTsNode(
                 generateCreator({
                     typeName,

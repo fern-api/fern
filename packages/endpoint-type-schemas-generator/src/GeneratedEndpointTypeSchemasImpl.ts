@@ -69,7 +69,13 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }): GeneratedEndpointErrorSchema {
         return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
-            property: () => new GeneratedEndpointErrorSchemaImpl({ service, endpoint, errorResolver }),
+            property: (properyDiscriminationStrategy) =>
+                new GeneratedEndpointErrorSchemaImpl({
+                    service,
+                    endpoint,
+                    errorResolver,
+                    discriminationStrategy: properyDiscriminationStrategy,
+                }),
             statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
             _unknown: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);

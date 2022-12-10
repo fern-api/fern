@@ -1,4 +1,4 @@
-import { WireStringWithAllCasings } from "@fern-fern/ir-model/commons";
+import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
@@ -8,7 +8,7 @@ import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context> extends AbstractGeneratedSchema.Init {
-        discriminant: WireStringWithAllCasings;
+        discriminant: NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
         getReferenceToSchema: (context: Context) => Reference;
@@ -19,7 +19,7 @@ export declare namespace GeneratedUnionSchema {
 export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends AbstractGeneratedSchema<Context> {
     private static VALUE_PARAMETER_NAME = "value";
 
-    private discriminant: WireStringWithAllCasings;
+    private discriminant: NameAndWireValue;
     private singleUnionTypes: RawSingleUnionType<Context>[];
     private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
     protected getReferenceToSchema: (context: Context) => Reference;
