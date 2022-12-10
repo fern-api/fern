@@ -31,7 +31,10 @@ types:
       path: HttpPath
       pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
-      request: HttpRequest
+      request:
+        type: HttpRequest
+        docs: this is the request body
+      sdkRequest: optional<SdkRequest>
       response: HttpResponse
       errors: serviceCommons.ResponseErrors
       errorsV2:
@@ -86,6 +89,13 @@ types:
         docs: this is deprecated. use typeV2 instead.
         type: types.TypeReference
       typeV2: optional<types.TypeReference>
+  SdkRequest:
+    union:
+      justRequestBody: {}
+  SdkRequestWrapper:
+    properties:
+      wrapperName: string
+      bodyPropertyName: string
   HttpResponse:
     extends: commons.WithDocs
     properties:
