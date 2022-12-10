@@ -4,7 +4,7 @@ import { GeneratorName } from "../../types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
 export const V2_TO_V1_MIGRATION: IrMigration<V2.ir.IntermediateRepresentation, V1.ir.IntermediateRepresentation> = {
-    requiredForGeneratorVersions: {
+    minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.245",
         [GeneratorName.JAVA]: AlwaysRunMigration,

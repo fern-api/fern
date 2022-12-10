@@ -23,7 +23,7 @@ describe("migrateIntermediateRepresentation", () => {
         for (const generatorName of Object.values(GeneratorName)) {
             // eslint-disable-next-line jest/valid-title
             it(generatorName, () => {
-                const versions = migrations.map((migration) => migration.requiredForGeneratorVersions[generatorName]);
+                const versions = migrations.map((migration) => migration.minGeneratorVersionsToExclude[generatorName]);
                 const expectedVersions = versions.sort((a, b) => {
                     // a null version signifies this migration should never be
                     // run for this generator, so it should be at the end
@@ -53,10 +53,20 @@ describe("migrateIntermediateRepresentation", () => {
         }
     });
 
-    it("runs migration if generator is equal to migration version", () => {
+    it("does not run migration if generator version is equal to migration's 'minVersiontoExclude'", () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.245",
+            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+        });
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+    });
+
+    it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", () => {
+        const migrated = migrateIntermediateRepresentation({
+            generatorName: "fernapi/fern-typescript-sdk",
+            generatorVersion: "0.0.244-1-ga1ce47f",
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -70,7 +80,7 @@ describe("migrateIntermediateRepresentation", () => {
         });
     });
 
-    it("runs migration if generator is less than migration version", () => {
+    it("runs migration if generator (release) version is less than migration's 'minVersiontoExclude'", () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.244",
@@ -87,7 +97,17 @@ describe("migrateIntermediateRepresentation", () => {
         });
     });
 
-    it("does not run migration if generator is great to migration version", () => {
+    it("does not run migration if generator (dev) version is greater than migration's 'minVersiontoExclude'", () => {
+        const migrated = migrateIntermediateRepresentation({
+            generatorName: "fernapi/fern-typescript-sdk",
+            generatorVersion: "0.0.245-1-ga1ce47f",
+            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+        });
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+    });
+
+    it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.246",
