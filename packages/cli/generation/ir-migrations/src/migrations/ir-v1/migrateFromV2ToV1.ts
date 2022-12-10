@@ -3,7 +3,7 @@ import * as V1 from "@fern-fern/ir-v1-model";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
 export const V2_TO_V1_MIGRATION: IrMigration<V2.ir.IntermediateRepresentation, V1.ir.IntermediateRepresentation> = {
-    requiredForGeneratorVersions: {
+    minGeneratorVersionsToExclude: {
         "fernapi/fern-typescript": AlwaysRunMigration,
         "fernapi/fern-typescript-sdk": "0.0.245",
         "fernapi/fern-python": AlwaysRunMigration,

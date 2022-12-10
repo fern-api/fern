@@ -86,15 +86,15 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         generatorName: string;
         generatorVersion: string;
     }): boolean {
-        if (!(generatorName in migration.requiredForGeneratorVersions)) {
+        if (!(generatorName in migration.minGeneratorVersionsToExclude)) {
             throw new Error(`Cannot migrate intermediate representation. Unrecognized generator: ${generatorName}.`);
         }
-        const maxVersionToMigrateTo = migration.requiredForGeneratorVersions[generatorName as GeneratorName];
-        if (!maxVersionToMigrateTo) {
+        const minVersionToExclude = migration.minGeneratorVersionsToExclude[generatorName as GeneratorName];
+        if (!minVersionToExclude) {
             return false;
         }
 
-        return maxVersionToMigrateTo === AlwaysRunMigration || !isVersionAhead(generatorVersion, maxVersionToMigrateTo);
+        return minVersionToExclude === AlwaysRunMigration || isVersionAhead(minVersionToExclude, generatorVersion);
     }
 }
 
