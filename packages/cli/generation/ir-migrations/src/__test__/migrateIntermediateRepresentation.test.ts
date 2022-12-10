@@ -55,7 +55,7 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("runs migration if generator is equal to migration version", () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript",
+            generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.245",
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
@@ -72,7 +72,7 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("runs migration if generator is less than migration version", () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript",
+            generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.244",
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
@@ -89,7 +89,7 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("does not run migration if generator is great to migration version", () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript",
+            generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.246",
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
