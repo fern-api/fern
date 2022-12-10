@@ -9,6 +9,7 @@
     { "path": "../../../logger" },
     { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },
-    { "path": "../../ir-generator" }
+    { "path": "../../ir-generator" },
+    { "path": "../../ir-migrations" }
   ]
 }

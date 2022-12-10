@@ -8,6 +8,8 @@ exports[`fern init no existing fern directory 1`] = `
         "contents": [
           {
             "contents": "name: api
+error-discrimination:
+  strategy: status-code
 ",
             "name": "api.yml",
             "type": "file",
@@ -52,7 +54,15 @@ services:
           path: /{movieId}
           path-parameters:
             movieId: MovieId
-          response: Movie",
+          response: Movie
+          errors:
+            - MovieDoesNotExistError
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+",
             "name": "imdb.yml",
             "type": "file",
           },

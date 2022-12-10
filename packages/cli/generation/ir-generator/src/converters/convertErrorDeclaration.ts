@@ -43,10 +43,6 @@ export function convertErrorDeclaration({
             fernFilepath: file.fernFilepath,
             fernFilepathV2: file.fernFilepathV2,
         },
-        discriminantValue: file.casingsGenerator.generateWireCasingsV1({
-            wireValue: errorName,
-            name: errorName,
-        }),
         discriminantValueV2: discriminantValue,
         discriminantValueV3: getErrorDiscriminantValueV3(errorDiscriminationSchema, discriminantValue),
         discriminantValueV4: discriminantValue,

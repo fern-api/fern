@@ -1,0 +1,1 @@
+export { migrateIntermediateRepresentation } from "./migrateIntermediateRepresentation";

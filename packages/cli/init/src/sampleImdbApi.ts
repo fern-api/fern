@@ -37,4 +37,12 @@ services:
           path: /{movieId}
           path-parameters:
             movieId: MovieId
-          response: Movie`;
+          response: Movie
+          errors:
+            - MovieDoesNotExistError
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+`;

@@ -1,4 +1,5 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -25,7 +26,7 @@ export async function createAndStartJob({
     context: TaskContext;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({ workspace, organization, generatorInvocation, version, context });
-    await startJob({ intermediateRepresentation, job, context });
+    await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
 }
 
@@ -93,15 +94,24 @@ async function createJob({
 
 async function startJob({
     intermediateRepresentation,
+    generatorInvocation,
     job,
     context,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
+    generatorInvocation: GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<void> {
     const formData = new FormData();
-    formData.append("file", JSON.stringify(intermediateRepresentation));
+
+    const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
+        generatorName: generatorInvocation.name,
+        generatorVersion: generatorInvocation.version,
+        intermediateRepresentation,
+    });
+    formData.append("file", JSON.stringify(migratedIntermediateRepresentation));
+
     const url = urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
         await axios.post(url, formData, {

@@ -10,6 +10,7 @@
     { "path": "../cli/config-management/project-configuration" },
     { "path": "../cli/ete-tests" },
     { "path": "../cli/generation/ir-generator" },
+    { "path": "../cli/generation/ir-migrations" },
     { "path": "../cli/generation/local-generation/docker-utils" },
     { "path": "../cli/generation/local-generation/local-workspace-runner" },
     { "path": "../cli/generation/remote-generation/remote-workspace-runner" },
