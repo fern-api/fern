@@ -3329,6 +3329,7 @@ __metadata:
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/init": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/ir-migrations": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
     "@fern-api/loadable": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
