@@ -77,6 +77,10 @@ async function visitEndpoint({
                 return;
             }
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
+            if (typeof request === "string") {
+                await visitor.typeReference?.(request, nodePathForRequest);
+                return;
+            }
             await visitObject(request, {
                 name: noop,
                 "path-parameters": async (pathParameters) => {

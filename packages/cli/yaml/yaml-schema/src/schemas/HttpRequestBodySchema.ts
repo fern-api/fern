@@ -1,12 +1,10 @@
 import { z } from "zod";
 import { HttpInlineRequestBodySchema } from "./HttpInlineRequestBodySchema";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySchema";
 
 export const HttpRequestBodySchema = z.union([
     z.string(),
-    WithDocsSchema.extend({
-        type: z.string(),
-    }),
+    HttpReferencedRequestBodySchema,
     HttpInlineRequestBodySchema,
 ]);
 

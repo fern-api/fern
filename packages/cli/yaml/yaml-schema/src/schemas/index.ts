@@ -20,6 +20,7 @@ export { HttpHeaderSchema } from "./HttpHeaderSchema";
 export { HttpInlineRequestBodySchema } from "./HttpInlineRequestBodySchema";
 export { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 export { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
+export { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySchema";
 export { HttpRequestBodySchema } from "./HttpRequestBodySchema";
 export { HttpRequestSchema } from "./HttpRequestSchema";
 export { HttpResponseSchema } from "./HttpResponseSchema";

@@ -22,5 +22,12 @@ services:
           path: /
           method: GET
           request:
-            docs: i'm a request
-            type: string
+            body:
+              docs: i'm a request
+              type: string
+        bat:
+          path: /
+          method: GET
+          request:
+            query-parameters:
+              limit: optional<string>

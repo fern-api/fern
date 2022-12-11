@@ -268,47 +268,6 @@
                         },
                         "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                         "path": { "type": "string" },
-                        "path-parameters": {
-                          "type": "object",
-                          "additionalProperties": {
-                            "$ref": "#/properties/services/properties/http/additionalProperties/properties/path-parameters/additionalProperties"
-                          }
-                        },
-                        "query-parameters": {
-                          "type": "object",
-                          "additionalProperties": {
-                            "anyOf": [
-                              { "type": "string" },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": { "type": "string" },
-                                  "docs": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
-                                  },
-                                  "availability": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
-                                  },
-                                  "audiences": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
-                                  },
-                                  "name": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/name"
-                                  },
-                                  "allow-multiple": { "type": "boolean" }
-                                },
-                                "required": ["type"],
-                                "additionalProperties": false
-                              }
-                            ]
-                          }
-                        },
-                        "headers": {
-                          "type": "object",
-                          "additionalProperties": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
-                          }
-                        },
                         "auth": { "type": "boolean" },
                         "request": {
                           "anyOf": [
@@ -316,13 +275,101 @@
                             {
                               "type": "object",
                               "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                "name": { "type": "string" },
+                                "path-parameters": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "$ref": "#/properties/services/properties/http/additionalProperties/properties/path-parameters/additionalProperties"
+                                  }
                                 },
-                                "encoding": { "type": "string" },
-                                "type": { "type": "string" }
+                                "query-parameters": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "anyOf": [
+                                      { "type": "string" },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": { "type": "string" },
+                                          "docs": {
+                                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                          },
+                                          "availability": {
+                                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                          },
+                                          "audiences": {
+                                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                          },
+                                          "name": {
+                                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/name"
+                                          },
+                                          "allow-multiple": { "type": "boolean" }
+                                        },
+                                        "required": ["type"],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                },
+                                "headers": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                  }
+                                },
+                                "body": {
+                                  "anyOf": [
+                                    { "type": "string" },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "docs": {
+                                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                        },
+                                        "type": { "type": "string" }
+                                      },
+                                      "required": ["type"],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "anyOf": [
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "extends": {
+                                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                                            },
+                                            "properties": {
+                                              "type": "object",
+                                              "additionalProperties": {
+                                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                              }
+                                            }
+                                          },
+                                          "required": ["extends"],
+                                          "additionalProperties": false
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "extends": {
+                                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                                            },
+                                            "properties": {
+                                              "type": "object",
+                                              "additionalProperties": {
+                                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                              }
+                                            }
+                                          },
+                                          "required": ["properties"],
+                                          "additionalProperties": false
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
                               },
-                              "required": ["type"],
                               "additionalProperties": false
                             }
                           ]

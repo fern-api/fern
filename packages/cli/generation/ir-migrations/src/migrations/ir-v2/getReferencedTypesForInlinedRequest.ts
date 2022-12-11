@@ -10,7 +10,7 @@ export function getReferencedTypesForInlinedRequest({
     inlinedRequest: IrVersions.V3.services.http.InlinedRequestBody;
     allTypes: IrVersions.V2.types.TypeDeclaration[];
 }): IrVersions.V2.types.DeclaredTypeName[] {
-    const typeIdToDeclaredTypeName: Record<StringifiedTypeId, IrVersions.V2.types.DeclaredTypeName> = {};
+    const referencedTypes = new Set<StringifiedTypeId>();
     const typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration> = allTypes.reduce(
         (acc, type) => ({
             ...acc,
@@ -20,36 +20,42 @@ export function getReferencedTypesForInlinedRequest({
     );
 
     for (const extension of inlinedRequest.extends) {
-        getReferencedTypesFromTypeName({ typeName: extension, typeNameToDeclaration, typeIdToDeclaredTypeName });
+        getReferencedTypesFromTypeName({ typeName: extension, typeNameToDeclaration, referencedTypes });
     }
 
     for (const property of inlinedRequest.properties) {
         getReferencedTypesFromReference({
             reference: property.valueType,
             typeNameToDeclaration,
-            typeIdToDeclaredTypeName,
+            referencedTypes,
         });
     }
 
-    return Object.values(typeIdToDeclaredTypeName);
+    return [...referencedTypes].reduce<IrVersions.V2.types.DeclaredTypeName[]>((names, id) => {
+        const declaration = typeNameToDeclaration[id];
+        if (declaration == null) {
+            throw new Error("Cannot find declaration for ID: " + id);
+        }
+        return [...names, declaration.name];
+    }, []);
 }
 
 function getReferencedTypesFromReference({
     reference,
     typeNameToDeclaration,
-    typeIdToDeclaredTypeName,
+    referencedTypes,
 }: {
     reference: IrVersions.V2.types.TypeReference;
     typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration>;
-    typeIdToDeclaredTypeName: Record<StringifiedTypeId, IrVersions.V2.types.DeclaredTypeName>;
+    referencedTypes: Set<StringifiedTypeId>;
 }): void {
     IrVersions.V2.types.TypeReference._visit(reference, {
         primitive: noop,
         container: (container) => {
-            getReferencedTypesFromContainer({ container, typeNameToDeclaration, typeIdToDeclaredTypeName });
+            getReferencedTypesFromContainer({ container, typeNameToDeclaration, referencedTypes });
         },
         named: (typeName) => {
-            getReferencedTypesFromTypeName({ typeName, typeNameToDeclaration, typeIdToDeclaredTypeName });
+            getReferencedTypesFromTypeName({ typeName, typeNameToDeclaration, referencedTypes });
         },
         unknown: noop,
         void: noop,
@@ -62,25 +68,25 @@ function getReferencedTypesFromReference({
 function getReferencedTypesFromContainer({
     container,
     typeNameToDeclaration,
-    typeIdToDeclaredTypeName,
+    referencedTypes,
 }: {
     container: IrVersions.V2.types.ContainerType;
     typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration>;
-    typeIdToDeclaredTypeName: Record<StringifiedTypeId, IrVersions.V2.types.DeclaredTypeName>;
+    referencedTypes: Set<StringifiedTypeId>;
 }): void {
     IrVersions.V2.types.ContainerType._visit(container, {
         list: (itemType) => {
-            getReferencedTypesFromReference({ reference: itemType, typeNameToDeclaration, typeIdToDeclaredTypeName });
+            getReferencedTypesFromReference({ reference: itemType, typeNameToDeclaration, referencedTypes });
         },
         set: (itemType) => {
-            getReferencedTypesFromReference({ reference: itemType, typeNameToDeclaration, typeIdToDeclaredTypeName });
+            getReferencedTypesFromReference({ reference: itemType, typeNameToDeclaration, referencedTypes });
         },
         optional: (itemType) => {
-            getReferencedTypesFromReference({ reference: itemType, typeNameToDeclaration, typeIdToDeclaredTypeName });
+            getReferencedTypesFromReference({ reference: itemType, typeNameToDeclaration, referencedTypes });
         },
         map: ({ keyType, valueType }) => {
-            getReferencedTypesFromReference({ reference: keyType, typeNameToDeclaration, typeIdToDeclaredTypeName });
-            getReferencedTypesFromReference({ reference: valueType, typeNameToDeclaration, typeIdToDeclaredTypeName });
+            getReferencedTypesFromReference({ reference: keyType, typeNameToDeclaration, referencedTypes });
+            getReferencedTypesFromReference({ reference: valueType, typeNameToDeclaration, referencedTypes });
         },
         literal: noop,
         _unknown: () => {
@@ -92,20 +98,20 @@ function getReferencedTypesFromContainer({
 function getReferencedTypesFromTypeName({
     typeName,
     typeNameToDeclaration,
-    typeIdToDeclaredTypeName,
+    referencedTypes,
 }: {
     typeName: IrVersions.V2.types.DeclaredTypeName;
     typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration>;
-    typeIdToDeclaredTypeName: Record<StringifiedTypeId, IrVersions.V2.types.DeclaredTypeName>;
+    referencedTypes: Set<StringifiedTypeId>;
 }) {
     const typeId = stringifyTypeName(typeName);
-    typeIdToDeclaredTypeName[typeId] = typeName;
+    referencedTypes.add(typeId);
     const declaration = typeNameToDeclaration[typeId];
     if (declaration == null) {
         throw new Error("Cannot locate type: " + typeId);
     }
     for (const referencedType of declaration.referencedTypes) {
-        typeIdToDeclaredTypeName[stringifyTypeName(referencedType)] = referencedType;
+        referencedTypes.add(stringifyTypeName(referencedType));
     }
 }
 

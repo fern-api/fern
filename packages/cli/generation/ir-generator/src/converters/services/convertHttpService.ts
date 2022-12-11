@@ -5,8 +5,9 @@ import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
-import { convertHttpRequest } from "./convertHttpRequest";
+import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
+import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
 import { convertResponseErrorsV2 } from "./convertResponseErrorsV2";
 
@@ -56,8 +57,8 @@ export function convertHttpService({
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
                 pathParameters:
-                    endpoint["path-parameters"] != null
-                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) =>
+                    typeof endpoint.request !== "string" && endpoint.request?.["path-parameters"] != null
+                        ? Object.entries(endpoint.request["path-parameters"]).map(([parameterName, parameter]) =>
                               convertPathParameter({
                                   parameterName,
                                   parameter,
@@ -66,8 +67,8 @@ export function convertHttpService({
                           )
                         : [],
                 queryParameters:
-                    endpoint["query-parameters"] != null
-                        ? Object.entries(endpoint["query-parameters"]).map(([parameterName, parameter]) => {
+                    typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
+                        ? Object.entries(endpoint.request["query-parameters"]).map(([parameterName, parameter]) => {
                               const valueType = file.parseTypeReference(parameter);
                               return {
                                   ...convertDeclaration(parameter),
@@ -94,12 +95,13 @@ export function convertHttpService({
                           })
                         : [],
                 headers:
-                    endpoint.headers != null
-                        ? Object.entries(endpoint.headers).map(([headerKey, header]) =>
+                    typeof endpoint.request !== "string" && endpoint.request?.headers != null
+                        ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
                               convertHttpHeader({ headerKey, header, file })
                           )
                         : [],
-                request: convertHttpRequest({ request: endpoint.request, file }),
+                requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                sdkRequest: convertHttpSdkRequest({ request: endpoint.request, file }),
                 response: convertHttpResponse({ response: endpoint.response, file }),
                 errors: convertResponseErrors({ errors: endpoint.errors, file }),
                 errorsV2: convertResponseErrorsV2({ errors: endpoint.errors, file, errorResolver }),
