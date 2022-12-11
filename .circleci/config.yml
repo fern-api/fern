@@ -78,7 +78,7 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
 
-  live-test:
+  live-test-canary:
     docker:
       - image: cimg/node:current
     steps:
@@ -86,10 +86,10 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Live Test (prod)
+          name: Live Test (canary)
           command: |
-            yarn workspace @fern-api/cli dist:cli:prod
-            cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
+            yarn workspace @fern-api/cli dist:cli:canary
+            cli_path="$(yarn workspace @fern-api/cli bin fern:canary)"
             ./scripts/live-test.sh "$cli_path"
 
   live-test-dev:
@@ -105,6 +105,47 @@ jobs:
             yarn workspace @fern-api/cli dist:cli:dev
             cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
             ./scripts/live-test.sh "$cli_path"
+
+  live-test:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Live Test (prod)
+          command: |
+            yarn workspace @fern-api/cli dist:cli:prod
+            cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
+            ./scripts/live-test.sh "$cli_path"
+
+  publish-canary:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
+      - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Publish fern-api-canary CLI
+          command: yarn workspace @fern-api/cli publish:cli:canary --access restricted
 
   publish-dev:
     docker:
@@ -199,6 +240,13 @@ workflows:
           context:
             - auth0-dev
 
+      - live-test-canary:
+          filters:
+            branches:
+              only: canary
+          context:
+            - auth0-dev
+
       - live-test-dev:
           filters:
             branches:
@@ -213,6 +261,18 @@ workflows:
             tags:
               only: /.*/
           context:
+            - auth0-dev
+
+      - publish-canary:
+          filters:
+            branches:
+              only: canary
+          requires:
+            - check
+            - test
+            - ete-tests
+          context:
+            - npm
             - auth0-dev
 
       - publish-dev:
