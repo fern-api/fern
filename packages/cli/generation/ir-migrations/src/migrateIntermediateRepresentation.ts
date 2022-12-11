@@ -1,4 +1,4 @@
-import * as V2 from "@fern-fern/ir-model";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
 
 export function migrateIntermediateRepresentation({
@@ -8,7 +8,7 @@ export function migrateIntermediateRepresentation({
 }: {
     generatorName: string;
     generatorVersion: string;
-    intermediateRepresentation: V2.ir.IntermediateRepresentation;
+    intermediateRepresentation: IntermediateRepresentation;
 }): unknown {
     return getIntermediateRepresentationMigrator().migrateBackwards({
         generatorName,

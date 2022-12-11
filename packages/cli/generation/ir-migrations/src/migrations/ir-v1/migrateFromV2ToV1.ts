@@ -1,9 +1,11 @@
-import * as V2 from "@fern-fern/ir-model";
-import * as V1 from "@fern-fern/ir-v1-model";
+import { IrVersions } from "../../ir-versions";
 import { GeneratorName } from "../../types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
-export const V2_TO_V1_MIGRATION: IrMigration<V2.ir.IntermediateRepresentation, V1.ir.IntermediateRepresentation> = {
+export const V2_TO_V1_MIGRATION: IrMigration<
+    IrVersions.V2.ir.IntermediateRepresentation,
+    IrVersions.V1.ir.IntermediateRepresentation
+> = {
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.245",
@@ -15,16 +17,40 @@ export const V2_TO_V1_MIGRATION: IrMigration<V2.ir.IntermediateRepresentation, V
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
-    migrateBackwards: (v2) => {
+    migrateBackwards: (v2): IrVersions.V1.ir.IntermediateRepresentation => {
         return {
-            ...v2,
+            apiName: v2.apiName,
+            auth: v2.auth,
+            headers: v2.headers,
+            types: v2.types,
+            services: v2.services,
+            constants: v2.constants,
+            constantsV2: v2.constantsV2,
+            defaultEnvironment: v2.defaultEnvironment,
+            environments: v2.environments,
+            errorDiscriminant: v2.errorDiscriminant,
+            errorDiscriminationStrategy: v2.errorDiscriminationStrategy,
+            sdkConfig: v2.sdkConfig,
             errors: v2.errors.map(
-                (error): V1.errors.ErrorDeclaration => ({
-                    ...error,
+                (error): IrVersions.V1.errors.ErrorDeclaration => ({
+                    name: error.name,
+                    docs: error.docs,
                     discriminantValue: {
+                        originalValue: error.discriminantValueV4.name.unsafeName.originalValue,
+                        camelCase: error.discriminantValueV4.name.unsafeName.camelCase,
+                        pascalCase: error.discriminantValueV4.name.unsafeName.pascalCase,
+                        snakeCase: error.discriminantValueV4.name.unsafeName.snakeCase,
+                        screamingSnakeCase: error.discriminantValueV4.name.unsafeName.screamingSnakeCase,
                         wireValue: error.discriminantValueV4.wireValue,
-                        ...error.discriminantValueV4.name.unsafeName,
                     },
+                    discriminantValueV2: error.discriminantValueV2,
+                    discriminantValueV3: error.discriminantValueV3,
+                    discriminantValueV4: error.discriminantValueV4,
+                    type: error.type,
+                    typeV2: error.typeV2,
+                    typeV3: error.typeV3,
+                    http: error.http,
+                    statusCode: error.statusCode,
                 })
             ),
         };
