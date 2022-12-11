@@ -12,12 +12,7 @@ export function convertObjectTypeDeclaration({
     file: FernFileContext;
 }): Type {
     return Type.object({
-        extends:
-            object.extends != null
-                ? typeof object.extends === "string"
-                    ? [parseTypeName({ typeName: object.extends, file })]
-                    : object.extends.map((extended) => parseTypeName({ typeName: extended, file }))
-                : [],
+        extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         properties:
             object.properties != null
                 ? Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
@@ -34,6 +29,16 @@ export function convertObjectTypeDeclaration({
                   }))
                 : [],
     });
+}
+
+export function getExtensionsAsList(extensions: string | string[] | undefined): string[] {
+    if (extensions == null) {
+        return [];
+    }
+    if (typeof extensions === "string") {
+        return [extensions];
+    }
+    return extensions;
 }
 
 export function getPropertyName({
