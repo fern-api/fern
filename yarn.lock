@@ -3263,6 +3263,7 @@ __metadata:
     validate-npm-package-name: ^4.0.0
     yargs: ^17.4.1
   bin:
+    "fern:canary": ./dist/canary/bundle.cjs
     "fern:dev": ./dist/dev/bundle.cjs
     "fern:prod": ./dist/prod/bundle.cjs
   languageName: unknown
