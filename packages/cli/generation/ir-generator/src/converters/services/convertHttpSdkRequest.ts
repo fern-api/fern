@@ -1,5 +1,6 @@
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { SdkRequest } from "@fern-fern/ir-model/services/http";
+import { size } from "lodash-es";
 import { FernFileContext } from "../../FernFileContext";
 import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody";
 
@@ -18,8 +19,8 @@ export function convertHttpSdkRequest({
         return SdkRequest.justRequestBody(convertReferenceHttpRequestBody(request, file));
     }
 
-    const { headers = [], "query-parameters": queryParameters = [], body } = request;
-    if (headers.length > 0 || queryParameters.length > 0 || (body != null && isInlineRequestBody(body))) {
+    const { headers = {}, "query-parameters": queryParameters = {}, body } = request;
+    if (size(headers) > 0 || size(queryParameters) > 0 || (body != null && isInlineRequestBody(body))) {
         if (request.name == null) {
             throw new Error("Name is missing for request wrapper");
         }

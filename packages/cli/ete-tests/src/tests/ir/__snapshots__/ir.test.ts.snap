@@ -4870,6 +4870,25 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                             }
                         ],
                         "headers": [],
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
                         "response": {
                             "type": {
                                 "name": "Movie",
@@ -10298,6 +10317,25 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                             }
                         ],
                         "headers": [],
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
                         "response": {
                             "type": {
                                 "name": "Movie",
@@ -15726,6 +15764,25 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                             }
                         ],
                         "headers": [],
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
                         "response": {
                             "type": {
                                 "name": "Movie",
@@ -20391,6 +20448,25 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                             }
                         ],
                         "headers": [],
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
                         "response": {
                             "type": {
                                 "name": "Movie",
@@ -25056,6 +25132,25 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                             }
                         ],
                         "headers": [],
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
                         "response": {
                             "type": {
                                 "name": "Movie",

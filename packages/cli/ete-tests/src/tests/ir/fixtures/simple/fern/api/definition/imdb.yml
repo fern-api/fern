@@ -70,6 +70,7 @@ services:
           method: GET
           path: /{movieId}
           request:
+            name: GetMovieRequest
             path-parameters:
               movieId: MovieId
             query-parameters:
