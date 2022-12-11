@@ -1,6 +1,7 @@
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { V2_TO_V1_MIGRATION } from "./migrations/ir-v1/migrateFromV2ToV1";
+import { V3_TO_V2_MIGRATION } from "./migrations/ir-v2/migrateFromV3ToV2";
 import { GeneratorName } from "./types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "./types/IrMigration";
 
@@ -102,5 +103,8 @@ const IntermediateRepresentationMigrator = {
     Builder: new IntermediateRepresentationMigratorBuilderImpl<IntermediateRepresentation>([]),
 };
 
-const INTERMEDIATE_REPRESENTATION_MIGRATOR =
-    IntermediateRepresentationMigrator.Builder.withMigration(V2_TO_V1_MIGRATION).build();
+const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
+    // put new migrations here
+    .withMigration(V3_TO_V2_MIGRATION)
+    .withMigration(V2_TO_V1_MIGRATION)
+    .build();

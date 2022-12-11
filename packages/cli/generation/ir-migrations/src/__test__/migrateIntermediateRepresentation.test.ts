@@ -1,9 +1,9 @@
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import * as V1 from "@fern-fern/ir-v1-model";
 import { readdir } from "fs/promises";
 import path from "path";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
+import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentation } from "../migrateIntermediateRepresentation";
 import { GeneratorName } from "../types/GeneratorName";
 import { AlwaysRunMigration } from "../types/IrMigration";
@@ -59,8 +59,10 @@ describe("migrateIntermediateRepresentation", () => {
             generatorVersion: "0.0.245",
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+        expect(
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            (migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue
+        ).toBeUndefined();
     });
 
     it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", () => {
@@ -70,7 +72,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -87,7 +89,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -104,7 +106,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 
     it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", () => {
@@ -114,6 +116,6 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 });
