@@ -19,10 +19,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                 httpEndpoint: ({ endpoint }) => {
                     return getPathParameterRuleViolations({
                         path: endpoint.path,
-                        pathParameters:
-                            typeof endpoint.request !== "string" && endpoint.request?.["path-parameters"] != null
-                                ? endpoint.request["path-parameters"]
-                                : {},
+                        pathParameters: endpoint["path-parameters"] != null ? endpoint["path-parameters"] : {},
                         pathType: "endpoint",
                     });
                 },

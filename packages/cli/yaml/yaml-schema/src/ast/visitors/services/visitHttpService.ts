@@ -72,6 +72,13 @@ async function visitEndpoint({
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         availability: noop,
         path: noop,
+        "path-parameters": async (pathParameters) => {
+            await visitPathParameters({
+                pathParameters,
+                visitor,
+                nodePath: nodePathForEndpoint,
+            });
+        },
         request: async (request) => {
             if (request == null) {
                 return;
@@ -83,13 +90,6 @@ async function visitEndpoint({
             }
             await visitObject(request, {
                 name: noop,
-                "path-parameters": async (pathParameters) => {
-                    await visitPathParameters({
-                        pathParameters,
-                        visitor,
-                        nodePath: nodePathForRequest,
-                    });
-                },
                 "query-parameters": async (queryParameters) => {
                     if (queryParameters == null) {
                         return;

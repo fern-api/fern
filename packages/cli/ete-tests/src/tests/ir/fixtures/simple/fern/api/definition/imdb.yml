@@ -69,10 +69,10 @@ services:
         getMovie:
           method: GET
           path: /{movieId}
+          path-parameters:
+            movieId: MovieId
           request:
             name: GetMovieRequest
-            path-parameters:
-              movieId: MovieId
             query-parameters:
               movieName:
                 type: string
@@ -83,6 +83,5 @@ services:
         delete:
           method: DELETE
           path: /{movieId}
-          request:
-            path-parameters:
-              movieId: MovieId
+          path-parameters:
+            movieId: MovieId

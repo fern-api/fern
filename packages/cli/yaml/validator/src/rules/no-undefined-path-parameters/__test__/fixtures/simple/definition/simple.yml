@@ -8,18 +8,15 @@ services:
       endpoints:
         noErrors:
           path: /path/{parameter}/to/endpoint
-          request:
-            path-parameters:
-              parameter: string
+          path-parameters:
+            parameter: string
 
         missingPathParameters:
           path: /path/{parameter1}/{parameter2}/to/endpoint
-          request:
-            path-parameters:
-              parameter1: string
+          path-parameters:
+            parameter1: string
 
         unusedPathParameters:
           path: /path/to/endpoint
-          request:
-            path-parameters:
-              parameter1: string
+          path-parameters:
+            parameter1: string

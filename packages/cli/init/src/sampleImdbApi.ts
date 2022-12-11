@@ -35,9 +35,8 @@ services:
         getMovie:
           method: GET
           path: /{movieId}
-          request:
-            path-parameters:
-              movieId: MovieId
+          path-parameters:
+            movieId: MovieId
           response: Movie
           errors:
             - MovieDoesNotExistError
