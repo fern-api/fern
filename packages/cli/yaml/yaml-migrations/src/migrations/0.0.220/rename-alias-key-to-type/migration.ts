@@ -3,7 +3,7 @@ import { Migration } from "../../../types/Migration";
 import { getAllYamlFiles } from "./getAllYamlFiles";
 
 export const migration: Migration = {
-    name: "rename-alias-key-to-type.test",
+    name: "rename-alias-key-to-type",
     summary: "Renames the 'alias' key to 'type'",
     run: async ({ context }) => {
         const yamlFiles = await getAllYamlFiles(context);

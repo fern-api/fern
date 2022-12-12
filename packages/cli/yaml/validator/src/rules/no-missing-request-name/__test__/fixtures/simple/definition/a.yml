@@ -1,0 +1,89 @@
+services:
+  http:
+    ServiceWithoutNames:
+      auth: false
+      base-path: /
+      endpoints:
+        foo:
+          path: /
+          method: POST
+        foo2:
+          path: /
+          method: POST
+          request: string
+        bar:
+          path: /
+          method: GET
+          request:
+            body: string
+        baz:
+          path: /
+          method: GET
+          request:
+            body:
+              properties:
+                foo: string
+        bing:
+          path: /
+          method: GET
+          request:
+            query-parameters:
+              foo: string
+        bat:
+          path: /
+          method: GET
+          request:
+            headers:
+              My-Header: string
+    ServiceWithNames:
+      auth: false
+      base-path: /
+      endpoints:
+        foo:
+          path: /
+          method: POST
+          request:
+            name: FooRequest
+        foo2:
+          path: /
+          method: POST
+          request:
+            name: Foo2Request
+            body: string
+        baz:
+          path: /
+          method: GET
+          request:
+            name: BazRequest
+            body:
+              properties:
+                foo: string
+        bing:
+          path: /
+          method: GET
+          request:
+            name: BingRequest
+            query-parameters:
+              foo: string
+        bat:
+          path: /
+          method: GET
+          request:
+            name: BatRequest
+            headers:
+              My-Header: string
+
+    ServiceWithHeaders:
+      base-path: /
+      headers:
+        Service-Header: string
+      auth: false
+      endpoints:
+        get:
+          path: /
+          method: GET
+        get2:
+          path: /
+          method: GET
+          request:
+            name: Get2Request

@@ -1,8 +1,10 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { HttpEndpointSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
+import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
 import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
+import { visitTypeDeclaration } from "../visitTypeDeclarations";
 
 export async function visitHttpService({
     service,
@@ -50,7 +52,7 @@ export async function visitHttpService({
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];
-                await visitor.httpEndpoint?.({ endpointId, endpoint }, nodePathForEndpoint);
+                await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
                 await visitEndpoint({ endpoint, visitor, nodePathForEndpoint });
             }
         },
@@ -77,34 +79,6 @@ async function visitEndpoint({
                 nodePath: nodePathForEndpoint,
             });
         },
-        "query-parameters": async (queryParameters) => {
-            if (queryParameters == null) {
-                return;
-            }
-            for (const [queryParameterKey, queryParameter] of Object.entries(queryParameters)) {
-                const nodePathForQueryParameter = [...nodePathForEndpoint, "query-parameters", queryParameterKey];
-                await visitor.queryParameter?.({ queryParameterKey, queryParameter }, nodePathForQueryParameter);
-
-                if (typeof queryParameter === "string") {
-                    await visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
-                } else {
-                    await visitObject(queryParameter, {
-                        name: noop,
-                        docs: createDocsVisitor(visitor, nodePathForQueryParameter),
-                        availability: noop,
-                        type: async (type) => {
-                            await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
-                        },
-                        "allow-multiple": noop,
-                        audiences: noop,
-                    });
-                }
-            }
-        },
-        audiences: noop,
-        method: noop,
-        auth: noop,
-        headers: noop,
         request: async (request) => {
             if (request == null) {
                 return;
@@ -112,16 +86,67 @@ async function visitEndpoint({
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
             if (typeof request === "string") {
                 await visitor.typeReference?.(request, nodePathForRequest);
-            } else {
-                await visitObject(request, {
-                    docs: createDocsVisitor(visitor, nodePathForRequest),
-                    type: async (type) => {
-                        await visitor.typeReference?.(type, [...nodePathForRequest, "type"]);
-                    },
-                    encoding: noop,
-                });
+                return;
             }
+            await visitObject(request, {
+                name: noop,
+                "query-parameters": async (queryParameters) => {
+                    if (queryParameters == null) {
+                        return;
+                    }
+                    for (const [queryParameterKey, queryParameter] of Object.entries(queryParameters)) {
+                        const nodePathForQueryParameter = [
+                            ...nodePathForRequest,
+                            "query-parameters",
+                            queryParameterKey,
+                        ];
+                        await visitor.queryParameter?.(
+                            { queryParameterKey, queryParameter },
+                            nodePathForQueryParameter
+                        );
+
+                        if (typeof queryParameter === "string") {
+                            await visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
+                        } else {
+                            await visitObject(queryParameter, {
+                                name: noop,
+                                docs: createDocsVisitor(visitor, nodePathForQueryParameter),
+                                availability: noop,
+                                type: async (type) => {
+                                    await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
+                                },
+                                "allow-multiple": noop,
+                                audiences: noop,
+                            });
+                        }
+                    }
+                },
+                headers: noop,
+                body: async (body) => {
+                    if (body == null) {
+                        return;
+                    }
+                    const nodePathForRequestBody = [...nodePathForRequest, "body"];
+
+                    if (typeof body === "string") {
+                        await visitor.typeReference?.(body, nodePathForRequestBody);
+                    } else if (isInlineRequestBody(body)) {
+                        await visitTypeDeclaration({
+                            typeName: "<Inlined Request>",
+                            declaration: body,
+                            visitor,
+                            nodePathForType: nodePathForRequestBody,
+                        });
+                    } else {
+                        await createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);
+                        await visitor.typeReference?.(body.type, nodePathForRequestBody);
+                    }
+                },
+            });
         },
+        audiences: noop,
+        method: noop,
+        auth: noop,
         response: async (response) => {
             if (response == null) {
                 return;

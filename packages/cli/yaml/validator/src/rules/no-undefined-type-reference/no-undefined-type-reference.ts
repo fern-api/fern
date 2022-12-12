@@ -27,8 +27,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
         return {
             serviceFile: {
-                typeReference: (typeReference, { relativeFilepath, contents }) => {
-                    const type = typeof typeReference === "string" ? typeReference : typeReference.type;
+                typeReference: (type, { relativeFilepath, contents }) => {
                     const namedTypes = getAllNamedTypes({
                         type,
                         relativeFilepath,

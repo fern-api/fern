@@ -14,6 +14,7 @@ export { visitFernServiceFileYamlAst } from "./ast/visitFernServiceFileYamlAst";
 export * as RawSchemas from "./schemas";
 export { RootApiFileSchema } from "./schemas/file-schemas/RootApiFileSchema";
 export { ServiceFileSchema } from "./schemas/file-schemas/ServiceFileSchema";
+export { isInlineRequestBody } from "./utils/isInlineRequestBody";
 export { RawPrimitiveType } from "./utils/RawPrimitiveType";
 export { recursivelyVisitRawTypeReference } from "./utils/recursivelyVisitRawTypeReference";
 export { isAnyAuthSchemes, isSingleAuthScheme, visitRawApiAuth, type RawApiAuthVisitor } from "./utils/visitRawApiAuth";
