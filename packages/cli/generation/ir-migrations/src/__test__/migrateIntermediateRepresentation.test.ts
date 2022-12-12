@@ -1,8 +1,6 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { readdir } from "fs/promises";
-import path from "path";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentation } from "../migrateIntermediateRepresentation";
@@ -11,14 +9,6 @@ import { AlwaysRunMigration } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
-    it("all migrations are registered", async () => {
-        const numberOfMigrations = (
-            await readdir(path.join(__dirname, "../migrations"), { withFileTypes: true })
-        ).filter((item) => item.isDirectory()).length;
-        const numberOfRegisteredMigrations = getIntermediateRepresentationMigrator().migrations.length;
-        expect(numberOfMigrations).toEqual(numberOfRegisteredMigrations);
-    });
-
     describe("migrations are in order", () => {
         const migrations = getIntermediateRepresentationMigrator().migrations;
         for (const generatorName of Object.values(GeneratorName)) {

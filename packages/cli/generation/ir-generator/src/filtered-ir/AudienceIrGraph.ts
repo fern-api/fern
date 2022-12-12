@@ -1,7 +1,7 @@
 import { noop } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpRequestBody } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
@@ -65,23 +65,8 @@ export class AudienceIrGraph {
         const endpointId = getEndpointId(declaredServiceName, httpEndpoint);
         const referencedTypes = new Set<TypeId>();
         const referencedErrors = new Set<ErrorId>();
-        if (httpEndpoint.requestBody != null) {
-            HttpRequestBody._visit(httpEndpoint.requestBody, {
-                inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const extension of inlinedRequestBody.extends) {
-                        populateReferencesFromTypeName(extension, referencedTypes);
-                    }
-                    for (const property of inlinedRequestBody.properties) {
-                        populateReferencesFromTypeReference(property.valueType, referencedTypes);
-                    }
-                },
-                reference: ({ requestBodyType }) => {
-                    populateReferencesFromTypeReference(requestBodyType, referencedTypes);
-                },
-                _unknown: () => {
-                    throw new Error("Unknown HttpRequestBody: " + httpEndpoint.requestBody?.type);
-                },
-            });
+        if (httpEndpoint.request.typeV2 != null) {
+            populateReferencesFromTypeReference(httpEndpoint.request.typeV2, referencedTypes);
         }
         if (httpEndpoint.response.typeV2 != null) {
             populateReferencesFromTypeReference(httpEndpoint.response.typeV2, referencedTypes);
@@ -184,17 +169,13 @@ function populateReferencesFromTypeReference(typeReference: TypeReference, refer
             populateReferencesFromContainer(containerType, referencedTypes);
         },
         named: (declaredTypeName) => {
-            populateReferencesFromTypeName(declaredTypeName, referencedTypes);
+            referencedTypes.add(getTypeId(declaredTypeName));
         },
         primitive: noop,
         unknown: noop,
         void: noop,
         _unknown: noop,
     });
-}
-
-function populateReferencesFromTypeName(typeName: DeclaredTypeName, referencedTypes: Set<TypeId>) {
-    referencedTypes.add(getTypeId(typeName));
 }
 
 function populateReferencesFromContainer(containerType: ContainerType, referencedTypes: Set<TypeId>) {
