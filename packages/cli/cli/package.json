@@ -15,7 +15,6 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern:canary": "./dist/canary/bundle.cjs",
     "fern:dev": "./dist/dev/bundle.cjs",
     "fern:prod": "./dist/prod/bundle.cjs"
   },
@@ -28,13 +27,10 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "env:canary": "env-cmd -r .env-cmdrc.cjs -e canary",
     "env:dev": "env-cmd -r .env-cmdrc.cjs -e dev",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli:canary": "yarn compile && yarn env:canary node build.canary.cjs",
     "dist:cli:dev": "yarn compile && yarn env:dev node build.dev.cjs",
     "dist:cli:prod": "yarn compile && yarn env:prod node build.prod.cjs",
-    "publish:cli:canary": "yarn dist:cli:canary && cd dist/canary && yarn npm publish",
     "publish:cli:dev": "yarn dist:cli:dev && cd dist/dev && yarn npm publish",
     "publish:cli:prod": "yarn dist:cli:prod && cd dist/prod && yarn npm publish"
   },

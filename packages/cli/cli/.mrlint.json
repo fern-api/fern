@@ -10,10 +10,6 @@
       "dev": {
         "cliName": "fern-dev",
         "cliPackageName": "@fern-api/fern-api-dev"
-      },
-      "canary": {
-        "cliName": "fern-canary",
-        "cliPackageName": "@fern-api/fern-api-canary"
       }
     },
     "variables": ["AUTH0_DOMAIN", "AUTH0_CLIENT_ID", "DEFAULT_FIDDLE_ORIGIN"]
