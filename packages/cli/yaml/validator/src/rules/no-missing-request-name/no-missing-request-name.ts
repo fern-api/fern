@@ -8,11 +8,7 @@ export const NoMissingRequestNameRule: Rule = {
         return {
             serviceFile: {
                 httpEndpoint: ({ endpoint, service }) => {
-                    if (
-                        endpoint.request != null &&
-                        typeof endpoint.request !== "string" &&
-                        endpoint.request.name != null
-                    ) {
+                    if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
                         return [];
                     }
 

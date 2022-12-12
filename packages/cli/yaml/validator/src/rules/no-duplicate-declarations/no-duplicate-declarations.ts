@@ -75,6 +75,11 @@ async function getDeclarations(workspace: Workspace): Promise<Declarations> {
             httpService: ({ serviceName }) => {
                 addDeclaration(serviceName);
             },
+            httpEndpoint: ({ endpoint }) => {
+                if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
+                    addDeclaration(endpoint.request.name);
+                }
+            },
         });
     }
 
