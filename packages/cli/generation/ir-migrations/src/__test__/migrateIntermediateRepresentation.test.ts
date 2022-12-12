@@ -1,23 +1,14 @@
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import * as V1 from "@fern-fern/ir-v1-model";
-import { readdir } from "fs/promises";
-import path from "path";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
+import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentation } from "../migrateIntermediateRepresentation";
 import { GeneratorName } from "../types/GeneratorName";
 import { AlwaysRunMigration } from "../types/IrMigration";
-import { MOCK_IR_V2 } from "./mocks/irV2";
+import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
-    it("all migrations are registered", async () => {
-        const numberOfMigrations = (
-            await readdir(path.join(__dirname, "../migrations"), { withFileTypes: true })
-        ).filter((item) => item.isDirectory()).length;
-        const numberOfRegisteredMigrations = getIntermediateRepresentationMigrator().migrations.length;
-        expect(numberOfMigrations).toEqual(numberOfRegisteredMigrations);
-    });
-
     describe("migrations are in order", () => {
         const migrations = getIntermediateRepresentationMigrator().migrations;
         for (const generatorName of Object.values(GeneratorName)) {
@@ -53,24 +44,26 @@ describe("migrateIntermediateRepresentation", () => {
         }
     });
 
-    it("does not run migration if generator version is equal to migration's 'minVersiontoExclude'", () => {
+    it("does not run migration if generator version is equal to migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.245",
-            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+            intermediateRepresentation: await getIrForSimpleApi(),
         });
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+        expect(
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            (migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue
+        ).toBeUndefined();
     });
 
-    it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", () => {
+    it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.244-1-ga1ce47f",
-            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+            intermediateRepresentation: await getIrForSimpleApi(),
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -80,14 +73,14 @@ describe("migrateIntermediateRepresentation", () => {
         });
     });
 
-    it("runs migration if generator (release) version is less than migration's 'minVersiontoExclude'", () => {
+    it("runs migration if generator (release) version is less than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.244",
-            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+            intermediateRepresentation: await getIrForSimpleApi(),
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -97,23 +90,27 @@ describe("migrateIntermediateRepresentation", () => {
         });
     });
 
-    it("does not run migration if generator (dev) version is greater than migration's 'minVersiontoExclude'", () => {
+    it("does not run migration if generator (dev) version is greater than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.245-1-ga1ce47f",
-            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+            intermediateRepresentation: await getIrForSimpleApi(),
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 
-    it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", () => {
+    it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
             generatorName: "fernapi/fern-typescript-sdk",
             generatorVersion: "0.0.246",
-            intermediateRepresentation: MOCK_IR_V2 as unknown as IntermediateRepresentation,
+            intermediateRepresentation: await getIrForSimpleApi(),
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toBeUndefined();
+        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 });
+
+function getIrForSimpleApi(): Promise<IntermediateRepresentation> {
+    return getIrForApi(join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"));
+}

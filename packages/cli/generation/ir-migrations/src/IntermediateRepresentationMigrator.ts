@@ -1,6 +1,6 @@
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { V2_TO_V1_MIGRATION } from "./migrations/ir-v1/migrateFromV2ToV1";
+import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
 import { GeneratorName } from "./types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "./types/IrMigration";
 
@@ -19,33 +19,45 @@ export interface IntermediateRepresentationMigrator {
         generatorVersion: string;
         intermediateRepresentation: IntermediateRepresentation;
     }) => unknown;
+    migrateThroughMigration<LaterVersion, EarlierVersion>({
+        migration,
+        intermediateRepresentation,
+    }: {
+        migration: IrMigration<LaterVersion, EarlierVersion>;
+        intermediateRepresentation: IntermediateRepresentation;
+    }): EarlierVersion;
 }
 
-interface IntermediateRepresentationMigratorBuilder<Next> {
-    withMigration: <Previous>(
-        migration: IrMigration<Next, Previous>
-    ) => BuildableIntermediateRepresentationMigratorBuilder<Previous>;
+interface IntermediateRepresentationMigratorBuilder<LaterVersion> {
+    withMigration: <EarlierVersion>(
+        migration: IrMigration<LaterVersion, EarlierVersion>
+    ) => BuildableIntermediateRepresentationMigratorBuilder<EarlierVersion>;
 }
 
-interface BuildableIntermediateRepresentationMigratorBuilder<Next>
-    extends IntermediateRepresentationMigratorBuilder<Next> {
+interface BuildableIntermediateRepresentationMigratorBuilder<LaterVersion>
+    extends IntermediateRepresentationMigratorBuilder<LaterVersion> {
     build: () => IntermediateRepresentationMigrator;
 }
 
-class IntermediateRepresentationMigratorBuilderImpl<Next> implements IntermediateRepresentationMigratorBuilder<Next> {
+class IntermediateRepresentationMigratorBuilderImpl<LaterVersion>
+    implements IntermediateRepresentationMigratorBuilder<LaterVersion>
+{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(protected readonly migrations: IrMigration<any, any>[]) {}
 
-    public withMigration<Previous>(
-        migration: IrMigration<Next, Previous>
-    ): BuildableIntermediateRepresentationMigratorBuilder<Previous> {
-        return new BuildaleIntermediateRepresentationMigratorBuilderImpl<Previous>([...this.migrations, migration]);
+    public withMigration<EarlierVersion>(
+        migration: IrMigration<LaterVersion, EarlierVersion>
+    ): BuildableIntermediateRepresentationMigratorBuilder<EarlierVersion> {
+        return new BuildaleIntermediateRepresentationMigratorBuilderImpl<EarlierVersion>([
+            ...this.migrations,
+            migration,
+        ]);
     }
 }
 
-class BuildaleIntermediateRepresentationMigratorBuilderImpl<Next>
-    extends IntermediateRepresentationMigratorBuilderImpl<Next>
-    implements BuildableIntermediateRepresentationMigratorBuilder<Next>
+class BuildaleIntermediateRepresentationMigratorBuilderImpl<LaterVersion>
+    extends IntermediateRepresentationMigratorBuilderImpl<LaterVersion>
+    implements BuildableIntermediateRepresentationMigratorBuilder<LaterVersion>
 {
     public build(): IntermediateRepresentationMigrator {
         return new IntermediateRepresentationMigratorImpl(this.migrations);
@@ -65,10 +77,41 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         generatorVersion: string;
         intermediateRepresentation: IntermediateRepresentation;
     }): unknown {
+        return this.migrate({
+            intermediateRepresentation,
+            shouldMigrate: (migration) => this.shouldRunMigration({ migration, generatorName, generatorVersion }),
+        });
+    }
+
+    public migrateThroughMigration<LaterVersion, EarlierVersion>({
+        migration,
+        intermediateRepresentation,
+    }: {
+        migration: IrMigration<LaterVersion, EarlierVersion>;
+        intermediateRepresentation: IntermediateRepresentation;
+    }): EarlierVersion {
+        let hasEncouneredMigrationYet = false;
+        return this.migrate({
+            intermediateRepresentation,
+            shouldMigrate: (nextMigration) => {
+                const isEncounteringMigration = nextMigration.earlierVersion === migration.earlierVersion;
+                hasEncouneredMigrationYet ||= isEncounteringMigration;
+                return isEncounteringMigration || !hasEncouneredMigrationYet;
+            },
+        }) as EarlierVersion;
+    }
+
+    private migrate({
+        intermediateRepresentation,
+        shouldMigrate,
+    }: {
+        intermediateRepresentation: IntermediateRepresentation;
+        shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
+    }): unknown {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let migrated: any = intermediateRepresentation;
         for (const migration of this.migrations) {
-            if (!this.shouldRunMigration({ migration, generatorName, generatorVersion })) {
+            if (!shouldMigrate(migration)) {
                 break;
             }
             migrated = migration.migrateBackwards(migrated);
@@ -102,5 +145,7 @@ const IntermediateRepresentationMigrator = {
     Builder: new IntermediateRepresentationMigratorBuilderImpl<IntermediateRepresentation>([]),
 };
 
-const INTERMEDIATE_REPRESENTATION_MIGRATOR =
-    IntermediateRepresentationMigrator.Builder.withMigration(V2_TO_V1_MIGRATION).build();
+const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
+    // put new migrations here
+    .withMigration(V2_TO_V1_MIGRATION)
+    .build();
