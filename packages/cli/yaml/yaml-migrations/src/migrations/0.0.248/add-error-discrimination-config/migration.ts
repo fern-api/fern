@@ -1,5 +1,4 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
@@ -9,10 +8,10 @@ export const migration: Migration = {
     name: "add-error-discrimination-config",
     summary: "Adds error discrimination configuration",
     run: async ({ context }) => {
-        const rootApiFile = await getAllRootApiYamlFiles(context);
-        for (const filepath of rootApiFile) {
+        const rootApiFiles = await getAllRootApiYamlFiles(context);
+        for (const filepath of rootApiFiles) {
             try {
-                await migrateRootApiFile(filepath, context);
+                await migrateRootApiFile(filepath);
             } catch (error) {
                 context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
@@ -20,7 +19,7 @@ export const migration: Migration = {
     },
 };
 
-async function migrateRootApiFile(filepath: AbsoluteFilePath, _context: TaskContext): Promise<void> {
+async function migrateRootApiFile(filepath: AbsoluteFilePath): Promise<void> {
     const contents = await readFile(filepath);
     const parsedDocument = YAML.parseDocument(contents.toString());
     const errorDiscriminant = parsedDocument.get("error-discriminant", true);
