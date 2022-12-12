@@ -268,6 +268,12 @@
                         },
                         "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                         "path": { "type": "string" },
+                        "path-parameters": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/properties/services/properties/http/additionalProperties/properties/path-parameters/additionalProperties"
+                          }
+                        },
                         "auth": { "type": "boolean" },
                         "request": {
                           "anyOf": [
@@ -276,12 +282,6 @@
                               "type": "object",
                               "properties": {
                                 "name": { "type": "string" },
-                                "path-parameters": {
-                                  "type": "object",
-                                  "additionalProperties": {
-                                    "$ref": "#/properties/services/properties/http/additionalProperties/properties/path-parameters/additionalProperties"
-                                  }
-                                },
                                 "query-parameters": {
                                   "type": "object",
                                   "additionalProperties": {
