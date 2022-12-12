@@ -4,8 +4,11 @@ export type GeneratorVersion = string | typeof AlwaysRunMigration;
 
 export const AlwaysRunMigration = Symbol();
 
-export interface IrMigration<NextVersion, PreviousVersion> {
-    migrateBackwards: (next: NextVersion) => PreviousVersion;
+export interface IrMigration<LaterVersion, EarlierVersion> {
+    // the version of IR we're migrating to
+    earlierVersion: string;
+
+    migrateBackwards: (next: LaterVersion) => EarlierVersion;
 
     /**
      * if the targeted generator's version is greater than or equal to its value
