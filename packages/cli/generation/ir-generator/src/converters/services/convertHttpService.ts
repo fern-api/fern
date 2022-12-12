@@ -5,8 +5,9 @@ import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
-import { convertHttpRequest } from "./convertHttpRequest";
+import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
+import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
 import { convertResponseErrorsV2 } from "./convertResponseErrorsV2";
 
@@ -99,7 +100,8 @@ export function convertHttpService({
                               convertHttpHeader({ headerKey, header, file })
                           )
                         : [],
-                request: convertHttpRequest({ request: endpoint.request, file }),
+                requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                sdkRequest: convertHttpSdkRequest({ request: endpoint.request, file }),
                 response: convertHttpResponse({ response: endpoint.response, file }),
                 errors: convertResponseErrors({ errors: endpoint.errors, file }),
                 errorsV2: convertResponseErrorsV2({ errors: endpoint.errors, file, errorResolver }),

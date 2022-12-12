@@ -5,17 +5,12 @@ import { TaskContext, TaskResult } from "./TaskContext";
 export function createMockTaskContext({
     shouldSuppressOutput = false,
 }: { shouldSuppressOutput?: boolean } = {}): TaskContext {
-    let result = TaskResult.Success;
     const context = {
         logger: shouldSuppressOutput ? NOOP_LOGGER : CONSOLE_LOGGER,
         takeOverTerminal: () => {
             throw new Error("Not implemented");
         },
         failAndThrow: (message?: string, error?: unknown) => {
-            context.failWithoutThrowing(message, error);
-            throw new FernCliError();
-        },
-        failWithoutThrowing: (message?: string, error?: unknown) => {
             const parts = [];
             if (message != null) {
                 parts.push(message);
@@ -26,9 +21,13 @@ export function createMockTaskContext({
             if (parts.length > 0) {
                 context.logger.error(...parts);
             }
-            result = TaskResult.Failure;
+            throw new FernCliError();
         },
-        getResult: () => result,
+        failWithoutThrowing: (message?: string, error?: unknown) => {
+            // in mock contexts, any failures should throw
+            context.failAndThrow(message, error);
+        },
+        getResult: () => TaskResult.Success,
         addInteractiveTask: () => {
             throw new Error("Not implemented");
         },
