@@ -2,5 +2,12 @@
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [{ "path": "../../../commons/core-utils" }, { "path": "../../semver-utils" }]
+  "references": [
+    { "path": "../../../commons/core-utils" },
+    { "path": "../../../commons/fs-utils" },
+    { "path": "../../semver-utils" },
+    { "path": "../../task-context" },
+    { "path": "../../workspace-loader" },
+    { "path": "../ir-generator" }
+  ]
 }
