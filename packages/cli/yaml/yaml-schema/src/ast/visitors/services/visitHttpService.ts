@@ -52,7 +52,7 @@ export async function visitHttpService({
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];
-                await visitor.httpEndpoint?.({ endpointId, endpoint }, nodePathForEndpoint);
+                await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
                 await visitEndpoint({ endpoint, visitor, nodePathForEndpoint });
             }
         },

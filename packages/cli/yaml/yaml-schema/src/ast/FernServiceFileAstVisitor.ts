@@ -20,7 +20,7 @@ export interface FernServiceFileAstNodeTypes {
     typeReference: string;
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };
-    httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema };
+    httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
     queryParameter: { queryParameterKey: string; queryParameter: HttpQueryParameterSchema };
     errorDeclaration: { errorName: string; declaration: ErrorDeclarationSchema };
     errorReference: string;
