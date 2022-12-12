@@ -27,9 +27,9 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.387",
+    "@fern-fern/ir-model": "0.0.397",
     "@fern-fern/ir-v1-model": "0.0.1",
-    "@fern-fern/ir-v2-model": "0.0.2"
+    "@fern-fern/ir-v3-model": "0.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
