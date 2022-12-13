@@ -92,10 +92,13 @@ export class CliContext {
         if (!this._suppressUpgradeMessage) {
             const { isUpgradeAvailable, latestVersion } = await this.isUpgradeAvailable();
             if (isUpgradeAvailable) {
-                const upgradeMessage = getFernCliUpgradeMessage({
+                let upgradeMessage = getFernCliUpgradeMessage({
                     toVersion: latestVersion,
                     cliEnvironment: this.environment,
                 });
+                if (!upgradeMessage.endsWith("\n")) {
+                    upgradeMessage += "\n";
+                }
                 this.stream.write(upgradeMessage);
             }
         }
