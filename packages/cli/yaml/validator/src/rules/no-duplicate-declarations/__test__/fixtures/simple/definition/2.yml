@@ -7,4 +7,15 @@ services:
     TwoService:
       auth: true
       base-path: /
-      endpoints: {}
+      endpoints:
+        get:
+          path: /
+          method: GET
+          request:
+            name: InlinedRequest
+            body:
+              properties:
+                foo: string
+
+types:
+  InlinedRequest: string

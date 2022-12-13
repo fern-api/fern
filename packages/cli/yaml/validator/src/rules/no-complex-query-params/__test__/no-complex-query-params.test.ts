@@ -12,19 +12,19 @@ describe("no-complex-query-params", () => {
         expect(violations).toEqual([
             {
                 message: "list<string> is not a valid type for a query parameter",
-                nodePath: ["services", "http", "MyService", "endpoints", "bar", "query-parameters", "c"],
+                nodePath: ["services", "http", "MyService", "endpoints", "bar", "request", "query-parameters", "c"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },
             {
                 message: "unknown is not a valid type for a query parameter",
-                nodePath: ["services", "http", "MyService", "endpoints", "bar", "query-parameters", "d"],
+                nodePath: ["services", "http", "MyService", "endpoints", "bar", "request", "query-parameters", "d"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },
             {
                 message: "optional<AliasOfAliasOfObject> is not a valid type for a query parameter",
-                nodePath: ["services", "http", "MyService", "endpoints", "bar", "query-parameters", "g"],
+                nodePath: ["services", "http", "MyService", "endpoints", "bar", "request", "query-parameters", "g"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },

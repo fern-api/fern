@@ -35,6 +35,12 @@ describe("no-duplicate-declarations", () => {
                 severity: "error",
             },
             {
+                message: "InlinedRequest is already declared in this file",
+                nodePath: ["types", "InlinedRequest"],
+                relativeFilepath: "2.yml",
+                severity: "error",
+            },
+            {
                 message: "OneService is already declared in 1.yml",
                 nodePath: ["services", "http", "OneService"],
                 relativeFilepath: "2.yml",

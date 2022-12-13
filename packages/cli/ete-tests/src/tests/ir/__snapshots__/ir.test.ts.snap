@@ -366,8 +366,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -421,7 +421,10 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -474,7 +477,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -4466,8 +4470,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -4521,7 +4525,10 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -4574,7 +4581,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -4862,10 +4870,24 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                             }
                         ],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
                         },
                         "response": {
                             "type": {
@@ -5246,11 +5268,6 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                         ],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
-                        },
                         "response": {
                             "type": {
                                 "_type": "void"
@@ -5796,8 +5813,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -5851,7 +5868,10 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -5904,7 +5924,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -9896,8 +9917,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -9951,7 +9972,10 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -10004,7 +10028,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -10292,10 +10317,24 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                             }
                         ],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
                         },
                         "response": {
                             "type": {
@@ -10676,11 +10715,6 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                         ],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
-                        },
                         "response": {
                             "type": {
                                 "_type": "void"
@@ -11226,8 +11260,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -11281,7 +11315,10 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -11334,7 +11371,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -15326,8 +15364,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -15381,7 +15419,10 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -15434,7 +15475,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -15722,10 +15764,24 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                             }
                         ],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
                         },
                         "response": {
                             "type": {
@@ -16106,11 +16162,6 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                         ],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
-                        },
                         "response": {
                             "type": {
                                 "_type": "void"
@@ -19997,8 +20048,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -20052,7 +20103,10 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -20105,7 +20159,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -20393,10 +20448,24 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                             }
                         ],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
                         },
                         "response": {
                             "type": {
@@ -20777,11 +20846,6 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                         ],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
-                        },
                         "response": {
                             "type": {
                                 "_type": "void"
@@ -24668,8 +24732,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                         "pathParameters": [],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
+                        "requestBody": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -24723,7 +24787,10 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                 ],
                                 "_type": "named"
                             },
-                            "typeV2": {
+                            "type": "reference"
+                        },
+                        "sdkRequest": {
+                            "requestBodyType": {
                                 "name": "CreateMovieRequest",
                                 "nameV2": {
                                     "originalValue": "CreateMovieRequest",
@@ -24776,7 +24843,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                     }
                                 ],
                                 "_type": "named"
-                            }
+                            },
+                            "type": "justRequestBody"
                         },
                         "response": {
                             "type": {
@@ -25064,10 +25132,24 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                             }
                         ],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
+                        "sdkRequest": {
+                            "wrapperName": {
+                                "unsafeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "GetMovieRequest",
+                                    "camelCase": "getMovieRequest",
+                                    "snakeCase": "get_movie_request",
+                                    "pascalCase": "GetMovieRequest",
+                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                }
+                            },
+                            "type": "wrapper"
                         },
                         "response": {
                             "type": {
@@ -25448,11 +25530,6 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                         ],
                         "queryParameters": [],
                         "headers": [],
-                        "request": {
-                            "type": {
-                                "_type": "void"
-                            }
-                        },
                         "response": {
                             "type": {
                                 "_type": "void"

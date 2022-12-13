@@ -9,4 +9,4 @@ migrations/
       ...
 ```
 
-When someone upgrades _past_ 0.0.188, the `generators-configuration` migration is run.
+When someone upgrades to a version that is later than 0.0.188, the `generators-configuration` migration is run.
