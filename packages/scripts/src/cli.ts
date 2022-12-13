@@ -1,7 +1,9 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { writeFernJsonSchema } from "@fern-api/json-schema";
+import { noop } from "lodash-es";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { checkReleaseBlockers } from "./checkReleaseBlockers";
 import { checkRootPackage } from "./checkRootPackage";
 
 void yargs(hideBin(process.argv))
@@ -31,6 +33,9 @@ void yargs(hideBin(process.argv))
             });
         }
     )
+    .command("check-release-blockers", "Check that there are no release blockers", noop, async () => {
+        await checkReleaseBlockers();
+    })
     .demandCommand()
     .showHelpOnFail(true)
     .parse();
