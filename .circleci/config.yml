@@ -180,6 +180,7 @@ jobs:
       - run:
           name: Publish fern-api CLI
           command: |
+            set -x
             npm_tag="latest"
             if ./scripts/is-release-candidate.sh; then
               npm_tag="prerelease"
