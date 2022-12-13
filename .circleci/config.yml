@@ -205,6 +205,9 @@ workflows:
             - auth0-dev
 
       - live-test-dev:
+          filters:
+            tags:
+              only: /.*/
           context:
             - auth0-dev
 
@@ -252,6 +255,7 @@ workflows:
             - test
             - ete-tests
             - live-test
+            - live-test-dev
           context:
             - npm
             - auth0-dev
