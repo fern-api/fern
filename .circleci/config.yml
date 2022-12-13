@@ -182,12 +182,11 @@ jobs:
       - run:
           name: Publish fern-api CLI
           command: |
-            set -x
             npm_tag="latest"
             if ./scripts/is-release-candidate.sh; then
               npm_tag="prerelease"
             fi
-            yarn workspace @fern-api/cli publish:cli:prod --tag "$npm_tag" --dry-run
+            yarn workspace @fern-api/cli publish:cli:prod --tag "$npm_tag"
 
   publish-ir-sdk:
     docker:
