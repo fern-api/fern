@@ -218,6 +218,11 @@ workflows:
             tags:
               only: /.*/
 
+      - organize-imports:
+          filters:
+            tags:
+              only: /.*/
+
       - test:
           filters:
             tags:
