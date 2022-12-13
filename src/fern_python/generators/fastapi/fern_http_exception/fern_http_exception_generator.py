@@ -1,3 +1,5 @@
+from fern import ErrorDiscriminationByPropertyStrategy, NameAndWireValue
+
 from fern_python.codegen import AST, LocalClassReference, Project, SourceFile
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -76,12 +78,13 @@ class FernHTTPExceptionGenerator:
             parent=exception_class,
             name=FernHTTPExceptionGenerator._BODY_CLASS_NAME,
         ) as body_pydantic_model:
+            error_discriminant = self._get_error_discriminant()
             body_pydantic_model.add_field(
                 PydanticField(
-                    name=self._get_error_discriminant_field_name(),
+                    name=error_discriminant.name.safe_name.snake_case,
                     type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                    json_field_name=self._context.ir.constants_v_2.errors.error_discriminant.wire_value,
-                    pascal_case_field_name=self._context.ir.constants_v_2.errors.error_discriminant.pascal_case,
+                    json_field_name=error_discriminant.wire_value,
+                    pascal_case_field_name=error_discriminant.name.unsafe_name.pascal_case,
                 )
             )
             body_pydantic_model.add_field(
@@ -113,8 +116,17 @@ class FernHTTPExceptionGenerator:
             )
             return body_pydantic_model.to_reference()
 
-    def _get_error_discriminant_field_name(self) -> str:
-        return self._context.ir.constants_v_2.errors.error_discriminant.snake_case
+    def _get_error_discriminant(self) -> NameAndWireValue:
+        def get_error_discriminant(property_strategy: ErrorDiscriminationByPropertyStrategy) -> NameAndWireValue:
+            return property_strategy.discriminant
+
+        def raise_status_code_unsupported() -> NameAndWireValue:
+            raise Exception("status code errors are unsupported")
+
+        return self._context.ir.error_discrimination_strategy.visit(
+            property=get_error_discriminant,
+            status_code=raise_status_code_unsupported,
+        )
 
     def _get_error_instance_id_field_name(self) -> str:
         return self._context.ir.constants_v_2.errors.error_instance_id_key.snake_case
@@ -133,7 +145,7 @@ class FernHTTPExceptionGenerator:
                     class_=reference_to_body,
                     kwargs=[
                         (
-                            self._get_error_discriminant_field_name(),
+                            self._get_error_discriminant().name.safe_name.snake_case,
                             AST.Expression("self." + self.FernHTTPException.NAME_MEMBER),
                         ),
                         (

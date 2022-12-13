@@ -21,7 +21,7 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.content = content
 
     class Body(pydantic.BaseModel):
-        error: typing.Optional[str]
+        error_name: typing.Optional[str] = pydantic.Field(alias="errorName")
         error_instance_id: uuid.UUID = pydantic.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
         content: typing.Optional[typing.Any]
 
@@ -30,6 +30,8 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
             allow_population_by_field_name = True
 
     def to_json_response(self) -> fastapi.responses.JSONResponse:
-        body = FernHTTPException.Body(error=self.name, content=self.content or http.HTTPStatus(self.status_code).phrase)
+        body = FernHTTPException.Body(
+            error_name=self.name, content=self.content or http.HTTPStatus(self.status_code).phrase
+        )
         content = fastapi.encoders.jsonable_encoder(body, exclude_none=True)
         return fastapi.responses.JSONResponse(content=content, status_code=self.status_code)
