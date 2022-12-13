@@ -74,8 +74,8 @@ exports[`add-inline-requests simple 1`] = `
           method: GET
           # i'm a request referencing an object named type
           request:
+            name: MyGetRequest
             body:
-              name: MyGetRequest
               properties:
                 foo: string
               docs: i'm a request
