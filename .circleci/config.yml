@@ -255,8 +255,6 @@ workflows:
             - test
             - ete-tests
             - live-test
-            - check-json-schema
-            - check-release-blockers
           context:
             - npm
             - auth0-dev
