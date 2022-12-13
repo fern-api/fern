@@ -7,5 +7,7 @@ export async function getLatestVersionOfCli(cliEnvironment: CliEnvironment): Pro
     if (cliEnvironment.packageVersion === "0.0.0") {
         return cliEnvironment.packageVersion;
     }
-    return latestVersion(cliEnvironment.packageName);
+    return latestVersion(cliEnvironment.packageName, {
+        version: "latest",
+    });
 }

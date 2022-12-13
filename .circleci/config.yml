@@ -142,10 +142,17 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Check release blockers
-          command: yarn check-release-blockers
+          command: |
+            if ./scripts/is-release-candidate.sh; then
+              echo Skipping check because this version is an RC
+            else
+              yarn check-release-blockers
       - run:
           name: Ensure JSON schema is up to date
           command: |
+            if ./scripts/is-release-candidate.sh; then
+              echo Skipping check because this version is an RC
+            else
             yarn generate-json-schema
             git --no-pager diff --exit-code
       - run:
@@ -172,7 +179,12 @@ jobs:
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - run:
           name: Publish fern-api CLI
-          command: yarn workspace @fern-api/cli publish:cli:prod
+          command: |
+            npm_tag="latest"
+            if ./scripts/is-release-candidate.sh; then
+              npm_tag="prerelease"
+            fi
+            yarn workspace @fern-api/cli publish:cli:prod
 
   publish-ir-sdk:
     docker:
@@ -181,7 +193,7 @@ jobs:
       - checkout
       - run:
           name: Publish ir sdks
-          command: npx fern-api generate --api ir-types --group sdks
+          command: npx fern-api generate --api ir-types-v3 --group sdks
 
 workflows:
   version: 2
