@@ -70,7 +70,7 @@ export const fetcher: FetchFunction = async (args) => {
         });
 
         let body: unknown;
-        if (response.data != null) {
+        if (response.data != null && response.data.length > 0) {
             try {
                 body = JSON.parse(response.data) ?? undefined;
             } catch {
