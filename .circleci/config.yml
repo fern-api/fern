@@ -184,7 +184,7 @@ jobs:
             if ./scripts/is-release-candidate.sh; then
               npm_tag="prerelease"
             fi
-            yarn workspace @fern-api/cli publish:cli:prod
+            yarn workspace @fern-api/cli publish:cli:prod --tag "$npm_tag" --dry-run
 
   publish-ir-sdk:
     docker:
