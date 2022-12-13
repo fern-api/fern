@@ -16,13 +16,6 @@ jobs:
           name: Check root package
           command: yarn root-package:check
       - run:
-          name: Organize imports
-          # not using --list-different because sometimes this removes a trailing
-          # comma that prettier adds back. Instead, we write the changes to disk.
-          # if the repo is dirty after the prettier step is run, this job will fail
-          # on the last step.
-          command: yarn organize-imports:all
-      - run:
           # compilation is needed for some typescript-eslint rules,
           # so we do it before the eslint check
           name: compile
@@ -39,6 +32,25 @@ jobs:
       - run:
           name: fern check
           command: npx fern-api check
+      - run:
+          name: Format
+          command: yarn format:check
+      - run:
+          name: Ensure no changes to git-tracked files
+          command: git --no-pager diff --exit-code
+
+  organize-imports:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Organize imports
+          # not using --list-different because sometimes this removes a trailing
+          # comma that prettier adds back
+          command: yarn organize-imports:all
       - run:
           name: Format
           command: yarn format:all
@@ -240,6 +252,7 @@ workflows:
               only: main
           requires:
             - check
+            - organize-imports
             - test
             - ete-tests
           context:
@@ -254,6 +267,7 @@ workflows:
               only: /.*/
           requires:
             - check
+            - organize-imports
             - test
             - ete-tests
             - live-test-dev
@@ -266,6 +280,7 @@ workflows:
               only: /.*/
           requires:
             - check
+            - organize-imports
             - test
             - ete-tests
             - live-test
