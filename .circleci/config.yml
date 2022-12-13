@@ -142,10 +142,17 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Check release blockers
-          command: yarn check-release-blockers
+          command: |
+            if ./scripts/is-release-candidate.sh; then
+              echo Skipping check because this version is an RC
+            else
+              yarn check-release-blockers
       - run:
           name: Ensure JSON schema is up to date
           command: |
+            if ./scripts/is-release-candidate.sh; then
+              echo Skipping check because this version is an RC
+            else
             yarn generate-json-schema
             git --no-pager diff --exit-code
       - run:
@@ -174,7 +181,7 @@ jobs:
           name: Publish fern-api CLI
           command: |
             npm_tag="latest"
-            if ./scripts/is-release-candidate.sh "$CIRCLE_TAG"; then
+            if ./scripts/is-release-candidate.sh; then
               npm_tag="prerelease"
             fi
             yarn workspace @fern-api/cli publish:cli:prod
