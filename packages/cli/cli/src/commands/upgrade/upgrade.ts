@@ -35,8 +35,16 @@ const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
  *        - run any migrations between PREVIOUS_VERSION_ENV_VAR and the latest version of the CLI.
  *        - change the generator versions in generators.yml to the latest stable versions
  */
-export async function upgrade({ cliContext }: { cliContext: CliContext }): Promise<void> {
-    const fernCliUpgradeInfo = await cliContext.isUpgradeAvailable();
+export async function upgrade({
+    cliContext,
+    includePreReleases,
+}: {
+    cliContext: CliContext;
+    includePreReleases: boolean;
+}): Promise<void> {
+    const fernCliUpgradeInfo = await cliContext.isUpgradeAvailable({
+        includePreReleases,
+    });
     if (!fernCliUpgradeInfo.isUpgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
         if (previousVersion == null) {

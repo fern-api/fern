@@ -218,11 +218,18 @@ export class CliContext {
     }
 
     private _isUpgradeAvailable: FernCliUpgradeInfo | undefined;
-    public async isUpgradeAvailable(): Promise<FernCliUpgradeInfo> {
+    public async isUpgradeAvailable({
+        includePreReleases = false,
+    }: {
+        includePreReleases?: boolean;
+    } = {}): Promise<FernCliUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
             this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
 
-            const latestPackageVersion = await getLatestVersionOfCli(this.environment);
+            const latestPackageVersion = await getLatestVersionOfCli({
+                cliEnvironment: this.environment,
+                includePreReleases,
+            });
             const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
 
             this.logger.debug(

@@ -1,4 +1,3 @@
-import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
@@ -145,7 +144,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         );
         return projectConfig.version;
     }
-    return getLatestVersionOfCli(cliContext.environment);
+    return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
 
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -162,7 +161,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await cliContext.runTask(async (context) =>
                 initialize({
                     organization: argv.organization,
-                    versionOfCli: await getLatestVersionOfCli(cliContext.environment),
+                    versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                     context,
                 })
             );
@@ -302,10 +301,16 @@ function addUpgradeCommand({
     cli.command(
         "upgrade",
         `Upgrades versions in ${GENERATORS_CONFIGURATION_FILENAME} and ${PROJECT_CONFIG_FILENAME}`,
-        noop,
-        async () => {
+        (yargs) =>
+            yargs.option("rc", {
+                boolean: true,
+                hidden: true,
+                default: false,
+            }),
+        async (argv) => {
             await upgrade({
                 cliContext,
+                includePreReleases: argv.rc,
             });
             onRun();
         }
