@@ -37,9 +37,6 @@ jobs:
           name: lint:style
           command: yarn lint:style
       - run:
-          name: Generate Fern JSON Schema
-          command: yarn generate-json-schema
-      - run:
           name: fern check
           command: npx fern-api check
       - run:
@@ -143,6 +140,14 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
+      - run:
+          name: Check release blockers
+          command: yarn check-release-blockers
+      - run:
+          name: Ensure JSON schema is up to date
+          command: |
+            yarn generate-json-schema
+            git --no-pager diff --exit-code
       - run:
           name: Print version
           command: |
@@ -250,6 +255,8 @@ workflows:
             - test
             - ete-tests
             - live-test
+            - check-json-schema
+            - check-release-blockers
           context:
             - npm
             - auth0-dev
