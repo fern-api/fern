@@ -93,13 +93,15 @@ function convertEndpoint({ document, endpoint }: { document: YAML.Document.Parse
                 const objectExtends = maybeTypeDeclarationForRequest.get("extends");
                 const objectProperties = maybeTypeDeclarationForRequest.get("properties");
                 if (objectExtends != null || objectProperties != null) {
-                    newRequest.set("name", requestBodyType);
-
                     // it's an object, so move to be the request body
                     newBody = maybeTypeDeclarationForRequest;
-                    // prefer request docs to type declaration's docs
-                    newBody.set("docs", originalRequestDocs ?? maybeTypeDeclarationForRequest.get("docs"));
+                    // inline requests can't have docs
+                    newBody.delete("docs");
 
+                    // set request wrapper name to be the old name
+                    newRequest.set("name", requestBodyType);
+
+                    // remove the old request body type
                     documentTypes.delete(requestBodyType);
                 }
             }

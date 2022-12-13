@@ -78,7 +78,6 @@ exports[`add-inline-requests simple 1`] = `
             body:
               properties:
                 foo: string
-              docs: i'm a request
 
 types:
   StringAlias: string
