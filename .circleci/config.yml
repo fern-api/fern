@@ -205,9 +205,6 @@ workflows:
             - auth0-dev
 
       - live-test-dev:
-          filters:
-            branches:
-              only: main
           context:
             - auth0-dev
 
