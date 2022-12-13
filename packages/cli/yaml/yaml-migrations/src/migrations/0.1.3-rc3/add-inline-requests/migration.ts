@@ -93,14 +93,13 @@ function convertEndpoint({ document, endpoint }: { document: YAML.Document.Parse
                 const objectExtends = maybeTypeDeclarationForRequest.get("extends");
                 const objectProperties = maybeTypeDeclarationForRequest.get("properties");
                 if (objectExtends != null || objectProperties != null) {
+                    newRequest.set("name", requestBodyType);
+
                     // it's an object, so move to be the request body
-                    newBody = new YAML.YAMLMap();
-                    newBody.set("name", requestBodyType);
-                    for (const pair of maybeTypeDeclarationForRequest.items) {
-                        newBody.add(pair);
-                    }
+                    newBody = maybeTypeDeclarationForRequest;
                     // prefer request docs to type declaration's docs
                     newBody.set("docs", originalRequestDocs ?? maybeTypeDeclarationForRequest.get("docs"));
+
                     documentTypes.delete(requestBodyType);
                 }
             }
