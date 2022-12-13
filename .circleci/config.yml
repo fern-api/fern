@@ -91,11 +91,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Build fern-typescript Docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
-      - run:
           name: Build fern-typescript-sdk Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
@@ -109,13 +104,6 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
-      - run:
-          name: Publish fern-typescript Docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace fern-typescript dockerTagVersion "$projectVersion"
-            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker push fernapi/fern-typescript:"$projectVersion"
       - run:
           name: Publish fern-typescript-sdk Docker
           command: |

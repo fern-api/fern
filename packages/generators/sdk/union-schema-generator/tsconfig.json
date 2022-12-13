@@ -4,8 +4,8 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../abstract-schema-generator" },
+    { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
-    { "path": "../../../deprecated/commons" },
     { "path": "../contexts" }
   ]
 }

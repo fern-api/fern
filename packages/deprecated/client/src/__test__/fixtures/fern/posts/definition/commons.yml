@@ -1,4 +1,0 @@
-types:
-  PostId:
-    type: string
-    docs: An ID of a blog post

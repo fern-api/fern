@@ -2,9 +2,5 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [
-    { "path": "../commons-v2" },
-    { "path": "../deprecated/commons" },
-    { "path": "../generators/sdk/contexts" }
-  ]
+  "references": [{ "path": "../commons" }, { "path": "../commons-v2" }, { "path": "../generators/sdk/contexts" }]
 }
