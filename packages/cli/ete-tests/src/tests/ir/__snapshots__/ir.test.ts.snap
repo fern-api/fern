@@ -424,61 +424,79 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -4528,61 +4546,79 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -4871,23 +4907,57 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                         ],
                         "headers": [],
                         "sdkRequest": {
-                            "wrapperName": {
+                            "shape": {
+                                "wrapperName": {
+                                    "unsafeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    }
+                                },
+                                "bodyKey": {
+                                    "unsafeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    }
+                                },
+                                "type": "wrapper"
+                            },
+                            "requestParameterName": {
                                 "unsafeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 },
                                 "safeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "response": {
                             "type": {
@@ -5871,61 +5941,79 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -9975,61 +10063,79 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -10318,23 +10424,57 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                         ],
                         "headers": [],
                         "sdkRequest": {
-                            "wrapperName": {
+                            "shape": {
+                                "wrapperName": {
+                                    "unsafeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    }
+                                },
+                                "bodyKey": {
+                                    "unsafeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    }
+                                },
+                                "type": "wrapper"
+                            },
+                            "requestParameterName": {
                                 "unsafeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 },
                                 "safeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "response": {
                             "type": {
@@ -11318,61 +11458,79 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -15422,61 +15580,79 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -15765,23 +15941,57 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                         ],
                         "headers": [],
                         "sdkRequest": {
-                            "wrapperName": {
+                            "shape": {
+                                "wrapperName": {
+                                    "unsafeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    }
+                                },
+                                "bodyKey": {
+                                    "unsafeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    }
+                                },
+                                "type": "wrapper"
+                            },
+                            "requestParameterName": {
                                 "unsafeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 },
                                 "safeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "response": {
                             "type": {
@@ -20106,61 +20316,79 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -20449,23 +20677,57 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                         ],
                         "headers": [],
                         "sdkRequest": {
-                            "wrapperName": {
+                            "shape": {
+                                "wrapperName": {
+                                    "unsafeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    }
+                                },
+                                "bodyKey": {
+                                    "unsafeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    }
+                                },
+                                "type": "wrapper"
+                            },
+                            "requestParameterName": {
                                 "unsafeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 },
                                 "safeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "response": {
                             "type": {
@@ -24790,61 +25052,79 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                             "type": "reference"
                         },
                         "sdkRequest": {
-                            "requestBodyType": {
-                                "name": "CreateMovieRequest",
-                                "nameV2": {
-                                    "originalValue": "CreateMovieRequest",
-                                    "camelCase": "createMovieRequest",
-                                    "snakeCase": "create_movie_request",
-                                    "pascalCase": "CreateMovieRequest",
-                                    "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                },
-                                "nameV3": {
-                                    "unsafeName": {
+                            "shape": {
+                                "requestBodyType": {
+                                    "name": "CreateMovieRequest",
+                                    "nameV2": {
                                         "originalValue": "CreateMovieRequest",
                                         "camelCase": "createMovieRequest",
                                         "snakeCase": "create_movie_request",
                                         "pascalCase": "CreateMovieRequest",
                                         "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                     },
-                                    "safeName": {
-                                        "originalValue": "CreateMovieRequest",
-                                        "camelCase": "createMovieRequest",
-                                        "snakeCase": "create_movie_request",
-                                        "pascalCase": "CreateMovieRequest",
-                                        "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
-                                    }
-                                },
-                                "fernFilepath": [
-                                    {
-                                        "originalValue": "imdb",
-                                        "camelCase": "imdb",
-                                        "snakeCase": "imdb",
-                                        "pascalCase": "Imdb",
-                                        "screamingSnakeCase": "IMDB"
-                                    }
-                                ],
-                                "fernFilepathV2": [
-                                    {
+                                    "nameV3": {
                                         "unsafeName": {
-                                            "originalValue": "imdb",
-                                            "camelCase": "imdb",
-                                            "snakeCase": "imdb",
-                                            "pascalCase": "Imdb",
-                                            "screamingSnakeCase": "IMDB"
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
                                         },
                                         "safeName": {
+                                            "originalValue": "CreateMovieRequest",
+                                            "camelCase": "createMovieRequest",
+                                            "snakeCase": "create_movie_request",
+                                            "pascalCase": "CreateMovieRequest",
+                                            "screamingSnakeCase": "CREATE_MOVIE_REQUEST"
+                                        }
+                                    },
+                                    "fernFilepath": [
+                                        {
                                             "originalValue": "imdb",
                                             "camelCase": "imdb",
                                             "snakeCase": "imdb",
                                             "pascalCase": "Imdb",
                                             "screamingSnakeCase": "IMDB"
                                         }
-                                    }
-                                ],
-                                "_type": "named"
+                                    ],
+                                    "fernFilepathV2": [
+                                        {
+                                            "unsafeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            },
+                                            "safeName": {
+                                                "originalValue": "imdb",
+                                                "camelCase": "imdb",
+                                                "snakeCase": "imdb",
+                                                "pascalCase": "Imdb",
+                                                "screamingSnakeCase": "IMDB"
+                                            }
+                                        }
+                                    ],
+                                    "_type": "named"
+                                },
+                                "type": "justRequestBody"
                             },
-                            "type": "justRequestBody"
+                            "requestParameterName": {
+                                "unsafeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                },
+                                "safeName": {
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
+                                }
+                            }
                         },
                         "response": {
                             "type": {
@@ -25133,23 +25413,57 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                         ],
                         "headers": [],
                         "sdkRequest": {
-                            "wrapperName": {
+                            "shape": {
+                                "wrapperName": {
+                                    "unsafeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "GetMovieRequest",
+                                        "camelCase": "getMovieRequest",
+                                        "snakeCase": "get_movie_request",
+                                        "pascalCase": "GetMovieRequest",
+                                        "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    }
+                                },
+                                "bodyKey": {
+                                    "unsafeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    },
+                                    "safeName": {
+                                        "originalValue": "body",
+                                        "camelCase": "body",
+                                        "snakeCase": "body",
+                                        "pascalCase": "Body",
+                                        "screamingSnakeCase": "BODY"
+                                    }
+                                },
+                                "type": "wrapper"
+                            },
+                            "requestParameterName": {
                                 "unsafeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 },
                                 "safeName": {
-                                    "originalValue": "GetMovieRequest",
-                                    "camelCase": "getMovieRequest",
-                                    "snakeCase": "get_movie_request",
-                                    "pascalCase": "GetMovieRequest",
-                                    "screamingSnakeCase": "GET_MOVIE_REQUEST"
+                                    "originalValue": "request",
+                                    "camelCase": "request",
+                                    "snakeCase": "request",
+                                    "pascalCase": "Request",
+                                    "screamingSnakeCase": "REQUEST"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "response": {
                             "type": {
