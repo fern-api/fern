@@ -19,9 +19,7 @@ export function pollJobAndReportStatus({
     let numConsecutiveFailed = 0;
 
     const fetchTaskStatus = async () => {
-        const response = await REMOTE_GENERATION_SERVICE.remoteGen.getJobStatus({
-            jobId: job.jobId,
-        });
+        const response = await REMOTE_GENERATION_SERVICE.remoteGen.getJobStatus(job.jobId);
         if (response.ok) {
             return response.body[taskId];
         } else {
