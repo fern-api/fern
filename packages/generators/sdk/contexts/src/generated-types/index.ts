@@ -1,4 +1,3 @@
-export { type GeneratedFile } from "./BaseGenerated";
 export {
     type BrandedGeneratedAliasType,
     type GeneratedAliasType,
@@ -12,8 +11,10 @@ export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
 export { type GeneratedEnvironments } from "./GeneratedEnvironments";
 export { type GeneratedError } from "./GeneratedError";
 export { type GeneratedErrorSchema } from "./GeneratedErrorSchema";
+export { type GeneratedFile } from "./GeneratedFile";
 export { type GeneratedObjectType } from "./GeneratedObjectType";
 export { type GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
+export { type GeneratedRequestWrapper } from "./GeneratedRequestWrapper";
 export { type GeneratedService } from "./GeneratedService";
 export { type GeneratedType } from "./GeneratedType";
 export { type GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";

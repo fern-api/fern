@@ -1531,6 +1531,8 @@ export * from \\"./owner/types\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
 export * from \\"./owner/errors\\";
+export * from \\"./owner/client/requests\\";
+export * from \\"./token/client/requests\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -1560,29 +1562,32 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async create(request: FernApi.CreateOwnerRequest): Promise<FernApi.owner.create.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment, \\"/owner/\\"),
       method: \\"POST\\",
       headers: {
         \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.owner.create.Request.json(request),
+      body: await serializers.owner.create.Request.json({
+        ownerId: request.ownerId,
+        data: request.data,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch (response.error.statusCode) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch (_response.error.statusCode) {
         case 400:
           return {
             ok: false,
             error: FernApi.owner.create.Error.ownerAlreadyExistsError(
               await serializers.OwnerAlreadyExistsError.parse(
-                response.error.body as serializers.OwnerAlreadyExistsError.Raw
+                _response.error.body as serializers.OwnerAlreadyExistsError.Raw
               )
             ),
           };
@@ -1591,27 +1596,27 @@ export class Client {
 
     return {
       ok: false,
-      error: FernApi.owner.create.Error._unknown(response.error),
+      error: FernApi.owner.create.Error._unknown(_response.error),
     };
   }
 
-  public async get(request: FernApi.owner.get.Request): Promise<FernApi.owner.get.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(this.options.environment, \`/owner/\${request.ownerId}\`),
+  public async get(ownerId: FernApi.OwnerId): Promise<FernApi.owner.get.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment, \`/owner/\${ownerId}\`),
       method: \\"GET\\",
       headers: {
         \\"X-API-Version\\": this.options.apiVersion,
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
-        body: await serializers.owner.get.Response.parse(response.body as serializers.owner.get.Response.Raw),
+        body: await serializers.owner.get.Response.parse(_response.body as serializers.owner.get.Response.Raw),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch (response.error.statusCode) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch (_response.error.statusCode) {
         case 404:
           return {
             ok: false,
@@ -1622,28 +1627,33 @@ export class Client {
 
     return {
       ok: false,
-      error: FernApi.owner.get.Error._unknown(response.error),
+      error: FernApi.owner.get.Error._unknown(_response.error),
     };
   }
 
-  public async update(request: FernApi.owner.update.Request): Promise<FernApi.owner.update.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(this.options.environment, \`/owner/\${request.ownerId}\`),
+  public async update(
+    ownerId: FernApi.OwnerId,
+    request: FernApi.UpdateOwnerRequest
+  ): Promise<FernApi.owner.update.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment, \`/owner/\${ownerId}\`),
       method: \\"PUT\\",
       headers: {
         \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.owner.update.Request.json(request._body),
+      body: await serializers.owner.update.Request.json({
+        data: request.data,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
-        body: await serializers.owner.update.Response.parse(response.body as serializers.owner.update.Response.Raw),
+        body: await serializers.owner.update.Response.parse(_response.body as serializers.owner.update.Response.Raw),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch (response.error.statusCode) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch (_response.error.statusCode) {
         case 404:
           return {
             ok: false,
@@ -1654,7 +1664,7 @@ export class Client {
 
     return {
       ok: false,
-      error: FernApi.owner.update.Error._unknown(response.error),
+      error: FernApi.owner.update.Error._unknown(_response.error),
     };
   }
 }
@@ -1742,10 +1752,6 @@ export const Error = {
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  ownerId: FernApi.OwnerId;
-}
-
 export type Response = core.APIResponse<FernApi.Owner, FernApi.owner.get.Error>;
 export type Error = FernApi.owner.get.Error.OwnerNotFoundError | FernApi.owner.get.Error._Unknown;
 
@@ -1805,11 +1811,52 @@ export const Error = {
                   },
                   Object {
                     "contents": "export * as create from \\"./create\\";
+export * from \\"./requests\\";
 export * as get from \\"./get\\";
 export * as update from \\"./update\\";
 ",
                     "name": "index.ts",
                     "type": "file",
+                  },
+                  Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import { FernApi } from \\"@fern/api\\";
+
+export interface CreateOwnerRequest {
+  ownerId: FernApi.OwnerId;
+  data?: unknown;
+}
+",
+                        "name": "CreateOwnerRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export interface UpdateOwnerRequest {
+  data?: unknown;
+}
+",
+                        "name": "UpdateOwnerRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { CreateOwnerRequest } from \\"./CreateOwnerRequest\\";
+export { UpdateOwnerRequest } from \\"./UpdateOwnerRequest\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "requests",
+                    "type": "directory",
                   },
                   Object {
                     "contents": "/**
@@ -1818,11 +1865,6 @@ export * as update from \\"./update\\";
 
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  ownerId: FernApi.OwnerId;
-  _body: FernApi.UpdateOwnerRequest;
-}
 
 export type Response = core.APIResponse<FernApi.Owner, FernApi.owner.update.Error>;
 export type Error = FernApi.owner.update.Error.OwnerNotFoundError | FernApi.owner.update.Error._Unknown;
@@ -1929,21 +1971,6 @@ export * from \\"./client\\";
 
 import { FernApi } from \\"@fern/api\\";
 
-export interface CreateOwnerRequest {
-  ownerId: FernApi.OwnerId;
-  data?: unknown;
-}
-",
-                    "name": "CreateOwnerRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { FernApi } from \\"@fern/api\\";
-
 export interface Owner {
   ownerId: FernApi.OwnerId;
   data?: unknown;
@@ -1966,21 +1993,7 @@ export type OwnerId = string;
                     "type": "file",
                   },
                   Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-export interface UpdateOwnerRequest {
-  data?: unknown;
-}
-",
-                    "name": "UpdateOwnerRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
                     "contents": "export * from \\"./OwnerId\\";
-export * from \\"./CreateOwnerRequest\\";
-export * from \\"./UpdateOwnerRequest\\";
 export * from \\"./Owner\\";
 ",
                     "name": "index.ts",
@@ -2019,23 +2032,26 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async create(request: FernApi.CreateTokenRequest): Promise<FernApi.token.create.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment, \\"/tokens/create\\"),
       method: \\"POST\\",
       headers: {
         \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.token.create.Request.json(request),
+      body: await serializers.token.create.Request.json({
+        ownerId: request.ownerId,
+        description: request.description,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
-        body: await serializers.token.create.Response.parse(response.body as serializers.token.create.Response.Raw),
+        body: await serializers.token.create.Response.parse(_response.body as serializers.token.create.Response.Raw),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch (response.error.statusCode) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch (_response.error.statusCode) {
         case 404:
           return {
             ok: false,
@@ -2046,32 +2062,34 @@ export class Client {
 
     return {
       ok: false,
-      error: FernApi.token.create.Error._unknown(response.error),
+      error: FernApi.token.create.Error._unknown(_response.error),
     };
   }
 
   public async getTokenMetadata(
     request: FernApi.GetTokenMetadataRequest
   ): Promise<FernApi.token.getTokenMetadata.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment, \\"/tokens/metadata\\"),
       method: \\"POST\\",
       headers: {
         \\"X-API-Version\\": this.options.apiVersion,
       },
-      body: await serializers.token.getTokenMetadata.Request.json(request),
+      body: await serializers.token.getTokenMetadata.Request.json({
+        token: request.token,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.token.getTokenMetadata.Response.parse(
-          response.body as serializers.token.getTokenMetadata.Response.Raw
+          _response.body as serializers.token.getTokenMetadata.Response.Raw
         ),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch (response.error.statusCode) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch (_response.error.statusCode) {
         case 404:
           return {
             ok: false,
@@ -2082,31 +2100,29 @@ export class Client {
 
     return {
       ok: false,
-      error: FernApi.token.getTokenMetadata.Error._unknown(response.error),
+      error: FernApi.token.getTokenMetadata.Error._unknown(_response.error),
     };
   }
 
-  public async getTokensForOwner(
-    request: FernApi.token.getTokensForOwner.Request
-  ): Promise<FernApi.token.getTokensForOwner.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(this.options.environment, \`/tokens/owner/\${request.ownerId}\`),
+  public async getTokensForOwner(ownerId: FernApi.OwnerId): Promise<FernApi.token.getTokensForOwner.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment, \`/tokens/owner/\${ownerId}\`),
       method: \\"GET\\",
       headers: {
         \\"X-API-Version\\": this.options.apiVersion,
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.token.getTokensForOwner.Response.parse(
-          response.body as serializers.token.getTokensForOwner.Response.Raw
+          _response.body as serializers.token.getTokensForOwner.Response.Raw
         ),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch (response.error.statusCode) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch (_response.error.statusCode) {
         case 404:
           return {
             ok: false,
@@ -2117,7 +2133,7 @@ export class Client {
 
     return {
       ok: false,
-      error: FernApi.token.getTokensForOwner.Error._unknown(response.error),
+      error: FernApi.token.getTokensForOwner.Error._unknown(_response.error),
     };
   }
 }
@@ -2271,10 +2287,6 @@ export const Error = {
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  ownerId: FernApi.OwnerId;
-}
-
 export type Response = core.APIResponse<FernApi.TokenMetadata[], FernApi.token.getTokensForOwner.Error>;
 export type Error =
   | FernApi.token.getTokensForOwner.Error.OwnerNotFoundError
@@ -2339,11 +2351,52 @@ export const Error = {
                   },
                   Object {
                     "contents": "export * as create from \\"./create\\";
+export * from \\"./requests\\";
 export * as getTokenMetadata from \\"./getTokenMetadata\\";
 export * as getTokensForOwner from \\"./getTokensForOwner\\";
 ",
                     "name": "index.ts",
                     "type": "file",
+                  },
+                  Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import { FernApi } from \\"@fern/api\\";
+
+export interface CreateTokenRequest {
+  ownerId: FernApi.OwnerId;
+  description?: string;
+}
+",
+                        "name": "CreateTokenRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export interface GetTokenMetadataRequest {
+  token: string;
+}
+",
+                        "name": "GetTokenMetadataRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { CreateTokenRequest } from \\"./CreateTokenRequest\\";
+export { GetTokenMetadataRequest } from \\"./GetTokenMetadataRequest\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "requests",
+                    "type": "directory",
                   },
                 ],
                 "name": "client",
@@ -2365,39 +2418,12 @@ export * from \\"./client\\";
 
 import { FernApi } from \\"@fern/api\\";
 
-export interface CreateTokenRequest {
-  ownerId: FernApi.OwnerId;
-  description?: string;
-}
-",
-                    "name": "CreateTokenRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { FernApi } from \\"@fern/api\\";
-
 export interface CreateTokenResponse {
   token: string;
   tokenId: FernApi.TokenId;
 }
 ",
                     "name": "CreateTokenResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-export interface GetTokenMetadataRequest {
-  token: string;
-}
-",
-                    "name": "GetTokenMetadataRequest.ts",
                     "type": "file",
                   },
                   Object {
@@ -2533,9 +2559,7 @@ export const TokenStatus = {
                   },
                   Object {
                     "contents": "export * from \\"./TokenId\\";
-export * from \\"./CreateTokenRequest\\";
 export * from \\"./CreateTokenResponse\\";
-export * from \\"./GetTokenMetadataRequest\\";
 export * from \\"./TokenMetadata\\";
 export * from \\"./TokenStatus\\";
 ",
@@ -2580,10 +2604,16 @@ import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<serializers.owner.create.Request.Raw, FernApi.CreateOwnerRequest> =
-  core.schemas.lazyObject(async () => (await import(\\"../..\\")).CreateOwnerRequest);
+  core.schemas.object({
+    ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
+    data: core.schemas.unknown(),
+  });
 
 export declare namespace Request {
-  type Raw = serializers.CreateOwnerRequest.Raw;
+  interface Raw {
+    ownerId: serializers.OwnerId.Raw;
+    data?: unknown;
+  }
 }
 ",
                     "name": "create.ts",
@@ -2627,10 +2657,14 @@ import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<serializers.owner.update.Request.Raw, FernApi.UpdateOwnerRequest> =
-  core.schemas.lazyObject(async () => (await import(\\"../..\\")).UpdateOwnerRequest);
+  core.schemas.object({
+    data: core.schemas.unknown(),
+  });
 
 export declare namespace Request {
-  type Raw = serializers.UpdateOwnerRequest.Raw;
+  interface Raw {
+    data?: unknown;
+  }
 }
 
 export const Response: core.schemas.Schema<serializers.owner.update.Response.Raw, FernApi.Owner> =
@@ -2699,33 +2733,6 @@ import * as serializers from \\"../..\\";
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
-export const CreateOwnerRequest: core.schemas.ObjectSchema<
-  serializers.CreateOwnerRequest.Raw,
-  FernApi.CreateOwnerRequest
-> = core.schemas.object({
-  ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
-  data: core.schemas.unknown(),
-});
-
-export declare namespace CreateOwnerRequest {
-  interface Raw {
-    ownerId: serializers.OwnerId.Raw;
-    data?: unknown;
-  }
-}
-",
-                    "name": "CreateOwnerRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../core\\";
-
 export const Owner: core.schemas.ObjectSchema<serializers.Owner.Raw, FernApi.Owner> = core.schemas.object({
   ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
   data: core.schemas.unknown(),
@@ -2760,34 +2767,7 @@ export declare namespace OwnerId {
                     "type": "file",
                   },
                   Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../core\\";
-
-export const UpdateOwnerRequest: core.schemas.ObjectSchema<
-  serializers.UpdateOwnerRequest.Raw,
-  FernApi.UpdateOwnerRequest
-> = core.schemas.object({
-  data: core.schemas.unknown(),
-});
-
-export declare namespace UpdateOwnerRequest {
-  interface Raw {
-    data?: unknown;
-  }
-}
-",
-                    "name": "UpdateOwnerRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
                     "contents": "export * from \\"./OwnerId\\";
-export * from \\"./CreateOwnerRequest\\";
-export * from \\"./UpdateOwnerRequest\\";
 export * from \\"./Owner\\";
 ",
                     "name": "index.ts",
@@ -2815,10 +2795,16 @@ import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<serializers.token.create.Request.Raw, FernApi.CreateTokenRequest> =
-  core.schemas.lazyObject(async () => (await import(\\"../..\\")).CreateTokenRequest);
+  core.schemas.object({
+    ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
+    description: core.schemas.string().optional(),
+  });
 
 export declare namespace Request {
-  type Raw = serializers.CreateTokenRequest.Raw;
+  interface Raw {
+    ownerId: serializers.OwnerId.Raw;
+    description?: string | null;
+  }
 }
 
 export const Response: core.schemas.Schema<serializers.token.create.Response.Raw, FernApi.CreateTokenResponse> =
@@ -2843,10 +2829,14 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   serializers.token.getTokenMetadata.Request.Raw,
   FernApi.GetTokenMetadataRequest
-> = core.schemas.lazyObject(async () => (await import(\\"../..\\")).GetTokenMetadataRequest);
+> = core.schemas.object({
+  token: core.schemas.string(),
+});
 
 export declare namespace Request {
-  type Raw = serializers.GetTokenMetadataRequest.Raw;
+  interface Raw {
+    token: string;
+  }
 }
 
 export const Response: core.schemas.Schema<serializers.token.getTokenMetadata.Response.Raw, FernApi.TokenMetadata> =
@@ -2908,33 +2898,6 @@ import * as serializers from \\"../..\\";
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
-export const CreateTokenRequest: core.schemas.ObjectSchema<
-  serializers.CreateTokenRequest.Raw,
-  FernApi.CreateTokenRequest
-> = core.schemas.object({
-  ownerId: core.schemas.lazy(async () => (await import(\\"../..\\")).OwnerId),
-  description: core.schemas.string().optional(),
-});
-
-export declare namespace CreateTokenRequest {
-  interface Raw {
-    ownerId: serializers.OwnerId.Raw;
-    description?: string | null;
-  }
-}
-",
-                    "name": "CreateTokenRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../core\\";
-
 export const CreateTokenResponse: core.schemas.ObjectSchema<
   serializers.CreateTokenResponse.Raw,
   FernApi.CreateTokenResponse
@@ -2951,31 +2914,6 @@ export declare namespace CreateTokenResponse {
 }
 ",
                     "name": "CreateTokenResponse.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../core\\";
-
-export const GetTokenMetadataRequest: core.schemas.ObjectSchema<
-  serializers.GetTokenMetadataRequest.Raw,
-  FernApi.GetTokenMetadataRequest
-> = core.schemas.object({
-  token: core.schemas.string(),
-});
-
-export declare namespace GetTokenMetadataRequest {
-  interface Raw {
-    token: string;
-  }
-}
-",
-                    "name": "GetTokenMetadataRequest.ts",
                     "type": "file",
                   },
                   Object {
@@ -3079,9 +3017,7 @@ export declare namespace TokenStatus {
                   },
                   Object {
                     "contents": "export * from \\"./TokenId\\";
-export * from \\"./CreateTokenRequest\\";
 export * from \\"./CreateTokenResponse\\";
-export * from \\"./GetTokenMetadataRequest\\";
 export * from \\"./TokenMetadata\\";
 export * from \\"./TokenStatus\\";
 ",
@@ -6132,20 +6068,21 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async updateTestSubmissionStatus(
-    request: TraceApi.admin.updateTestSubmissionStatus.Request
+    submissionId: TraceApi.SubmissionId,
+    request: TraceApi.TestSubmissionStatus
   ): Promise<TraceApi.admin.updateTestSubmissionStatus.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-test-submission-status/\${request.submissionId}\`
+        \`/admin/store-test-submission-status/\${submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.updateTestSubmissionStatus.Request.json(request._body),
+      body: await serializers.admin.updateTestSubmissionStatus.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6154,25 +6091,26 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.updateTestSubmissionStatus.Error._unknown(response.error),
+      error: TraceApi.admin.updateTestSubmissionStatus.Error._unknown(_response.error),
     };
   }
 
   public async sendTestSubmissionUpdate(
-    request: TraceApi.admin.sendTestSubmissionUpdate.Request
+    submissionId: TraceApi.SubmissionId,
+    request: TraceApi.TestSubmissionUpdate
   ): Promise<TraceApi.admin.sendTestSubmissionUpdate.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-test-submission-status-v2/\${request.submissionId}\`
+        \`/admin/store-test-submission-status-v2/\${submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.sendTestSubmissionUpdate.Request.json(request._body),
+      body: await serializers.admin.sendTestSubmissionUpdate.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6181,25 +6119,26 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.sendTestSubmissionUpdate.Error._unknown(response.error),
+      error: TraceApi.admin.sendTestSubmissionUpdate.Error._unknown(_response.error),
     };
   }
 
   public async updateWorkspaceSubmissionStatus(
-    request: TraceApi.admin.updateWorkspaceSubmissionStatus.Request
+    submissionId: TraceApi.SubmissionId,
+    request: TraceApi.WorkspaceSubmissionStatus
   ): Promise<TraceApi.admin.updateWorkspaceSubmissionStatus.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-workspace-submission-status/\${request.submissionId}\`
+        \`/admin/store-workspace-submission-status/\${submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.updateWorkspaceSubmissionStatus.Request.json(request._body),
+      body: await serializers.admin.updateWorkspaceSubmissionStatus.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6208,25 +6147,26 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.updateWorkspaceSubmissionStatus.Error._unknown(response.error),
+      error: TraceApi.admin.updateWorkspaceSubmissionStatus.Error._unknown(_response.error),
     };
   }
 
   public async sendWorkspaceSubmissionUpdate(
-    request: TraceApi.admin.sendWorkspaceSubmissionUpdate.Request
+    submissionId: TraceApi.SubmissionId,
+    request: TraceApi.WorkspaceSubmissionUpdate
   ): Promise<TraceApi.admin.sendWorkspaceSubmissionUpdate.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-workspace-submission-status-v2/\${request.submissionId}\`
+        \`/admin/store-workspace-submission-status-v2/\${submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.sendWorkspaceSubmissionUpdate.Request.json(request._body),
+      body: await serializers.admin.sendWorkspaceSubmissionUpdate.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6235,25 +6175,36 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.sendWorkspaceSubmissionUpdate.Error._unknown(response.error),
+      error: TraceApi.admin.sendWorkspaceSubmissionUpdate.Error._unknown(_response.error),
     };
   }
 
   public async storeTracedTestCase(
-    request: TraceApi.admin.storeTracedTestCase.Request
+    submissionId: TraceApi.SubmissionId,
+    testCaseId: string,
+    request: TraceApi.StoreTracedTestCaseRequest
   ): Promise<TraceApi.admin.storeTracedTestCase.Response> {
-    const response = await core.fetcher({
+    const _queryParams = new URLSearchParams();
+    if (request.someQueryParam != null) {
+      _queryParams.append(\\"some-query-param\\", request.someQueryParam);
+    }
+
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-test-trace/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`
+        \`/admin/store-test-trace/submission/\${submissionId}/testCase/\${testCaseId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.storeTracedTestCase.Request.json(request._body),
+      queryParameters: _queryParams,
+      body: await serializers.admin.storeTracedTestCase.Request.json({
+        result: request.result,
+        traceResponses: request.traceResponses,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6262,25 +6213,27 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.storeTracedTestCase.Error._unknown(response.error),
+      error: TraceApi.admin.storeTracedTestCase.Error._unknown(_response.error),
     };
   }
 
   public async storeTracedTestCaseV2(
-    request: TraceApi.admin.storeTracedTestCaseV2.Request
+    submissionId: TraceApi.SubmissionId,
+    testCaseId: TraceApi.v2.TestCaseId,
+    request: TraceApi.TraceResponseV2[]
   ): Promise<TraceApi.admin.storeTracedTestCaseV2.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-test-trace-v2/submission/\${request.submissionId}/testCase/\${request.testCaseId}\`
+        \`/admin/store-test-trace-v2/submission/\${submissionId}/testCase/\${testCaseId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.storeTracedTestCaseV2.Request.json(request._body),
+      body: await serializers.admin.storeTracedTestCaseV2.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6289,25 +6242,29 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.storeTracedTestCaseV2.Error._unknown(response.error),
+      error: TraceApi.admin.storeTracedTestCaseV2.Error._unknown(_response.error),
     };
   }
 
   public async storeTracedWorkspace(
-    request: TraceApi.admin.storeTracedWorkspace.Request
+    submissionId: TraceApi.SubmissionId,
+    request: TraceApi.StoreTracedWorkspaceRequest
   ): Promise<TraceApi.admin.storeTracedWorkspace.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-workspace-trace/submission/\${request.submissionId}\`
+        \`/admin/store-workspace-trace/submission/\${submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.storeTracedWorkspace.Request.json(request._body),
+      body: await serializers.admin.storeTracedWorkspace.Request.json({
+        workspaceRunDetails: request.workspaceRunDetails,
+        traceResponses: request.traceResponses,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6316,25 +6273,26 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.storeTracedWorkspace.Error._unknown(response.error),
+      error: TraceApi.admin.storeTracedWorkspace.Error._unknown(_response.error),
     };
   }
 
   public async storeTracedWorkspaceV2(
-    request: TraceApi.admin.storeTracedWorkspaceV2.Request
+    submissionId: TraceApi.SubmissionId,
+    request: TraceApi.TraceResponseV2[]
   ): Promise<TraceApi.admin.storeTracedWorkspaceV2.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/admin/store-workspace-trace-v2/submission/\${request.submissionId}\`
+        \`/admin/store-workspace-trace-v2/submission/\${submissionId}\`
       ),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.admin.storeTracedWorkspaceV2.Request.json(request._body),
+      body: await serializers.admin.storeTracedWorkspaceV2.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -6343,7 +6301,7 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.admin.storeTracedWorkspaceV2.Error._unknown(response.error),
+      error: TraceApi.admin.storeTracedWorkspaceV2.Error._unknown(_response.error),
     };
   }
 }
@@ -6357,6 +6315,7 @@ export * as sendTestSubmissionUpdate from \\"./sendTestSubmissionUpdate\\";
 export * as updateWorkspaceSubmissionStatus from \\"./updateWorkspaceSubmissionStatus\\";
 export * as sendWorkspaceSubmissionUpdate from \\"./sendWorkspaceSubmissionUpdate\\";
 export * as storeTracedTestCase from \\"./storeTracedTestCase\\";
+export * from \\"./requests\\";
 export * as storeTracedTestCaseV2 from \\"./storeTracedTestCaseV2\\";
 export * as storeTracedWorkspace from \\"./storeTracedWorkspace\\";
 export * as storeTracedWorkspaceV2 from \\"./storeTracedWorkspaceV2\\";
@@ -6365,17 +6324,56 @@ export * as storeTracedWorkspaceV2 from \\"./storeTracedWorkspaceV2\\";
                     "type": "file",
                   },
                   Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import { TraceApi } from \\"@fern-trace/api-sdk\\";
+
+export interface StoreTracedTestCaseRequest {
+  someQueryParam?: string;
+  result: TraceApi.TestCaseResultWithStdout;
+  traceResponses: TraceApi.TraceResponse[];
+}
+",
+                        "name": "StoreTracedTestCaseRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import { TraceApi } from \\"@fern-trace/api-sdk\\";
+
+export interface StoreTracedWorkspaceRequest {
+  workspaceRunDetails: TraceApi.WorkspaceRunDetails;
+  traceResponses: TraceApi.TraceResponse[];
+}
+",
+                        "name": "StoreTracedWorkspaceRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { StoreTracedTestCaseRequest } from \\"./StoreTracedTestCaseRequest\\";
+export { StoreTracedWorkspaceRequest } from \\"./StoreTracedWorkspaceRequest\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "requests",
+                    "type": "directory",
+                  },
+                  Object {
                     "contents": "/**
  * This file was auto-generated by Fern from our API Definition.
  */
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  _body: TraceApi.TestSubmissionUpdate;
-}
 
 export type Response = core.APIResponse<void, TraceApi.admin.sendTestSubmissionUpdate.Error>;
 export type Error = TraceApi.admin.sendTestSubmissionUpdate.Error._Unknown;
@@ -6430,11 +6428,6 @@ export const Error = {
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  _body: TraceApi.WorkspaceSubmissionUpdate;
-}
-
 export type Response = core.APIResponse<void, TraceApi.admin.sendWorkspaceSubmissionUpdate.Error>;
 export type Error = TraceApi.admin.sendWorkspaceSubmissionUpdate.Error._Unknown;
 
@@ -6487,12 +6480,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  testCaseId: string;
-  _body: TraceApi.StoreTracedTestCaseRequest;
-}
 
 export type Response = core.APIResponse<void, TraceApi.admin.storeTracedTestCase.Error>;
 export type Error = TraceApi.admin.storeTracedTestCase.Error._Unknown;
@@ -6547,12 +6534,6 @@ export const Error = {
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  testCaseId: TraceApi.v2.TestCaseId;
-  _body: TraceApi.TraceResponseV2[];
-}
-
 export type Response = core.APIResponse<void, TraceApi.admin.storeTracedTestCaseV2.Error>;
 export type Error = TraceApi.admin.storeTracedTestCaseV2.Error._Unknown;
 
@@ -6605,11 +6586,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  _body: TraceApi.StoreTracedWorkspaceRequest;
-}
 
 export type Response = core.APIResponse<void, TraceApi.admin.storeTracedWorkspace.Error>;
 export type Error = TraceApi.admin.storeTracedWorkspace.Error._Unknown;
@@ -6664,11 +6640,6 @@ export const Error = {
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  _body: TraceApi.TraceResponseV2[];
-}
-
 export type Response = core.APIResponse<void, TraceApi.admin.storeTracedWorkspaceV2.Error>;
 export type Error = TraceApi.admin.storeTracedWorkspaceV2.Error._Unknown;
 
@@ -6721,11 +6692,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  _body: TraceApi.TestSubmissionStatus;
-}
 
 export type Response = core.APIResponse<void, TraceApi.admin.updateTestSubmissionStatus.Error>;
 export type Error = TraceApi.admin.updateTestSubmissionStatus.Error._Unknown;
@@ -6780,11 +6746,6 @@ export const Error = {
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  submissionId: TraceApi.SubmissionId;
-  _body: TraceApi.WorkspaceSubmissionStatus;
-}
-
 export type Response = core.APIResponse<void, TraceApi.admin.updateWorkspaceSubmissionStatus.Error>;
 export type Error = TraceApi.admin.updateWorkspaceSubmissionStatus.Error._Unknown;
 
@@ -6835,54 +6796,10 @@ export const Error = {
                 "type": "directory",
               },
               Object {
-                "contents": "export * from \\"./types\\";
-export * from \\"./client\\";
+                "contents": "export * from \\"./client\\";
 ",
                 "name": "index.ts",
                 "type": "file",
-              },
-              Object {
-                "contents": Array [
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-
-export interface StoreTracedTestCaseRequest {
-  result: TraceApi.TestCaseResultWithStdout;
-  traceResponses: TraceApi.TraceResponse[];
-}
-",
-                    "name": "StoreTracedTestCaseRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-
-export interface StoreTracedWorkspaceRequest {
-  workspaceRunDetails: TraceApi.WorkspaceRunDetails;
-  traceResponses: TraceApi.TraceResponse[];
-}
-",
-                    "name": "StoreTracedWorkspaceRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export * from \\"./StoreTracedTestCaseRequest\\";
-export * from \\"./StoreTracedWorkspaceRequest\\";
-",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                ],
-                "name": "types",
-                "type": "directory",
               },
             ],
             "name": "admin",
@@ -8174,32 +8091,32 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async getHomepageProblems(): Promise<TraceApi.homepage.getHomepageProblems.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/homepage-problems/\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.homepage.getHomepageProblems.Response.parse(
-          response.body as serializers.homepage.getHomepageProblems.Response.Raw
+          _response.body as serializers.homepage.getHomepageProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.homepage.getHomepageProblems.Error._unknown(response.error),
+      error: TraceApi.homepage.getHomepageProblems.Error._unknown(_response.error),
     };
   }
 
   public async setHomepageProblems(
     request: TraceApi.ProblemId[]
   ): Promise<TraceApi.homepage.setHomepageProblems.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/homepage-problems/\\"),
       method: \\"POST\\",
       headers: {
@@ -8207,7 +8124,7 @@ export class Client {
       },
       body: await serializers.homepage.setHomepageProblems.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -8216,7 +8133,7 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.homepage.setHomepageProblems.Error._unknown(response.error),
+      error: TraceApi.homepage.setHomepageProblems.Error._unknown(_response.error),
     };
   }
 }
@@ -8352,9 +8269,7 @@ export const Error = {
             "type": "directory",
           },
           Object {
-            "contents": "export * as admin from \\"./admin\\";
-export * from \\"./admin/types\\";
-export * as commons from \\"./commons\\";
+            "contents": "export * as commons from \\"./commons\\";
 export * from \\"./commons/types\\";
 export * as langServer from \\"./langServer\\";
 export * from \\"./langServer/types\\";
@@ -8368,7 +8283,11 @@ export * as submission from \\"./submission\\";
 export * from \\"./submission/types\\";
 export * as v2 from \\"./v2\\";
 export * from \\"./playlist/errors\\";
+export * as admin from \\"./admin\\";
+export * from \\"./admin/client/requests\\";
 export * as homepage from \\"./homepage\\";
+export * from \\"./playlist/client/requests\\";
+export * from \\"./problem/client/requests\\";
 export * as sysprop from \\"./sysprop\\";
 ",
             "name": "index.ts",
@@ -8449,25 +8368,25 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async getAttemptedMigrations(): Promise<TraceApi.migration.getAttemptedMigrations.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/migration-info/all\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.migration.getAttemptedMigrations.Response.parse(
-          response.body as serializers.migration.getAttemptedMigrations.Response.Raw
+          _response.body as serializers.migration.getAttemptedMigrations.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.migration.getAttemptedMigrations.Error._unknown(response.error),
+      error: TraceApi.migration.getAttemptedMigrations.Error._unknown(_response.error),
     };
   }
 }
@@ -8619,99 +8538,96 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async createPlaylist(
-    request: TraceApi.playlist.createPlaylist.Request
+    serviceParam: number,
+    request: TraceApi.PlaylistCreateRequest
   ): Promise<TraceApi.playlist.createPlaylist.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}/create\`
-      ),
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/v2/playlist/\${serviceParam}/create\`),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.playlist.createPlaylist.Request.json(request._body),
+      body: await serializers.playlist.createPlaylist.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.playlist.createPlaylist.Response.parse(
-          response.body as serializers.playlist.createPlaylist.Response.Raw
+          _response.body as serializers.playlist.createPlaylist.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.playlist.createPlaylist.Error._unknown(response.error),
+      error: TraceApi.playlist.createPlaylist.Error._unknown(_response.error),
     };
   }
 
   public async getPlaylists(
-    request: TraceApi.playlist.getPlaylists.Request
+    serviceParam: number,
+    request: TraceApi.GetPlaylistsRequest
   ): Promise<TraceApi.playlist.getPlaylists.Response> {
-    const queryParams = new URLSearchParams();
+    const _queryParams = new URLSearchParams();
     if (request.limit != null) {
-      queryParams.append(\\"limit\\", request.limit.toString());
+      _queryParams.append(\\"limit\\", request.limit.toString());
     }
 
-    queryParams.append(\\"otherField\\", request.otherField);
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}/all\`
-      ),
+    _queryParams.append(\\"otherField\\", request.otherField);
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/v2/playlist/\${serviceParam}/all\`),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      queryParameters: queryParams,
+      queryParameters: _queryParams,
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.playlist.getPlaylists.Response.parse(
-          response.body as serializers.playlist.getPlaylists.Response.Raw
+          _response.body as serializers.playlist.getPlaylists.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.playlist.getPlaylists.Error._unknown(response.error),
+      error: TraceApi.playlist.getPlaylists.Error._unknown(_response.error),
     };
   }
 
   public async getPlaylist(
-    request: TraceApi.playlist.getPlaylist.Request
+    serviceParam: number,
+    playlistId: TraceApi.PlaylistId
   ): Promise<TraceApi.playlist.getPlaylist.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
+        \`/v2/playlist/\${serviceParam}/\${playlistId}\`
       ),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.playlist.getPlaylist.Response.parse(
-          response.body as serializers.playlist.getPlaylist.Response.Raw
+          _response.body as serializers.playlist.getPlaylist.Response.Raw
         ),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.playlist.getPlaylist.Error.Raw)?.errorName) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch ((_response.error.body as serializers.playlist.getPlaylist.Error.Raw)?.errorName) {
         case \\"PlaylistIdNotFoundError\\":
         case \\"UnauthorizedError\\":
           return {
             ok: false,
             error: await serializers.playlist.getPlaylist.Error.parse(
-              response.error.body as serializers.playlist.getPlaylist.Error.Raw
+              _response.error.body as serializers.playlist.getPlaylist.Error.Raw
             ),
           };
       }
@@ -8719,40 +8635,42 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.playlist.getPlaylist.Error._unknown(response.error),
+      error: TraceApi.playlist.getPlaylist.Error._unknown(_response.error),
     };
   }
 
   public async updatePlaylist(
-    request: TraceApi.playlist.updatePlaylist.Request
+    serviceParam: number,
+    playlistId: TraceApi.PlaylistId,
+    request?: TraceApi.UpdatePlaylistRequest
   ): Promise<TraceApi.playlist.updatePlaylist.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
+        \`/v2/playlist/\${serviceParam}/\${playlistId}\`
       ),
       method: \\"PUT\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.playlist.updatePlaylist.Request.json(request._body),
+      body: await serializers.playlist.updatePlaylist.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.playlist.updatePlaylist.Response.parse(
-          response.body as serializers.playlist.updatePlaylist.Response.Raw
+          _response.body as serializers.playlist.updatePlaylist.Response.Raw
         ),
       };
     }
 
-    if (response.error.reason === \\"status-code\\") {
-      switch ((response.error.body as serializers.playlist.updatePlaylist.Error.Raw)?.errorName) {
+    if (_response.error.reason === \\"status-code\\") {
+      switch ((_response.error.body as serializers.playlist.updatePlaylist.Error.Raw)?.errorName) {
         case \\"PlaylistIdNotFoundError\\":
           return {
             ok: false,
             error: await serializers.playlist.updatePlaylist.Error.parse(
-              response.error.body as serializers.playlist.updatePlaylist.Error.Raw
+              _response.error.body as serializers.playlist.updatePlaylist.Error.Raw
             ),
           };
       }
@@ -8760,24 +8678,25 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.playlist.updatePlaylist.Error._unknown(response.error),
+      error: TraceApi.playlist.updatePlaylist.Error._unknown(_response.error),
     };
   }
 
   public async deletePlaylist(
-    request: TraceApi.playlist.deletePlaylist.Request
+    serviceParam: number,
+    playlistId: TraceApi.PlaylistId
   ): Promise<TraceApi.playlist.deletePlaylist.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/v2/playlist/\${request.serviceParam}/\${request.playlistId}\`
+        \`/v2/playlist/\${serviceParam}/\${playlistId}\`
       ),
       method: \\"DELETE\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -8786,7 +8705,7 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.playlist.deletePlaylist.Error._unknown(response.error),
+      error: TraceApi.playlist.deletePlaylist.Error._unknown(_response.error),
     };
   }
 }
@@ -8801,11 +8720,6 @@ export class Client {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  serviceParam: number;
-  _body: TraceApi.PlaylistCreateRequest;
-}
 
 export type Response = core.APIResponse<TraceApi.Playlist, TraceApi.playlist.createPlaylist.Error>;
 export type Error = TraceApi.playlist.createPlaylist.Error._Unknown;
@@ -8860,11 +8774,6 @@ export const Error = {
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  serviceParam: number;
-  playlistId: TraceApi.PlaylistId;
-}
-
 export type Response = core.APIResponse<void, TraceApi.playlist.deletePlaylist.Error>;
 export type Error = TraceApi.playlist.deletePlaylist.Error._Unknown;
 
@@ -8917,11 +8826,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  serviceParam: number;
-  playlistId: TraceApi.PlaylistId;
-}
 
 export type Response = core.APIResponse<TraceApi.Playlist, TraceApi.playlist.getPlaylist.Error>;
 export type Error =
@@ -9016,12 +8920,6 @@ export const Error = {
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
-export interface Request {
-  limit?: number;
-  otherField: string;
-  serviceParam: number;
-}
-
 export type Response = core.APIResponse<TraceApi.Playlist[], TraceApi.playlist.getPlaylists.Error>;
 export type Error = TraceApi.playlist.getPlaylists.Error._Unknown;
 
@@ -9067,6 +8965,7 @@ export const Error = {
                   Object {
                     "contents": "export * as createPlaylist from \\"./createPlaylist\\";
 export * as getPlaylists from \\"./getPlaylists\\";
+export * from \\"./requests\\";
 export * as getPlaylist from \\"./getPlaylist\\";
 export * as updatePlaylist from \\"./updatePlaylist\\";
 export * as deletePlaylist from \\"./deletePlaylist\\";
@@ -9075,18 +8974,37 @@ export * as deletePlaylist from \\"./deletePlaylist\\";
                     "type": "file",
                   },
                   Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export interface GetPlaylistsRequest {
+  limit?: number;
+  otherField: string;
+}
+",
+                        "name": "GetPlaylistsRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { GetPlaylistsRequest } from \\"./GetPlaylistsRequest\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "requests",
+                    "type": "directory",
+                  },
+                  Object {
                     "contents": "/**
  * This file was auto-generated by Fern from our API Definition.
  */
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  serviceParam: number;
-  playlistId: TraceApi.PlaylistId;
-  _body?: TraceApi.UpdatePlaylistRequest;
-}
 
 export type Response = core.APIResponse<TraceApi.Playlist | undefined, TraceApi.playlist.updatePlaylist.Error>;
 export type Error =
@@ -9388,7 +9306,7 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async createProblem(request: TraceApi.CreateProblemRequest): Promise<TraceApi.problem.createProblem.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problem-crud/create\\"),
       method: \\"POST\\",
       headers: {
@@ -9396,64 +9314,57 @@ export class Client {
       },
       body: await serializers.problem.createProblem.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.problem.createProblem.Response.parse(
-          response.body as serializers.problem.createProblem.Response.Raw
+          _response.body as serializers.problem.createProblem.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.problem.createProblem.Error._unknown(response.error),
+      error: TraceApi.problem.createProblem.Error._unknown(_response.error),
     };
   }
 
   public async updateProblem(
-    request: TraceApi.problem.updateProblem.Request
+    problemId: TraceApi.ProblemId,
+    request: TraceApi.CreateProblemRequest
   ): Promise<TraceApi.problem.updateProblem.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/problem-crud/update/\${request.problemId}\`
-      ),
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/problem-crud/update/\${problemId}\`),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.problem.updateProblem.Request.json(request._body),
+      body: await serializers.problem.updateProblem.Request.json(request),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.problem.updateProblem.Response.parse(
-          response.body as serializers.problem.updateProblem.Response.Raw
+          _response.body as serializers.problem.updateProblem.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.problem.updateProblem.Error._unknown(response.error),
+      error: TraceApi.problem.updateProblem.Error._unknown(_response.error),
     };
   }
 
-  public async deleteProblem(
-    request: TraceApi.problem.deleteProblem.Request
-  ): Promise<TraceApi.problem.deleteProblem.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/problem-crud/delete/\${request.problemId}\`
-      ),
+  public async deleteProblem(problemId: TraceApi.ProblemId): Promise<TraceApi.problem.deleteProblem.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/problem-crud/delete/\${problemId}\`),
       method: \\"DELETE\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -9462,33 +9373,37 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.problem.deleteProblem.Error._unknown(response.error),
+      error: TraceApi.problem.deleteProblem.Error._unknown(_response.error),
     };
   }
 
   public async getDefaultStarterFiles(
     request: TraceApi.GetDefaultStarterFilesRequest
   ): Promise<TraceApi.problem.getDefaultStarterFiles.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problem-crud/default-starter-files\\"),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
-      body: await serializers.problem.getDefaultStarterFiles.Request.json(request),
+      body: await serializers.problem.getDefaultStarterFiles.Request.json({
+        inputParams: request.inputParams,
+        outputType: request.outputType,
+        methodName: request.methodName,
+      }),
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.problem.getDefaultStarterFiles.Response.parse(
-          response.body as serializers.problem.getDefaultStarterFiles.Response.Raw
+          _response.body as serializers.problem.getDefaultStarterFiles.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.problem.getDefaultStarterFiles.Error._unknown(response.error),
+      error: TraceApi.problem.getDefaultStarterFiles.Error._unknown(_response.error),
     };
   }
 }
@@ -9553,10 +9468,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  problemId: TraceApi.ProblemId;
-}
 
 export type Response = core.APIResponse<void, TraceApi.problem.deleteProblem.Error>;
 export type Error = TraceApi.problem.deleteProblem.Error._Unknown;
@@ -9661,9 +9572,38 @@ export const Error = {
 export * as updateProblem from \\"./updateProblem\\";
 export * as deleteProblem from \\"./deleteProblem\\";
 export * as getDefaultStarterFiles from \\"./getDefaultStarterFiles\\";
+export * from \\"./requests\\";
 ",
                     "name": "index.ts",
                     "type": "file",
+                  },
+                  Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import { TraceApi } from \\"@fern-trace/api-sdk\\";
+
+export interface GetDefaultStarterFilesRequest {
+  inputParams: TraceApi.VariableTypeAndName[];
+  outputType: TraceApi.VariableType;
+  methodName: string;
+}
+",
+                        "name": "GetDefaultStarterFilesRequest.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { GetDefaultStarterFilesRequest } from \\"./GetDefaultStarterFilesRequest\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "requests",
+                    "type": "directory",
                   },
                   Object {
                     "contents": "/**
@@ -9672,11 +9612,6 @@ export * as getDefaultStarterFiles from \\"./getDefaultStarterFiles\\";
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  problemId: TraceApi.ProblemId;
-  _body: TraceApi.CreateProblemRequest;
-}
 
 export type Response = core.APIResponse<TraceApi.UpdateProblemResponse, TraceApi.problem.updateProblem.Error>;
 export type Error = TraceApi.problem.updateProblem.Error._Unknown;
@@ -9932,22 +9867,6 @@ export interface GenericCreateProblemError {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 
-export interface GetDefaultStarterFilesRequest {
-  inputParams: TraceApi.VariableTypeAndName[];
-  outputType: TraceApi.VariableType;
-  methodName: string;
-}
-",
-                    "name": "GetDefaultStarterFilesRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-
 export interface GetDefaultStarterFilesResponse {
   files: Record<TraceApi.Language, TraceApi.ProblemFiles>;
 }
@@ -10189,7 +10108,6 @@ export * from \\"./CreateProblemResponse\\";
 export * from \\"./UpdateProblemResponse\\";
 export * from \\"./CreateProblemError\\";
 export * from \\"./GenericCreateProblemError\\";
-export * from \\"./GetDefaultStarterFilesRequest\\";
 export * from \\"./GetDefaultStarterFilesResponse\\";
 ",
                     "name": "index.ts",
@@ -10232,69 +10150,62 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async createExecutionSession(
-    request: TraceApi.submission.createExecutionSession.Request
+    language: TraceApi.Language
   ): Promise<TraceApi.submission.createExecutionSession.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/sessions/create-session/\${request.language}\`
-      ),
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/create-session/\${language}\`),
       method: \\"POST\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.submission.createExecutionSession.Response.parse(
-          response.body as serializers.submission.createExecutionSession.Response.Raw
+          _response.body as serializers.submission.createExecutionSession.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.submission.createExecutionSession.Error._unknown(response.error),
+      error: TraceApi.submission.createExecutionSession.Error._unknown(_response.error),
     };
   }
 
-  public async getExecutionSession(
-    request: TraceApi.submission.getExecutionSession.Request
-  ): Promise<TraceApi.submission.getExecutionSession.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/\${request.sessionId}\`),
+  public async getExecutionSession(sessionId: string): Promise<TraceApi.submission.getExecutionSession.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/\${sessionId}\`),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.submission.getExecutionSession.Response.parse(
-          response.body as serializers.submission.getExecutionSession.Response.Raw
+          _response.body as serializers.submission.getExecutionSession.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.submission.getExecutionSession.Error._unknown(response.error),
+      error: TraceApi.submission.getExecutionSession.Error._unknown(_response.error),
     };
   }
 
-  public async stopExecutionSession(
-    request: TraceApi.submission.stopExecutionSession.Request
-  ): Promise<TraceApi.submission.stopExecutionSession.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/stop/\${request.sessionId}\`),
+  public async stopExecutionSession(sessionId: string): Promise<TraceApi.submission.stopExecutionSession.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/sessions/stop/\${sessionId}\`),
       method: \\"DELETE\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -10303,30 +10214,30 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.submission.stopExecutionSession.Error._unknown(response.error),
+      error: TraceApi.submission.stopExecutionSession.Error._unknown(_response.error),
     };
   }
 
   public async getExecutionSessionsState(): Promise<TraceApi.submission.getExecutionSessionsState.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/sessions/execution-sessions-state\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.submission.getExecutionSessionsState.Response.parse(
-          response.body as serializers.submission.getExecutionSessionsState.Response.Raw
+          _response.body as serializers.submission.getExecutionSessionsState.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.submission.getExecutionSessionsState.Error._unknown(response.error),
+      error: TraceApi.submission.getExecutionSessionsState.Error._unknown(_response.error),
     };
   }
 }
@@ -10341,10 +10252,6 @@ export class Client {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  language: TraceApi.Language;
-}
 
 export type Response = core.APIResponse<
   TraceApi.ExecutionSessionResponse,
@@ -10401,10 +10308,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  sessionId: string;
-}
 
 export type Response = core.APIResponse<
   TraceApi.ExecutionSessionResponse | undefined,
@@ -10526,10 +10429,6 @@ export * as getExecutionSessionsState from \\"./getExecutionSessionsState\\";
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  sessionId: string;
-}
 
 export type Response = core.APIResponse<void, TraceApi.submission.stopExecutionSession.Error>;
 export type Error = TraceApi.submission.stopExecutionSession.Error._Unknown;
@@ -13758,19 +13657,20 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async setNumWarmInstances(
-    request: TraceApi.sysprop.setNumWarmInstances.Request
+    language: TraceApi.Language,
+    numWarmInstances: number
   ): Promise<TraceApi.sysprop.setNumWarmInstances.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/sysprop/num-warm-instances/\${request.language}/\${request.numWarmInstances}\`
+        \`/sysprop/num-warm-instances/\${language}/\${numWarmInstances}\`
       ),
       method: \\"PUT\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: undefined,
@@ -13779,30 +13679,30 @@ export class Client {
 
     return {
       ok: false,
-      error: TraceApi.sysprop.setNumWarmInstances.Error._unknown(response.error),
+      error: TraceApi.sysprop.setNumWarmInstances.Error._unknown(_response.error),
     };
   }
 
   public async getNumWarmInstances(): Promise<TraceApi.sysprop.getNumWarmInstances.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/sysprop/num-warm-instances\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.sysprop.getNumWarmInstances.Response.parse(
-          response.body as serializers.sysprop.getNumWarmInstances.Response.Raw
+          _response.body as serializers.sysprop.getNumWarmInstances.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.sysprop.getNumWarmInstances.Error._unknown(response.error),
+      error: TraceApi.sysprop.getNumWarmInstances.Error._unknown(_response.error),
     };
   }
 }
@@ -13877,11 +13777,6 @@ export * as getNumWarmInstances from \\"./getNumWarmInstances\\";
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
-
-export interface Request {
-  language: TraceApi.Language;
-  numWarmInstances: number;
-}
 
 export type Response = core.APIResponse<void, TraceApi.sysprop.setNumWarmInstances.Error>;
 export type Error = TraceApi.sysprop.setNumWarmInstances.Error._Unknown;
@@ -14035,104 +13930,100 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async getLightweightProblems(): Promise<TraceApi.v2.problem.getLightweightProblems.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/lightweight-problem-info\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.problem.getLightweightProblems.Response.parse(
-          response.body as serializers.v2.problem.getLightweightProblems.Response.Raw
+          _response.body as serializers.v2.problem.getLightweightProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.problem.getLightweightProblems.Error._unknown(response.error),
+      error: TraceApi.v2.problem.getLightweightProblems.Error._unknown(_response.error),
     };
   }
 
   public async getProblems(): Promise<TraceApi.v2.problem.getProblems.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/problem-info\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.problem.getProblems.Response.parse(
-          response.body as serializers.v2.problem.getProblems.Response.Raw
+          _response.body as serializers.v2.problem.getProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.problem.getProblems.Error._unknown(response.error),
+      error: TraceApi.v2.problem.getProblems.Error._unknown(_response.error),
     };
   }
 
-  public async getLatestProblem(
-    request: TraceApi.v2.problem.getLatestProblem.Request
-  ): Promise<TraceApi.v2.problem.getLatestProblem.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/problems-v2/problem-info/\${request.problemId}\`
-      ),
+  public async getLatestProblem(problemId: TraceApi.ProblemId): Promise<TraceApi.v2.problem.getLatestProblem.Response> {
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/problems-v2/problem-info/\${problemId}\`),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.problem.getLatestProblem.Response.parse(
-          response.body as serializers.v2.problem.getLatestProblem.Response.Raw
+          _response.body as serializers.v2.problem.getLatestProblem.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.problem.getLatestProblem.Error._unknown(response.error),
+      error: TraceApi.v2.problem.getLatestProblem.Error._unknown(_response.error),
     };
   }
 
   public async getProblemVersion(
-    request: TraceApi.v2.problem.getProblemVersion.Request
+    problemId: TraceApi.ProblemId,
+    problemVersion: number
   ): Promise<TraceApi.v2.problem.getProblemVersion.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/problems-v2/problem-info/\${request.problemId}/version/\${request.problemVersion}\`
+        \`/problems-v2/problem-info/\${problemId}/version/\${problemVersion}\`
       ),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.problem.getProblemVersion.Response.parse(
-          response.body as serializers.v2.problem.getProblemVersion.Response.Raw
+          _response.body as serializers.v2.problem.getProblemVersion.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.problem.getProblemVersion.Error._unknown(response.error),
+      error: TraceApi.v2.problem.getProblemVersion.Error._unknown(_response.error),
     };
   }
 }
@@ -14147,10 +14038,6 @@ export class Client {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../../core\\";
-
-export interface Request {
-  problemId: TraceApi.ProblemId;
-}
 
 export type Response = core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getLatestProblem.Error>;
 export type Error = TraceApi.v2.problem.getLatestProblem.Error._Unknown;
@@ -14260,11 +14147,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../../core\\";
-
-export interface Request {
-  problemId: TraceApi.ProblemId;
-  problemVersion: number;
-}
 
 export type Response = core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getProblemVersion.Error>;
 export type Error = TraceApi.v2.problem.getProblemVersion.Error._Unknown;
@@ -15638,104 +15520,102 @@ export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async getLightweightProblems(): Promise<TraceApi.v2.v3.problem.getLightweightProblems.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/lightweight-problem-info\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.v3.problem.getLightweightProblems.Response.parse(
-          response.body as serializers.v2.v3.problem.getLightweightProblems.Response.Raw
+          _response.body as serializers.v2.v3.problem.getLightweightProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.v3.problem.getLightweightProblems.Error._unknown(response.error),
+      error: TraceApi.v2.v3.problem.getLightweightProblems.Error._unknown(_response.error),
     };
   }
 
   public async getProblems(): Promise<TraceApi.v2.v3.problem.getProblems.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(this.options.environment ?? environments.Environment.Prod, \\"/problems-v2/problem-info\\"),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.v3.problem.getProblems.Response.parse(
-          response.body as serializers.v2.v3.problem.getProblems.Response.Raw
+          _response.body as serializers.v2.v3.problem.getProblems.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.v3.problem.getProblems.Error._unknown(response.error),
+      error: TraceApi.v2.v3.problem.getProblems.Error._unknown(_response.error),
     };
   }
 
   public async getLatestProblem(
-    request: TraceApi.v2.v3.problem.getLatestProblem.Request
+    problemId: TraceApi.ProblemId
   ): Promise<TraceApi.v2.v3.problem.getLatestProblem.Response> {
-    const response = await core.fetcher({
-      url: urlJoin(
-        this.options.environment ?? environments.Environment.Prod,
-        \`/problems-v2/problem-info/\${request.problemId}\`
-      ),
+    const _response = await core.fetcher({
+      url: urlJoin(this.options.environment ?? environments.Environment.Prod, \`/problems-v2/problem-info/\${problemId}\`),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.v3.problem.getLatestProblem.Response.parse(
-          response.body as serializers.v2.v3.problem.getLatestProblem.Response.Raw
+          _response.body as serializers.v2.v3.problem.getLatestProblem.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.v3.problem.getLatestProblem.Error._unknown(response.error),
+      error: TraceApi.v2.v3.problem.getLatestProblem.Error._unknown(_response.error),
     };
   }
 
   public async getProblemVersion(
-    request: TraceApi.v2.v3.problem.getProblemVersion.Request
+    problemId: TraceApi.ProblemId,
+    problemVersion: number
   ): Promise<TraceApi.v2.v3.problem.getProblemVersion.Response> {
-    const response = await core.fetcher({
+    const _response = await core.fetcher({
       url: urlJoin(
         this.options.environment ?? environments.Environment.Prod,
-        \`/problems-v2/problem-info/\${request.problemId}/version/\${request.problemVersion}\`
+        \`/problems-v2/problem-info/\${problemId}/version/\${problemVersion}\`
       ),
       method: \\"GET\\",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
       },
     });
-    if (response.ok) {
+    if (_response.ok) {
       return {
         ok: true,
         body: await serializers.v2.v3.problem.getProblemVersion.Response.parse(
-          response.body as serializers.v2.v3.problem.getProblemVersion.Response.Raw
+          _response.body as serializers.v2.v3.problem.getProblemVersion.Response.Raw
         ),
       };
     }
 
     return {
       ok: false,
-      error: TraceApi.v2.v3.problem.getProblemVersion.Error._unknown(response.error),
+      error: TraceApi.v2.v3.problem.getProblemVersion.Error._unknown(_response.error),
     };
   }
 }
@@ -15750,10 +15630,6 @@ export class Client {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../../../../core\\";
-
-export interface Request {
-  problemId: TraceApi.ProblemId;
-}
 
 export type Response = core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getLatestProblem.Error>;
 export type Error = TraceApi.v2.v3.problem.getLatestProblem.Error._Unknown;
@@ -15863,11 +15739,6 @@ export const Error = {
 
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../../../../core\\";
-
-export interface Request {
-  problemId: TraceApi.ProblemId;
-  problemVersion: number;
-}
 
 export type Response = core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getProblemVersion.Error>;
 export type Error = TraceApi.v2.v3.problem.getProblemVersion.Error._Unknown;
@@ -17259,11 +17130,17 @@ import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<
   serializers.admin.storeTracedTestCase.Request.Raw,
-  TraceApi.StoreTracedTestCaseRequest
-> = core.schemas.lazyObject(async () => (await import(\\"../..\\")).StoreTracedTestCaseRequest);
+  Omit<TraceApi.StoreTracedTestCaseRequest, \\"someQueryParam\\">
+> = core.schemas.object({
+  result: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResultWithStdout),
+  traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
+});
 
 export declare namespace Request {
-  type Raw = serializers.StoreTracedTestCaseRequest.Raw;
+  interface Raw {
+    result: serializers.TestCaseResultWithStdout.Raw;
+    traceResponses: serializers.TraceResponse.Raw[];
+  }
 }
 ",
                     "name": "storeTracedTestCase.ts",
@@ -17302,10 +17179,16 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   serializers.admin.storeTracedWorkspace.Request.Raw,
   TraceApi.StoreTracedWorkspaceRequest
-> = core.schemas.lazyObject(async () => (await import(\\"../..\\")).StoreTracedWorkspaceRequest);
+> = core.schemas.object({
+  workspaceRunDetails: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
+  traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
+});
 
 export declare namespace Request {
-  type Raw = serializers.StoreTracedWorkspaceRequest.Raw;
+  interface Raw {
+    workspaceRunDetails: serializers.WorkspaceRunDetails.Raw;
+    traceResponses: serializers.TraceResponse.Raw[];
+  }
 }
 ",
                     "name": "storeTracedWorkspace.ts",
@@ -17379,78 +17262,10 @@ export declare namespace Request {
                 "type": "directory",
               },
               Object {
-                "contents": "export * from \\"./types\\";
-export * from \\"./client\\";
+                "contents": "export * from \\"./client\\";
 ",
                 "name": "index.ts",
                 "type": "file",
-              },
-              Object {
-                "contents": Array [
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../core\\";
-
-export const StoreTracedTestCaseRequest: core.schemas.ObjectSchema<
-  serializers.StoreTracedTestCaseRequest.Raw,
-  TraceApi.StoreTracedTestCaseRequest
-> = core.schemas.object({
-  result: core.schemas.lazyObject(async () => (await import(\\"../..\\")).TestCaseResultWithStdout),
-  traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
-});
-
-export declare namespace StoreTracedTestCaseRequest {
-  interface Raw {
-    result: serializers.TestCaseResultWithStdout.Raw;
-    traceResponses: serializers.TraceResponse.Raw[];
-  }
-}
-",
-                    "name": "StoreTracedTestCaseRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../core\\";
-
-export const StoreTracedWorkspaceRequest: core.schemas.ObjectSchema<
-  serializers.StoreTracedWorkspaceRequest.Raw,
-  TraceApi.StoreTracedWorkspaceRequest
-> = core.schemas.object({
-  workspaceRunDetails: core.schemas.lazyObject(async () => (await import(\\"../..\\")).WorkspaceRunDetails),
-  traceResponses: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).TraceResponse)),
-});
-
-export declare namespace StoreTracedWorkspaceRequest {
-  interface Raw {
-    workspaceRunDetails: serializers.WorkspaceRunDetails.Raw;
-    traceResponses: serializers.TraceResponse.Raw[];
-  }
-}
-",
-                    "name": "StoreTracedWorkspaceRequest.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export * from \\"./StoreTracedTestCaseRequest\\";
-export * from \\"./StoreTracedWorkspaceRequest\\";
-",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                ],
-                "name": "types",
-                "type": "directory",
               },
             ],
             "name": "admin",
@@ -18583,9 +18398,7 @@ export declare namespace Request {
             "type": "directory",
           },
           Object {
-            "contents": "export * as admin from \\"./admin\\";
-export * from \\"./admin/types\\";
-export * as commons from \\"./commons\\";
+            "contents": "export * as commons from \\"./commons\\";
 export * from \\"./commons/types\\";
 export * as langServer from \\"./langServer\\";
 export * from \\"./langServer/types\\";
@@ -18599,6 +18412,7 @@ export * as submission from \\"./submission\\";
 export * from \\"./submission/types\\";
 export * as v2 from \\"./v2\\";
 export * from \\"./playlist/errors\\";
+export * as admin from \\"./admin\\";
 export * as homepage from \\"./homepage\\";
 export * as sysprop from \\"./sysprop\\";
 ",
@@ -19238,10 +19052,18 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   serializers.problem.getDefaultStarterFiles.Request.Raw,
   TraceApi.GetDefaultStarterFilesRequest
-> = core.schemas.lazyObject(async () => (await import(\\"../..\\")).GetDefaultStarterFilesRequest);
+> = core.schemas.object({
+  inputParams: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).VariableTypeAndName)),
+  outputType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
+  methodName: core.schemas.string(),
+});
 
 export declare namespace Request {
-  type Raw = serializers.GetDefaultStarterFilesRequest.Raw;
+  interface Raw {
+    inputParams: serializers.VariableTypeAndName.Raw[];
+    outputType: serializers.VariableType.Raw;
+    methodName: string;
+  }
 }
 
 export const Response: core.schemas.Schema<
@@ -19463,35 +19285,6 @@ export declare namespace GenericCreateProblemError {
 }
 ",
                     "name": "GenericCreateProblemError.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../core\\";
-
-export const GetDefaultStarterFilesRequest: core.schemas.ObjectSchema<
-  serializers.GetDefaultStarterFilesRequest.Raw,
-  TraceApi.GetDefaultStarterFilesRequest
-> = core.schemas.object({
-  inputParams: core.schemas.list(core.schemas.lazyObject(async () => (await import(\\"../..\\")).VariableTypeAndName)),
-  outputType: core.schemas.lazy(async () => (await import(\\"../..\\")).VariableType),
-  methodName: core.schemas.string(),
-});
-
-export declare namespace GetDefaultStarterFilesRequest {
-  interface Raw {
-    inputParams: serializers.VariableTypeAndName.Raw[];
-    outputType: serializers.VariableType.Raw;
-    methodName: string;
-  }
-}
-",
-                    "name": "GetDefaultStarterFilesRequest.ts",
                     "type": "file",
                   },
                   Object {
@@ -19770,7 +19563,6 @@ export * from \\"./CreateProblemResponse\\";
 export * from \\"./UpdateProblemResponse\\";
 export * from \\"./CreateProblemError\\";
 export * from \\"./GenericCreateProblemError\\";
-export * from \\"./GetDefaultStarterFilesRequest\\";
 export * from \\"./GetDefaultStarterFilesResponse\\";
 ",
                     "name": "index.ts",

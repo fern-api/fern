@@ -12,6 +12,7 @@
     { "path": "../contexts" },
     { "path": "../error-generator" },
     { "path": "../error-schema-generator" },
+    { "path": "../request-wrapper-generator" },
     { "path": "../service-generator" },
     { "path": "../type-generator" },
     { "path": "../type-reference-converters" },

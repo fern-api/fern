@@ -15,4 +15,6 @@ services:
         setHomepageProblems:
           method: POST
           path: /
-          request: list<commons.ProblemId>
+          request:
+            body:
+              type: list<commons.ProblemId>

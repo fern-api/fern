@@ -27,7 +27,7 @@
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-model": "0.0.368",
+    "@fern-fern/ir-model": "0.0.436",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
@@ -36,6 +36,7 @@
     "@fern-typescript/environments-generator": "workspace:*",
     "@fern-typescript/error-generator": "workspace:*",
     "@fern-typescript/error-schema-generator": "workspace:*",
+    "@fern-typescript/request-wrapper-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/service-generator": "workspace:*",
     "@fern-typescript/type-generator": "workspace:*",

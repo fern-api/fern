@@ -4,6 +4,7 @@ export { type EnvironmentsContext } from "./EnvironmentsContext";
 export { type ErrorContext } from "./ErrorContext";
 export { type ErrorSchemaContext } from "./ErrorSchemaContext";
 export * from "./mixins";
+export { type RequestWrapperContext } from "./RequestWrapperContext";
 export { type ServiceContext } from "./ServiceContext";
 export { type TypeContext } from "./TypeContext";
 export { type TypeReferenceExampleContext } from "./TypeReferenceExampleContext";

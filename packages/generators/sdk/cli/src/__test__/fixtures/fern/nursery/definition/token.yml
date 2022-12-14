@@ -4,19 +4,10 @@ imports:
 types:
   TokenId: string
 
-  CreateTokenRequest:
-    properties:
-      ownerId: owner.OwnerId
-      description: optional<string>
-
   CreateTokenResponse:
     properties:
       token: string
       tokenId: TokenId
-
-  GetTokenMetadataRequest:
-    properties:
-      token: string
 
   TokenMetadata:
     properties:
@@ -41,7 +32,12 @@ services:
         create:
           method: POST
           path: /create
-          request: CreateTokenRequest
+          request:
+            name: CreateTokenRequest
+            body:
+              properties:
+                ownerId: owner.OwnerId
+                description: optional<string>
           response: CreateTokenResponse
           errors:
             - owner.OwnerNotFoundError
@@ -49,7 +45,11 @@ services:
         getTokenMetadata:
           method: POST
           path: /metadata
-          request: GetTokenMetadataRequest
+          request:
+            name: GetTokenMetadataRequest
+            body:
+              properties:
+                token: string
           response: TokenMetadata
           errors:
             - TokenNotFoundError

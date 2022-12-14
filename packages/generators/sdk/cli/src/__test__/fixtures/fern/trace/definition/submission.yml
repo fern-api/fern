@@ -55,7 +55,8 @@ types:
     union:
       buildingExecutor:
         type: BuildingExecutorResponse
-        docs: Statuses if an executor for the session isn't ready (Before RunningResponse).
+        docs: Statuses if an executor for the session isn't ready (Before
+          RunningResponse).
       running:
         type: RunningResponse
         docs: Sent once a test submission is executing.
@@ -447,7 +448,8 @@ services:
           response: ExecutionSessionResponse
 
         getExecutionSession:
-          docs: Returns execution server URL for session. Returns empty if session isn't registered.
+          docs: Returns execution server URL for session. Returns empty if session isn't
+            registered.
           method: GET
           path: /{sessionId}
           path-parameters:

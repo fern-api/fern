@@ -25,9 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.368",
+    "@fern-fern/ir-model": "0.0.436",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/union-generator": "workspace:*",

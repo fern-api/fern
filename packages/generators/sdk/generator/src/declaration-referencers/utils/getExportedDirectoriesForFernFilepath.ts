@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepathV2, Name } from "@fern-fern/ir-model/commons";
 import { ExportedDirectory } from "../../exports-manager/ExportedFilePath";
 import { ExportDeclaration } from "../../exports-manager/ExportsManager";
@@ -7,7 +8,7 @@ export function getExportedDirectoriesForFernFilepath({
     subExports,
 }: {
     fernFilepath: FernFilepathV2;
-    subExports?: Record<string, ExportDeclaration>;
+    subExports?: Record<RelativeFilePath, ExportDeclaration>;
 }): ExportedDirectory[] {
     return fernFilepath.flatMap((fernFilepathPart, index) => {
         const directories: ExportedDirectory[] = [];

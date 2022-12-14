@@ -1,7 +1,6 @@
 import { ExternalDependencies } from "@fern-typescript/contexts";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
-import { FernServiceUtilsImpl } from "./implementations/FernServiceUtilsImpl";
 import { UrlJoinImpl } from "./implementations/UrlJoinImpl";
 
 export declare namespace createExternalDependencies {
@@ -16,7 +15,6 @@ export function createExternalDependencies({
     dependencyManager,
 }: createExternalDependencies.Args): ExternalDependencies {
     return {
-        serviceUtils: new FernServiceUtilsImpl({ importsManager, dependencyManager }),
         urlJoin: new UrlJoinImpl({ importsManager, dependencyManager }),
     };
 }

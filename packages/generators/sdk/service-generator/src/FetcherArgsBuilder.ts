@@ -32,7 +32,8 @@ export declare namespace FetcherArgsBuilder {
 }
 
 export class FetcherArgsBuilder {
-    private static QUERY_PARAMS_VARIABLE_NAME = "queryParams";
+    // this starts with an underscore to prevent collisions with path paramters
+    private static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
 
     private url: ts.Expression;
     private method: HttpMethod;

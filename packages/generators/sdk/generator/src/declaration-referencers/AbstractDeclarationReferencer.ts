@@ -24,7 +24,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
     public abstract getExportedFilepath(name: Name): ExportedFilePath;
     public abstract getFilename(name: Name): string;
 
-    protected getExportedFilepathForReferences(name: Name): ExportedFilePath {
+    protected getExportedFilepathForReference(name: Name): ExportedFilePath {
         return this.getExportedFilepath(name);
     }
 
@@ -42,7 +42,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
             case "direct":
                 return getDirectReferenceToExport({
                     exportedName,
-                    exportedFromPath: this.getExportedFilepathForReferences(name),
+                    exportedFromPath: this.getExportedFilepathForReference(name),
                     importAlias: importStrategy.alias,
                     importsManager,
                     referencedIn,
@@ -52,7 +52,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
             case "fromRoot":
                 return getReferenceToExportFromRoot({
                     exportedName,
-                    exportedFromPath: this.getExportedFilepathForReferences(name),
+                    exportedFromPath: this.getExportedFilepathForReference(name),
                     referencedIn,
                     importsManager,
                     namespaceImport: importStrategy.namespaceImport,

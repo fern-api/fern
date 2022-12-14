@@ -5,6 +5,7 @@ import {
     WithEnvironmentsContextMixin,
     WithErrorContextMixin,
     WithErrorSchemaContextMixin,
+    WithRequestWrapperContextMixin,
     WithServiceContextMixin,
     WithTypeContextMixin,
     WithTypeSchemaContextMixin,
@@ -18,5 +19,6 @@ export interface ServiceContext
         WithErrorSchemaContextMixin,
         WithServiceContextMixin,
         WithEndpointTypesContextMixin,
+        WithRequestWrapperContextMixin,
         WithEndpointTypeSchemasContextMixin,
         WithEnvironmentsContextMixin {}

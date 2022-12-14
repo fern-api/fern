@@ -5,6 +5,7 @@ import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generato
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { ServiceGenerator } from "@fern-typescript/service-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -13,6 +14,7 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentEnumDeclarationReferencer } from "../declaration-referencers/EnvironmentEnumDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
+import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "../declaration-referencers/ServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
@@ -21,6 +23,7 @@ import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixi
 import { EnvironmentsContextMixinImpl } from "./mixins/EnvironmentsContextMixinImpl";
 import { ErrorContextMixinImpl } from "./mixins/ErrorContextMixinImpl";
 import { ErrorSchemaContextMixinImpl } from "./mixins/ErrorSchemaContextMixinImpl";
+import { RequestWrapperContextMixinImpl } from "./mixins/RequestWrapperContextMixinImpl";
 import { ServiceContextMixinImpl } from "./mixins/ServiceContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 import { TypeSchemaContextMixinImpl } from "./mixins/TypeSchemaContextMixinImpl";
@@ -41,6 +44,8 @@ export declare namespace ServiceContextImpl {
         errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
         endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
+        requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
+        requestWrapperGenerator: RequestWrapperGenerator;
         endpointTypesGenerator: EndpointTypesGenerator;
         endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
         serviceDeclarationReferencer: ServiceDeclarationReferencer;
@@ -57,6 +62,7 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
     public readonly error: ErrorContextMixinImpl;
     public readonly errorSchema: ErrorSchemaContextMixinImpl;
     public readonly endpointTypes: EndpointTypesContextMixinImpl;
+    public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly endpointTypeSchemas: EndpointTypeSchemasContextMixinImpl;
     public readonly service: ServiceContextMixin;
     public readonly environments: EnvironmentsContextMixin;
@@ -78,6 +84,8 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
         endpointSchemaDeclarationReferencer,
         endpointTypesGenerator,
         endpointTypeSchemasGenerator,
+        requestWrapperDeclarationReferencer,
+        requestWrapperGenerator,
         serviceResolver,
         serviceDeclarationReferencer,
         serviceGenerator,
@@ -126,6 +134,13 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
             endpointDeclarationReferencer,
             endpointTypesGenerator,
             serviceResolver,
+        });
+        this.requestWrapper = new RequestWrapperContextMixinImpl({
+            requestWrapperDeclarationReferencer,
+            requestWrapperGenerator,
+            serviceResolver,
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
         });
         this.endpointTypeSchemas = new EndpointTypeSchemasContextMixinImpl({
             serviceResolver,

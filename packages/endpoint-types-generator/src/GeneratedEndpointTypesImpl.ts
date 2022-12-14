@@ -1,7 +1,6 @@
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpHeader, HttpService, QueryParameter } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
@@ -9,9 +8,6 @@ import { ts } from "ts-morph";
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
 import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
 import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
-import { GeneratedEndpointRequest } from "./request/GeneratedEndpointRequest";
-import { NotWrappedEndpointRequest } from "./request/NotWrappedEndpointRequest";
-import { WrappedEndpointRequest } from "./request/WrappedEndpointRequest";
 
 export declare namespace GeneratedEndpointTypesImpl {
     export interface Init {
@@ -29,16 +25,11 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
 
     private service: HttpService;
     private endpoint: HttpEndpoint;
-    private request: GeneratedEndpointRequest;
     private errorUnion: GeneratedUnionImpl<EndpointTypesContext>;
 
     constructor({ service, endpoint, errorResolver, errorDiscriminationStrategy }: GeneratedEndpointTypesImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
-
-        this.request = isRequestWrapped(service, endpoint)
-            ? new WrappedEndpointRequest({ service, endpoint })
-            : new NotWrappedEndpointRequest({ service, endpoint });
 
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator();
         this.errorUnion = new GeneratedUnionImpl<EndpointTypesContext>({
@@ -72,17 +63,12 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
     }
 
     public writeToFile(context: EndpointTypesContext): void {
-        this.request.writeToFile(context);
         this.writeResponseToFile(context);
         this.errorUnion.writeToFile(context);
     }
 
     public getErrorUnion(): GeneratedUnion<EndpointTypesContext> {
         return this.errorUnion;
-    }
-
-    public getReferenceToRequestType(context: EndpointTypesContext): TypeReferenceNode | undefined {
-        return this.request.getRequestParameterType(context);
     }
 
     public getReferenceToResponseType(context: EndpointTypesContext): ts.TypeNode {
@@ -93,25 +79,6 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
                 GeneratedEndpointTypesImpl.RESPONSE_INTERFACE_NAME
             )
             .getTypeNode();
-    }
-
-    public getReferenceToRequestBody(requestParameter: ts.Expression): ts.Expression {
-        return this.request.getReferenceToRequestBody(requestParameter);
-    }
-
-    public getReferenceToQueryParameter(
-        queryParameter: QueryParameter,
-        requestParameter: ts.Expression
-    ): ts.Expression {
-        return this.request.getReferenceToQueryParameter(queryParameter, requestParameter);
-    }
-
-    public getReferenceToPathParameter(pathParameterKey: string, requestParameter: ts.Expression): ts.Expression {
-        return this.request.getReferenceToPathParameter(pathParameterKey, requestParameter);
-    }
-
-    public getReferenceToHeader(header: HttpHeader, requestParameter: ts.Expression): ts.Expression {
-        return this.request.getReferenceToHeader(header, requestParameter);
     }
 
     private writeResponseToFile(context: EndpointTypesContext): void {
@@ -128,13 +95,4 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
             ),
         });
     }
-}
-
-function isRequestWrapped(service: HttpService, endpoint: HttpEndpoint): boolean {
-    return (
-        service.pathParameters.length > 0 ||
-        endpoint.pathParameters.length > 0 ||
-        endpoint.queryParameters.length > 0 ||
-        endpoint.headers.length > 0
-    );
 }

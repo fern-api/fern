@@ -1,11 +1,13 @@
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/services/http";
 import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
+import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
+import { GeneratedInlinedRequestBodySchema } from "./GeneratedInlinedRequestBodySchema";
 import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema";
 
 export declare namespace GeneratedEndpointTypeSchemasImpl {
@@ -22,7 +24,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     private static RESPONSE_SCHEMA_NAME = "Response";
 
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
-    private generatedResponseSchema: GeneratedEndpointTypeSchema | undefined;
+    private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private generatedErrorSchema: GeneratedEndpointErrorSchema;
 
     constructor({
@@ -32,17 +34,30 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
         errorDiscriminationStrategy,
     }: GeneratedEndpointTypeSchemasImpl.Init) {
         this.generatedRequestSchema =
-            endpoint.request.typeV2 != null
-                ? new GeneratedEndpointTypeSchema({
-                      service,
-                      endpoint,
-                      typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                      type: endpoint.request.typeV2,
+            endpoint.requestBody != null
+                ? HttpRequestBody._visit<GeneratedEndpointTypeSchema>(endpoint.requestBody, {
+                      inlinedRequestBody: (inlinedRequestBody) =>
+                          new GeneratedInlinedRequestBodySchema({
+                              service,
+                              endpoint,
+                              typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
+                              inlinedRequestBody,
+                          }),
+                      reference: ({ requestBodyType }) =>
+                          new GeneratedEndpointTypeSchemaImpl({
+                              service,
+                              endpoint,
+                              typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
+                              type: requestBodyType,
+                          }),
+                      _unknown: () => {
+                          throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type);
+                      },
                   })
                 : undefined;
         this.generatedResponseSchema =
             endpoint.response.typeV2 != null
-                ? new GeneratedEndpointTypeSchema({
+                ? new GeneratedEndpointTypeSchemaImpl({
                       service,
                       endpoint,
                       typeName: GeneratedEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,

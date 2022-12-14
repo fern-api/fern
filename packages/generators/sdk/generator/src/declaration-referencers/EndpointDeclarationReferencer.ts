@@ -44,7 +44,7 @@ export class EndpointDeclarationReferencer extends AbstractServiceDeclarationRef
         return this.getReferenceTo(this.getNamespaceExport(args.name), args);
     }
 
-    protected override getExportedFilepathForReferences(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
+    protected override getExportedFilepathForReference(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: this.getExportedDirectory(name.serviceName),
             file: undefined,

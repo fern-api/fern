@@ -1,5 +1,5 @@
 import { ts } from "ts-morph";
-import { GeneratedFile } from "./BaseGenerated";
+import { GeneratedFile } from "./GeneratedFile";
 
 export interface GeneratedUnion<Context> extends GeneratedFile<Context> {
     discriminant: string;

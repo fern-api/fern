@@ -17,7 +17,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && yarn workspace @fern-typescript/service-utils compile && jest --passWithNoTests",
+    "test": "yarn compile && jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
     "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
@@ -31,7 +31,7 @@
     "@fern-api/logger": "0.0.248-7-gb4189be0",
     "@fern-api/logging-execa": "0.0.248-7-gb4189be0",
     "@fern-fern/generator-exec-sdk": "^0.0.46",
-    "@fern-fern/ir-model": "0.0.368",
+    "@fern-fern/ir-model": "0.0.436",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",

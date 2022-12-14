@@ -28,7 +28,7 @@
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-fern/generator-exec-sdk": "^0.0.46",
-    "@fern-fern/ir-model": "0.0.368",
+    "@fern-fern/ir-model": "0.0.436",
     "esutils": "^2.0.3",
     "immer": "^9.0.15",
     "ts-morph": "^15.1.0",

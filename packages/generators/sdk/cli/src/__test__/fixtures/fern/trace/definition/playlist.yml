@@ -46,10 +46,12 @@ services:
           docs: Returns the user's playlists
           method: GET
           path: /all
-          query-parameters:
-            limit: optional<integer>
-            otherField: string
           response: list<Playlist>
+          request:
+            name: GetPlaylistsRequest
+            query-parameters:
+              limit: optional<integer>
+              otherField: string
 
         getPlaylist:
           docs: Returns a playlist
@@ -69,7 +71,9 @@ services:
           path: /{playlistId}
           path-parameters:
             playlistId: PlaylistId
-          request: optional<UpdatePlaylistRequest>
+          request:
+            body:
+              type: optional<UpdatePlaylistRequest>
           response: optional<Playlist>
           errors:
             - PlaylistIdNotFoundError

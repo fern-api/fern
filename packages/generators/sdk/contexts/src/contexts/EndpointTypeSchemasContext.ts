@@ -4,6 +4,7 @@ import {
     WithEndpointTypesContextMixin,
     WithErrorContextMixin,
     WithErrorSchemaContextMixin,
+    WithRequestWrapperContextMixin,
     WithTypeContextMixin,
     WithTypeSchemaContextMixin,
 } from "./mixins";
@@ -11,6 +12,7 @@ import {
 export interface EndpointTypeSchemasContext
     extends WithBaseContextMixin,
         WithEndpointTypesContextMixin,
+        WithRequestWrapperContextMixin,
         WithEndpointTypeSchemasContextMixin,
         WithTypeContextMixin,
         WithTypeSchemaContextMixin,

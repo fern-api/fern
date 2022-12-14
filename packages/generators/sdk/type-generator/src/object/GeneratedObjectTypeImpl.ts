@@ -1,4 +1,4 @@
-import { ExampleType, ObjectTypeDeclaration } from "@fern-fern/ir-model/types";
+import { ExampleType, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedObjectType, GetReferenceOpts, TypeContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -17,7 +17,7 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
                 ...this.shape.properties.map((property) => {
                     const value = context.type.getReferenceToType(property.valueType);
                     const propertyNode: OptionalKind<PropertySignatureStructure> = {
-                        name: this.getPropertyKey({ propertyWireKey: property.nameV2.wireValue }),
+                        name: this.getPropertyKeyFromProperty(property),
                         type: getTextOfTsNode(value.typeNodeWithoutUndefined),
                         hasQuestionToken: value.isOptional,
                         docs: property.docs != null ? [{ description: property.docs }] : undefined,
@@ -41,6 +41,10 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
         if (property == null) {
             throw new Error("Property does not exist: " + propertyWireKey);
         }
+        return this.getPropertyKeyFromProperty(property);
+    }
+
+    private getPropertyKeyFromProperty(property: ObjectProperty): string {
         return property.nameV2.name.unsafeName.camelCase;
     }
 
@@ -63,5 +67,24 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
             }),
             true
         );
+    }
+
+    public getAllPropertiesIncludingExtensions(
+        context: Context
+    ): { propertyKey: string; wireKey: string; type: TypeReference }[] {
+        return [
+            ...this.shape.properties.map((property) => ({
+                wireKey: property.nameV2.wireValue,
+                propertyKey: this.getPropertyKeyFromProperty(property),
+                type: property.valueType,
+            })),
+            ...this.shape.extends.flatMap((extension) => {
+                const generatedType = context.type.getGeneratedType(extension);
+                if (generatedType.type !== "object") {
+                    throw new Error("Type extends non-object");
+                }
+                return generatedType.getAllPropertiesIncludingExtensions(context);
+            }),
+        ];
     }
 }

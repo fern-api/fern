@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 import { EndpointTypeSchemasContext } from "../contexts";
-import { GeneratedFile } from "./BaseGenerated";
+import { GeneratedFile } from "./GeneratedFile";
 
 export interface GeneratedEndpointTypeSchemas extends GeneratedFile<EndpointTypeSchemasContext> {
     getReferenceToRawResponse: (context: EndpointTypeSchemasContext) => ts.TypeNode;

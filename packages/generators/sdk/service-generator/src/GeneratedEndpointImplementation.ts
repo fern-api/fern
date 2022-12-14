@@ -1,11 +1,12 @@
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpPath, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpPath, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEndpointTypes, GeneratedEndpointTypeSchemas, ServiceContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     MethodDeclarationStructure,
     OptionalKind,
+    ParameterDeclarationStructure,
     Scope,
     StatementStructures,
     StructureKind,
@@ -16,6 +17,9 @@ import {
 import urlJoin from "url-join";
 import { FetcherArgsBuilder } from "./FetcherArgsBuilder";
 import { GeneratedServiceImpl } from "./GeneratedServiceImpl";
+import { RequestBodyParameter } from "./request-parameter/RequestBodyParameter";
+import { RequestParameter } from "./request-parameter/RequestParameter";
+import { RequestWrapperParameter } from "./request-parameter/RequestWrapperParameter";
 
 export declare namespace GeneratedEndpointImplementation {
     export interface Init {
@@ -28,14 +32,15 @@ export declare namespace GeneratedEndpointImplementation {
 }
 
 export class GeneratedEndpointImplementation {
-    private static REQUEST_PARAMETER_NAME = "request";
-    private static RESPONSE_VARIABLE_NAME = "response";
+    // this starts with an underscore to prevent collisions with path parameters
+    private static RESPONSE_VARIABLE_NAME = "_response";
 
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private generatedService: GeneratedServiceImpl;
     private errorResolver: ErrorResolver;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private requestParameter: RequestParameter | undefined;
 
     constructor({
         service,
@@ -49,23 +54,26 @@ export class GeneratedEndpointImplementation {
         this.generatedService = generatedService;
         this.errorResolver = errorResolver;
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
+
+        const sdkRequest = this.endpoint.sdkRequest;
+        this.requestParameter =
+            sdkRequest != null
+                ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
+                      justRequestBody: (requestBodyReference) =>
+                          new RequestBodyParameter({ requestBodyReference, service, endpoint, sdkRequest }),
+                      wrapper: () => new RequestWrapperParameter({ service, endpoint, sdkRequest }),
+                      _unknown: () => {
+                          throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
+                      },
+                  })
+                : undefined;
     }
 
     public getImplementation(context: ServiceContext): OptionalKind<MethodDeclarationStructure> {
         const generatedEndpointTypes = this.getGeneratedEndpointTypes(context);
-        const requestType = generatedEndpointTypes.getReferenceToRequestType(context);
         return {
             name: this.endpoint.nameV2.unsafeName.camelCase,
-            parameters:
-                requestType != null
-                    ? [
-                          {
-                              name: GeneratedEndpointImplementation.REQUEST_PARAMETER_NAME,
-                              type: getTextOfTsNode(requestType.typeNodeWithoutUndefined),
-                              hasQuestionToken: requestType.isOptional,
-                          },
-                      ]
-                    : [],
+            parameters: this.getEndpointParameters(context),
             returnType: getTextOfTsNode(
                 ts.factory.createTypeReferenceNode("Promise", [
                     generatedEndpointTypes.getReferenceToResponseType(context),
@@ -77,34 +85,46 @@ export class GeneratedEndpointImplementation {
         };
     }
 
+    private getEndpointParameters(context: ServiceContext): OptionalKind<ParameterDeclarationStructure>[] {
+        const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
+        for (const pathParameter of this.getAllPathParameters()) {
+            parameters.push({
+                name: this.getParameterNameForPathParameter(pathParameter),
+                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+            });
+        }
+        if (this.requestParameter != null) {
+            parameters.push(this.requestParameter.getParameterDeclaration(context));
+        }
+        return parameters;
+    }
+
+    private getAllPathParameters(): PathParameter[] {
+        return [...this.service.pathParameters, ...this.endpoint.pathParameters];
+    }
+
+    private getParameterNameForPathParameter(pathParameter: PathParameter): string {
+        return pathParameter.nameV2.unsafeName.camelCase;
+    }
+
     private generateMethodBody(context: ServiceContext): (StatementStructures | WriterFunction | string)[] {
         const statements: (StatementStructures | WriterFunction | string)[] = [];
-
-        const generatedEndpointTypes = this.getGeneratedEndpointTypes(context);
 
         const fetcherArgsBuilder = new FetcherArgsBuilder({
             url: context.base.externalDependencies.urlJoin.invoke([
                 this.generatedService.getEnvironment(context),
-                this.buildUrl(context),
+                this.buildUrl(),
             ]),
             method: this.endpoint.method,
-            body:
-                this.endpoint.request.typeV2 != null
-                    ? this.getGeneratedEndpointTypeSchemas(context).serializeRequest(
-                          this.getGeneratedEndpointTypes(context).getReferenceToRequestBody(
-                              ts.factory.createIdentifier(GeneratedEndpointImplementation.REQUEST_PARAMETER_NAME)
-                          ),
-                          context
-                      )
-                    : undefined,
+            body: this.getSerializedRequestBody(context),
         });
 
         for (const queryParameter of this.endpoint.queryParameters) {
+            if (this.requestParameter == null) {
+                throw new Error("Cannot get reference to query parameter because there's no request parameter");
+            }
             const type = context.type.getReferenceToType(queryParameter.valueType);
-            const value = generatedEndpointTypes.getReferenceToQueryParameter(
-                queryParameter,
-                ts.factory.createIdentifier(GeneratedEndpointImplementation.REQUEST_PARAMETER_NAME)
-            );
+            const value = this.requestParameter.getReferenceToQueryParameter(queryParameter, context);
             fetcherArgsBuilder.addQueryParameter({
                 isNullable: type.isOptional,
                 key: queryParameter.nameV2.wireValue,
@@ -114,12 +134,12 @@ export class GeneratedEndpointImplementation {
         }
 
         for (const header of [...this.service.headers, ...this.endpoint.headers]) {
+            if (this.requestParameter == null) {
+                throw new Error("Cannot get reference to header because there's no request parameter");
+            }
             fetcherArgsBuilder.addHeader({
                 header: header.nameV2.wireValue,
-                value: generatedEndpointTypes.getReferenceToHeader(
-                    header,
-                    ts.factory.createIdentifier(GeneratedEndpointImplementation.REQUEST_PARAMETER_NAME)
-                ),
+                value: this.requestParameter.getReferenceToHeader(header, context),
             });
         }
 
@@ -147,7 +167,7 @@ export class GeneratedEndpointImplementation {
         return statements;
     }
 
-    private buildUrl(context: ServiceContext): ts.Expression {
+    private buildUrl(): ts.Expression {
         if (this.service.pathParameters.length === 0 && this.endpoint.pathParameters.length === 0) {
             if (this.service.basePathV2 == null) {
                 return ts.factory.createStringLiteral(this.endpoint.path.head);
@@ -155,17 +175,19 @@ export class GeneratedEndpointImplementation {
             return ts.factory.createStringLiteral(urlJoin(this.service.basePathV2.head, this.endpoint.path.head));
         }
 
-        const generatedEndpointTypes = this.getGeneratedEndpointTypes(context);
         const httpPath = this.getHttpPath();
 
         return ts.factory.createTemplateExpression(
             ts.factory.createTemplateHead(httpPath.head),
             httpPath.parts.map((part, index) => {
+                const pathParameter = this.getAllPathParameters().find(
+                    (param) => param.nameV2.unsafeName.originalValue === part.pathParameter
+                );
+                if (pathParameter == null) {
+                    throw new Error("Could not locate path parameter: " + part.pathParameter);
+                }
                 return ts.factory.createTemplateSpan(
-                    generatedEndpointTypes.getReferenceToPathParameter(
-                        part.pathParameter,
-                        ts.factory.createIdentifier(GeneratedEndpointImplementation.REQUEST_PARAMETER_NAME)
-                    ),
+                    ts.factory.createIdentifier(this.getParameterNameForPathParameter(pathParameter)),
                     index === httpPath.parts.length - 1
                         ? ts.factory.createTemplateTail(part.tail)
                         : ts.factory.createTemplateMiddle(part.tail)
@@ -200,6 +222,18 @@ export class GeneratedEndpointImplementation {
                 ...this.endpoint.path.parts,
             ],
         };
+    }
+
+    private getSerializedRequestBody(context: ServiceContext): ts.Expression | undefined {
+        if (this.requestParameter == null) {
+            return undefined;
+        }
+        const referenceToRequestBody = this.requestParameter.getReferenceToRequestBody(context);
+        if (referenceToRequestBody == null) {
+            return undefined;
+        }
+
+        return this.getGeneratedEndpointTypeSchemas(context).serializeRequest(referenceToRequestBody, context);
     }
 
     private getReturnResponseStatements(context: ServiceContext): ts.Statement[] {

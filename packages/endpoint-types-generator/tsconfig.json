@@ -4,7 +4,6 @@
   "include": ["./src"],
   "references": [
     { "path": "../commons" },
-    { "path": "../commons-v2" },
     { "path": "../generators/sdk/contexts" },
     { "path": "../generators/sdk/union-generator" },
     { "path": "../resolvers" }

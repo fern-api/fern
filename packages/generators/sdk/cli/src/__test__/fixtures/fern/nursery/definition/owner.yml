@@ -3,15 +3,6 @@ types:
     type: string
     docs: Unique id for an owner.
 
-  CreateOwnerRequest:
-    properties:
-      ownerId: OwnerId
-      data: unknown
-
-  UpdateOwnerRequest:
-    properties:
-      data: unknown
-
   Owner:
     properties:
       ownerId: OwnerId
@@ -26,7 +17,12 @@ services:
         create:
           method: POST
           path: /
-          request: CreateOwnerRequest
+          request:
+            name: CreateOwnerRequest
+            body:
+              properties:
+                ownerId: OwnerId
+                data: unknown
           errors:
             - OwnerAlreadyExistsError
 
@@ -44,7 +40,11 @@ services:
           path: /{ownerId}
           path-parameters:
             ownerId: OwnerId
-          request: UpdateOwnerRequest
+          request:
+            name: UpdateOwnerRequest
+            body:
+              properties:
+                data: unknown
           response: Owner
           errors:
             - OwnerNotFoundError

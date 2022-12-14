@@ -6,6 +6,7 @@ import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generato
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { ServiceGenerator } from "@fern-typescript/service-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -18,6 +19,7 @@ import { EndpointTypesContextImpl } from "./contexts/EndpointTypesContextImpl";
 import { EnvironmentsContextImpl } from "./contexts/EnvironmentsContextImpl";
 import { ErrorContextImpl } from "./contexts/ErrorContextImpl";
 import { ErrorSchemaContextImpl } from "./contexts/ErrorSchemaContextImpl";
+import { RequestWrapperContextImpl } from "./contexts/RequestWrapperContextImpl";
 import { ServiceContextImpl } from "./contexts/ServiceContextImpl";
 import { TypeContextImpl } from "./contexts/TypeContextImpl";
 import { TypeSchemaContextImpl } from "./contexts/TypeSchemaContextImpl";
@@ -25,6 +27,7 @@ import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentEnumDeclarationReferencer } from "./declaration-referencers/EnvironmentEnumDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
+import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { DependencyManager } from "./dependency-manager/DependencyManager";
@@ -78,6 +81,7 @@ export class SdkGenerator {
     private errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
     private serviceDeclarationReferencer: ServiceDeclarationReferencer;
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
+    private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
     private endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private environmentsEnumDeclarationReferencer: EnvironmentEnumDeclarationReferencer;
 
@@ -87,6 +91,7 @@ export class SdkGenerator {
     private errorGenerator: ErrorGenerator;
     private errorSchemaGenerator: ErrorSchemaGenerator;
     private endpointTypesGenerator: EndpointTypesGenerator;
+    private requestWrapperGenerator: RequestWrapperGenerator;
     private endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
     private serviceGenerator: ServiceGenerator;
@@ -155,6 +160,10 @@ export class SdkGenerator {
             containingDirectory: apiDirectory,
             packageName,
         });
+        this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            packageName,
+        });
         this.endpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             packageName,
@@ -177,6 +186,7 @@ export class SdkGenerator {
             errorResolver: this.errorResolver,
             intermediateRepresentation,
         });
+        this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
         this.serviceGenerator = new ServiceGenerator({
             intermediateRepresentation: this.intermediateRepresentation,
@@ -349,6 +359,38 @@ export class SdkGenerator {
                             .writeToFile(endpointTypesContext);
                     },
                 });
+                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                    this.withSourceFile({
+                        filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
+                            serviceName: service.name,
+                            endpoint,
+                        }),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = new RequestWrapperContextImpl({
+                                sourceFile,
+                                coreUtilitiesManager: this.coreUtilitiesManager,
+                                dependencyManager: this.dependencyManager,
+                                fernConstants: this.intermediateRepresentation.constantsV2,
+                                importsManager,
+                                typeResolver: this.typeResolver,
+                                typeDeclarationReferencer: this.typeDeclarationReferencer,
+                                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                                typeGenerator: this.typeGenerator,
+                                errorDeclarationReferencer: this.errorDeclarationReferencer,
+                                errorGenerator: this.errorGenerator,
+                                errorResolver: this.errorResolver,
+                                serviceResolver: this.serviceResolver,
+                                endpointDeclarationReferencer: this.endpointDeclarationReferencer,
+                                endpointTypesGenerator: this.endpointTypesGenerator,
+                                requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
+                                requestWrapperGenerator: this.requestWrapperGenerator,
+                            });
+                            context.requestWrapper
+                                .getGeneratedRequestWrapper(service.name, endpoint.id)
+                                .writeToFile(context);
+                        },
+                    });
+                }
             }
         }
     }
@@ -374,9 +416,11 @@ export class SdkGenerator {
                             typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                             errorDeclarationReferencer: this.errorDeclarationReferencer,
                             errorSchemaDeclarationReferencer: this.errorSchemaDeclarationReferencer,
-                            endpointDeclarationReferencer: this.endpointDeclarationReferencer,
                             endpointSchemaDeclarationReferencer: this.endpointSchemaDeclarationReferencer,
+                            endpointDeclarationReferencer: this.endpointDeclarationReferencer,
                             endpointTypesGenerator: this.endpointTypesGenerator,
+                            requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
+                            requestWrapperGenerator: this.requestWrapperGenerator,
                             typeGenerator: this.typeGenerator,
                             errorGenerator: this.errorGenerator,
                             errorResolver: this.errorResolver,
@@ -416,6 +460,8 @@ export class SdkGenerator {
                         endpointDeclarationReferencer: this.endpointDeclarationReferencer,
                         endpointSchemaDeclarationReferencer: this.endpointSchemaDeclarationReferencer,
                         endpointTypesGenerator: this.endpointTypesGenerator,
+                        requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
+                        requestWrapperGenerator: this.requestWrapperGenerator,
                         typeGenerator: this.typeGenerator,
                         errorGenerator: this.errorGenerator,
                         errorResolver: this.errorResolver,
