@@ -87,40 +87,68 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
     }
 
-    public getReferenceToQueryParameter(
-        queryParameter: QueryParameter,
-        requestParameter: ts.Expression
-    ): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(
+    public getReferenceToQueryParameter({
+        queryParameter,
+        requestParameter,
+        isRequestParameterNullable,
+    }: {
+        queryParameter: QueryParameter;
+        requestParameter: ts.Expression;
+        isRequestParameterNullable: boolean;
+    }): ts.Expression {
+        return this.accessRequestProperty({
             requestParameter,
-            this.getPropertyNameOfQueryParameter(queryParameter)
-        );
+            isRequestParameterNullable,
+            key: this.getPropertyNameOfQueryParameter(queryParameter),
+        });
     }
 
-    public getReferenceToHeader(header: HttpHeader, requestParameter: ts.Expression): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(requestParameter, this.getPropertyNameOfHeader(header));
+    public getReferenceToHeader({
+        header,
+        isRequestParameterNullable,
+        requestParameter,
+    }: {
+        header: HttpHeader;
+        requestParameter: ts.Expression;
+        isRequestParameterNullable: boolean;
+    }): ts.Expression {
+        return this.accessRequestProperty({
+            requestParameter,
+            isRequestParameterNullable,
+            key: this.getPropertyNameOfHeader(header),
+        });
     }
 
-    public getReferenceToBody(
-        requestParameter: ts.Expression,
-        context: RequestWrapperContext
-    ): ts.Expression | undefined {
+    public getReferenceToBody({
+        requestParameter,
+        isRequestParameterNullable,
+        context,
+    }: {
+        requestParameter: ts.Expression;
+        isRequestParameterNullable: boolean;
+        context: RequestWrapperContext;
+    }): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
         return HttpRequestBody._visit<ts.Expression>(this.endpoint.requestBody, {
             reference: () =>
-                ts.factory.createPropertyAccessExpression(requestParameter, this.getReferencedBodyPropertyName()),
+                this.accessRequestProperty({
+                    requestParameter,
+                    isRequestParameterNullable,
+                    key: this.getReferencedBodyPropertyName(),
+                }),
             inlinedRequestBody: (inlinedRequestBody) => {
                 return ts.factory.createObjectLiteralExpression(
                     [
                         ...inlinedRequestBody.properties.map((property) =>
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createStringLiteral(property.name.wireValue),
-                                ts.factory.createPropertyAccessExpression(
+                                ts.factory.createStringLiteral(this.getInlinedRequestBodyPropertyKey(property)),
+                                this.accessRequestProperty({
                                     requestParameter,
-                                    this.getInlinedRequestBodyPropertyKey(property)
-                                )
+                                    isRequestParameterNullable,
+                                    key: this.getInlinedRequestBodyPropertyKey(property),
+                                })
                             )
                         ),
                         ...inlinedRequestBody.extends.flatMap((extension) => {
@@ -128,14 +156,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             if (generatedType.type !== "object") {
                                 throw new Error("Inlined request extends a non-object");
                             }
-                            return generatedType
-                                .getAllPropertiesIncludingExtensions(context)
-                                .map(({ propertyKey, wireKey }) =>
-                                    ts.factory.createPropertyAssignment(
-                                        ts.factory.createStringLiteral(wireKey),
-                                        ts.factory.createPropertyAccessExpression(requestParameter, propertyKey)
-                                    )
-                                );
+                            return generatedType.getAllPropertiesIncludingExtensions(context).map(({ propertyKey }) =>
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createStringLiteral(propertyKey),
+                                    this.accessRequestProperty({
+                                        requestParameter,
+                                        isRequestParameterNullable,
+                                        key: propertyKey,
+                                    })
+                                )
+                            );
                         }),
                     ],
                     true
@@ -242,5 +272,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             throw new Error("Request body is defined but sdkRequest is not a wrapper");
         }
         return this.endpoint.sdkRequest.shape.bodyKey.unsafeName.camelCase;
+    }
+
+    private accessRequestProperty({
+        requestParameter,
+        isRequestParameterNullable,
+        key,
+    }: {
+        requestParameter: ts.Expression;
+        isRequestParameterNullable: boolean;
+        key: string;
+    }): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            requestParameter,
+            isRequestParameterNullable ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
+            key
+        );
     }
 }

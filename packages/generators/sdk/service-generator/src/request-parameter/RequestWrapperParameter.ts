@@ -13,24 +13,27 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     }
 
     public getReferenceToRequestBody(context: ServiceContext): ts.Expression | undefined {
-        return this.getGeneratedRequestWrapper(context).getReferenceToBody(
-            ts.factory.createIdentifier(this.getRequestParameterName()),
-            context
-        );
+        return this.getGeneratedRequestWrapper(context).getReferenceToBody({
+            requestParameter: ts.factory.createIdentifier(this.getRequestParameterName()),
+            isRequestParameterNullable: this.getParameterType(context).isOptional,
+            context,
+        });
     }
 
     public getReferenceToQueryParameter(queryParameter: QueryParameter, context: ServiceContext): ts.Expression {
-        return this.getGeneratedRequestWrapper(context).getReferenceToQueryParameter(
+        return this.getGeneratedRequestWrapper(context).getReferenceToQueryParameter({
             queryParameter,
-            ts.factory.createIdentifier(this.getRequestParameterName())
-        );
+            requestParameter: ts.factory.createIdentifier(this.getRequestParameterName()),
+            isRequestParameterNullable: this.getParameterType(context).isOptional,
+        });
     }
 
     public getReferenceToHeader(header: HttpHeader, context: ServiceContext): ts.Expression {
-        return this.getGeneratedRequestWrapper(context).getReferenceToHeader(
+        return this.getGeneratedRequestWrapper(context).getReferenceToHeader({
             header,
-            ts.factory.createIdentifier(this.getRequestParameterName())
-        );
+            requestParameter: ts.factory.createIdentifier(this.getRequestParameterName()),
+            isRequestParameterNullable: this.getParameterType(context).isOptional,
+        });
     }
 
     private getGeneratedRequestWrapper(context: ServiceContext): GeneratedRequestWrapper {
