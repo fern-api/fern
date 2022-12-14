@@ -22,7 +22,7 @@ exports[`fern upgrade upgrades generators 1`] = `
           location: maven
           coordinate: ''
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.248
+        version: 0.0.249
         output:
           location: npm
           package-name: ''
@@ -46,7 +46,7 @@ exports[`fern upgrade upgrades generators 1`] = `
           location: maven
           coordinate: ''
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.248
+        version: 0.0.249
         output:
           location: npm
           package-name: ''
