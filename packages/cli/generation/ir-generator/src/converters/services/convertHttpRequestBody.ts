@@ -35,7 +35,7 @@ export function convertHttpRequestBody({
                           docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
                           name: file.casingsGenerator.generateNameAndWireValue({
                               wireValue: propertyKey,
-                              name: getPropertyName({ propertyKey, declaration: propertyDefinition }).name,
+                              name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
                           }),
                           valueType: file.parseTypeReference(propertyDefinition),
                       }))

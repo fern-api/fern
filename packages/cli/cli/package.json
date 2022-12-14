@@ -51,7 +51,7 @@
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
-    "@fern-fern/ir-model": "0.0.387",
+    "@fern-fern/ir-model": "0.0.436",
     "ansi-escapes": "^5.0.0",
     "boxen": "^7.0.0",
     "chalk": "^5.0.1",

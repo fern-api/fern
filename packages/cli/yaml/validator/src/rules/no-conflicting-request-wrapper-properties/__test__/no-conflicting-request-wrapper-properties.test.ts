@@ -1,0 +1,55 @@
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoConflictingRequestWrapperPropertiesRule } from "../no-conflicting-request-wrapper-properties";
+
+describe("no-conflicting-request-wrapper-properties", () => {
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoConflictingRequestWrapperPropertiesRule,
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
+        });
+
+        expect(violations).toEqual([
+            {
+                message: `Multiple request properties have the name body. This is not suitable for code generation. Use the "name" property to deconflict.
+  - Body property "body"
+  - Query Parameter "body"`,
+                nodePath: ["services", "http", "Service", "endpoints", "c"],
+                relativeFilepath: "a.yml",
+                severity: "error",
+            },
+            {
+                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
+  - Service header "foo"
+  - Query Parameter "foo"`,
+                nodePath: ["services", "http", "Service", "endpoints", "c"],
+                relativeFilepath: "a.yml",
+                severity: "error",
+            },
+            {
+                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
+  - Service header "foo"
+  - Body property: <Request Body> -> (extends) ObjectWithFoo -> foo`,
+                nodePath: ["services", "http", "Service", "endpoints", "d"],
+                relativeFilepath: "a.yml",
+                severity: "error",
+            },
+            {
+                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property to deconflict.
+  - Service header "bar"
+  - Body property: <Request Body> -> bar`,
+                nodePath: ["services", "http", "Service", "endpoints", "d"],
+                relativeFilepath: "a.yml",
+                severity: "error",
+            },
+            {
+                message: `Multiple request properties have the name baz. This is not suitable for code generation. Use the "name" property to deconflict.
+  - Service header "baz"
+  - Endpoint header "baz"`,
+                nodePath: ["services", "http", "Service", "endpoints", "d"],
+                relativeFilepath: "a.yml",
+                severity: "error",
+            },
+        ]);
+    });
+});

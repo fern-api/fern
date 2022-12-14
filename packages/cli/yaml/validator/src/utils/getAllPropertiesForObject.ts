@@ -67,7 +67,7 @@ export function getAllPropertiesForObject({
 
             properties.push({
                 wireKey: propertyKey,
-                name: getPropertyName({ propertyKey, declaration: propertyDeclaration }).name,
+                name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
                 filepathOfDeclaration,
                 path,
                 finalPropertyKey: propertyKey,

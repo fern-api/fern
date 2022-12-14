@@ -99,12 +99,17 @@ types:
     properties:
       requestBodyType: types.TypeReference
   SdkRequest:
+    properties:
+      requestParameterName: commons.Name
+      shape: SdkRequestShape
+  SdkRequestShape:
     union:
       justRequestBody: HttpRequestBodyReference
       wrapper: SdkRequestWrapper
   SdkRequestWrapper:
     properties:
       wrapperName: commons.Name
+      bodyKey: commons.Name
   HttpResponse:
     extends: commons.WithDocs
     properties:
