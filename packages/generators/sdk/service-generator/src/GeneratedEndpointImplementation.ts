@@ -1,4 +1,4 @@
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpPath, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEndpointTypes, GeneratedEndpointTypeSchemas, ServiceContext } from "@fern-typescript/contexts";
@@ -324,7 +324,12 @@ export class GeneratedEndpointImplementation {
         context: ServiceContext;
     }) {
         return ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
-            property: () => this.getSwitchStatementForPropertyDiscriminatedErrors({ referenceToError, context }),
+            property: (propertyErrorDiscriminationStrategy) =>
+                this.getSwitchStatementForPropertyDiscriminatedErrors({
+                    referenceToError,
+                    context,
+                    propertyErrorDiscriminationStrategy,
+                }),
             statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors({ referenceToError, context }),
             _unknown: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
@@ -335,9 +340,11 @@ export class GeneratedEndpointImplementation {
     private getSwitchStatementForPropertyDiscriminatedErrors({
         referenceToError,
         context,
+        propertyErrorDiscriminationStrategy,
     }: {
         referenceToError: ts.Expression;
         context: ServiceContext;
+        propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
     }) {
         const allErrorsButLast = [...this.endpoint.errors];
         const lastError = allErrorsButLast.pop();
@@ -359,7 +366,7 @@ export class GeneratedEndpointImplementation {
                     generatedEndpointTypeSchemas.getReferenceToRawError(context)
                 ),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                this.endpoint.errorsV2.discriminant.wireValue
+                propertyErrorDiscriminationStrategy.discriminant.wireValue
             ),
             ts.factory.createCaseBlock([
                 ...allErrorsButLast.map((error) =>

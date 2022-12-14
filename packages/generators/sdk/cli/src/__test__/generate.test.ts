@@ -41,6 +41,15 @@ const FIXTURES: FixtureInfo[] = [
             private: true,
         },
     },
+    {
+        path: "fiddle",
+        orgName: "fern",
+        outputMode: "publish",
+        apiName: "fiddle",
+        customConfig: {
+            useBrandedStringAliases: true,
+        },
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
