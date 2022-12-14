@@ -9,7 +9,7 @@ export const V2_TO_V1_MIGRATION: IrMigration<
     earlierVersion: "v1",
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.0.245",
+        [GeneratorName.TYPESCRIPT_SDK]: "0.0.246",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
