@@ -68,31 +68,28 @@ export function convertHttpService({
                         : [],
                 queryParameters:
                     typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
-                        ? Object.entries(endpoint.request["query-parameters"]).map(([parameterName, parameter]) => {
-                              const valueType = file.parseTypeReference(parameter);
-                              return {
-                                  ...convertDeclaration(parameter),
-                                  name: file.casingsGenerator.generateWireCasingsV1({
-                                      wireValue: parameterName,
-                                      name:
-                                          typeof parameter !== "string" && parameter.name != null
-                                              ? parameter.name
-                                              : parameterName,
-                                  }),
-                                  nameV2: file.casingsGenerator.generateNameAndWireValue({
-                                      wireValue: parameterName,
-                                      name:
-                                          typeof parameter !== "string" && parameter.name != null
-                                              ? parameter.name
-                                              : parameterName,
-                                  }),
-                                  valueType,
-                                  allowMultiple:
-                                      typeof parameter !== "string" && parameter["allow-multiple"] != null
-                                          ? parameter["allow-multiple"]
-                                          : false,
-                              };
-                          })
+                        ? Object.entries(endpoint.request["query-parameters"]).map(
+                              ([queryParameterKey, queryParameter]) => {
+                                  const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
+                                  const valueType = file.parseTypeReference(queryParameter);
+                                  return {
+                                      ...convertDeclaration(queryParameter),
+                                      name: file.casingsGenerator.generateWireCasingsV1({
+                                          wireValue: queryParameterKey,
+                                          name,
+                                      }),
+                                      nameV2: file.casingsGenerator.generateNameAndWireValue({
+                                          wireValue: queryParameterKey,
+                                          name,
+                                      }),
+                                      valueType,
+                                      allowMultiple:
+                                          typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+                                              ? queryParameter["allow-multiple"]
+                                              : false,
+                                  };
+                              }
+                          )
                         : [],
                 headers:
                     typeof endpoint.request !== "string" && endpoint.request?.headers != null
@@ -127,6 +124,21 @@ function convertPathParameter({
     };
 }
 
+export function getQueryParameterName({
+    queryParameterKey,
+    queryParameter,
+}: {
+    queryParameterKey: string;
+    queryParameter: RawSchemas.HttpQueryParameterSchema;
+}): { name: string; wasExplicitlySet: boolean } {
+    if (typeof queryParameter !== "string") {
+        if (queryParameter.name != null) {
+            return { name: queryParameter.name, wasExplicitlySet: true };
+        }
+    }
+    return { name: queryParameterKey, wasExplicitlySet: false };
+}
+
 function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method"], null | undefined>): HttpMethod {
     switch (method) {
         case "GET":
@@ -153,16 +165,35 @@ export function convertHttpHeader({
     header: RawSchemas.HttpHeaderSchema;
     file: FernFileContext;
 }): HttpHeader {
+    const { name } = getHeaderName({ headerKey, header });
     return {
         ...convertDeclaration(header),
         name: file.casingsGenerator.generateWireCasingsV1({
             wireValue: headerKey,
-            name: typeof header !== "string" && header.name != null ? header.name : headerKey,
+            name,
         }),
         nameV2: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
-            name: typeof header !== "string" && header.name != null ? header.name : headerKey,
+            name,
         }),
         valueType: file.parseTypeReference(header),
+    };
+}
+
+export function getHeaderName({ headerKey, header }: { headerKey: string; header: RawSchemas.HttpHeaderSchema }): {
+    name: string;
+    wasExplicitlySet: boolean;
+} {
+    if (typeof header !== "string") {
+        if (header.name != null) {
+            return {
+                name: header.name,
+                wasExplicitlySet: true,
+            };
+        }
+    }
+    return {
+        name: headerKey,
+        wasExplicitlySet: false,
     };
 }

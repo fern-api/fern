@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { HttpEndpointSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
+import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
 import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
@@ -20,25 +20,11 @@ export async function visitHttpService({
         docs: createDocsVisitor(visitor, nodePathForService),
         availability: noop,
         headers: async (headers) => {
-            if (headers == null) {
-                return;
-            }
-            for (const [headerKey, header] of Object.entries(headers)) {
-                const nodePathForHeader = [...nodePathForService, "headers", headerKey];
-                if (typeof header === "string") {
-                    await visitor.typeReference?.(header, nodePathForHeader);
-                } else {
-                    await visitObject(header, {
-                        name: noop,
-                        availability: noop,
-                        type: async (type) => {
-                            await visitor.typeReference?.(type, nodePathForHeader);
-                        },
-                        docs: createDocsVisitor(visitor, nodePathForHeader),
-                        audiences: noop,
-                    });
-                }
-            }
+            await visitHeaders({
+                headers,
+                visitor,
+                nodePath: [...nodePathForService, "headers"],
+            });
         },
         audiences: noop,
         auth: noop,
@@ -46,7 +32,7 @@ export async function visitHttpService({
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: nodePathForService,
+                nodePath: [...nodePathForService, "path-parameters"],
             });
         },
         endpoints: async (endpoints) => {
@@ -76,7 +62,7 @@ async function visitEndpoint({
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: nodePathForEndpoint,
+                nodePath: [...nodePathForEndpoint, "path-parameters"],
             });
         },
         request: async (request) => {
@@ -121,7 +107,13 @@ async function visitEndpoint({
                         }
                     }
                 },
-                headers: noop,
+                headers: async (headers) => {
+                    await visitHeaders({
+                        headers,
+                        visitor,
+                        nodePath: [...nodePathForRequest, "headers"],
+                    });
+                },
                 body: async (body) => {
                     if (body == null) {
                         return;
@@ -201,7 +193,10 @@ async function visitPathParameters({
         return;
     }
     for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
-        const nodePathForPathParameter = [...nodePath, "path-parameters", pathParameterKey];
+        const nodePathForPathParameter = [...nodePath, pathParameterKey];
+
+        await visitor.pathParameter?.({ pathParameterKey, pathParameter }, nodePathForPathParameter);
+
         if (typeof pathParameter === "string") {
             await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
         } else {
@@ -211,6 +206,39 @@ async function visitPathParameters({
                 type: async (type) => {
                     await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
                 },
+                audiences: noop,
+            });
+        }
+    }
+}
+
+async function visitHeaders({
+    headers,
+    visitor,
+    nodePath,
+}: {
+    headers: Record<string, HttpHeaderSchema> | undefined;
+    visitor: Partial<FernServiceFileAstVisitor>;
+    nodePath: NodePath;
+}) {
+    if (headers == null) {
+        return;
+    }
+    for (const [headerKey, header] of Object.entries(headers)) {
+        const nodePathForHeader = [...nodePath, headerKey];
+
+        await visitor.header?.({ headerKey, header }, nodePathForHeader);
+
+        if (typeof header === "string") {
+            await visitor.typeReference?.(header, nodePathForHeader);
+        } else {
+            await visitObject(header, {
+                name: noop,
+                availability: noop,
+                type: async (type) => {
+                    await visitor.typeReference?.(type, nodePathForHeader);
+                },
+                docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
             });
         }

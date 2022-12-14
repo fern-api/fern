@@ -1,8 +1,11 @@
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { SdkRequest } from "@fern-fern/ir-model/services/http";
+import { SdkRequest, SdkRequestShape } from "@fern-fern/ir-model/services/http";
 import { size } from "lodash-es";
 import { FernFileContext } from "../../FernFileContext";
 import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody";
+
+export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
+export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
 
 export function convertHttpSdkRequest({
     request,
@@ -11,12 +14,29 @@ export function convertHttpSdkRequest({
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
 }): SdkRequest | undefined {
+    const shape = convertHttpSdkRequestShape({ request, file });
+    if (shape == null) {
+        return undefined;
+    }
+    return {
+        shape,
+        requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
+    };
+}
+
+function convertHttpSdkRequestShape({
+    request,
+    file,
+}: {
+    request: string | RawSchemas.HttpRequestSchema | null | undefined;
+    file: FernFileContext;
+}): SdkRequestShape | undefined {
     if (request == null) {
         return undefined;
     }
 
     if (typeof request === "string") {
-        return SdkRequest.justRequestBody(convertReferenceHttpRequestBody(request, file));
+        return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody(request, file));
     }
 
     const { headers = {}, "query-parameters": queryParameters = {}, body } = request;
@@ -24,8 +44,9 @@ export function convertHttpSdkRequest({
         if (request.name == null) {
             throw new Error("Name is missing for request wrapper");
         }
-        return SdkRequest.wrapper({
+        return SdkRequestShape.wrapper({
             wrapperName: file.casingsGenerator.generateName(request.name),
+            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER),
         });
     }
 
@@ -33,5 +54,5 @@ export function convertHttpSdkRequest({
         return undefined;
     }
 
-    return SdkRequest.justRequestBody(convertReferenceHttpRequestBody(body, file));
+    return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody(body, file));
 }

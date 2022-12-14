@@ -1,5 +1,10 @@
 export { constructCasingsGenerator, type CasingsGenerator } from "./casings/CasingsGenerator";
 export { constructHttpPath } from "./converters/services/constructHttpPath";
+export {
+    DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+    DEFAULT_REQUEST_PARAMETER_NAME,
+} from "./converters/services/convertHttpSdkRequest";
+export { getHeaderName, getQueryParameterName } from "./converters/services/convertHttpService";
 export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
 export {

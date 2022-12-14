@@ -19,11 +19,11 @@ export function convertObjectTypeDeclaration({
                       ...convertDeclaration(propertyDefinition),
                       name: file.casingsGenerator.generateWireCasingsV1({
                           wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, declaration: propertyDefinition }).name,
+                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
                       }),
                       nameV2: file.casingsGenerator.generateNameAndWireValue({
                           wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, declaration: propertyDefinition }).name,
+                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
                       }),
                       valueType: file.parseTypeReference(propertyDefinition),
                   }))
@@ -43,14 +43,14 @@ export function getExtensionsAsList(extensions: string | string[] | undefined): 
 
 export function getPropertyName({
     propertyKey,
-    declaration,
+    property,
 }: {
     propertyKey: string;
-    declaration: RawSchemas.ObjectPropertySchema;
+    property: RawSchemas.ObjectPropertySchema;
 }): { name: string; wasExplicitlySet: boolean } {
-    if (typeof declaration !== "string" && declaration.name != null) {
+    if (typeof property !== "string" && property.name != null) {
         return {
-            name: declaration.name,
+            name: property.name,
             wasExplicitlySet: true,
         };
     }

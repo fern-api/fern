@@ -2,6 +2,8 @@ import { Rule } from "./Rule";
 import ImportFileExistsRule from "./rules/import-file-exists";
 import NoCircularImportsRule from "./rules/no-circular-imports";
 import NoComplexQueryParamsRule from "./rules/no-complex-query-params";
+import NoConflictingEndpointParametersRule from "./rules/no-conflicting-endpoint-parameters";
+import NoConflictingRequestWrapperPropertiesRule from "./rules/no-conflicting-request-wrapper-properties";
 import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
 import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
 import NoDuplicateFieldNamesRule from "./rules/no-duplicate-field-names";
@@ -38,6 +40,8 @@ export function getAllRules(): Rule[] {
         NoErrorStatusCodeConflict,
         NoMissingAuthRule,
         NoMissingRequestNameRule,
+        NoConflictingEndpointParametersRule,
+        NoConflictingRequestWrapperPropertiesRule,
     ];
 }
 
