@@ -1,3 +1,4 @@
 # if there are any release blockers in this list, releasing will fail on Circle
 release-blockers:
-  - inline requests
+  - inline requests IR break
+  - v3->v2 IR migration has a dev version for TS SDK
