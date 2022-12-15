@@ -48,7 +48,7 @@ public abstract class BearerAuth {
     return "Bearer " + getToken();
   }
 
-  public static BearerAuth of(String token) {
+  public static BearerAuth valueOf(String token) {
     return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
   }
 }
@@ -2958,7 +2958,7 @@ public abstract class BearerAuth {
     return "Bearer " + getToken();
   }
 
-  public static BearerAuth of(String token) {
+  public static BearerAuth valueOf(String token) {
     return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
   }
 }
@@ -3194,7 +3194,7 @@ public abstract class BearerAuth {
     return "Bearer " + getToken();
   }
 
-  public static BearerAuth of(String token) {
+  public static BearerAuth valueOf(String token) {
     return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
   }
 }
