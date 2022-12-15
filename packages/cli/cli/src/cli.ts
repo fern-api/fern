@@ -272,7 +272,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["register"],
-        "Register all generators in the specified group",
+        false, // hide from help message
         (yargs) =>
             yargs
                 .option("version", {
