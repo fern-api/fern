@@ -38,22 +38,26 @@ export async function visitHttpService({
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];
-                await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
-                await visitEndpoint({ endpoint, visitor, nodePathForEndpoint });
+                await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
     });
 }
 
 async function visitEndpoint({
+    endpointId,
     endpoint,
+    service,
     visitor,
     nodePathForEndpoint,
 }: {
+    endpointId: string;
     endpoint: HttpEndpointSchema;
+    service: HttpServiceSchema;
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
+    await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
     await visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         availability: noop,
@@ -183,6 +187,15 @@ async function visitEndpoint({
             }
             for (const [index, example] of examples.entries()) {
                 const nodePathForExample: NodePath = [...nodePathForEndpoint, { key: "examples", arrayIndex: index }];
+                await visitor.exampleHttpEndpointCall?.(
+                    {
+                        service,
+                        endpoint,
+                        endpointId,
+                        example,
+                    },
+                    nodePathForExample
+                );
                 if (example.response != null) {
                     const nodePathForResponse = [...nodePathForExample, "response"];
                     if (example.response.error != null) {

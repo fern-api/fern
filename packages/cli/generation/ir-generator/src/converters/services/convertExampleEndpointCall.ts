@@ -1,7 +1,9 @@
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ExampleEndpointCall,
+    ExampleHeader,
     ExampleInlinedRequestBodyProperty,
+    ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
 } from "@fern-fern/ir-model/services/http";
@@ -11,42 +13,25 @@ import { parseTypeName } from "../../utils/parseTypeName";
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions,
-} from "../type-declarations/convertTypeExample";
+} from "../type-declarations/convertExampleType";
 
 export function convertExampleEndpointCall({
+    service,
     endpoint,
     example,
     typeResolver,
     file,
 }: {
+    service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
 }): ExampleEndpointCall {
     return {
-        "path-parameters":
-            example["path-parameters"] != null
-                ? Object.entries(example["path-parameters"]).map(([key, value]) => {
-                      const pathParameterDeclaration = endpoint["path-parameters"]?.[key];
-                      if (pathParameterDeclaration == null) {
-                          throw new Error(`Path parameter ${key} does not exist`);
-                      }
-                      return {
-                          key,
-                          value: convertTypeReferenceExample({
-                              example: value,
-                              rawTypeBeingExemplified:
-                                  typeof pathParameterDeclaration === "string"
-                                      ? pathParameterDeclaration
-                                      : pathParameterDeclaration.type,
-                              typeResolver,
-                              file,
-                          }),
-                      };
-                  })
-                : [],
-        "query-parameters":
+        ...convertPathParameters({ service, endpoint, example, typeResolver, file }),
+        ...convertHeaders({ service, endpoint, example, typeResolver, file }),
+        queryParameters:
             example["query-parameters"] != null
                 ? Object.entries(example["query-parameters"]).map(([key, value]) => {
                       const queryParameterDeclaration =
@@ -70,28 +55,125 @@ export function convertExampleEndpointCall({
                       };
                   })
                 : [],
-        headers:
-            example.headers != null
-                ? Object.entries(example.headers).map(([key, value]) => {
-                      const headerDeclaration =
-                          typeof endpoint.request !== "string" ? endpoint.request?.headers?.[key] : undefined;
-                      if (headerDeclaration == null) {
-                          throw new Error(`Header ${key} does not exist`);
-                      }
-                      return {
-                          key,
-                          value: convertTypeReferenceExample({
-                              example: value,
-                              rawTypeBeingExemplified:
-                                  typeof headerDeclaration === "string" ? headerDeclaration : headerDeclaration.type,
-                              typeResolver,
-                              file,
-                          }),
-                      };
-                  })
-                : [],
         request: convertExampleRequestBody({ endpoint, example, typeResolver, file }),
         response: convertExampleResponse({ endpoint, example, typeResolver, file }),
+    };
+}
+
+function convertPathParameters({
+    service,
+    endpoint,
+    example,
+    typeResolver,
+    file,
+}: {
+    service: RawSchemas.HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}): Pick<ExampleEndpointCall, "endpointPathParameters" | "servicePathParameters"> {
+    const servicePathParameters: ExamplePathParameter[] = [];
+    const endpointPathParameters: ExamplePathParameter[] = [];
+
+    if (example["path-parameters"] != null) {
+        for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
+            const endpointPathParameterDeclaration = endpoint["path-parameters"]?.[key];
+            const servicePathParameterDeclaration = service["path-parameters"]?.[key];
+            if (endpointPathParameterDeclaration != null) {
+                endpointPathParameters.push({
+                    key,
+                    value: convertTypeReferenceExample({
+                        example: examplePathParameter,
+                        rawTypeBeingExemplified:
+                            typeof endpointPathParameterDeclaration === "string"
+                                ? endpointPathParameterDeclaration
+                                : endpointPathParameterDeclaration.type,
+                        typeResolver,
+                        file,
+                    }),
+                });
+            } else if (servicePathParameterDeclaration != null) {
+                endpointPathParameters.push({
+                    key,
+                    value: convertTypeReferenceExample({
+                        example: examplePathParameter,
+                        rawTypeBeingExemplified:
+                            typeof servicePathParameterDeclaration === "string"
+                                ? servicePathParameterDeclaration
+                                : servicePathParameterDeclaration.type,
+                        typeResolver,
+                        file,
+                    }),
+                });
+            } else {
+                throw new Error(`Path parameter ${key} does not exist`);
+            }
+        }
+    }
+
+    return {
+        endpointPathParameters,
+        servicePathParameters,
+    };
+}
+
+function convertHeaders({
+    service,
+    endpoint,
+    example,
+    typeResolver,
+    file,
+}: {
+    service: RawSchemas.HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}): Pick<ExampleEndpointCall, "endpointHeaders" | "serviceHeaders"> {
+    const serviceHeaders: ExampleHeader[] = [];
+    const endpointHeaders: ExampleHeader[] = [];
+
+    if (example.headers != null) {
+        for (const [key, exampleHeader] of Object.entries(example.headers)) {
+            const endpointHeaderDeclaration =
+                typeof endpoint.request !== "string" ? endpoint.request?.headers?.[key] : undefined;
+            const serviceHeaderDeclaration = service.headers?.[key];
+            if (endpointHeaderDeclaration != null) {
+                endpointHeaders.push({
+                    key,
+                    value: convertTypeReferenceExample({
+                        example: exampleHeader,
+                        rawTypeBeingExemplified:
+                            typeof endpointHeaderDeclaration === "string"
+                                ? endpointHeaderDeclaration
+                                : endpointHeaderDeclaration.type,
+                        typeResolver,
+                        file,
+                    }),
+                });
+            } else if (serviceHeaderDeclaration != null) {
+                endpointHeaders.push({
+                    key,
+                    value: convertTypeReferenceExample({
+                        example: exampleHeader,
+                        rawTypeBeingExemplified:
+                            typeof serviceHeaderDeclaration === "string"
+                                ? serviceHeaderDeclaration
+                                : serviceHeaderDeclaration.type,
+                        typeResolver,
+                        file,
+                    }),
+                });
+            } else {
+                throw new Error(`Heder ${key} does not exist`);
+            }
+        }
+    }
+
+    return {
+        endpointHeaders,
+        serviceHeaders,
     };
 }
 

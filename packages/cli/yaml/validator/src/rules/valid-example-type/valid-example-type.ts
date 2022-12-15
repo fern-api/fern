@@ -10,7 +10,7 @@ export const ValidExampleTypeRule: Rule = {
 
         return {
             serviceFile: {
-                typeExample: ({ typeName, typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
+                exampleType: ({ typeName, typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
                     return validateTypeExample({
                         typeName,
                         typeDeclaration,

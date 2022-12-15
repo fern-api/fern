@@ -5,8 +5,8 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
+import { convertTypeExample } from "./convertExampleType";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
-import { convertTypeExample } from "./convertTypeExample";
 import { convertUnionTypeDeclaration } from "./convertUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
 

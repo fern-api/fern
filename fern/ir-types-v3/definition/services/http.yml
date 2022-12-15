@@ -124,9 +124,11 @@ types:
 
   ExampleEndpointCall:
     properties:
-      path-parameters: list<ExamplePathParameter>
-      query-parameters: list<ExampleQueryParameter>
-      headers: list<ExampleHeader>
+      servicePathParameters: list<ExamplePathParameter>
+      endpointPathParameters: list<ExamplePathParameter>
+      serviceHeaders: list<ExampleHeader>
+      endpointHeaders: list<ExampleHeader>
+      queryParameters: list<ExampleQueryParameter>
       request: optional<ExampleRequestBody>
       response: ExampleResponse
 

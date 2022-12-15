@@ -42,7 +42,7 @@ export async function visitTypeDeclaration({
             return;
         }
         for (const [arrayIndex, example] of examples.entries()) {
-            await visitor.typeExample?.({ typeName, typeDeclaration: declaration, example }, [
+            await visitor.exampleType?.({ typeName, typeDeclaration: declaration, example }, [
                 ...nodePathForType,
                 { key: "examples", arrayIndex },
             ]);

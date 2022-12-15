@@ -1,5 +1,6 @@
 import {
     ErrorDeclarationSchema,
+    ExampleEndpointCallSchema,
     ExampleTypeSchema,
     HttpEndpointSchema,
     HttpHeaderSchema,
@@ -18,11 +19,17 @@ export interface FernServiceFileAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
-    typeExample: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
+    exampleType: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
     typeReference: string;
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
+    exampleHttpEndpointCall: {
+        endpointId: string;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+        example: ExampleEndpointCallSchema;
+    };
     pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
     queryParameter: { queryParameterKey: string; queryParameter: HttpQueryParameterSchema };
     header: { headerKey: string; header: HttpHeaderSchema };

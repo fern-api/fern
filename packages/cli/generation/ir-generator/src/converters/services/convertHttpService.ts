@@ -109,7 +109,13 @@ export function convertHttpService({
                 examples:
                     endpoint.examples != null
                         ? endpoint.examples.map((example) =>
-                              convertExampleEndpointCall({ endpoint, example, typeResolver, file })
+                              convertExampleEndpointCall({
+                                  service: serviceDefinition,
+                                  endpoint,
+                                  example,
+                                  typeResolver,
+                                  file,
+                              })
                           )
                         : [],
             })
