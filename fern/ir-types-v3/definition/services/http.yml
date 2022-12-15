@@ -39,6 +39,7 @@ types:
         docs: this is deprecated. Use errors instead. yes, this is weird.
         type: serviceCommons.ResponseErrorsV2
       auth: boolean
+      examples: list<ExampleEndpointCall>
   EndpointName: commons.Name
   HttpPath:
     properties:
@@ -117,3 +118,28 @@ types:
         docs: this is deprecated. use typeV2 instead.
         type: types.TypeReference
       typeV2: optional<types.TypeReference>
+
+  # examples
+
+  ExampleEndpointCall:
+    properties:
+      url: string
+      headers: list<ExampleHeader>
+      query-parameters: list<ExampleQueryParameter>
+      request: optional<types.ExampleType>
+      response: optional<ExampleResponse>
+
+  ExampleHeader:
+    properties:
+      key: string
+      value: types.ExampleType
+
+  ExampleQueryParameter:
+    properties:
+      key: string
+      value: types.ExampleType
+
+  ExampleResponse:
+    union:
+      ok: types.ExampleType
+      # TODO example errors
