@@ -123,18 +123,23 @@ types:
 
   ExampleEndpointCall:
     properties:
-      url: string
-      headers: list<ExampleHeader>
+      path-parameters: list<ExamplePathParameter>
       query-parameters: list<ExampleQueryParameter>
+      headers: list<ExampleHeader>
       request: optional<types.ExampleType>
       response: optional<ExampleResponse>
 
-  ExampleHeader:
+  ExamplePathParameter:
     properties:
       key: string
       value: types.ExampleType
 
   ExampleQueryParameter:
+    properties:
+      key: string
+      value: types.ExampleType
+
+  ExampleHeader:
     properties:
       key: string
       value: types.ExampleType
