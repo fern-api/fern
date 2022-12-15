@@ -18,7 +18,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { registerWorkspace } from "./commands/register/registerWorkspace";
+import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
@@ -120,6 +120,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
+    addRegisterCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -287,26 +288,15 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "The token for the organization",
                 }),
         async (argv) => {
-            const project = await loadProjectAndRegisterWorkspaces(cliContext, {
-                commandLineWorkspace: argv.api,
-                defaultToAllWorkspaces: false,
-            });
-            const workspaces = project.workspaces;
-            if (workspaces === undefined || workspaces.length !== 1) {
-                cliContext.fail(`Failed to load ${argv.api}`);
-                return;
-            }
-            const workspace = workspaces[0];
-            if (workspace == null) {
-                cliContext.fail(`Failed to load ${argv.api}`);
-                return;
-            }
             if (argv.token == null) {
                 cliContext.fail("Token must be specified");
                 return;
             }
-            await registerWorkspace({
-                workspace,
+            await registerApiDefinitions({
+                project: await loadProjectAndRegisterWorkspaces(cliContext, {
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
+                }),
                 cliContext,
                 token: argv.token,
                 version: argv.version,
