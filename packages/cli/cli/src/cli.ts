@@ -198,16 +198,15 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["generate"],
+        ["generate [group]"],
         "Generate all generators in the specified group",
         (yargs) =>
             yargs
                 .positional("group", {
                     type: "string",
-                    demandOption: true,
                     description: "The group to generate",
                 })
-                .positional("version", {
+                .option("version", {
                     type: "string",
                     description: "The version for the generated packages",
                 })
