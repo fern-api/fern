@@ -299,7 +299,7 @@ function addUpgradeCommand({
 }) {
     cli.command(
         "upgrade",
-        `Upgrades versions in ${GENERATORS_CONFIGURATION_FILENAME} and ${PROJECT_CONFIG_FILENAME}`,
+        `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
         (yargs) =>
             yargs.option("rc", {
                 boolean: true,
