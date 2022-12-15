@@ -66,6 +66,12 @@ services:
           response: MovieId
           audiences:
             - test
+          examples:
+            - request:
+                title: Shrek
+                ratings: [10, 10, 10, 10]
+              response:
+                body: shrek-123
         getMovie:
           method: GET
           path: /{movieId}
@@ -80,6 +86,23 @@ services:
           response: Movie
           errors:
             - NotFoundError
+          examples:
+            - path-parameters:
+                movieId: id-123
+              query-parameters:
+                movieName: hello
+              response:
+                body:
+                  id: id-123
+                  title: Shrek
+                  rating: 10
+            - path-parameters:
+                movieId: id-123
+              query-parameters:
+                movieName: hello
+              response:
+                error: NotFoundError
+                body: id-123
         delete:
           method: DELETE
           path: /{movieId}

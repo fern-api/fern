@@ -12,16 +12,19 @@ import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
 export function validateObjectExample({
     typeName,
+    typeNameForBreadcrumb,
     rawObject,
     file,
     typeResolver,
     workspace,
     example,
 }: {
-    typeName: string;
+    // undefined for inline requests
+    typeName: string | undefined;
+    typeNameForBreadcrumb: string;
     rawObject: RawSchemas.ObjectSchema;
     file: FernFileContext;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     typeResolver: TypeResolver;
     workspace: Workspace;
 }): RuleViolation[] {
@@ -47,14 +50,14 @@ export function validateObjectExample({
         (property) => property.isOptional != null && !property.isOptional
     );
     for (const requiredProperty of requiredProperties) {
-        if (!(requiredProperty.wireKey in example)) {
+        if (example[requiredProperty.wireKey] == null) {
             let message = `Example is missing required property "${requiredProperty.wireKey}"`;
             if (requiredProperty.path.length > 0) {
                 message +=
                     ". " +
                     convertObjectPropertyWithPathToString({
                         property: requiredProperty,
-                        prefixBreadcrumbs: [typeName],
+                        prefixBreadcrumbs: [typeNameForBreadcrumb],
                     });
             }
             violations.push({

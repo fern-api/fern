@@ -1,12 +1,15 @@
 import {
     ErrorDeclarationSchema,
+    ExampleEndpointCallSchema,
+    ExampleResponseSchema,
+    ExampleTypeReferenceSchema,
+    ExampleTypeSchema,
     HttpEndpointSchema,
     HttpHeaderSchema,
     HttpPathParameterSchema,
     HttpQueryParameterSchema,
     HttpServiceSchema,
     TypeDeclarationSchema,
-    TypeExampleSchema,
 } from "../schemas";
 import { NodePath } from "./NodePath";
 
@@ -18,11 +21,41 @@ export interface FernServiceFileAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
-    typeExample: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: TypeExampleSchema };
+    exampleType: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
     typeReference: string;
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
+    exampleHttpEndpointCall: {
+        example: ExampleEndpointCallSchema;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleHeaders: {
+        examples: Record<string, ExampleTypeReferenceSchema> | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    examplePathParameters: {
+        examples: Record<string, ExampleTypeReferenceSchema> | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleQueryParameters: {
+        examples: Record<string, ExampleTypeReferenceSchema> | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleRequest: {
+        example: ExampleTypeReferenceSchema | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleResponse: {
+        example: ExampleResponseSchema | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
     pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
     queryParameter: { queryParameterKey: string; queryParameter: HttpQueryParameterSchema };
     header: { headerKey: string; header: HttpHeaderSchema };

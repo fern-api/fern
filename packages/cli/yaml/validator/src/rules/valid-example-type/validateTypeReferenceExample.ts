@@ -23,7 +23,7 @@ export function validateTypeReferenceExample({
     workspace,
 }: {
     rawTypeReference: string;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: Workspace;
@@ -141,7 +141,7 @@ function validatePrimitiveExample({
     example,
 }: {
     primitiveType: PrimitiveType;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
 }): RuleViolation[] {
     return PrimitiveType._visit<RuleViolation[]>(primitiveType, {
         string: () => validateString(example),
@@ -166,9 +166,9 @@ const validateUuid = createValidator((example) => UUID_REGEX.test(example), "a U
 const validateDateTime = createValidator((example) => ISO_8601_REGEX.test(example), "an ISO 8601 timestamp");
 
 function createValidator(
-    validate: (example: RawSchemas.TypeExampleSchema) => boolean,
+    validate: (example: RawSchemas.ExampleTypeSchema) => boolean,
     expectedTypeIncludingArticle: string
-): (example: RawSchemas.TypeExampleSchema) => RuleViolation[] {
+): (example: RawSchemas.ExampleTypeSchema) => RuleViolation[] {
     return (example) => {
         if (validate(example)) {
             return [];

@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { TypeDeclarationSchema, TypeExampleSchema } from "../../schemas";
+import { ExampleTypeSchema, TypeDeclarationSchema } from "../../schemas";
 import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
 import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
 import { NodePath } from "../NodePath";
@@ -37,12 +37,12 @@ export async function visitTypeDeclaration({
 }): Promise<void> {
     await visitor.typeDeclaration?.({ typeName, declaration }, nodePathForType);
 
-    const visitExamples = async (examples: TypeExampleSchema[] | undefined) => {
+    const visitExamples = async (examples: ExampleTypeSchema[] | undefined) => {
         if (examples == null) {
             return;
         }
         for (const [arrayIndex, example] of examples.entries()) {
-            await visitor.typeExample?.({ typeName, typeDeclaration: declaration, example }, [
+            await visitor.exampleType?.({ typeName, typeDeclaration: declaration, example }, [
                 ...nodePathForType,
                 { key: "examples", arrayIndex },
             ]);

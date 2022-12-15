@@ -3,14 +3,14 @@ import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateTypeExample } from "./validateTypeExample";
 
-export const ValidExampleShapeRule: Rule = {
-    name: "valid-example",
+export const ValidExampleTypeRule: Rule = {
+    name: "valid-example-type",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
 
         return {
             serviceFile: {
-                typeExample: ({ typeName, typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
+                exampleType: ({ typeName, typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
                     return validateTypeExample({
                         typeName,
                         typeDeclaration,

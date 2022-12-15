@@ -19,7 +19,7 @@ export function validateTypeExample({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     workspace: Workspace;
 }): RuleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
@@ -41,6 +41,7 @@ export function validateTypeExample({
         object: (rawObject) => {
             return validateObjectExample({
                 typeName,
+                typeNameForBreadcrumb: typeName,
                 rawObject,
                 example,
                 file,

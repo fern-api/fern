@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DeclarationSchema } from "./DeclarationSchema";
+import { ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpRequestSchema } from "./HttpRequestSchema";
 import { HttpResponseSchema } from "./HttpResponseSchema";
@@ -13,6 +14,7 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     request: z.optional(z.union([z.string(), HttpRequestSchema])),
     response: z.optional(HttpResponseSchema),
     errors: z.optional(ResponseErrorsSchema),
+    examples: z.optional(z.array(ExampleEndpointCallSchema)),
 });
 
 export type HttpEndpointSchema = z.infer<typeof HttpEndpointSchema>;

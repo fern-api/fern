@@ -29,7 +29,7 @@ export function convertTypeExample({
 }: {
     typeName: DeclaredTypeName;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
 }): ExampleType {
@@ -81,13 +81,13 @@ export function convertTypeExample({
     });
 }
 
-function convertTypeReferenceExample({
+export function convertTypeReferenceExample({
     example,
     rawTypeBeingExemplified,
     typeResolver,
     file,
 }: {
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     rawTypeBeingExemplified: string;
     typeResolver: TypeResolver;
     file: FernFileContext;
@@ -213,7 +213,7 @@ function convertPrimitiveExample({
     example,
     typeBeingExemplified,
 }: {
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     typeBeingExemplified: PrimitiveType;
 }): ExampleTypeReference {
     return PrimitiveType._visit(typeBeingExemplified, {
@@ -239,7 +239,7 @@ function convertObject({
 }: {
     typeName: DeclaredTypeName;
     rawObject: RawSchemas.ObjectSchema;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): ExampleType {
@@ -295,10 +295,29 @@ function getOriginalTypeDeclarationForProperty({
     const rawPropertyType = rawObject.properties?.[wirePropertyKey];
     if (rawPropertyType != null) {
         return { typeName, rawPropertyType };
+    } else {
+        return getOriginalTypeDeclarationForPropertyFromExtensions({
+            wirePropertyKey,
+            extends_: rawObject.extends,
+            typeResolver,
+            file,
+        });
     }
+}
 
-    if (rawObject.extends != null) {
-        const extendsList = typeof rawObject.extends === "string" ? [rawObject.extends] : rawObject.extends;
+export function getOriginalTypeDeclarationForPropertyFromExtensions({
+    wirePropertyKey,
+    extends_,
+    typeResolver,
+    file,
+}: {
+    wirePropertyKey: string;
+    extends_: string | string[] | undefined;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+}): { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema } | undefined {
+    if (extends_ != null) {
+        const extendsList = typeof extends_ === "string" ? [extends_] : extends_;
         for (const typeName of extendsList) {
             const resolvedType = typeResolver.resolveNamedTypeOrThrow({
                 referenceToNamedType: typeName,
@@ -335,7 +354,7 @@ function convertUnionProperties({
     rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     discriminant: string;
 }): ExampleSingleUnionTypeProperties {
     if (rawValueType == null) {

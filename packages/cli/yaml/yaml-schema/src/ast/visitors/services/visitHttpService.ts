@@ -38,22 +38,26 @@ export async function visitHttpService({
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
                 const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];
-                await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
-                await visitEndpoint({ endpoint, visitor, nodePathForEndpoint });
+                await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
     });
 }
 
 async function visitEndpoint({
+    endpointId,
     endpoint,
+    service,
     visitor,
     nodePathForEndpoint,
 }: {
+    endpointId: string;
     endpoint: HttpEndpointSchema;
+    service: HttpServiceSchema;
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
+    await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
     await visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         availability: noop,
@@ -174,6 +178,69 @@ async function visitEndpoint({
                             await visitor.errorReference?.(error, [...nodePathForError, "error"]);
                         },
                     });
+                }
+            }
+        },
+        examples: async (examples) => {
+            if (examples == null) {
+                return;
+            }
+            for (const [index, example] of examples.entries()) {
+                const nodePathForExample: NodePath = [...nodePathForEndpoint, { key: "examples", arrayIndex: index }];
+                await visitor.exampleHttpEndpointCall?.(
+                    {
+                        service,
+                        endpoint,
+                        example,
+                    },
+                    nodePathForExample
+                );
+                await visitor.exampleHeaders?.(
+                    {
+                        service,
+                        endpoint,
+                        examples: example.headers,
+                    },
+                    [...nodePathForExample, "headers"]
+                );
+                await visitor.examplePathParameters?.(
+                    {
+                        service,
+                        endpoint,
+                        examples: example["path-parameters"],
+                    },
+                    [...nodePathForExample, "path-parameters"]
+                );
+                await visitor.exampleQueryParameters?.(
+                    {
+                        service,
+                        endpoint,
+                        examples: example["query-parameters"],
+                    },
+                    [...nodePathForExample, "query-parameters"]
+                );
+                await visitor.exampleRequest?.(
+                    {
+                        service,
+                        endpoint,
+                        example: example.request,
+                    },
+                    [...nodePathForExample, "request"]
+                );
+                await visitor.exampleResponse?.(
+                    {
+                        service,
+                        endpoint,
+                        example: example.response,
+                    },
+                    [...nodePathForExample, "response"]
+                );
+
+                if (example.response != null) {
+                    const nodePathForResponse = [...nodePathForExample, "response"];
+                    if (example.response.error != null) {
+                        await visitor.errorReference?.(example.response.error, [...nodePathForResponse, "error"]);
+                    }
                 }
             }
         },

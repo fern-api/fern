@@ -3,8 +3,10 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
+import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
+import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
 import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
@@ -16,11 +18,13 @@ export function convertHttpService({
     serviceId,
     file,
     errorResolver,
+    typeResolver,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     file: FernFileContext;
     errorResolver: ErrorResolver;
+    typeResolver: TypeResolver;
 }): HttpService {
     return {
         ...convertDeclaration(serviceDefinition),
@@ -102,6 +106,19 @@ export function convertHttpService({
                 response: convertHttpResponse({ response: endpoint.response, file }),
                 errors: convertResponseErrors({ errors: endpoint.errors, file }),
                 errorsV2: convertResponseErrorsV2({ errors: endpoint.errors, file, errorResolver }),
+                examples:
+                    endpoint.examples != null
+                        ? endpoint.examples.map((example) =>
+                              convertExampleEndpointCall({
+                                  service: serviceDefinition,
+                                  endpoint,
+                                  example,
+                                  typeResolver,
+                                  errorResolver,
+                                  file,
+                              })
+                          )
+                        : [],
             })
         ),
     };
