@@ -18,6 +18,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { registerWorkspace } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
@@ -263,6 +264,53 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext,
                 generationLanguage: argv.language,
                 audiences: argv.audience,
+            });
+        }
+    );
+}
+
+function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        ["register"],
+        "Register all generators in the specified group",
+        (yargs) =>
+            yargs
+                .option("version", {
+                    type: "string",
+                    description: "The version for the registered api",
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("token", {
+                    string: true,
+                    description: "The token for the organization",
+                }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspaces(cliContext, {
+                commandLineWorkspace: argv.api,
+                defaultToAllWorkspaces: false,
+            });
+            const workspaces = project.workspaces;
+            if (workspaces === undefined || workspaces.length !== 1) {
+                cliContext.fail(`Failed to load ${argv.api}`);
+                return;
+            }
+            const workspace = workspaces[0];
+            if (workspace == null) {
+                cliContext.fail(`Failed to load ${argv.api}`);
+                return;
+            }
+            if (argv.token == null) {
+                cliContext.fail("Token must be specified");
+                return;
+            }
+            await registerWorkspace({
+                workspace,
+                cliContext,
+                token: argv.token,
+                version: argv.version,
             });
         }
     );

@@ -7881,6 +7881,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-migrations", "workspace:packages/cli/yaml/yaml-migrations"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.143"],\
             ["@fern-fern/ir-model", "npm:0.0.436"],\
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/is-ci", "npm:3.0.0"],\
@@ -8142,7 +8143,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.126"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.143"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -8469,7 +8470,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.126"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.143"],\
             ["@fern-fern/ir-model", "npm:0.0.436"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8745,12 +8746,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-sdk", [\
-        ["npm:0.0.126", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-sdk-npm-0.0.126-ca99c8c958-1212052582.zip/node_modules/@fern-fern/fiddle-sdk/",\
+        ["npm:0.0.143", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-sdk-npm-0.0.143-a63c310d2e-8d39b09e24.zip/node_modules/@fern-fern/fiddle-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.126"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.143"],\
+            ["@types/basic-auth", "npm:1.1.3"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
+            ["basic-auth", "npm:2.0.1"],\
+            ["buffer", "npm:6.0.3"],\
+            ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -10353,6 +10358,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/babel__traverse", "npm:7.17.1"],\
             ["@babel/types", "npm:7.18.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/basic-auth", [\
+        ["npm:1.1.3", {\
+          "packageLocation": "./.yarn/cache/@types-basic-auth-npm-1.1.3-f8d5471ba8-9fe87b9dab.zip/node_modules/@types/basic-auth/",\
+          "packageDependencies": [\
+            ["@types/basic-auth", "npm:1.1.3"],\
+            ["@types/node", "npm:18.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
