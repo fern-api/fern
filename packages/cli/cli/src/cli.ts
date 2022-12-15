@@ -198,16 +198,15 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["generate"],
+        ["generate [group]"],
         "Generate all generators in the specified group",
         (yargs) =>
             yargs
                 .positional("group", {
                     type: "string",
-                    demandOption: true,
                     description: "The group to generate",
                 })
-                .positional("version", {
+                .option("version", {
                     type: "string",
                     description: "The version for the generated packages",
                 })
@@ -300,7 +299,7 @@ function addUpgradeCommand({
 }) {
     cli.command(
         "upgrade",
-        `Upgrades versions in ${GENERATORS_CONFIGURATION_FILENAME} and ${PROJECT_CONFIG_FILENAME}`,
+        `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
         (yargs) =>
             yargs.option("rc", {
                 boolean: true,
