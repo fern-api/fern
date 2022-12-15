@@ -114,6 +114,7 @@ export function convertHttpService({
                                   endpoint,
                                   example,
                                   typeResolver,
+                                  errorResolver,
                                   file,
                               })
                           )

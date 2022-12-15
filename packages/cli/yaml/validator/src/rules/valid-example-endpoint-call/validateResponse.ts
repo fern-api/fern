@@ -62,13 +62,13 @@ export function validateResponse({
                 });
             }
 
-            if (errorDeclaration.type != null) {
+            if (errorDeclaration.declaration.type != null) {
                 violations.push(
                     ...validateTypeReferenceExample({
-                        rawTypeReference: errorDeclaration.type,
+                        rawTypeReference: errorDeclaration.declaration.type,
                         example: example.body,
                         typeResolver,
-                        file,
+                        file: errorDeclaration.file,
                         workspace,
                     })
                 );

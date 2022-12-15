@@ -8,6 +8,7 @@ import {
     ExampleResponse,
 } from "@fern-fern/ir-model/services/http";
 import { FernFileContext } from "../../FernFileContext";
+import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
 import {
@@ -20,12 +21,14 @@ export function convertExampleEndpointCall({
     endpoint,
     example,
     typeResolver,
+    errorResolver,
     file,
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     file: FernFileContext;
 }): ExampleEndpointCall {
     return {
@@ -56,7 +59,7 @@ export function convertExampleEndpointCall({
                   })
                 : [],
         request: convertExampleRequestBody({ endpoint, example, typeResolver, file }),
-        response: convertExampleResponse({ endpoint, example, typeResolver, file }),
+        response: convertExampleResponse({ endpoint, example, typeResolver, errorResolver, file }),
     };
 }
 
@@ -255,25 +258,37 @@ function convertExampleResponse({
     endpoint,
     example,
     typeResolver,
+    errorResolver,
     file,
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     typeResolver: TypeResolver;
+    errorResolver: ErrorResolver;
     file: FernFileContext;
 }): ExampleResponse {
-    const exampleBody = convertExampleResponseBody({ endpoint, example, typeResolver, file });
     if (example.response?.error != null) {
+        const errorDeclaration = errorResolver.getDeclarationOrThrow(example.response.error, file);
         return ExampleResponse.error({
             error: parseTypeName({
                 typeName: example.response.error,
                 file,
             }),
-            body: exampleBody,
+            body:
+                errorDeclaration.declaration.type != null
+                    ? convertTypeReferenceExample({
+                          example: example.response.body,
+                          rawTypeBeingExemplified: errorDeclaration.declaration.type,
+                          typeResolver,
+                          file: errorDeclaration.file,
+                      })
+                    : undefined,
         });
     }
 
-    return ExampleResponse.ok({ body: exampleBody });
+    return ExampleResponse.ok({
+        body: convertExampleResponseBody({ endpoint, example, typeResolver, file }),
+    });
 }
 
 function convertExampleResponseBody({

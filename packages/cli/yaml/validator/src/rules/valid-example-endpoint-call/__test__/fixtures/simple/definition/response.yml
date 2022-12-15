@@ -1,3 +1,5 @@
+imports:
+  errors: errors.yml
 services:
   http:
     MyService:
@@ -8,7 +10,7 @@ services:
           path: /
           method: GET
           errors:
-            - ErrorWithStringBody
+            - errors.ErrorWithStringBody
             - ErrorWithNoBody
           response: boolean
           examples:
@@ -18,12 +20,12 @@ services:
             - response:
                 body: true
             - response:
-                error: ErrorWithStringBody
+                error: errors.ErrorWithStringBody
             - response:
-                error: ErrorWithStringBody
+                error: errors.ErrorWithStringBody
                 body: true
             - response:
-                error: ErrorWithStringBody
+                error: errors.ErrorWithStringBody
                 body: hello
             - response:
                 error: ErrorWithNoBody
@@ -41,6 +43,11 @@ services:
           examples:
             - response:
                 body: hello
+
+types:
+  ObjectWithFoo:
+    properties:
+      foo: string
 
 errors:
   ErrorWithStringBody:

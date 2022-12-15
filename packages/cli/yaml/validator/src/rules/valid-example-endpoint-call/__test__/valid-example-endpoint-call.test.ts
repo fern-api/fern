@@ -325,7 +325,8 @@ describe("valid-example-endpoint-call", () => {
                 severity: "error",
             },
             {
-                message: 'Example is missing required property "foo". <Inlined Request> -> (extends) WithFoo -> foo',
+                message:
+                    'Example is missing required property "foo". <Inlined Request> -> (extends) ObjectWithFoo -> foo',
                 nodePath: [
                     "services",
                     "http",
