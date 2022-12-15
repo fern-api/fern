@@ -47,7 +47,7 @@ export function validateObjectExample({
         (property) => property.isOptional != null && !property.isOptional
     );
     for (const requiredProperty of requiredProperties) {
-        if (!(requiredProperty.wireKey in example)) {
+        if (example[requiredProperty.wireKey] == null) {
             let message = `Example is missing required property "${requiredProperty.wireKey}"`;
             if (requiredProperty.path.length > 0) {
                 message +=
