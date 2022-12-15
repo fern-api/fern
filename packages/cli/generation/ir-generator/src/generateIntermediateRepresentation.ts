@@ -130,6 +130,7 @@ export async function generateIntermediateRepresentation({
                             serviceId,
                             file,
                             errorResolver,
+                            typeResolver,
                         });
                         intermediateRepresentation.services.http.push(convertedHttpService);
 

@@ -4,6 +4,7 @@ imports:
   serviceCommons: ./commons.yml
   commons: ../commons.yml
   types: ../types.yml
+  errors: ../errors.yml
   declaration: ../declaration.yml
 types:
   HttpService:
@@ -126,25 +127,53 @@ types:
       path-parameters: list<ExamplePathParameter>
       query-parameters: list<ExampleQueryParameter>
       headers: list<ExampleHeader>
-      request: optional<types.ExampleType>
-      response: optional<ExampleResponse>
+      request: optional<ExampleRequestBody>
+      response: ExampleResponse
 
   ExamplePathParameter:
     properties:
       key: string
-      value: types.ExampleType
+      value: types.ExampleTypeReference
 
   ExampleQueryParameter:
     properties:
       key: string
-      value: types.ExampleType
+      value: types.ExampleTypeReference
 
   ExampleHeader:
     properties:
       key: string
-      value: types.ExampleType
+      value: types.ExampleTypeReference
+
+  ExampleRequestBody:
+    union:
+      inlinedRequestBody: ExampleInlinedRequestBody
+      reference: types.ExampleTypeReference
+
+  ExampleInlinedRequestBody:
+    properties:
+      properties: list<ExampleInlinedRequestBodyProperty>
+
+  ExampleInlinedRequestBodyProperty:
+    properties:
+      wireKey: string
+      value: types.ExampleTypeReference
+      originalTypeDeclaration:
+        docs: |
+          this property may have been brought in via extension. originalTypeDeclaration
+          is the name of the type that contains this property
+        type: optional<types.DeclaredTypeName>
 
   ExampleResponse:
     union:
-      ok: types.ExampleType
-      # TODO example errors
+      ok: ExampleEndpointSuccessResponse
+      error: ExampleEndpointErrorResponse
+
+  ExampleEndpointSuccessResponse:
+    properties:
+      body: optional<types.ExampleTypeReference>
+
+  ExampleEndpointErrorResponse:
+    properties:
+      error: errors.DeclaredErrorName
+      body: optional<types.ExampleTypeReference>

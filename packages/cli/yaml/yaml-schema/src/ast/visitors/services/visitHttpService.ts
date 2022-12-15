@@ -177,6 +177,20 @@ async function visitEndpoint({
                 }
             }
         },
+        examples: async (examples) => {
+            if (examples == null) {
+                return;
+            }
+            for (const [index, example] of examples.entries()) {
+                const nodePathForExample: NodePath = [...nodePathForEndpoint, { key: "examples", arrayIndex: index }];
+                if (example.response != null) {
+                    const nodePathForResponse = [...nodePathForExample, "response"];
+                    if (example.response.error != null) {
+                        await visitor.errorReference?.(example.response.error, [...nodePathForResponse, "error"]);
+                    }
+                }
+            }
+        },
     });
 }
 

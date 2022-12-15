@@ -15,7 +15,7 @@ export function validateUnionExample({
 }: {
     typeName: string;
     rawUnion: RawSchemas.UnionSchema;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: Workspace;

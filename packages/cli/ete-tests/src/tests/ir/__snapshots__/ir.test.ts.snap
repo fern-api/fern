@@ -619,7 +619,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -4741,7 +4742,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -5211,7 +5213,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                     }
                                 }
                             ]
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -5354,7 +5357,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -6136,7 +6140,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -10258,7 +10263,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -10728,7 +10734,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                     }
                                 }
                             ]
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -10871,7 +10878,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -11653,7 +11661,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -15775,7 +15784,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -16245,7 +16255,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                     }
                                 }
                             ]
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -16388,7 +16399,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -20511,7 +20523,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -20981,7 +20994,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                     }
                                 }
                             ]
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -21124,7 +21138,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }
@@ -25247,7 +25262,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -25717,7 +25733,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                     }
                                 }
                             ]
-                        }
+                        },
+                        "examples": []
                     },
                     {
                         "availability": {
@@ -25860,7 +25877,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                 "wireValue": "errorName"
                             },
                             "types": []
-                        }
+                        },
+                        "examples": []
                     }
                 ]
             }

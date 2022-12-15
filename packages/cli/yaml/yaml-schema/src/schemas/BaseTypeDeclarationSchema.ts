@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { DeclarationSchema } from "./DeclarationSchema";
-import { TypeExampleSchema } from "./TypeExampleSchema";
+import { ExampleTypeSchema } from "./ExampleTypeSchema";
 
 export const BaseTypeDeclarationSchema = DeclarationSchema.extend({
-    examples: z.optional(z.array(TypeExampleSchema)),
+    examples: z.optional(z.array(ExampleTypeSchema)),
 });
 
 export type BaseTypeDeclarationSchema = z.infer<typeof BaseTypeDeclarationSchema>;

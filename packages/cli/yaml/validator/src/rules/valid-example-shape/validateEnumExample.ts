@@ -6,7 +6,7 @@ export function validateEnumExample({
     example,
 }: {
     rawEnum: RawSchemas.EnumSchema;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
 }): RuleViolation[] {
     const wireValues = rawEnum.enum.map((enumValue) => (typeof enumValue === "string" ? enumValue : enumValue.value));
     if (wireValues.includes(example)) {

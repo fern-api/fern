@@ -21,7 +21,7 @@ export function validateObjectExample({
     typeName: string;
     rawObject: RawSchemas.ObjectSchema;
     file: FernFileContext;
-    example: RawSchemas.TypeExampleSchema;
+    example: RawSchemas.ExampleTypeSchema;
     typeResolver: TypeResolver;
     workspace: Workspace;
 }): RuleViolation[] {
