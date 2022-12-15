@@ -35,23 +35,27 @@ export function getAllPropertiesForObject({
     path = [],
     seen = {},
 }: {
-    typeName: TypeName;
+    // this can be undefined for inline requests
+    typeName: TypeName | undefined;
     objectDeclaration: RawSchemas.ObjectSchema;
     filepathOfDeclaration: RelativeFilePath;
     serviceFile: RawSchemas.ServiceFileSchema;
     workspace: Workspace;
     typeResolver: TypeResolver;
+    // these are for recursive calls only
     path?: ObjectPropertyPath;
     seen?: Record<RelativeFilePath, Set<TypeName>>;
 }): ObjectPropertyWithPath[] {
     const properties: ObjectPropertyWithPath[] = [];
 
     // prevent infinite looping
-    const seenAtFilepath = (seen[filepathOfDeclaration] ??= new Set());
-    if (seenAtFilepath.has(typeName)) {
-        return properties;
+    if (typeName != null) {
+        const seenAtFilepath = (seen[filepathOfDeclaration] ??= new Set());
+        if (seenAtFilepath.has(typeName)) {
+            return properties;
+        }
+        seenAtFilepath.add(typeName);
     }
-    seenAtFilepath.add(typeName);
 
     const file = constructFernFileContext({
         relativeFilepath: filepathOfDeclaration,

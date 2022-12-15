@@ -12,13 +12,16 @@ import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
 export function validateObjectExample({
     typeName,
+    typeNameForBreadcrumb,
     rawObject,
     file,
     typeResolver,
     workspace,
     example,
 }: {
-    typeName: string;
+    // undefined for inline requests
+    typeName: string | undefined;
+    typeNameForBreadcrumb: string;
     rawObject: RawSchemas.ObjectSchema;
     file: FernFileContext;
     example: RawSchemas.ExampleTypeSchema;
@@ -54,7 +57,7 @@ export function validateObjectExample({
                     ". " +
                     convertObjectPropertyWithPathToString({
                         property: requiredProperty,
-                        prefixBreadcrumbs: [typeName],
+                        prefixBreadcrumbs: [typeNameForBreadcrumb],
                     });
             }
             violations.push({

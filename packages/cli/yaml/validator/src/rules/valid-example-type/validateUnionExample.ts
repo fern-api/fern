@@ -66,6 +66,7 @@ export function validateUnionExample({
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return validateObjectExample({
             typeName,
+            typeNameForBreadcrumb: typeName,
             rawObject: resolvedType.declaration,
             file: resolvedType.file,
             example: nonDiscriminantPropertyExamples,

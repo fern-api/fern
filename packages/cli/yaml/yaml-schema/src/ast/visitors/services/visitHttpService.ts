@@ -191,11 +191,51 @@ async function visitEndpoint({
                     {
                         service,
                         endpoint,
-                        endpointId,
                         example,
                     },
                     nodePathForExample
                 );
+                await visitor.exampleHeaders?.(
+                    {
+                        service,
+                        endpoint,
+                        examples: example.headers,
+                    },
+                    [...nodePathForExample, "headers"]
+                );
+                await visitor.examplePathParameters?.(
+                    {
+                        service,
+                        endpoint,
+                        examples: example["path-parameters"],
+                    },
+                    [...nodePathForExample, "path-parameters"]
+                );
+                await visitor.exampleQueryParameters?.(
+                    {
+                        service,
+                        endpoint,
+                        examples: example["query-parameters"],
+                    },
+                    [...nodePathForExample, "query-parameters"]
+                );
+                await visitor.exampleRequest?.(
+                    {
+                        service,
+                        endpoint,
+                        example: example.request,
+                    },
+                    [...nodePathForExample, "request"]
+                );
+                await visitor.exampleResponse?.(
+                    {
+                        service,
+                        endpoint,
+                        example: example.response,
+                    },
+                    [...nodePathForExample, "response"]
+                );
+
                 if (example.response != null) {
                     const nodePathForResponse = [...nodePathForExample, "response"];
                     if (example.response.error != null) {

@@ -146,7 +146,7 @@ function getRequestWrapperPropertiesByName({
 
         if (endpoint.request.body != null && isInlineRequestBody(endpoint.request.body)) {
             const allProperties = getAllPropertiesForObject({
-                typeName: "<Inlined Request>",
+                typeName: undefined,
                 objectDeclaration: {
                     extends: endpoint.request.body.extends,
                     properties: endpoint.request.body.properties ?? {},

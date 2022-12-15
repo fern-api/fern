@@ -41,6 +41,7 @@ export function validateTypeExample({
         object: (rawObject) => {
             return validateObjectExample({
                 typeName,
+                typeNameForBreadcrumb: typeName,
                 rawObject,
                 example,
                 file,

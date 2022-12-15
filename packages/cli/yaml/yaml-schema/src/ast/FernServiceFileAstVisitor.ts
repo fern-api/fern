@@ -1,6 +1,8 @@
 import {
     ErrorDeclarationSchema,
     ExampleEndpointCallSchema,
+    ExampleResponseSchema,
+    ExampleTypeReferenceSchema,
     ExampleTypeSchema,
     HttpEndpointSchema,
     HttpHeaderSchema,
@@ -25,10 +27,34 @@ export interface FernServiceFileAstNodeTypes {
     httpService: { serviceName: string; service: HttpServiceSchema };
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
     exampleHttpEndpointCall: {
-        endpointId: string;
+        example: ExampleEndpointCallSchema;
         endpoint: HttpEndpointSchema;
         service: HttpServiceSchema;
-        example: ExampleEndpointCallSchema;
+    };
+    exampleHeaders: {
+        examples: Record<string, ExampleTypeReferenceSchema> | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    examplePathParameters: {
+        examples: Record<string, ExampleTypeReferenceSchema> | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleQueryParameters: {
+        examples: Record<string, ExampleTypeReferenceSchema> | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleRequest: {
+        example: ExampleTypeReferenceSchema | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
+    };
+    exampleResponse: {
+        example: ExampleResponseSchema | undefined;
+        endpoint: HttpEndpointSchema;
+        service: HttpServiceSchema;
     };
     pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
     queryParameter: { queryParameterKey: string; queryParameter: HttpQueryParameterSchema };

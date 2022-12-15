@@ -1,0 +1,52 @@
+services:
+  http:
+    MyService:
+      base-path: /
+      auth: true
+      endpoints:
+        a:
+          path: /
+          method: GET
+          errors:
+            - ErrorWithStringBody
+            - ErrorWithNoBody
+          response: boolean
+          examples:
+            - {}
+            - response:
+                body: hello
+            - response:
+                body: true
+            - response:
+                error: ErrorWithStringBody
+            - response:
+                error: ErrorWithStringBody
+                body: true
+            - response:
+                error: ErrorWithStringBody
+                body: hello
+            - response:
+                error: ErrorWithNoBody
+            - response:
+                error: ErrorWithNoBody
+                body: hello
+            - response:
+                error: NotFoundError
+            - response:
+                error: NotFoundError
+                body: hello
+        b:
+          path: /
+          method: GET
+          examples:
+            - response:
+                body: hello
+
+errors:
+  ErrorWithStringBody:
+    status-code: 500
+    type: string
+  ErrorWithNoBody:
+    status-code: 500
+  NotFoundError:
+    status-code: 404
