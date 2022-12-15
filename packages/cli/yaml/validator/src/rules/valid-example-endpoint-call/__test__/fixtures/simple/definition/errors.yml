@@ -1,0 +1,7 @@
+imports:
+  commons: commons.yml
+
+errors:
+  ErrorWithStringBody:
+    status-code: 500
+    type: commons.StringAlias

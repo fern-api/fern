@@ -1,12 +1,12 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidationViolation } from "../../../ValidationViolation";
-import { ValidExampleShapeRule } from "../valid-example-shape";
+import { ValidExampleTypeRule } from "../valid-example-type";
 
-describe("valid-example-shape", () => {
+describe("valid-example-type", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
-            rule: ValidExampleShapeRule,
+            rule: ValidExampleTypeRule,
             absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
         });
 

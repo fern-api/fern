@@ -59,6 +59,12 @@ export function createServiceFileAstVisitorForRules({
         ...createAstNodeVisitor("header"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
-        ...createAstNodeVisitor("typeExample"),
+        ...createAstNodeVisitor("exampleType"),
+        ...createAstNodeVisitor("exampleHttpEndpointCall"),
+        ...createAstNodeVisitor("exampleHeaders"),
+        ...createAstNodeVisitor("examplePathParameters"),
+        ...createAstNodeVisitor("exampleQueryParameters"),
+        ...createAstNodeVisitor("exampleRequest"),
+        ...createAstNodeVisitor("exampleResponse"),
     };
 }

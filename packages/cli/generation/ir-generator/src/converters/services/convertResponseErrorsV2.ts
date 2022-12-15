@@ -33,11 +33,7 @@ export function convertResponseErrorsV2({
         types: Object.values(errors).map((errorReference): ResponseErrorV2 => {
             const referenceToError = typeof errorReference === "string" ? errorReference : errorReference.error;
 
-            const declaration = errorResolver.getDeclaration(referenceToError, file);
-            if (declaration == null) {
-                throw new Error("Cannot locate declaration for error: " + referenceToError);
-            }
-            const rawErrorType = typeof declaration === "string" ? declaration : declaration.type;
+            const declaration = errorResolver.getDeclarationOrThrow(referenceToError, file);
 
             const parsedErrorName = parseTypeName({ typeName: referenceToError, file });
             const discriminantValue = parsedErrorName.name;
@@ -49,7 +45,7 @@ export function convertResponseErrorsV2({
                     name: discriminantValue,
                 }),
                 shape:
-                    rawErrorType != null && rawErrorType !== RawPrimitiveType.void
+                    declaration.declaration.type != null && declaration.declaration.type !== RawPrimitiveType.void
                         ? ResponseErrorShape.singleProperty({
                               name: file.casingsGenerator.generateWireCasingsV1({
                                   wireValue: ERROR_CONTENT_PROPERTY_NAME,

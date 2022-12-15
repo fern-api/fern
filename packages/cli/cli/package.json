@@ -52,7 +52,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.143",
-    "@fern-fern/ir-model": "0.0.436",
+    "@fern-fern/ir-model": "0.0.463",
     "ansi-escapes": "^5.0.0",
     "boxen": "^7.0.0",
     "chalk": "^5.0.1",
