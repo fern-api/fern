@@ -17,7 +17,7 @@ import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference"
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
 import ValidDefaultEnvironmentRule from "./rules/valid-default-environment";
-import ValidExampleShapeRule from "./rules/valid-example-shape";
+import ValidExampleTypeRule from "./rules/valid-example-type";
 import ValidFieldNamesRule from "./rules/valid-field-names";
 
 export function getAllRules(): Rule[] {
@@ -36,7 +36,7 @@ export function getAllRules(): Rule[] {
         NoComplexQueryParamsRule,
         ValidDefaultEnvironmentRule,
         NoMissingErrorDiscriminant,
-        ValidExampleShapeRule,
+        ValidExampleTypeRule,
         NoErrorStatusCodeConflict,
         NoMissingAuthRule,
         NoMissingRequestNameRule,

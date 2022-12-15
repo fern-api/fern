@@ -3,8 +3,8 @@ import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateTypeExample } from "./validateTypeExample";
 
-export const ValidExampleShapeRule: Rule = {
-    name: "valid-example",
+export const ValidExampleTypeRule: Rule = {
+    name: "valid-example-type",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
 
