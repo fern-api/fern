@@ -173,6 +173,7 @@ async function validateDependencyAndGetServiceFiles({
     await visitObject(rootApiFile, {
         name: noop,
         imports: noop,
+        "display-name": noop,
         auth: (auth) => {
             areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.workspace.rootApiFile.auth);
         },
