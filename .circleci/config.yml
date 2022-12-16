@@ -97,10 +97,9 @@ jobs:
       - run:
           name: Live Test (dev)
           command: |
-            FERN_TOKEN=$FERN_ORG_TOKEN_DEV
             yarn workspace @fern-api/cli dist:cli:dev
             cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
-            ./scripts/live-test.sh "$cli_path"
+            ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
   live-test:
     docker:
