@@ -150,6 +150,7 @@ async function validateDependencyAndGetServiceFiles({
     // download API
     context.logger.info("Downloading...");
     const pathToDependency = AbsoluteFilePath.of((await tmp.dir()).path);
+    context.logger.debug("Remote URL: " + response.body.definitionS3DownloadUrl);
     await downloadDependency({
         s3PreSignedReadUrl: response.body.definitionS3DownloadUrl,
         absolutePathToLocalOutput: pathToDependency,

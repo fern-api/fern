@@ -52,17 +52,7 @@ export async function registerApiDefinitions({
                 await tar.create({ file: tarPath, cwd: workspace.absolutePathToWorkspace }, ["."]);
 
                 context.logger.info("Uploading definition...");
-                await axios.put(
-                    registerApiResponse.body.definitionS3UploadUrl,
-                    {
-                        data: await readFile(tarPath),
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/octet-stream",
-                        },
-                    }
-                );
+                await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));
 
                 context.logger.info(`Registered ${registerApiResponse.body.version}`);
             });

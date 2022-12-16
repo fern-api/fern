@@ -104,21 +104,19 @@ async function startJob({
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<void> {
-    const formData = new FormData();
-
     const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
         intermediateRepresentation,
     });
+
+    const formData = new FormData();
     formData.append("file", JSON.stringify(migratedIntermediateRepresentation));
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
         await axios.post(url, formData, {
-            headers: {
-                "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
-            },
+            headers: formData.getHeaders(),
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
