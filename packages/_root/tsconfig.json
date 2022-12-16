@@ -5,6 +5,7 @@
   "references": [
     { "path": "../cli/cli" },
     { "path": "../cli/config-management/commons" },
+    { "path": "../cli/config-management/dependencies-configuration" },
     { "path": "../cli/config-management/generators-configuration" },
     { "path": "../cli/config-management/manage-generator" },
     { "path": "../cli/config-management/project-configuration" },
@@ -19,6 +20,7 @@
     { "path": "../cli/login" },
     { "path": "../cli/project-loader" },
     { "path": "../cli/semver-utils" },
+    { "path": "../cli/services" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../cli/yaml/json-schema" },

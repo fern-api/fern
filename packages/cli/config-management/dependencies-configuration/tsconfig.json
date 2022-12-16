@@ -3,7 +3,6 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/fs-utils" },
     { "path": "../../task-context" },
     { "path": "../commons" },
