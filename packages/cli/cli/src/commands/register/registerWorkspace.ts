@@ -1,6 +1,11 @@
 import { LogLevel } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { FernFiddle, FernFiddleClient } from "@fern-fern/fiddle-sdk";
+import axios from "axios";
+import { readFile } from "fs/promises";
+import path from "path";
+import tar from "tar";
+import tmp from "tmp-promise";
 import { CliContext } from "../../cli-context/CliContext";
 
 export const FIDDLE_ORIGIN =
@@ -46,6 +51,26 @@ export async function registerApiDefinitions({
                     });
                     return;
                 }
+
+                const tmpDir = await tmp.dir();
+                const tarPath = path.join(tmpDir.path, "definition.tgz");
+
+                context.logger.debug(`Compressing definition at ${tmpDir.path}`);
+                await tar.c({ file: tarPath, cwd: workspace.absolutePathToWorkspace }, ["."]);
+
+                context.logger.info("Uploading definition...");
+                await axios.put(
+                    registerApiResponse.body.definitionS3UploadUrl,
+                    {
+                        data: await readFile(tarPath),
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/octet-stream",
+                        },
+                    }
+                );
+
                 context.logger.info(`Registered ${registerApiResponse.body.version}`);
             });
         })
