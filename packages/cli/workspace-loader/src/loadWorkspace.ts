@@ -1,13 +1,18 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { DEFINITION_DIRECTORY, DEPENDENCIES_FILENAME, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { RootApiFileSchema } from "@fern-api/yaml-schema";
+import { DependenciesFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { listServiceFilesForWorkspace } from "./listServiceFilesForWorkspace";
+import {
+    DependenciesConfiguration,
+    EMPTY_DEPENDENCIES_CONFIGURATION,
+    loadDependenciesConfiguration,
+} from "./loadDependencies";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
@@ -43,6 +48,24 @@ export async function loadWorkspace({
         filepathBeingParsed: rootApiFilepath,
     });
 
+    const dependenciesApiFilepath = path.join(absolutePathToWorkspace, DEPENDENCIES_FILENAME);
+    const dependenciesExist = await doesPathExist(AbsoluteFilePath.of(dependenciesApiFilepath));
+
+    let dependenciesConfiguration: DependenciesConfiguration = EMPTY_DEPENDENCIES_CONFIGURATION;
+    if (dependenciesExist) {
+        const dependenciesApiFile = yaml.load(dependenciesApiFilepath.toString());
+        const validatedDependenciesFile = await validateSchema({
+            schema: DependenciesFileSchema,
+            value: dependenciesApiFile,
+            context,
+            filepathBeingParsed: dependenciesApiFilepath,
+        });
+        dependenciesConfiguration = loadDependenciesConfiguration({
+            context,
+            dependenciesFile: validatedDependenciesFile,
+        });
+    }
+
     return {
         didSucceed: true,
         workspace: {
@@ -52,6 +75,7 @@ export async function loadWorkspace({
             generatorsConfiguration,
             rootApiFile: validatedRootApiFile,
             serviceFiles: structuralValidationResult.validatedFiles,
+            dependencies: dependenciesConfiguration,
         },
     };
 }
