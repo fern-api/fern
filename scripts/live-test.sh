@@ -15,6 +15,7 @@ node "$cli_path" add typescript
 node "$cli_path" add postman
 node "$cli_path" add openapi
 node "$cli_path" generate --group external --log-level debug
+node "$cli_path" register --log-level debug --token ${FERN_TOKEN}
 set +x
 
 rm -rf "$test_dir"
