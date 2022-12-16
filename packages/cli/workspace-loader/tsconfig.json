@@ -5,9 +5,10 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
-    { "path": "../config-management/commons" },
+    { "path": "../config-management/dependencies-configuration" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
+    { "path": "../services" },
     { "path": "../task-context" },
     { "path": "../yaml/yaml-schema" }
   ]

@@ -10,6 +10,7 @@ import { Project } from "./Project";
 export declare namespace loadProject {
     export interface Args {
         cliName: string;
+        cliVersion: string;
         commandLineWorkspace: string | undefined;
         /**
          * if false and commandLineWorkspace it not defined,
@@ -22,6 +23,7 @@ export declare namespace loadProject {
 
 export async function loadProject({
     cliName,
+    cliVersion,
     commandLineWorkspace,
     defaultToAllWorkspaces,
     context,
@@ -63,6 +65,7 @@ export async function loadProject({
         workspaceDirectoryNames:
             commandLineWorkspace != null ? [commandLineWorkspace] : [...allWorkspaceDirectoryNames],
         context,
+        cliVersion,
     });
 
     return {
@@ -75,10 +78,12 @@ async function loadWorkspaces({
     fernDirectory,
     workspaceDirectoryNames,
     context,
+    cliVersion,
 }: {
     fernDirectory: AbsoluteFilePath;
     workspaceDirectoryNames: string[];
     context: TaskContext;
+    cliVersion: string;
 }): Promise<Workspace[]> {
     const allWorkspaces: Workspace[] = [];
 
@@ -87,6 +92,7 @@ async function loadWorkspaces({
             const workspace = await loadWorkspace({
                 absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                 context,
+                cliVersion,
             });
             if (workspace.didSucceed) {
                 allWorkspaces.push(workspace.workspace);

@@ -66,6 +66,7 @@ export async function upgrade({
             commandLineWorkspace: undefined,
             defaultToAllWorkspaces: true,
             cliName: cliContext.environment.cliName,
+            cliVersion: cliContext.environment.packageVersion,
             context: contextForLoadingProject,
         });
         contextForLoadingProject.finish();

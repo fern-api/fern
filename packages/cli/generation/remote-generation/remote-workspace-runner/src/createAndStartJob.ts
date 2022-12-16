@@ -1,5 +1,6 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
+import { getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -7,7 +8,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
-import { FIDDLE_ORIGIN, REMOTE_GENERATION_SERVICE } from "./service";
+import { REMOTE_GENERATION_SERVICE } from "./service";
 import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function createAndStartJob({
@@ -103,21 +104,19 @@ async function startJob({
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<void> {
-    const formData = new FormData();
-
     const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
         intermediateRepresentation,
     });
+
+    const formData = new FormData();
     formData.append("file", JSON.stringify(migratedIntermediateRepresentation));
 
-    const url = urlJoin(FIDDLE_ORIGIN, `/api/remote-gen/jobs/${job.jobId}/start`);
+    const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
         await axios.post(url, formData, {
-            headers: {
-                "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
-            },
+            headers: formData.getHeaders(),
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;

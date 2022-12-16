@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`help no arguments 1`] = `
-"fern
+"fern-dev
 
 Commands:
-  fern init              Initialize a Fern API
-  fern add <generator>   Add a code generator to generators.yml
-  fern generate [group]  Generate all generators in the specified group
-  fern check             Validates your Fern Definition
-  fern upgrade           Upgrades version in fern.config.json. Also upgrades gen
-                         erators in generators.yml to their minimum-compatible v
-                         ersions.
+  fern-dev init              Initialize a Fern API
+  fern-dev add <generator>   Add a code generator to generators.yml
+  fern-dev generate [group]  Generate all generators in the specified group
+  fern-dev check             Validates your Fern Definition
+  fern-dev upgrade           Upgrades version in fern.config.json. Also upgrades
+                              generators in generators.yml to their minimum-comp
+                             atible versions.
 
 Options:
       --help       Show help                                           [boolean]

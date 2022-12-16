@@ -15,6 +15,7 @@
     { "path": "../logger" },
     { "path": "../project-loader" },
     { "path": "../semver-utils" },
+    { "path": "../services" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
     { "path": "../yaml/validator" },

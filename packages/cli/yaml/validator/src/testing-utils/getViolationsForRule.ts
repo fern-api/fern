@@ -24,6 +24,7 @@ export async function getViolationsForRule({
     const parseResult = await loadWorkspace({
         absolutePathToWorkspace,
         context: createMockTaskContext(),
+        cliVersion: "0.0.0",
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));

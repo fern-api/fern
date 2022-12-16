@@ -1,5 +1,4 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { ZodError } from "zod";
 import { Workspace } from "./Workspace";
 
@@ -16,9 +15,14 @@ export declare namespace WorkspaceLoader {
         failures: Record<RelativeFilePath, Failure>;
     }
 
-    export type Failure = FileReadFilure | FileParseFailure | StructureValidationFailure;
+    export type Failure =
+        | FileReadFailure
+        | FileParseFailure
+        | MissingFileFailure
+        | StructureValidationFailure
+        | DependencyFailure;
 
-    export interface FileReadFilure {
+    export interface FileReadFailure {
         type: WorkspaceLoaderFailureType.FILE_READ;
         error: unknown;
     }
@@ -28,14 +32,25 @@ export declare namespace WorkspaceLoader {
         error: unknown;
     }
 
+    export interface MissingFileFailure {
+        type: WorkspaceLoaderFailureType.FILE_MISSING;
+    }
+
     export interface StructureValidationFailure {
         type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION;
-        error: ZodError<ServiceFileSchema>;
+        error: ZodError;
+    }
+
+    export interface DependencyFailure {
+        type: WorkspaceLoaderFailureType.DEPENDENCY;
+        cause: "dependencyNotListed" | "failedToLoadDependency";
     }
 }
 
 export enum WorkspaceLoaderFailureType {
     FILE_READ = "FILE_READ",
     FILE_PARSE = "FILE_PARSE",
+    FILE_MISSING = "FILE_MISSING",
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
+    DEPENDENCY = "DEPENDENCY",
 }
