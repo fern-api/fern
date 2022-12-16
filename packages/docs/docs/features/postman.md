@@ -14,7 +14,7 @@ Step 2: Get your workspace ID. To view the workspace ID, select the information 
 
 ![Copy your workspace ID.](../../static/img/workspace_id.png)
 
-Step 3: Generate a Postman API key [here](https://go.postman.co/settings/me/api-keys). Save this as an enviroment variable, such as {POSTMAN_API_KEY}.
+Step 3: Generate a Postman API key [here](https://go.postman.co/settings/me/api-keys). Save this as an environment variable, such as {POSTMAN_API_KEY}.
 
 Step 4: Add the
 
