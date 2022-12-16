@@ -50,6 +50,9 @@ function handleWorkspaceParserFailureForFile({
                 }
             }
             break;
+        case WorkspaceLoaderFailureType.DEPENDENCY:
+            logger.error("Failed to load dependencies.");
+            break;
         default:
             assertNever(failure);
     }

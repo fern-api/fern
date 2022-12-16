@@ -6,7 +6,11 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 
 export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Promise<IntermediateRepresentation> {
     const context = createMockTaskContext();
-    const workspace = await loadWorkspace({ absolutePathToWorkspace, context });
+    const workspace = await loadWorkspace({
+        absolutePathToWorkspace,
+        context,
+        cliVersion: "0.0.0",
+    });
     if (!workspace.didSucceed) {
         return context.failAndThrow("Failed to load workspace", workspace.failures);
     }

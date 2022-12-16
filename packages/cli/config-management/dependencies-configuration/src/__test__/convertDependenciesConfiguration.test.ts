@@ -1,29 +1,30 @@
 import { createMockTaskContext } from "@fern-api/task-context";
-import { DependenciesFileSchema } from "@fern-api/yaml-schema";
-import { DependenciesConfiguration, loadDependenciesConfiguration } from "../loadDependencies";
+import { convertDependenciesConfiguration } from "../convertDependenciesConfiguration";
+import { DependenciesConfiguration } from "../DependenciesConfiguration";
+import { DependenciesConfigurationSchema } from "../schemas/DependenciesConfigurationSchema";
 
-describe("parseDependenciesYaml", () => {
+describe("convertDependenciesConfiguration", () => {
     it("basic", async () => {
-        const dependenciesFile: DependenciesFileSchema = {
+        const rawDependenciesConfiguration: DependenciesConfigurationSchema = {
             dependencies: {
                 "@fern/ir-types": "0.0.1",
                 "@fern/fiddle": "0.2.0",
             },
         };
-        const dependenciesConfiguration = loadDependenciesConfiguration({
-            dependenciesFile,
+        const dependenciesConfiguration = convertDependenciesConfiguration({
+            rawDependenciesConfiguration,
             context: createMockTaskContext(),
         });
         const expectedDependenciesConfiguration: DependenciesConfiguration = {
             dependencies: {
                 "@fern/ir-types": {
                     apiName: "ir-types",
-                    org: "fern",
+                    organization: "fern",
                     version: "0.0.1",
                 },
                 "@fern/fiddle": {
                     apiName: "fiddle",
-                    org: "fern",
+                    organization: "fern",
                     version: "0.2.0",
                 },
             },

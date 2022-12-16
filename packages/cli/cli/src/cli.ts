@@ -187,7 +187,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await addGeneratorToWorkspaces(
-                await loadProjectAndRegisterWorkspaces(cliContext, {
+                await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
@@ -218,7 +218,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
         async (argv) => {
             await generateWorkspaces({
-                project: await loadProjectAndRegisterWorkspaces(cliContext, {
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
@@ -256,7 +256,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
-                project: await loadProjectAndRegisterWorkspaces(cliContext, {
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
@@ -293,7 +293,7 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 return;
             }
             await registerApiDefinitions({
-                project: await loadProjectAndRegisterWorkspaces(cliContext, {
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
@@ -316,7 +316,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }),
         async (argv) => {
             await validateWorkspaces({
-                project: await loadProjectAndRegisterWorkspaces(cliContext, {
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: true,
                 }),
@@ -354,14 +354,15 @@ function addUpgradeCommand({
     );
 }
 
-async function loadProjectAndRegisterWorkspaces(
+async function loadProjectAndRegisterWorkspacesWithContext(
     cliContext: CliContext,
-    args: Omit<loadProject.Args, "context" | "cliName">
+    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">
 ): Promise<Project> {
     const context = cliContext.addTask().start();
     const project = await loadProject({
         ...args,
         cliName: cliContext.environment.cliName,
+        cliVersion: cliContext.environment.packageVersion,
         context,
     });
     context.finish();

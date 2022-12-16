@@ -4,7 +4,7 @@ import { readFile } from "fs/promises";
 import glob from "glob-promise";
 import { FernFile } from "./types/FernFile";
 
-export async function listServiceFilesForWorkspace(absolutePathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
+export async function listYamlFilesForWorkspace(absolutePathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
     const files: FernFile[] = [];
 
     const filepaths = (

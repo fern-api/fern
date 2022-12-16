@@ -47,6 +47,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
+    "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
