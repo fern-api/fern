@@ -1,3 +1,4 @@
+import { HttpRequestBody } from "@fern-fern/ir-model/services/http";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -66,33 +67,27 @@ export function getMockBodyFromTypeReference({
     });
 }
 
-function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): any {
-    return Type._visit(type, {
+function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[]): any {
+    if (type.examples[0] != null) {
+        return type.examples[0].jsonExample;
+    }
+    return Type._visit(type.shape, {
         object: (objectDeclaration) => {
-            const mockedExtendedProperties = objectDeclaration.extends.map((extendedType) => {
-                const mockBody = getMockBodyFromType(getType(extendedType, allTypes), allTypes);
-                return mockBody;
-            });
-            const objectProperties = objectDeclaration.properties.map((objectProperty) => {
-                return {
-                    [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
-                        typeReference: objectProperty.valueType,
-                        allTypes,
-                    }),
-                };
-            });
             return {
-                ...mockedExtendedProperties.reduce<Record<string, any>>(
-                    (combined, extension) => ({
+                ...objectDeclaration.properties.reduce<Record<string, any>>(
+                    (combined, objectProperty) => ({
                         ...combined,
-                        ...extension,
+                        [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
+                            typeReference: objectProperty.valueType,
+                            allTypes,
+                        }),
                     }),
                     {}
                 ),
-                ...objectProperties.reduce<Record<string, any>>(
+                ...objectDeclaration.extends.reduce<Record<string, any>>(
                     (combined, extension) => ({
                         ...combined,
-                        ...extension,
+                        ...getMockBodyFromType(getType(extension, allTypes), allTypes),
                     }),
                     {}
                 ),
@@ -147,12 +142,12 @@ function getMockBodyFromType(type: Type, allTypes: TypeDeclaration[]): any {
             });
         },
         _unknown: () => {
-            throw new Error("Unknown type: " + type._type);
+            throw new Error("Unknown type: " + type.shape._type);
         },
     });
 }
 
-function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]): Type {
+function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]): TypeDeclaration {
     const namedType = allTypes.find(
         (val) =>
             val.name.name === declaredTypeName.name && isEqual(val.name.fernFilepath, declaredTypeName.fernFilepath)
@@ -160,5 +155,39 @@ function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]
     if (namedType == null) {
         throw new Error("Cannot find type: " + declaredTypeName.name);
     }
-    return namedType.shape;
+    return namedType;
+}
+
+export function getMockRequestBody({
+    requestBody,
+    allTypes,
+}: {
+    requestBody: HttpRequestBody;
+    allTypes: TypeDeclaration[];
+}): unknown {
+    return HttpRequestBody._visit(requestBody, {
+        inlinedRequestBody: (inlinedRequestBody) => ({
+            ...inlinedRequestBody.properties.reduce<Record<string, any>>(
+                (combined, objectProperty) => ({
+                    ...combined,
+                    [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
+                        typeReference: objectProperty.valueType,
+                        allTypes,
+                    }),
+                }),
+                {}
+            ),
+            ...inlinedRequestBody.extends.reduce<Record<string, any>>(
+                (combined, extension) => ({
+                    ...combined,
+                    ...getMockBodyFromType(getType(extension, allTypes), allTypes),
+                }),
+                {}
+            ),
+        }),
+        reference: ({ requestBodyType }) => getMockBodyFromTypeReference({ typeReference: requestBodyType, allTypes }),
+        _unknown: () => {
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type);
+        },
+    });
 }

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-imports: 
+imports:
   workspace: workspace.yml
 
 types:
@@ -39,9 +39,10 @@ types:
       raw: string
       host: list<string>
       path: list<string>
-      query: list<PostmanQueryParameter>
+      query: list<PostmanUrlVariable>
+      variable: list<PostmanUrlVariable>
 
-  PostmanQueryParameter:
+  PostmanUrlVariable:
     properties:
       key: string
       value: string
@@ -78,6 +79,7 @@ types:
       name: string
       originalRequest: PostmanRequest
       code: integer
+      status: string
       body: string
       "_postman_previewlanguage": optional<string>
 

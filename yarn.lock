@@ -1371,21 +1371,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:^0.0.294":
-  version: 0.0.294
-  resolution: "@fern-fern/ir-model@npm:0.0.294"
-  checksum: a45dcd090146a53135766525d3210941b525066c665576e01387502544ffdc3e89fd07d44518c659e6ddddb8a8ae0fbb2bf5f18a48932294310bf6ab3ec5e2ab
+"@fern-fern/ir-model@npm:^0.0.477":
+  version: 0.0.477
+  resolution: "@fern-fern/ir-model@npm:0.0.477"
+  checksum: 4e26e456f19b74afbe6088edbf1506f438b845c52a6e308710969935d8c30acce69ce916da9900ef301e557315ec4484d9e090335283d47b3ba34882ee7fca6a
   languageName: node
   linkType: hard
 
-"@fern-fern/postman-sdk@npm:^0.0.12":
-  version: 0.0.12
-  resolution: "@fern-fern/postman-sdk@npm:0.0.12"
+"@fern-fern/postman-sdk@npm:^0.0.14":
+  version: 0.0.14
+  resolution: "@fern-fern/postman-sdk@npm:0.0.14"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: 9ee591fdc199b643d6876870182791bacbbf0fb7271df372710dced89d9fb26122e19b91381edbd2d8b35392e95d0d3cbd94dc81d44584dd5b218cf4bd4fc4dd
+  checksum: 419d4272c45fcb7574c6e7f8c67c2ded65ad1bb8d7c5bb39a5625c09d411c802d838e798d2c8605401e19f5ee329478371e505c89ae9b9ded6422905765451b3
   languageName: node
   linkType: hard
 
@@ -3775,8 +3775,8 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-api/config-management-commons": 0.0.188-13-g68e2f408
     "@fern-fern/generator-exec-sdk": ^0.0.42
-    "@fern-fern/ir-model": ^0.0.294
-    "@fern-fern/postman-sdk": ^0.0.12
+    "@fern-fern/ir-model": ^0.0.477
+    "@fern-fern/postman-sdk": ^0.0.14
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7

@@ -7,7 +7,7 @@ import {
 } from "@fern-fern/generator-exec-sdk/resources";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { execa } from "execa";
-import { readFile, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { COLLECTION_OUTPUT_FILENAME, writePostmanCollection } from "../writePostmanCollection";
@@ -25,9 +25,16 @@ describe("convertToPostman", () => {
         const fixtureDir = path.join(__dirname, "fixtures");
         it(fixture, async () => {
             const tmpDir = await tmp.dir();
+
             const collectionPath = path.join(tmpDir.path, COLLECTION_OUTPUT_FILENAME);
-            const confgPath = path.join(tmpDir.path, "config.json");
+            const configPath = path.join(tmpDir.path, "config.json");
             const irPath = path.join(tmpDir.path, "ir.json");
+
+            // add symlink for easy access in VSCode
+            const generatedDir = path.join(fixtureDir, "fern", fixture, "generated");
+            await rm(generatedDir, { force: true, recursive: true });
+            await mkdir(generatedDir);
+            await symlink(collectionPath, path.join(generatedDir, COLLECTION_OUTPUT_FILENAME));
 
             const generatorConfig: GeneratorConfig = {
                 dryRun: true,
@@ -50,13 +57,13 @@ describe("convertToPostman", () => {
                 environment: GeneratorEnvironment.local(),
             };
 
-            await writeFile(confgPath, JSON.stringify(generatorConfig, undefined, 2));
+            await writeFile(configPath, JSON.stringify(generatorConfig, undefined, 2));
 
             await execa("fern", ["ir", irPath, "--api", fixture], {
                 cwd: fixtureDir,
             });
 
-            await writePostmanCollection(confgPath);
+            await writePostmanCollection(configPath);
 
             const postmanCollection = (await readFile(collectionPath)).toString();
 

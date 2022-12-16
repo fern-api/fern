@@ -15,7 +15,12 @@ services:
         createPost:
           method: POST
           path: /create
-          request: BlogPost
+          request:
+            name: CreatePostRequest
+            body:
+              properties:
+                title: string
+                content: string
           response: PostId
         getPost:
           method: GET

@@ -1,3 +1,4 @@
 name: blog-post-api
-
-error-discriminant: error
+error-discrimination:
+  strategy: property
+  property-name: error
