@@ -145,6 +145,40 @@ jobs:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
 
+  publish-rc:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Print version
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            echo Publishing version: "${git_version}"
+      - run:
+          name: Add version to package.json's
+          command: |
+            git_version="$(./scripts/git-version.sh)"
+            yarn mrlint version "$git_version"
+      - run:
+          name: Update yarn.lock with new versions
+          command: yarn
+      - run:
+          name: Compile
+          command: yarn compile
+      - run:
+          name: Publish all packages
+          command: yarn run publish
+      - run:
+          name: Publish fern-api-dev CLI
+          command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+      - run:
+          name: Publish fern-api CLI
+          command: |
+            yarn workspace @fern-api/cli publish:cli:prod --tag prerelease
+
   publish:
     docker:
       - image: cimg/node:current
@@ -154,21 +188,12 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Check release blockers
-          command: |
-            if ./scripts/is-release-candidate.sh; then
-              echo Skipping check because this version is an RC
-            else
-              yarn check-release-blockers
-            fi
+          command: yarn check-release-blockers
       - run:
           name: Ensure JSON schema is up to date
           command: |
-            if ./scripts/is-release-candidate.sh; then
-              echo Skipping check because this version is an RC
-            else
-              yarn generate-json-schema
-              git --no-pager diff --exit-code
-            fi
+            yarn generate-json-schema
+            git --no-pager diff --exit-code
       - run:
           name: Print version
           command: |
@@ -198,7 +223,7 @@ jobs:
             if ./scripts/is-release-candidate.sh; then
               npm_tag="prerelease"
             fi
-            yarn workspace @fern-api/cli publish:cli:prod --tag "$npm_tag"
+            yarn workspace @fern-api/cli publish:cli:prod --tag latest
 
   publish-ir-sdk:
     docker:
@@ -265,6 +290,39 @@ workflows:
             - npm
             - auth0-dev
 
+      - publish-rc:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
+          requires:
+            - check
+            - organize-imports
+            - test
+            - ete-tests
+            - live-test-dev
+          context:
+            - npm
+            - auth0-dev
+
+      - publish:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$
+          requires:
+            - check
+            - organize-imports
+            - test
+            - ete-tests
+            - live-test-dev
+            - live-test
+          context:
+            - npm
+            - auth0-dev
+
       - publish-ir-sdk:
           filters:
             branches:
@@ -277,20 +335,3 @@ workflows:
             - test
             - ete-tests
             - live-test-dev
-
-      - publish:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-          requires:
-            - check
-            - organize-imports
-            - test
-            - ete-tests
-            - live-test
-            - live-test-dev
-          context:
-            - npm
-            - auth0-dev
