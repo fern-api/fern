@@ -138,7 +138,7 @@ exports[`convertToPostman test-api 1`] = `
       \\"name\\": \\"Blog\\",
       \\"item\\": [
         {
-          \\"name\\": \\"createPost\\",
+          \\"name\\": \\"Create Blog Post\\",
           \\"request\\": {
             \\"description\\": \\"Creates a blog post and returns blog post id.\\",
             \\"url\\": {
