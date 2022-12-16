@@ -11,7 +11,7 @@ describe("convertDependenciesConfiguration", () => {
                 "@fern/fiddle": "0.2.0",
             },
         };
-        const dependenciesConfiguration = convertDependenciesConfiguration({
+        const dependenciesConfiguration = await convertDependenciesConfiguration({
             rawDependenciesConfiguration,
             context: createMockTaskContext(),
         });
