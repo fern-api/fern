@@ -8,6 +8,7 @@ export async function visitFernRootApiFileYamlAst(
 ): Promise<void> {
     await visitObject(contents, {
         name: noop,
+        "display-name": noop,
         imports: noop,
         auth: noop,
         "auth-schemes": noop,

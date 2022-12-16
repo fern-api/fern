@@ -6,7 +6,8 @@ import { ErrorDiscriminationSchema } from "../ErrorDiscriminationSchema";
 import { HttpHeaderSchema } from "../HttpHeaderSchema";
 
 export const RootApiFileSchema = z.strictObject({
-    name: z.string(),
+    name: z.string(), // TODO: should this be migrated to id?
+    "display-name": z.optional(z.string()),
     imports: z.optional(z.record(z.string())),
     auth: z.optional(ApiAuthSchema),
     "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
