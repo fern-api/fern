@@ -16,8 +16,6 @@ import { GeneratedDummyRequest } from "./request/GeneratedDummyRequest";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
 import { ORIGIN_VARIABLE_NAME } from "./utils";
 
-const ORIGIN_DEFAULT_VAULE = "http://localhost:8080";
-
 export function convertToPostmanCollection(ir: IntermediateRepresentation): PostmanCollectionSchema {
     const id = ir.apiName;
 
@@ -32,7 +30,7 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Post
         variable: [
             {
                 key: ORIGIN_VARIABLE_NAME,
-                value: ORIGIN_DEFAULT_VAULE,
+                value: getOriginaVariableValue(ir),
                 type: "string",
             },
             ...authSchemes.flatMap(getVariablesForAuthScheme),
@@ -40,6 +38,17 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Post
         auth: convertAuth(authSchemes),
         item: getCollectionItems({ ir, authHeaders }),
     };
+}
+
+function getOriginaVariableValue(ir: IntermediateRepresentation): string {
+    if (ir.defaultEnvironment != null) {
+        const defaultEnvironment = ir.environments.find((env) => env.id === ir.defaultEnvironment);
+        if (defaultEnvironment == null) {
+            throw new Error("Environment does not exist: " + ir.defaultEnvironment);
+        }
+        return defaultEnvironment.url;
+    }
+    return ir.environments[0]?.url ?? "";
 }
 
 function filterAuthSchemes(auth: ApiAuth): AuthScheme[] {

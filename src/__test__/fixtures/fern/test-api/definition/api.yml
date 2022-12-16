@@ -3,3 +3,9 @@ display-name: Blog Post API
 error-discrimination:
   strategy: property
   property-name: error
+default-environment: PROD
+environments:
+  PROD: prod.fern.com
+  STAGING:
+    url: staging.fern.com
+    docs: i'm staging

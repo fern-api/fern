@@ -8,8 +8,8 @@ exports[`convertToPostman any-auth 1`] = `
   },
   \\"variable\\": [
     {
-      \\"key\\": \\"origin\\",
-      \\"value\\": \\"http://localhost:8080\\",
+      \\"key\\": \\"baseUrl\\",
+      \\"value\\": \\"\\",
       \\"type\\": \\"string\\"
     },
     {
@@ -51,9 +51,9 @@ exports[`convertToPostman any-auth 1`] = `
           \\"name\\": \\"createPost\\",
           \\"request\\": {
             \\"url\\": {
-              \\"raw\\": \\"{{origin}}/create\\",
+              \\"raw\\": \\"{{baseUrl}}/create\\",
               \\"host\\": [
-                \\"{{origin}}\\"
+                \\"{{baseUrl}}\\"
               ],
               \\"path\\": [
                 \\"create\\"
@@ -86,9 +86,9 @@ exports[`convertToPostman any-auth 1`] = `
           \\"name\\": \\"getPost\\",
           \\"request\\": {
             \\"url\\": {
-              \\"raw\\": \\"{{origin}}/:postId\\",
+              \\"raw\\": \\"{{baseUrl}}/:postId\\",
               \\"host\\": [
-                \\"{{origin}}\\"
+                \\"{{baseUrl}}\\"
               ],
               \\"path\\": [
                 \\":postId\\"
@@ -128,8 +128,8 @@ exports[`convertToPostman test-api 1`] = `
   },
   \\"variable\\": [
     {
-      \\"key\\": \\"origin\\",
-      \\"value\\": \\"http://localhost:8080\\",
+      \\"key\\": \\"baseUrl\\",
+      \\"value\\": \\"prod.fern.com\\",
       \\"type\\": \\"string\\"
     }
   ],
@@ -142,9 +142,9 @@ exports[`convertToPostman test-api 1`] = `
           \\"request\\": {
             \\"description\\": \\"Creates a blog post and returns blog post id.\\",
             \\"url\\": {
-              \\"raw\\": \\"{{origin}}/create\\",
+              \\"raw\\": \\"{{baseUrl}}/create\\",
               \\"host\\": [
-                \\"{{origin}}\\"
+                \\"{{baseUrl}}\\"
               ],
               \\"path\\": [
                 \\"create\\"
@@ -184,9 +184,9 @@ exports[`convertToPostman test-api 1`] = `
           \\"request\\": {
             \\"description\\": \\"Gets a blog post.\\",
             \\"url\\": {
-              \\"raw\\": \\"{{origin}}/:postId\\",
+              \\"raw\\": \\"{{baseUrl}}/:postId\\",
               \\"host\\": [
-                \\"{{origin}}\\"
+                \\"{{baseUrl}}\\"
               ],
               \\"path\\": [
                 \\":postId\\"
@@ -216,9 +216,9 @@ exports[`convertToPostman test-api 1`] = `
               \\"originalRequest\\": {
                 \\"description\\": \\"Gets a blog post.\\",
                 \\"url\\": {
-                  \\"raw\\": \\"{{origin}}/:postId\\",
+                  \\"raw\\": \\"{{baseUrl}}/:postId\\",
                   \\"host\\": [
-                    \\"{{origin}}\\"
+                    \\"{{baseUrl}}\\"
                   ],
                   \\"path\\": [
                     \\":postId\\"
@@ -250,9 +250,9 @@ exports[`convertToPostman test-api 1`] = `
               \\"originalRequest\\": {
                 \\"description\\": \\"Gets a blog post.\\",
                 \\"url\\": {
-                  \\"raw\\": \\"{{origin}}/:postId\\",
+                  \\"raw\\": \\"{{baseUrl}}/:postId\\",
                   \\"host\\": [
-                    \\"{{origin}}\\"
+                    \\"{{baseUrl}}\\"
                   ],
                   \\"path\\": [
                     \\":postId\\"
@@ -293,9 +293,9 @@ exports[`convertToPostman test-api 1`] = `
               \\"name\\": \\"get\\",
               \\"request\\": {
                 \\"url\\": {
-                  \\"raw\\": \\"{{origin}}\\",
+                  \\"raw\\": \\"{{baseUrl}}\\",
                   \\"host\\": [
-                    \\"{{origin}}\\"
+                    \\"{{baseUrl}}\\"
                   ],
                   \\"path\\": [],
                   \\"query\\": [],
