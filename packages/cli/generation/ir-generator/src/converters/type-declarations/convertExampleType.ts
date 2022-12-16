@@ -13,6 +13,8 @@ import {
     ExampleSingleUnionTypeProperties,
     ExampleType,
     ExampleTypeReference,
+    ExampleTypeReferenceShape,
+    ExampleTypeShape,
     PrimitiveType,
 } from "@fern-fern/ir-model/types";
 import { isArray } from "lodash-es";
@@ -33,9 +35,9 @@ export function convertTypeExample({
     typeResolver: TypeResolver;
     file: FernFileContext;
 }): ExampleType {
-    return visitRawTypeDeclaration<ExampleType>(typeDeclaration, {
+    const shape = visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
-            return ExampleType.alias({
+            return ExampleTypeShape.alias({
                 value: convertTypeReferenceExample({
                     example,
                     rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
@@ -61,7 +63,7 @@ export function convertTypeExample({
 
             const rawValueType = typeof rawSingleUnionType === "string" ? rawSingleUnionType : rawSingleUnionType.type;
 
-            return ExampleType.union({
+            return ExampleTypeShape.union({
                 wireDiscriminantValue: discriminantValueForExample,
                 properties: convertUnionProperties({
                     rawValueType,
@@ -74,11 +76,16 @@ export function convertTypeExample({
             });
         },
         enum: () => {
-            return ExampleType.enum({
+            return ExampleTypeShape.enum({
                 wireValue: example,
             });
         },
     });
+
+    return {
+        jsonExample: example,
+        shape,
+    };
 }
 
 export function convertTypeReferenceExample({
@@ -92,7 +99,7 @@ export function convertTypeReferenceExample({
     typeResolver: TypeResolver;
     file: FernFileContext;
 }): ExampleTypeReference {
-    return visitRawTypeReference(rawTypeBeingExemplified, {
+    const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
         primitive: (primitive) => {
             return convertPrimitiveExample({
                 example,
@@ -100,7 +107,7 @@ export function convertTypeReferenceExample({
             });
         },
         map: ({ keyType, valueType }) => {
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.map(
                     Object.entries(example).map(([key, value]) => ({
                         key: convertTypeReferenceExample({
@@ -123,7 +130,7 @@ export function convertTypeReferenceExample({
             if (!isArray(example)) {
                 throw new Error("Example is not a list");
             }
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.list(
                     example.map((exampleItem) =>
                         convertTypeReferenceExample({
@@ -140,7 +147,7 @@ export function convertTypeReferenceExample({
             if (!isArray(example)) {
                 throw new Error("Example is not a list");
             }
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.set(
                     example.map((exampleItem) =>
                         convertTypeReferenceExample({
@@ -154,7 +161,7 @@ export function convertTypeReferenceExample({
             );
         },
         optional: (itemType) => {
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.optional(
                     convertTypeReferenceExample({
                         example,
@@ -177,11 +184,6 @@ export function convertTypeReferenceExample({
             if (parsedReferenceToNamedType._type !== "named") {
                 throw new Error("Type reference is not to a named type.");
             }
-            // TODO when we add optional keys to the IR definition of
-            // DeclaredTypeName, we won't get a compile break here.
-            // Fixes:
-            //   1. Remove question marks in generated types for internal use cases
-            //   2. Use IDs for type name references rather than copying this whole thing
             const typeName = {
                 fernFilepath: parsedReferenceToNamedType.fernFilepath,
                 fernFilepathV2: parsedReferenceToNamedType.fernFilepathV2,
@@ -189,7 +191,7 @@ export function convertTypeReferenceExample({
                 nameV2: parsedReferenceToNamedType.nameV2,
                 nameV3: parsedReferenceToNamedType.nameV3,
             };
-            return ExampleTypeReference.named({
+            return ExampleTypeReferenceShape.named({
                 typeName,
                 shape: convertTypeExample({
                     typeName,
@@ -197,16 +199,20 @@ export function convertTypeReferenceExample({
                     file: typeDeclaration.file,
                     example,
                     typeResolver,
-                }),
+                }).shape,
             });
         },
         unknown: () => {
-            return ExampleTypeReference.unknown(example);
+            return ExampleTypeReferenceShape.unknown(example);
         },
         void: () => {
             throw new Error("Examples are not supported for void");
         },
     });
+    return {
+        shape,
+        jsonExample: example,
+    };
 }
 
 function convertPrimitiveExample({
@@ -215,15 +221,15 @@ function convertPrimitiveExample({
 }: {
     example: RawSchemas.ExampleTypeSchema;
     typeBeingExemplified: PrimitiveType;
-}): ExampleTypeReference {
+}): ExampleTypeReferenceShape {
     return PrimitiveType._visit(typeBeingExemplified, {
-        string: () => ExampleTypeReference.primitive(ExamplePrimitive.string(example)),
-        dateTime: () => ExampleTypeReference.primitive(ExamplePrimitive.datetime(example)),
-        integer: () => ExampleTypeReference.primitive(ExamplePrimitive.integer(example)),
-        double: () => ExampleTypeReference.primitive(ExamplePrimitive.double(example)),
-        long: () => ExampleTypeReference.primitive(ExamplePrimitive.long(example)),
-        boolean: () => ExampleTypeReference.primitive(ExamplePrimitive.boolean(example)),
-        uuid: () => ExampleTypeReference.primitive(ExamplePrimitive.uuid(example)),
+        string: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example)),
+        dateTime: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example)),
+        integer: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example)),
+        double: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example)),
+        long: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example)),
+        boolean: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example)),
+        uuid: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example)),
         _unknown: () => {
             throw new Error("Unknown primitive type: " + typeBeingExemplified);
         },
@@ -242,8 +248,8 @@ function convertObject({
     example: RawSchemas.ExampleTypeSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): ExampleType {
-    return ExampleType.object({
+}): ExampleTypeShape {
+    return ExampleTypeShape.object({
         properties:
             rawObject.properties != null
                 ? Object.entries(example).reduce<ExampleObjectProperty[]>(
@@ -388,12 +394,7 @@ function convertUnionProperties({
             if (!isRawObjectDefinition(rawDeclaration.declaration)) {
                 throw new Error(`${rawValueType} is not an object`);
             }
-            // TODO when we add optional keys to the IR definition of
-            // DeclaredTypeName, we won't get a compile break here.
-            // Fixes:
-            //   1. Remove question marks in generated types for internal use cases
-            //   2. Use IDs for type name references rather than copying this whole thing
-            const typeName = {
+            const typeName: DeclaredTypeName = {
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
                 fernFilepathV2: parsedSingleUnionTypeProperties.fernFilepathV2,
                 name: parsedSingleUnionTypeProperties.name,
