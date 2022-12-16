@@ -210,7 +210,7 @@ exports[`convertToPostman test-api 1`] = `
           },
           \\"response\\": [
             {
-              \\"name\\": \\"Successful getPost\\",
+              \\"name\\": \\"Success\\",
               \\"status\\": \\"OK\\",
               \\"code\\": 200,
               \\"originalRequest\\": {
@@ -244,8 +244,8 @@ exports[`convertToPostman test-api 1`] = `
               \\"_postman_previewlanguage\\": \\"json\\"
             },
             {
-              \\"name\\": \\"Failed getPost (PostNotFoundError)\\",
-              \\"status\\": \\"PostNotFoundError\\",
+              \\"name\\": \\"Post Not Found Error\\",
+              \\"status\\": \\"Post Not Found Error\\",
               \\"code\\": 400,
               \\"originalRequest\\": {
                 \\"description\\": \\"Gets a blog post.\\",

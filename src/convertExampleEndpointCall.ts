@@ -2,7 +2,7 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ExampleEndpointCall, HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/resources";
-import { isEqual } from "lodash";
+import { isEqual, startCase } from "lodash";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
 
 export function convertExampleEndpointCall({
@@ -29,7 +29,7 @@ export function convertExampleEndpointCall({
     }).get();
 
     return {
-        ...getNameAndStatus({ example, httpEndpoint, allErrors }),
+        ...getNameAndStatus({ example, allErrors }),
         originalRequest: generatedRequest,
         description: httpEndpoint.response.docs ?? undefined,
         body:
@@ -42,16 +42,14 @@ export function convertExampleEndpointCall({
 
 function getNameAndStatus({
     example,
-    httpEndpoint,
     allErrors,
 }: {
     example: ExampleEndpointCall;
-    httpEndpoint: HttpEndpoint;
     allErrors: ErrorDeclaration[];
 }): Pick<PostmanExampleResponse, "name" | "status" | "code"> {
     if (example.response.type === "ok") {
         return {
-            name: `Successful ${httpEndpoint.id}`,
+            name: "Success",
             status: "OK",
             code: 200,
         };
@@ -62,9 +60,9 @@ function getNameAndStatus({
             throw new Error("Cannot find error: " + errorName.nameV3.unsafeName.originalValue);
         }
 
-        const errorDisplayName = errorName.nameV3.unsafeName.originalValue;
+        const errorDisplayName = startCase(errorName.nameV3.unsafeName.originalValue);
         return {
-            name: `Failed ${httpEndpoint.id} (${errorDisplayName})`,
+            name: errorDisplayName,
             status: errorDisplayName,
             code: errorDeclaration.statusCode,
         };
