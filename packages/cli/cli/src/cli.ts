@@ -18,6 +18,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
@@ -119,6 +120,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
+    addRegisterCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -262,6 +264,42 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext,
                 generationLanguage: argv.language,
                 audiences: argv.audience,
+            });
+        }
+    );
+}
+
+function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        ["register"],
+        false, // hide from help message
+        (yargs) =>
+            yargs
+                .option("version", {
+                    type: "string",
+                    description: "The version for the registered api",
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("token", {
+                    string: true,
+                    description: "The token for the organization",
+                }),
+        async (argv) => {
+            if (argv.token == null) {
+                cliContext.fail("Token must be specified");
+                return;
+            }
+            await registerApiDefinitions({
+                project: await loadProjectAndRegisterWorkspaces(cliContext, {
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
+                }),
+                cliContext,
+                token: argv.token,
+                version: argv.version,
             });
         }
     );
