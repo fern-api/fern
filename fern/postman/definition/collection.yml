@@ -74,6 +74,9 @@ types:
       bearer:
         type: list<PostmanAuthParam>
         key: bearer
+      apikey:
+        type: list<PostmanAuthParam>
+        key: apikey
 
   PostmanAuthParam:
     properties:

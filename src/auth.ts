@@ -31,7 +31,24 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                         type: "string",
                     },
                 ]),
-            header: () => undefined,
+            header: (header) =>
+                PostmanRequestAuth.apikey([
+                    {
+                        key: "value",
+                        value: getReferenceToVariable(getVariableForAuthHeader(header)),
+                        type: "string",
+                    },
+                    {
+                        key: "key",
+                        value: getReferenceToVariable(getVariableForAuthHeader(header)),
+                        type: "string",
+                    },
+                    {
+                        key: "in",
+                        value: "header",
+                        type: "string",
+                    },
+                ]),
             _unknown: () => {
                 throw new Error("Unknown auth scheme: " + scheme._type);
             },

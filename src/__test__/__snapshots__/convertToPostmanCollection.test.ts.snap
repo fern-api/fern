@@ -131,8 +131,33 @@ exports[`convertToPostman test-api 1`] = `
       \\"key\\": \\"baseUrl\\",
       \\"value\\": \\"prod.fern.com\\",
       \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"X-API-Key\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
     }
   ],
+  \\"auth\\": {
+    \\"apikey\\": [
+      {
+        \\"key\\": \\"value\\",
+        \\"value\\": \\"{{X-API-Key}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"key\\",
+        \\"value\\": \\"{{X-API-Key}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"in\\",
+        \\"value\\": \\"header\\",
+        \\"type\\": \\"string\\"
+      }
+    ],
+    \\"type\\": \\"apikey\\"
+  },
   \\"item\\": [
     {
       \\"name\\": \\"Blog\\",
@@ -153,6 +178,11 @@ exports[`convertToPostman test-api 1`] = `
               \\"variable\\": []
             },
             \\"header\\": [
+              {
+                \\"key\\": \\"X-API-Key\\",
+                \\"value\\": \\"{{X-API-Key}}\\",
+                \\"type\\": \\"string\\"
+              },
               {
                 \\"key\\": \\"x-service-header\\",
                 \\"type\\": \\"text\\",
@@ -201,6 +231,11 @@ exports[`convertToPostman test-api 1`] = `
             },
             \\"header\\": [
               {
+                \\"key\\": \\"X-API-Key\\",
+                \\"value\\": \\"{{X-API-Key}}\\",
+                \\"type\\": \\"string\\"
+              },
+              {
                 \\"key\\": \\"x-service-header\\",
                 \\"type\\": \\"text\\",
                 \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
@@ -232,6 +267,11 @@ exports[`convertToPostman test-api 1`] = `
                   ]
                 },
                 \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{X-API-Key}}\\",
+                    \\"type\\": \\"string\\"
+                  },
                   {
                     \\"key\\": \\"x-service-header\\",
                     \\"type\\": \\"text\\",
@@ -266,6 +306,11 @@ exports[`convertToPostman test-api 1`] = `
                   ]
                 },
                 \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{X-API-Key}}\\",
+                    \\"type\\": \\"string\\"
+                  },
                   {
                     \\"key\\": \\"x-service-header\\",
                     \\"type\\": \\"text\\",
@@ -302,6 +347,11 @@ exports[`convertToPostman test-api 1`] = `
                   \\"variable\\": []
                 },
                 \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{X-API-Key}}\\",
+                    \\"type\\": \\"string\\"
+                  },
                   {
                     \\"key\\": \\"x-service-header\\",
                     \\"type\\": \\"text\\",

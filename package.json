@@ -49,7 +49,7 @@
     "@fern-api/config-management-commons": "0.0.188-13-g68e2f408",
     "@fern-fern/generator-exec-sdk": "^0.0.42",
     "@fern-fern/ir-model": "0.0.512",
-    "@fern-fern/postman-sdk": "0.0.16",
+    "@fern-fern/postman-sdk": "0.0.17",
     "@types/lodash": "^4.14.182",
     "endent": "^2.1.0",
     "lodash": "^4.17.21",
