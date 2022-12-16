@@ -97,7 +97,7 @@ function convertPathParameters({
                     }),
                 });
             } else if (servicePathParameterDeclaration != null) {
-                endpointPathParameters.push({
+                servicePathParameters.push({
                     key,
                     value: convertTypeReferenceExample({
                         example: examplePathParameter,
@@ -156,7 +156,7 @@ function convertHeaders({
                     }),
                 });
             } else if (serviceHeaderDeclaration != null) {
-                endpointHeaders.push({
+                serviceHeaders.push({
                     wireKey,
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
