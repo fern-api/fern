@@ -25,6 +25,9 @@ function handleWorkspaceParserFailureForFile({
         case WorkspaceLoaderFailureType.FILE_READ:
             logger.error("Failed to open file: " + relativeFilepath);
             break;
+        case WorkspaceLoaderFailureType.FILE_MISSING:
+            logger.error("Missing file: " + relativeFilepath);
+            break;
         case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
                 logger.error(

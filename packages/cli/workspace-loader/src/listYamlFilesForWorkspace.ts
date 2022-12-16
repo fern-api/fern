@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { readFile } from "fs/promises";
 import glob from "glob-promise";
 import { FernFile } from "./types/FernFile";
@@ -11,9 +10,7 @@ export async function listYamlFilesForWorkspace(absolutePathToDefinition: Absolu
         await glob("**/*.yml", {
             cwd: absolutePathToDefinition,
         })
-    )
-        .filter((filepath) => filepath !== ROOT_API_FILENAME)
-        .map(RelativeFilePath.of);
+    ).map(RelativeFilePath.of);
 
     for (const filepath of filepaths) {
         files.push(

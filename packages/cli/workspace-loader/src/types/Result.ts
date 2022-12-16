@@ -15,9 +15,14 @@ export declare namespace WorkspaceLoader {
         failures: Record<RelativeFilePath, Failure>;
     }
 
-    export type Failure = FileReadFilure | FileParseFailure | StructureValidationFailure | DependencyFailure;
+    export type Failure =
+        | FileReadFailure
+        | FileParseFailure
+        | MissingFileFailure
+        | StructureValidationFailure
+        | DependencyFailure;
 
-    export interface FileReadFilure {
+    export interface FileReadFailure {
         type: WorkspaceLoaderFailureType.FILE_READ;
         error: unknown;
     }
@@ -25,6 +30,10 @@ export declare namespace WorkspaceLoader {
     export interface FileParseFailure {
         type: WorkspaceLoaderFailureType.FILE_PARSE;
         error: unknown;
+    }
+
+    export interface MissingFileFailure {
+        type: WorkspaceLoaderFailureType.FILE_MISSING;
     }
 
     export interface StructureValidationFailure {
@@ -41,6 +50,7 @@ export declare namespace WorkspaceLoader {
 export enum WorkspaceLoaderFailureType {
     FILE_READ = "FILE_READ",
     FILE_PARSE = "FILE_PARSE",
+    FILE_MISSING = "FILE_MISSING",
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
     DEPENDENCY = "DEPENDENCY",
 }

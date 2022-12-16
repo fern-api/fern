@@ -18,7 +18,10 @@ export declare namespace validateStructureOfYamlFiles {
 
     export interface FailedResult {
         didSucceed: false;
-        failures: Record<RelativeFilePath, WorkspaceLoader.StructureValidationFailure>;
+        failures: Record<
+            RelativeFilePath,
+            WorkspaceLoader.StructureValidationFailure | WorkspaceLoader.MissingFileFailure
+        >;
     }
 }
 
@@ -29,7 +32,10 @@ export function validateStructureOfYamlFiles(
     const serviceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
     const packageMarkers: Record<RelativeFilePath, PackageMarkerFileSchema> = {};
 
-    const failures: Record<RelativeFilePath, WorkspaceLoader.StructureValidationFailure> = {};
+    const failures: Record<
+        RelativeFilePath,
+        WorkspaceLoader.StructureValidationFailure | WorkspaceLoader.MissingFileFailure
+    > = {};
 
     for (const [relativeFilepath, parsedFileContents] of entries(files)) {
         const addFailure = (error: ZodError) => {
@@ -63,7 +69,19 @@ export function validateStructureOfYamlFiles(
         }
     }
 
-    if (rootApiFile == null || Object.keys(failures).length > 0) {
+    if (rootApiFile == null) {
+        return {
+            didSucceed: false,
+            failures: {
+                [ROOT_API_FILENAME]: {
+                    type: WorkspaceLoaderFailureType.FILE_MISSING,
+                },
+                ...failures,
+            },
+        };
+    }
+
+    if (Object.keys(failures).length > 0) {
         return {
             didSucceed: false,
             failures,

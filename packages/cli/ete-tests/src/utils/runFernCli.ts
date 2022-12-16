@@ -3,8 +3,13 @@ import { ExecaChildProcess, Options } from "execa";
 import path from "path";
 
 export async function runFernCli(args: string[], options?: Options): Promise<ExecaChildProcess> {
-    return loggingExeca(undefined, "node", [path.join(__dirname, "../../../cli/dist/prod/cli.cjs"), ...args], {
-        ...options,
-        doNotPipeOutput: options?.reject === false,
-    });
+    return loggingExeca(
+        undefined,
+        "node",
+        [path.join(__dirname, "../../../cli/dist/prod/cli.cjs"), ...args, "--log-level", "debug"],
+        {
+            ...options,
+            doNotPipeOutput: options?.reject === false,
+        }
+    );
 }
