@@ -25,7 +25,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*",
     "semver-diff": "^4.0.0"
   },
   "devDependencies": {
