@@ -122,7 +122,7 @@ exports[`convertToPostman any-auth 2`] = `Array []`;
 exports[`convertToPostman test-api 1`] = `
 "{
   \\"info\\": {
-    \\"name\\": \\"blog-post-api\\",
+    \\"name\\": \\"Blog Post API\\",
     \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
   },
   \\"variable\\": [

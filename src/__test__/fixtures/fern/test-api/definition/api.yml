@@ -1,4 +1,5 @@
 name: blog-post-api
+display-name: Blog Post API
 error-discrimination:
   strategy: property
   property-name: error
