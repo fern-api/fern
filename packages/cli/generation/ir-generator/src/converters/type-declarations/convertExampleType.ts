@@ -13,6 +13,7 @@ import {
     ExampleSingleUnionTypeProperties,
     ExampleType,
     ExampleTypeReference,
+    ExampleTypeReferenceShape,
     ExampleTypeShape,
     PrimitiveType,
 } from "@fern-fern/ir-model/types";
@@ -98,7 +99,7 @@ export function convertTypeReferenceExample({
     typeResolver: TypeResolver;
     file: FernFileContext;
 }): ExampleTypeReference {
-    return visitRawTypeReference(rawTypeBeingExemplified, {
+    const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
         primitive: (primitive) => {
             return convertPrimitiveExample({
                 example,
@@ -106,7 +107,7 @@ export function convertTypeReferenceExample({
             });
         },
         map: ({ keyType, valueType }) => {
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.map(
                     Object.entries(example).map(([key, value]) => ({
                         key: convertTypeReferenceExample({
@@ -129,7 +130,7 @@ export function convertTypeReferenceExample({
             if (!isArray(example)) {
                 throw new Error("Example is not a list");
             }
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.list(
                     example.map((exampleItem) =>
                         convertTypeReferenceExample({
@@ -146,7 +147,7 @@ export function convertTypeReferenceExample({
             if (!isArray(example)) {
                 throw new Error("Example is not a list");
             }
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.set(
                     example.map((exampleItem) =>
                         convertTypeReferenceExample({
@@ -160,7 +161,7 @@ export function convertTypeReferenceExample({
             );
         },
         optional: (itemType) => {
-            return ExampleTypeReference.container(
+            return ExampleTypeReferenceShape.container(
                 ExampleContainer.optional(
                     convertTypeReferenceExample({
                         example,
@@ -190,7 +191,7 @@ export function convertTypeReferenceExample({
                 nameV2: parsedReferenceToNamedType.nameV2,
                 nameV3: parsedReferenceToNamedType.nameV3,
             };
-            return ExampleTypeReference.named({
+            return ExampleTypeReferenceShape.named({
                 typeName,
                 shape: convertTypeExample({
                     typeName,
@@ -202,12 +203,16 @@ export function convertTypeReferenceExample({
             });
         },
         unknown: () => {
-            return ExampleTypeReference.unknown(example);
+            return ExampleTypeReferenceShape.unknown(example);
         },
         void: () => {
             throw new Error("Examples are not supported for void");
         },
     });
+    return {
+        shape,
+        jsonExample: example,
+    };
 }
 
 function convertPrimitiveExample({
@@ -216,15 +221,15 @@ function convertPrimitiveExample({
 }: {
     example: RawSchemas.ExampleTypeSchema;
     typeBeingExemplified: PrimitiveType;
-}): ExampleTypeReference {
+}): ExampleTypeReferenceShape {
     return PrimitiveType._visit(typeBeingExemplified, {
-        string: () => ExampleTypeReference.primitive(ExamplePrimitive.string(example)),
-        dateTime: () => ExampleTypeReference.primitive(ExamplePrimitive.datetime(example)),
-        integer: () => ExampleTypeReference.primitive(ExamplePrimitive.integer(example)),
-        double: () => ExampleTypeReference.primitive(ExamplePrimitive.double(example)),
-        long: () => ExampleTypeReference.primitive(ExamplePrimitive.long(example)),
-        boolean: () => ExampleTypeReference.primitive(ExamplePrimitive.boolean(example)),
-        uuid: () => ExampleTypeReference.primitive(ExamplePrimitive.uuid(example)),
+        string: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example)),
+        dateTime: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example)),
+        integer: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example)),
+        double: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example)),
+        long: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example)),
+        boolean: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example)),
+        uuid: () => ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example)),
         _unknown: () => {
             throw new Error("Unknown primitive type: " + typeBeingExemplified);
         },

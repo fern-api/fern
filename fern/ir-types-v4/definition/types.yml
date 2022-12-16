@@ -227,6 +227,11 @@ types:
       noProperties: {}
 
   ExampleTypeReference:
+    extends: commons.WithJsonExample
+    properties:
+      shape: ExampleTypeReferenceShape
+
+  ExampleTypeReferenceShape:
     union:
       primitive: ExamplePrimitive
       container: ExampleContainer

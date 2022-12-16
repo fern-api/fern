@@ -75,16 +75,19 @@ function convertExampleObject(v4Example: IrVersions.V4.types.ExampleObjectType):
 function convertExampleTypeReference(
     v4Example: IrVersions.V4.types.ExampleTypeReference
 ): IrVersions.V3.types.ExampleTypeReference {
-    return IrVersions.V4.types.ExampleTypeReference._visit<IrVersions.V3.types.ExampleTypeReference>(v4Example, {
-        primitive: IrVersions.V3.types.ExampleTypeReference.primitive,
-        container: (containerExample) =>
-            IrVersions.V3.types.ExampleTypeReference.container(convertContainerExample(containerExample)),
-        named: (namedExample) => IrVersions.V3.types.ExampleTypeReference.named(convertNamedExample(namedExample)),
-        unknown: IrVersions.V3.types.ExampleTypeReference.unknown,
-        _unknown: () => {
-            throw new Error("Unknown ExampleTypeReference: " + v4Example.type);
-        },
-    });
+    return IrVersions.V4.types.ExampleTypeReferenceShape._visit<IrVersions.V3.types.ExampleTypeReference>(
+        v4Example.shape,
+        {
+            primitive: IrVersions.V3.types.ExampleTypeReference.primitive,
+            container: (containerExample) =>
+                IrVersions.V3.types.ExampleTypeReference.container(convertContainerExample(containerExample)),
+            named: (namedExample) => IrVersions.V3.types.ExampleTypeReference.named(convertNamedExample(namedExample)),
+            unknown: IrVersions.V3.types.ExampleTypeReference.unknown,
+            _unknown: () => {
+                throw new Error("Unknown ExampleTypeReference: " + v4Example.shape.type);
+            },
+        }
+    );
 }
 
 function convertContainerExample(
