@@ -36,16 +36,16 @@ export function convertExampleEndpointCall({
         ...convertHeaders({ service, endpoint, example, typeResolver, file }),
         queryParameters:
             example["query-parameters"] != null
-                ? Object.entries(example["query-parameters"]).map(([key, value]) => {
+                ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
                       const queryParameterDeclaration =
                           typeof endpoint.request !== "string"
-                              ? endpoint.request?.["query-parameters"]?.[key]
+                              ? endpoint.request?.["query-parameters"]?.[wireKey]
                               : undefined;
                       if (queryParameterDeclaration == null) {
-                          throw new Error(`Query parameter ${key} does not exist`);
+                          throw new Error(`Query parameter ${wireKey} does not exist`);
                       }
                       return {
-                          key,
+                          wireKey,
                           value: convertTypeReferenceExample({
                               example: value,
                               rawTypeBeingExemplified:
@@ -138,13 +138,13 @@ function convertHeaders({
     const endpointHeaders: ExampleHeader[] = [];
 
     if (example.headers != null) {
-        for (const [key, exampleHeader] of Object.entries(example.headers)) {
+        for (const [wireKey, exampleHeader] of Object.entries(example.headers)) {
             const endpointHeaderDeclaration =
-                typeof endpoint.request !== "string" ? endpoint.request?.headers?.[key] : undefined;
-            const serviceHeaderDeclaration = service.headers?.[key];
+                typeof endpoint.request !== "string" ? endpoint.request?.headers?.[wireKey] : undefined;
+            const serviceHeaderDeclaration = service.headers?.[wireKey];
             if (endpointHeaderDeclaration != null) {
                 endpointHeaders.push({
-                    key,
+                    wireKey,
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
@@ -157,7 +157,7 @@ function convertHeaders({
                 });
             } else if (serviceHeaderDeclaration != null) {
                 endpointHeaders.push({
-                    key,
+                    wireKey,
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
@@ -169,7 +169,7 @@ function convertHeaders({
                     }),
                 });
             } else {
-                throw new Error(`Heder ${key} does not exist`);
+                throw new Error(`Heder ${wireKey} does not exist`);
             }
         }
     }

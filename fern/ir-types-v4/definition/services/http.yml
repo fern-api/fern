@@ -139,12 +139,12 @@ types:
 
   ExampleQueryParameter:
     properties:
-      key: string
+      wireKey: string
       value: types.ExampleTypeReference
 
   ExampleHeader:
     properties:
-      key: string
+      wireKey: string
       value: types.ExampleTypeReference
 
   ExampleRequestBody:
