@@ -55,6 +55,7 @@ export function convertHttpService({
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 ...convertDeclaration(endpoint),
                 id: endpointKey,
+                displayName: endpoint["display-name"],
                 name: file.casingsGenerator.generateNameCasingsV1(endpointKey),
                 nameV2: file.casingsGenerator.generateName(endpointKey),
                 auth: endpoint.auth ?? serviceDefinition.auth,

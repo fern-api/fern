@@ -60,6 +60,7 @@ async function visitEndpoint({
     await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
     await visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
+        "display-name": noop,
         availability: noop,
         path: noop,
         "path-parameters": async (pathParameters) => {

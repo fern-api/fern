@@ -74,6 +74,7 @@ services:
                 body: shrek-123
         getMovie:
           method: GET
+          display-name: "Get Movie by Id"
           path: /{movieId}
           path-parameters:
             movieId: MovieId

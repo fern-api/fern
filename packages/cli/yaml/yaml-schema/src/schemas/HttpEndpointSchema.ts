@@ -8,6 +8,7 @@ import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 
 export const HttpEndpointSchema = DeclarationSchema.extend({
     method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
+    "display-name": z.optional(z.string()),
     path: z.string(),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     auth: z.optional(z.boolean()),

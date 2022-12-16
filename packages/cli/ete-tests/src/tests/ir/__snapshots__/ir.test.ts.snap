@@ -5630,6 +5630,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                             "status": "GENERAL_AVAILABILITY"
                         },
                         "id": "getMovie",
+                        "displayName": "Get Movie by Id",
                         "name": {
                             "originalValue": "getMovie",
                             "camelCase": "getMovie",
@@ -12623,6 +12624,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                             "status": "GENERAL_AVAILABILITY"
                         },
                         "id": "getMovie",
+                        "displayName": "Get Movie by Id",
                         "name": {
                             "originalValue": "getMovie",
                             "camelCase": "getMovie",
@@ -19616,6 +19618,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                             "status": "GENERAL_AVAILABILITY"
                         },
                         "id": "getMovie",
+                        "displayName": "Get Movie by Id",
                         "name": {
                             "originalValue": "getMovie",
                             "camelCase": "getMovie",
@@ -25481,6 +25484,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                             "status": "GENERAL_AVAILABILITY"
                         },
                         "id": "getMovie",
+                        "displayName": "Get Movie by Id",
                         "name": {
                             "originalValue": "getMovie",
                             "camelCase": "getMovie",
@@ -31346,6 +31350,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                             "status": "GENERAL_AVAILABILITY"
                         },
                         "id": "getMovie",
+                        "displayName": "Get Movie by Id",
                         "name": {
                             "originalValue": "getMovie",
                             "camelCase": "getMovie",
