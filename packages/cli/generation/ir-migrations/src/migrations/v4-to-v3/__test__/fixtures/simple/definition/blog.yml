@@ -1,0 +1,6 @@
+types:
+  Blog:
+    properties:
+      title: string
+    examples:
+      - title: hello

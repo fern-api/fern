@@ -250,6 +250,7 @@ function convertExampleRequestBody({
     }
 
     return ExampleRequestBody.inlinedRequestBody({
+        jsonExample: example.request,
         properties: exampleProperties,
     });
 }
