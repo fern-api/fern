@@ -1,35 +1,5 @@
 import semverDiff from "semver-diff";
-
-const POST_RELEASE_COMMIT_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-([0-9]+)-([a-z0-9])+$/;
-const POST_RC_COMMIT_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)-([0-9]+)-([a-z0-9])+$/;
-const RC_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/;
-const VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)$/;
-
-type Version = Release | PostReleaseCommit | ReleaseCandidate | PostReleaseCandidateCommit;
-
-interface ReleaseCandidate {
-    type: "rc";
-    forVersion: string;
-    releaseCandidateIndex: number;
-}
-
-interface PostReleaseCandidateCommit {
-    type: "post-rc-commit";
-    forVersion: string;
-    releaseCandidateIndex: number;
-    commitIndex: number;
-}
-
-interface Release {
-    type: "release";
-    version: string;
-}
-
-interface PostReleaseCommit {
-    type: "post-release-commit";
-    releasedVersion: string;
-    commitIndex: number;
-}
+import { ParsedVersion, parseVersion } from "./parseVersion";
 
 /**
  * returns whether version a came after version b
@@ -42,11 +12,9 @@ export function isVersionAhead(a: string, b: string): boolean {
     const aVersion = parseVersion(a);
     const bVersion = parseVersion(b);
 
-    // if versions are different, then default to semverDiff
-    const aVersionString = getVersionString(aVersion);
-    const bVersionString = getVersionString(bVersion);
-    if (aVersionString !== bVersionString) {
-        return semverDiff(aVersionString, bVersionString) == null;
+    // if major/minor/patch versions are different, then default to semverDiff
+    if (aVersion.major !== bVersion.major || aVersion.minor !== bVersion.minor || aVersion.patch !== bVersion.patch) {
+        return semverDiff(getReleaseVersion(aVersion), getReleaseVersion(bVersion)) == null;
     }
 
     if (aVersion.type === "post-release-commit") {
@@ -82,93 +50,6 @@ export function isVersionAhead(a: string, b: string): boolean {
     return !isVersionAhead(b, a);
 }
 
-function parseVersion(versionString: string): Version {
-    const postReleaseCommitMatch = versionString.match(POST_RELEASE_COMMIT_VERSION_REGEX);
-    if (postReleaseCommitMatch != null) {
-        const [_, major, minor, patch, commitIndex] = postReleaseCommitMatch;
-        const parsedCommitIndex = Number(commitIndex);
-        if (
-            major == null ||
-            minor == null ||
-            patch == null ||
-            commitIndex == null ||
-            commitIndex.length === 0 ||
-            isNaN(parsedCommitIndex)
-        ) {
-            throw new Error("Cannot parse post-release commit version: " + versionString);
-        }
-        return {
-            type: "post-release-commit",
-            releasedVersion: `${major}.${minor}.${patch}`,
-            commitIndex: parsedCommitIndex,
-        };
-    }
-
-    const rcMatch = versionString.match(RC_VERSION_REGEX);
-    if (rcMatch != null) {
-        const [_, major, minor, patch, rcIndex] = rcMatch;
-        const parsedRcIndex = Number(rcIndex);
-        if (
-            major == null ||
-            minor == null ||
-            patch == null ||
-            rcIndex == null ||
-            rcIndex.length === 0 ||
-            isNaN(parsedRcIndex)
-        ) {
-            throw new Error("Cannot parse RC version: " + versionString);
-        }
-        return {
-            type: "rc",
-            forVersion: `${major}.${minor}.${patch}`,
-            releaseCandidateIndex: parsedRcIndex,
-        };
-    }
-
-    const postRcCommitMatch = versionString.match(POST_RC_COMMIT_VERSION_REGEX);
-    if (postRcCommitMatch != null) {
-        const [_, major, minor, patch, rcIndex, commitIndex] = postRcCommitMatch;
-        const parsedRcIndex = Number(rcIndex);
-        const parsedCommitIndex = Number(commitIndex);
-        if (
-            major == null ||
-            minor == null ||
-            patch == null ||
-            rcIndex == null ||
-            rcIndex.length === 0 ||
-            isNaN(parsedRcIndex) ||
-            commitIndex == null ||
-            commitIndex.length === 0 ||
-            isNaN(parsedCommitIndex)
-        ) {
-            throw new Error("Cannot parse post-RC version: " + versionString);
-        }
-        return {
-            type: "post-rc-commit",
-            forVersion: `${major}.${minor}.${patch}`,
-            releaseCandidateIndex: parsedRcIndex,
-            commitIndex: parsedCommitIndex,
-        };
-    }
-
-    if (!VERSION_REGEX.test(versionString)) {
-        throw new Error("Failed to parse version: " + versionString);
-    }
-
-    return {
-        type: "release",
-        version: versionString,
-    };
-}
-
-function getVersionString(version: Version): string {
-    switch (version.type) {
-        case "post-release-commit":
-            return version.releasedVersion;
-        case "rc":
-        case "post-rc-commit":
-            return version.forVersion;
-        case "release":
-            return version.version;
-    }
+function getReleaseVersion(version: ParsedVersion): string {
+    return `${version.major}.${version.minor}.${version.patch}`;
 }

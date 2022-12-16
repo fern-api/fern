@@ -2,6 +2,7 @@ import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { DependenciesConfiguration, Dependency } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEPENDENCIES_CONFIGURATION_FILENAME, ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { parseVersion } from "@fern-api/semver-utils";
 import { createFiddleService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { PackageMarkerFileSchema, RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
@@ -139,10 +140,15 @@ async function validateDependencyAndGetServiceFiles({
         return undefined;
     }
 
-    // ensure CLI versions are identical
-    if (response.body.cliVersion !== cliVersion) {
+    // ensure CLI versions are on the same major + minor versions
+    const parsedCliVersion = parseVersion(cliVersion);
+    const parsedCliVersionOfDependency = parseVersion(response.body.cliVersion);
+    if (
+        parsedCliVersion.major !== parsedCliVersionOfDependency.major ||
+        parsedCliVersion.minor !== parsedCliVersionOfDependency.minor
+    ) {
         context.failWithoutThrowing(
-            `CLI version is ${response.body.cliVersion}. Expected ${cliVersion} (to match current workspace).`
+            `CLI version is ${response.body.cliVersion}. Expected ${parsedCliVersion.major}.${parsedCliVersion.minor}.x (to match current workspace).`
         );
         return undefined;
     }
