@@ -13,6 +13,7 @@ import {
     ExampleSingleUnionTypeProperties,
     ExampleType,
     ExampleTypeReference,
+    ExampleTypeShape,
     PrimitiveType,
 } from "@fern-fern/ir-model/types";
 import { isArray } from "lodash-es";
@@ -33,9 +34,9 @@ export function convertTypeExample({
     typeResolver: TypeResolver;
     file: FernFileContext;
 }): ExampleType {
-    return visitRawTypeDeclaration<ExampleType>(typeDeclaration, {
+    const shape = visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
-            return ExampleType.alias({
+            return ExampleTypeShape.alias({
                 value: convertTypeReferenceExample({
                     example,
                     rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
@@ -61,7 +62,7 @@ export function convertTypeExample({
 
             const rawValueType = typeof rawSingleUnionType === "string" ? rawSingleUnionType : rawSingleUnionType.type;
 
-            return ExampleType.union({
+            return ExampleTypeShape.union({
                 wireDiscriminantValue: discriminantValueForExample,
                 properties: convertUnionProperties({
                     rawValueType,
@@ -74,11 +75,16 @@ export function convertTypeExample({
             });
         },
         enum: () => {
-            return ExampleType.enum({
+            return ExampleTypeShape.enum({
                 wireValue: example,
             });
         },
     });
+
+    return {
+        jsonExample: example,
+        shape,
+    };
 }
 
 export function convertTypeReferenceExample({
@@ -177,11 +183,6 @@ export function convertTypeReferenceExample({
             if (parsedReferenceToNamedType._type !== "named") {
                 throw new Error("Type reference is not to a named type.");
             }
-            // TODO when we add optional keys to the IR definition of
-            // DeclaredTypeName, we won't get a compile break here.
-            // Fixes:
-            //   1. Remove question marks in generated types for internal use cases
-            //   2. Use IDs for type name references rather than copying this whole thing
             const typeName = {
                 fernFilepath: parsedReferenceToNamedType.fernFilepath,
                 fernFilepathV2: parsedReferenceToNamedType.fernFilepathV2,
@@ -197,7 +198,7 @@ export function convertTypeReferenceExample({
                     file: typeDeclaration.file,
                     example,
                     typeResolver,
-                }),
+                }).shape,
             });
         },
         unknown: () => {
@@ -242,8 +243,8 @@ function convertObject({
     example: RawSchemas.ExampleTypeSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): ExampleType {
-    return ExampleType.object({
+}): ExampleTypeShape {
+    return ExampleTypeShape.object({
         properties:
             rawObject.properties != null
                 ? Object.entries(example).reduce<ExampleObjectProperty[]>(
@@ -388,12 +389,7 @@ function convertUnionProperties({
             if (!isRawObjectDefinition(rawDeclaration.declaration)) {
                 throw new Error(`${rawValueType} is not an object`);
             }
-            // TODO when we add optional keys to the IR definition of
-            // DeclaredTypeName, we won't get a compile break here.
-            // Fixes:
-            //   1. Remove question marks in generated types for internal use cases
-            //   2. Use IDs for type name references rather than copying this whole thing
-            const typeName = {
+            const typeName: DeclaredTypeName = {
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
                 fernFilepathV2: parsedSingleUnionTypeProperties.fernFilepathV2,
                 name: parsedSingleUnionTypeProperties.name,
