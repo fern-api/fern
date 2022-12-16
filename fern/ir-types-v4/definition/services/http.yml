@@ -27,6 +27,7 @@ types:
         type: commons.StringWithAllCasings
         docs: this is deprecated. use nameV2 instead
       nameV2: EndpointName
+      displayName: optional<string>
       method: HttpMethod
       headers: list<HttpHeader>
       path: HttpPath
