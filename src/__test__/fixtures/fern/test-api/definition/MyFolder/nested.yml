@@ -1,0 +1,13 @@
+services:
+  http:
+    NestedService:
+      auth: false
+      headers:
+        x-service-header: string
+      base-path: /
+      endpoints:
+        get:
+          path: /
+          method: GET
+          request:
+            name: GetThingRequest

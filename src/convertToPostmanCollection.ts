@@ -5,10 +5,11 @@ import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import {
     PostmanCollectionEndpointItem,
+    PostmanCollectionItem,
     PostmanCollectionSchema,
-    PostmanCollectionServiceItem,
     PostmanHeader,
 } from "@fern-fern/postman-sdk/resources";
+import { startCase } from "lodash";
 import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { GeneratedDummyRequest } from "./request/GeneratedDummyRequest";
@@ -71,28 +72,41 @@ function getCollectionItems({
 }: {
     ir: IntermediateRepresentation;
     authHeaders: PostmanHeader[];
-}): PostmanCollectionServiceItem[] {
-    const serviceItems: PostmanCollectionServiceItem[] = [];
+}): PostmanCollectionItem[] {
+    const rootItems: PostmanCollectionItem[] = [];
     for (const httpService of ir.services.http) {
-        const endpointItems: PostmanCollectionEndpointItem[] = [];
-        for (const httpEndpoint of httpService.endpoints) {
-            endpointItems.push(
-                convertEndpoint({
-                    authHeaders,
-                    httpEndpoint,
-                    httpService,
-                    allTypes: ir.types,
-                    allErrors: ir.errors,
-                })
-            );
+        let container = rootItems;
+        for (const fernFilepathPart of httpService.name.fernFilepathV2) {
+            const existingContainerForFernFilepathPart = rootItems
+                .filter((item): item is PostmanCollectionItem.Container => item.type === "container")
+                .find((item) => item.name === fernFilepathPart.unsafeName.originalValue);
+            if (existingContainerForFernFilepathPart != null) {
+                container = existingContainerForFernFilepathPart.item;
+            } else {
+                const newContainer = PostmanCollectionItem.container({
+                    name: startCase(fernFilepathPart.unsafeName.originalValue),
+                    item: [],
+                });
+                container.push(newContainer);
+                container = newContainer.item;
+            }
         }
-        const serviceItem: PostmanCollectionServiceItem = {
-            name: httpService.name.name,
-            item: endpointItems,
-        };
-        serviceItems.push(serviceItem);
+
+        container.push(
+            ...httpService.endpoints.map((httpEndpoint) =>
+                PostmanCollectionItem.endpoint(
+                    convertEndpoint({
+                        authHeaders,
+                        httpEndpoint,
+                        httpService,
+                        allTypes: ir.types,
+                        allErrors: ir.errors,
+                    })
+                )
+            )
+        );
     }
-    return serviceItems;
+    return rootItems;
 }
 
 function convertEndpoint({

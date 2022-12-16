@@ -45,7 +45,7 @@ exports[`convertToPostman any-auth 1`] = `
   },
   \\"item\\": [
     {
-      \\"name\\": \\"PostsService\\",
+      \\"name\\": \\"Blog\\",
       \\"item\\": [
         {
           \\"name\\": \\"createPost\\",
@@ -79,7 +79,8 @@ exports[`convertToPostman any-auth 1`] = `
               }
             }
           },
-          \\"response\\": []
+          \\"response\\": [],
+          \\"_type\\": \\"endpoint\\"
         },
         {
           \\"name\\": \\"getPost\\",
@@ -109,15 +110,15 @@ exports[`convertToPostman any-auth 1`] = `
             ],
             \\"method\\": \\"GET\\"
           },
-          \\"response\\": []
+          \\"response\\": [],
+          \\"_type\\": \\"endpoint\\"
         }
-      ]
+      ],
+      \\"_type\\": \\"container\\"
     }
   ]
 }"
 `;
-
-exports[`convertToPostman any-auth 2`] = `Array []`;
 
 exports[`convertToPostman test-api 1`] = `
 "{
@@ -134,7 +135,7 @@ exports[`convertToPostman test-api 1`] = `
   ],
   \\"item\\": [
     {
-      \\"name\\": \\"PostsService\\",
+      \\"name\\": \\"Blog\\",
       \\"item\\": [
         {
           \\"name\\": \\"createPost\\",
@@ -175,7 +176,8 @@ exports[`convertToPostman test-api 1`] = `
               }
             }
           },
-          \\"response\\": []
+          \\"response\\": [],
+          \\"_type\\": \\"endpoint\\"
         },
         {
           \\"name\\": \\"getPost\\",
@@ -275,34 +277,48 @@ exports[`convertToPostman test-api 1`] = `
               \\"body\\": \\"{\\\\n    \\\\\\"id\\\\\\": \\\\\\"123e4567-e89b-12d3-a456-426614174000\\\\\\"\\\\n}\\",
               \\"_postman_previewlanguage\\": \\"json\\"
             }
-          ]
+          ],
+          \\"_type\\": \\"endpoint\\"
         }
-      ]
+      ],
+      \\"_type\\": \\"container\\"
+    },
+    {
+      \\"name\\": \\"My Folder\\",
+      \\"item\\": [
+        {
+          \\"name\\": \\"Nested\\",
+          \\"item\\": [
+            {
+              \\"name\\": \\"get\\",
+              \\"request\\": {
+                \\"url\\": {
+                  \\"raw\\": \\"{{origin}}\\",
+                  \\"host\\": [
+                    \\"{{origin}}\\"
+                  ],
+                  \\"path\\": [],
+                  \\"query\\": [],
+                  \\"variable\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\"
+              },
+              \\"response\\": [],
+              \\"_type\\": \\"endpoint\\"
+            }
+          ],
+          \\"_type\\": \\"container\\"
+        }
+      ],
+      \\"_type\\": \\"container\\"
     }
   ]
 }"
-`;
-
-exports[`convertToPostman test-api 2`] = `
-Array [
-  Object {
-    "request": undefined,
-    "response": Object {
-      "author": Object {
-        "type": "anonymous",
-      },
-      "content": "I'm a blog post",
-      "id": "123e4567-e89b-12d3-a456-426614174000",
-      "title": "My Post",
-      "type": "LONG",
-      "writtenDate": "2022-12-15T22:06:28+00:00",
-    },
-  },
-  Object {
-    "request": undefined,
-    "response": Object {
-      "id": "123e4567-e89b-12d3-a456-426614174000",
-    },
-  },
-]
 `;

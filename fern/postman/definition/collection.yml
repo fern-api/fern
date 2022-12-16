@@ -8,7 +8,7 @@ types:
   PostmanCollectionSchema:
     properties:
       info: PostmanCollectionInfo
-      item: list<PostmanCollectionServiceItem>
+      item: list<PostmanCollectionItem>
       auth: optional<PostmanRequestAuth>
       variable: list<PostmanVariable>
 
@@ -23,10 +23,18 @@ types:
       name: string
       schema: string
 
-  PostmanCollectionServiceItem:
+  PostmanCollectionItem:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      container: PostmanCollectionContainerItem
+      endpoint: PostmanCollectionEndpointItem
+
+  PostmanCollectionContainerItem:
     properties:
       name: string
-      item: list<PostmanCollectionEndpointItem>
+      item: list<PostmanCollectionItem>
 
   PostmanCollectionEndpointItem:
     properties:

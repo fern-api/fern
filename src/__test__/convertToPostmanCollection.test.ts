@@ -5,7 +5,6 @@ import {
     GithubPublishInfo,
     OutputMode,
 } from "@fern-fern/generator-exec-sdk/resources";
-import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { execa } from "execa";
 import { mkdir, readFile, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
@@ -13,11 +12,6 @@ import tmp from "tmp-promise";
 import { COLLECTION_OUTPUT_FILENAME, writePostmanCollection } from "../writePostmanCollection";
 
 const FIXTURES = ["test-api", "any-auth"];
-
-interface RequestResponse {
-    request: any;
-    response: any;
-}
 
 describe("convertToPostman", () => {
     for (const fixture of FIXTURES) {
@@ -68,25 +62,6 @@ describe("convertToPostman", () => {
             const postmanCollection = (await readFile(collectionPath)).toString();
 
             expect(postmanCollection).toMatchSnapshot();
-
-            const rawPostmanCollection = JSON.parse(postmanCollection);
-            const parsedOpenApi = PostmanParsing.PostmanCollectionSchema.parse(rawPostmanCollection);
-
-            const examples: RequestResponse[] = [];
-            parsedOpenApi.item.forEach((serviceItem) => {
-                serviceItem.item.forEach((item) => {
-                    item.response.forEach((response) => {
-                        examples.push({
-                            request:
-                                response.originalRequest.body != null
-                                    ? JSON.parse(response.originalRequest.body.raw)
-                                    : undefined,
-                            response: JSON.parse(response.body),
-                        });
-                    });
-                });
-            });
-            expect(examples).toMatchSnapshot();
         });
     }
 });
