@@ -12,6 +12,7 @@ export { type NodePath } from "./ast/NodePath";
 export { visitFernRootApiFileYamlAst } from "./ast/visitFernRootApiFileYamlAst";
 export { visitFernServiceFileYamlAst } from "./ast/visitFernServiceFileYamlAst";
 export * as RawSchemas from "./schemas";
+export { DependenciesFileSchema } from "./schemas/DependenciesFileSchema";
 export { RootApiFileSchema } from "./schemas/file-schemas/RootApiFileSchema";
 export { ServiceFileSchema } from "./schemas/file-schemas/ServiceFileSchema";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
