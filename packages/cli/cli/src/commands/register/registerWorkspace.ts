@@ -54,7 +54,9 @@ export async function registerApiDefinitions({
                 context.logger.info("Uploading definition...");
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));
 
-                context.logger.info(`Registered ${registerApiResponse.body.version}`);
+                context.logger.info(
+                    `Registered @${project.config.organization}/${workspace.rootApiFile.name}:${registerApiResponse.body.version}`
+                );
             });
         })
     );
