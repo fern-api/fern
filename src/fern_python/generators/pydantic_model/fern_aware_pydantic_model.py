@@ -249,7 +249,7 @@ class FernAwarePydanticModel:
         def write_json_body(writer: AST.NodeWriter) -> None:
             writer.write("kwargs_with_defaults: ")
             writer.write_node(AST.TypeHint.any())
-            writer.write(' = { "by_alias": True, **kwargs }')
+            writer.write(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
             writer.write_line()
             writer.write_line("return super().json(**kwargs_with_defaults)")
 
@@ -268,7 +268,7 @@ class FernAwarePydanticModel:
         def write_dict_body(writer: AST.NodeWriter) -> None:
             writer.write("kwargs_with_defaults: ")
             writer.write_node(AST.TypeHint.any())
-            writer.write(' = { "by_alias": True, **kwargs }')
+            writer.write(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
             writer.write_line()
             writer.write_line("return super().dict(**kwargs_with_defaults)")
 
