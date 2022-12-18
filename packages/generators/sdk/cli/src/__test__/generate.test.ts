@@ -77,7 +77,7 @@ describe("runGenerator", () => {
                 if (await doesPathExist(irPath)) {
                     await rm(irPath);
                 }
-                await symlink(outputPath, generatedDir, "dir");
+                await symlink(outputPath, generatedDir);
 
                 const config: FernGeneratorExec.GeneratorConfig = {
                     dryRun: true,

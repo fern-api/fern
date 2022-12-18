@@ -37,11 +37,14 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         return this.sdkRequest.requestParameterName.unsafeName.camelCase;
     }
 
+    public abstract getAllQueryParameters(context: ServiceContext): QueryParameter[];
+    public abstract getAllHeaders(context: ServiceContext): HttpHeader[];
     public abstract getReferenceToRequestBody(context: ServiceContext): ts.Expression | undefined;
-    public abstract getReferenceToQueryParameter(
-        queryParameter: QueryParameter,
-        context: ServiceContext
-    ): ts.Expression;
     public abstract getReferenceToHeader(header: HttpHeader, context: ServiceContext): ts.Expression;
+    public abstract withQueryParameter(
+        queryParameter: QueryParameter,
+        context: ServiceContext,
+        callback: (value: ts.Expression) => ts.Statement[]
+    ): ts.Statement[];
     protected abstract getParameterType(contxt: ServiceContext): { type: ts.TypeNode; isOptional: boolean };
 }

@@ -6,8 +6,8 @@ import { AugmentedService } from "@fern-typescript/commons-v2";
 import { GeneratedService, ServiceContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
-import { GeneratedHeader } from "./FetcherArgsBuilder";
 import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
+import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
 export declare namespace GeneratedServiceImpl {

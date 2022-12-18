@@ -39,7 +39,16 @@ services:
           docs: Create a new playlist
           method: POST
           path: /create
-          request: playlistCreateRequest
+          request:
+            name: playlistCreateRequestWrapper
+            query-parameters:
+              multiple:
+                type: integer
+                allow-multiple: true
+              multipleOptional:
+                type: optional<boolean>
+                allow-multiple: true
+            body: playlistCreateRequest
           response: Playlist
 
         getPlaylists:

@@ -14,25 +14,39 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     public getReferenceToRequestBody(context: ServiceContext): ts.Expression | undefined {
         return this.getGeneratedRequestWrapper(context).getReferenceToBody({
-            requestParameter: ts.factory.createIdentifier(this.getRequestParameterName()),
-            isRequestParameterNullable: this.getParameterType(context).isOptional,
+            requestArgument: ts.factory.createIdentifier(this.getRequestParameterName()),
+            isRequestArgumentNullable: this.getParameterType(context).isOptional,
             context,
         });
     }
 
-    public getReferenceToQueryParameter(queryParameter: QueryParameter, context: ServiceContext): ts.Expression {
-        return this.getGeneratedRequestWrapper(context).getReferenceToQueryParameter({
+    public getAllQueryParameters(context: ServiceContext): QueryParameter[] {
+        return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
+    }
+
+    public getAllHeaders(context: ServiceContext): HttpHeader[] {
+        return this.getGeneratedRequestWrapper(context).getAllHeaders();
+    }
+
+    public withQueryParameter(
+        queryParameter: QueryParameter,
+        context: ServiceContext,
+        callback: (value: ts.Expression) => ts.Statement[]
+    ): ts.Statement[] {
+        return this.getGeneratedRequestWrapper(context).withQueryParameter({
             queryParameter,
-            requestParameter: ts.factory.createIdentifier(this.getRequestParameterName()),
-            isRequestParameterNullable: this.getParameterType(context).isOptional,
+            requestArgument: ts.factory.createIdentifier(this.getRequestParameterName()),
+            isRequestArgumentNullable: this.getParameterType(context).isOptional,
+            context,
+            callback,
         });
     }
 
     public getReferenceToHeader(header: HttpHeader, context: ServiceContext): ts.Expression {
         return this.getGeneratedRequestWrapper(context).getReferenceToHeader({
             header,
-            requestParameter: ts.factory.createIdentifier(this.getRequestParameterName()),
-            isRequestParameterNullable: this.getParameterType(context).isOptional,
+            requestArgument: ts.factory.createIdentifier(this.getRequestParameterName()),
+            isRequestArgumentNullable: this.getParameterType(context).isOptional,
         });
     }
 

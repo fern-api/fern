@@ -21,6 +21,10 @@ export declare namespace GeneratedRequestWrapperImpl {
 }
 
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
+    // this has an underscore to prevent deconflicting with user-provided names
+    // that are in scope (e.g. path parameters)
+    private static QUERY_PARAM_LIST_ITEM = "_item";
+
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private wrapperName: string;
@@ -40,7 +44,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const property = requestInterface.addProperty({
                 name: this.getPropertyNameOfQueryParameter(queryParameter),
-                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+                type: getTextOfTsNode(
+                    queryParameter.allowMultiple
+                        ? ts.factory.createUnionTypeNode([
+                              type.typeNodeWithoutUndefined,
+                              ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined),
+                          ])
+                        : type.typeNodeWithoutUndefined
+                ),
                 hasQuestionToken: type.isOptional,
             });
             maybeAddDocs(property, queryParameter.docs);
@@ -87,45 +98,109 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
     }
 
-    public getReferenceToQueryParameter({
+    public withQueryParameter({
         queryParameter,
-        requestParameter,
-        isRequestParameterNullable,
+        requestArgument,
+        isRequestArgumentNullable,
+        context,
+        callback,
     }: {
         queryParameter: QueryParameter;
-        requestParameter: ts.Expression;
-        isRequestParameterNullable: boolean;
-    }): ts.Expression {
-        return this.accessRequestProperty({
-            requestParameter,
-            isRequestParameterNullable,
+        requestArgument: ts.Expression;
+        isRequestArgumentNullable: boolean;
+        context: RequestWrapperContext;
+        callback: (value: ts.Expression) => ts.Statement[];
+    }): ts.Statement[] {
+        let statements: ts.Statement[];
+
+        const requestPropertyForQueryParam = this.accessRequestProperty({
+            requestArgument,
+            isRequestArgumentNullable,
             key: this.getPropertyNameOfQueryParameter(queryParameter),
         });
+
+        if (queryParameter.allowMultiple) {
+            statements = [
+                ts.factory.createIfStatement(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Array"),
+                            ts.factory.createIdentifier("isArray")
+                        ),
+                        undefined,
+                        [requestPropertyForQueryParam]
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createForOfStatement(
+                                undefined,
+                                ts.factory.createVariableDeclarationList(
+                                    [
+                                        ts.factory.createVariableDeclaration(
+                                            GeneratedRequestWrapperImpl.QUERY_PARAM_LIST_ITEM
+                                        ),
+                                    ],
+                                    ts.NodeFlags.Const
+                                ),
+                                requestPropertyForQueryParam,
+                                ts.factory.createBlock(
+                                    callback(
+                                        ts.factory.createIdentifier(GeneratedRequestWrapperImpl.QUERY_PARAM_LIST_ITEM)
+                                    ),
+                                    true
+                                )
+                            ),
+                        ],
+                        true
+                    ),
+                    ts.factory.createBlock(callback(requestPropertyForQueryParam), true)
+                ),
+            ];
+        } else {
+            statements = callback(requestPropertyForQueryParam);
+        }
+
+        const resolvedType = context.type.resolveTypeReference(queryParameter.valueType);
+        const isQueryParamOptional = resolvedType._type === "container" && resolvedType.container._type === "optional";
+        if (isRequestArgumentNullable || isQueryParamOptional) {
+            statements = [
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        requestPropertyForQueryParam,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(statements)
+                ),
+            ];
+        }
+
+        return statements;
     }
 
     public getReferenceToHeader({
         header,
-        isRequestParameterNullable,
-        requestParameter,
+        requestArgument,
+        isRequestArgumentNullable,
     }: {
         header: HttpHeader;
-        requestParameter: ts.Expression;
-        isRequestParameterNullable: boolean;
+        requestArgument: ts.Expression;
+        isRequestArgumentNullable: boolean;
     }): ts.Expression {
         return this.accessRequestProperty({
-            requestParameter,
-            isRequestParameterNullable,
+            requestArgument,
+            isRequestArgumentNullable,
             key: this.getPropertyNameOfHeader(header),
         });
     }
 
     public getReferenceToBody({
-        requestParameter,
-        isRequestParameterNullable,
+        requestArgument,
+        isRequestArgumentNullable,
         context,
     }: {
-        requestParameter: ts.Expression;
-        isRequestParameterNullable: boolean;
+        requestArgument: ts.Expression;
+        isRequestArgumentNullable: boolean;
         context: RequestWrapperContext;
     }): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
@@ -134,8 +209,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return HttpRequestBody._visit<ts.Expression>(this.endpoint.requestBody, {
             reference: () =>
                 this.accessRequestProperty({
-                    requestParameter,
-                    isRequestParameterNullable,
+                    requestArgument,
+                    isRequestArgumentNullable,
                     key: this.getReferencedBodyPropertyName(),
                 }),
             inlinedRequestBody: (inlinedRequestBody) => {
@@ -145,8 +220,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createStringLiteral(this.getInlinedRequestBodyPropertyKey(property)),
                                 this.accessRequestProperty({
-                                    requestParameter,
-                                    isRequestParameterNullable,
+                                    requestArgument,
+                                    isRequestArgumentNullable,
                                     key: this.getInlinedRequestBodyPropertyKey(property),
                                 })
                             )
@@ -160,8 +235,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 ts.factory.createPropertyAssignment(
                                     ts.factory.createStringLiteral(propertyKey),
                                     this.accessRequestProperty({
-                                        requestParameter,
-                                        isRequestParameterNullable,
+                                        requestArgument,
+                                        isRequestArgumentNullable,
                                         key: propertyKey,
                                     })
                                 )
@@ -256,11 +331,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return header.nameV2.name.unsafeName.camelCase;
     }
 
-    private getAllQueryParameters(): QueryParameter[] {
+    public getAllQueryParameters(): QueryParameter[] {
         return this.endpoint.queryParameters;
     }
 
-    private getAllHeaders(): HttpHeader[] {
+    public getAllHeaders(): HttpHeader[] {
         return [...this.service.headers, ...this.endpoint.headers];
     }
 
@@ -275,17 +350,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private accessRequestProperty({
-        requestParameter,
-        isRequestParameterNullable,
+        requestArgument,
+        isRequestArgumentNullable,
         key,
     }: {
-        requestParameter: ts.Expression;
-        isRequestParameterNullable: boolean;
+        requestArgument: ts.Expression;
+        isRequestArgumentNullable: boolean;
         key: string;
     }): ts.Expression {
         return ts.factory.createPropertyAccessChain(
-            requestParameter,
-            isRequestParameterNullable ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
+            requestArgument,
+            isRequestArgumentNullable ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
             key
         );
     }

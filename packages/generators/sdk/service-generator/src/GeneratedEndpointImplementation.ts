@@ -1,7 +1,12 @@
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { HttpEndpoint, HttpPath, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEndpointTypes, GeneratedEndpointTypeSchemas, ServiceContext } from "@fern-typescript/contexts";
+import {
+    Fetcher,
+    GeneratedEndpointTypes,
+    GeneratedEndpointTypeSchemas,
+    ServiceContext,
+} from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     MethodDeclarationStructure,
@@ -15,7 +20,7 @@ import {
     WriterFunction,
 } from "ts-morph";
 import urlJoin from "url-join";
-import { FetcherArgsBuilder } from "./FetcherArgsBuilder";
+import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedServiceImpl } from "./GeneratedServiceImpl";
 import { RequestBodyParameter } from "./request-parameter/RequestBodyParameter";
 import { RequestParameter } from "./request-parameter/RequestParameter";
@@ -32,8 +37,9 @@ export declare namespace GeneratedEndpointImplementation {
 }
 
 export class GeneratedEndpointImplementation {
-    // this starts with an underscore to prevent collisions with path parameters
+    // these start with an underscore to prevent collisions with path parameters
     private static RESPONSE_VARIABLE_NAME = "_response";
+    private static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
 
     private service: HttpService;
     private endpoint: HttpEndpoint;
@@ -110,46 +116,66 @@ export class GeneratedEndpointImplementation {
     private generateMethodBody(context: ServiceContext): (StatementStructures | WriterFunction | string)[] {
         const statements: (StatementStructures | WriterFunction | string)[] = [];
 
-        const fetcherArgsBuilder = new FetcherArgsBuilder({
+        let urlSearchParamsVariable: ts.Expression | undefined;
+        if (this.requestParameter != null) {
+            const queryParameters = this.requestParameter.getAllQueryParameters(context);
+            if (queryParameters.length > 0) {
+                statements.push({
+                    kind: StructureKind.VariableStatement,
+                    declarationKind: VariableDeclarationKind.Const,
+                    declarations: [
+                        {
+                            name: GeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME,
+                            initializer: getTextOfTsNode(
+                                ts.factory.createNewExpression(
+                                    ts.factory.createIdentifier("URLSearchParams"),
+                                    undefined,
+                                    []
+                                )
+                            ),
+                        },
+                    ],
+                });
+                for (const queryParameter of queryParameters) {
+                    statements.push(
+                        ...this.requestParameter
+                            .withQueryParameter(queryParameter, context, (referenceToQueryParameter) => [
+                                ts.factory.createExpressionStatement(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(
+                                                GeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
+                                            ),
+                                            ts.factory.createIdentifier("append")
+                                        ),
+                                        undefined,
+                                        [
+                                            ts.factory.createStringLiteral(queryParameter.nameV2.wireValue),
+                                            context.type.stringify(referenceToQueryParameter, queryParameter.valueType),
+                                        ]
+                                    )
+                                ),
+                            ])
+                            .map(getTextOfTsNode)
+                    );
+                }
+                urlSearchParamsVariable = ts.factory.createIdentifier(
+                    GeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
+                );
+            }
+        }
+
+        const fetcherArgs: Fetcher.Args = {
             url: context.base.externalDependencies.urlJoin.invoke([
                 this.generatedService.getEnvironment(context),
                 this.buildUrl(),
             ]),
-            method: this.endpoint.method,
+            method: ts.factory.createStringLiteral(this.endpoint.method),
+            headers: this.getHeadersForFetcherArgs(context),
+            queryParameters: urlSearchParamsVariable,
             body: this.getSerializedRequestBody(context),
-        });
-
-        for (const queryParameter of this.endpoint.queryParameters) {
-            if (this.requestParameter == null) {
-                throw new Error("Cannot get reference to query parameter because there's no request parameter");
-            }
-            const type = context.type.getReferenceToType(queryParameter.valueType);
-            const value = this.requestParameter.getReferenceToQueryParameter(queryParameter, context);
-            fetcherArgsBuilder.addQueryParameter({
-                isNullable: type.isOptional,
-                key: queryParameter.nameV2.wireValue,
-                value,
-                valueAsString: context.type.stringify(value, queryParameter.valueType),
-            });
-        }
-
-        for (const header of [...this.service.headers, ...this.endpoint.headers]) {
-            if (this.requestParameter == null) {
-                throw new Error("Cannot get reference to header because there's no request parameter");
-            }
-            fetcherArgsBuilder.addHeader({
-                header: header.nameV2.wireValue,
-                value: this.requestParameter.getReferenceToHeader(header, context),
-            });
-        }
-
-        fetcherArgsBuilder.addHeaders([
-            ...this.generatedService.getApiHeaders(),
-            ...this.generatedService.getAuthorizationHeaders(context),
-        ]);
-
-        const { statementsToPrepend, fetcherArgs } = fetcherArgsBuilder.build();
-        statements.push(...statementsToPrepend.map(getTextOfTsNode));
+            timeoutMs: undefined,
+        };
 
         statements.push({
             kind: StructureKind.VariableStatement,
@@ -222,6 +248,26 @@ export class GeneratedEndpointImplementation {
                 ...this.endpoint.path.parts,
             ],
         };
+    }
+
+    private getHeadersForFetcherArgs(context: ServiceContext): ts.ObjectLiteralElementLike[] {
+        const elements: GeneratedHeader[] = [];
+        if (this.requestParameter != null) {
+            for (const header of this.requestParameter.getAllHeaders(context)) {
+                elements.push({
+                    header: header.nameV2.wireValue,
+                    value: this.requestParameter.getReferenceToHeader(header, context),
+                });
+            }
+        }
+        elements.push(
+            ...this.generatedService.getApiHeaders(),
+            ...this.generatedService.getAuthorizationHeaders(context)
+        );
+
+        return elements.map(({ header, value }) =>
+            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
+        );
     }
 
     private getSerializedRequestBody(context: ServiceContext): ts.Expression | undefined {

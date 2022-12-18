@@ -5,6 +5,12 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 export interface RequestParameter {
     getParameterDeclaration: (context: ServiceContext) => OptionalKind<ParameterDeclarationStructure>;
     getReferenceToRequestBody: (context: ServiceContext) => ts.Expression | undefined;
-    getReferenceToQueryParameter: (queryParameter: QueryParameter, context: ServiceContext) => ts.Expression;
+    getAllQueryParameters: (context: ServiceContext) => QueryParameter[];
+    getAllHeaders: (context: ServiceContext) => HttpHeader[];
     getReferenceToHeader: (header: HttpHeader, context: ServiceContext) => ts.Expression;
+    withQueryParameter: (
+        queryParameter: QueryParameter,
+        context: ServiceContext,
+        callback: (value: ts.Expression) => ts.Statement[]
+    ) => ts.Statement[];
 }
