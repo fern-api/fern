@@ -1,6 +1,6 @@
 import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { Finishable, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
+import { FernCliError, Finishable, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
@@ -152,8 +152,15 @@ export class CliContext {
         run: (context: TaskContext) => T | Promise<T>
     ): Promise<T> {
         const context = this.addTaskWithInit(init).start();
-        const result = await run(context);
-        context.finish();
+        let result: T;
+        try {
+            result = await run(context);
+        } catch (error) {
+            context.failWithoutThrowing(undefined, error);
+            throw new FernCliError();
+        } finally {
+            context.finish();
+        }
         return result;
     }
 
