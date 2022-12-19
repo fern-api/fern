@@ -40,7 +40,7 @@
   "navigation": [
     {
       "group": "Home",
-      "pages": ["intro", "getting-started"]
+      "pages": ["what-is-fern", "why-fern", "getting-started"]
     },
     {
       "group": "Features",
