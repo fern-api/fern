@@ -31,7 +31,6 @@
     { "path": "../commons/fs-utils" },
     { "path": "../commons/loadable" },
     { "path": "../commons/logging-execa" },
-    { "path": "../docs" },
     { "path": "../editor/id-generator" },
     { "path": "../editor/transaction-generator" },
     { "path": "../editor/transaction-resolver" },
