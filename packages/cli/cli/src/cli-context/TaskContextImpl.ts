@@ -135,15 +135,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ): Promise<boolean> {
         const subtask = this.addInteractiveTask(params).start();
-        try {
-            await run(subtask);
-        } catch (error) {
-            subtask.failWithoutThrowing(undefined, error);
-            throw new FernCliError();
-        } finally {
-            subtask.finish();
-        }
-        return subtask.getResult() === TaskResult.Success;
+        await run(subtask);
+        subtask.finish();
+        return this.result === TaskResult.Success;
     }
 
     public printInteractiveTasks({ spinner }: { spinner: string }): string {
