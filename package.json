@@ -32,7 +32,6 @@
     "fern:local": "yarn workspace @fern-api/cli dist:cli:prod && node $(yarn workspace @fern-api/cli bin fern:prod)",
     "fern-dev:local": "yarn workspace @fern-api/cli dist:cli:dev && node $(yarn workspace @fern-api/cli bin fern:dev)",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
-    "docs:preview": "yarn workspace @fern-api/docs start",
     "add-workspace": "yarn mrlint add-workspace",
     "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
     "generate-json-schema": "yarn fern-script write-json-schema",
