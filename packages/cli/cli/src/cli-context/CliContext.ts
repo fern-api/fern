@@ -156,7 +156,7 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
-            context.failWithoutThrowing("Failed", error);
+            context.failWithoutThrowing(undefined, error);
             throw new FernCliError();
         } finally {
             context.finish();
