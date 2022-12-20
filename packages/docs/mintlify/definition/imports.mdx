@@ -1,7 +1,7 @@
 ---
 title: "Imports"
 description: "Imports allow you to reference types, errors, and ids from other Fern
-    Definitions."
+  Definitions."
 ---
 
 ## Example of using imports
@@ -10,7 +10,7 @@ Let's say that we've got a `movies.yml` where we've already defined a `MovieId`.
 
 ```yml movies.yml
 types:
-    MovieId: string
+  MovieId: string
 ```
 
 We now want to create a new file called `actors.yml` that includes every movie
@@ -20,16 +20,16 @@ import.
 
 ```yml actors.yml
 imports:
-    movies: movies.yml
+  movies: movies.yml
 
 types:
-    ActorId: string
+  ActorId: string
 
-    Actor:
-        properties:
-            id: ActorId
-            name: string
-            movies: list<movies.MovieId>
+  Actor:
+    properties:
+      id: ActorId
+      name: string
+      movies: list<movies.MovieId>
 ```
 
 In the last line above, `movies.` informs which import to reference and

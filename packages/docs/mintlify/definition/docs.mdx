@@ -12,24 +12,24 @@ documentation website, OpenAPI description, or Postman collection.
 
 ```yml
 types:
-    Movie:
-        docs: This is a movie object in IMDb (International Movie Database).
-        properties:
-            id: MovieId
-            title: string
-            rating: double
+  Movie:
+    docs: This is a movie object in IMDb (International Movie Database).
+    properties:
+      id: MovieId
+      title: string
+      rating: double
 
 services:
-    http:
-        MoviesService:
-            docs: This service helps grow the IMDb database.
-            auth: false
-            base-path: /movies
-            endpoints:
-                createMovie:
-                    docs: Use this endpoint to add movies to the database.
-                    method: POST
-                    path: /create-movie
-                    request: CreateMovieRequest
-                    response: MovieId
+  http:
+    MoviesService:
+      docs: This service helps grow the IMDb database.
+      auth: false
+      base-path: /movies
+      endpoints:
+        createMovie:
+          docs: Use this endpoint to add movies to the database.
+          method: POST
+          path: /create-movie
+          request: CreateMovieRequest
+          response: MovieId
 ```

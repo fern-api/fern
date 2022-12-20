@@ -5,9 +5,9 @@ description: "Endpoints can throw errors on failure. An endpoint can have multip
 
 Errors have the following properties:
 
--   **body**: a name
--   **status code**: a server response to a browser’s request (optional)
--   **type(s)**: information about the error that the client can expect (optional)
+- **body**: a name
+- **status code**: a server response to a browser’s request (optional)
+- **type(s)**: information about the error that the client can expect (optional)
 
 ## Example of using errors
 
@@ -16,35 +16,35 @@ The `getMovie` endpoint below has two errors that can throw: `NotFoundError` and
 
 ```yml
 services:
-    http:
-        MoviesService:
-            auth: false
-            base-path: /movies
-            endpoints:
-                getMovie:
-                    method: GET
-                    path: /{movieId}
-                    path-parameters:
-                        movieId: MovieId
-                    response:
-                        ok: Movie
-                        failed:
-                            errors:
-                                - NotFoundError
-                                - UnauthorizedError
+  http:
+    MoviesService:
+      auth: false
+      base-path: /movies
+      endpoints:
+        getMovie:
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response:
+            ok: Movie
+            failed:
+              errors:
+                - NotFoundError
+                - UnauthorizedError
 errors:
-    NotFoundError:
-        http:
-            statusCode: 404
-        type:
-            properties:
-                id: MovieId
-    UnauthorizedError:
-        http:
-            statusCode: 401
-        type:
-            properties:
-                message: string
+  NotFoundError:
+    http:
+      statusCode: 404
+    type:
+      properties:
+        id: MovieId
+  UnauthorizedError:
+    http:
+      statusCode: 401
+    type:
+      properties:
+        message: string
 ```
 
 Let's say that a client hits the `getMovie` endpoint looking for _Iron Man 5_.
@@ -53,9 +53,9 @@ The response would be:
 
 ```json
 {
-    "_error": "NotFoundError",
-    "_errorInstanceId": "67d92c10-b094-49b2-8ea4-0b84013ad1bc",
-    "MovieId": "Iron Man 5"
+  "_error": "NotFoundError",
+  "_errorInstanceId": "67d92c10-b094-49b2-8ea4-0b84013ad1bc",
+  "MovieId": "Iron Man 5"
 }
 ```
 

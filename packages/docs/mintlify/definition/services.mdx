@@ -1,7 +1,7 @@
 ---
 title: "Services"
 description: "This page describes how to define a REST service, which communicates over
-    HTTP."
+  HTTP."
 ---
 
 A service consists of **endpoints**. Each endpoint has a path and an associated
@@ -14,16 +14,16 @@ HTTP message body.
 
 ```yml
 types:
-    ZipCode: string
+  ZipCode: string
 services:
-    WeatherService:
-        base-path: /weather
-        auth: false
-        endpoints:
-            isItRaining:
-                docs: Check if it's currently raining in the provided zip code!
-                path: /is-it-raining
-                method: GET
+  WeatherService:
+    base-path: /weather
+    auth: false
+    endpoints:
+      isItRaining:
+        docs: Check if it's currently raining in the provided zip code!
+        path: /is-it-raining
+        method: GET
 +       request: ZipCode
 +       response: boolean
 ```
@@ -77,8 +77,8 @@ services:
 `/weather/is-it-raining/98112?includeNearbyAreas=true`.
 
 <Note>
-    To encourage best practices, all query parameters are implicitly typed as `optional`. API consumers are never
-    required to supply them.
+  To encourage best practices, all query parameters are implicitly typed as `optional`. API consumers are never required
+  to supply them.
 </Note>
 
 ```yml

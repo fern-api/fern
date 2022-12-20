@@ -26,10 +26,10 @@ variable, such as \{POSTMAN_API_KEY\}.
 
 ```yml /fern/api/generators.yml
 draft:
-    - name: fernapi/fern-postman
-      version: 0.0.xx
-      mode: download-files
-      output-path: ./generated-postman
+  - name: fernapi/fern-postman
+    version: 0.0.xx
+    mode: download-files
+    output-path: ./generated-postman
 +   config:
 +     publishing:
 +       apiKey: ${POSTMAN_API_KEY}

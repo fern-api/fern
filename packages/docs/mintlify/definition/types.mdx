@@ -6,15 +6,15 @@ your own."
 
 ### Built-in types
 
--   [Primitives](#primitives)
--   [Containers](#containers)
+- [Primitives](#primitives)
+- [Containers](#containers)
 
 ### Create your own types
 
--   [Objects](#objects)
--   [Unions](#objects)
--   [Enums](#enums)
--   [Aliases](#aliases)
+- [Objects](#objects)
+- [Unions](#objects)
+- [Enums](#enums)
+- [Aliases](#aliases)
 
 ### Optional Types
 
@@ -32,33 +32,33 @@ Fern includes two kinds of built-in types: **primitives** and **containers**.
 
 The includes primitives are:
 
--   `integer`
--   `double`
--   `long` _(range -2^53 to 2^53)_
--   `string`
--   `boolean`
--   `datetime`
--   `uuid`
+- `integer`
+- `double`
+- `long` _(range -2^53 to 2^53)_
+- `string`
+- `boolean`
+- `datetime`
+- `uuid`
 
 ### Containers
 
 Containers wrap existing types. The included containers are
 
--   `map<K, V>` \- values of type `V` each indexed by a unique key of type `K`
-    (keys are unordered).
--   `list<V>` \- an ordered sequence of items of type `T`.
--   `set<V>`\- a collection of distinct values of type `T`.
--   `optional<V>` \- represents a value of type `T` which is either present or not
-    present.
+- `map<K, V>` \- values of type `V` each indexed by a unique key of type `K`
+  (keys are unordered).
+- `list<V>` \- an ordered sequence of items of type `T`.
+- `set<V>`\- a collection of distinct values of type `T`.
+- `optional<V>` \- represents a value of type `T` which is either present or not
+  present.
 
 ```yml
 types:
-    KitchenSink:
-        docs: Quite the kitchen sink!
-        properties:
-            someMap: map<string, boolean>
-            myList: list<integer>
-            maybeASet: optional<set<string>>
+  KitchenSink:
+    docs: Quite the kitchen sink!
+    properties:
+      someMap: map<string, boolean>
+      myList: list<integer>
+      maybeASet: optional<set<string>>
 ```
 
 ## Create your own types
@@ -70,12 +70,12 @@ built-in [primitive](#primitives) or a type you've defined._
 
 ```yml
 types:
-    Movie:
-        properties:
-            id: MovieId
-            title: string
-            rating: double
-            inTheaters: optional<boolean>
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating: double
+      inTheaters: optional<boolean>
 ```
 
 ### Extending objects
@@ -85,22 +85,22 @@ objects. For example, we might have an `Animal` object.
 
 ```yml
 types:
-    Animal:
-        properties:
-            name: string
-            color: string
+  Animal:
+    properties:
+      name: string
+      color: string
 ```
 
 We want to extend the `Animal` object to create a `Dog` object.
 
 ```yml
 types:
-    Dog:
-        extends: Animal
-        properties:
-            type:
-                likesTreats: boolean
-                furColor: optional<string>
+  Dog:
+    extends: Animal
+    properties:
+      type:
+        likesTreats: boolean
+        furColor: optional<string>
 ```
 
 ### Unions
@@ -109,19 +109,19 @@ A union type represents a value that can have one of several different types.
 
 ```yml
 types:
-    Shape:
-        docs: |
-            A shape is either a square or a circle.
-            Don't ask about triangles.
-        union:
-            square: Square
-            circle: Circle
-    Square:
-        properties:
-            sideLength: double
-    Circle:
-        properties:
-            radius: double
+  Shape:
+    docs: |
+      A shape is either a square or a circle.
+      Don't ask about triangles.
+    union:
+      square: Square
+      circle: Circle
+  Square:
+    properties:
+      sideLength: double
+  Circle:
+    properties:
+      radius: double
 ```
 
 #### Using Discriminant
@@ -131,8 +131,8 @@ representation of a `Square` is:
 
 ```json
 {
-    "type": "square",
-    "sideLength": 42
+  "type": "square",
+  "sideLength": 42
 }
 ```
 
@@ -141,13 +141,13 @@ defining your own discriminant:
 
 ```yml
 types:
-    Shape:
-        docs: |
-            A shape is either a square or a circle.
-            Don't ask about triangles.
-        union:
-            square: Square
-            circle: Circle
+  Shape:
+    docs: |
+      A shape is either a square or a circle.
+      Don't ask about triangles.
+    union:
+      square: Square
+      circle: Circle
 +   discriminant: shapeType
 ```
 
@@ -157,13 +157,13 @@ In union types, you can use `void` when a member has no additional data.
 
 ```yml
 types:
-    TaskResult:
-        union:
-            success: void
-            failure: FailureDetails
-    FailureDetails:
-        properties:
-            reason: string
+  TaskResult:
+    union:
+      success: void
+      failure: FailureDetails
+  FailureDetails:
+    properties:
+      reason: string
 ```
 
 ### Enums
@@ -172,12 +172,12 @@ An enum type represents a collection of allowed values.
 
 ```yml
 types:
-    Suit:
-        enum:
-            - SPADES
-            - HEARTS
-            - CLUBS
-            - DIAMONDS
+  Suit:
+    enum:
+      - SPADES
+      - HEARTS
+      - CLUBS
+      - DIAMONDS
 ```
 
 You can optionally assign a `name` of an enum. This is often used when the
@@ -185,27 +185,27 @@ You can optionally assign a `name` of an enum. This is often used when the
 
 ```yml
 GithubIssueStatus:
-    enum:
-        - name: IssueOpened
-          value: issue.opened
-        - name: IssueUpdated
-          value: issue.updated
-        - name: IssueClosed
-          value: issue.closed
+  enum:
+    - name: IssueOpened
+      value: issue.opened
+    - name: IssueUpdated
+      value: issue.updated
+    - name: IssueClosed
+      value: issue.closed
 ```
 
 Let's look at another example.
 
 ```yml
 FamilyRelationship:
-    docs: Describes the relationship between two individuals.
-    enum:
-        - name: SPOUSE
-          value: "01"
-          docs: 01 - Spouse
-        - value: "02"
-          name: SIBLING
-          docs: 02 - Brother or Sister
+  docs: Describes the relationship between two individuals.
+  enum:
+    - name: SPOUSE
+      value: "01"
+      docs: 01 - Spouse
+    - value: "02"
+      name: SIBLING
+      docs: 02 - Brother or Sister
 ```
 
 ### Aliases
@@ -215,11 +215,11 @@ types more self-documenting. For example, without aliases:
 
 ```yml
 types:
-    Employee:
-        id: string
-        name: string
-        # hmm, is this the manager's name or ID?
-        manager: string
+  Employee:
+    id: string
+    name: string
+    # hmm, is this the manager's name or ID?
+    manager: string
 ```
 
 With aliases:
