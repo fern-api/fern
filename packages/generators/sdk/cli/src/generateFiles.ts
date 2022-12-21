@@ -1,9 +1,11 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { PackageJsonScript, SdkGenerator } from "@fern-typescript/sdk-generator";
+import { SdkGenerator } from "@fern-typescript/sdk-generator";
+import { PRETTIER_COMMAND } from "@fern-typescript/sdk-generator/src/generate-ts-project/generatePackageJson";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
@@ -54,14 +56,7 @@ export async function generateFiles({
 
     await runYarnCommand(["set", "version", "3.2.4"]);
     await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
-    await runYarnCommand(["install"], {
-        env: {
-            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
-        },
-    });
-    await runYarnCommand(["run", PackageJsonScript.FORMAT]);
-    await runYarnCommand(["dlx", "@yarnpkg/sdks", "vscode"]);
+    await loggingExeca(logger, "npx", PRETTIER_COMMAND, { cwd: directoyOnDiskToWriteTo });
 
     return { writtenTo: directoyOnDiskToWriteTo };
 }

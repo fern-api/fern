@@ -10,6 +10,8 @@ export const PackageJsonScript = {
     FORMAT: "format",
 } as const;
 
+export const PRETTIER_COMMAND = ["prettier", "--write", "--print-width", "120", "src/**/*.ts"];
+
 export const DEV_DEPENDENCIES: Record<string, string> = {
     "@types/node": "17.0.33",
     prettier: "2.7.1",
@@ -52,7 +54,7 @@ export async function generatePackageJson({
         main: "./index.js",
         types: "./index.d.ts",
         scripts: {
-            [PackageJsonScript.FORMAT]: "prettier --write --print-width 120 'src/**/*.ts'",
+            [PackageJsonScript.FORMAT]: PRETTIER_COMMAND.join(" "),
             [PackageJsonScript.BUILD]: "tsc && tsc-alias",
         },
     };

@@ -28,6 +28,12 @@ export async function publishPackage({
         logger,
     });
 
+    await runYarnCommand(["install"], {
+        env: {
+            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+        },
+    });
     await runYarnCommand(["run", PackageJsonScript.BUILD]);
 
     await generatorNotificationService.sendUpdate(

@@ -38,37 +38,6 @@ node_modules
     "type": "file",
   },
   Object {
-    "contents": Array [
-      Object {
-        "contents": "{
-  \\"recommendations\\": [
-    \\"arcanis.vscode-zipfs\\",
-    \\"esbenp.prettier-vscode\\"
-  ]
-}
-",
-        "name": "extensions.json",
-        "type": "file",
-      },
-      Object {
-        "contents": "{
-  \\"search.exclude\\": {
-    \\"**/.yarn\\": true,
-    \\"**/.pnp.*\\": true
-  },
-  \\"prettier.prettierPath\\": \\".yarn/sdks/prettier/index.js\\",
-  \\"typescript.tsdk\\": \\".yarn/sdks/typescript/lib\\",
-  \\"typescript.enablePromptUseWorkspaceTsdk\\": true
-}
-",
-        "name": "settings.json",
-        "type": "file",
-      },
-    ],
-    "name": ".vscode",
-    "type": "directory",
-  },
-  Object {
     "contents": "nodeLinker: pnp
 
 yarnPath: .yarn/releases/yarn-3.2.4.cjs
@@ -90,7 +59,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
+        \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
         \\"build\\": \\"tsc && tsc-alias\\"
     },
     \\"dependencies\\": {
@@ -5015,7 +4984,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
+        \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
         \\"build\\": \\"tsc && tsc-alias\\"
     },
     \\"dependencies\\": {
@@ -7978,37 +7947,6 @@ node_modules
     "type": "file",
   },
   Object {
-    "contents": Array [
-      Object {
-        "contents": "{
-  \\"recommendations\\": [
-    \\"arcanis.vscode-zipfs\\",
-    \\"esbenp.prettier-vscode\\"
-  ]
-}
-",
-        "name": "extensions.json",
-        "type": "file",
-      },
-      Object {
-        "contents": "{
-  \\"search.exclude\\": {
-    \\"**/.yarn\\": true,
-    \\"**/.pnp.*\\": true
-  },
-  \\"prettier.prettierPath\\": \\".yarn/sdks/prettier/index.js\\",
-  \\"typescript.tsdk\\": \\".yarn/sdks/typescript/lib\\",
-  \\"typescript.enablePromptUseWorkspaceTsdk\\": true
-}
-",
-        "name": "settings.json",
-        "type": "file",
-      },
-    ],
-    "name": ".vscode",
-    "type": "directory",
-  },
-  Object {
     "contents": "nodeLinker: pnp
 
 yarnPath: .yarn/releases/yarn-3.2.4.cjs
@@ -8018,8 +7956,8 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
   },
   Object {
     "contents": "{
-    \\"name\\": \\"@fern-fern/api-sdk\\",
-    \\"version\\": \\"\\",
+    \\"name\\": \\"@fern/api\\",
+    \\"version\\": \\"0.0.0\\",
     \\"files\\": [
         \\"core\\",
         \\"resources\\",
@@ -8030,7 +7968,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
+        \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
         \\"build\\": \\"tsc && tsc-alias\\"
     },
     \\"devDependencies\\": {
@@ -9237,7 +9175,7 @@ export * from \\"./package/types\\";
  */
 
 import * as serializers from \\"../..\\";
-import { FernApi } from \\"@fern-fern/api-sdk\\";
+import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
 export const Package: core.schemas.ObjectSchema<serializers.Package.Raw, FernApi.Package> = core.schemas.object({
@@ -9294,7 +9232,7 @@ export declare namespace Package {
         \\"rootDir\\": \\"src\\",
         \\"baseUrl\\": \\"src\\",
         \\"paths\\": {
-            \\"@fern-fern/api-sdk\\": [
+            \\"@fern/api\\": [
                 \\".\\"
             ]
         }
@@ -9348,37 +9286,6 @@ node_modules
     "type": "file",
   },
   Object {
-    "contents": Array [
-      Object {
-        "contents": "{
-  \\"recommendations\\": [
-    \\"arcanis.vscode-zipfs\\",
-    \\"esbenp.prettier-vscode\\"
-  ]
-}
-",
-        "name": "extensions.json",
-        "type": "file",
-      },
-      Object {
-        "contents": "{
-  \\"search.exclude\\": {
-    \\"**/.yarn\\": true,
-    \\"**/.pnp.*\\": true
-  },
-  \\"prettier.prettierPath\\": \\".yarn/sdks/prettier/index.js\\",
-  \\"typescript.tsdk\\": \\".yarn/sdks/typescript/lib\\",
-  \\"typescript.enablePromptUseWorkspaceTsdk\\": true
-}
-",
-        "name": "settings.json",
-        "type": "file",
-      },
-    ],
-    "name": ".vscode",
-    "type": "directory",
-  },
-  Object {
     "contents": "nodeLinker: pnp
 
 yarnPath: .yarn/releases/yarn-3.2.4.cjs
@@ -9400,7 +9307,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write --print-width 120 'src/**/*.ts'\\",
+        \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
         \\"build\\": \\"tsc && tsc-alias\\"
     },
     \\"dependencies\\": {

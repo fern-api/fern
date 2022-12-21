@@ -11,7 +11,7 @@ import { runGenerator } from "../runGenerator";
 interface FixtureInfo {
     path: string;
     orgName: string;
-    outputMode: "github" | "publish";
+    outputMode: "github" | "publish" | "local";
     apiName: string;
     customConfig?: SdkCustomConfigSchema;
 }
@@ -29,7 +29,7 @@ const FIXTURES: FixtureInfo[] = [
     {
         path: "reserved-keywords",
         orgName: "fern",
-        outputMode: "publish",
+        outputMode: "local",
         apiName: "api",
     },
     {
@@ -115,8 +115,8 @@ describe("runGenerator", () => {
 
                 const unzippedGitArchive = (await tmp.dir()).path;
                 await decompress(pathToGitArchive, unzippedGitArchive);
-                await rm(path.join(unzippedGitArchive, ".yarn"), { recursive: true });
-                await rm(path.join(unzippedGitArchive, "yarn.lock"), { recursive: true });
+                await rm(path.join(unzippedGitArchive, ".yarn"), { recursive: true, force: true });
+                await rm(path.join(unzippedGitArchive, "yarn.lock"), { recursive: true, force: true });
                 const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(unzippedGitArchive));
                 expect(directoryContents).toMatchSnapshot();
                 expect([]).toEqual([]);
@@ -126,8 +126,14 @@ describe("runGenerator", () => {
     }
 });
 
-function generateOutputMode(org: string, apiName: string, mode: "github" | "publish"): FernGeneratorExec.OutputMode {
+function generateOutputMode(
+    org: string,
+    apiName: string,
+    mode: "github" | "publish" | "local"
+): FernGeneratorExec.OutputMode {
     switch (mode) {
+        case "local":
+            return FernGeneratorExec.OutputMode.downloadFiles();
         case "github":
             return FernGeneratorExec.OutputMode.github({
                 version: "0.0.1",
