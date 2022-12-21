@@ -11,20 +11,17 @@ import { Volume } from "memfs/lib/volume";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { NpmPackage } from "./npm-package/NpmPackage";
 import { loadIntermediateRepresentation } from "./utils/loadIntermediateRepresentation";
-import { YarnRunner } from "./yarnRunner";
 
 export async function generateFiles({
     config,
     customConfig,
     npmPackage,
     logger,
-    runYarnCommand,
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     customConfig: SdkCustomConfig;
     npmPackage: NpmPackage;
     logger: Logger;
-    runYarnCommand: YarnRunner;
 }): Promise<{ writtenTo: AbsoluteFilePath }> {
     const directoyOnDiskToWriteTo = AbsoluteFilePath.of(config.output.path);
     const generatorContext = new GeneratorContextImpl(logger);
@@ -54,8 +51,6 @@ export async function generateFiles({
     await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
     await sdkGenerator.copyCoreUtilities({ pathToPackage: directoyOnDiskToWriteTo });
 
-    await runYarnCommand(["set", "version", "3.2.4"]);
-    await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
     await loggingExeca(logger, "npx", PRETTIER_COMMAND, { cwd: directoyOnDiskToWriteTo });
 
     return { writtenTo: directoyOnDiskToWriteTo };

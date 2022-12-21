@@ -11,7 +11,7 @@ import { constructNpmPackage } from "./npm-package/constructNpmPackage";
 import { publishPackage } from "./publishPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
-import { createYarnRunner } from "./yarnRunner";
+import { createYarnRunner, YarnRunner } from "./yarnRunner";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
@@ -55,7 +55,6 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
             customConfig,
             logger,
             npmPackage,
-            runYarnCommand,
         });
 
         await config.output.mode._visit<void | Promise<void>>({
@@ -63,6 +62,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                 if (npmPackage.publishInfo == null) {
                     throw new Error("npmPackage.publishInfo is not defined.");
                 }
+                await prepareRepoForPublishing({ runYarnCommand });
                 await publishPackage({
                     generatorNotificationService,
                     logger,
@@ -73,12 +73,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                 });
             },
             github: async (githubOutputMode) => {
-                await runYarnCommand(["install"], {
-                    env: {
-                        // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                        YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
-                    },
-                });
+                await prepareRepoForPublishing({ runYarnCommand });
                 await runYarnCommand(["dlx", "@yarnpkg/sdks", "vscode"]);
                 await writeGitHubWorkflows({
                     config,
@@ -113,4 +108,15 @@ function parseCustomConfig(config: FernGeneratorExec.GeneratorConfig): SdkCustom
         useBrandedStringAliases: customConfig?.useBrandedStringAliases ?? false,
         isPackagePrivate: customConfig?.private ?? false,
     };
+}
+
+async function prepareRepoForPublishing({ runYarnCommand }: { runYarnCommand: YarnRunner }) {
+    await runYarnCommand(["set", "version", "3.2.4"]);
+    await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
+    await runYarnCommand(["install"], {
+        env: {
+            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+        },
+    });
 }
