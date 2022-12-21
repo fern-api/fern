@@ -53,8 +53,6 @@ export async function publishPackage({
     }
     await npm(publishCommand);
 
-    logger.info(`Published ${publishInfo.packageCoordinate.name}@${publishInfo.packageCoordinate.version}`);
-
     await generatorNotificationService.sendUpdate(
         FernGeneratorExec.GeneratorUpdate.published(publishInfo.packageCoordinate)
     );

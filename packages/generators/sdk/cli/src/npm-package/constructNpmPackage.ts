@@ -5,7 +5,12 @@ export function constructNpmPackage(generatorConfig: FernGeneratorExec.Generator
     const outputMode = generatorConfig.output.mode;
     switch (outputMode.type) {
         case "downloadFiles":
-            throw new Error("Output mode downloadFiles is unsupported!");
+            return {
+                packageName: `@${generatorConfig.organization}/${generatorConfig.workspaceName}`,
+                version: "0.0.0",
+                publishInfo: undefined,
+                repoUrl: undefined,
+            };
         case "publish":
             return {
                 packageName: outputMode.registriesV2.npm.packageName,

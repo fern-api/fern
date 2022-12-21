@@ -1,3 +1,4 @@
+import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -57,7 +58,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
             runYarnCommand,
         });
 
-        await config.output.mode._visit({
+        await config.output.mode._visit<void | Promise<void>>({
             publish: async () => {
                 if (npmPackage.publishInfo == null) {
                     throw new Error("npmPackage.publishInfo is not defined.");
@@ -78,9 +79,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                     customConfig,
                 });
             },
-            downloadFiles: () => {
-                throw new Error("download-files output mode is not implemented");
-            },
+            downloadFiles: noop,
             _other: ({ type }) => {
                 throw new Error(`${type} mode is not implemented`);
             },
