@@ -5,19 +5,13 @@ description: "A Fern Definition is a set of YAML files that describe your API."
 
 Each **Fern Definition** file may define:
 
-- **[Services](/definition/services)**: a set of REST endpoints
-- **[Types](/definition/types)**: data model and objects
-- **[Errors](/definition/errors)**: an error name, status code, and can include
-  properties
-- **[Docs](/definition)**: human-readable descriptions
-- **[Imports](/definition/imports)**: share types and errors across YAML files
+- **[Custom types](/definition/types)**. Use **custom types** to build your data model.
+- **[Services](/definition/services)**. A **service** is a set of related REST endpoints.
+- **[Errors](/definition/errors)**. An **error** represents a failed (non-200) response from an endpoint.
 
 ## An example of a Fern Definition
 
-[View the example on Github](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/)
-or here:
-
-```yml
+```yml imdb.yml
 services:
   http:
     MoviesService:

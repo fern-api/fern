@@ -2,7 +2,9 @@
 title: "Comparison with OpenAPI"
 ---
 
-We built Fern from the ground up to address our own dissatisfaction with OpenAPI. We differ from OpenAPI in three key areas:
+We built Fern from the ground up to address our own dissatisfaction with OpenAPI.
+
+**TL;DR: we differ from OpenAPI in these areas:**
 
 - **Ease of use**
 - **Quality of code generation**
@@ -126,11 +128,11 @@ We built Fern from first principles to ensure that **we will always generate
 idimoatic code.** There's a number of footguns in OpenAPI: if you use them,
 it's impossible to generate high-quality code. Here's some examples:
 
-- Inline types\*\* in an OpenAPI spec makes it impossible to generate idiomatic
+- Using inline (anonymous) types in an OpenAPI spec makes it impossible to generate idiomatic
   code, as most langauges do not support anonymous type declarations.
 - It's easy to define non-discriminated unions in OpenAPI, which makes for
-  tricky-to-use SDKs. In many languages, this makes it difficult or impossible
-  to deserialize JSON correctly.
+  tricky-to-use SDKs. In many languages, it's difficult or impossible to
+  deserialize non-discriminated unions correctly.
 - Common errors (like `PetNotFoundError` in the above example) cannot be reused
   in OpenAPI.
   This results is duplicative generated code that doesn't feel handwritten.

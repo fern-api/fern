@@ -1,234 +1,210 @@
 ---
 title: "Types"
-description: "Types describe the data model of your API. You can use built-in types or create
-your own."
+description: "Types describe the data model of your API."
 ---
-
-### Built-in types
-
-- [Primitives](#primitives)
-- [Containers](#containers)
-
-### Create your own types
-
-- [Objects](#objects)
-- [Unions](#objects)
-- [Enums](#enums)
-- [Aliases](#aliases)
-
-### Optional Types
-
-Any type can be made optional by wrapping it in `optional<>`. For example:
-
-```yml
-inTheaters: optional<boolean>`
-```
 
 ## Built-in types
 
-Fern includes two kinds of built-in types: **primitives** and **containers**.
+- **`string`**
+- **`integer`**
+- **`long`**
+- **`double`**
+- **`boolean`**
+- **`datetime`** _An [ISO-8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601)._
+- **`uuid`**
+- **`list`** _e.g. list\<string\>_
+- **`set`** _e.g. set\<string\>_
+- **`map`** _e.g. map\<string, integer\>_
+- **`optional`** _e.g. optional\<string\>_
 
-### Primitives
+## Custom types
 
-The includes primitives are:
-
-- `integer`
-- `double`
-- `long` _(range -2^53 to 2^53)_
-- `string`
-- `boolean`
-- `datetime`
-- `uuid`
-
-### Containers
-
-Containers wrap existing types. The included containers are
-
-- `map<K, V>` \- values of type `V` each indexed by a unique key of type `K`
-  (keys are unordered).
-- `list<V>` \- an ordered sequence of items of type `T`.
-- `set<V>`\- a collection of distinct values of type `T`.
-- `optional<V>` \- represents a value of type `T` which is either present or not
-  present.
-
-```yml
-types:
-  KitchenSink:
-    docs: Quite the kitchen sink!
-    properties:
-      someMap: map<string, boolean>
-      myList: list<integer>
-      maybeASet: optional<set<string>>
-```
-
-## Create your own types
+Creating your own types is easy in Fern!
 
 ### Objects
 
-_Objects are a collection of named properties. A property can reference a
-built-in [primitive](#primitives) or a type you've defined._
+The most common custom types are **objects**.
 
-```yml
+In Fern, you use the `"properties"` key to create an object:
+
+```yaml
 types:
-  Movie:
-    properties:
-      id: MovieId
-      title: string
-      rating: double
-      inTheaters: optional<boolean>
-```
-
-### Extending objects
-
-It’s pretty common to have objects that might be more specific versions of other
-objects. For example, we might have an `Animal` object.
-
-```yml
-types:
-  Animal:
-    properties:
+  Person:
+    properties: # <---
       name: string
-      color: string
+      address: Address
+
+  Address:
+    properties: # <---
+      line1: string
+      line2: optional<string>
+      city: string
+      state: string
+      zip: string
 ```
 
-We want to extend the `Animal` object to create a `Dog` object.
-
-```yml
-types:
-  Dog:
-    extends: Animal
-    properties:
-      type:
-        likesTreats: boolean
-        furColor: optional<string>
-```
-
-### Unions
-
-A union type represents a value that can have one of several different types.
-
-```yml
-types:
-  Shape:
-    docs: |
-      A shape is either a square or a circle.
-      Don't ask about triangles.
-    union:
-      square: Square
-      circle: Circle
-  Square:
-    properties:
-      sideLength: double
-  Circle:
-    properties:
-      radius: double
-```
-
-#### Using Discriminant
-
-Union types in Fern are always discriminated. For example, the JSON
-representation of a `Square` is:
+These represent JSON objects:
 
 ```json
 {
-  "type": "square",
-  "sideLength": 42
+  "name": "Alice",
+  "address": {
+    "line1": "123 Happy Lane",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001"
+  }
 }
 ```
 
-By default, the `discriminant` in JSON will be `"type"`. You can change this by
-defining your own discriminant:
+You can also use **extends** to compose objects:
 
-```yml
+```yaml
 types:
-  Shape:
-    docs: |
-      A shape is either a square or a circle.
-      Don't ask about triangles.
-    union:
-      square: Square
-      circle: Circle
-+   discriminant: shapeType
-```
-
-#### Using `void`
-
-In union types, you can use `void` when a member has no additional data.
-
-```yml
-types:
-  TaskResult:
-    union:
-      success: void
-      failure: FailureDetails
-  FailureDetails:
+  Pet:
     properties:
-      reason: string
-```
-
-### Enums
-
-An enum type represents a collection of allowed values.
-
-```yml
-types:
-  Suit:
-    enum:
-      - SPADES
-      - HEARTS
-      - CLUBS
-      - DIAMONDS
-```
-
-You can optionally assign a `name` of an enum. This is often used when the
-`value` has punctuation. The `value` is what goes over the wire as JSON.
-
-```yml
-GithubIssueStatus:
-  enum:
-    - name: IssueOpened
-      value: issue.opened
-    - name: IssueUpdated
-      value: issue.updated
-    - name: IssueClosed
-      value: issue.closed
-```
-
-Let's look at another example.
-
-```yml
-FamilyRelationship:
-  docs: Describes the relationship between two individuals.
-  enum:
-    - name: SPOUSE
-      value: "01"
-      docs: 01 - Spouse
-    - value: "02"
-      name: SIBLING
-      docs: 02 - Brother or Sister
+      name: string
+  Dog:
+    extends: Pet
+    properties:
+      breed: string
 ```
 
 ### Aliases
 
-An alias type renames an existing type. Use aliases to remove ambiguity and make
-types more self-documenting. For example, without aliases:
+An Alias type is a renaming of an existing type. This is usually done for clarity.
 
-```yml
+```yaml
 types:
-  Employee:
-    id: string
-    name: string
-    # hmm, is this the manager's name or ID?
-    manager: string
+  # UserId is an alias of string
+  UserId: string
+
+  User:
+    properties:
+      id: UserId
+      name: string
 ```
 
-With aliases:
+### Enums
 
-```yml
+An enum represents a string with a set of allowed values.
+
+In Fern, you use the `"enum"` key to create an enum:
+
+```yaml
 types:
-+ EmployeeId: string
-  Employee:
-+   id: EmployeeId
-    name: string
-+   manager: EmployeeId
+  WeatherReport:
+    enum: # <---
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING
+```
+
+### Unions
+
+Fern supports tagged unions (a.k.a. discriminated unions). Unions are useful for
+polymorphism. This is similar to the `oneOf` concept in OpenAPI.
+
+In Fern, you use the `"union"` key to create an union:
+
+```yaml
+types:
+  Animal:
+    union:
+      dog: Dog
+      cat: Cat
+  Dog:
+    properties:
+      likesToWoof: boolean
+  Cat:
+    properties:
+      likesToMeow: boolean
+```
+
+In JSON, unions have a **discriminant property** to differentiate between
+different members of the union. By default, Fern uses `"type"` as the
+discriminant property:
+
+```json
+{
+  "type": "dog",
+  "likesToWoof": true
+}
+```
+
+You can customize the discriminant property using the "discriminant" key:
+
+```diff
+types:
+  Animal:
++   discriminant: animalType
+    union:
+      dog: Dog
+      cat: Cat
+  Dog:
+    properties:
+      likesToWoof: boolean
+  Cat:
+    properties:
+      likesToMeow: boolean
+```
+
+This corresponds to a JSON object like this:
+
+```json
+{
+  "animalType": "dog",
+  "likesToWoof": true
+}
+```
+
+### Documentation
+
+You can add documentation for types. These docs are passed into the compiler,
+and are incredibly useful in the generated outputs (e.g. docstrings in SDKs).
+
+```yaml
+types:
+  Person:
+    docs: A person represents a human being
+    properties:
+      name: string
+      age:
+        docs: age in years
+        type: integer
+```
+
+```typescript Generated TypeScript SDK
+/**
+ * A person represents a human being
+ */
+interface Person {
+  name: string;
+  // age in years
+  age: number;
+}
+```
+
+### Examples
+
+You can add examples for types. These docs are passed into the compiler,
+and are incredibly useful in the generated outputs (e.g. docstrings in SDKs).
+
+```
+types:
+  UserId:
+    docs: A unique identifier for a user
+    type: string
+    examples:
+      - user-id-123
+```
+
+```typescript Generated TypeScript SDK
+/**
+ * A unique identifier for a user
+ *
+ * @example "user-id-123"
+ */
+type UserId = string;
 ```
