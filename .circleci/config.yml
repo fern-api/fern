@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Publish fern-openapi docker
           command: |
-            projectVersion=$(git tag --points-at HEAD)
+            projectVersion="$(./scripts/git-version.sh)"
             yarn dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fern-openapi:"$projectVersion" fernapi/fern-openapi:"$projectVersion"
@@ -59,8 +59,6 @@ workflows:
               only: /.*/
       - publish:
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /.*/
           requires:
