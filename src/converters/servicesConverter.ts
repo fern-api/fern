@@ -163,9 +163,9 @@ function convertRequestBody({
     examples: ExampleEndpointCall[];
 }): OpenAPIV3.RequestBodyObject {
     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
-    for (const [exampleIndex, example] of examples.entries()) {
+    for (const example of examples) {
         if (example.request != null) {
-            openapiExamples[`Example${exampleIndex + 1}`] = {
+            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                 value: example.request.jsonExample,
             };
         }
@@ -241,9 +241,9 @@ function convertResponse({
         };
 
         const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
-        for (const [exampleIndex, example] of examples.entries()) {
+        for (const example of examples) {
             if (example.response.type === "ok" && example.response.body != null) {
-                openapiExamples[`Example${exampleIndex + 1}`] = {
+                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                     value: example.response.body.jsonExample,
                 };
             }
@@ -276,13 +276,13 @@ function convertResponse({
                     };
 
                     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
-                    for (const [exampleIndex, example] of examples.entries()) {
+                    for (const example of examples) {
                         if (
                             example.response.type === "error" &&
                             example.response.body != null &&
                             isEqual(responseError.error, example.response.error)
                         ) {
-                            openapiExamples[`Example${exampleIndex + 1}`] = {
+                            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                                 value: example.response.body.jsonExample,
                             };
                         }
@@ -321,11 +321,11 @@ function convertResponse({
                 };
 
                 const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
-                for (const [exampleIndex, example] of examples.entries()) {
+                for (const example of examples) {
                     if (example.response.type === "error" && example.response.body != null) {
                         const errorForExample = example.response.error;
                         if (errorInfos.some((errorInfo) => isEqual(errorInfo.errorDeclaration.name, errorForExample))) {
-                            openapiExamples[`Example${exampleIndex + 1}`] = {
+                            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                                 value: example.response.body.jsonExample,
                             };
                         }
@@ -444,12 +444,12 @@ function convertPathParameter({
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
-    for (const [exampleIndex, example] of examples.entries()) {
+    for (const example of examples) {
         const pathParameterExample = [...example.servicePathParameters, ...example.endpointPathParameters].find(
             (param) => param.key === pathParameter.nameV2.unsafeName.originalValue
         );
         if (pathParameterExample != null) {
-            openapiExamples[`Example${exampleIndex + 1}`] = {
+            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                 value: pathParameterExample.value.jsonExample,
             };
         }
@@ -479,12 +479,12 @@ function convertQueryParameter({
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
-    for (const [exampleIndex, example] of examples.entries()) {
+    for (const example of examples) {
         const queryParameterExample = example.queryParameters.find(
             (param) => param.wireKey === queryParameter.nameV2.wireValue
         );
         if (queryParameterExample != null) {
-            openapiExamples[`Example${exampleIndex + 1}`] = {
+            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                 value: queryParameterExample.value.jsonExample,
             };
         }
@@ -514,12 +514,12 @@ function convertHeader({
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
-    for (const [exampleIndex, example] of examples.entries()) {
+    for (const example of examples) {
         const headerExample = [...example.serviceHeaders, ...example.endpointHeaders].find(
             (headerFromExample) => headerFromExample.wireKey === httpHeader.nameV2.wireValue
         );
         if (headerExample != null) {
-            openapiExamples[`Example${exampleIndex + 1}`] = {
+            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                 value: headerExample.value.jsonExample,
             };
         }
