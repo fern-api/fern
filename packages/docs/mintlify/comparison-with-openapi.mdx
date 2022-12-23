@@ -1,0 +1,194 @@
+---
+title: "Comparison with OpenAPI"
+---
+
+We built Fern from the ground up to address our own dissatisfaction with OpenAPI.
+
+**TL;DR: we differ from OpenAPI in these areas:**
+
+- **Ease of use**
+- **Quality of code generation**
+- **Focus on server-side API development**
+- **Change management**
+- **Cloud-based code generation and publishing**
+
+## Ease of use
+
+The Fern specification was built to be **easy to write and easy to read.** Take,
+for example, OpenAPI's classic [Pet Store API](https://petstore.swagger.io/).
+
+Here's how you would define the `getPetById` endpoint in Fern:
+
+<Accordion title="Fern Example.">
+
+```yaml
+services:
+  http:
+    PetStoreService:
+      docs: Everything about your pets
+      base-path: /pet
+      auth: false
+      endpoints:
+        getPetById:
+          docs: Find a pet by its ID
+          path: /{petId}
+          path-parameters:
+            petId:
+              docs: ID of the pet to return
+              type: integer
+          method: GET
+          response: Pet
+          errors:
+            - InvalidPetIdError
+            - PetNotFoundError
+types:
+  Pet:
+    properties:
+      id: integer
+      name: string
+errors:
+  InvalidPetIdError:
+    status-code: 400
+  PetNotFoundError:
+    status-code: 404
+```
+
+</Accordion>
+
+And here's the equivalent OpenAPI (taken from their website):
+
+<Accordion title="OpenAPI Example">
+
+```json
+{
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "pet",
+      "description": "Everything about your pets"
+    }
+  ],
+  "paths": {
+    "/pet/{petId}": {
+      "get": {
+        "tags": ["pet"],
+        "summary": "Find a pet by its ID",
+        "operationId": "getPetById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of the pet to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pet": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+```
+
+</Accordion>
+
+## Quality of code generation
+
+We built Fern from first principles to ensure that **we will always generate
+idimoatic code.** There's a number of footguns in OpenAPI: if you use them,
+it's impossible to generate high-quality code. Here's some examples:
+
+- Using inline (anonymous) types in an OpenAPI spec makes it impossible to generate idiomatic
+  code, as most langauges do not support anonymous type declarations.
+- It's easy to define non-discriminated unions in OpenAPI, which makes for
+  tricky-to-use SDKs. In many languages, it's difficult or impossible to
+  deserialize non-discriminated unions correctly.
+- Common errors (like `PetNotFoundError` in the above example) cannot be reused
+  in OpenAPI.
+  This results is duplicative generated code that doesn't feel handwritten.
+- OpenAPI's `anyOf` concept is impossible to represent in most programming
+  languages in sub-exponential time.
+
+Pitfalls like these are why it's common for OpenAPI generated code to
+[not compile](https://github.com/OpenAPITools/openapi-generator/issues?q=is%3Aissue+%22doesn%27t+compile%22).
+
+Beyond the format, we've built Fern based on best practices in compiling. This includes:
+
+- **Semantic validation** (e.g. disallowing references to types that haven't been defined)
+- **Building the compiler to be modular,** as we have multiple independent outputs
+  (e.g. TypeScript SDK, Postman Collection).
+- **Producing an intermediate representation** so that different generators don't
+  have implement duplicative logic. Beyond saving time, this reduces errors and
+  increases consistency among outputs.
+- **Using AST representations,** rather than templating, to enable more complex and
+  idiomatic code generation.
+
+## Focus on server-side API development
+
+OpenAPI is focused primarily on documentation and SDK generation, and is not very
+helpful for backend API development. The best you'll get from OpenAPI are _server stubs_,
+which aren't too helpful once you already have a backend.
+
+In comparison, we've focused heavily on server-side integration, as that's where
+most of the API development process occurs! In particular, we:
+
+- **Auto-generate the types** (e.g. Pydantic models for FastAPI)
+- **Auto-generate the networking logic** (e.g. FastAPI routes)
+- **Auto-generate exceptions** that you can throw. Fern handles converting to the
+  correct HTTP status code.
+- **Auto-generate server interfaces** for you to implement your business logic.
+  This ensure you implement your API correctly. For example, if you return the
+  wrong type for an endpoint, you'll get a compile error.
+
+## Change management
+
+An important difference between Fern and OpenAPI is our strategy around versioning
+and change management.
+
+With OpenAPI, you're beholden to their infamous [features matrices](https://openapi-generator.tech/docs/generators/java#schema-support-feature); if you want to use a feature, you first need to ensure that all your generators support it.
+
+In comparison, we've built a custom migration framework for our intermediate
+representation so that most new features are implicitly supported by older
+generators. And when a migration isn't possible, you'll get a clear error from
+our compiler of how you can remediate.
+
+## Cloud-based code generation and publishing
+
+Fern can run your code generation in the cloud. This improves reliability as we
+run the generators in consistent, containerized environments. You run `fern generate`
+and _it just works_. You don't need to have Java installed on your computer to
+generate a Java SDK.
+
+Fern handles publishing too. We don't just spit out a bunch of code and say
+"good luck." Fern can publish directly to registries (e.g. npm, Maven) and to
+GitHub repos.

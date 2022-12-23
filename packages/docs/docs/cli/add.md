@@ -20,7 +20,7 @@ Add the TypeScript SDK generator:
 fern add typescript
 ```
 
-Add the Postman collection generator:
+Add the Postman Collection generator:
 
 ```
 fern add postman

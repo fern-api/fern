@@ -40,34 +40,30 @@
   "navigation": [
     {
       "group": "Home",
-      "pages": ["intro", "getting-started"]
+      "pages": ["intro", "why-fern", "comparison-with-openapi", "getting-started"]
     },
     {
-      "group": "Features",
-      "pages": ["features/sdk", "features/api-docs", "features/server", "features/postman", "features/openapi"]
+      "group": "Showcase",
+      "pages": ["showcase/typescript-sdk", "showcase/fastapi"]
     },
     {
-      "group": "Define your API",
+      "group": "Defining your API",
       "pages": [
         "definition",
-        "definition/services",
         "definition/types",
+        "definition/services",
         "definition/errors",
-        "definition/docs",
-        "definition/imports"
+        "definition/imports",
+        "definition/api-yml"
       ]
     },
     {
-      "group": "Code generators",
-      "pages": ["generators/code-generators", "generators/introduction"]
+      "group": "Compiler",
+      "pages": ["compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
     },
     {
-      "group": "CLI",
-      "pages": ["cli/add", "cli/check", "cli/generate", "cli/release", "cli/init", "cli/upgrade", "cli/fern.config"]
-    },
-    {
-      "group": "Tutorials",
-      "pages": ["tutorials/express", "tutorials/fastapi", "tutorials/spring"]
+      "group": "Advanced features",
+      "pages": ["advanced/audiences", "advanced/multiple-apis", "advanced/depending-on-other-apis"]
     }
   ],
   "footerSocials": {

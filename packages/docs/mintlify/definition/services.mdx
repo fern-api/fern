@@ -1,159 +1,297 @@
 ---
 title: "Services"
-description: "This page describes how to define a REST service, which communicates over
-    HTTP."
+description: "A Service is a collection of related endpoints"
 ---
 
-A service consists of **endpoints**. Each endpoint has a path and an associated
-HTTP method (e.g. `GET`, `POST`).
+## Service Definition
 
-## Requests and responses
+Each service defines:
 
-Endpoints can optionally provide requests and responses, which are used as the
-HTTP message body.
+1. A **base-path**: A common prefix for all the endpoints's HTTP paths
+2. Whether the service requires [authentication](./api-yml#authentication)
+3. **Endpoints**
 
-```yml
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints: {}
+```
+
+## Endpoints
+
+An endpoint includes:
+
+- A **URL path** (optionally including path parameters)
+- An **HTTP Method**
+- **Request information** _(Optional)_
+  - **Query-parameters**
+  - **Headers**
+  - **Request body**
+- **Successful (200) response** information _(Optional)_
+- **Error (non-200) responses** that this endpoint might return _(Optional)_
+
+## URL Path
+
+Each endpoint has a URL path.
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getAllUsers:
+          path: /all # <---
+          method: GET
+```
+
+The full path for the endpoint is the concatenation of:
+
+- The [environment](./api-yml#environments) URL
+- The service `base-path`
+- The endpoint `path`
+
+### Path parameters
+
+You can supply path parameters for your endpoints to create dynamic URLs.
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getUser:
+          path: /{userId} # <---
+          path-parameters: # <---
+            userId: string
+          method: GET
+```
+
+Services can also have path-parameters:
+
+```yaml project.yml
+services:
+  http:
+    ProjectService:
+      base-path: /projects/{projectId}
+      path-parameters:
+        projectId: string
+      auth: false
+      endpoints: ...
+```
+
+## Query parameters
+
+Each endpoint can specify query parameters:
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getAllUsers:
+          path: /all
+          method: GET
+          request:
+            # this name is required for idiomatic SDKs
+            name: GetAllUsersRequest
+            query-parameters:
+              limit: optional<integer>
+```
+
+## Headers
+
+Each endpoint can specify request headers:
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getAllUsers:
+          path: /all
+          method: GET
+          request:
+            # this name is required for idiomatic SDKs
+            name: GetAllUsersRequest
+            headers:
+              X-Endpoint-Header: string
+```
+
+Services can also specify request headers. These headers will cascade to the service's endpoints.
+
+```diff user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
++     headers:
++       X-Service-Header: string
+      endpoints:
+        getAllUsers:
+          path: /all
+          method: GET
+          request:
+            # this name is required for idiomatic SDKs
+            name: GetAllUsersRequest
+            headers:
+              X-Endpoint-Header: string
+```
+
+## Request body
+
+Endpoints can specify a request body type.
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        setUserName:
+          path: /{userId}/set-name
+          path-parameters:
+            userId: string
+          method: POST
+          request:
+            # this name is required for idiomatic SDKs
+            name: SetUserNameRequest
+            body: string # <---
+```
+
+### Inlining a request body
+
+If the request body is an object, you can **inline the type declaration.** This
+makes the generated SDKs a bit more idiomatic.
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        createUser:
+          path: /create
+          method: POST
+          request:
+            # this name is required for idiomatic SDKs
+            name: CreateUserRequest
+            body:
+              properties:
+                userName: string
+```
+
+## Success response
+
+Endpoints can specify a `response`, which is the type of the body that will be
+returned on a successful (200) call.
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getAllUsers:
+          path: /all
+          method: GET
+          response: list<User>
+
 types:
-    ZipCode: string
-services:
-    WeatherService:
-        base-path: /weather
-        auth: false
-        endpoints:
-            isItRaining:
-                docs: Check if it's currently raining in the provided zip code!
-                path: /is-it-raining
-                method: GET
-+       request: ZipCode
-+       response: boolean
+  User:
+    properties:
+      userId: string
+      name: string
 ```
 
-You can also define requests and responses inline:
+## Error responses
 
-```yml
+Endpoints can specify error responses, which detail the non-200 responses that
+the endpoint might return
+
+```yaml user.yml
 services:
-  WeatherService:
-    base-path: /weather
-    auth: false
-    endpoints:
-      isItRaining:
-        docs: Check if it's currently raining in the provided city!
-        path: /is-it-raining
-        method: GET
-        request:
-+         properties:
-+           city: string
-+           country: string
-        response: boolean
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getUser:
+          path: /{userId}
+          path-parameters:
+            userId: string
+          method: GET
+          response: User
+          errors:
+            - UserNotFoundError
 
-```
-
-## Path and query parameters
-
-You can specify **path parameters** and **query parameters** for each endpoint.
-
-**Path parameters** are parsed from the endpoint URL, e.g.
-`/weather/is-it-raining/98112`.
-
-```yml
 types:
-  ZipCode: string
-services:
-  WeatherService:
-    base-path: /weather
-    auth: false
-    endpoints:
-      isItRaining:
-        docs: Check if it's currently raining in the provided zip code!
-+       path: /is-it-raining/{zipCode}
-+       path-parameters:
-+         zipCode: ZipCode
-        method: GET
-        response: boolean
+  User:
+    properties:
+      userId: string
+      name: string
 
+errors:
+  UserNotFoundError:
+    status-code: 404
 ```
 
-**Query parameters** are appended to the endpoint URL, e.g.
-`/weather/is-it-raining/98112?includeNearbyAreas=true`.
+You can learn more about how to define errors on the [Errors](./errors) page.
 
-<Note>
-    To encourage best practices, all query parameters are implicitly typed as `optional`. API consumers are never
-    required to supply them.
-</Note>
+## Examples
 
-```yml
+When you declare an example, you can also specify some examples of how that
+endpoint might be used. These are used by the compiler to enhance the generated
+outputs (e.g. examples in the generated Postman Collection).
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getUser:
+          path: /{userId}
+          path-parameters:
+            userId: string
+          method: GET
+          response: User
+          errors:
+            - UserNotFoundError
+          examples: # <---
+            - path-parameters:
+                userId: alice-user-id
+              response:
+                body:
+                  userId: alice-user-id
+                  name: Alice
+            - path-parameters:
+                userId: missing-user-id
+                response:
+                  error: UserNotFoundError
+
 types:
-  ZipCode: string
-services:
-  WeatherService:
-    base-path: /weather
-    auth: false
-    endpoints:
-      isItRaining:
-        docs: Check if it's currently raining in the provided zip code!
-        path: /is-it-raining/{zipCode}
-        path-parameters:
-          zipCode: ZipCode
-+       query-parameters:
-+         includeNearbyAreas:
-+           type: boolean
-+           docs: if true, we'll also tell you if it's raining nearby
-        method: GET
-        response: boolean
+  User:
+    properties:
+      userId: string
+      name: string
 
-```
-
-## Errors
-
-Every endpoint can specify [errors](/definition/errors) \- i.e. responses that
-indicate that something went wrong. The endpoint's `errors` field must be a
-union.
-
-```yml
- types:
-   ZipCode: string
- services:
-   WeatherService:
-     base-path: /weather
-     auth: false
-     endpoints:
-       isItRaining:
-         docs: Check if it's currently raining in the provided zip code!
-         path: /is-it-raining/{zipCode}
-         path-parameters:
-           zipCode: ZipCode
-         method: GET
-         response:
-+          ok: boolean
-+          errors:
-+            union:
-+              invalidZipCode: NotFoundError
-+errors:
-+  NotFoundError:
-+    http:
-+      statusCode: 404
-
-```
-
-## Authentication
-
-Services require authentication. Currently, Fern only supports bearer tokens
-using the `Authorization` header.
-
-```yml
-types:
-  ZipCode: string
-services:
-  WeatherService:
-    base-path: /weather
-+   auth: true
-    endpoints:
-      isItRaining:
-        docs: Check if it's currently raining in the provided zip code!
-        path: /is-it-raining/{zipCode}
-        path-parameters:
-          zipCode: ZipCode
-        method: GET
-        response: boolean
-
+errors:
+  UserNotFoundError:
+    status-code: 404
 ```

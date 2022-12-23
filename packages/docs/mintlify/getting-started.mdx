@@ -1,24 +1,22 @@
 ---
 title: "Getting started"
-description: "Welcome to Fern! This guide walks through setting up Fern in your repo, defining your API, and generating code."
 ---
 
-## Setting up Fern in your repo
-
 ### Install
-
-In terminal, run
 
 ```bash
 npm install -g fern-api
 ```
 
-### Initialize
+### The `fern/` directory
+
+The `fern/` directory contains your API definition. This generally lives in your
+backend repo, but you can also have an independent repo dedicated to your API (like [Raven's](https://github.com/ravenappdev/raven-api)).
 
 In the root of your repo, run `fern init`. This will create the following folder
 structure in your project:
 
-```
+```yaml
 fern/
 ├─ fern.config.json # root-level configuration
 └─ api/ # your API
@@ -26,43 +24,72 @@ fern/
   └─ definition/
     ├─ api.yml  # API-level configuration
     └─ imdb.yml # endpoints, types, and errors
-
 ```
 
 ### Defining your API
 
-Your **Fern Definition** is a set of YAML files that are the single source of
-truth for your API. You check your **Fern Definition** into your repo, inside of
-which describes your API requests, responses, model, paths, methods, errors, and
-authentication scheme.
+<Accordion title="Example API">
 
-Check out
-[an example Fern Definition](https://github.com/fern-api/fern-examples/blob/main/fern/api/definition/movie.yml)
-on Github.
+```yaml imdb.yml
+types:
+  MovieId: string
 
-Already have OpenAPI description?
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+services:
+  http:
+    MoviesService:
+      auth: false
+      base-path: /movies
+      endpoints:
+        createMovie:
+          docs: Add a movie to the database
+          method: POST
+          path: /create-movie
+          request: CreateMovieRequest
+          response: MovieId
+
+        getMovie:
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response: Movie
+          errors:
+            - MovieDoesNotExistError
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+```
+
+</Accordion>
+
+Your **Fern Definition** is a set of YAML files that describe your API. You can
+learn more about this in the [Define your API](/definition) section.
 
 <Card
-    title="Use our openapi-to-fern converter"
-    icon="repeat"
-    href="mailto:hey@buildwithfern.com?subject=OpenAPI%20to%20Fern&body=Hey-%20%0A%0AHere's%20an%20attachment%2Flink%20to%20my%20OpenAPI%20description.%20Can%20you%20convert%20it%20to%20a%20Fern%20Definition%3F"
+  title="Already have an OpenAPI description?"
+  icon="repeat"
+  href="mailto:hey@buildwithfern.com?subject=OpenAPI%20to%20Fern&body=Hey-%20%0A%0AHere's%20an%20attachment%2Flink%20to%20my%20OpenAPI%20description.%20Can%20you%20convert%20it%20to%20a%20Fern%20Definition%3F"
 >
-    Send us an email to get started
+  Get early access to our OpenAPI → Fern converter
 </Card>
 
-### Generate code
+### Running the Fern compiler
 
-Fern's code generators run remotely in the cloud. The input is your **Fern
-Definition** and the output is auto-generated code. You configure which
-generators you're using in [generators.yml](/cli/generate).
-
-Check out
-[an example generators.yml](https://github.com/fern-api/fern-examples/blob/main/fern/api/generators.yml)
-on Github.
-
-### What's next?
-
--   [How do I get SDKs?](/features/sdk)
--   [How do I get API documentation?](/features/api-docs)
--   [How do I get server-side type safety?](/features/server)
--   [How do I get a Postman integration?](/features/postman)
+The Fern compiler takes your Fern Definition and generates useful outputs, like
+SDKs. You can learn more about configuring outputs in the [Compiler](./compiler/generators)
+section.

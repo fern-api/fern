@@ -15,18 +15,18 @@ fern upgrade
 ## Examples of changes
 
 ```diff title="/fern/fern.config.json"
-{
+ {
    "organization": "imdb",
 -  "version": "0.0.203"
 +  "version": "0.0.210"
-}
+ }
 ```
 
 ```diff title="/fern/api/generators.yml"
-draft:
+ draft:
    - name: fernapi/fern-typescript-sdk
 -    version: 0.0.197
 +    version: 0.0.206
      mode: download-files
-release: []
+ release: []
 ```
