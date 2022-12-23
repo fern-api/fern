@@ -1,15 +1,14 @@
 types:
   PostId: string
+  Author:
+    properties:
+      name: string
   BlogPost:
-    docs: A blog post
     properties:
       id: PostId
       title: string
       author: Author
       content: string
-  Author: 
-    properties:
-      name: string
 services:
   http:
     PostsService:

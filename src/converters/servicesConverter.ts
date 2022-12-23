@@ -1,12 +1,12 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { FernConstants } from "@fern-fern/ir-model/ir";
+import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import {
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
     HttpPath,
-    HttpRequest,
+    HttpRequestBody,
     HttpResponse,
     HttpService,
     PathParameter,
@@ -16,19 +16,20 @@ import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types"
 import { OpenAPIV3 } from "openapi-types";
 import path from "path";
 import { getDeclaredTypeNameKey } from "../convertToOpenApi";
-import { convertTypeReference, getReferenceFromDeclaredTypeName } from "./typeConverter";
+import { convertObject } from "./convertObject";
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
 export function convertServices({
     httpServices,
     typesByName,
     errorsByName,
-    fernConstants,
+    errorDiscriminationStrategy,
     security,
 }: {
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
-    fernConstants: FernConstants;
+    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
 }): OpenAPIV3.PathsObject {
     const paths: OpenAPIV3.PathsObject = {};
@@ -39,7 +40,7 @@ export function convertServices({
                 httpService,
                 typesByName,
                 errorsByName,
-                fernConstants,
+                errorDiscriminationStrategy,
                 security,
             });
             const pathsObject = (paths[fullPath] ??= {});
@@ -63,14 +64,14 @@ function convertHttpEndpoint({
     httpService,
     typesByName,
     errorsByName,
-    fernConstants,
+    errorDiscriminationStrategy,
     security,
 }: {
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
-    fernConstants: FernConstants;
+    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
 }): ConvertedHttpEndpoint {
     const endpointPath = getEndpointPath(httpEndpoint.path);
@@ -102,17 +103,16 @@ function convertHttpEndpoint({
                 httpResponse: httpEndpoint.response,
                 responseErrors: httpEndpoint.errors,
                 errorsByName,
-                typesByName,
-                fernConstants,
+                errorDiscriminationStrategy,
             }),
         },
     };
     if (httpEndpoint.auth) {
         operationObject.security = security;
     }
-    const maybeRequestBody = convertRequestBody({ httpRequest: httpEndpoint.request, typesByName });
-    if (maybeRequestBody != null) {
-        operationObject.requestBody = maybeRequestBody;
+
+    if (httpEndpoint.requestBody != null) {
+        operationObject.requestBody = convertRequestBody({ httpRequest: httpEndpoint.requestBody, typesByName });
     }
     return {
         fullPath,
@@ -148,36 +148,55 @@ function convertRequestBody({
     httpRequest,
     typesByName,
 }: {
-    httpRequest: HttpRequest;
+    httpRequest: HttpRequestBody;
     typesByName: Record<string, TypeDeclaration>;
-}): OpenAPIV3.RequestBodyObject | undefined {
-    if (httpRequest.type._type === "void") {
-        return undefined;
-    } else {
-        return {
-            description: httpRequest.docs ?? undefined,
-            required: isTypeReferenceRequired({ typeReference: httpRequest.type, typesByName }),
-            content: {
-                "application/json": {
-                    schema: convertTypeReference(httpRequest.type),
+}): OpenAPIV3.RequestBodyObject {
+    return HttpRequestBody._visit<OpenAPIV3.RequestBodyObject>(httpRequest, {
+        inlinedRequestBody: (inlinedRequestBody) => {
+            return {
+                required: true,
+                content: {
+                    "application/json": {
+                        schema: convertObject({
+                            docs: undefined,
+                            properties: inlinedRequestBody.properties.map((property) => ({
+                                docs: property.docs ?? undefined,
+                                name: property.name,
+                                valueType: property.valueType,
+                            })),
+                            extensions: inlinedRequestBody.extends,
+                        }),
+                    },
                 },
-            },
-        };
-    }
+            };
+        },
+        reference: (reference) => {
+            return {
+                description: reference.docs ?? undefined,
+                required: isTypeReferenceRequired({ typeReference: reference.requestBodyType, typesByName }),
+                content: {
+                    "application/json": {
+                        schema: convertTypeReference(reference.requestBodyType),
+                    },
+                },
+            };
+        },
+        _unknown: () => {
+            throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
+        },
+    });
 }
 
 function convertResponse({
     httpResponse,
     responseErrors,
     errorsByName,
-    typesByName,
-    fernConstants,
+    errorDiscriminationStrategy,
 }: {
     httpResponse: HttpResponse;
     responseErrors: ResponseErrors;
     errorsByName: Record<string, ErrorDeclaration>;
-    typesByName: Record<string, TypeDeclaration>;
-    fernConstants: FernConstants;
+    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
     if (httpResponse.type._type === "void") {
@@ -194,28 +213,57 @@ function convertResponse({
             },
         };
     }
-    const errorInfoByStatusCode: Record<string, ErrorInfo[]> = getErrorInfoByStatusCode({
-        responseErrors,
-        errorsByName,
-    });
-    for (const statusCode of Object.keys(errorInfoByStatusCode)) {
-        const errorInfos = errorInfoByStatusCode[statusCode];
-        if (errorInfos == null || errorInfos.length === 0) {
-            continue;
-        }
-        responseByStatusCode[statusCode] = {
-            description: "",
-            content: {
-                "application/json": {
-                    schema: {
-                        oneOf: errorInfos.map((errorInfo) =>
-                            getErrorInfoOpenApiSchema({ errorInfo, typesByName, fernConstants })
-                        ),
+    ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+        statusCode: () => {
+            for (const responseError of responseErrors) {
+                const errorDeclaration = errorsByName[getDeclaredTypeNameKey(responseError.error)];
+                if (errorDeclaration == null) {
+                    throw new Error("Encountered undefined error declaration: " + responseError.error.name);
+                }
+                const responseForStatusCode: OpenAPIV3.ResponseObject = {
+                    description: responseError.docs ?? "",
+                };
+                if (errorDeclaration.typeV3 != null) {
+                    responseForStatusCode.content = {
+                        "application/json": {
+                            schema: convertTypeReference(errorDeclaration.typeV3),
+                        },
+                    };
+                }
+                responseByStatusCode[errorDeclaration.statusCode] = responseForStatusCode;
+            }
+        },
+        property: (property) => {
+            const errorInfoByStatusCode: Record<string, ErrorInfo[]> = getErrorInfoByStatusCode({
+                responseErrors,
+                errorsByName,
+            });
+            for (const statusCode of Object.keys(errorInfoByStatusCode)) {
+                const errorInfos = errorInfoByStatusCode[statusCode];
+                if (errorInfos == null || errorInfos.length === 0) {
+                    continue;
+                }
+                responseByStatusCode[statusCode] = {
+                    description: "",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                oneOf: errorInfos.map((errorInfo) =>
+                                    getDiscriminatedErrorInfoOpenApiSchema({
+                                        errorInfo,
+                                        property,
+                                    })
+                                ),
+                            },
+                        },
                     },
-                },
-            },
-        };
-    }
+                };
+            }
+        },
+        _unknown: () => {
+            throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
+        },
+    });
     return responseByStatusCode;
 }
 
@@ -240,47 +288,32 @@ function typeReferenceIsObject(typeReference: TypeReference, typesByName: Record
     return false;
 }
 
-function getErrorInfoOpenApiSchema({
+function getDiscriminatedErrorInfoOpenApiSchema({
     errorInfo,
-    typesByName,
-    fernConstants,
+    property,
 }: {
     errorInfo: ErrorInfo;
-    typesByName: Record<string, TypeDeclaration>;
-    fernConstants: FernConstants;
+    property: ErrorDiscriminationByPropertyStrategy;
 }): OpenAPIV3.SchemaObject {
-    const discriminantValue = errorInfo.errorDeclaration.discriminantValue.wireValue;
-    const errorTypeRef = getReferenceFromDeclaredTypeName(errorInfo.errorDeclaration.name);
+    const discriminantValue = errorInfo.errorDeclaration.discriminantValueV4.wireValue;
     const description = errorInfo.responseError.docs ?? undefined;
-    const discriminatorProperties: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject> = {};
-    discriminatorProperties[fernConstants.errorDiscriminant] = {
-        type: "string",
-        enum: [discriminantValue],
+
+    const properties: Record<string, OpenApiComponentSchema> = {
+        [property.discriminant.wireValue]: {
+            type: "string",
+            enum: [discriminantValue],
+        },
     };
-    if (typeIsObject({ type: errorInfo.errorDeclaration.type, typesByName })) {
-        return {
-            type: "object",
-            description,
-            allOf: [
-                {
-                    type: "object",
-                    properties: discriminatorProperties,
-                },
-                {
-                    $ref: errorTypeRef,
-                },
-            ],
-        };
-    } else {
-        discriminatorProperties[discriminantValue] = {
-            $ref: errorTypeRef,
-        };
-        return {
-            type: "object",
-            description,
-            properties: discriminatorProperties,
-        };
+
+    if (errorInfo.errorDeclaration.typeV3 != null) {
+        properties[property.contentProperty.wireValue] = convertTypeReference(errorInfo.errorDeclaration.typeV3);
     }
+
+    return {
+        type: "object",
+        description,
+        properties,
+    };
 }
 
 interface ErrorInfo {
@@ -300,10 +333,8 @@ function getErrorInfoByStatusCode({
         const errorDeclaration = errorsByName[getDeclaredTypeNameKey(responseError.error)];
         if (errorDeclaration == null) {
             throw new Error("Encountered undefined error declaration: " + responseError.error.name);
-        } else if (errorDeclaration.http == null) {
-            throw new Error("Encountered error with undefined http config: " + responseError.error.name);
         }
-        const statusCode = errorDeclaration.http.statusCode;
+        const statusCode = errorDeclaration.statusCode;
         const statusCodeErrorInfo = errorInfoByStatusCode[statusCode];
         if (statusCodeErrorInfo == null) {
             errorInfoByStatusCode[statusCode] = [{ responseError, errorDeclaration }];

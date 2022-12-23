@@ -3,7 +3,6 @@ import {
     ContainerType,
     DeclaredTypeName,
     EnumTypeDeclaration,
-    ObjectTypeDeclaration,
     PrimitiveType,
     Type,
     TypeDeclaration,
@@ -11,6 +10,7 @@ import {
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
+import { convertObject } from "./convertObject";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;
@@ -30,7 +30,15 @@ export function convertType(typeDeclaration: TypeDeclaration): ConvertedType {
             return convertEnum({ enumTypeDeclaration, docs });
         },
         object: (objectTypeDeclaration) => {
-            return convertObject({ objectTypeDeclaration, docs });
+            return convertObject({
+                properties: objectTypeDeclaration.properties.map((property) => ({
+                    docs: property.docs ?? undefined,
+                    name: property.nameV2,
+                    valueType: property.valueType,
+                })),
+                extensions: objectTypeDeclaration.extends,
+                docs,
+            });
         },
         union: (unionTypeDeclaration) => {
             return convertUnion({ unionTypeDeclaration, docs });
@@ -73,45 +81,6 @@ export function convertEnum({
         }),
         description: docs,
     };
-}
-
-export function convertObject({
-    objectTypeDeclaration,
-    docs,
-}: {
-    objectTypeDeclaration: ObjectTypeDeclaration;
-    docs: string | undefined;
-}): OpenAPIV3.SchemaObject {
-    const properties: Record<string, OpenApiComponentSchema> = {};
-    const required: string[] = [];
-    objectTypeDeclaration.properties.forEach((objectProperty) => {
-        const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
-        properties[objectProperty.name.wireValue] = {
-            ...convertedObjectProperty,
-            description: objectProperty.docs ?? undefined,
-        };
-        const isOptionalProperty =
-            objectProperty.valueType._type === "container" && objectProperty.valueType.container._type === "optional";
-        if (!isOptionalProperty) {
-            required.push(objectProperty.name.wireValue);
-        }
-    });
-    const convertedSchemaObject: OpenAPIV3.SchemaObject = {
-        type: "object",
-        description: docs,
-        properties,
-    };
-    if (required.length > 0) {
-        convertedSchemaObject.required = required;
-    }
-    if (objectTypeDeclaration.extends.length > 0) {
-        convertedSchemaObject.allOf = objectTypeDeclaration.extends.map((declaredTypeName) => {
-            return {
-                $ref: getReferenceFromDeclaredTypeName(declaredTypeName),
-            };
-        });
-    }
-    return convertedSchemaObject;
 }
 
 export function convertUnion({
@@ -251,6 +220,9 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
         },
         optional: (optionalType) => {
             return convertTypeReference(optionalType);
+        },
+        literal: () => {
+            throw new Error("Literals are not supported");
         },
         _unknown: () => {
             throw new Error("Encountered unknown containerType: " + containerType._type);

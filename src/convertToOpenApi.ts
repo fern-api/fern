@@ -2,7 +2,6 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DeclaredTypeName, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
-import { convertError } from "./converters/errorConverter";
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
@@ -29,10 +28,6 @@ export function convertToOpenApi({
 
     const errorsByName: Record<string, ErrorDeclaration> = {};
     ir.errors.forEach((errorDeclaration) => {
-        // convert error to open api schema
-        const convertedError = convertError(errorDeclaration);
-        schemas[convertedError.schemaName] = convertedError.openApiSchema;
-        // populate errorsByname map
         errorsByName[getDeclaredTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
 
@@ -42,7 +37,7 @@ export function convertToOpenApi({
         httpServices: ir.services.http,
         typesByName,
         errorsByName,
-        fernConstants: ir.constants,
+        errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
     });
     return {

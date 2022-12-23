@@ -10,13 +10,13 @@ const FIXTURES = ["test-api", "any-auth"];
 describe("convertToOpenApi", () => {
     for (const fixture of FIXTURES) {
         const fixtureDir = path.join(__dirname, "fixtures");
-        // eslint-disable-next-line jest/valid-title
         it(
+            // eslint-disable-next-line jest/valid-title
             fixture,
             async () => {
                 const tmpDir = await tmp.dir();
                 const openapiPath = path.join(tmpDir.path, "openapi.yml");
-                const confgPath = path.join(tmpDir.path, "config.json");
+                const configPath = path.join(tmpDir.path, "config.json");
                 const irPath = path.join(tmpDir.path, "ir.json");
 
                 const generatorConfig: GeneratorConfig = {
@@ -29,13 +29,14 @@ describe("convertToOpenApi", () => {
                     environment: GeneratorEnvironment.local(),
                 };
 
-                await writeFile(confgPath, JSON.stringify(generatorConfig, undefined, 4));
+                await writeFile(configPath, JSON.stringify(generatorConfig, undefined, 4));
 
                 await execa("fern", ["ir", irPath, "--api", fixture], {
                     cwd: fixtureDir,
                 });
 
-                await writeOpenApi(confgPath);
+                await writeOpenApi(configPath);
+                console.log(`Wrote ${openapiPath}`);
 
                 const openApi = (await readFile(openapiPath)).toString();
 

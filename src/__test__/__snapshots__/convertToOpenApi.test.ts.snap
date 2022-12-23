@@ -51,9 +51,15 @@ components:
   schemas:
     BlogPostId:
       type: string
+    BlogAuthor:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
     BlogBlogPost:
       type: object
-      description: A blog post
       properties:
         id:
           $ref: '#/components/schemas/BlogPostId'
@@ -68,13 +74,6 @@ components:
         - title
         - author
         - content
-    BlogAuthor:
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-        - name
   securitySchemes:
     BearerAuth:
       type: http
@@ -116,8 +115,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlogPostId'
-      security:
-        - {}
       requestBody:
         required: true
         content:
@@ -148,16 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - type: object
-                    allOf:
-                      - type: object
-                        properties:
-                          _error:
-                            type: string
-                            enum:
-                              - PostNotFoundError
-                      - $ref: '#/components/schemas/BlogPostNotFoundError'
+                $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
     post:
       description: Updates a blog post.
       operationId: PostsService.updatePost
@@ -181,16 +169,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - type: object
-                    allOf:
-                      - type: object
-                        properties:
-                          _error:
-                            type: string
-                            enum:
-                              - PostNotFoundError
-                      - $ref: '#/components/schemas/BlogPostNotFoundError'
+                $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
       requestBody:
         required: true
         content:
@@ -244,6 +223,13 @@ components:
                   type: string
                   enum:
                     - type
+    BlogPostNotFoundErrorBody:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostId'
+      required:
+        - id
     BlogCreatePostRequest:
       type: object
       properties:
@@ -261,15 +247,6 @@ components:
         - author
         - content
         - postType
-    BlogPostNotFoundErrorBody:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogPostId'
-      required:
-        - id
-    BlogPostNotFoundError:
-      $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
   securitySchemes: {}
 servers:
   - url: https://buildwithfern.com

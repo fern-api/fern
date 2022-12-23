@@ -17,6 +17,9 @@ types:
       anonymous: {}
       name: string
       type: PostType
+  PostNotFoundErrorBody:
+    properties:
+      id: PostId
   CreatePostRequest:
     properties:
       title: string
@@ -25,9 +28,6 @@ types:
         docs: Author is the writer.
       content: string
       postType: PostType
-  PostNotFoundErrorBody: 
-    properties:
-      id: PostId
 errors:
   PostNotFoundError:
     status-code: 400
@@ -35,7 +35,7 @@ errors:
 services:
   http:
     PostsService:
-      auth: true
+      auth: false
       headers:
         x-service-header: string
       base-path: /
@@ -44,11 +44,13 @@ services:
           docs: Creates a blog post and returns blog post id.
           method: POST
           path: /create
-          headers:
-            x-endpoint-header:
-              docs: I'm a header!
-              type: string
-          request: CreatePostRequest
+          request:
+            name: CreatePostRequestWrapper
+            body: CreatePostRequest
+            headers:
+              x-endpoint-header:
+                docs: I'm a header!
+                type: string
           response: PostId
         getPost:
           docs: Gets a blog post.
@@ -57,6 +59,8 @@ services:
           path: /{postId}
           path-parameters:
             postId: PostId
+          request:
+            name: GetPostRequest
           response: BlogPost
           errors:
             - PostNotFoundError
@@ -67,7 +71,10 @@ services:
           path: /{postId}
           path-parameters:
             postId: PostId
-          request: CreatePostRequest
+          request:
+            name: UpdatePostRequest
+            body:
+              type: CreatePostRequest
           response: PostId
           errors:
             - PostNotFoundError

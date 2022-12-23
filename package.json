@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",
-    "@fern-fern/ir-model": "^0.0.270",
+    "@fern-fern/ir-model": "^0.0.512",
     "js-yaml": "^4.1.0",
     "openapi-types": "^12.0.0"
   },
