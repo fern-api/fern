@@ -15,7 +15,7 @@ export const V4_TO_V3_MIGRATION: IrMigration<
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
-        [GeneratorName.OPENAPI]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI]: "0.0.11-4-g1c29f6c",
         [GeneratorName.POSTMAN]: "0.0.32-rc0",
     },
     migrateBackwards: (v4): IrVersions.V3.ir.IntermediateRepresentation => {
