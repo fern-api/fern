@@ -133,15 +133,15 @@ Union types in Fern are always discriminated. For example, the JSON representati
 By default, the `discriminant` in JSON will be `"type"`. You can change this by defining your own discriminant:
 
 ```diff
-types:
-  Shape:
-    docs: |
-      A shape is either a square or a circle.
-      Don't ask about triangles.
-    union:
-      square: Square
-      circle: Circle
-+   discriminant: shapeType
+ types:
+   Shape:
+     docs: |
+       A shape is either a square or a circle.
+       Don't ask about triangles.
+     union:
+       square: Square
+       circle: Circle
++    discriminant: shapeType
 ```
 
 #### Using `void`
@@ -216,10 +216,10 @@ types:
 With aliases:
 
 ```diff
-types:
-+ EmployeeId: string
-  Employee:
-+   id: EmployeeId
-    name: string
-+   manager: EmployeeId
+ types:
++  EmployeeId: string
+   Employee:
++    id: EmployeeId
+     name: string
++    manager: EmployeeId
 ```

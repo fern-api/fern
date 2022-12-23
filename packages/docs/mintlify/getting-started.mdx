@@ -11,12 +11,12 @@ npm install -g fern-api
 ### The `fern/` directory
 
 The `fern/` directory contains your API definition. This generally lives in your
-backend repo, but you can also have an independent repo dedicated to your API (like [Flipt's](https://github.com/flipt-io/flipt-api)).
+backend repo, but you can also have an independent repo dedicated to your API (like [Raven's](https://github.com/ravenappdev/raven-api)).
 
 In the root of your repo, run `fern init`. This will create the following folder
 structure in your project:
 
-```
+```yaml
 fern/
 ├─ fern.config.json # root-level configuration
 └─ api/ # your API
@@ -91,5 +91,5 @@ learn more about this in the [Define your API](/definition) section.
 ### Running the Fern compiler
 
 The Fern compiler takes your Fern Definition and generates useful outputs, like
-SDKs. You can learn more about configuring outputs in the [Compiler](./compiler)
+SDKs. You can learn more about configuring outputs in the [Compiler](./compiler/generators)
 section.

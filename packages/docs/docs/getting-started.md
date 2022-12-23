@@ -16,7 +16,7 @@ In terminal, run `npm install -g fern-api`.
 
 In the root of your repo, run `fern init`. This will create the following folder structure in your project:
 
-```yml
+```yaml
 fern/
 ├─ fern.config.json # root-level configuration
 └─ api/ # your API

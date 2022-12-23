@@ -6,7 +6,7 @@ Add descriptions that help document your API. Docs are intended for readers of y
 
 ## Example of using docs
 
-Let's say we want to add human-readable descriptions to a type, a service, and an endpoint. Docs can be used in Fern generators, including to populate your documentation website, OpenAPI description, or Postman collection.
+Let's say we want to add human-readable descriptions to a type, a service, and an endpoint. Docs can be used in Fern generators, including to populate your documentation website, OpenAPI description, or Postman Collection.
 
 ```yml
 types:

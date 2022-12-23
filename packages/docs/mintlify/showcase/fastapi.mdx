@@ -21,9 +21,7 @@ Let's walk through the [Fern FastAPI Starter](https://github.com/fern-api/fastap
 
 ### Step 1: Define the API
 
-File: [fern/api/definition/imdb.yml](https://github.com/fern-api/fastapi-starter/blob/main/fern/api/definition/imdb.yml)
-
-```yaml
+```yaml fern/api/definition/imdb.yml
 services:
   http:
     MoviesService:
@@ -75,11 +73,9 @@ $ fern generate
 
 ### Step 3: Implement the server
 
-File: [src/fern_fastapi_starter/movies_service.py](https://github.com/fern-api/fastapi-starter/blob/main/src/fern_fastapi_starter/movies_service.py)
-
 Notice you only need to provide the business logic. Just implement the function and Fern takes care of the rest.
 
-```python
+```python src/fern_fastapi_starter/movies_service.py
 from .generated.fern import AbstractMoviesService, Movie, MovieDoesNotExistError, MovieId
 
 class MoviesService(AbstractMoviesService):
@@ -91,6 +87,19 @@ class MoviesService(AbstractMoviesService):
                 rating=9.8,
             )
         raise MovieDoesNotExistError(MovieId.from_str(movie_id))
+```
+
+And register your endpoints with Fern, which registers them with FastAPI under the hood:
+
+```python src/fern_fastapi_starter/server.py
+from fastapi import FastAPI
+
+from .generated.fern.register import register
+from .movies_service import MoviesService
+
+app = FastAPI()
+
+register(app, imdb=MoviesService())
 ```
 
 ### Step 4: Compile
@@ -121,7 +130,7 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
 
-### Step 6: Hit the API 🚀
+### Step 6: Hit the API &nbsp;🚀
 
 ```bash
 $ curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .

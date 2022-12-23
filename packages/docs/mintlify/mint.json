@@ -44,11 +44,18 @@
     },
     {
       "group": "Showcase",
-      "pages": ["showcase/typescript-sdk", "showcase/fastapi", "showcase/postman"]
+      "pages": ["showcase/typescript-sdk", "showcase/fastapi"]
     },
     {
       "group": "Defining your API",
-      "pages": ["definition", "definition/types", "definition/services", "definition/errors", "definition/api-yml"]
+      "pages": [
+        "definition",
+        "definition/types",
+        "definition/services",
+        "definition/errors",
+        "definition/imports",
+        "definition/api-yml"
+      ]
     },
     {
       "group": "Compiler",
@@ -56,7 +63,7 @@
     },
     {
       "group": "Advanced features",
-      "pages": ["advanced/audiences", "advanced/multiple-apis", "tutorials/spring"]
+      "pages": ["advanced/audiences", "advanced/multiple-apis", "advanced/depending-on-other-apis"]
     }
   ],
   "footerSocials": {

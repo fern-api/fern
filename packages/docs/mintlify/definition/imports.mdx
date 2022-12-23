@@ -1,37 +1,21 @@
 ---
 title: "Imports"
-description: "Imports allow you to reference types, errors, and ids from other Fern
-  Definitions."
+description: "Imports allow you to reference types and errors from other files"
 ---
 
-## Example of using imports
-
-Let's say that we've got a `movies.yml` where we've already defined a `MovieId`.
-
-```yml movies.yml
+```yaml person.yml
 types:
-  MovieId: string
+  Person: ...
 ```
 
-We now want to create a new file called `actors.yml` that includes every movie
-an Actor has had a role in. We don't want to redefine `MovieId`, instead we want
-to reference what we already defined above. We can accomplish this by using an
-import.
-
-```yml actors.yml
+```yaml family.yml
 imports:
-  movies: movies.yml
-
+  person: ./path/to/person.yml
 types:
-  ActorId: string
-
-  Actor:
+  Family:
     properties:
-      id: ActorId
-      name: string
-      movies: list<movies.MovieId>
+      people: list<person.Person> # use an imported type
 ```
 
-In the last line above, `movies.` informs which import to reference and
-`MovieId` is the id that we're referencing. While this example shows importing a
-type from another file, you can also import errors.
+Note that you can only import files that exist in your Fern Definition (i.e. in
+the same `definition/` folder).

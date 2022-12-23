@@ -14,7 +14,7 @@ fern init
 
 This will create the following folder structure in your project:
 
-```yml
+```yaml
 fern/
 ├─ fern.config.json # root-level configuration
 └─ api/ # your API

@@ -8,7 +8,7 @@ description: "A Service is a collection of related endpoints"
 Each service defines:
 
 1. A **base-path**: A common prefix for all the endpoints's HTTP paths
-2. Whether the service requires [authentication](./authentication)
+2. Whether the service requires [authentication](./api-yml#authentication)
 3. **Endpoints**
 
 ```yaml user.yml
@@ -35,11 +35,7 @@ An endpoint includes:
 
 ## URL Path
 
-Each endpoint has a URL path. The full path for the endpoint is the concatenation of:
-
-- The [environment]() URL
-- The service `base-path`
-- The endpoint `path`
+Each endpoint has a URL path.
 
 ```yaml user.yml
 services:
@@ -53,25 +49,28 @@ services:
           method: GET
 ```
 
+The full path for the endpoint is the concatenation of:
+
+- The [environment](./api-yml#environments) URL
+- The service `base-path`
+- The endpoint `path`
+
 ### Path parameters
 
 You can supply path parameters for your endpoints to create dynamic URLs.
 
-```diff user.yml
+```yaml user.yml
 services:
   http:
     UserService:
       base-path: /users
       auth: false
       endpoints:
-        getAllUsers:
-          path: /all
+        getUser:
+          path: /{userId} # <---
+          path-parameters: # <---
+            userId: string
           method: GET
-+       getUser:
-+         path: /{userId}
-+         path-parameters:
-+           userId: string
-+         method: GET
 ```
 
 Services can also have path-parameters:
@@ -252,3 +251,47 @@ errors:
 ```
 
 You can learn more about how to define errors on the [Errors](./errors) page.
+
+## Examples
+
+When you declare an example, you can also specify some examples of how that
+endpoint might be used. These are used by the compiler to enhance the generated
+outputs (e.g. examples in the generated Postman Collection).
+
+```yaml user.yml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: false
+      endpoints:
+        getUser:
+          path: /{userId}
+          path-parameters:
+            userId: string
+          method: GET
+          response: User
+          errors:
+            - UserNotFoundError
+          examples: # <---
+            - path-parameters:
+                userId: alice-user-id
+              response:
+                body:
+                  userId: alice-user-id
+                  name: Alice
+            - path-parameters:
+                userId: missing-user-id
+                response:
+                  error: UserNotFoundError
+
+types:
+  User:
+    properties:
+      userId: string
+      name: string
+
+errors:
+  UserNotFoundError:
+    status-code: 404
+```

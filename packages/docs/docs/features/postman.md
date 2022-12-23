@@ -4,7 +4,7 @@ title: Postman integration
 
 The Fern team uses Postman and, if you're here, you probably do too.
 
-Fern has a first class integration with Postman so that you can automatically update your Postman collection any time you generate code.
+Fern has a first class integration with Postman so that you can automatically update your Postman Collection any time you generate code.
 
 ## Configure the Postman Integration
 
