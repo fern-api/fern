@@ -10,7 +10,7 @@ exports[`fern upgrade upgrades generators 1`] = `
           location: local-file-system
           path: ./generated-postman
       - name: fernapi/fern-openapi
-        version: 0.0.11
+        version: 0.0.11-4-g1c29f6c
         output:
           location: local-file-system
           path: ./generated-openapi
@@ -34,7 +34,7 @@ exports[`fern upgrade upgrades generators 1`] = `
           location: local-file-system
           path: ./generated-postman
       - name: fernapi/fern-openapi
-        version: 0.0.11
+        version: 0.0.11-4-g1c29f6c
         output:
           location: local-file-system
           path: ./generated-openapi
