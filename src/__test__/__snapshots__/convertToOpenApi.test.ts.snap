@@ -108,6 +108,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: abc
       responses:
         '200':
           description: ''
@@ -115,12 +118,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlogPostId'
+              examples:
+                Example1:
+                  value: post-id-123
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/BlogCreatePostRequest'
+            examples:
+              Example1:
+                value:
+                  title: My Blog
+                  author:
+                    type: anonymous
+                  content: I'm a post
+                  postType: LONG
   /{postId}:
     get:
       description: Gets a blog post.
@@ -133,6 +147,17 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/BlogPostId'
+          examples:
+            Example1:
+              value: post-id-123
+        - name: some-query-param
+          in: query
+          required: true
+          schema:
+            type: integer
+          examples:
+            Example1:
+              value: 123
       responses:
         '200':
           description: ''
@@ -146,6 +171,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
+              examples:
+                Example1:
+                  value:
+                    id: post-id-123
     post:
       description: Updates a blog post.
       operationId: PostsService.updatePost

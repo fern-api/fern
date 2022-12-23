@@ -2,6 +2,7 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import {
+    ExampleEndpointCall,
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
@@ -13,6 +14,7 @@ import {
     QueryParameter,
 } from "@fern-fern/ir-model/services/http";
 import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import path from "path";
 import { getDeclaredTypeNameKey } from "../convertToOpenApi";
@@ -78,15 +80,17 @@ function convertHttpEndpoint({
     const fullPath = path.join(httpService.basePath ?? "", endpointPath);
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
-        convertPathParameter(pathParameter)
+        convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
     );
     const convertedEndpointPathParameters = httpEndpoint.pathParameters.map((pathParameter) =>
-        convertPathParameter(pathParameter)
+        convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
     );
     const convertedQueryParameters = httpEndpoint.queryParameters.map((queryParameter) =>
-        convertQueryParameter({ queryParameter, typesByName })
+        convertQueryParameter({ queryParameter, typesByName, examples: httpEndpoint.examples })
     );
-    const convertedHeaders = httpEndpoint.headers.map((header) => convertHeader({ httpHeader: header, typesByName }));
+    const convertedHeaders = httpEndpoint.headers.map((header) =>
+        convertHeader({ httpHeader: header, typesByName, examples: httpEndpoint.examples })
+    );
     const parameters: OpenAPIV3.ParameterObject[] = [
         ...convertedServicePathParameters,
         ...convertedEndpointPathParameters,
@@ -104,6 +108,7 @@ function convertHttpEndpoint({
                 responseErrors: httpEndpoint.errors,
                 errorsByName,
                 errorDiscriminationStrategy,
+                examples: httpEndpoint.examples,
             }),
         },
     };
@@ -112,7 +117,11 @@ function convertHttpEndpoint({
     }
 
     if (httpEndpoint.requestBody != null) {
-        operationObject.requestBody = convertRequestBody({ httpRequest: httpEndpoint.requestBody, typesByName });
+        operationObject.requestBody = convertRequestBody({
+            httpRequest: httpEndpoint.requestBody,
+            typesByName,
+            examples: httpEndpoint.examples,
+        });
     }
     return {
         fullPath,
@@ -147,37 +156,58 @@ function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
 function convertRequestBody({
     httpRequest,
     typesByName,
+    examples,
 }: {
     httpRequest: HttpRequestBody;
     typesByName: Record<string, TypeDeclaration>;
+    examples: ExampleEndpointCall[];
 }): OpenAPIV3.RequestBodyObject {
+    const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
+    for (const [exampleIndex, example] of examples.entries()) {
+        if (example.request != null) {
+            openapiExamples[`Example${exampleIndex + 1}`] = {
+                value: example.request.jsonExample,
+            };
+        }
+    }
+
     return HttpRequestBody._visit<OpenAPIV3.RequestBodyObject>(httpRequest, {
         inlinedRequestBody: (inlinedRequestBody) => {
+            const convertedRequest: OpenAPIV3.MediaTypeObject = {
+                schema: convertObject({
+                    docs: undefined,
+                    properties: inlinedRequestBody.properties.map((property) => ({
+                        docs: property.docs ?? undefined,
+                        name: property.name,
+                        valueType: property.valueType,
+                    })),
+                    extensions: inlinedRequestBody.extends,
+                }),
+            };
+
+            if (size(openapiExamples) > 0) {
+                convertedRequest.examples = openapiExamples;
+            }
+
             return {
                 required: true,
                 content: {
-                    "application/json": {
-                        schema: convertObject({
-                            docs: undefined,
-                            properties: inlinedRequestBody.properties.map((property) => ({
-                                docs: property.docs ?? undefined,
-                                name: property.name,
-                                valueType: property.valueType,
-                            })),
-                            extensions: inlinedRequestBody.extends,
-                        }),
-                    },
+                    "application/json": convertedRequest,
                 },
             };
         },
         reference: (reference) => {
+            const convertedRequest: OpenAPIV3.MediaTypeObject = {
+                schema: convertTypeReference(reference.requestBodyType),
+            };
+            if (size(openapiExamples) > 0) {
+                convertedRequest.examples = openapiExamples;
+            }
             return {
                 description: reference.docs ?? undefined,
                 required: isTypeReferenceRequired({ typeReference: reference.requestBodyType, typesByName }),
                 content: {
-                    "application/json": {
-                        schema: convertTypeReference(reference.requestBodyType),
-                    },
+                    "application/json": convertedRequest,
                 },
             };
         },
@@ -192,27 +222,44 @@ function convertResponse({
     responseErrors,
     errorsByName,
     errorDiscriminationStrategy,
+    examples,
 }: {
     httpResponse: HttpResponse;
     responseErrors: ResponseErrors;
     errorsByName: Record<string, ErrorDeclaration>;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    examples: ExampleEndpointCall[];
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
-    if (httpResponse.type._type === "void") {
+    if (httpResponse.typeV2 == null) {
         responseByStatusCode["204"] = {
             description: httpResponse.docs ?? "",
         };
     } else {
+        const convertedResponse: OpenAPIV3.MediaTypeObject = {
+            schema: convertTypeReference(httpResponse.typeV2),
+        };
+
+        const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
+        for (const [exampleIndex, example] of examples.entries()) {
+            if (example.response.type === "ok" && example.response.body != null) {
+                openapiExamples[`Example${exampleIndex + 1}`] = {
+                    value: example.response.body.jsonExample,
+                };
+            }
+        }
+        if (size(openapiExamples) > 0) {
+            convertedResponse.examples = openapiExamples;
+        }
+
         responseByStatusCode["200"] = {
             description: httpResponse.docs ?? "",
             content: {
-                "application/json": {
-                    schema: convertTypeReference(httpResponse.type),
-                },
+                "application/json": convertedResponse,
             },
         };
     }
+
     ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         statusCode: () => {
             for (const responseError of responseErrors) {
@@ -224,10 +271,28 @@ function convertResponse({
                     description: responseError.docs ?? "",
                 };
                 if (errorDeclaration.typeV3 != null) {
+                    const convertedResponse: OpenAPIV3.MediaTypeObject = {
+                        schema: convertTypeReference(errorDeclaration.typeV3),
+                    };
+
+                    const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
+                    for (const [exampleIndex, example] of examples.entries()) {
+                        if (
+                            example.response.type === "error" &&
+                            example.response.body != null &&
+                            isEqual(responseError.error, example.response.error)
+                        ) {
+                            openapiExamples[`Example${exampleIndex + 1}`] = {
+                                value: example.response.body.jsonExample,
+                            };
+                        }
+                    }
+                    if (size(openapiExamples) > 0) {
+                        convertedResponse.examples = openapiExamples;
+                    }
+
                     responseForStatusCode.content = {
-                        "application/json": {
-                            schema: convertTypeReference(errorDeclaration.typeV3),
-                        },
+                        "application/json": convertedResponse,
                     };
                 }
                 responseByStatusCode[errorDeclaration.statusCode] = responseForStatusCode;
@@ -243,19 +308,37 @@ function convertResponse({
                 if (errorInfos == null || errorInfos.length === 0) {
                     continue;
                 }
+
+                const convertedResponse: OpenAPIV3.MediaTypeObject = {
+                    schema: {
+                        oneOf: errorInfos.map((errorInfo) =>
+                            getDiscriminatedErrorInfoOpenApiSchema({
+                                errorInfo,
+                                property,
+                            })
+                        ),
+                    },
+                };
+
+                const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
+                for (const [exampleIndex, example] of examples.entries()) {
+                    if (example.response.type === "error" && example.response.body != null) {
+                        const errorForExample = example.response.error;
+                        if (errorInfos.some((errorInfo) => isEqual(errorInfo.errorDeclaration.name, errorForExample))) {
+                            openapiExamples[`Example${exampleIndex + 1}`] = {
+                                value: example.response.body.jsonExample,
+                            };
+                        }
+                    }
+                }
+                if (size(openapiExamples) > 0) {
+                    convertedResponse.examples = openapiExamples;
+                }
+
                 responseByStatusCode[statusCode] = {
                     description: "",
                     content: {
-                        "application/json": {
-                            schema: {
-                                oneOf: errorInfos.map((errorInfo) =>
-                                    getDiscriminatedErrorInfoOpenApiSchema({
-                                        errorInfo,
-                                        property,
-                                    })
-                                ),
-                            },
-                        },
+                        "application/json": convertedResponse,
                     },
                 };
             }
@@ -345,46 +428,107 @@ function getErrorInfoByStatusCode({
     return errorInfoByStatusCode;
 }
 
-function convertPathParameter(pathParameter: PathParameter): OpenAPIV3.ParameterObject {
-    return {
+function convertPathParameter({
+    pathParameter,
+    examples,
+}: {
+    pathParameter: PathParameter;
+    examples: ExampleEndpointCall[];
+}): OpenAPIV3.ParameterObject {
+    const convertedParameter: OpenAPIV3.ParameterObject = {
         name: pathParameter.name.originalValue,
         in: "path",
         description: pathParameter.docs ?? undefined,
         required: true,
         schema: convertTypeReference(pathParameter.valueType),
     };
+
+    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
+    for (const [exampleIndex, example] of examples.entries()) {
+        const pathParameterExample = [...example.servicePathParameters, ...example.endpointPathParameters].find(
+            (param) => param.key === pathParameter.nameV2.unsafeName.originalValue
+        );
+        if (pathParameterExample != null) {
+            openapiExamples[`Example${exampleIndex + 1}`] = {
+                value: pathParameterExample.value.jsonExample,
+            };
+        }
+    }
+    if (size(openapiExamples) > 0) {
+        convertedParameter.examples = openapiExamples;
+    }
+
+    return convertedParameter;
 }
 
 function convertQueryParameter({
     queryParameter,
     typesByName,
+    examples,
 }: {
     queryParameter: QueryParameter;
     typesByName: Record<string, TypeDeclaration>;
+    examples: ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
-    return {
+    const convertedParameter: OpenAPIV3.ParameterObject = {
         name: queryParameter.name.wireValue,
         in: "query",
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: convertTypeReference(queryParameter.valueType),
     };
+
+    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
+    for (const [exampleIndex, example] of examples.entries()) {
+        const queryParameterExample = example.queryParameters.find(
+            (param) => param.wireKey === queryParameter.nameV2.wireValue
+        );
+        if (queryParameterExample != null) {
+            openapiExamples[`Example${exampleIndex + 1}`] = {
+                value: queryParameterExample.value.jsonExample,
+            };
+        }
+    }
+    if (size(openapiExamples) > 0) {
+        convertedParameter.examples = openapiExamples;
+    }
+
+    return convertedParameter;
 }
 
 function convertHeader({
     httpHeader,
     typesByName,
+    examples,
 }: {
     httpHeader: HttpHeader;
     typesByName: Record<string, TypeDeclaration>;
+    examples: ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
-    return {
+    const convertedParameter: OpenAPIV3.ParameterObject = {
         name: httpHeader.name.wireValue,
         in: "header",
         description: httpHeader.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: httpHeader.valueType, typesByName }),
         schema: convertTypeReference(httpHeader.valueType),
     };
+
+    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
+    for (const [exampleIndex, example] of examples.entries()) {
+        const headerExample = [...example.serviceHeaders, ...example.endpointHeaders].find(
+            (headerFromExample) => headerFromExample.wireKey === httpHeader.nameV2.wireValue
+        );
+        if (headerExample != null) {
+            openapiExamples[`Example${exampleIndex + 1}`] = {
+                value: headerExample.value.jsonExample,
+            };
+        }
+    }
+    if (size(openapiExamples) > 0) {
+        convertedParameter.examples = openapiExamples;
+    }
+
+    return convertedParameter;
 }
 
 function getEndpointPath(httpPath: HttpPath): string {

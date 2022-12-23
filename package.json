@@ -25,6 +25,7 @@
     "@babel/preset-typescript": "^7.17.12",
     "@types/jest": "^27.5.0",
     "@types/js-yaml": "^4.0.5",
+    "@types/lodash-es": "^4.17.6",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "depcheck": "^1.4.3",
@@ -46,6 +47,7 @@
     "@fern-fern/generator-exec-client": "^0.0.6",
     "@fern-fern/ir-model": "^0.0.512",
     "js-yaml": "^4.1.0",
+    "lodash-es": "^4.17.21",
     "openapi-types": "^12.0.0"
   },
   "packageManager": "yarn@3.2.0"

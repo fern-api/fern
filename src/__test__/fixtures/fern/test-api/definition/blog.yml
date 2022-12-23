@@ -52,6 +52,18 @@ services:
                 docs: I'm a header!
                 type: string
           response: PostId
+          examples:
+            - request:
+                title: My Blog
+                author:
+                  type: anonymous
+                content: I'm a post
+                postType: LONG
+              headers:
+                x-service-header: abc
+                x-endpoint-header: abc
+              response:
+                body: post-id-123
         getPost:
           docs: Gets a blog post.
           method: GET
@@ -61,9 +73,22 @@ services:
             postId: PostId
           request:
             name: GetPostRequest
+            query-parameters:
+              some-query-param: integer
           response: BlogPost
           errors:
             - PostNotFoundError
+          examples:
+            - path-parameters:
+                postId: post-id-123
+              query-parameters:
+                some-query-param: 123
+              headers:
+                x-service-header: abc
+              response:
+                error: PostNotFoundError
+                body:
+                  id: post-id-123
         updatePost:
           docs: Updates a blog post.
           method: POST
