@@ -44,6 +44,7 @@ export function convertToOpenApi({
         openapi: "3.0.1",
         info: {
             title: ir.apiDisplayName ?? apiName,
+            description: ir.apiDocs ?? undefined,
             version: apiVersion,
         },
         paths,
