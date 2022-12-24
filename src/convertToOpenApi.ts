@@ -43,7 +43,7 @@ export function convertToOpenApi({
     return {
         openapi: "3.0.1",
         info: {
-            title: apiName,
+            title: ir.apiDisplayName ?? apiName,
             version: apiVersion,
         },
         paths,
