@@ -191,6 +191,7 @@ async function validateDependencyAndGetServiceFiles({
         "auth-schemes": (auth) => {
             areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.workspace.rootApiFile["auth-schemes"]);
         },
+        docs: noop,
         headers: noop,
         "default-environment": noop,
         environments: noop,

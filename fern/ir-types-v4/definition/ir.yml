@@ -18,6 +18,7 @@ types:
         type: string
         docs: This is the human readable unique id for the API.
       apiDisplayName: optional<string>
+      apiDocs: optional<string>
       auth: auth.ApiAuth
       headers:
         docs: API Wide headers that are sent on every request
