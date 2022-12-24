@@ -280,6 +280,8 @@ components:
   securitySchemes: {}
 servers:
   - url: https://buildwithfern.com
+    description: prod
   - url: https://dev.buildwithfern.com
+    description: dev
 "
 `;

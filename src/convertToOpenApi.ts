@@ -54,7 +54,10 @@ export function convertToOpenApi({
         servers: ir.environments.map((environment) => {
             return {
                 url: environment.url,
-                docs: environment.docs,
+                description:
+                    environment.docs != null
+                        ? `${environment.name.safeName.originalValue} (${environment.docs})`
+                        : environment.name.safeName.originalValue,
             };
         }),
     };
