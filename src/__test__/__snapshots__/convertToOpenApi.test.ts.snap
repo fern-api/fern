@@ -220,10 +220,12 @@ components:
           $ref: '#/components/schemas/PostType'
         title:
           type: string
+          example: My blog post
         author:
           $ref: '#/components/schemas/Author'
         content:
           type: string
+          example: This is my short post!
       required:
         - id
         - type

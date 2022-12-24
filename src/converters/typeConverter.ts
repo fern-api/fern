@@ -3,6 +3,7 @@ import {
     ContainerType,
     DeclaredTypeName,
     EnumTypeDeclaration,
+    ExampleObjectProperty,
     PrimitiveType,
     Type,
     TypeDeclaration,
@@ -31,11 +32,20 @@ export function convertType(typeDeclaration: TypeDeclaration): ConvertedType {
         },
         object: (objectTypeDeclaration) => {
             return convertObject({
-                properties: objectTypeDeclaration.properties.map((property) => ({
-                    docs: property.docs ?? undefined,
-                    name: property.nameV2,
-                    valueType: property.valueType,
-                })),
+                properties: objectTypeDeclaration.properties.map((property) => {
+                    let exampleProperty: ExampleObjectProperty | undefined = undefined;
+                    if (typeDeclaration.examples.length > 0 && typeDeclaration.examples[0]?.shape.type === "object") {
+                        exampleProperty = typeDeclaration.examples[0].shape.properties.find((example) => {
+                            return example.wireKey === property.nameV2.wireValue;
+                        });
+                    }
+                    return {
+                        docs: property.docs ?? undefined,
+                        name: property.nameV2,
+                        valueType: property.valueType,
+                        example: exampleProperty,
+                    };
+                }),
                 extensions: objectTypeDeclaration.extends,
                 docs,
             });

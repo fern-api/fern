@@ -8,7 +8,14 @@ types:
       title: string
       author: Author
       content: string
-  PostType:
+    examples: 
+      - id: 12301sdsd2
+        type: SHORT
+        title: "My blog post"
+        author: 
+          type: anonymous
+        content: "This is my short post!"
+  PostType: 
     enum:
       - LONG
       - SHORT

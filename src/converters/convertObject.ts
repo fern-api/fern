@@ -1,5 +1,5 @@
 import { NameAndWireValue } from "@fern-fern/ir-model/commons";
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ExampleObjectProperty, TypeReference } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
 
@@ -7,6 +7,7 @@ export interface ObjectProperty {
     docs: string | undefined;
     name: NameAndWireValue;
     valueType: TypeReference;
+    example?: ExampleObjectProperty;
 }
 
 export function convertObject({
@@ -25,6 +26,10 @@ export function convertObject({
         convertedProperties[objectProperty.name.wireValue] = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
+            example:
+                objectProperty.valueType._type === "primitive" && objectProperty.example != null
+                    ? objectProperty.example?.value.jsonExample
+                    : undefined,
         };
         const isOptionalProperty =
             objectProperty.valueType._type === "container" && objectProperty.valueType.container._type === "optional";
