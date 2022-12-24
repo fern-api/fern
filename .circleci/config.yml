@@ -59,6 +59,8 @@ workflows:
               only: /.*/
       - publish:
           filters:
+            branches:
+              only: main
             tags:
               only: /.*/
           requires:

@@ -3,6 +3,7 @@ import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } fr
 import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import {
     ExampleEndpointCall,
+    ExampleInlinedRequestBodyProperty,
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
@@ -177,11 +178,20 @@ function convertRequestBody({
             const convertedRequest: OpenAPIV3.MediaTypeObject = {
                 schema: convertObject({
                     docs: undefined,
-                    properties: inlinedRequestBody.properties.map((property) => ({
-                        docs: property.docs ?? undefined,
-                        name: property.name,
-                        valueType: property.valueType,
-                    })),
+                    properties: inlinedRequestBody.properties.map((property) => {
+                        let exampleProperty: ExampleInlinedRequestBodyProperty | undefined = undefined;
+                        if (examples.length > 0 && examples[0]?.request?.type === "inlinedRequestBody") {
+                            exampleProperty = examples[0]?.request.properties.find((example) => {
+                                return example.wireKey === property.name.wireValue;
+                            });
+                        }
+                        return {
+                            docs: property.docs ?? undefined,
+                            name: property.name,
+                            valueType: property.valueType,
+                            example: exampleProperty,
+                        };
+                    }),
                     extensions: inlinedRequestBody.extends,
                 }),
             };

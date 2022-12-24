@@ -1,4 +1,5 @@
 import { NameAndWireValue } from "@fern-fern/ir-model/commons";
+import { ExampleInlinedRequestBodyProperty } from "@fern-fern/ir-model/services/http";
 import { DeclaredTypeName, ExampleObjectProperty, TypeReference } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
@@ -7,7 +8,7 @@ export interface ObjectProperty {
     docs: string | undefined;
     name: NameAndWireValue;
     valueType: TypeReference;
-    example?: ExampleObjectProperty;
+    example?: ExampleObjectProperty | ExampleInlinedRequestBodyProperty;
 }
 
 export function convertObject({

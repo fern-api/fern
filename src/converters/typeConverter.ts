@@ -1,15 +1,19 @@
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { ExampleEndpointSuccessResponse, ExampleRequestBody } from "@fern-fern/ir-model/services/http";
 import {
     AliasTypeDeclaration,
     ContainerType,
     DeclaredTypeName,
     EnumTypeDeclaration,
     ExampleObjectProperty,
+    ExampleType,
     PrimitiveType,
     Type,
     TypeDeclaration,
     TypeReference,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
+import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 import { convertObject } from "./convertObject";
 
@@ -20,7 +24,7 @@ export interface ConvertedType {
 
 export type OpenApiComponentSchema = OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
 
-export function convertType(typeDeclaration: TypeDeclaration): ConvertedType {
+export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRepresentation): ConvertedType {
     const shape = typeDeclaration.shape;
     const docs = typeDeclaration.docs ?? undefined;
     const openApiSchema = Type._visit(shape, {
@@ -31,13 +35,47 @@ export function convertType(typeDeclaration: TypeDeclaration): ConvertedType {
             return convertEnum({ enumTypeDeclaration, docs });
         },
         object: (objectTypeDeclaration) => {
+            const exampleType: ExampleType | undefined = typeDeclaration.examples[0];
+            const exampleTypeFromEndpointRequest =
+                exampleType == null ? getExampleFromEndpointRequest(ir, typeDeclaration.name) : undefined;
+            const exampleTypeFromEndpointResponse =
+                exampleType == null && exampleTypeFromEndpointRequest == null
+                    ? getExampleFromEndpointResponse(ir, typeDeclaration.name)
+                    : undefined;
+
             return convertObject({
                 properties: objectTypeDeclaration.properties.map((property) => {
                     let exampleProperty: ExampleObjectProperty | undefined = undefined;
-                    if (typeDeclaration.examples.length > 0 && typeDeclaration.examples[0]?.shape.type === "object") {
-                        exampleProperty = typeDeclaration.examples[0].shape.properties.find((example) => {
+                    if (exampleType != null && exampleType.shape.type === "object") {
+                        exampleProperty = exampleType.shape.properties.find((example) => {
                             return example.wireKey === property.nameV2.wireValue;
                         });
+                    } else if (exampleTypeFromEndpointRequest != null) {
+                        if (
+                            exampleTypeFromEndpointRequest.type === "reference" &&
+                            exampleTypeFromEndpointRequest.shape.type === "named" &&
+                            exampleTypeFromEndpointRequest.shape.shape.type === "object"
+                        ) {
+                            exampleProperty = exampleTypeFromEndpointRequest.shape.shape.properties.find((example) => {
+                                return example.wireKey === property.nameV2.wireValue;
+                            });
+                        }
+                    } else if (exampleTypeFromEndpointResponse != null) {
+                        if (
+                            exampleTypeFromEndpointResponse.body?.shape.type === "named" &&
+                            exampleTypeFromEndpointResponse.body?.shape.shape.type === "object"
+                        ) {
+                            exampleProperty = exampleTypeFromEndpointResponse.body.shape.shape.properties.find(
+                                (example) => {
+                                    return example.wireKey === property.nameV2.wireValue;
+                                }
+                            );
+                        }
+                    } else {
+                        console.log(`Using no examples: ${typeDeclaration.name.nameV3.unsafeName.originalValue}`);
+                        console.log(`exampleType: ${exampleType}`);
+                        console.log(`exampleTypeFromEndpointRequest: ${exampleTypeFromEndpointRequest}`);
+                        console.log(`exampleTypeFromEndpointResponse: ${exampleTypeFromEndpointResponse}`);
                     }
                     return {
                         docs: property.docs ?? undefined,
@@ -251,4 +289,54 @@ export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName):
         })
         .map((part) => part.pascalCase);
     return [...pascalCaseFolders, declaredTypeName.name].join("");
+}
+
+function getExampleFromEndpointRequest(
+    ir: IntermediateRepresentation,
+    declaredTypeName: DeclaredTypeName
+): ExampleRequestBody | undefined {
+    for (const service of ir.services.http) {
+        for (const endpoint of service.endpoints) {
+            if (endpoint.examples.length <= 0) {
+                continue;
+            }
+            if (
+                endpoint.requestBody?.type === "reference" &&
+                endpoint.requestBody.requestBodyType._type === "named" &&
+                areDeclaredTypeNamesEqual(endpoint.requestBody.requestBodyType, declaredTypeName)
+            ) {
+                return endpoint.examples[0]?.request ?? undefined;
+            }
+        }
+    }
+    return undefined;
+}
+
+function getExampleFromEndpointResponse(
+    ir: IntermediateRepresentation,
+    declaredTypeName: DeclaredTypeName
+): ExampleEndpointSuccessResponse | undefined {
+    for (const service of ir.services.http) {
+        for (const endpoint of service.endpoints) {
+            if (endpoint.examples.length > 0) {
+                continue;
+            }
+            if (
+                endpoint.response.typeV2?._type === "named" &&
+                areDeclaredTypeNamesEqual(endpoint.response.typeV2, declaredTypeName)
+            ) {
+                const okResponseExample = endpoint.examples.find((exampleEndpoint) => {
+                    exampleEndpoint.response.type === "ok";
+                });
+                if (okResponseExample != null && okResponseExample.response.type === "ok") {
+                    return okResponseExample.response;
+                }
+            }
+        }
+    }
+    return undefined;
+}
+
+function areDeclaredTypeNamesEqual(one: DeclaredTypeName, two: DeclaredTypeName): boolean {
+    return isEqual(one.fernFilepathV2, two.fernFilepathV2) && isEqual(one.nameV3, two.nameV3);
 }

@@ -20,7 +20,7 @@ export function convertToOpenApi({
     const typesByName: Record<string, TypeDeclaration> = {};
     ir.types.forEach((typeDeclaration) => {
         // convert type to open api schema
-        const convertedType = convertType(typeDeclaration);
+        const convertedType = convertType(typeDeclaration, ir);
         schemas[convertedType.schemaName] = convertedType.openApiSchema;
         // populates typesByName map
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;

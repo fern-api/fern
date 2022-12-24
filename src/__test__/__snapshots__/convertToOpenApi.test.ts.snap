@@ -267,11 +267,13 @@ components:
       properties:
         title:
           type: string
+          example: My Blog
         author:
           $ref: '#/components/schemas/Author'
           description: Author is the writer.
         content:
           type: string
+          example: I'm a post
         postType:
           $ref: '#/components/schemas/PostType'
       required:
