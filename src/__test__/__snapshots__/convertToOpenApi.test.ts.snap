@@ -19,6 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlogPostId'
+      summary: Create Blog Post
       security:
         - BearerAuth: []
         - BasicAuth: []

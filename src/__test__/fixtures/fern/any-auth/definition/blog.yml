@@ -16,6 +16,7 @@ services:
       base-path: /
       endpoints:
         createPost:
+          display-name: Create Blog Post
           method: POST
           path: /create
           request: BlogPost

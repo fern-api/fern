@@ -111,6 +111,7 @@ function convertHttpEndpoint({
                 examples: httpEndpoint.examples,
             }),
         },
+        summary: httpEndpoint.displayName ?? undefined,
     };
     if (httpEndpoint.auth) {
         operationObject.security = security;
