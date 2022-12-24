@@ -71,11 +71,6 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                                 }
                             );
                         }
-                    } else {
-                        console.log(`Using no examples: ${typeDeclaration.name.nameV3.unsafeName.originalValue}`);
-                        console.log(`exampleType: ${exampleType}`);
-                        console.log(`exampleTypeFromEndpointRequest: ${exampleTypeFromEndpointRequest}`);
-                        console.log(`exampleTypeFromEndpointResponse: ${exampleTypeFromEndpointResponse}`);
                     }
                     return {
                         docs: property.docs ?? undefined,
@@ -318,7 +313,7 @@ function getExampleFromEndpointResponse(
 ): ExampleEndpointSuccessResponse | undefined {
     for (const service of ir.services.http) {
         for (const endpoint of service.endpoints) {
-            if (endpoint.examples.length > 0) {
+            if (endpoint.examples.length <= 0) {
                 continue;
             }
             if (
@@ -326,7 +321,7 @@ function getExampleFromEndpointResponse(
                 areDeclaredTypeNamesEqual(endpoint.response.typeV2, declaredTypeName)
             ) {
                 const okResponseExample = endpoint.examples.find((exampleEndpoint) => {
-                    exampleEndpoint.response.type === "ok";
+                    return exampleEndpoint.response.type === "ok";
                 });
                 if (okResponseExample != null && okResponseExample.response.type === "ok") {
                     return okResponseExample.response;

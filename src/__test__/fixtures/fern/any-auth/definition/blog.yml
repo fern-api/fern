@@ -28,3 +28,13 @@ services:
           path-parameters:
             postId: PostId
           response: BlogPost
+          examples: 
+            - path-parameters:
+                postId: 1234abc
+              response:
+                body: 
+                  id: 1234abc
+                  title: My Post
+                  author:
+                    name: Fernie
+                  content: This is my post.

@@ -41,6 +41,9 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/PostId'
+          examples:
+            Example1:
+              value: 1234abc
       responses:
         '200':
           description: ''
@@ -48,6 +51,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlogPost'
+              examples:
+                Example1:
+                  value:
+                    id: 1234abc
+                    title: My Post
+                    author:
+                      name: Fernie
+                    content: This is my post.
 components:
   schemas:
     PostId:
@@ -66,10 +77,12 @@ components:
           $ref: '#/components/schemas/PostId'
         title:
           type: string
+          example: My Post
         author:
           $ref: '#/components/schemas/Author'
         content:
           type: string
+          example: This is my post.
       required:
         - id
         - title
