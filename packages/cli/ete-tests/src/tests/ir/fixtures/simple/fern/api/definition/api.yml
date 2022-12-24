@@ -1,4 +1,5 @@
 name: my-api
+docs: foo bar baz
 headers:
   X-API-VERSION:
     name: apiVersion
