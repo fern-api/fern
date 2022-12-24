@@ -235,5 +235,10 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 }
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
-    return [...declaredTypeName.fernFilepath.map((part) => part.pascalCase), declaredTypeName.name].join("");
+    const pascalCaseFolders = declaredTypeName.fernFilepath
+        .filter((_part, idx) => {
+            return idx !== declaredTypeName.fernFilepath.length - 1;
+        })
+        .map((part) => part.pascalCase);
+    return [...pascalCaseFolders, declaredTypeName.name].join("");
 }

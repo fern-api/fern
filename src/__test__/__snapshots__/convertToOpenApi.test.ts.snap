@@ -18,7 +18,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPostId'
+                $ref: '#/components/schemas/PostId'
       summary: Create Blog Post
       security:
         - BearerAuth: []
@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogBlogPost'
+              $ref: '#/components/schemas/BlogPost'
   /{postId}:
     get:
       operationId: PostsService.getPost
@@ -40,34 +40,34 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/BlogPostId'
+            $ref: '#/components/schemas/PostId'
       responses:
         '200':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogBlogPost'
+                $ref: '#/components/schemas/BlogPost'
 components:
   schemas:
-    BlogPostId:
+    PostId:
       type: string
-    BlogAuthor:
+    Author:
       type: object
       properties:
         name:
           type: string
       required:
         - name
-    BlogBlogPost:
+    BlogPost:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/BlogPostId'
+          $ref: '#/components/schemas/PostId'
         title:
           type: string
         author:
-          $ref: '#/components/schemas/BlogAuthor'
+          $ref: '#/components/schemas/Author'
         content:
           type: string
       required:
@@ -118,7 +118,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPostId'
+                $ref: '#/components/schemas/PostId'
               examples:
                 Example1:
                   value: post-id-123
@@ -127,7 +127,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogCreatePostRequest'
+              $ref: '#/components/schemas/CreatePostRequest'
             examples:
               Example1:
                 value:
@@ -147,7 +147,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/BlogPostId'
+            $ref: '#/components/schemas/PostId'
           examples:
             Example1:
               value: post-id-123
@@ -165,13 +165,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogBlogPost'
+                $ref: '#/components/schemas/BlogPost'
         '400':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
+                $ref: '#/components/schemas/PostNotFoundErrorBody'
               examples:
                 Example1:
                   value:
@@ -186,42 +186,42 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/BlogPostId'
+            $ref: '#/components/schemas/PostId'
       responses:
         '200':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPostId'
+                $ref: '#/components/schemas/PostId'
         '400':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlogPostNotFoundErrorBody'
+                $ref: '#/components/schemas/PostNotFoundErrorBody'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogCreatePostRequest'
+              $ref: '#/components/schemas/CreatePostRequest'
 components:
   schemas:
-    BlogPostId:
+    PostId:
       type: string
-    BlogBlogPost:
+    BlogPost:
       type: object
       description: A blog post
       properties:
         id:
-          $ref: '#/components/schemas/BlogPostId'
+          $ref: '#/components/schemas/PostId'
         type:
-          $ref: '#/components/schemas/BlogPostType'
+          $ref: '#/components/schemas/PostType'
         title:
           type: string
         author:
-          $ref: '#/components/schemas/BlogAuthor'
+          $ref: '#/components/schemas/Author'
         content:
           type: string
       required:
@@ -230,12 +230,12 @@ components:
         - title
         - author
         - content
-    BlogPostType:
+    PostType:
       type: string
       enum:
         - LONG
         - SHORT
-    BlogAuthor:
+    Author:
       oneOf:
         - type: object
           properties:
@@ -246,32 +246,32 @@ components:
               type: string
         - type: object
           allOf:
-            - $ref: '#/components/schemas/BlogPostType'
+            - $ref: '#/components/schemas/PostType'
             - type: object
               properties:
                 type:
                   type: string
                   enum:
                     - type
-    BlogPostNotFoundErrorBody:
+    PostNotFoundErrorBody:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/BlogPostId'
+          $ref: '#/components/schemas/PostId'
       required:
         - id
-    BlogCreatePostRequest:
+    CreatePostRequest:
       type: object
       properties:
         title:
           type: string
         author:
-          $ref: '#/components/schemas/BlogAuthor'
+          $ref: '#/components/schemas/Author'
           description: Author is the writer.
         content:
           type: string
         postType:
-          $ref: '#/components/schemas/BlogPostType'
+          $ref: '#/components/schemas/PostType'
       required:
         - title
         - author
