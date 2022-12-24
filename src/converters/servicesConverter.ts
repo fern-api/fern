@@ -100,7 +100,7 @@ function convertHttpEndpoint({
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
         operationId: httpService.name.name + "." + httpEndpoint.id,
-        tags: [httpService.name.name],
+        tags: [httpService.name.fernFilepathV2.map((name) => name.safeName.pascalCase).join("")],
         parameters,
         responses: {
             ...convertResponse({

@@ -10,7 +10,7 @@ paths:
     post:
       operationId: PostsService.createPost
       tags:
-        - PostsService
+        - Blog
       parameters: []
       responses:
         '200':
@@ -34,7 +34,7 @@ paths:
     get:
       operationId: PostsService.getPost
       tags:
-        - PostsService
+        - Blog
       parameters:
         - name: postId
           in: path
@@ -101,7 +101,7 @@ paths:
       description: Creates a blog post and returns blog post id.
       operationId: PostsService.createPost
       tags:
-        - PostsService
+        - Blog
       parameters:
         - name: x-endpoint-header
           in: header
@@ -141,7 +141,7 @@ paths:
       description: Gets a blog post.
       operationId: PostsService.getPost
       tags:
-        - PostsService
+        - Blog
       parameters:
         - name: postId
           in: path
@@ -180,7 +180,7 @@ paths:
       description: Updates a blog post.
       operationId: PostsService.updatePost
       tags:
-        - PostsService
+        - Blog
       parameters:
         - name: postId
           in: path
