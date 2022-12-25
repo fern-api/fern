@@ -108,5 +108,4 @@ const config = {
         }),
 };
 
-index.title = "Your Desired Title";
 module.exports = config;
