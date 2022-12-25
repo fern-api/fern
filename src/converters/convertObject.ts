@@ -24,13 +24,23 @@ export function convertObject({
     const required: string[] = [];
     properties.forEach((objectProperty) => {
         const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
+
+        let example: unknown = undefined;
+        if (objectProperty.example != null && objectProperty.valueType._type === "primitive") {
+            example = objectProperty.example?.value.jsonExample;
+        } else if (
+            objectProperty.example != null &&
+            objectProperty.valueType._type === "container" &&
+            objectProperty.valueType.container._type === "list" &&
+            objectProperty.valueType.container.list._type === "primitive"
+        ) {
+            example = objectProperty.example?.value.jsonExample;
+        }
+
         convertedProperties[objectProperty.name.wireValue] = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
-            example:
-                objectProperty.valueType._type === "primitive" && objectProperty.example != null
-                    ? objectProperty.example?.value.jsonExample
-                    : undefined,
+            example,
         };
         const isOptionalProperty =
             objectProperty.valueType._type === "container" && objectProperty.valueType.container._type === "optional";
