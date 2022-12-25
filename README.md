@@ -1,4 +1,4 @@
-# Fern
+## Fern is an open source specification for describing REST APIs
 
 <div align="right">
   <a href="https://www.npmjs.com/package/fern-api" alt="fern-api npm package">
@@ -6,19 +6,21 @@
   </a>
 </div>
 
-Fern keeps your docs and SDKs in sync with your API.
+Define your API in Fern to generate boilerplate server code, SDKs, API documentation, an OpenAPI definition, and a Postman Collection.
+
+Inspired by Google's gRPC, Amazon's Smithy, and Palantir's Conjure, **we built Fern to productize schema-first API automation**.
 
 [View our docs ➚](https://buildwithfern.com/docs/intro)
 
 [Join the Discord ➚](https://discord.com/invite/JkkXumPzcG)
 
-**Fern** allows you to maintain a single source of truth for your API so that you can:
+With **Fern** you can:
 
-1. **Generate idiomatic SDKs** in the most popular languages: TypeScript/JavaScript, Python, Java, Go, Ruby. Fern also handles publishing to registries.
-2. **Serve your API accurately**. Fern integrates with popular frameworks like Express, FastAPI, and Spring to add compile-time and run-time checks.
+1. **Serve your API accurately**. Fern integrates with popular frameworks like Express, FastAPI, and Spring to add compile-time and run-time checks.
+2. **Generate idiomatic SDKs** in the most popular languages: TypeScript/JavaScript, Python, Java, Go, Ruby. Fern also handles publishing to registries.
 3. **Auto-update** your API documentation, Postman collection, and OpenAPI description any time your API changes.
 
-We’re in private beta with a handful of customers. If you’re interested in using Fern, [**reach out**](mailto:hey@buildwithfern.com?subject=%5BPrivate%20beta%5D%20Interest%20in%20joining).
+We’re in private beta. If you’re interested in using Fern, [**reach out**](mailto:hey@buildwithfern.com?subject=%5BPrivate%20beta%5D%20Interest%20in%20joining).
 
 ## Getting started
 
