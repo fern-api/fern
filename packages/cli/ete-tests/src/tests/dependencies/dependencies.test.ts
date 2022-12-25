@@ -10,5 +10,5 @@ describe("dependencies", () => {
             apiName: "dependent",
         });
         expect(ir).toMatchSnapshot();
-    });
+    }, 90_000);
 });

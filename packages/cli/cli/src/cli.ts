@@ -105,6 +105,7 @@ async function tryRunCli(cliContext: CliContext) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
                     cli.showHelp();
+                    cliContext.fail();
                 }
             }
         )
