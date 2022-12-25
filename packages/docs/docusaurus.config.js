@@ -3,6 +3,7 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const { default: Home } = require("./src/pages");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -107,4 +108,5 @@ const config = {
         }),
 };
 
+index.title = "Your Desired Title";
 module.exports = config;
