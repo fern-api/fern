@@ -73,7 +73,7 @@ $ fern generate
 
 ### Step 3: Implement the server
 
-Notice you only need to provide the business logic. Just implement the function and Fern takes care of the rest.
+Notice you only need to provide the business logic. Just implement the function, and Fern takes care of the rest.
 
 ```python src/fern_fastapi_starter/movies_service.py
 from .generated.fern import AbstractMoviesService, Movie, MovieDoesNotExistError, MovieId
@@ -104,7 +104,7 @@ register(app, imdb=MoviesService())
 
 ### Step 4: Compile
 
-If you make mistakes implementing your API, the type checker will warn you.
+The type checker will warn you if you make mistakes implementing your API.
 
 ![Invalid return value](images/invalid_return_value.png)
 
