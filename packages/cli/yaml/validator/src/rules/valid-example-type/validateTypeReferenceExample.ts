@@ -1,8 +1,9 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { PrimitiveType } from "@fern-fern/ir-model/types";
-import { isArray, isPlainObject } from "lodash-es";
+import { isArray } from "lodash-es";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
@@ -23,7 +24,7 @@ export function validateTypeReferenceExample({
     workspace,
 }: {
     rawTypeReference: string;
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeReferenceSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: Workspace;
@@ -141,7 +142,7 @@ function validatePrimitiveExample({
     example,
 }: {
     primitiveType: PrimitiveType;
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeReferenceSchema;
 }): RuleViolation[] {
     return PrimitiveType._visit<RuleViolation[]>(primitiveType, {
         string: () => validateString(example),
@@ -162,13 +163,16 @@ const validateInteger = createValidator((example) => Number.isInteger(example), 
 const validateDouble = createValidator((example) => typeof example === "number", "a double");
 const validateLong = createValidator((example) => Number.isInteger(example), "an integer");
 const validateBoolean = createValidator((example) => typeof example === "boolean", "a boolean");
-const validateUuid = createValidator((example) => UUID_REGEX.test(example), "a UUID");
-const validateDateTime = createValidator((example) => ISO_8601_REGEX.test(example), "an ISO 8601 timestamp");
+const validateUuid = createValidator((example) => typeof example === "string" && UUID_REGEX.test(example), "a UUID");
+const validateDateTime = createValidator(
+    (example) => typeof example === "string" && ISO_8601_REGEX.test(example),
+    "an ISO 8601 timestamp"
+);
 
 function createValidator(
-    validate: (example: RawSchemas.ExampleTypeSchema) => boolean,
+    validate: (example: RawSchemas.ExampleTypeReferenceSchema) => boolean,
     expectedTypeIncludingArticle: string
-): (example: RawSchemas.ExampleTypeSchema) => RuleViolation[] {
+): (example: RawSchemas.ExampleTypeReferenceSchema) => RuleViolation[] {
     return (example) => {
         if (validate(example)) {
             return [];

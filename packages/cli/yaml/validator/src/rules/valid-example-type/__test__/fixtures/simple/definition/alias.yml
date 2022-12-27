@@ -2,86 +2,97 @@ types:
   StringAlias:
     type: string
     examples:
-      - I am a string
-      - 14
-      - key: some value
+      - value: I am a string
+      - value: 14
+      - value:
+          key: some value
   IntegerAlias1: integer
   IntegerAlias2:
     type: integer
     examples:
-      - 1
-      - 2.0
-      - 3.14
+      - value: 1
+      - value: 2.0
+      - value: 3.14
   LongAlias:
     type: long
     examples:
-      - 1
-      - 9120830129830912
-      - hello
+      - value: 1
+      - value: 9120830129830912
+      - value: hello
   DoubleAlias:
     type: double
     examples:
-      - 1
-      - 3.14
-      - false
+      - value: 1
+      - value: 3.14
+      - value: false
   BooleanAlias:
     type: boolean
     examples:
-      - true
-      - 100
-      - false
+      - value: true
+      - value: 100
+      - value: false
   DateTimeAlias:
     type: datetime
     examples:
-      - 4/13/2002
-      - "2022-12-06T23:13:15+00:00"
-      - "2022-12-06T23:13:15Z"
-      - "20221206T231315Z"
+      - value: 4/13/2002
+      - value: "2022-12-06T23:13:15+00:00"
+      - value: "2022-12-06T23:13:15Z"
+      - value: "20221206T231315Z"
   UnknownAlias:
     type: unknown
     examples:
-      - 213
-      - hello
-      - key: value
+      - value: 213
+      - value: hello
+      - value:
+          key: value
   UuidAlias:
     type: uuid
     examples:
-      - my-id
-      - 123e4567-e89b-12d3-a456-426614174000
+      - value: my-id
+      - value: 123e4567-e89b-12d3-a456-426614174000
   ListAlias:
     type: list<string>
     examples:
-      - - hello
-        - world
-      - - hello
-        - 3.14
-      - hello
+      - value:
+          - hello
+          - world
+      - value:
+          - hello
+          - 3.14
+      - value: hello
   SetAlias:
     type: set<string>
     examples:
-      - key: value
-      - - hello
-        - world
-      - - hello
-        - hello
-      - - hello
-        - 3.14
+      - value:
+          key: value
+      - value:
+          - hello
+          - world
+      - value:
+          - hello
+          - hello
+      - value:
+          - hello
+          - 3.14
   MapAlias:
     type: map<string, integer>
     examples:
-      - key: 4
-        otherKey: 42
-      - key: 1
-        lastKey: 3.15
-      - - hello
+      - value:
+          key: 4
+          otherKey: 42
+      - value:
+          key: 1
+          lastKey: 3.15
+      - value:
+          - hello
   OptionalAlias:
     type: optional<double>
     examples:
-      - hello
-      - null
-      - 3.0
+      - value: hello
+      - value: null
+      - value: 3.0
   LiteralAlias:
     type: literal<"hello">
     examples:
-      - hello
-      - goodbye
+      - value: hello
+      - value: goodbye

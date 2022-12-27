@@ -12,7 +12,7 @@ export function validateAliasExample({
     workspace,
 }: {
     rawAlias: string | RawSchemas.AliasSchema;
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
     workspace: Workspace;

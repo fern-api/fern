@@ -3034,6 +3034,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             ],
             "examples": [
                 {
+                    "name": "PersonExample1",
+                    "docs": "this is a person example",
                     "jsonExample": {
                         "type": "actor",
                         "value": "Matt Damon"
@@ -10030,6 +10032,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             ],
             "examples": [
                 {
+                    "name": "PersonExample1",
+                    "docs": "this is a person example",
                     "jsonExample": {
                         "type": "actor",
                         "value": "Matt Damon"
@@ -17026,6 +17030,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             ],
             "examples": [
                 {
+                    "name": "PersonExample1",
+                    "docs": "this is a person example",
                     "jsonExample": {
                         "type": "actor",
                         "value": "Matt Damon"
@@ -22893,6 +22899,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             ],
             "examples": [
                 {
+                    "name": "PersonExample1",
+                    "docs": "this is a person example",
                     "jsonExample": {
                         "type": "actor",
                         "value": "Matt Damon"
@@ -28760,6 +28768,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             ],
             "examples": [
                 {
+                    "name": "PersonExample1",
+                    "docs": "this is a person example",
                     "jsonExample": {
                         "type": "actor",
                         "value": "Matt Damon"

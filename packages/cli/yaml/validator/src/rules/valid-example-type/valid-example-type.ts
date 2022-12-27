@@ -14,7 +14,7 @@ export const ValidExampleTypeRule: Rule = {
                     return validateTypeExample({
                         typeName,
                         typeDeclaration,
-                        example,
+                        example: example.value,
                         file: constructFernFileContext({
                             relativeFilepath,
                             serviceFile,

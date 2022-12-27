@@ -36,15 +36,18 @@ export function convertTypeDeclaration({
         referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
         examples:
             typeof typeDeclaration !== "string" && typeDeclaration.examples != null
-                ? typeDeclaration.examples.map((example) =>
-                      convertTypeExample({
+                ? typeDeclaration.examples.map((example) => ({
+                      name: example.name,
+                      docs: example.docs,
+                      jsonExample: example.value,
+                      shape: convertTypeExample({
                           typeName: declaredTypeName,
-                          example,
+                          example: example.value,
                           typeResolver,
                           typeDeclaration,
                           file,
-                      })
-                  )
+                      }),
+                  }))
                 : [],
     };
 }

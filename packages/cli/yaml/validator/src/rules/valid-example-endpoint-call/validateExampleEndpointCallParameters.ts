@@ -1,5 +1,6 @@
 import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
 
@@ -12,7 +13,7 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
     file,
 }: {
     allDeclarations: Record<string, T> | undefined;
-    examples: Record<string, string> | undefined;
+    examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined;
     parameterDisplayName: string;
     typeResolver: TypeResolver;
     workspace: Workspace;
@@ -35,6 +36,7 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
 
         return acc;
     }, []);
+
     for (const requiredKey of requiredParameters) {
         if (examples?.[requiredKey] == null) {
             violations.push({

@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ExampleEndpointCall,
@@ -32,6 +33,8 @@ export function convertExampleEndpointCall({
     file: FernFileContext;
 }): ExampleEndpointCall {
     return {
+        name: example.name,
+        docs: example.docs,
         ...convertPathParameters({ service, endpoint, example, typeResolver, file }),
         ...convertHeaders({ service, endpoint, example, typeResolver, file }),
         queryParameters:
@@ -204,6 +207,10 @@ function convertExampleRequestBody({
                 file,
             })
         );
+    }
+
+    if (!isPlainObject(example.request)) {
+        throw new Error("Example is not an object");
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
