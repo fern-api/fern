@@ -4,6 +4,7 @@ import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
 import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
+import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
 
 export async function visitTypeDeclarations({
     typeDeclarations,
@@ -42,10 +43,13 @@ export async function visitTypeDeclaration({
             return;
         }
         for (const [arrayIndex, example] of examples.entries()) {
-            await visitor.exampleType?.({ typeName, typeDeclaration: declaration, example }, [
-                ...nodePathForType,
-                { key: "examples", arrayIndex },
-            ]);
+            const nodePathForExample = [...nodePathForType, { key: "examples", arrayIndex }];
+            await visitor.exampleType?.({ typeName, typeDeclaration: declaration, example }, nodePathForExample);
+            await visitAllReferencesInExample({
+                example: example.value,
+                nodePath: nodePathForExample,
+                visitor,
+            });
         }
     };
 

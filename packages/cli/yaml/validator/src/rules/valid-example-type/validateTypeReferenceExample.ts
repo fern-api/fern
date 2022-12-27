@@ -3,7 +3,6 @@ import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { PrimitiveType } from "@fern-fern/ir-model/types";
-import { isArray } from "lodash-es";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
@@ -73,7 +72,7 @@ export function validateTypeReferenceExample({
             ]);
         },
         list: (itemType) => {
-            if (!isArray(example)) {
+            if (!Array.isArray(example)) {
                 return getRuleViolationsForMisshapenExample(example, "a list");
             }
             return example.flatMap((exampleItem) =>
@@ -87,7 +86,7 @@ export function validateTypeReferenceExample({
             );
         },
         set: (itemType) => {
-            if (!isArray(example)) {
+            if (!Array.isArray(example)) {
                 return getRuleViolationsForMisshapenExample(example, "a list");
             }
 

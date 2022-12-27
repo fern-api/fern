@@ -22,6 +22,7 @@ export interface FernServiceFileAstNodeTypes {
     import: { importPath: string; importedAs: string };
     typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
     exampleType: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
+    exampleTypeReference: string;
     typeReference: string;
     typeName: string;
     httpService: { serviceName: string; service: HttpServiceSchema };

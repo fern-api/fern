@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
+import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
@@ -19,12 +20,14 @@ export function convertHttpService({
     file,
     errorResolver,
     typeResolver,
+    exampleResolver,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     serviceId: string;
     file: FernFileContext;
     errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
 }): HttpService {
     return {
         ...convertDeclaration(serviceDefinition),
@@ -116,6 +119,7 @@ export function convertHttpService({
                                   example,
                                   typeResolver,
                                   errorResolver,
+                                  exampleResolver,
                                   file,
                               })
                           )

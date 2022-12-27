@@ -60,6 +60,7 @@ export function createServiceFileAstVisitorForRules({
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
         ...createAstNodeVisitor("exampleType"),
+        ...createAstNodeVisitor("exampleTypeReference"),
         ...createAstNodeVisitor("exampleHttpEndpointCall"),
         ...createAstNodeVisitor("exampleHeaders"),
         ...createAstNodeVisitor("examplePathParameters"),
