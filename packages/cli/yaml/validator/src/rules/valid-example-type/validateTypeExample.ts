@@ -19,7 +19,7 @@ export function validateTypeExample({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
     workspace: Workspace;
 }): RuleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {

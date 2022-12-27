@@ -3,4 +3,5 @@ types:
     properties:
       title: string
     examples:
-      - title: hello
+      - value:
+          title: hello

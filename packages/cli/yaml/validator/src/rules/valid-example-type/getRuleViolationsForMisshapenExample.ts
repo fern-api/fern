@@ -2,7 +2,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 
 export function getRuleViolationsForMisshapenExample(
-    example: RawSchemas.ExampleTypeSchema,
+    example: RawSchemas.ExampleTypeReferenceSchema,
     expectedTypeIncludingArticle: string
 ): RuleViolation[] {
     return [

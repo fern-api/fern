@@ -124,7 +124,9 @@ types:
   # examples
 
   ExampleEndpointCall:
+    extends: commons.WithDocs
     properties:
+      name: optional<string>
       servicePathParameters: list<ExamplePathParameter>
       endpointPathParameters: list<ExamplePathParameter>
       serviceHeaders: list<ExampleHeader>

@@ -4,8 +4,8 @@ types:
   MovieId:
     type: string
     examples:
-      - id1
-      - id2
+      - value: id1
+      - value: id2
   ActorId: string
   Movie:
     properties:
@@ -13,9 +13,10 @@ types:
       title: string
       rating: double
     examples:
-      - id: my-movie-id
-        title: Goodwill Hunting
-        rating: 14.5
+      - value:
+          id: my-movie-id
+          title: Goodwill Hunting
+          rating: 14.5
   CreateMovieRequest:
     properties:
       title: string
@@ -26,29 +27,34 @@ types:
       director: director.Director
       producer: {}
     examples:
-      - type: actor
-        value: Matt Damon
-      - type: director
-        name: George the Directory
-        age: 100
-      - type: producer
+      - value:
+          type: actor
+          value: Matt Damon
+      - value:
+          type: director
+          name: George the Directory
+          age: 100
+      - value:
+          type: producer
   RecursiveType:
     extends: CreateMovieRequest
     properties:
       selfReferencing: list<RecursiveType>
     examples:
-      - title: The Godfather
-        ratings: [10, 5, 9]
-        selfReferencing:
-          - title: The Godfather II
-            ratings: [10, 11]
-            selfReferencing: []
-          - title: The Godfather III
-            ratings: []
-            selfReferencing: []
-      - title: Goodfellas
-        ratings: [1, 2, 3]
-        selfReferencing: []
+      - value:
+          title: The Godfather
+          ratings: [10, 5, 9]
+          selfReferencing:
+            - title: The Godfather II
+              ratings: [10, 11]
+              selfReferencing: []
+            - title: The Godfather III
+              ratings: []
+              selfReferencing: []
+      - value:
+          title: Goodfellas
+          ratings: [1, 2, 3]
+          selfReferencing: []
 errors:
   NotFoundError:
     status-code: 404

@@ -17,6 +17,7 @@ export { ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
 export { ExampleResponseSchema } from "./ExampleResponseSchema";
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 export { ExampleTypeSchema } from "./ExampleTypeSchema";
+export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
 export * from "./file-schemas";
 export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export { HttpEndpointSchema } from "./HttpEndpointSchema";

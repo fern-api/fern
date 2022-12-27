@@ -51,7 +51,7 @@ export function convertTypeExample({
         },
         union: (rawUnion) => {
             const discriminant = getUnionDiscriminant(rawUnion);
-            const discriminantValueForExample = example[discriminant];
+            const discriminantValueForExample = example.value?.[discriminant];
             if (discriminantValueForExample == null) {
                 throw new Error("Example is missing discriminant: " + discriminant);
             }
@@ -77,7 +77,7 @@ export function convertTypeExample({
         },
         enum: () => {
             return ExampleTypeShape.enum({
-                wireValue: example,
+                wireValue: example.value,
             });
         },
     });
@@ -94,7 +94,7 @@ export function convertTypeReferenceExample({
     typeResolver,
     file,
 }: {
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeReferenceSchema;
     rawTypeBeingExemplified: string;
     typeResolver: TypeResolver;
     file: FernFileContext;
@@ -219,7 +219,7 @@ function convertPrimitiveExample({
     example,
     typeBeingExemplified,
 }: {
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeReferenceSchema;
     typeBeingExemplified: PrimitiveType;
 }): ExampleTypeReferenceShape {
     return PrimitiveType._visit(typeBeingExemplified, {
@@ -252,7 +252,7 @@ function convertObject({
     return ExampleTypeShape.object({
         properties:
             rawObject.properties != null
-                ? Object.entries(example).reduce<ExampleObjectProperty[]>(
+                ? Object.entries(example.value).reduce<ExampleObjectProperty[]>(
                       (exampleProperties, [wireKey, propertyExample]) => {
                           const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
                               typeName,
@@ -379,14 +379,14 @@ function convertUnionProperties({
         case "singleProperty":
             return ExampleSingleUnionTypeProperties.singleProperty(
                 convertTypeReferenceExample({
-                    example: example[parsedSingleUnionTypeProperties.nameV2.wireValue],
+                    example: example.value?.[parsedSingleUnionTypeProperties.nameV2.wireValue],
                     rawTypeBeingExemplified: rawValueType,
                     typeResolver,
                     file,
                 })
             );
         case "samePropertiesAsObject": {
-            const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example;
+            const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example.value;
             const rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
                 file,
