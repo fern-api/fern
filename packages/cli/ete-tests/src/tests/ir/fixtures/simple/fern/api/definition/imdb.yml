@@ -27,7 +27,9 @@ types:
       director: director.Director
       producer: {}
     examples:
-      - value:
+      - name: PersonExample1
+        docs: this is a person example
+        value:
           type: actor
           value: Matt Damon
       - value:

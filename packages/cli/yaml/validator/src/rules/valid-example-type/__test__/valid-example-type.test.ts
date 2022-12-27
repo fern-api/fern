@@ -138,10 +138,7 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: "enum.yml",
-                message: `This example is not valid. Example is: {"key":"value"}. Enum values are:
-  - Red
-  - BLUE
-  - purple`,
+                message: 'Expected example to be a string. Example is: {"key":"value"}',
                 nodePath: ["types", "Color", { key: "examples", arrayIndex: 4 }],
             },
 

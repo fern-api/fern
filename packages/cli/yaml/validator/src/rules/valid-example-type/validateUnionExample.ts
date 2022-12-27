@@ -1,7 +1,9 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import { FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
+import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
 import { validateObjectExample } from "./validateObjectExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
@@ -20,6 +22,10 @@ export function validateUnionExample({
     file: FernFileContext;
     workspace: Workspace;
 }): RuleViolation[] {
+    if (!isPlainObject(example)) {
+        return getRuleViolationsForMisshapenExample(example, "an object");
+    }
+
     const discriminant = getUnionDiscriminant(rawUnion);
     const { [discriminant]: discriminantValue, ...nonDiscriminantPropertyExamples } = example;
 
@@ -30,6 +36,10 @@ export function validateUnionExample({
                 message: `Missing discriminant property ("${discriminant}")`,
             },
         ];
+    }
+
+    if (typeof discriminantValue !== "string") {
+        return getRuleViolationsForMisshapenExample(discriminantValue, "a string");
     }
 
     const singleUnionTypeDefinition = rawUnion.union[discriminantValue];

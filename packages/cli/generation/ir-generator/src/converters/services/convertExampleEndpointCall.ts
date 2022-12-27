@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ExampleEndpointCall,
@@ -206,6 +207,10 @@ function convertExampleRequestBody({
                 file,
             })
         );
+    }
+
+    if (!isPlainObject(example.request)) {
+        throw new Error("Example is not an object");
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];

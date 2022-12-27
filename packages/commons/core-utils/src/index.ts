@@ -7,5 +7,6 @@ export { identity } from "./identity";
 export { noop } from "./noop";
 export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
 export { entries, type Entries } from "./objects/entries";
+export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
 export { values, type Values } from "./objects/values";
