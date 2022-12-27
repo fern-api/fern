@@ -83,6 +83,8 @@ export function convertTypeExample({
     });
 
     return {
+        name: example.name,
+        docs: example.docs,
         jsonExample: example,
         shape,
     };

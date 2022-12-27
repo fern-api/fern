@@ -32,6 +32,8 @@ export function convertExampleEndpointCall({
     file: FernFileContext;
 }): ExampleEndpointCall {
     return {
+        name: example.name,
+        docs: example.docs,
         ...convertPathParameters({ service, endpoint, example, typeResolver, file }),
         ...convertHeaders({ service, endpoint, example, typeResolver, file }),
         queryParameters:
