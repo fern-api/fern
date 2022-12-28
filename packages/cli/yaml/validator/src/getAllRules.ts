@@ -6,6 +6,7 @@ import NoConflictingEndpointParametersRule from "./rules/no-conflicting-endpoint
 import NoConflictingRequestWrapperPropertiesRule from "./rules/no-conflicting-request-wrapper-properties";
 import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
 import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
+import NoDuplicateExampleNamesRule from "./rules/no-duplicate-example-names";
 import NoDuplicateFieldNamesRule from "./rules/no-duplicate-field-names";
 import NoErrorStatusCodeConflict from "./rules/no-error-status-code-conflict";
 import NoGetRequestBody from "./rules/no-get-request-body";
@@ -44,6 +45,7 @@ export function getAllRules(): Rule[] {
         NoConflictingEndpointParametersRule,
         NoConflictingRequestWrapperPropertiesRule,
         ValidExampleEndpointCallRule,
+        NoDuplicateExampleNamesRule,
     ];
 }
 
