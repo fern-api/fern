@@ -15,6 +15,7 @@ import NoMissingErrorDiscriminant from "./rules/no-missing-error-discriminant";
 import NoMissingRequestNameRule from "./rules/no-missing-request-name";
 import NoObjectSinglePropertyKey from "./rules/no-object-single-property-key";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
+import NoUndefinedExampleReferenceRule from "./rules/no-undefined-example-reference";
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
 import ValidDefaultEnvironmentRule from "./rules/valid-default-environment";
@@ -46,6 +47,7 @@ export function getAllRules(): Rule[] {
         NoConflictingRequestWrapperPropertiesRule,
         ValidExampleEndpointCallRule,
         NoDuplicateExampleNamesRule,
+        NoUndefinedExampleReferenceRule,
     ];
 }
 

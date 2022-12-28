@@ -14,9 +14,10 @@ export interface ExampleResolver {
     resolveExample: (args: {
         referenceToExample: string;
         file: FernFileContext;
-    }) => { resolvedExample: unknown } | undefined;
+    }) => { resolvedExample: unknown; file: FernFileContext } | undefined;
     resolveExampleOrThrow: (args: { referenceToExample: string; file: FernFileContext }) => {
         resolvedExample: unknown;
+        file: FernFileContext;
     };
     parseExampleReference: (exampleReference: string) => { rawTypeReference: string; exampleName: string } | undefined;
 }
@@ -33,9 +34,16 @@ export class ExampleResolverImpl implements ExampleResolver {
     }): { resolvedExample: unknown } | undefined {
         if (typeof example === "string") {
             if (example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
-                return this.resolveExample({
+                const resolvedExample = this.resolveExample({
                     referenceToExample: example,
                     file,
+                });
+                if (resolvedExample == null) {
+                    return undefined;
+                }
+                return this.resolveAllReferencesInExample({
+                    example: resolvedExample.resolvedExample,
+                    file: resolvedExample.file,
                 });
             }
         } else if (isPlainObject(example)) {
@@ -79,7 +87,7 @@ export class ExampleResolverImpl implements ExampleResolver {
     }: {
         referenceToExample: string;
         file: FernFileContext;
-    }): { resolvedExample: unknown } | undefined {
+    }): { resolvedExample: unknown; file: FernFileContext } | undefined {
         const parsedExampleReference = this.parseExampleReference(referenceToExample);
         if (parsedExampleReference == null) {
             return undefined;
@@ -97,17 +105,18 @@ export class ExampleResolverImpl implements ExampleResolver {
             return undefined;
         }
 
-        const example = typeDeclaration.declaration.examples.find(
+        const resolvedExample = typeDeclaration.declaration.examples.find(
             (otherExample) => otherExample.name === parsedExampleReference.exampleName
         );
-        if (example == null) {
+        if (resolvedExample == null) {
             return undefined;
         }
-        return this.resolveAllReferencesInExample({ example: example.value, file: typeDeclaration.file });
+        return { resolvedExample, file: typeDeclaration.file };
     }
 
     public resolveExampleOrThrow({ referenceToExample, file }: { referenceToExample: string; file: FernFileContext }): {
         resolvedExample: unknown;
+        file: FernFileContext;
     } {
         const resolvedExample = this.resolveExample({ referenceToExample, file });
         if (resolvedExample == null) {

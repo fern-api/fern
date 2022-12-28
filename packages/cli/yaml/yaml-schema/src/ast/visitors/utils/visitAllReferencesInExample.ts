@@ -17,7 +17,7 @@ export async function visitAllReferencesInExample({
             await visitor.exampleTypeReference?.(example, nodePath);
         }
     } else if (isPlainObject(example)) {
-        for (const exampleValue in Object.values(example)) {
+        for (const exampleValue of Object.values(example)) {
             await visitAllReferencesInExample({
                 example: exampleValue,
                 visitor,
