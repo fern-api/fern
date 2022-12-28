@@ -1,6 +1,7 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
+import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
@@ -15,11 +16,13 @@ export function convertTypeDeclaration({
     typeDeclaration,
     file,
     typeResolver,
+    exampleResolver,
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
 }): TypeDeclaration {
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = {
@@ -39,11 +42,15 @@ export function convertTypeDeclaration({
                 ? typeDeclaration.examples.map((example) => ({
                       name: example.name,
                       docs: example.docs,
-                      jsonExample: example.value,
+                      jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                          example: example.value,
+                          file,
+                      }).resolvedExample,
                       shape: convertTypeExample({
                           typeName: declaredTypeName,
                           example: example.value,
                           typeResolver,
+                          exampleResolver,
                           typeDeclaration,
                           file,
                       }),

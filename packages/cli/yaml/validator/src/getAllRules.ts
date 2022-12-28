@@ -6,6 +6,7 @@ import NoConflictingEndpointParametersRule from "./rules/no-conflicting-endpoint
 import NoConflictingRequestWrapperPropertiesRule from "./rules/no-conflicting-request-wrapper-properties";
 import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
 import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
+import NoDuplicateExampleNamesRule from "./rules/no-duplicate-example-names";
 import NoDuplicateFieldNamesRule from "./rules/no-duplicate-field-names";
 import NoErrorStatusCodeConflict from "./rules/no-error-status-code-conflict";
 import NoGetRequestBody from "./rules/no-get-request-body";
@@ -14,6 +15,7 @@ import NoMissingErrorDiscriminant from "./rules/no-missing-error-discriminant";
 import NoMissingRequestNameRule from "./rules/no-missing-request-name";
 import NoObjectSinglePropertyKey from "./rules/no-object-single-property-key";
 import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
+import NoUndefinedExampleReferenceRule from "./rules/no-undefined-example-reference";
 import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
 import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
 import ValidDefaultEnvironmentRule from "./rules/valid-default-environment";
@@ -44,6 +46,8 @@ export function getAllRules(): Rule[] {
         NoConflictingEndpointParametersRule,
         NoConflictingRequestWrapperPropertiesRule,
         ValidExampleEndpointCallRule,
+        NoDuplicateExampleNamesRule,
+        NoUndefinedExampleReferenceRule,
     ];
 }
 

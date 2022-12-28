@@ -1,4 +1,9 @@
-import { constructFernFileContext, ErrorResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
+import {
+    constructFernFileContext,
+    ErrorResolverImpl,
+    ExampleResolverImpl,
+    TypeResolverImpl,
+} from "@fern-api/ir-generator";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateExampleEndpointCallParameters } from "./validateExampleEndpointCallParameters";
@@ -10,6 +15,7 @@ export const ValidExampleEndpointCallRule: Rule = {
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
         const errorResolver = new ErrorResolverImpl(workspace);
+        const exampleResolver = new ExampleResolverImpl(typeResolver);
 
         return {
             serviceFile: {
@@ -22,6 +28,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         examples,
                         parameterDisplayName: "header",
                         typeResolver,
+                        exampleResolver,
                         workspace,
                         file: constructFernFileContext({
                             relativeFilepath,
@@ -42,6 +49,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         examples,
                         parameterDisplayName: "path parameter",
                         typeResolver,
+                        exampleResolver,
                         workspace,
                         file: constructFernFileContext({
                             relativeFilepath,
@@ -57,6 +65,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         examples,
                         parameterDisplayName: "query parameter",
                         typeResolver,
+                        exampleResolver,
                         workspace,
                         file: constructFernFileContext({
                             relativeFilepath,
@@ -70,6 +79,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         example,
                         endpoint,
                         typeResolver,
+                        exampleResolver,
                         file: constructFernFileContext({
                             relativeFilepath,
                             serviceFile,
@@ -83,6 +93,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         example,
                         endpoint,
                         typeResolver,
+                        exampleResolver,
                         file: constructFernFileContext({
                             relativeFilepath,
                             serviceFile,

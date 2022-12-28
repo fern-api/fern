@@ -1,5 +1,5 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
@@ -12,6 +12,7 @@ export function validateUnionExample({
     rawUnion,
     example,
     typeResolver,
+    exampleResolver,
     file,
     workspace,
 }: {
@@ -19,6 +20,7 @@ export function validateUnionExample({
     rawUnion: RawSchemas.UnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: Workspace;
 }): RuleViolation[] {
@@ -81,6 +83,7 @@ export function validateUnionExample({
             file: resolvedType.file,
             example: nonDiscriminantPropertyExamples,
             typeResolver,
+            exampleResolver,
             workspace,
         });
     }
@@ -109,6 +112,7 @@ export function validateUnionExample({
                 rawTypeReference: type,
                 example: singlePropertyExample,
                 typeResolver,
+                exampleResolver,
                 file,
                 workspace,
             })

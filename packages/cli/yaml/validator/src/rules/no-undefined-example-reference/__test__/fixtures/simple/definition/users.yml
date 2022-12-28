@@ -1,0 +1,21 @@
+types:
+  UserId:
+    type: integer
+    examples:
+      - name: UserIdExample1
+        value: user-id-123
+
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: true
+      endpoints:
+        getUser:
+          method: GET
+          path: /{userId}
+          path-parameters:
+            userId: UserId
+          examples:
+            - path-parameters:
+                userId: $UserId.UserIdExample1

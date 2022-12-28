@@ -17,6 +17,7 @@ import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
 import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
+import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 
 export async function generateIntermediateRepresentation({
@@ -75,6 +76,7 @@ export async function generateIntermediateRepresentation({
 
     const typeResolver = new TypeResolverImpl(workspace);
     const errorResolver = new ErrorResolverImpl(workspace);
+    const exampleResolver = new ExampleResolverImpl(typeResolver);
 
     const visitServiceFile = async ({ file, schema }: { file: FernFileContext; schema: ServiceFileSchema }) => {
         await visitObject(schema, {
@@ -91,6 +93,7 @@ export async function generateIntermediateRepresentation({
                         typeDeclaration,
                         file,
                         typeResolver,
+                        exampleResolver,
                     });
                     intermediateRepresentation.types.push(convertedTypeDeclaration);
 
@@ -133,6 +136,7 @@ export async function generateIntermediateRepresentation({
                             file,
                             errorResolver,
                             typeResolver,
+                            exampleResolver,
                         });
                         intermediateRepresentation.services.http.push(convertedHttpService);
 

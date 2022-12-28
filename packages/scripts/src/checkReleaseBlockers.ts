@@ -3,7 +3,6 @@
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { isArray } from "lodash-es";
 import path from "path";
 
 const FILENAME = "release-blockers.yml";
@@ -34,7 +33,7 @@ export async function checkReleaseBlockers(): Promise<void> {
         process.exit(1);
     }
 
-    if (!isArray(releaseBlockers)) {
+    if (!Array.isArray(releaseBlockers)) {
         console.error(chalk.red(`'release-blockers' is not an array in ${FILENAME}`));
         process.exit(1);
     }

@@ -197,7 +197,7 @@ types:
     docs: A unique identifier for a user
     type: string
     examples:
-      - user-id-123
+      - value: user-id-123
 ```
 
 ```typescript Generated TypeScript SDK
@@ -217,5 +217,28 @@ types:
   UserId:
     type: integer
     examples:
-      - hello # not an integer
+      - value: hello # not an integer
+```
+
+#### Referencing examples from other types
+
+Just like types, you can compose examples. To reference an example from another
+type, use `$`.
+
+```yaml
+types:
+  UserId:
+    type: integer
+    examples:
+      - name: Example1
+        value: user-id-123
+
+  User:
+    properties:
+      id: UserId
+      name: string
+    examples:
+      - value:
+          id: $UserId.Example1 # <---
+          name: Jane Smith
 ```

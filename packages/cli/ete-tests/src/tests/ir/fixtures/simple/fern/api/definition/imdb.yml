@@ -1,6 +1,10 @@
 imports:
   director: director.yml
 types:
+  CurrencyAmount:
+    type: string
+    examples:
+      - value: \$4.50
   MovieId:
     type: string
     examples:
@@ -21,6 +25,17 @@ types:
     properties:
       title: string
       ratings: list<double>
+    examples:
+      - name: Example1
+        value:
+          title: Winnie the Pooh
+          ratings: [1, 2, 3]
+  DirectorWrapper:
+    properties:
+      director: director.Director
+    examples:
+      - value:
+          director: $director.Director.GeorgeExample
   Person:
     union:
       actor: ActorId
@@ -78,6 +93,9 @@ services:
             - request:
                 title: Shrek
                 ratings: [10, 10, 10, 10]
+              response:
+                body: shrek-123
+            - request: $CreateMovieRequest.Example1
               response:
                 body: shrek-123
         getMovie:

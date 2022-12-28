@@ -1,4 +1,4 @@
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
@@ -9,6 +9,7 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
     examples,
     parameterDisplayName,
     typeResolver,
+    exampleResolver,
     workspace,
     file,
 }: {
@@ -16,6 +17,7 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
     examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined;
     parameterDisplayName: string;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     workspace: Workspace;
     file: FernFileContext;
 }): RuleViolation[] {
@@ -62,6 +64,7 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
                         file,
                         workspace,
                         typeResolver,
+                        exampleResolver,
                     })
                 );
             }

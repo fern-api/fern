@@ -1,7 +1,9 @@
 ---
-title: "Services"
-description: "A Service is a collection of related endpoints"
+title: "Endpoints"
 ---
+
+In Fern, you organize related endpoints into a **Service.** This grouping
+improves clarity and makes the generated SDKs more idiomatic.
 
 ## Service Definition
 
@@ -294,4 +296,32 @@ types:
 errors:
   UserNotFoundError:
     status-code: 404
+```
+
+#### Referencing examples from types
+
+To avoid duplication, you can reference examples from types using `$`.
+
+```yaml
+services:
+  http:
+    UserService:
+      base-path: /users
+      auth: true
+      endpoints:
+        getUser:
+          method: GET
+          path: /{userId}
+          path-parameters:
+            userId: UserId
+          examples:
+            - path-parameters:
+                userId: $UserId.Example1 # <---
+
+types:
+  UserId:
+    type: integer
+    examples:
+      - name: Example1
+        value: user-id-123
 ```
