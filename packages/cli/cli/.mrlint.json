@@ -12,7 +12,7 @@
         "cliPackageName": "@fern-api/fern-api-dev"
       }
     },
-    "variables": ["AUTH0_DOMAIN", "AUTH0_CLIENT_ID", "DEFAULT_FIDDLE_ORIGIN"]
+    "variables": ["AUTH0_DOMAIN", "AUTH0_CLIENT_ID", "DEFAULT_FIDDLE_ORIGIN", "VENUS_AUDIENCE"]
   },
   "private": false
 }

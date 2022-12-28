@@ -6,12 +6,14 @@ import { createServer } from "./createServer";
 export async function getToken({
     auth0Domain,
     auth0ClientId,
+    audience,
 }: {
     auth0Domain: string;
     auth0ClientId: string;
+    audience: string;
 }): Promise<string> {
     const { origin, server } = await createServer();
-    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin });
+    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience });
     server.close();
     const token = await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
     return token;
@@ -22,11 +24,13 @@ function getCode({
     auth0Domain,
     auth0ClientId,
     origin,
+    audience,
 }: {
     server: Server;
     auth0Domain: string;
     auth0ClientId: string;
     origin: string;
+    audience: string;
 }) {
     return new Promise<{ code: string }>((resolve) => {
         server.addListener("request", async (request, response) => {
@@ -39,7 +43,7 @@ function getCode({
             }
         });
 
-        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin }));
+        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience }));
     });
 }
 
@@ -74,7 +78,6 @@ async function getTokenFromCode({
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
     );
-
     const { access_token: token } = response.data;
     if (token == null) {
         throw new Error("Token is not defined");
@@ -86,15 +89,20 @@ function constructAuth0Url({
     origin,
     auth0Domain,
     auth0ClientId,
+    audience,
 }: {
     origin: string;
     auth0Domain: string;
     auth0ClientId: string;
+    audience: string;
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
         response_type: "code",
+        connection: "github",
+        scope: "openid profile email offline_access",
         redirect_uri: origin,
+        audience,
     });
     return `https://${auth0Domain}/authorize?${queryParams.toString()}`;
 }
