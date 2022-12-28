@@ -30,7 +30,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     ): ts.Expression {
         return ExampleTypeReference._visit(example, {
             primitive: (primitiveExample) =>
-                ExamplePrimitive._visit(primitiveExample, {
+                ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
@@ -38,7 +38,9 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: (datetimeExample) =>
-                        context.base.coreUtilities.zurg.date().parse(ts.factory.createStringLiteral(datetimeExample)),
+                        ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
+                            ts.factory.createStringLiteral(datetimeExample),
+                        ]),
                     _unknown: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     },

@@ -62,7 +62,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                 if (npmPackage.publishInfo == null) {
                     throw new Error("npmPackage.publishInfo is not defined.");
                 }
-                await prepareRepoForPublishing({ runYarnCommand });
+                await upgradeYarnAndInstall({ runYarnCommand });
                 await publishPackage({
                     generatorNotificationService,
                     logger,
@@ -73,7 +73,7 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
                 });
             },
             github: async (githubOutputMode) => {
-                await prepareRepoForPublishing({ runYarnCommand });
+                await upgradeYarnAndInstall({ runYarnCommand });
                 await runYarnCommand(["dlx", "@yarnpkg/sdks", "vscode"]);
                 await writeGitHubWorkflows({
                     config,
@@ -110,7 +110,7 @@ function parseCustomConfig(config: FernGeneratorExec.GeneratorConfig): SdkCustom
     };
 }
 
-async function prepareRepoForPublishing({ runYarnCommand }: { runYarnCommand: YarnRunner }) {
+async function upgradeYarnAndInstall({ runYarnCommand }: { runYarnCommand: YarnRunner }) {
     await runYarnCommand(["set", "version", "3.2.4"]);
     await runYarnCommand(["config", "set", "nodeLinker", "pnp"]);
     await runYarnCommand(["install"], {
