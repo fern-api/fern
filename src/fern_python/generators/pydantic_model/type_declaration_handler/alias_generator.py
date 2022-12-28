@@ -83,8 +83,8 @@ class AliasGenerator(AbstractTypeGenerator):
                 date_time=lambda: "from_datetime",
                 uuid=lambda: "from_uuid",
             ),
-            unknown=lambda: "from",
-            void=lambda: "from",
+            unknown=lambda: "from_",
+            void=lambda: "from_",
         )
 
     def _get_getter_name(self, alias_of: ir_types.TypeReference) -> str:
