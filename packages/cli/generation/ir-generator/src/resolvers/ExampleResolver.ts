@@ -46,6 +46,14 @@ export class ExampleResolverImpl implements ExampleResolver {
                     file: resolvedExample.file,
                 });
             }
+
+            // handle escaping \
+            if (example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+                // remove backslash
+                return {
+                    resolvedExample: example.slice(1),
+                };
+            }
         } else if (isPlainObject(example)) {
             const newExample: typeof example = {};
             for (const [exampleKey, exampleValue] of Object.entries(example)) {
