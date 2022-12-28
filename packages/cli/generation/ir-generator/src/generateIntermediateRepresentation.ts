@@ -76,7 +76,7 @@ export async function generateIntermediateRepresentation({
 
     const typeResolver = new TypeResolverImpl(workspace);
     const errorResolver = new ErrorResolverImpl(workspace);
-    const exampleResolver = new ExampleResolverImpl(workspace);
+    const exampleResolver = new ExampleResolverImpl(typeResolver);
 
     const visitServiceFile = async ({ file, schema }: { file: FernFileContext; schema: ServiceFileSchema }) => {
         await visitObject(schema, {

@@ -1,4 +1,4 @@
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
@@ -9,12 +9,14 @@ export function validateRequest({
     example,
     endpoint,
     typeResolver,
+    exampleResolver,
     file,
     workspace,
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema | undefined;
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: Workspace;
 }): RuleViolation[] {
@@ -40,6 +42,7 @@ export function validateRequest({
                 },
                 file,
                 typeResolver,
+                exampleResolver,
                 workspace,
                 example,
             })
@@ -52,6 +55,7 @@ export function validateRequest({
                 file,
                 workspace,
                 typeResolver,
+                exampleResolver,
             })
         );
     }

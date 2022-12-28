@@ -1,5 +1,5 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { constructFernFileContext, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { constructFernFileContext, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { keyBy } from "lodash-es";
@@ -17,6 +17,7 @@ export function validateObjectExample({
     rawObject,
     file,
     typeResolver,
+    exampleResolver,
     workspace,
     example,
 }: {
@@ -27,6 +28,7 @@ export function validateObjectExample({
     file: FernFileContext;
     example: RawSchemas.ExampleTypeValueSchema;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     workspace: Workspace;
 }): RuleViolation[] {
     if (!isPlainObject(example)) {
@@ -92,6 +94,7 @@ export function validateObjectExample({
                     }),
                     workspace,
                     typeResolver,
+                    exampleResolver,
                 })
             );
         }

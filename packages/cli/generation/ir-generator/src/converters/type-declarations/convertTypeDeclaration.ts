@@ -42,7 +42,10 @@ export function convertTypeDeclaration({
                 ? typeDeclaration.examples.map((example) => ({
                       name: example.name,
                       docs: example.docs,
-                      jsonExample: example.value,
+                      jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                          example: example.value,
+                          file,
+                      }).resolvedExample,
                       shape: convertTypeExample({
                           typeName: declaredTypeName,
                           example: example.value,

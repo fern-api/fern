@@ -274,7 +274,8 @@ function convertExampleRequestBody({
     }
 
     return ExampleRequestBody.inlinedRequestBody({
-        jsonExample: example.request,
+        jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
+            .resolvedExample,
         properties: exampleProperties,
     });
 }

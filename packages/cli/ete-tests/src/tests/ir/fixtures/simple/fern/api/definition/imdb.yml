@@ -21,6 +21,12 @@ types:
     properties:
       title: string
       ratings: list<double>
+  DirectorWrapper:
+    properties:
+      director: director.Director
+    examples:
+      - value:
+          director: $director.Director.GeorgeExample
   Person:
     union:
       actor: ActorId

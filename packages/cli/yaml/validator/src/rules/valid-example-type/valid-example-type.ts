@@ -1,4 +1,4 @@
-import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
+import { constructFernFileContext, ExampleResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateTypeExample } from "./validateTypeExample";
@@ -7,6 +7,7 @@ export const ValidExampleTypeRule: Rule = {
     name: "valid-example-type",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace);
+        const exampleResolver = new ExampleResolverImpl(typeResolver);
 
         return {
             serviceFile: {
@@ -21,6 +22,7 @@ export const ValidExampleTypeRule: Rule = {
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                         typeResolver,
+                        exampleResolver,
                         workspace,
                     });
                 },

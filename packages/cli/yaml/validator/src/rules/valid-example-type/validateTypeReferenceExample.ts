@@ -1,7 +1,7 @@
-import { isPlainObject } from "@fern-api/core-utils";
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { ExampleResolver, FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
-import { RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { PrimitiveType } from "@fern-fern/ir-model/types";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
@@ -19,15 +19,56 @@ export function validateTypeReferenceExample({
     rawTypeReference,
     example,
     typeResolver,
+    exampleResolver,
     file,
     workspace,
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: Workspace;
 }): RuleViolation[] {
+    if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
+        // if it's a reference to another example, we just need to compare the
+        // expected type with the referenced type
+        const resolvedExpectedType = typeResolver.resolveType({
+            type: rawTypeReference,
+            file,
+        });
+        // invalid reference. will be caught by another rule
+        if (resolvedExpectedType == null) {
+            return [];
+        }
+
+        const parsedExampleReference = exampleResolver.parseExampleReference(example);
+
+        // invalid reference. will be caught by another rule
+        if (parsedExampleReference == null) {
+            return [];
+        }
+        const resolvedActualType = typeResolver.resolveNamedType({
+            referenceToNamedType: parsedExampleReference.rawTypeReference,
+            file,
+        });
+        // invalid reference. will be caught by another rule
+        if (resolvedActualType == null) {
+            return [];
+        }
+
+        if (areResolvedTypesEquivalent(resolvedExpectedType, resolvedActualType)) {
+            return [];
+        } else {
+            return [
+                {
+                    severity: "error",
+                    message: `Expected example to be: ${rawTypeReference}. Example is ${example}.`,
+                },
+            ];
+        }
+    }
+
     return visitRawTypeReference(rawTypeReference, {
         primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
         named: (referenceToNamedType) => {
@@ -47,6 +88,7 @@ export function validateTypeReferenceExample({
                 file: declaration.file,
                 example,
                 typeResolver,
+                exampleResolver,
                 workspace,
             });
         },
@@ -59,6 +101,7 @@ export function validateTypeReferenceExample({
                     rawTypeReference: keyType,
                     example: exampleKey,
                     typeResolver,
+                    exampleResolver,
                     file,
                     workspace,
                 }),
@@ -66,6 +109,7 @@ export function validateTypeReferenceExample({
                     rawTypeReference: valueType,
                     example: exampleValue,
                     typeResolver,
+                    exampleResolver,
                     file,
                     workspace,
                 }),
@@ -80,6 +124,7 @@ export function validateTypeReferenceExample({
                     rawTypeReference: itemType,
                     example: exampleItem,
                     typeResolver,
+                    exampleResolver,
                     file,
                     workspace,
                 })
@@ -107,6 +152,7 @@ export function validateTypeReferenceExample({
                     rawTypeReference: itemType,
                     example: exampleItem,
                     typeResolver,
+                    exampleResolver,
                     file,
                     workspace,
                 })
@@ -120,6 +166,7 @@ export function validateTypeReferenceExample({
                 rawTypeReference: itemType,
                 example,
                 typeResolver,
+                exampleResolver,
                 file,
                 workspace,
             });
@@ -178,4 +225,46 @@ function createValidator(
         }
         return getRuleViolationsForMisshapenExample(example, expectedTypeIncludingArticle);
     };
+}
+
+function areResolvedTypesEquivalent(a: ResolvedType, b: ResolvedType): boolean {
+    if (a._type === "unknown" || a._type === "void") {
+        return true;
+    }
+    if (a._type === "primitive") {
+        return b._type === "primitive" && a.primitive === b.primitive;
+    }
+    if (a._type === "container") {
+        if (b._type !== "container") {
+            return false;
+        }
+        switch (a.container._type) {
+            case "list":
+            case "set":
+            case "optional":
+                return (
+                    b.container._type === a.container._type &&
+                    areResolvedTypesEquivalent(a.container.itemType, b.container.itemType)
+                );
+            case "map":
+                return (
+                    b.container._type === a.container._type &&
+                    areResolvedTypesEquivalent(a.container.keyType, b.container.keyType) &&
+                    areResolvedTypesEquivalent(a.container.valueType, b.container.valueType)
+                );
+            case "literal":
+                return (
+                    b.container._type === a.container._type && a.container.literal.string === b.container.literal.string
+                );
+            default:
+                assertNever(a.container);
+        }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (a._type === "named") {
+        return b._type === "named" && b.filepath === a.filepath && b.rawName === a.rawName;
+    }
+
+    assertNever(a);
 }

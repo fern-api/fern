@@ -1,6 +1,5 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
-    EXAMPLE_REFERENCE_PREFIX,
     isRawObjectDefinition,
     RawSchemas,
     visitRawTypeDeclaration,
@@ -116,12 +115,10 @@ export function convertTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
 }): ExampleTypeReference {
-    if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
-        example = exampleResolver.resolveExampleOrThrow({
-            referenceToExample: example,
-            file,
-        });
-    }
+    example = exampleResolver.resolveAllReferencesInExampleOrThrow({
+        example,
+        file,
+    }).resolvedExample;
 
     const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
         primitive: (primitive) => {
@@ -271,7 +268,7 @@ function convertPrimitiveExample({
         },
         integer: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number");
+                throw new Error("Example is not a number, example is " + JSON.stringify(example));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },

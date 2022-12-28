@@ -182,6 +182,27 @@ describe("valid-example-type", () => {
                 nodePath: ["types", "Object1", { key: "examples", arrayIndex: 7 }],
             },
 
+            // references.yml
+            {
+                message: "Expected example to be: string. Example is $MyNumberAlias.Example1.",
+                nodePath: [
+                    "types",
+                    "MyAlias",
+                    {
+                        arrayIndex: 1,
+                        key: "examples",
+                    },
+                ],
+                relativeFilepath: "references.yml",
+                severity: "error",
+            },
+            {
+                severity: "error",
+                relativeFilepath: "references.yml",
+                message: "Expected example to be a string. Example is: 123",
+                nodePath: ["types", "MyStringAlias", { key: "examples", arrayIndex: 0 }],
+            },
+
             // union.yml
             {
                 severity: "error",
