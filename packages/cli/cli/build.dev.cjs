@@ -23,6 +23,7 @@ async function main() {
             "process.env.AUTH0_DOMAIN": getEnvironmentVariable("AUTH0_DOMAIN"),
             "process.env.AUTH0_CLIENT_ID": getEnvironmentVariable("AUTH0_CLIENT_ID"),
             "process.env.DEFAULT_FIDDLE_ORIGIN": getEnvironmentVariable("DEFAULT_FIDDLE_ORIGIN"),
+            "process.env.VENUS_AUDIENCE": getEnvironmentVariable("VENUS_AUDIENCE"),
         },
     };
 
