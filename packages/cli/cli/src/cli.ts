@@ -1,7 +1,9 @@
+import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { initiateLogin } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -122,6 +124,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
+    addLoginCommand(cli);
 
     addUpgradeCommand({
         cli,
@@ -351,6 +354,17 @@ function addUpgradeCommand({
                 includePreReleases: argv.rc,
             });
             onRun();
+        }
+    );
+}
+
+function addLoginCommand(cli: Argv) {
+    cli.command(
+        "login",
+        false, // hide from help message
+        noop,
+        async () => {
+            await initiateLogin();
         }
     );
 }
