@@ -113,7 +113,7 @@ jobs:
           command: |
             yarn workspace @fern-api/cli dist:cli:prod
             cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
-            ./scripts/live-test.sh "$cli_path"
+            ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_PROD"
 
   publish-dev:
     docker:
@@ -272,6 +272,7 @@ workflows:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           context:
             - auth0-dev
+            - fern-tokens
 
       - publish-dev:
           filters:
