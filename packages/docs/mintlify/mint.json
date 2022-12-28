@@ -51,7 +51,7 @@
       "pages": [
         "definition",
         "definition/types",
-        "definition/services",
+        "definition/endpoints",
         "definition/errors",
         "definition/imports",
         "definition/api-yml"

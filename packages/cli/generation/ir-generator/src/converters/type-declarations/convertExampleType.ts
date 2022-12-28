@@ -268,7 +268,7 @@ function convertPrimitiveExample({
         },
         integer: () => {
             if (typeof example !== "number") {
-                throw new Error("Example is not a number, example is " + JSON.stringify(example));
+                throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },

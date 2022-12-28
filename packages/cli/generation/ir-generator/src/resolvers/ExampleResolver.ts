@@ -111,7 +111,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         if (resolvedExample == null) {
             return undefined;
         }
-        return { resolvedExample, file: typeDeclaration.file };
+        return { resolvedExample: resolvedExample.value, file: typeDeclaration.file };
     }
 
     public resolveExampleOrThrow({ referenceToExample, file }: { referenceToExample: string; file: FernFileContext }): {
