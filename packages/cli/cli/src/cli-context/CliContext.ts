@@ -264,13 +264,13 @@ export class CliContext {
                 });
                 if (!versionExists) {
                     this.logger.error(
-                        `Failed to upgrade ${upgradeVersion} because it does not exist. See https://www.npmjs.com/package/${this.environment.packageName}?activeTab=versions.`
+                        `Failed to upgrade to ${upgradeVersion} because it does not exist. See https://www.npmjs.com/package/${this.environment.packageName}?activeTab=versions.`
                     );
                 }
 
                 const versionIsAhead = isVersionAhead(upgradeVersion, this.environment.packageVersion);
                 if (!versionIsAhead) {
-                    this.logger.error(`Cannot upgrade to ${upgradeVersion} because you are ahead of this version.`);
+                    this.logger.error(`Cannot upgrade to ${upgradeVersion} because it is behind the existing version.`);
                 }
 
                 this._isUpgradeAvailable = {
