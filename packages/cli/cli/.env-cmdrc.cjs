@@ -11,6 +11,6 @@ module.exports = {
         AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev.buildwithfern.com",
         VENUS_AUDIENCE: "venus-dev",
-        LOCAL_STORAGE_FOLDER: ".ferndev",
+        LOCAL_STORAGE_FOLDER: ".fern-dev",
     },
 };
