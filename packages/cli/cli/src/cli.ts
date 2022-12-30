@@ -351,13 +351,13 @@ function addUpgradeCommand({
                 })
                 .option("version", {
                     string: true,
-                    description: "The version to upgrade to. If unspecified, will upgrade to latest.",
+                    description: "The version to upgrade to. Defaults to the latest release.",
                 }),
         async (argv) => {
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
-                upgradeVersion: argv.version,
+                targetVersion: argv.version,
             });
             onRun();
         }

@@ -247,35 +247,35 @@ export class CliContext {
     private _isUpgradeAvailable: FernCliUpgradeInfo | undefined;
     public async isUpgradeAvailable({
         includePreReleases = false,
-        upgradeVersion,
+        targetVersion,
     }: {
         includePreReleases?: boolean;
-        upgradeVersion?: string;
+        targetVersion?: string;
     } = {}): Promise<FernCliUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
-            if (upgradeVersion != null) {
+            if (targetVersion != null) {
                 this.logger.debug(
-                    `Checking if ${this.environment.packageName}@${upgradeVersion} upgrade is available...`
+                    `Checking if ${this.environment.packageName}@${targetVersion} upgrade is available...`
                 );
 
                 const versionExists = await doesVersionOfCliExist({
                     cliEnvironment: this.environment,
-                    version: upgradeVersion,
+                    version: targetVersion,
                 });
                 if (!versionExists) {
                     this.logger.error(
-                        `Failed to upgrade to ${upgradeVersion} because it does not exist. See https://www.npmjs.com/package/${this.environment.packageName}?activeTab=versions.`
+                        `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${this.environment.packageName}?activeTab=versions.`
                     );
                 }
 
-                const versionIsAhead = isVersionAhead(upgradeVersion, this.environment.packageVersion);
+                const versionIsAhead = isVersionAhead(targetVersion, this.environment.packageVersion);
                 if (!versionIsAhead) {
-                    this.logger.error(`Cannot upgrade to ${upgradeVersion} because it is behind the existing version.`);
+                    this.logger.error(`Cannot upgrade to ${targetVersion} because it is behind the existing version.`);
                 }
 
                 this._isUpgradeAvailable = {
                     isUpgradeAvailable: versionExists && versionIsAhead,
-                    upgradeVersion,
+                    upgradeVersion: targetVersion,
                 };
             } else {
                 this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);

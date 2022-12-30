@@ -38,15 +38,15 @@ const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 export async function upgrade({
     cliContext,
     includePreReleases,
-    upgradeVersion,
+    targetVersion,
 }: {
     cliContext: CliContext;
     includePreReleases: boolean;
-    upgradeVersion?: string;
+    targetVersion: string | undefined;
 }): Promise<void> {
     const fernCliUpgradeInfo = await cliContext.isUpgradeAvailable({
         includePreReleases,
-        upgradeVersion,
+        targetVersion,
     });
     if (!fernCliUpgradeInfo.isUpgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
