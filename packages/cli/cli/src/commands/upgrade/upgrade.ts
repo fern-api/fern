@@ -1,13 +1,11 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
-import { loadProject } from "@fern-api/project-loader";
 import { runMigrations } from "@fern-api/yaml-migrations";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";
 import { CliContext } from "../../cli-context/CliContext";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
-import { upgradeGeneratorsInWorkspaces } from "./upgradeGeneratorsInWorkspaces";
 
 const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -60,17 +58,6 @@ export async function upgrade({
             });
         });
         await cliContext.exitIfFailed();
-
-        const contextForLoadingProject = cliContext.addTask().start();
-        const project = await loadProject({
-            commandLineWorkspace: undefined,
-            defaultToAllWorkspaces: true,
-            cliName: cliContext.environment.cliName,
-            cliVersion: cliContext.environment.packageVersion,
-            context: contextForLoadingProject,
-        });
-        contextForLoadingProject.finish();
-        await upgradeGeneratorsInWorkspaces(project, cliContext);
     } else {
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
