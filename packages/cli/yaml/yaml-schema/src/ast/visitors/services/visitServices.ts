@@ -1,4 +1,4 @@
-import { noop, visitObject } from "@fern-api/core-utils";
+import { visitObject } from "@fern-api/core-utils";
 import { ServicesSchema } from "../../../schemas";
 import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
@@ -27,6 +27,5 @@ export async function visitServices({
                 await visitHttpService({ service: httpService, visitor, nodePathForService });
             }
         },
-        websocket: noop,
     });
 }

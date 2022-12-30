@@ -99,7 +99,6 @@ export class TypeResolverImpl implements TypeResolver {
                 originalTypeReference: TypeReference.primitive(primitive),
             }),
             unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
-            void: () => ({ _type: "void", originalTypeReference: TypeReference.void() }),
             map: ({ keyType, valueType }) =>
                 keyType != null && valueType != null
                     ? {

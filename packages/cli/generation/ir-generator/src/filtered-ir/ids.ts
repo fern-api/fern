@@ -26,30 +26,26 @@ export interface EndpointNode {
 }
 
 export function getEndpointId(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): ErrorId {
-    const joinedFernFilePath = declaredServiceName.fernFilepathV2
-        .map((name) => name.unsafeName.originalValue)
-        .join("/");
+    const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
     const serviceName = declaredServiceName.name;
-    const endpointId = httpEndpoint.nameV2.safeName.originalValue;
+    const endpointId = httpEndpoint.name.originalName;
     return `endpoint_${joinedFernFilePath}:${serviceName}.${endpointId}`;
 }
 
 export function getServiceId(declaredServiceName: DeclaredServiceName): ServiceId {
-    const joinedFernFilePath = declaredServiceName.fernFilepathV2
-        .map((name) => name.unsafeName.originalValue)
-        .join("/");
+    const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
     const serviceName = declaredServiceName.name;
     return `endpoint_${joinedFernFilePath}:${serviceName}`;
 }
 
 export function getErrorId(declaredErrorName: DeclaredErrorName): ErrorId {
-    const joinedFernFilePath = declaredErrorName.fernFilepathV2.map((name) => name.unsafeName.originalValue).join("/");
-    const errorName = declaredErrorName.nameV3.unsafeName.originalValue;
+    const joinedFernFilePath = declaredErrorName.fernFilepath.map((name) => name.originalName).join("/");
+    const errorName = declaredErrorName.name.originalName;
     return `error_${joinedFernFilePath}:${errorName}`;
 }
 
 export function getTypeId(declaredTypeName: DeclaredTypeName): TypeId {
-    const joinedFernFilePath = declaredTypeName.fernFilepathV2.map((name) => name.unsafeName.originalValue).join("/");
-    const typeName = declaredTypeName.nameV3.unsafeName.originalValue;
+    const joinedFernFilePath = declaredTypeName.fernFilepath.map((name) => name.originalName).join("/");
+    const typeName = declaredTypeName.name.originalName;
     return `type_${joinedFernFilePath}:${typeName}`;
 }

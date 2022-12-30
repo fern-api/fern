@@ -13,11 +13,7 @@ export function convertEnumTypeDeclaration({
     return Type.enum({
         values: _enum.enum.map((value) => ({
             ...convertDeclaration(value),
-            name: file.casingsGenerator.generateWireCasingsV1({
-                wireValue: typeof value === "string" ? value : value.value,
-                name: getEnumName(value).name,
-            }),
-            nameV2: file.casingsGenerator.generateNameAndWireValue({
+            name: file.casingsGenerator.generateNameAndWireValue({
                 wireValue: typeof value === "string" ? value : value.value,
                 name: getEnumName(value).name,
             }),

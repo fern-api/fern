@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -25,12 +25,9 @@ export function convertTypeDeclaration({
     exampleResolver: ExampleResolver;
 }): TypeDeclaration {
     const declaration = convertDeclaration(typeDeclaration);
-    const declaredTypeName = {
+    const declaredTypeName: DeclaredTypeName = {
         fernFilepath: file.fernFilepath,
-        fernFilepathV2: file.fernFilepathV2,
-        name: typeName,
-        nameV2: file.casingsGenerator.generateNameCasingsV1(typeName),
-        nameV3: file.casingsGenerator.generateName(typeName),
+        name: file.casingsGenerator.generateName(typeName),
     };
     return {
         ...declaration,

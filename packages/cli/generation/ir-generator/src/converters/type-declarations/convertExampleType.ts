@@ -215,10 +215,7 @@ export function convertTypeReferenceExample({
             }
             const typeName = {
                 fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                fernFilepathV2: parsedReferenceToNamedType.fernFilepathV2,
                 name: parsedReferenceToNamedType.name,
-                nameV2: parsedReferenceToNamedType.nameV2,
-                nameV3: parsedReferenceToNamedType.nameV3,
             };
             return ExampleTypeReferenceShape.named({
                 typeName,
@@ -234,9 +231,6 @@ export function convertTypeReferenceExample({
         },
         unknown: () => {
             return ExampleTypeReferenceShape.unknown(example);
-        },
-        void: () => {
-            throw new Error("Examples are not supported for void");
         },
     });
 
@@ -456,7 +450,7 @@ function convertUnionProperties({
             }
             return ExampleSingleUnionTypeProperties.singleProperty(
                 convertTypeReferenceExample({
-                    example: example[parsedSingleUnionTypeProperties.nameV2.wireValue],
+                    example: example[parsedSingleUnionTypeProperties.name.wireValue],
                     rawTypeBeingExemplified: rawValueType,
                     typeResolver,
                     exampleResolver,
@@ -478,10 +472,7 @@ function convertUnionProperties({
             }
             const typeName: DeclaredTypeName = {
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
-                fernFilepathV2: parsedSingleUnionTypeProperties.fernFilepathV2,
                 name: parsedSingleUnionTypeProperties.name,
-                nameV2: parsedSingleUnionTypeProperties.nameV2,
-                nameV3: parsedSingleUnionTypeProperties.nameV3,
             };
             return ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                 typeName,
