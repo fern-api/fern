@@ -9,7 +9,6 @@ import { Log } from "./Log";
 import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
-import { doesVersionOfCliExist } from "./upgrade-utils/doesVersionOfCliExist";
 import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
 
@@ -17,7 +16,7 @@ const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE
 
 export interface FernCliUpgradeInfo {
     isUpgradeAvailable: boolean;
-    upgradeVersion: string;
+    latestVersion: string;
 }
 
 export class CliContext {
@@ -98,7 +97,7 @@ export class CliContext {
 
     private async nudgeUpgradeIfAvaialable() {
         try {
-            const { isUpgradeAvailable, upgradeVersion } = await Promise.race<
+            const { isUpgradeAvailable, latestVersion } = await Promise.race<
                 [Promise<FernCliUpgradeInfo>, Promise<never>]
             >([
                 this.isUpgradeAvailable(),
@@ -107,7 +106,7 @@ export class CliContext {
 
             if (isUpgradeAvailable) {
                 let upgradeMessage = getFernCliUpgradeMessage({
-                    toVersion: upgradeVersion,
+                    toVersion: latestVersion,
                     cliEnvironment: this.environment,
                 });
                 if (!upgradeMessage.endsWith("\n")) {
@@ -247,55 +246,27 @@ export class CliContext {
     private _isUpgradeAvailable: FernCliUpgradeInfo | undefined;
     public async isUpgradeAvailable({
         includePreReleases = false,
-        targetVersion,
     }: {
         includePreReleases?: boolean;
-        targetVersion?: string;
     } = {}): Promise<FernCliUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
-            if (targetVersion != null) {
-                this.logger.debug(
-                    `Checking if ${this.environment.packageName}@${targetVersion} upgrade is available...`
-                );
+            this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
 
-                const versionExists = await doesVersionOfCliExist({
-                    cliEnvironment: this.environment,
-                    version: targetVersion,
-                });
-                if (!versionExists) {
-                    this.logger.error(
-                        `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${this.environment.packageName}?activeTab=versions.`
-                    );
-                }
+            const latestPackageVersion = await getLatestVersionOfCli({
+                cliEnvironment: this.environment,
+                includePreReleases,
+            });
+            const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
 
-                const versionIsAhead = isVersionAhead(targetVersion, this.environment.packageVersion);
-                if (!versionIsAhead) {
-                    this.logger.error(`Cannot upgrade to ${targetVersion} because it is behind the existing version.`);
-                }
+            this.logger.debug(
+                `Latest version: ${latestPackageVersion}. ` +
+                    (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
+            );
 
-                this._isUpgradeAvailable = {
-                    isUpgradeAvailable: versionExists && versionIsAhead,
-                    upgradeVersion: targetVersion,
-                };
-            } else {
-                this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
-
-                const latestPackageVersion = await getLatestVersionOfCli({
-                    cliEnvironment: this.environment,
-                    includePreReleases,
-                });
-                const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
-
-                this.logger.debug(
-                    `Latest version: ${latestPackageVersion}. ` +
-                        (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
-                );
-
-                this._isUpgradeAvailable = {
-                    isUpgradeAvailable,
-                    upgradeVersion: latestPackageVersion,
-                };
-            }
+            this._isUpgradeAvailable = {
+                isUpgradeAvailable,
+                latestVersion: latestPackageVersion,
+            };
         }
         return this._isUpgradeAvailable;
     }
