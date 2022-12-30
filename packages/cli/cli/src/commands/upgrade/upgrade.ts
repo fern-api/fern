@@ -38,12 +38,15 @@ const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 export async function upgrade({
     cliContext,
     includePreReleases,
+    upgradeVersion,
 }: {
     cliContext: CliContext;
     includePreReleases: boolean;
+    upgradeVersion?: string;
 }): Promise<void> {
     const fernCliUpgradeInfo = await cliContext.isUpgradeAvailable({
         includePreReleases,
+        upgradeVersion,
     });
     if (!fernCliUpgradeInfo.isUpgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
@@ -55,7 +58,7 @@ export async function upgrade({
         await cliContext.runTask(async (context) => {
             await runMigrations({
                 fromVersion: previousVersion,
-                toVersion: fernCliUpgradeInfo.latestVersion,
+                toVersion: fernCliUpgradeInfo.upgradeVersion,
                 context,
             });
         });
@@ -81,20 +84,20 @@ export async function upgrade({
             loadProjectConfig({ directory: fernDirectory, context })
         );
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = fernCliUpgradeInfo.latestVersion;
+            draft.version = fernCliUpgradeInfo.upgradeVersion;
         });
         await writeFile(projectConfig._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
 
         cliContext.logger.info(
             `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(
-                fernCliUpgradeInfo.latestVersion
+                fernCliUpgradeInfo.upgradeVersion
             )}`
         );
 
         await loggingExeca(cliContext.logger, "npm", ["install", "-g", cliContext.environment.packageName]);
 
         const { failed } = await rerunFernCliAtVersion({
-            version: fernCliUpgradeInfo.latestVersion,
+            version: fernCliUpgradeInfo.upgradeVersion,
             cliContext,
             env: {
                 [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion,
