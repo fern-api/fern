@@ -343,15 +343,21 @@ function addUpgradeCommand({
         "upgrade",
         `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
         (yargs) =>
-            yargs.option("rc", {
-                boolean: true,
-                hidden: true,
-                default: false,
-            }),
+            yargs
+                .option("rc", {
+                    boolean: true,
+                    hidden: true,
+                    default: false,
+                })
+                .option("version", {
+                    string: true,
+                    description: "The version to upgrade to. Defaults to the latest release.",
+                }),
         async (argv) => {
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
+                targetVersion: argv.version,
             });
             onRun();
         }
