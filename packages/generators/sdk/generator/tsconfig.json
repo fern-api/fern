@@ -3,7 +3,6 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
     { "path": "../../../endpoint-type-schemas-generator" },
     { "path": "../../../endpoint-types-generator" },

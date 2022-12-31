@@ -1,4 +1,3 @@
-import { BUILD_PROJECT_SCRIPT_NAME } from "@fern-typescript/commons";
 import execa from "execa";
 import { readdir, writeFile } from "fs/promises";
 import path from "path";
@@ -20,7 +19,7 @@ export async function installAndCompileGeneratedProject(pathToDirectory: string)
         // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
         YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
     });
-    await runYarnCommand([BUILD_PROJECT_SCRIPT_NAME]);
+    await runYarnCommand(["build"]);
 }
 
 export async function installAndCompileGeneratedProjects(parent: string): Promise<void> {

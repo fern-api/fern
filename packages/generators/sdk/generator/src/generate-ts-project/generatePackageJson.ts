@@ -1,8 +1,7 @@
-import { DependencyType } from "@fern-typescript/commons";
 import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
-import { PackageDependencies } from "../dependency-manager/DependencyManager";
+import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
