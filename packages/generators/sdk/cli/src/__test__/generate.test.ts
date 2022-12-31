@@ -121,7 +121,7 @@ describe("runGenerator", () => {
                 expect(directoryContents).toMatchSnapshot();
                 expect([]).toEqual([]);
             },
-            90_000
+            180_000
         );
     }
 });

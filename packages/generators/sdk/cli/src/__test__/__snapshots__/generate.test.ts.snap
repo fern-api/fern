@@ -856,8 +856,8 @@ export type inferRawKey<
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "import { BaseObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
-import { withProperties } from \\"./withProperties\\";
+                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
+import { BaseObjectLikeSchema, ObjectLikeSchema, ObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"./types\\";
 
 export function getObjectLikeUtils<Raw, Parsed>(
   schema: BaseObjectLikeSchema<Raw, Parsed>
@@ -866,44 +866,10 @@ export function getObjectLikeUtils<Raw, Parsed>(
     withProperties: (properties) => withProperties(schema, properties),
   };
 }
-",
-                        "name": "getObjectLikeUtils.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
-export { withProperties } from \\"./withProperties\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 
-export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
-  BaseObjectLikeSchema<Raw, Parsed> &
-  ObjectLikeUtils<Raw, Parsed>;
-
-export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
-  _objectLike: void;
-};
-
-export interface ObjectLikeUtils<Raw, Parsed> {
-  withProperties: <T extends Record<string, any>>(properties: {
-    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
-  }) => ObjectLikeSchema<Raw, Parsed & T>;
-}
-
-export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
-",
-                        "name": "types.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
-import { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-import { BaseObjectLikeSchema, ObjectLikeSchema, OBJECT_LIKE_BRAND } from \\"./types\\";
+/**
+ * object-like utils are defined in one file to resolve issues with circular imports
+ */
 
 export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>,
@@ -949,7 +915,36 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   };
 }
 ",
-                        "name": "withProperties.ts",
+                        "name": "getObjectLikeUtils.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
+export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+
+export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
+  BaseObjectLikeSchema<Raw, Parsed> &
+  ObjectLikeUtils<Raw, Parsed>;
+
+export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
+  _objectLike: void;
+};
+
+export interface ObjectLikeUtils<Raw, Parsed> {
+  withProperties: <T extends Record<string, any>>(properties: {
+    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
+  }) => ObjectLikeSchema<Raw, Parsed & T>;
+}
+
+export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
+",
+                        "name": "types.ts",
                         "type": "file",
                       },
                     ],
@@ -5782,8 +5777,8 @@ export type inferRawKey<
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "import { BaseObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
-import { withProperties } from \\"./withProperties\\";
+                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
+import { BaseObjectLikeSchema, ObjectLikeSchema, ObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"./types\\";
 
 export function getObjectLikeUtils<Raw, Parsed>(
   schema: BaseObjectLikeSchema<Raw, Parsed>
@@ -5792,44 +5787,10 @@ export function getObjectLikeUtils<Raw, Parsed>(
     withProperties: (properties) => withProperties(schema, properties),
   };
 }
-",
-                        "name": "getObjectLikeUtils.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
-export { withProperties } from \\"./withProperties\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 
-export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
-  BaseObjectLikeSchema<Raw, Parsed> &
-  ObjectLikeUtils<Raw, Parsed>;
-
-export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
-  _objectLike: void;
-};
-
-export interface ObjectLikeUtils<Raw, Parsed> {
-  withProperties: <T extends Record<string, any>>(properties: {
-    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
-  }) => ObjectLikeSchema<Raw, Parsed & T>;
-}
-
-export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
-",
-                        "name": "types.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
-import { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-import { BaseObjectLikeSchema, ObjectLikeSchema, OBJECT_LIKE_BRAND } from \\"./types\\";
+/**
+ * object-like utils are defined in one file to resolve issues with circular imports
+ */
 
 export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>,
@@ -5875,7 +5836,36 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   };
 }
 ",
-                        "name": "withProperties.ts",
+                        "name": "getObjectLikeUtils.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
+export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+
+export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
+  BaseObjectLikeSchema<Raw, Parsed> &
+  ObjectLikeUtils<Raw, Parsed>;
+
+export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
+  _objectLike: void;
+};
+
+export interface ObjectLikeUtils<Raw, Parsed> {
+  withProperties: <T extends Record<string, any>>(properties: {
+    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
+  }) => ObjectLikeSchema<Raw, Parsed & T>;
+}
+
+export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
+",
+                        "name": "types.ts",
                         "type": "file",
                       },
                     ],
@@ -8544,8 +8534,8 @@ export type inferRawKey<
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "import { BaseObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
-import { withProperties } from \\"./withProperties\\";
+                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
+import { BaseObjectLikeSchema, ObjectLikeSchema, ObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"./types\\";
 
 export function getObjectLikeUtils<Raw, Parsed>(
   schema: BaseObjectLikeSchema<Raw, Parsed>
@@ -8554,44 +8544,10 @@ export function getObjectLikeUtils<Raw, Parsed>(
     withProperties: (properties) => withProperties(schema, properties),
   };
 }
-",
-                        "name": "getObjectLikeUtils.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
-export { withProperties } from \\"./withProperties\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 
-export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
-  BaseObjectLikeSchema<Raw, Parsed> &
-  ObjectLikeUtils<Raw, Parsed>;
-
-export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
-  _objectLike: void;
-};
-
-export interface ObjectLikeUtils<Raw, Parsed> {
-  withProperties: <T extends Record<string, any>>(properties: {
-    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
-  }) => ObjectLikeSchema<Raw, Parsed & T>;
-}
-
-export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
-",
-                        "name": "types.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
-import { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-import { BaseObjectLikeSchema, ObjectLikeSchema, OBJECT_LIKE_BRAND } from \\"./types\\";
+/**
+ * object-like utils are defined in one file to resolve issues with circular imports
+ */
 
 export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>,
@@ -8637,7 +8593,36 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   };
 }
 ",
-                        "name": "withProperties.ts",
+                        "name": "getObjectLikeUtils.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
+export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+
+export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
+  BaseObjectLikeSchema<Raw, Parsed> &
+  ObjectLikeUtils<Raw, Parsed>;
+
+export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
+  _objectLike: void;
+};
+
+export interface ObjectLikeUtils<Raw, Parsed> {
+  withProperties: <T extends Record<string, any>>(properties: {
+    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
+  }) => ObjectLikeSchema<Raw, Parsed & T>;
+}
+
+export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
+",
+                        "name": "types.ts",
                         "type": "file",
                       },
                     ],
@@ -10210,8 +10195,8 @@ export type inferRawKey<
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "import { BaseObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
-import { withProperties } from \\"./withProperties\\";
+                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
+import { BaseObjectLikeSchema, ObjectLikeSchema, ObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"./types\\";
 
 export function getObjectLikeUtils<Raw, Parsed>(
   schema: BaseObjectLikeSchema<Raw, Parsed>
@@ -10220,44 +10205,10 @@ export function getObjectLikeUtils<Raw, Parsed>(
     withProperties: (properties) => withProperties(schema, properties),
   };
 }
-",
-                        "name": "getObjectLikeUtils.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
-export { withProperties } from \\"./withProperties\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 
-export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
-  BaseObjectLikeSchema<Raw, Parsed> &
-  ObjectLikeUtils<Raw, Parsed>;
-
-export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
-  _objectLike: void;
-};
-
-export interface ObjectLikeUtils<Raw, Parsed> {
-  withProperties: <T extends Record<string, any>>(properties: {
-    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
-  }) => ObjectLikeSchema<Raw, Parsed & T>;
-}
-
-export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
-",
-                        "name": "types.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
-import { getObjectLikeUtils } from \\"./getObjectLikeUtils\\";
-import { BaseObjectLikeSchema, ObjectLikeSchema, OBJECT_LIKE_BRAND } from \\"./types\\";
+/**
+ * object-like utils are defined in one file to resolve issues with circular imports
+ */
 
 export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>,
@@ -10303,7 +10254,36 @@ export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
   };
 }
 ",
-                        "name": "withProperties.ts",
+                        "name": "getObjectLikeUtils.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
+export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+
+export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
+  BaseObjectLikeSchema<Raw, Parsed> &
+  ObjectLikeUtils<Raw, Parsed>;
+
+export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
+  _objectLike: void;
+};
+
+export interface ObjectLikeUtils<Raw, Parsed> {
+  withProperties: <T extends Record<string, any>>(properties: {
+    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
+  }) => ObjectLikeSchema<Raw, Parsed & T>;
+}
+
+export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
+",
+                        "name": "types.ts",
                         "type": "file",
                       },
                     ],
