@@ -16,6 +16,7 @@ export async function generateTypeScriptProject({
     packageName,
     packageVersion,
     isPackagePrivate,
+    shouldOutputEsm,
     repositoryUrl,
     project,
     dependencies,
@@ -24,6 +25,7 @@ export async function generateTypeScriptProject({
     packageName: string;
     packageVersion: string | undefined;
     isPackagePrivate: boolean;
+    shouldOutputEsm: boolean;
     repositoryUrl: string | undefined;
     project: Project;
     dependencies: PackageDependencies;
@@ -35,10 +37,11 @@ export async function generateTypeScriptProject({
         packageName,
         packageVersion,
         isPackagePrivate,
+        shouldOutputEsm,
         repositoryUrl,
         dependencies,
     });
-    await generateTsConfig({ volume, packageName });
+    await generateTsConfig({ volume, packageName, shouldOutputEsm });
     await generatePrettierIgnore(volume);
     await generateGitIgnore(volume);
 }

@@ -107,6 +107,7 @@ function parseCustomConfig(config: FernGeneratorExec.GeneratorConfig): SdkCustom
     return {
         useBrandedStringAliases: customConfig?.useBrandedStringAliases ?? false,
         isPackagePrivate: customConfig?.private ?? false,
+        shouldOutputEsm: customConfig?.outputEsm ?? false,
     };
 }
 

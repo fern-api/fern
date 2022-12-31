@@ -39,6 +39,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             private: true,
+            outputEsm: true,
         },
     },
     {

@@ -4967,6 +4967,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     "contents": "{
     \\"name\\": \\"@fern/api\\",
     \\"version\\": \\"0.0.1\\",
+    \\"type\\": \\"module\\",
     \\"private\\": true,
     \\"repository\\": \\"https://github.com/fern/api}\\",
     \\"files\\": [
@@ -7869,7 +7870,7 @@ export * from \\"./TokenStatus\\";
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
