@@ -1,6 +1,6 @@
 from typing import Callable, Optional, Set
 
-import fern.ir.pydantic as ir_types
+import fern.ir_v1.pydantic as ir_types
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer

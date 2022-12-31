@@ -1,4 +1,4 @@
-import fern.ir.pydantic as ir_types
+import fern.ir_v1.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath

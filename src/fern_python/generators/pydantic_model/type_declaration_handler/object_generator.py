@@ -1,6 +1,6 @@
 from typing import Optional
 
-import fern.ir.pydantic as ir_types
+import fern.ir_v1.pydantic as ir_types
 
 from fern_python.codegen import SourceFile
 

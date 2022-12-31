@@ -3,7 +3,7 @@ from __future__ import annotations
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
 
-import fern.ir.pydantic as ir_types
+import fern.ir_v1.pydantic as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
