@@ -219,6 +219,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
+                })
+                .option("printZipUrl", {
+                    boolean: true,
+                    hidden: true,
+                    default: false,
                 }),
         async (argv) => {
             await generateWorkspaces({
@@ -229,6 +234,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
+                printZipUrl: argv.printZipUrl,
             });
         }
     );
