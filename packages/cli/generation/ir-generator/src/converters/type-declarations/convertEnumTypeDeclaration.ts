@@ -17,7 +17,6 @@ export function convertEnumTypeDeclaration({
                 wireValue: typeof value === "string" ? value : value.value,
                 name: getEnumName(value).name,
             }),
-            value: typeof value === "string" ? value : value.value,
         })),
     });
 }

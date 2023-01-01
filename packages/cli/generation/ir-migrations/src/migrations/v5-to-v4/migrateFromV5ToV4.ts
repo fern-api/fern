@@ -8,6 +8,7 @@ import { convertHeader } from "./convertHeader";
 import { convertNameAndWireValueToV1, convertNameAndWireValueToV2, convertNameToV2 } from "./convertName";
 import { convertService } from "./convertService";
 import { convertTypeDeclaration } from "./convertTypeDeclaration";
+import { TypeReferenceResolverImpl } from "./TypeReferenceResolver";
 
 export const V5_TO_V4_MIGRATION: IrMigration<
     IrVersions.V5.ir.IntermediateRepresentation,
@@ -27,6 +28,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
+        const typeReferenceResolver = new TypeReferenceResolverImpl(v5);
         return {
             apiName: v5.apiName,
             apiDisplayName: v5.apiDisplayName,
@@ -38,7 +40,13 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                 http: v5.services.map((service) => convertService(service)),
                 websocket: [],
             },
-            errors: v5.errors.map((error) => convertErrorDeclaration(error)),
+            errors: v5.errors.map((error) =>
+                convertErrorDeclaration({
+                    errorDeclaration: error,
+                    errorDiscriminationStrategy: v5.errorDiscriminationStrategy,
+                    typeReferenceResolver,
+                })
+            ),
             constants: {
                 errorDiscriminant: "_error",
                 errorInstanceIdKey: "_errorInstanceId",

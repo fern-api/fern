@@ -2,19 +2,22 @@ import { IrVersions } from "../../ir-versions";
 import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath";
 import { convertNameAndWireValueToV2, convertNameToV1, convertNameToV2 } from "./convertName";
 import { convertTypeReference } from "./convertTypeReference";
-import { TypeResolver } from "./TypeReferenceResolver";
+import { TypeReferenceResolver } from "./TypeReferenceResolver";
 
-export function convertErrorDeclaration(
-    errorDeclaration: IrVersions.V5.errors.ErrorDeclaration,
-    errorDiscriminationStrategy: IrVersions.V5.ir.ErrorDiscriminationStrategy,
-    typeResolver: TypeResolver
-): IrVersions.V4.errors.ErrorDeclaration {
+export function convertErrorDeclaration({
+    errorDeclaration,
+    errorDiscriminationStrategy,
+    typeReferenceResolver,
+}: {
+    errorDeclaration: IrVersions.V5.errors.ErrorDeclaration;
+    errorDiscriminationStrategy: IrVersions.V5.ir.ErrorDiscriminationStrategy;
+    typeReferenceResolver: TypeReferenceResolver;
+}): IrVersions.V4.errors.ErrorDeclaration {
     const typeV2 =
         errorDeclaration.type != null
             ? IrVersions.V4.types.Type.alias({
                   aliasOf: convertTypeReference(errorDeclaration.type),
-                  // TODO
-                  resolvedType: undefined,
+                  resolvedType: typeReferenceResolver.resolveTypeReference(errorDeclaration.type),
               })
             : undefined;
     return {
