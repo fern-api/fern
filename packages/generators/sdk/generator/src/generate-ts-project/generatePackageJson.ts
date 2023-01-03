@@ -76,6 +76,9 @@ export async function generatePackageJson({
                 shouldIncludeSourceMaps: false,
                 format: "esm",
                 outfile: Outfile.ESM,
+                // Node's built-in modules cannot be required due to due an esbuild bug.
+                // this is a workaround until https://github.com/evanw/esbuild/pull/2067 merges.
+                jsBanner: "import { createRequire } from 'module';\nconst require = createRequire(import.meta.url);",
             }),
             [PackageJsonScript.BUILD_CJS]: generateEsbuildCommand({
                 platform: "node",
@@ -122,11 +125,13 @@ function generateEsbuildCommand({
     shouldIncludeSourceMaps,
     format,
     outfile,
+    jsBanner,
 }: {
     platform: "node" | "browser";
     shouldIncludeSourceMaps: boolean;
     format: "cjs" | "esm" | undefined;
     outfile: string;
+    jsBanner?: string;
 }): string {
     const parts = ["esbuild", "src/index.ts", "--bundle", `--platform=${platform}`];
     if (shouldIncludeSourceMaps) {
@@ -134,6 +139,9 @@ function generateEsbuildCommand({
     }
     if (format != null) {
         parts.push(`--format=${format}`);
+    }
+    if (jsBanner != null) {
+        parts.push(`--banner:js="${jsBanner}"`);
     }
     parts.push(`--outfile=${outfile}`);
 

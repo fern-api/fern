@@ -70,7 +70,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --outfile=index.mjs\\",
+        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --banner:js=\\\\\\"import { createRequire } from 'module';\\\\nconst require = createRequire(import.meta.url);\\\\\\" --outfile=index.mjs\\",
         \\"build:cjs\\": \\"esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=index.cjs\\",
         \\"build:browser\\": \\"esbuild src/index.ts --bundle --platform=browser --sourcemap --outfile=browser.js\\",
         \\"build\\": \\"yarn build:esm && yarn build:cjs && yarn build:browser && tsc && tsc-alias\\"
@@ -5004,7 +5004,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --outfile=index.mjs\\",
+        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --banner:js=\\\\\\"import { createRequire } from 'module';\\\\nconst require = createRequire(import.meta.url);\\\\\\" --outfile=index.mjs\\",
         \\"build:cjs\\": \\"esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=index.cjs\\",
         \\"build:browser\\": \\"esbuild src/index.ts --bundle --platform=browser --sourcemap --outfile=browser.js\\",
         \\"build\\": \\"yarn build:esm && yarn build:cjs && yarn build:browser && tsc && tsc-alias\\"
@@ -7990,7 +7990,7 @@ node_modules
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --outfile=index.mjs\\",
+        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --banner:js=\\\\\\"import { createRequire } from 'module';\\\\nconst require = createRequire(import.meta.url);\\\\\\" --outfile=index.mjs\\",
         \\"build:cjs\\": \\"esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=index.cjs\\",
         \\"build:browser\\": \\"esbuild src/index.ts --bundle --platform=browser --sourcemap --outfile=browser.js\\",
         \\"build\\": \\"yarn build:esm && yarn build:cjs && yarn build:browser && tsc && tsc-alias\\"
@@ -9335,7 +9335,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --outfile=index.mjs\\",
+        \\"build:esm\\": \\"esbuild src/index.ts --bundle --platform=node --format=esm --banner:js=\\\\\\"import { createRequire } from 'module';\\\\nconst require = createRequire(import.meta.url);\\\\\\" --outfile=index.mjs\\",
         \\"build:cjs\\": \\"esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=index.cjs\\",
         \\"build:browser\\": \\"esbuild src/index.ts --bundle --platform=browser --sourcemap --outfile=browser.js\\",
         \\"build\\": \\"yarn build:esm && yarn build:cjs && yarn build:browser && tsc && tsc-alias\\"
