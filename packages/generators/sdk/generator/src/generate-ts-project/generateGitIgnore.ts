@@ -10,6 +10,8 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
             "*.d.ts",
             "*.js",
             "*.js.map",
+            "*.cjs",
+            "*.mjs",
             "",
             "# yarn berry",
             ".pnp.*",

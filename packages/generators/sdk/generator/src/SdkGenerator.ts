@@ -60,7 +60,6 @@ export declare namespace SdkGenerator {
     export interface Config {
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
-        shouldOutputEsm: boolean;
     }
 }
 
@@ -200,7 +199,6 @@ export class SdkGenerator {
                 packageName,
                 packageVersion,
                 isPackagePrivate: config.isPackagePrivate,
-                shouldOutputEsm: config.shouldOutputEsm,
                 project,
                 dependencies: this.dependencyManager.getDependencies(),
                 repositoryUrl,

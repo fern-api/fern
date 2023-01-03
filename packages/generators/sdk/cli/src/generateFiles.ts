@@ -39,7 +39,6 @@ export async function generateFiles({
         config: {
             shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
             isPackagePrivate: customConfig.isPackagePrivate,
-            shouldOutputEsm: customConfig.shouldOutputEsm,
         },
     });
 
