@@ -50,17 +50,15 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"name\\": \\"@fern-fern/fiddle-sdk\\",
     \\"version\\": \\"\\",
     \\"files\\": [
-        \\"core\\",
-        \\"resources\\",
-        \\"serialization\\",
-        \\"client\\",
-        \\"*.{js,js.map,d.ts}\\"
+        \\"index.js\\",
+        \\"index.js.map\\",
+        \\"*.d.ts\\"
     ],
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build\\": \\"tsc && tsc-alias\\"
+        \\"build\\": \\"esbuild src/index.ts --bundle --sourcemap --format=cjs --outfile=index.js && tsc && tsc-alias\\"
     },
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
@@ -69,6 +67,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"^0.16.13\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"^1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
@@ -4799,13 +4798,12 @@ export * from \\"./InsufficientPermissionsDetails\\";
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"inlineSources\\": true,
+        \\"emitDeclarationOnly\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,
@@ -4971,17 +4969,15 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"private\\": true,
     \\"repository\\": \\"https://github.com/fern/api}\\",
     \\"files\\": [
-        \\"core\\",
-        \\"resources\\",
-        \\"serialization\\",
-        \\"client\\",
-        \\"*.{js,js.map,d.ts}\\"
+        \\"index.js\\",
+        \\"index.js.map\\",
+        \\"*.d.ts\\"
     ],
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build\\": \\"tsc && tsc-alias\\"
+        \\"build\\": \\"esbuild src/index.ts --bundle --sourcemap --format=esm --outfile=index.js && tsc && tsc-alias\\"
     },
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
@@ -4990,6 +4986,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"^0.16.13\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"^1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
@@ -7875,8 +7872,7 @@ export * from \\"./TokenStatus\\";
         \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"inlineSources\\": true,
+        \\"emitDeclarationOnly\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,
@@ -7943,20 +7939,19 @@ node_modules
     \\"version\\": \\"0.0.0\\",
     \\"private\\": false,
     \\"files\\": [
-        \\"core\\",
-        \\"resources\\",
-        \\"serialization\\",
-        \\"client\\",
-        \\"*.{js,js.map,d.ts}\\"
+        \\"index.js\\",
+        \\"index.js.map\\",
+        \\"*.d.ts\\"
     ],
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build\\": \\"tsc && tsc-alias\\"
+        \\"build\\": \\"esbuild src/index.ts --bundle --sourcemap --format=cjs --outfile=index.js && tsc && tsc-alias\\"
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"^0.16.13\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"typescript\\": \\"4.6.4\\",
         \\"tsc-alias\\": \\"^1.7.1\\"
@@ -9195,13 +9190,12 @@ export declare namespace Package {
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"inlineSources\\": true,
+        \\"emitDeclarationOnly\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,
@@ -9275,17 +9269,15 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"name\\": \\"@fern-trace/api-sdk\\",
     \\"version\\": \\"\\",
     \\"files\\": [
-        \\"core\\",
-        \\"resources\\",
-        \\"serialization\\",
-        \\"client\\",
-        \\"*.{js,js.map,d.ts}\\"
+        \\"index.js\\",
+        \\"index.js.map\\",
+        \\"*.d.ts\\"
     ],
     \\"main\\": \\"./index.js\\",
     \\"types\\": \\"./index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write --print-width 120 src/**/*.ts\\",
-        \\"build\\": \\"tsc && tsc-alias\\"
+        \\"build\\": \\"esbuild src/index.ts --bundle --sourcemap --format=cjs --outfile=index.js && tsc && tsc-alias\\"
     },
     \\"dependencies\\": {
         \\"@types/basic-auth\\": \\"^1.1.3\\",
@@ -9298,6 +9290,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"^0.16.13\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"^1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
@@ -30363,13 +30356,12 @@ export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
-        \\"module\\": \\"commonjs\\",
+        \\"module\\": \\"esnext\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,
         \\"declaration\\": true,
-        \\"sourceMap\\": true,
-        \\"inlineSources\\": true,
+        \\"emitDeclarationOnly\\": true,
         \\"noUncheckedIndexedAccess\\": true,
         \\"noUnusedLocals\\": true,
         \\"noUnusedParameters\\": true,

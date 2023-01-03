@@ -13,6 +13,7 @@ export const PRETTIER_COMMAND = ["prettier", "--write", "--print-width", "120", 
 
 export const DEV_DEPENDENCIES: Record<string, string> = {
     "@types/node": "17.0.33",
+    esbuild: "^0.16.13",
     prettier: "2.7.1",
     typescript: "4.6.4",
     "tsc-alias": "^1.7.1",
@@ -57,12 +58,18 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: ["core", "resources", "serialization", "client", "*.{js,js.map,d.ts}"],
+        files: ["index.js", "index.js.map", "*.d.ts"],
         main: "./index.js",
         types: "./index.d.ts",
         scripts: {
             [PackageJsonScript.FORMAT]: PRETTIER_COMMAND.join(" "),
-            [PackageJsonScript.BUILD]: "tsc && tsc-alias",
+            [PackageJsonScript.BUILD]: [
+                `esbuild src/index.ts --bundle --sourcemap --format=${
+                    shouldOutputEsm ? "esm" : "cjs"
+                } --outfile=index.js`,
+                "tsc",
+                "tsc-alias",
+            ].join(" && "),
         },
     };
 

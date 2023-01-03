@@ -5,22 +5,19 @@ import { getPathToProjectFile } from "./utils";
 export async function generateTsConfig({
     volume,
     packageName,
-    shouldOutputEsm,
 }: {
     volume: Volume;
     packageName: string;
-    shouldOutputEsm: boolean;
 }): Promise<void> {
     const compilerOptions: CompilerOptions = {
         strict: true,
         target: "esnext" as unknown as ScriptTarget,
-        module: (shouldOutputEsm ? "esnext" : "commonjs") as unknown as ModuleKind,
+        module: "esnext" as unknown as ModuleKind,
         moduleResolution: "node" as unknown as ModuleResolutionKind,
         esModuleInterop: true,
         skipLibCheck: true,
         declaration: true,
-        sourceMap: true,
-        inlineSources: true,
+        emitDeclarationOnly: true,
         noUncheckedIndexedAccess: true,
         noUnusedLocals: true,
         noUnusedParameters: true,
