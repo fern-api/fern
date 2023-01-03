@@ -67,6 +67,7 @@ export const fetcher: FetchFunction = async (args) => {
             transitional: {
                 clarifyTimeoutError: true,
             },
+            withCredentials: true,
         });
 
         let body: unknown;
