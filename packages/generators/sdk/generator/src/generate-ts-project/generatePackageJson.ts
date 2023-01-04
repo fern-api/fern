@@ -2,9 +2,11 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
+import { TYPES_DIRECTORY } from "./generateTsConfig";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
+    COMPILE: "compile",
     BUILD: "build",
     BUILD_ESM: "build:esm",
     BUILD_CJS: "build:cjs",
@@ -58,7 +60,7 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: [Outfile.ESM, Outfile.CJS, Outfile.BROWSER, `${Outfile.BROWSER}.map`, "*.d.ts"],
+        files: [Outfile.ESM, Outfile.CJS, Outfile.BROWSER, `${Outfile.BROWSER}.map`, TYPES_DIRECTORY],
         exports: {
             ".": {
                 import: `./${Outfile.ESM}`,
@@ -68,9 +70,10 @@ export async function generatePackageJson({
                 default: `./${Outfile.CJS}`,
             },
         },
-        types: "./index.d.ts",
+        types: `./${TYPES_DIRECTORY}/index.d.ts`,
         scripts: {
             [PackageJsonScript.FORMAT]: PRETTIER_COMMAND.join(" "),
+            [PackageJsonScript.COMPILE]: "tsc && tsc-alias",
             [PackageJsonScript.BUILD_ESM]: generateEsbuildCommand({
                 platform: "node",
                 shouldIncludeSourceMaps: false,
@@ -93,11 +96,10 @@ export async function generatePackageJson({
                 outfile: Outfile.BROWSER,
             }),
             [PackageJsonScript.BUILD]: [
+                `yarn ${PackageJsonScript.COMPILE}`,
                 `yarn ${PackageJsonScript.BUILD_ESM}`,
                 `yarn ${PackageJsonScript.BUILD_CJS}`,
                 `yarn ${PackageJsonScript.BUILD_BROWSER}`,
-                "tsc",
-                "tsc-alias",
             ].join(" && "),
         },
     };

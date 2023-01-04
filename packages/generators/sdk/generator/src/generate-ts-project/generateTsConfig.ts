@@ -2,6 +2,8 @@ import { Volume } from "memfs/lib/volume";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 import { getPathToProjectFile } from "./utils";
 
+export const TYPES_DIRECTORY = "types";
+
 export async function generateTsConfig({
     volume,
     packageName,
@@ -21,7 +23,7 @@ export async function generateTsConfig({
         sourceMap: true,
         noUnusedLocals: true,
         noUnusedParameters: true,
-        outDir: ".",
+        outDir: TYPES_DIRECTORY,
         rootDir: "src",
         baseUrl: "src",
         paths: {
