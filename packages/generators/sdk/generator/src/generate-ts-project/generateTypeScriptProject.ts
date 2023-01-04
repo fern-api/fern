@@ -1,6 +1,7 @@
 import { Volume } from "memfs/lib/volume";
 import { Project } from "ts-morph";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
+import { SRC_DIRECTORY } from "./constants";
 import { generateGitIgnore } from "./generateGitIgnore";
 import { generatePackageJson } from "./generatePackageJson";
 import { generatePrettierIgnore } from "./generatePrettierIgnore";
@@ -28,8 +29,8 @@ export async function generateTypeScriptProject({
     project: Project;
     dependencies: PackageDependencies;
 }): Promise<void> {
-    await volume.promises.mkdir("/src");
-    await writeProjectToVolume(project, volume, "/src");
+    await volume.promises.mkdir(`/${SRC_DIRECTORY}`);
+    await writeProjectToVolume(project, volume, `/${SRC_DIRECTORY}`);
     await generatePackageJson({
         volume,
         packageName,

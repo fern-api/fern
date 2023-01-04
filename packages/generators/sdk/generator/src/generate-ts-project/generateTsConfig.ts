@@ -1,8 +1,7 @@
 import { Volume } from "memfs/lib/volume";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
+import { SRC_DIRECTORY, TYPES_DIRECTORY } from "./constants";
 import { getPathToProjectFile } from "./utils";
-
-export const TYPES_DIRECTORY = "types";
 
 export async function generateTsConfig({
     volume,
@@ -24,9 +23,10 @@ export async function generateTsConfig({
         noUnusedLocals: true,
         noUnusedParameters: true,
         outDir: TYPES_DIRECTORY,
-        rootDir: "src",
-        baseUrl: "src",
+        rootDir: SRC_DIRECTORY,
+        baseUrl: SRC_DIRECTORY,
         paths: {
+            // matches up with esbuild alias
             [packageName]: ["."],
         },
     };
@@ -36,7 +36,7 @@ export async function generateTsConfig({
         JSON.stringify(
             {
                 compilerOptions,
-                include: ["src"],
+                include: [SRC_DIRECTORY],
                 exclude: [],
             },
             undefined,

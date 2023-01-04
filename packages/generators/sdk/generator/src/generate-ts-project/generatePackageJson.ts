@@ -2,7 +2,7 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
-import { TYPES_DIRECTORY } from "./generateTsConfig";
+import { SRC_DIRECTORY, TYPES_DIRECTORY } from "./constants";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
@@ -82,18 +82,21 @@ export async function generatePackageJson({
                 // Node's built-in modules cannot be required due to due an esbuild bug.
                 // this is a workaround until https://github.com/evanw/esbuild/pull/2067 merges.
                 jsBanner: "import { createRequire } from 'module';\nconst require = createRequire(import.meta.url);",
+                packageName,
             }),
             [PackageJsonScript.BUILD_CJS]: generateEsbuildCommand({
                 platform: "node",
                 shouldIncludeSourceMaps: false,
                 format: "cjs",
                 outfile: Outfile.CJS,
+                packageName,
             }),
             [PackageJsonScript.BUILD_BROWSER]: generateEsbuildCommand({
                 platform: "browser",
                 shouldIncludeSourceMaps: true,
                 format: undefined,
                 outfile: Outfile.BROWSER,
+                packageName,
             }),
             [PackageJsonScript.BUILD]: [
                 `yarn ${PackageJsonScript.COMPILE}`,
@@ -128,14 +131,24 @@ function generateEsbuildCommand({
     format,
     outfile,
     jsBanner,
+    packageName,
 }: {
     platform: "node" | "browser";
     shouldIncludeSourceMaps: boolean;
     format: "cjs" | "esm" | undefined;
     outfile: string;
     jsBanner?: string;
+    packageName: string;
 }): string {
-    const parts = ["esbuild", "src/index.ts", "--bundle", `--platform=${platform}`];
+    const parts = [
+        "esbuild",
+        `${SRC_DIRECTORY}/index.ts`,
+        "--bundle",
+        `--platform=${platform}`,
+        "--packages=external",
+        // matches up with tsconfig paths
+        `--alias:${packageName}=./${SRC_DIRECTORY}`,
+    ];
     if (shouldIncludeSourceMaps) {
         parts.push("--sourcemap");
     }

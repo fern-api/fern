@@ -39,8 +39,29 @@ export function getReferenceToExportFromRoot({
     let directoriesInsideNamespaceExport: ExportedDirectory[];
     let addImport: () => void;
 
-    if (exportedFromPath.directories[0]?.exportDeclaration?.namespaceExport == null && namespaceImport != null) {
-        const [firstDirectory, ...remainingDirectories] = exportedFromPath.directories;
+    const [firstDirectory, ...remainingDirectories] = exportedFromPath.directories;
+
+    // if there's a default export, just use that
+    if (firstDirectory?.exportDeclaration?.defaultExport != null) {
+        moduleSpecifier = getRelativePathAsModuleSpecifierTo({
+            from: referencedIn,
+            to: convertExportedDirectoryPathToFilePath([]),
+            packageName,
+        });
+
+        const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
+
+        addImport = () => {
+            importsManager.addImport(moduleSpecifier, { defaultImport: recommendedImportName });
+        };
+
+        prefix = ts.factory.createIdentifier(recommendedImportName);
+        directoriesInsideNamespaceExport = remainingDirectories;
+    }
+
+    // if the item we're importing has no namespaceExport, but the namespaceImport arg is provided,
+    // just: import * as namespaceImport from <root>;
+    else if (firstDirectory?.exportDeclaration?.namespaceExport == null && namespaceImport != null) {
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to:
@@ -56,7 +77,10 @@ export function getReferenceToExportFromRoot({
 
         prefix = ts.factory.createIdentifier(namespaceImport);
         directoriesInsideNamespaceExport = remainingDirectories;
-    } else {
+    }
+
+    // otherwise, import directly from the first namespace-exported directory
+    else {
         const directoryToImportDirectlyFrom: ExportedDirectory[] = [];
 
         // find the first namespace-exported directory

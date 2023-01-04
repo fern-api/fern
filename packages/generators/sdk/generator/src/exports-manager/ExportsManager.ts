@@ -8,6 +8,9 @@ export interface ExportDeclaration {
     exportAll?: boolean;
     namespaceExport?: string;
     namedExports?: string[];
+    defaultExport?: {
+        recommendedImportName: string;
+    };
 }
 
 interface CombinedExportDeclarations {
@@ -110,6 +113,9 @@ export class ExportsManager {
         if (exportDeclaration.namespaceExport != null) {
             exportsForModuleSpecifier.namespaceExports.add(exportDeclaration.namespaceExport);
         }
+        if (exportDeclaration.defaultExport != null) {
+            exportsForModuleSpecifier.namespaceExports.add("default");
+        }
 
         if (exportDeclaration.namedExports != null) {
             for (const namedExport of exportDeclaration.namedExports) {
@@ -126,15 +132,7 @@ export class ExportsManager {
             });
 
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
-                const namespaceExports = [...combinedExportDeclarations.namespaceExports];
-                if (namespaceExports.length > 1) {
-                    throw new Error(
-                        `Multiple namespace exports from ${moduleSpecifier}: ${namespaceExports.join(", ")}`
-                    );
-                }
-
-                const namespaceExport = namespaceExports[0];
-                if (namespaceExport != null) {
+                for (const namespaceExport of combinedExportDeclarations.namespaceExports) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
                         namespaceExport,

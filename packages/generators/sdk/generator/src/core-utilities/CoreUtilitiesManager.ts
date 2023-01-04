@@ -15,7 +15,7 @@ import { BaseCoreUtilitiesImpl } from "./implementations/BaseCoreUtilitiesImpl";
 import { FetcherImpl } from "./implementations/FetcherImpl";
 import { ZurgImpl } from "./implementations/ZurgImpl";
 
-const CORE_UTILITIES_FILEPATH: ExportedDirectory[] = [{ nameOnDisk: "core" }];
+// const CORE_UTILITIES_FILEPATH: ExportedDirectory[] = [{ nameOnDisk: "core" }];
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -27,10 +27,12 @@ export declare namespace CoreUtilitiesManager {
 }
 
 export class CoreUtilitiesManager {
+    private apiName: string;
     private packageName: string;
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
 
-    constructor({ packageName }: { packageName: string }) {
+    constructor({ apiName, packageName }: { apiName: string; packageName: string }) {
+        this.apiName = apiName;
         this.packageName = packageName;
     }
 
@@ -46,7 +48,7 @@ export class CoreUtilitiesManager {
 
     public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
         for (const utility of Object.values(this.referencedCoreUtilities)) {
-            exportsManager.addExportsForDirectories(getPathToUtility(utility));
+            exportsManager.addExportsForDirectories(this.getPathToUtility(utility));
             utility.addDependencies?.(dependencyManager);
         }
     }
@@ -57,7 +59,7 @@ export class CoreUtilitiesManager {
                 const toPath = join(
                     pathToPackage,
                     "src",
-                    ...getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
+                    ...this.getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
                 );
                 await cp(
                     process.env.NODE_ENV === "test"
@@ -84,7 +86,7 @@ export class CoreUtilitiesManager {
             return getReferenceToExportViaNamespaceImport({
                 exportedName,
                 filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
-                filepathToNamespaceImport: { directories: CORE_UTILITIES_FILEPATH, file: undefined },
+                filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
                 importsManager,
@@ -92,8 +94,17 @@ export class CoreUtilitiesManager {
             });
         };
     }
-}
 
-function getPathToUtility(utility: CoreUtility.Manifest): ExportedDirectory[] {
-    return [...CORE_UTILITIES_FILEPATH, ...utility.pathInCoreUtilities];
+    private getPathToUtility(utility: CoreUtility.Manifest): ExportedDirectory[] {
+        return [...this.getCoreUtilitiesFilepath(), ...utility.pathInCoreUtilities];
+    }
+
+    private getCoreUtilitiesFilepath(): ExportedDirectory[] {
+        return [
+            {
+                nameOnDisk: "core",
+                exportDeclaration: { namespaceExport: `${this.apiName}Core` },
+            },
+        ];
+    }
 }

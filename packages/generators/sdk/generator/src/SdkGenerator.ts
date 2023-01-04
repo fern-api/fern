@@ -112,7 +112,7 @@ export class SdkGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
 
         this.exportsManager = new ExportsManager({ packageName });
-        this.coreUtilitiesManager = new CoreUtilitiesManager({ packageName });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({ apiName, packageName });
 
         const project = new Project({
             useInMemoryFileSystem: true,
@@ -125,7 +125,7 @@ export class SdkGenerator {
         const apiDirectory: ExportedDirectory[] = [
             {
                 nameOnDisk: "resources",
-                exportDeclaration: { namespaceExport: apiName },
+                exportDeclaration: { namespaceExport: apiName, defaultExport: { recommendedImportName: apiName } },
             },
         ];
 
