@@ -8,9 +8,9 @@ import { getPathToProjectFile } from "./utils";
 export const PackageJsonScript = {
     COMPILE: "compile",
     BUILD: "build",
+    BUILD_NODE: "build:node",
     BUILD_ESM: "build:esm",
     BUILD_CJS: "build:cjs",
-    BUILD_BROWSER: "build:browser",
     FORMAT: "format",
 } as const;
 
@@ -25,9 +25,9 @@ export const DEV_DEPENDENCIES: Record<string, string> = {
 };
 
 const Outfile = {
+    NODE: "node.cjs",
     ESM: "index.mjs",
     CJS: "index.cjs",
-    BROWSER: "browser.js",
 } as const;
 
 export async function generatePackageJson({
@@ -60,13 +60,12 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: [Outfile.ESM, Outfile.CJS, Outfile.BROWSER, `${Outfile.BROWSER}.map`, TYPES_DIRECTORY],
+        files: [Outfile.ESM, Outfile.CJS, Outfile.NODE, TYPES_DIRECTORY],
         exports: {
             ".": {
+                node: `./${Outfile.NODE}`,
                 import: `./${Outfile.ESM}`,
                 require: `./${Outfile.CJS}`,
-                module: `./${Outfile.BROWSER}`,
-                browser: `./${Outfile.BROWSER}`,
                 default: `./${Outfile.CJS}`,
             },
         },
@@ -74,14 +73,21 @@ export async function generatePackageJson({
         scripts: {
             [PackageJsonScript.FORMAT]: PRETTIER_COMMAND.join(" "),
             [PackageJsonScript.COMPILE]: "tsc && tsc-alias",
+            [PackageJsonScript.BUILD_NODE]: generateEsbuildCommand({
+                platform: "node",
+                shouldIncludeSourceMaps: false,
+                format: undefined,
+                outfile: Outfile.NODE,
+                // Node's built-in modules cannot be required due to due an esbuild bug.
+                // this is a workaround until https://github.com/evanw/esbuild/pull/2067 merges.
+                jsBanner: "import { createRequire } from 'module';\nconst require = createRequire(import.meta.url);",
+                packageName,
+            }),
             [PackageJsonScript.BUILD_ESM]: generateEsbuildCommand({
                 platform: "node",
                 shouldIncludeSourceMaps: false,
                 format: "esm",
                 outfile: Outfile.ESM,
-                // Node's built-in modules cannot be required due to due an esbuild bug.
-                // this is a workaround until https://github.com/evanw/esbuild/pull/2067 merges.
-                jsBanner: "import { createRequire } from 'module';\nconst require = createRequire(import.meta.url);",
                 packageName,
             }),
             [PackageJsonScript.BUILD_CJS]: generateEsbuildCommand({
@@ -91,29 +97,23 @@ export async function generatePackageJson({
                 outfile: Outfile.CJS,
                 packageName,
             }),
-            [PackageJsonScript.BUILD_BROWSER]: generateEsbuildCommand({
-                platform: "browser",
-                shouldIncludeSourceMaps: true,
-                format: undefined,
-                outfile: Outfile.BROWSER,
-                packageName,
-            }),
             [PackageJsonScript.BUILD]: [
                 `yarn ${PackageJsonScript.COMPILE}`,
+                `yarn ${PackageJsonScript.BUILD_NODE}`,
                 `yarn ${PackageJsonScript.BUILD_ESM}`,
                 `yarn ${PackageJsonScript.BUILD_CJS}`,
-                `yarn ${PackageJsonScript.BUILD_BROWSER}`,
             ].join(" && "),
         },
     };
 
     packageJson = produce(packageJson, (draft) => {
-        draft.dependencies = {
-            ...dependencies?.[DependencyType.PROD],
-            module: "^1.2.5",
-        };
-        if (dependencies != null && Object.keys(dependencies[DependencyType.PEER]).length > 0) {
-            draft.peerDependencies = dependencies[DependencyType.PEER];
+        if (dependencies != null) {
+            if (Object.keys(dependencies[DependencyType.PROD]).length > 0) {
+                draft.dependencies = dependencies[DependencyType.PROD];
+            }
+            if (Object.keys(dependencies[DependencyType.PEER]).length > 0) {
+                draft.peerDependencies = dependencies[DependencyType.PEER];
+            }
         }
         draft.devDependencies = {
             ...dependencies?.[DependencyType.DEV],
