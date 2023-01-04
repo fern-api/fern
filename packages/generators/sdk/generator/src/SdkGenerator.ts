@@ -125,7 +125,7 @@ export class SdkGenerator {
         const apiDirectory: ExportedDirectory[] = [
             {
                 nameOnDisk: "resources",
-                exportDeclaration: { namespaceExport: apiName, defaultExport: { recommendedImportName: apiName } },
+                exportDeclaration: { namespaceExport: apiName },
             },
         ];
 
