@@ -73,7 +73,7 @@ export class EndpointTypeSchemasContextMixinImpl implements EndpointTypeSchemasC
             name: { serviceName, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            importStrategy: getSchemaImportStrategy(),
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
             subImport: typeof export_ === "string" ? [export_] : export_,
         });
     }

@@ -3335,7 +3335,9 @@ export const Request: core.schemas.Schema<
   apiName: core.schemas.string(),
   organizationName: core.schemas.string(),
   version: core.schemas.string().optional(),
-  generators: core.schemas.list(FernFiddleSerializers.GeneratorConfig),
+  generators: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorConfig)
+  ),
 });
 
 export declare namespace Request {
@@ -3350,7 +3352,9 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   FernFiddleSerializers.remoteGen.createJob.Response.Raw,
   FernFiddle.CreateJobResponse
-> = FernFiddleSerializers.CreateJobResponse;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CreateJobResponse
+);
 
 export declare namespace Response {
   type Raw = FernFiddleSerializers.CreateJobResponse.Raw;
@@ -3363,16 +3367,24 @@ export const Error: core.schemas.Schema<
   .union(\\"error\\", {
     IllegalApiNameError: core.schemas.object({}),
     GeneratorsDoNotExistError: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.GeneratorsDoNotExistError),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorsDoNotExistError
+      ),
     }),
     CannotPublishToNpmScope: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.CannotPublishToNpmScope),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CannotPublishToNpmScope
+      ),
     }),
     CannotPublishToMavenGroup: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.CannotPublishToMavenGroup),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CannotPublishToMavenGroup
+      ),
     }),
     InsufficientPermissions: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.InsufficientPermissions),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.InsufficientPermissions
+      ),
     }),
   })
   .transform<FernFiddle.remoteGen.createJob.Error>({
@@ -3444,7 +3456,9 @@ export const Request: core.schemas.Schema<
   apiName: core.schemas.string(),
   organizationName: core.schemas.string(),
   version: core.schemas.string().optional(),
-  generators: core.schemas.list(FernFiddleSerializers.GeneratorConfigV2),
+  generators: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorConfigV2)
+  ),
   uploadToS3: core.schemas.boolean().optional(),
 });
 
@@ -3461,7 +3475,9 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   FernFiddleSerializers.remoteGen.createJobV2.Response.Raw,
   FernFiddle.CreateJobResponse
-> = FernFiddleSerializers.CreateJobResponse;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CreateJobResponse
+);
 
 export declare namespace Response {
   type Raw = FernFiddleSerializers.CreateJobResponse.Raw;
@@ -3474,16 +3490,24 @@ export const Error: core.schemas.Schema<
   .union(\\"error\\", {
     IllegalApiNameError: core.schemas.object({}),
     GeneratorsDoNotExistError: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.GeneratorsDoNotExistError),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorsDoNotExistError
+      ),
     }),
     CannotPublishToNpmScope: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.CannotPublishToNpmScope),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CannotPublishToNpmScope
+      ),
     }),
     CannotPublishToMavenGroup: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.CannotPublishToMavenGroup),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CannotPublishToMavenGroup
+      ),
     }),
     InsufficientPermissions: core.schemas.object({
-      content: core.schemas.lazy(async () => FernFiddleSerializers.InsufficientPermissions),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.InsufficientPermissions
+      ),
     }),
   })
   .transform<FernFiddle.remoteGen.createJobV2.Error>({
@@ -3551,7 +3575,10 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   FernFiddleSerializers.remoteGen.getJobStatus.Response.Raw,
   Record<FernFiddle.RemoteGenTaskId, FernFiddle.Task>
-> = core.schemas.record(FernFiddleSerializers.RemoteGenTaskId, FernFiddleSerializers.Task);
+> = core.schemas.record(
+  core.schemas.lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.RemoteGenTaskId),
+  core.schemas.lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.Task)
+);
 
 export declare namespace Response {
   type Raw = Record<FernFiddleSerializers.RemoteGenTaskId.Raw, FernFiddleSerializers.Task.Raw>;
@@ -3585,7 +3612,9 @@ import * as core from \\"../../../core\\";
 export const CannotPublishToMavenGroup: core.schemas.Schema<
   FernFiddleSerializers.CannotPublishToMavenGroup.Raw,
   FernFiddle.CannotPublishToMavenGroup
-> = FernFiddleSerializers.CannotPublishToMavenGroupDetails;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CannotPublishToMavenGroupDetails
+);
 
 export declare namespace CannotPublishToMavenGroup {
   type Raw = FernFiddleSerializers.CannotPublishToMavenGroupDetails.Raw;
@@ -3605,7 +3634,9 @@ import * as core from \\"../../../core\\";
 export const CannotPublishToNpmScope: core.schemas.Schema<
   FernFiddleSerializers.CannotPublishToNpmScope.Raw,
   FernFiddle.CannotPublishToNpmScope
-> = FernFiddleSerializers.CannotPublishToNpmScopeDetails;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.CannotPublishToNpmScopeDetails
+);
 
 export declare namespace CannotPublishToNpmScope {
   type Raw = FernFiddleSerializers.CannotPublishToNpmScopeDetails.Raw;
@@ -3625,7 +3656,9 @@ import * as core from \\"../../../core\\";
 export const GeneratorsDoNotExistError: core.schemas.Schema<
   FernFiddleSerializers.GeneratorsDoNotExistError.Raw,
   FernFiddle.GeneratorsDoNotExistError
-> = FernFiddleSerializers.GeneratorsDoNotExistErrorBodyType;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorsDoNotExistErrorBodyType
+);
 
 export declare namespace GeneratorsDoNotExistError {
   type Raw = FernFiddleSerializers.GeneratorsDoNotExistErrorBodyType.Raw;
@@ -3645,7 +3678,9 @@ import * as core from \\"../../../core\\";
 export const InsufficientPermissions: core.schemas.Schema<
   FernFiddleSerializers.InsufficientPermissions.Raw,
   FernFiddle.InsufficientPermissions
-> = FernFiddleSerializers.InsufficientPermissionsDetails;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.InsufficientPermissionsDetails
+);
 
 export declare namespace InsufficientPermissions {
   type Raw = FernFiddleSerializers.InsufficientPermissionsDetails.Raw;
@@ -3745,8 +3780,10 @@ export const CreateJobResponse: core.schemas.ObjectSchema<
   FernFiddleSerializers.CreateJobResponse.Raw,
   FernFiddle.CreateJobResponse
 > = core.schemas.object({
-  jobId: FernFiddleSerializers.RemoteGenJobId,
-  taskIds: core.schemas.list(FernFiddleSerializers.RemoteGenTaskId),
+  jobId: core.schemas.lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.RemoteGenJobId),
+  taskIds: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.RemoteGenTaskId)
+  ),
 });
 
 export declare namespace CreateJobResponse {
@@ -3829,7 +3866,9 @@ export const GeneratorConfig: core.schemas.ObjectSchema<
   version: core.schemas.string(),
   customConfig: core.schemas.unknown(),
   willDownloadFiles: core.schemas.boolean(),
-  outputs: FernFiddleSerializers.GeneratorOutputs,
+  outputs: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorOutputs
+  ),
 });
 
 export declare namespace GeneratorConfig {
@@ -3860,7 +3899,7 @@ export const GeneratorConfigV2: core.schemas.ObjectSchema<
   id: core.schemas.string(),
   version: core.schemas.string(),
   customConfig: core.schemas.unknown(),
-  outputMode: FernFiddleSerializers.OutputMode,
+  outputMode: core.schemas.lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.OutputMode),
 });
 
 export declare namespace GeneratorConfigV2 {
@@ -3913,8 +3952,12 @@ export const GeneratorOutputs: core.schemas.ObjectSchema<
   FernFiddleSerializers.GeneratorOutputs.Raw,
   FernFiddle.GeneratorOutputs
 > = core.schemas.object({
-  npm: FernFiddleSerializers.NpmOutput.optional(),
-  maven: FernFiddleSerializers.MavenOutput.optional(),
+  npm: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.NpmOutput)
+    .optional(),
+  maven: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.MavenOutput)
+    .optional(),
 });
 
 export declare namespace GeneratorOutputs {
@@ -3939,7 +3982,11 @@ export const GeneratorsDoNotExistErrorBodyType: core.schemas.ObjectSchema<
   FernFiddleSerializers.GeneratorsDoNotExistErrorBodyType.Raw,
   FernFiddle.GeneratorsDoNotExistErrorBodyType
 > = core.schemas.object({
-  nonExistentGenerators: core.schemas.list(FernFiddleSerializers.GeneratorIdAndVersion),
+  nonExistentGenerators: core.schemas.list(
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GeneratorIdAndVersion
+    )
+  ),
 });
 
 export declare namespace GeneratorsDoNotExistErrorBodyType {
@@ -3965,7 +4012,9 @@ export const GithubOutputMode: core.schemas.ObjectSchema<
 > = core.schemas.object({
   owner: core.schemas.string(),
   repo: core.schemas.string(),
-  publishInfo: FernFiddleSerializers.GithubPublishInfo.optional(),
+  publishInfo: core.schemas
+    .lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GithubPublishInfo)
+    .optional(),
 });
 
 export declare namespace GithubOutputMode {
@@ -3992,9 +4041,15 @@ export const GithubPublishInfo: core.schemas.Schema<
   FernFiddle.GithubPublishInfo
 > = core.schemas
   .union(\\"type\\", {
-    npm: FernFiddleSerializers.NpmOutputWithOptionalToken,
-    maven: FernFiddleSerializers.MavenOutputWithOptionalCreds,
-    postman: FernFiddleSerializers.PostmanOutput,
+    npm: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.NpmOutputWithOptionalToken
+    ),
+    maven: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.MavenOutputWithOptionalCreds
+    ),
+    postman: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PostmanOutput
+    ),
   })
   .transform<FernFiddle.GithubPublishInfo>({
     parse: (value) => {
@@ -4143,7 +4198,9 @@ export const MavenOutputWithOptionalCreds: core.schemas.ObjectSchema<
 > = core.schemas.object({
   registryUrl: core.schemas.string(),
   coordinate: core.schemas.string(),
-  credentials: FernFiddleSerializers.UsernamePassword.optional(),
+  credentials: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.UsernamePassword)
+    .optional(),
 });
 
 export declare namespace MavenOutputWithOptionalCreds {
@@ -4247,12 +4304,18 @@ import * as core from \\"../../../core\\";
 
 export const OutputMode: core.schemas.Schema<FernFiddleSerializers.OutputMode.Raw, FernFiddle.OutputMode> = core.schemas
   .union(\\"type\\", {
-    publish: FernFiddleSerializers.PublishOutputMode,
+    publish: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PublishOutputMode
+    ),
     publishV2: core.schemas.object({
-      publishV2: FernFiddleSerializers.PublishOutputModeV2,
+      publishV2: core.schemas.lazy(
+        async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PublishOutputModeV2
+      ),
     }),
     downloadFiles: core.schemas.object({}),
-    github: FernFiddleSerializers.GithubOutputMode,
+    github: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.GithubOutputMode
+    ),
   })
   .transform<FernFiddle.OutputMode>({
     parse: (value) => {
@@ -4306,8 +4369,12 @@ import * as core from \\"../../../core\\";
 
 export const Package: core.schemas.ObjectSchema<FernFiddleSerializers.Package.Raw, FernFiddle.Package> =
   core.schemas.object({
-    coordinate: FernFiddleSerializers.PackageCoordinate,
-    status: FernFiddleSerializers.PackagePublishStatus,
+    coordinate: core.schemas.lazy(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PackageCoordinate
+    ),
+    status: core.schemas.lazy(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PackagePublishStatus
+    ),
   });
 
 export declare namespace Package {
@@ -4333,9 +4400,15 @@ export const PackageCoordinate: core.schemas.Schema<
   FernFiddle.PackageCoordinate
 > = core.schemas
   .union(core.schemas.discriminant(\\"type\\", \\"_type\\"), {
-    npm: FernFiddleSerializers.NpmCoordinate,
-    maven: FernFiddleSerializers.MavenCoordinate,
-    pypi: FernFiddleSerializers.PypiCoordinate,
+    npm: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.NpmCoordinate
+    ),
+    maven: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.MavenCoordinate
+    ),
+    pypi: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PypiCoordinate
+    ),
   })
   .transform<FernFiddle.PackageCoordinate>({
     parse: (value) => {
@@ -4430,7 +4503,9 @@ export const PublishOutputMode: core.schemas.ObjectSchema<
   FernFiddleSerializers.PublishOutputMode.Raw,
   FernFiddle.PublishOutputMode
 > = core.schemas.object({
-  registryOverrides: FernFiddleSerializers.RegistryOverrides,
+  registryOverrides: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.RegistryOverrides
+  ),
 });
 
 export declare namespace PublishOutputMode {
@@ -4456,12 +4531,18 @@ export const PublishOutputModeV2: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     npmOverride: core.schemas.object({
-      npmOverride: FernFiddleSerializers.NpmOutput.optional(),
+      npmOverride: core.schemas
+        .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.NpmOutput)
+        .optional(),
     }),
     mavenOverride: core.schemas.object({
-      mavenOverride: FernFiddleSerializers.MavenOutput.optional(),
+      mavenOverride: core.schemas
+        .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.MavenOutput)
+        .optional(),
     }),
-    postman: FernFiddleSerializers.PostmanOutput,
+    postman: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.PostmanOutput
+    ),
   })
   .transform<FernFiddle.PublishOutputModeV2>({
     parse: (value) => {
@@ -4538,8 +4619,12 @@ export const RegistryOverrides: core.schemas.ObjectSchema<
   FernFiddleSerializers.RegistryOverrides.Raw,
   FernFiddle.RegistryOverrides
 > = core.schemas.object({
-  npm: FernFiddleSerializers.NpmOutput.optional(),
-  maven: FernFiddleSerializers.MavenOutput.optional(),
+  npm: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.NpmOutput)
+    .optional(),
+  maven: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.MavenOutput)
+    .optional(),
 });
 
 export declare namespace RegistryOverrides {
@@ -4605,9 +4690,13 @@ import { FernFiddleSerializers, FernFiddle } from \\"@fern-fern/fiddle-sdk\\";
 import * as core from \\"../../../core\\";
 
 export const Task: core.schemas.ObjectSchema<FernFiddleSerializers.Task.Raw, FernFiddle.Task> = core.schemas.object({
-  status: FernFiddleSerializers.TaskStatus,
-  packages: core.schemas.list(FernFiddleSerializers.Package),
-  logs: core.schemas.list(FernFiddleSerializers.TaskLog),
+  status: core.schemas.lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.TaskStatus),
+  packages: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.Package)
+  ),
+  logs: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.TaskLog)
+  ),
 });
 
 export declare namespace Task {
@@ -4631,7 +4720,7 @@ import * as core from \\"../../../core\\";
 
 export const TaskLog: core.schemas.ObjectSchema<FernFiddleSerializers.TaskLog.Raw, FernFiddle.TaskLog> =
   core.schemas.object({
-    level: FernFiddleSerializers.LogLevel,
+    level: core.schemas.lazy(async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.LogLevel),
     message: core.schemas.string(),
   });
 
@@ -4657,8 +4746,12 @@ export const TaskStatus: core.schemas.Schema<FernFiddleSerializers.TaskStatus.Ra
   .union(core.schemas.discriminant(\\"type\\", \\"_type\\"), {
     notStarted: core.schemas.object({}),
     running: core.schemas.object({}),
-    failed: FernFiddleSerializers.FailedTaskStatus,
-    finished: FernFiddleSerializers.FinishedTaskStatus,
+    failed: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.FailedTaskStatus
+    ),
+    finished: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-fern/fiddle-sdk\\")).FernFiddleSerializers.FinishedTaskStatus
+    ),
   })
   .transform<FernFiddle.TaskStatus>({
     parse: (value) => {
@@ -7439,7 +7532,7 @@ import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<FernApiSerializers.owner.create.Request.Raw, FernApi.CreateOwnerRequest> =
   core.schemas.object({
-    ownerId: FernApiSerializers.OwnerId,
+    ownerId: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.OwnerId),
     data: core.schemas.unknown(),
   });
 
@@ -7462,7 +7555,7 @@ import { FernApiSerializers, FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
 export const Response: core.schemas.Schema<FernApiSerializers.owner.get.Response.Raw, FernApi.Owner> =
-  FernApiSerializers.Owner;
+  core.schemas.lazyObject(async () => (await import(\\"@fern/api\\")).FernApiSerializers.Owner);
 
 export declare namespace Response {
   type Raw = FernApiSerializers.Owner.Raw;
@@ -7499,7 +7592,7 @@ export declare namespace Request {
 }
 
 export const Response: core.schemas.Schema<FernApiSerializers.owner.update.Response.Raw, FernApi.Owner> =
-  FernApiSerializers.Owner;
+  core.schemas.lazyObject(async () => (await import(\\"@fern/api\\")).FernApiSerializers.Owner);
 
 export declare namespace Response {
   type Raw = FernApiSerializers.Owner.Raw;
@@ -7525,7 +7618,7 @@ import * as core from \\"../../../core\\";
 export const OwnerAlreadyExistsError: core.schemas.Schema<
   FernApiSerializers.OwnerAlreadyExistsError.Raw,
   FernApi.OwnerAlreadyExistsError
-> = FernApiSerializers.OwnerId;
+> = core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.OwnerId);
 
 export declare namespace OwnerAlreadyExistsError {
   type Raw = FernApiSerializers.OwnerId.Raw;
@@ -7563,7 +7656,7 @@ import { FernApiSerializers, FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../core\\";
 
 export const Owner: core.schemas.ObjectSchema<FernApiSerializers.Owner.Raw, FernApi.Owner> = core.schemas.object({
-  ownerId: FernApiSerializers.OwnerId,
+  ownerId: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.OwnerId),
   data: core.schemas.unknown(),
 });
 
@@ -7623,7 +7716,7 @@ import * as core from \\"../../../core\\";
 
 export const Request: core.schemas.Schema<FernApiSerializers.token.create.Request.Raw, FernApi.CreateTokenRequest> =
   core.schemas.object({
-    ownerId: FernApiSerializers.OwnerId,
+    ownerId: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.OwnerId),
     description: core.schemas.string().optional(),
   });
 
@@ -7635,7 +7728,7 @@ export declare namespace Request {
 }
 
 export const Response: core.schemas.Schema<FernApiSerializers.token.create.Response.Raw, FernApi.CreateTokenResponse> =
-  FernApiSerializers.CreateTokenResponse;
+  core.schemas.lazyObject(async () => (await import(\\"@fern/api\\")).FernApiSerializers.CreateTokenResponse);
 
 export declare namespace Response {
   type Raw = FernApiSerializers.CreateTokenResponse.Raw;
@@ -7668,7 +7761,7 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   FernApiSerializers.token.getTokenMetadata.Response.Raw,
   FernApi.TokenMetadata
-> = FernApiSerializers.TokenMetadata;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern/api\\")).FernApiSerializers.TokenMetadata);
 
 export declare namespace Response {
   type Raw = FernApiSerializers.TokenMetadata.Raw;
@@ -7688,7 +7781,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   FernApiSerializers.token.getTokensForOwner.Response.Raw,
   FernApi.TokenMetadata[]
-> = core.schemas.list(FernApiSerializers.TokenMetadata);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern/api\\")).FernApiSerializers.TokenMetadata)
+);
 
 export declare namespace Response {
   type Raw = FernApiSerializers.TokenMetadata.Raw[];
@@ -7731,7 +7826,7 @@ export const CreateTokenResponse: core.schemas.ObjectSchema<
   FernApi.CreateTokenResponse
 > = core.schemas.object({
   token: core.schemas.string(),
-  tokenId: FernApiSerializers.TokenId,
+  tokenId: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.TokenId),
 });
 
 export declare namespace CreateTokenResponse {
@@ -7771,11 +7866,11 @@ import * as core from \\"../../../core\\";
 
 export const TokenMetadata: core.schemas.ObjectSchema<FernApiSerializers.TokenMetadata.Raw, FernApi.TokenMetadata> =
   core.schemas.object({
-    tokenId: FernApiSerializers.TokenId,
-    ownerId: FernApiSerializers.OwnerId,
+    tokenId: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.TokenId),
+    ownerId: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.OwnerId),
     description: core.schemas.string().optional(),
     createdTime: core.schemas.date(),
-    status: FernApiSerializers.TokenStatus,
+    status: core.schemas.lazy(async () => (await import(\\"@fern/api\\")).FernApiSerializers.TokenStatus),
   });
 
 export declare namespace TokenMetadata {
@@ -21896,7 +21991,7 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.sendTestSubmissionUpdate.Request.Raw,
   TraceApi.TestSubmissionUpdate
-> = TraceApiSerializers.TestSubmissionUpdate;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionUpdate);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.TestSubmissionUpdate.Raw;
@@ -21916,7 +22011,9 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.sendWorkspaceSubmissionUpdate.Request.Raw,
   TraceApi.WorkspaceSubmissionUpdate
-> = TraceApiSerializers.WorkspaceSubmissionUpdate;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionUpdate
+);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.WorkspaceSubmissionUpdate.Raw;
@@ -21937,8 +22034,12 @@ export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.storeTracedTestCase.Request.Raw,
   Omit<TraceApi.StoreTracedTestCaseRequest, \\"someQueryParam\\">
 > = core.schemas.object({
-  result: TraceApiSerializers.TestCaseResultWithStdout,
-  traceResponses: core.schemas.list(TraceApiSerializers.TraceResponse),
+  result: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseResultWithStdout
+  ),
+  traceResponses: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TraceResponse)
+  ),
 });
 
 export declare namespace Request {
@@ -21962,7 +22063,9 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.storeTracedTestCaseV2.Request.Raw,
   TraceApi.TraceResponseV2[]
-> = core.schemas.list(TraceApiSerializers.TraceResponseV2);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TraceResponseV2)
+);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.TraceResponseV2.Raw[];
@@ -21983,8 +22086,12 @@ export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.storeTracedWorkspace.Request.Raw,
   TraceApi.StoreTracedWorkspaceRequest
 > = core.schemas.object({
-  workspaceRunDetails: TraceApiSerializers.WorkspaceRunDetails,
-  traceResponses: core.schemas.list(TraceApiSerializers.TraceResponse),
+  workspaceRunDetails: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceRunDetails
+  ),
+  traceResponses: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TraceResponse)
+  ),
 });
 
 export declare namespace Request {
@@ -22008,7 +22115,9 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.storeTracedWorkspaceV2.Request.Raw,
   TraceApi.TraceResponseV2[]
-> = core.schemas.list(TraceApiSerializers.TraceResponseV2);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TraceResponseV2)
+);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.TraceResponseV2.Raw[];
@@ -22028,7 +22137,7 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.updateTestSubmissionStatus.Request.Raw,
   TraceApi.TestSubmissionStatus
-> = TraceApiSerializers.TestSubmissionStatus;
+> = core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionStatus);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.TestSubmissionStatus.Raw;
@@ -22048,7 +22157,7 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.admin.updateWorkspaceSubmissionStatus.Request.Raw,
   TraceApi.WorkspaceSubmissionStatus
-> = TraceApiSerializers.WorkspaceSubmissionStatus;
+> = core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionStatus);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.WorkspaceSubmissionStatus.Raw;
@@ -22093,8 +22202,10 @@ export const BinaryTreeNodeAndTreeValue: core.schemas.ObjectSchema<
   TraceApiSerializers.BinaryTreeNodeAndTreeValue.Raw,
   TraceApi.BinaryTreeNodeAndTreeValue
 > = core.schemas.object({
-  nodeId: TraceApiSerializers.NodeId,
-  fullTree: TraceApiSerializers.BinaryTreeValue,
+  nodeId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
+  fullTree: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.BinaryTreeValue
+  ),
 });
 
 export declare namespace BinaryTreeNodeAndTreeValue {
@@ -22119,10 +22230,10 @@ export const BinaryTreeNodeValue: core.schemas.ObjectSchema<
   TraceApiSerializers.BinaryTreeNodeValue.Raw,
   TraceApi.BinaryTreeNodeValue
 > = core.schemas.object({
-  nodeId: TraceApiSerializers.NodeId,
+  nodeId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
   val: core.schemas.number(),
-  right: TraceApiSerializers.NodeId.optional(),
-  left: TraceApiSerializers.NodeId.optional(),
+  right: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
+  left: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
 });
 
 export declare namespace BinaryTreeNodeValue {
@@ -22149,8 +22260,11 @@ export const BinaryTreeValue: core.schemas.ObjectSchema<
   TraceApiSerializers.BinaryTreeValue.Raw,
   TraceApi.BinaryTreeValue
 > = core.schemas.object({
-  root: TraceApiSerializers.NodeId.optional(),
-  nodes: core.schemas.record(TraceApiSerializers.NodeId, TraceApiSerializers.BinaryTreeNodeValue),
+  root: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
+  nodes: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.BinaryTreeNodeValue)
+  ),
 });
 
 export declare namespace BinaryTreeValue {
@@ -22175,8 +22289,8 @@ export const DebugKeyValuePairs: core.schemas.ObjectSchema<
   TraceApiSerializers.DebugKeyValuePairs.Raw,
   TraceApi.DebugKeyValuePairs
 > = core.schemas.object({
-  key: TraceApiSerializers.DebugVariableValue,
-  value: TraceApiSerializers.DebugVariableValue,
+  key: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugVariableValue),
+  value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugVariableValue),
 });
 
 export declare namespace DebugKeyValuePairs {
@@ -22199,7 +22313,9 @@ import * as core from \\"../../../core\\";
 
 export const DebugMapValue: core.schemas.ObjectSchema<TraceApiSerializers.DebugMapValue.Raw, TraceApi.DebugMapValue> =
   core.schemas.object({
-    keyValuePairs: core.schemas.list(TraceApiSerializers.DebugKeyValuePairs),
+    keyValuePairs: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugKeyValuePairs)
+    ),
   });
 
 export declare namespace DebugMapValue {
@@ -22239,16 +22355,28 @@ export const DebugVariableValue: core.schemas.Schema<
     charValue: core.schemas.object({
       value: core.schemas.string(),
     }),
-    mapValue: TraceApiSerializers.DebugMapValue,
+    mapValue: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugMapValue
+    ),
     listValue: core.schemas.object({
-      value: core.schemas.list(TraceApiSerializers.DebugVariableValue),
+      value: core.schemas.list(
+        core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugVariableValue)
+      ),
     }),
-    binaryTreeNodeValue: TraceApiSerializers.BinaryTreeNodeAndTreeValue,
-    singlyLinkedListNodeValue: TraceApiSerializers.SinglyLinkedListNodeAndListValue,
-    doublyLinkedListNodeValue: TraceApiSerializers.DoublyLinkedListNodeAndListValue,
+    binaryTreeNodeValue: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.BinaryTreeNodeAndTreeValue
+    ),
+    singlyLinkedListNodeValue: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SinglyLinkedListNodeAndListValue
+    ),
+    doublyLinkedListNodeValue: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DoublyLinkedListNodeAndListValue
+    ),
     undefinedValue: core.schemas.object({}),
     nullValue: core.schemas.object({}),
-    genericValue: TraceApiSerializers.GenericValue,
+    genericValue: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GenericValue
+    ),
   })
   .transform<TraceApi.DebugVariableValue>({
     parse: (value) => {
@@ -22376,8 +22504,10 @@ export const DoublyLinkedListNodeAndListValue: core.schemas.ObjectSchema<
   TraceApiSerializers.DoublyLinkedListNodeAndListValue.Raw,
   TraceApi.DoublyLinkedListNodeAndListValue
 > = core.schemas.object({
-  nodeId: TraceApiSerializers.NodeId,
-  fullList: TraceApiSerializers.DoublyLinkedListValue,
+  nodeId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
+  fullList: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DoublyLinkedListValue
+  ),
 });
 
 export declare namespace DoublyLinkedListNodeAndListValue {
@@ -22402,10 +22532,10 @@ export const DoublyLinkedListNodeValue: core.schemas.ObjectSchema<
   TraceApiSerializers.DoublyLinkedListNodeValue.Raw,
   TraceApi.DoublyLinkedListNodeValue
 > = core.schemas.object({
-  nodeId: TraceApiSerializers.NodeId,
+  nodeId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
   val: core.schemas.number(),
-  next: TraceApiSerializers.NodeId.optional(),
-  prev: TraceApiSerializers.NodeId.optional(),
+  next: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
+  prev: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
 });
 
 export declare namespace DoublyLinkedListNodeValue {
@@ -22432,8 +22562,13 @@ export const DoublyLinkedListValue: core.schemas.ObjectSchema<
   TraceApiSerializers.DoublyLinkedListValue.Raw,
   TraceApi.DoublyLinkedListValue
 > = core.schemas.object({
-  head: TraceApiSerializers.NodeId.optional(),
-  nodes: core.schemas.record(TraceApiSerializers.NodeId, TraceApiSerializers.DoublyLinkedListNodeValue),
+  head: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
+  nodes: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DoublyLinkedListNodeValue
+    )
+  ),
 });
 
 export declare namespace DoublyLinkedListValue {
@@ -22504,8 +22639,8 @@ import * as core from \\"../../../core\\";
 
 export const KeyValuePair: core.schemas.ObjectSchema<TraceApiSerializers.KeyValuePair.Raw, TraceApi.KeyValuePair> =
   core.schemas.object({
-    key: TraceApiSerializers.VariableValue,
-    value: TraceApiSerializers.VariableValue,
+    key: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue),
+    value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue),
   });
 
 export declare namespace KeyValuePair {
@@ -22549,7 +22684,7 @@ import * as core from \\"../../../core\\";
 
 export const ListType: core.schemas.ObjectSchema<TraceApiSerializers.ListType.Raw, TraceApi.ListType> =
   core.schemas.object({
-    valueType: TraceApiSerializers.VariableType,
+    valueType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
     isFixedLength: core.schemas.boolean().optional(),
   });
 
@@ -22573,8 +22708,8 @@ import * as core from \\"../../../core\\";
 
 export const MapType: core.schemas.ObjectSchema<TraceApiSerializers.MapType.Raw, TraceApi.MapType> =
   core.schemas.object({
-    keyType: TraceApiSerializers.VariableType,
-    valueType: TraceApiSerializers.VariableType,
+    keyType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
+    valueType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
   });
 
 export declare namespace MapType {
@@ -22597,7 +22732,9 @@ import * as core from \\"../../../core\\";
 
 export const MapValue: core.schemas.ObjectSchema<TraceApiSerializers.MapValue.Raw, TraceApi.MapValue> =
   core.schemas.object({
-    keyValuePairs: core.schemas.list(TraceApiSerializers.KeyValuePair),
+    keyValuePairs: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.KeyValuePair)
+    ),
   });
 
 export declare namespace MapValue {
@@ -22685,8 +22822,10 @@ export const SinglyLinkedListNodeAndListValue: core.schemas.ObjectSchema<
   TraceApiSerializers.SinglyLinkedListNodeAndListValue.Raw,
   TraceApi.SinglyLinkedListNodeAndListValue
 > = core.schemas.object({
-  nodeId: TraceApiSerializers.NodeId,
-  fullList: TraceApiSerializers.SinglyLinkedListValue,
+  nodeId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
+  fullList: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SinglyLinkedListValue
+  ),
 });
 
 export declare namespace SinglyLinkedListNodeAndListValue {
@@ -22711,9 +22850,9 @@ export const SinglyLinkedListNodeValue: core.schemas.ObjectSchema<
   TraceApiSerializers.SinglyLinkedListNodeValue.Raw,
   TraceApi.SinglyLinkedListNodeValue
 > = core.schemas.object({
-  nodeId: TraceApiSerializers.NodeId,
+  nodeId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
   val: core.schemas.number(),
-  next: TraceApiSerializers.NodeId.optional(),
+  next: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
 });
 
 export declare namespace SinglyLinkedListNodeValue {
@@ -22739,8 +22878,13 @@ export const SinglyLinkedListValue: core.schemas.ObjectSchema<
   TraceApiSerializers.SinglyLinkedListValue.Raw,
   TraceApi.SinglyLinkedListValue
 > = core.schemas.object({
-  head: TraceApiSerializers.NodeId.optional(),
-  nodes: core.schemas.record(TraceApiSerializers.NodeId, TraceApiSerializers.SinglyLinkedListNodeValue),
+  head: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId).optional(),
+  nodes: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.NodeId),
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SinglyLinkedListNodeValue
+    )
+  ),
 });
 
 export declare namespace SinglyLinkedListValue {
@@ -22764,7 +22908,9 @@ import * as core from \\"../../../core\\";
 export const TestCase: core.schemas.ObjectSchema<TraceApiSerializers.TestCase.Raw, TraceApi.TestCase> =
   core.schemas.object({
     id: core.schemas.string(),
-    params: core.schemas.list(TraceApiSerializers.VariableValue),
+    params: core.schemas.list(
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue)
+    ),
   });
 
 export declare namespace TestCase {
@@ -22789,8 +22935,10 @@ export const TestCaseWithExpectedResult: core.schemas.ObjectSchema<
   TraceApiSerializers.TestCaseWithExpectedResult.Raw,
   TraceApi.TestCaseWithExpectedResult
 > = core.schemas.object({
-  testCase: TraceApiSerializers.TestCase,
-  expectedResult: TraceApiSerializers.VariableValue,
+  testCase: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCase),
+  expectedResult: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue
+  ),
 });
 
 export declare namespace TestCaseWithExpectedResult {
@@ -22841,8 +22989,8 @@ export const VariableType: core.schemas.Schema<TraceApiSerializers.VariableType.
       booleanType: core.schemas.object({}),
       stringType: core.schemas.object({}),
       charType: core.schemas.object({}),
-      listType: TraceApiSerializers.ListType,
-      mapType: TraceApiSerializers.MapType,
+      listType: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ListType),
+      mapType: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.MapType),
       binaryTreeType: core.schemas.object({}),
       singlyLinkedListType: core.schemas.object({}),
       doublyLinkedListType: core.schemas.object({}),
@@ -22960,13 +23108,21 @@ export const VariableValue: core.schemas.Schema<TraceApiSerializers.VariableValu
       charValue: core.schemas.object({
         value: core.schemas.string(),
       }),
-      mapValue: TraceApiSerializers.MapValue,
+      mapValue: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.MapValue),
       listValue: core.schemas.object({
-        value: core.schemas.list(TraceApiSerializers.VariableValue),
+        value: core.schemas.list(
+          core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue)
+        ),
       }),
-      binaryTreeValue: TraceApiSerializers.BinaryTreeValue,
-      singlyLinkedListValue: TraceApiSerializers.SinglyLinkedListValue,
-      doublyLinkedListValue: TraceApiSerializers.DoublyLinkedListValue,
+      binaryTreeValue: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.BinaryTreeValue
+      ),
+      singlyLinkedListValue: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SinglyLinkedListValue
+      ),
+      doublyLinkedListValue: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DoublyLinkedListValue
+      ),
       nullValue: core.schemas.object({}),
     })
     .transform<TraceApi.VariableValue>({
@@ -23124,7 +23280,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.homepage.getHomepageProblems.Response.Raw,
   TraceApi.ProblemId[]
-> = core.schemas.list(TraceApiSerializers.ProblemId);
+> = core.schemas.list(
+  core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId)
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.ProblemId.Raw[];
@@ -23151,7 +23309,9 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.homepage.setHomepageProblems.Request.Raw,
   TraceApi.ProblemId[]
-> = core.schemas.list(TraceApiSerializers.ProblemId);
+> = core.schemas.list(
+  core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId)
+);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.ProblemId.Raw[];
@@ -23284,7 +23444,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.migration.getAttemptedMigrations.Response.Raw,
   TraceApi.Migration[]
-> = core.schemas.list(TraceApiSerializers.Migration);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Migration)
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.Migration.Raw[];
@@ -23323,7 +23485,7 @@ import * as core from \\"../../../core\\";
 export const Migration: core.schemas.ObjectSchema<TraceApiSerializers.Migration.Raw, TraceApi.Migration> =
   core.schemas.object({
     name: core.schemas.string(),
-    status: TraceApiSerializers.MigrationStatus,
+    status: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.MigrationStatus),
   });
 
 export declare namespace Migration {
@@ -23384,7 +23546,9 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.playlist.createPlaylist.Request.Raw,
   TraceApi.PlaylistCreateRequest
-> = TraceApiSerializers.PlaylistCreateRequest;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistCreateRequest
+);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.PlaylistCreateRequest.Raw;
@@ -23393,7 +23557,7 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   TraceApiSerializers.playlist.createPlaylist.Response.Raw,
   TraceApi.Playlist
-> = TraceApiSerializers.Playlist;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Playlist);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.Playlist.Raw;
@@ -23411,7 +23575,7 @@ import { TraceApiSerializers, TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
 export const Response: core.schemas.Schema<TraceApiSerializers.playlist.getPlaylist.Response.Raw, TraceApi.Playlist> =
-  TraceApiSerializers.Playlist;
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Playlist);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.Playlist.Raw;
@@ -23423,7 +23587,9 @@ export const Error: core.schemas.Schema<
 > = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(async () => TraceApiSerializers.PlaylistIdNotFoundError),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistIdNotFoundError
+      ),
     }),
     UnauthorizedError: core.schemas.object({}),
   })
@@ -23466,7 +23632,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.playlist.getPlaylists.Response.Raw,
   TraceApi.Playlist[]
-> = core.schemas.list(TraceApiSerializers.Playlist);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Playlist)
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.Playlist.Raw[];
@@ -23495,7 +23663,9 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.playlist.updatePlaylist.Request.Raw,
   TraceApi.UpdatePlaylistRequest | undefined
-> = TraceApiSerializers.UpdatePlaylistRequest.optional();
+> = core.schemas
+  .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.UpdatePlaylistRequest)
+  .optional();
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.UpdatePlaylistRequest.Raw | null | undefined;
@@ -23504,7 +23674,7 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   TraceApiSerializers.playlist.updatePlaylist.Response.Raw,
   TraceApi.Playlist | undefined
-> = TraceApiSerializers.Playlist.optional();
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Playlist).optional();
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.Playlist.Raw | null | undefined;
@@ -23516,7 +23686,9 @@ export const Error: core.schemas.Schema<
 > = core.schemas
   .union(\\"errorName\\", {
     PlaylistIdNotFoundError: core.schemas.object({
-      content: core.schemas.lazy(async () => TraceApiSerializers.PlaylistIdNotFoundError),
+      content: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistIdNotFoundError
+      ),
     }),
   })
   .transform<TraceApi.playlist.updatePlaylist.Error>({
@@ -23558,7 +23730,9 @@ import * as core from \\"../../../core\\";
 export const PlaylistIdNotFoundError: core.schemas.Schema<
   TraceApiSerializers.PlaylistIdNotFoundError.Raw,
   TraceApi.PlaylistIdNotFoundError
-> = TraceApiSerializers.PlaylistIdNotFoundErrorBody;
+> = core.schemas.lazy(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistIdNotFoundErrorBody
+);
 
 export declare namespace PlaylistIdNotFoundError {
   type Raw = TraceApiSerializers.PlaylistIdNotFoundErrorBody.Raw;
@@ -23597,10 +23771,18 @@ import * as core from \\"../../../core\\";
 
 export const Playlist: core.schemas.ObjectSchema<TraceApiSerializers.Playlist.Raw, TraceApi.Playlist> = core.schemas
   .object({
-    playlistId: core.schemas.property(\\"playlist_id\\", TraceApiSerializers.PlaylistId),
-    ownerId: core.schemas.property(\\"owner-id\\", TraceApiSerializers.UserId),
+    playlistId: core.schemas.property(
+      \\"playlist_id\\",
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistId)
+    ),
+    ownerId: core.schemas.property(
+      \\"owner-id\\",
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.UserId)
+    ),
   })
-  .extend(TraceApiSerializers.PlaylistCreateRequest);
+  .extend(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistCreateRequest)
+  );
 
 export declare namespace Playlist {
   interface Raw extends TraceApiSerializers.PlaylistCreateRequest.Raw {
@@ -23625,7 +23807,9 @@ export const PlaylistCreateRequest: core.schemas.ObjectSchema<
   TraceApi.PlaylistCreateRequest
 > = core.schemas.object({
   name: core.schemas.string(),
-  problems: core.schemas.list(TraceApiSerializers.ProblemId),
+  problems: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId)
+  ),
 });
 
 export declare namespace PlaylistCreateRequest {
@@ -23674,7 +23858,7 @@ export const PlaylistIdNotFoundErrorBody: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     playlistId: core.schemas.object({
-      value: TraceApiSerializers.PlaylistId,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.PlaylistId),
     }),
   })
   .transform<TraceApi.PlaylistIdNotFoundErrorBody>({
@@ -23734,7 +23918,9 @@ export const UpdatePlaylistRequest: core.schemas.ObjectSchema<
   TraceApi.UpdatePlaylistRequest
 > = core.schemas.object({
   name: core.schemas.string(),
-  problems: core.schemas.list(TraceApiSerializers.ProblemId),
+  problems: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId)
+  ),
 });
 
 export declare namespace UpdatePlaylistRequest {
@@ -23781,7 +23967,7 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.problem.createProblem.Request.Raw,
   TraceApi.CreateProblemRequest
-> = TraceApiSerializers.CreateProblemRequest;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CreateProblemRequest);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.CreateProblemRequest.Raw;
@@ -23790,7 +23976,7 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   TraceApiSerializers.problem.createProblem.Response.Raw,
   TraceApi.CreateProblemResponse
-> = TraceApiSerializers.CreateProblemResponse;
+> = core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CreateProblemResponse);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.CreateProblemResponse.Raw;
@@ -23811,8 +23997,10 @@ export const Request: core.schemas.Schema<
   TraceApiSerializers.problem.getDefaultStarterFiles.Request.Raw,
   TraceApi.GetDefaultStarterFilesRequest
 > = core.schemas.object({
-  inputParams: core.schemas.list(TraceApiSerializers.VariableTypeAndName),
-  outputType: TraceApiSerializers.VariableType,
+  inputParams: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableTypeAndName)
+  ),
+  outputType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
   methodName: core.schemas.string(),
 });
 
@@ -23827,7 +24015,9 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   TraceApiSerializers.problem.getDefaultStarterFiles.Response.Raw,
   TraceApi.GetDefaultStarterFilesResponse
-> = TraceApiSerializers.GetDefaultStarterFilesResponse;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GetDefaultStarterFilesResponse
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.GetDefaultStarterFilesResponse.Raw;
@@ -23855,7 +24045,7 @@ import * as core from \\"../../../core\\";
 export const Request: core.schemas.Schema<
   TraceApiSerializers.problem.updateProblem.Request.Raw,
   TraceApi.CreateProblemRequest
-> = TraceApiSerializers.CreateProblemRequest;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CreateProblemRequest);
 
 export declare namespace Request {
   type Raw = TraceApiSerializers.CreateProblemRequest.Raw;
@@ -23864,7 +24054,9 @@ export declare namespace Request {
 export const Response: core.schemas.Schema<
   TraceApiSerializers.problem.updateProblem.Response.Raw,
   TraceApi.UpdateProblemResponse
-> = TraceApiSerializers.UpdateProblemResponse;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.UpdateProblemResponse
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.UpdateProblemResponse.Raw;
@@ -23899,7 +24091,9 @@ export const CreateProblemError: core.schemas.Schema<
   TraceApi.CreateProblemError
 > = core.schemas
   .union(core.schemas.discriminant(\\"errorType\\", \\"_type\\"), {
-    generic: TraceApiSerializers.GenericCreateProblemError,
+    generic: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GenericCreateProblemError
+    ),
   })
   .transform<TraceApi.CreateProblemError>({
     parse: (value) => {
@@ -23937,11 +24131,22 @@ export const CreateProblemRequest: core.schemas.ObjectSchema<
   TraceApi.CreateProblemRequest
 > = core.schemas.object({
   problemName: core.schemas.string(),
-  problemDescription: TraceApiSerializers.ProblemDescription,
-  files: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.ProblemFiles),
-  inputParams: core.schemas.list(TraceApiSerializers.VariableTypeAndName),
-  outputType: TraceApiSerializers.VariableType,
-  testcases: core.schemas.list(TraceApiSerializers.TestCaseWithExpectedResult),
+  problemDescription: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescription
+  ),
+  files: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemFiles)
+  ),
+  inputParams: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableTypeAndName)
+  ),
+  outputType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
+  testcases: core.schemas.list(
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseWithExpectedResult
+    )
+  ),
   methodName: core.schemas.string(),
 });
 
@@ -23974,10 +24179,12 @@ export const CreateProblemResponse: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     success: core.schemas.object({
-      value: TraceApiSerializers.ProblemId,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
     }),
     error: core.schemas.object({
-      value: TraceApiSerializers.CreateProblemError,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CreateProblemError
+      ),
     }),
   })
   .transform<TraceApi.CreateProblemResponse>({
@@ -24051,7 +24258,10 @@ export const GetDefaultStarterFilesResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.GetDefaultStarterFilesResponse.Raw,
   TraceApi.GetDefaultStarterFilesResponse
 > = core.schemas.object({
-  files: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.ProblemFiles),
+  files: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemFiles)
+  ),
 });
 
 export declare namespace GetDefaultStarterFilesResponse {
@@ -24075,7 +24285,9 @@ export const ProblemDescription: core.schemas.ObjectSchema<
   TraceApiSerializers.ProblemDescription.Raw,
   TraceApi.ProblemDescription
 > = core.schemas.object({
-  boards: core.schemas.list(TraceApiSerializers.ProblemDescriptionBoard),
+  boards: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescriptionBoard)
+  ),
 });
 
 export declare namespace ProblemDescription {
@@ -24104,7 +24316,7 @@ export const ProblemDescriptionBoard: core.schemas.Schema<
       value: core.schemas.string(),
     }),
     variable: core.schemas.object({
-      value: TraceApiSerializers.VariableValue,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue),
     }),
     testCaseId: core.schemas.object({
       value: core.schemas.string(),
@@ -24158,8 +24370,12 @@ import * as core from \\"../../../core\\";
 
 export const ProblemFiles: core.schemas.ObjectSchema<TraceApiSerializers.ProblemFiles.Raw, TraceApi.ProblemFiles> =
   core.schemas.object({
-    solutionFile: TraceApiSerializers.FileInfo,
-    readOnlyFiles: core.schemas.list(TraceApiSerializers.FileInfo),
+    solutionFile: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.FileInfo
+    ),
+    readOnlyFiles: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.FileInfo)
+    ),
   });
 
 export declare namespace ProblemFiles {
@@ -24182,14 +24398,25 @@ import * as core from \\"../../../core\\";
 
 export const ProblemInfo: core.schemas.ObjectSchema<TraceApiSerializers.ProblemInfo.Raw, TraceApi.ProblemInfo> =
   core.schemas.object({
-    problemId: TraceApiSerializers.ProblemId,
-    problemDescription: TraceApiSerializers.ProblemDescription,
+    problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
+    problemDescription: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescription
+    ),
     problemName: core.schemas.string(),
     problemVersion: core.schemas.number(),
-    files: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.ProblemFiles),
-    inputParams: core.schemas.list(TraceApiSerializers.VariableTypeAndName),
-    outputType: TraceApiSerializers.VariableType,
-    testcases: core.schemas.list(TraceApiSerializers.TestCaseWithExpectedResult),
+    files: core.schemas.record(
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemFiles)
+    ),
+    inputParams: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableTypeAndName)
+    ),
+    outputType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
+    testcases: core.schemas.list(
+      core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseWithExpectedResult
+      )
+    ),
     methodName: core.schemas.string(),
     supportsCustomTestCases: core.schemas.boolean(),
   });
@@ -24222,7 +24449,10 @@ import * as core from \\"../../../core\\";
 
 export const ProblemsMap: core.schemas.ObjectSchema<TraceApiSerializers.ProblemsMap.Raw, TraceApi.ProblemsMap> =
   core.schemas.object({
-    problemsById: core.schemas.record(TraceApiSerializers.ProblemId, TraceApiSerializers.ProblemInfo),
+    problemsById: core.schemas.record(
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemInfo)
+    ),
   });
 
 export declare namespace ProblemsMap {
@@ -24270,7 +24500,7 @@ export const VariableTypeAndName: core.schemas.ObjectSchema<
   TraceApiSerializers.VariableTypeAndName.Raw,
   TraceApi.VariableTypeAndName
 > = core.schemas.object({
-  variableType: TraceApiSerializers.VariableType,
+  variableType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
   name: core.schemas.string(),
 });
 
@@ -24324,7 +24554,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.submission.createExecutionSession.Response.Raw,
   TraceApi.ExecutionSessionResponse
-> = TraceApiSerializers.ExecutionSessionResponse;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExecutionSessionResponse
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.ExecutionSessionResponse.Raw;
@@ -24344,7 +24576,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.submission.getExecutionSession.Response.Raw,
   TraceApi.ExecutionSessionResponse | undefined
-> = TraceApiSerializers.ExecutionSessionResponse.optional();
+> = core.schemas
+  .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExecutionSessionResponse)
+  .optional();
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.ExecutionSessionResponse.Raw | null | undefined;
@@ -24364,7 +24598,9 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.submission.getExecutionSessionsState.Response.Raw,
   TraceApi.GetExecutionSessionStateResponse
-> = TraceApiSerializers.GetExecutionSessionStateResponse;
+> = core.schemas.lazyObject(
+  async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GetExecutionSessionStateResponse
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.GetExecutionSessionStateResponse.Raw;
@@ -24406,11 +24642,13 @@ export const ActualResult: core.schemas.Schema<TraceApiSerializers.ActualResult.
   core.schemas
     .union(\\"type\\", {
       value: core.schemas.object({
-        value: TraceApiSerializers.VariableValue,
+        value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue),
       }),
-      exception: TraceApiSerializers.ExceptionInfo,
+      exception: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionInfo
+      ),
       exceptionV2: core.schemas.object({
-        value: TraceApiSerializers.ExceptionV2,
+        value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionV2),
       }),
     })
     .transform<TraceApi.ActualResult>({
@@ -24462,8 +24700,10 @@ export const BuildingExecutorResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.BuildingExecutorResponse.Raw,
   TraceApi.BuildingExecutorResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  status: TraceApiSerializers.ExecutionSessionStatus,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  status: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExecutionSessionStatus
+  ),
 });
 
 export declare namespace BuildingExecutorResponse {
@@ -24489,17 +24729,39 @@ export const CodeExecutionUpdate: core.schemas.Schema<
   TraceApi.CodeExecutionUpdate
 > = core.schemas
   .union(\\"type\\", {
-    buildingExecutor: TraceApiSerializers.BuildingExecutorResponse,
-    running: TraceApiSerializers.RunningResponse,
-    errored: TraceApiSerializers.ErroredResponse,
-    stopped: TraceApiSerializers.StoppedResponse,
-    graded: TraceApiSerializers.GradedResponse,
-    gradedV2: TraceApiSerializers.GradedResponseV2,
-    workspaceRan: TraceApiSerializers.WorkspaceRanResponse,
-    recording: TraceApiSerializers.RecordingResponseNotification,
-    recorded: TraceApiSerializers.RecordedResponseNotification,
-    invalidRequest: TraceApiSerializers.InvalidRequestResponse,
-    finished: TraceApiSerializers.FinishedResponse,
+    buildingExecutor: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.BuildingExecutorResponse
+    ),
+    running: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RunningResponse
+    ),
+    errored: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ErroredResponse
+    ),
+    stopped: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.StoppedResponse
+    ),
+    graded: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GradedResponse
+    ),
+    gradedV2: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GradedResponseV2
+    ),
+    workspaceRan: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceRanResponse
+    ),
+    recording: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RecordingResponseNotification
+    ),
+    recorded: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RecordedResponseNotification
+    ),
+    invalidRequest: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.InvalidRequestResponse
+    ),
+    finished: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.FinishedResponse
+    ),
   })
   .transform<TraceApi.CodeExecutionUpdate>({
     parse: (value) => {
@@ -24629,8 +24891,8 @@ export const CustomTestCasesUnsupported: core.schemas.ObjectSchema<
   TraceApiSerializers.CustomTestCasesUnsupported.Raw,
   TraceApi.CustomTestCasesUnsupported
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
-  submissionId: TraceApiSerializers.SubmissionId,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
 });
 
 export declare namespace CustomTestCasesUnsupported {
@@ -24653,9 +24915,15 @@ import * as core from \\"../../../core\\";
 
 export const ErrorInfo: core.schemas.Schema<TraceApiSerializers.ErrorInfo.Raw, TraceApi.ErrorInfo> = core.schemas
   .union(\\"type\\", {
-    compileError: TraceApiSerializers.CompileError,
-    runtimeError: TraceApiSerializers.RuntimeError,
-    internalError: TraceApiSerializers.InternalError,
+    compileError: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CompileError
+    ),
+    runtimeError: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RuntimeError
+    ),
+    internalError: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.InternalError
+    ),
   })
   .transform<TraceApi.ErrorInfo>({
     parse: (value) => {
@@ -24704,8 +24972,8 @@ export const ErroredResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.ErroredResponse.Raw,
   TraceApi.ErroredResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  errorInfo: TraceApiSerializers.ErrorInfo,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  errorInfo: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ErrorInfo),
 });
 
 export declare namespace ErroredResponse {
@@ -24754,7 +25022,9 @@ import * as core from \\"../../../core\\";
 
 export const ExceptionV2: core.schemas.Schema<TraceApiSerializers.ExceptionV2.Raw, TraceApi.ExceptionV2> = core.schemas
   .union(\\"type\\", {
-    generic: TraceApiSerializers.ExceptionInfo,
+    generic: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionInfo
+    ),
     timeout: core.schemas.object({}),
   })
   .transform<TraceApi.ExceptionV2>({
@@ -24800,8 +25070,10 @@ export const ExecutionSessionResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   sessionId: core.schemas.string(),
   executionSessionUrl: core.schemas.string().optional(),
-  language: TraceApiSerializers.Language,
-  status: TraceApiSerializers.ExecutionSessionStatus,
+  language: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  status: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExecutionSessionStatus
+  ),
 });
 
 export declare namespace ExecutionSessionResponse {
@@ -24832,8 +25104,10 @@ export const ExecutionSessionState: core.schemas.ObjectSchema<
   sessionId: core.schemas.string(),
   isWarmInstance: core.schemas.boolean(),
   awsTaskId: core.schemas.string().optional(),
-  language: TraceApiSerializers.Language,
-  status: TraceApiSerializers.ExecutionSessionStatus,
+  language: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  status: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExecutionSessionStatus
+  ),
 });
 
 export declare namespace ExecutionSessionState {
@@ -24895,7 +25169,7 @@ export const ExistingSubmissionExecuting: core.schemas.ObjectSchema<
   TraceApiSerializers.ExistingSubmissionExecuting.Raw,
   TraceApi.ExistingSubmissionExecuting
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
 });
 
 export declare namespace ExistingSubmissionExecuting {
@@ -24945,7 +25219,7 @@ export const FinishedResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.FinishedResponse.Raw,
   TraceApi.FinishedResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
 });
 
 export declare namespace FinishedResponse {
@@ -24969,7 +25243,10 @@ export const GetExecutionSessionStateResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.GetExecutionSessionStateResponse.Raw,
   TraceApi.GetExecutionSessionStateResponse
 > = core.schemas.object({
-  states: core.schemas.record(core.schemas.string(), TraceApiSerializers.ExecutionSessionState),
+  states: core.schemas.record(
+    core.schemas.string(),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExecutionSessionState)
+  ),
   numWarmingInstances: core.schemas.number().optional(),
   warmingSessionIds: core.schemas.list(core.schemas.string()),
 });
@@ -24999,8 +25276,10 @@ export const GetSubmissionStateResponse: core.schemas.ObjectSchema<
 > = core.schemas.object({
   timeSubmitted: core.schemas.date().optional(),
   submission: core.schemas.string(),
-  language: TraceApiSerializers.Language,
-  submissionTypeState: TraceApiSerializers.SubmissionTypeState,
+  language: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  submissionTypeState: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionTypeState
+  ),
 });
 
 export declare namespace GetSubmissionStateResponse {
@@ -25051,8 +25330,13 @@ export const GradedResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.GradedResponse.Raw,
   TraceApi.GradedResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  testCases: core.schemas.record(core.schemas.string(), TraceApiSerializers.TestCaseResultWithStdout),
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  testCases: core.schemas.record(
+    core.schemas.string(),
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseResultWithStdout
+    )
+  ),
 });
 
 export declare namespace GradedResponse {
@@ -25077,8 +25361,11 @@ export const GradedResponseV2: core.schemas.ObjectSchema<
   TraceApiSerializers.GradedResponseV2.Raw,
   TraceApi.GradedResponseV2
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  testCases: core.schemas.record(TraceApiSerializers.v2.TestCaseId, TraceApiSerializers.TestCaseGrade),
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  testCases: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseId),
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseGrade)
+  ),
 });
 
 export declare namespace GradedResponseV2 {
@@ -25103,8 +25390,8 @@ export const GradedTestCaseUpdate: core.schemas.ObjectSchema<
   TraceApiSerializers.GradedTestCaseUpdate.Raw,
   TraceApi.GradedTestCaseUpdate
 > = core.schemas.object({
-  testCaseId: TraceApiSerializers.v2.TestCaseId,
-  grade: TraceApiSerializers.TestCaseGrade,
+  testCaseId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseId),
+  grade: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseGrade),
 });
 
 export declare namespace GradedTestCaseUpdate {
@@ -25129,7 +25416,7 @@ export const InitializeProblemRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.InitializeProblemRequest.Raw,
   TraceApi.InitializeProblemRequest
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
   problemVersion: core.schemas.number().optional(),
 });
 
@@ -25153,7 +25440,9 @@ import * as core from \\"../../../core\\";
 
 export const InternalError: core.schemas.ObjectSchema<TraceApiSerializers.InternalError.Raw, TraceApi.InternalError> =
   core.schemas.object({
-    exceptionInfo: TraceApiSerializers.ExceptionInfo,
+    exceptionInfo: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionInfo
+    ),
   });
 
 export declare namespace InternalError {
@@ -25178,9 +25467,15 @@ export const InvalidRequestCause: core.schemas.Schema<
   TraceApi.InvalidRequestCause
 > = core.schemas
   .union(\\"type\\", {
-    submissionIdNotFound: TraceApiSerializers.SubmissionIdNotFound,
-    customTestCasesUnsupported: TraceApiSerializers.CustomTestCasesUnsupported,
-    unexpectedLanguage: TraceApiSerializers.UnexpectedLanguageError,
+    submissionIdNotFound: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionIdNotFound
+    ),
+    customTestCasesUnsupported: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CustomTestCasesUnsupported
+    ),
+    unexpectedLanguage: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.UnexpectedLanguageError
+    ),
   })
   .transform<TraceApi.InvalidRequestCause>({
     parse: (value) => {
@@ -25232,8 +25527,8 @@ export const InvalidRequestResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.InvalidRequestResponse.Raw,
   TraceApi.InvalidRequestResponse
 > = core.schemas.object({
-  request: TraceApiSerializers.SubmissionRequest,
-  cause: TraceApiSerializers.InvalidRequestCause,
+  request: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionRequest),
+  cause: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.InvalidRequestCause),
 });
 
 export declare namespace InvalidRequestResponse {
@@ -25284,7 +25579,7 @@ export const RecordedResponseNotification: core.schemas.ObjectSchema<
   TraceApiSerializers.RecordedResponseNotification.Raw,
   TraceApi.RecordedResponseNotification
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
   traceResponsesSize: core.schemas.number(),
   testCaseId: core.schemas.string().optional(),
 });
@@ -25312,7 +25607,7 @@ export const RecordedTestCaseUpdate: core.schemas.ObjectSchema<
   TraceApiSerializers.RecordedTestCaseUpdate.Raw,
   TraceApi.RecordedTestCaseUpdate
 > = core.schemas.object({
-  testCaseId: TraceApiSerializers.v2.TestCaseId,
+  testCaseId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseId),
   traceResponsesSize: core.schemas.number(),
 });
 
@@ -25338,11 +25633,15 @@ export const RecordingResponseNotification: core.schemas.ObjectSchema<
   TraceApiSerializers.RecordingResponseNotification.Raw,
   TraceApi.RecordingResponseNotification
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
   testCaseId: core.schemas.string().optional(),
   lineNumber: core.schemas.number(),
-  lightweightStackInfo: TraceApiSerializers.LightweightStackframeInformation,
-  tracedFile: TraceApiSerializers.TracedFile.optional(),
+  lightweightStackInfo: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.LightweightStackframeInformation
+  ),
+  tracedFile: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TracedFile)
+    .optional(),
 });
 
 export declare namespace RecordingResponseNotification {
@@ -25370,8 +25669,10 @@ export const RunningResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.RunningResponse.Raw,
   TraceApi.RunningResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  state: TraceApiSerializers.RunningSubmissionState,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  state: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RunningSubmissionState
+  ),
 });
 
 export declare namespace RunningResponse {
@@ -25446,7 +25747,10 @@ import { TraceApiSerializers, TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../core\\";
 
 export const Scope: core.schemas.ObjectSchema<TraceApiSerializers.Scope.Raw, TraceApi.Scope> = core.schemas.object({
-  variables: core.schemas.record(core.schemas.string(), TraceApiSerializers.DebugVariableValue),
+  variables: core.schemas.record(
+    core.schemas.string(),
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugVariableValue)
+  ),
 });
 
 export declare namespace Scope {
@@ -25492,7 +25796,9 @@ export const StackFrame: core.schemas.ObjectSchema<TraceApiSerializers.StackFram
   core.schemas.object({
     methodName: core.schemas.string(),
     lineNumber: core.schemas.number(),
-    scopes: core.schemas.list(TraceApiSerializers.Scope),
+    scopes: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Scope)
+    ),
   });
 
 export declare namespace StackFrame {
@@ -25519,7 +25825,9 @@ export const StackInformation: core.schemas.ObjectSchema<
   TraceApi.StackInformation
 > = core.schemas.object({
   numStackFrames: core.schemas.number(),
-  topStackFrame: TraceApiSerializers.StackFrame.optional(),
+  topStackFrame: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.StackFrame)
+    .optional(),
 });
 
 export declare namespace StackInformation {
@@ -25544,7 +25852,7 @@ export const StderrResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.StderrResponse.Raw,
   TraceApi.StderrResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
   stderr: core.schemas.string(),
 });
 
@@ -25570,7 +25878,7 @@ export const StdoutResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.StdoutResponse.Raw,
   TraceApi.StdoutResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
   stdout: core.schemas.string(),
 });
 
@@ -25594,7 +25902,7 @@ import * as core from \\"../../../core\\";
 
 export const StopRequest: core.schemas.ObjectSchema<TraceApiSerializers.StopRequest.Raw, TraceApi.StopRequest> =
   core.schemas.object({
-    submissionId: TraceApiSerializers.SubmissionId,
+    submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
   });
 
 export declare namespace StopRequest {
@@ -25618,7 +25926,7 @@ export const StoppedResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.StoppedResponse.Raw,
   TraceApi.StoppedResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
 });
 
 export declare namespace StoppedResponse {
@@ -25691,7 +25999,9 @@ export const SubmissionIdNotFound: core.schemas.ObjectSchema<
   TraceApiSerializers.SubmissionIdNotFound.Raw,
   TraceApi.SubmissionIdNotFound
 > = core.schemas.object({
-  missingSubmissionId: TraceApiSerializers.SubmissionId,
+  missingSubmissionId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId
+  ),
 });
 
 export declare namespace SubmissionIdNotFound {
@@ -25716,11 +26026,17 @@ export const SubmissionRequest: core.schemas.Schema<
   TraceApi.SubmissionRequest
 > = core.schemas
   .union(\\"type\\", {
-    initializeProblemRequest: TraceApiSerializers.InitializeProblemRequest,
+    initializeProblemRequest: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.InitializeProblemRequest
+    ),
     initializeWorkspaceRequest: core.schemas.object({}),
-    submitV2: TraceApiSerializers.SubmitRequestV2,
-    workspaceSubmit: TraceApiSerializers.WorkspaceSubmitRequest,
-    stop: TraceApiSerializers.StopRequest,
+    submitV2: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmitRequestV2
+    ),
+    workspaceSubmit: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmitRequest
+    ),
+    stop: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.StopRequest),
   })
   .transform<TraceApi.SubmissionRequest>({
     parse: (value) => {
@@ -25789,14 +26105,20 @@ export const SubmissionResponse: core.schemas.Schema<
   .union(\\"type\\", {
     serverInitialized: core.schemas.object({}),
     problemInitialized: core.schemas.object({
-      value: TraceApiSerializers.ProblemId,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
     }),
     workspaceInitialized: core.schemas.object({}),
-    serverErrored: TraceApiSerializers.ExceptionInfo,
+    serverErrored: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionInfo
+    ),
     codeExecutionUpdate: core.schemas.object({
-      value: TraceApiSerializers.CodeExecutionUpdate,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.CodeExecutionUpdate
+      ),
     }),
-    terminated: TraceApiSerializers.TerminatedResponse,
+    terminated: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TerminatedResponse
+    ),
   })
   .transform<TraceApi.SubmissionResponse>({
     parse: (value) => {
@@ -25872,11 +26194,15 @@ export const SubmissionStatusForTestCase: core.schemas.Schema<
   TraceApi.SubmissionStatusForTestCase
 > = core.schemas
   .union(\\"type\\", {
-    graded: TraceApiSerializers.TestCaseResultWithStdout,
+    graded: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseResultWithStdout
+    ),
     gradedV2: core.schemas.object({
-      value: TraceApiSerializers.TestCaseGrade,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseGrade),
     }),
-    traced: TraceApiSerializers.TracedTestCase,
+    traced: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TracedTestCase
+    ),
   })
   .transform<TraceApi.SubmissionStatusForTestCase>({
     parse: (value) => {
@@ -25930,8 +26256,12 @@ export const SubmissionStatusV2: core.schemas.Schema<
   TraceApi.SubmissionStatusV2
 > = core.schemas
   .union(\\"type\\", {
-    test: TraceApiSerializers.TestSubmissionStatusV2,
-    workspace: TraceApiSerializers.WorkspaceSubmissionStatusV2,
+    test: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionStatusV2
+    ),
+    workspace: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionStatusV2
+    ),
   })
   .transform<TraceApi.SubmissionStatusV2>({
     parse: (value) => {
@@ -25995,8 +26325,12 @@ export const SubmissionTypeState: core.schemas.Schema<
   TraceApi.SubmissionTypeState
 > = core.schemas
   .union(\\"type\\", {
-    test: TraceApiSerializers.TestSubmissionState,
-    workspace: TraceApiSerializers.WorkspaceSubmissionState,
+    test: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionState
+    ),
+    workspace: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionState
+    ),
   })
   .transform<TraceApi.SubmissionTypeState>({
     parse: (value) => {
@@ -26039,10 +26373,12 @@ export const SubmitRequestV2: core.schemas.ObjectSchema<
   TraceApiSerializers.SubmitRequestV2.Raw,
   TraceApi.SubmitRequestV2
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  language: TraceApiSerializers.Language,
-  submissionFiles: core.schemas.list(TraceApiSerializers.SubmissionFileInfo),
-  problemId: TraceApiSerializers.ProblemId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  language: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  submissionFiles: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionFileInfo)
+  ),
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
   problemVersion: core.schemas.number().optional(),
   userId: core.schemas.string().optional(),
 });
@@ -26092,8 +26428,12 @@ import * as core from \\"../../../core\\";
 export const TestCaseGrade: core.schemas.Schema<TraceApiSerializers.TestCaseGrade.Raw, TraceApi.TestCaseGrade> =
   core.schemas
     .union(\\"type\\", {
-      hidden: TraceApiSerializers.TestCaseHiddenGrade,
-      nonHidden: TraceApiSerializers.TestCaseNonHiddenGrade,
+      hidden: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseHiddenGrade
+      ),
+      nonHidden: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseNonHiddenGrade
+      ),
     })
     .transform<TraceApi.TestCaseGrade>({
       parse: (value) => {
@@ -26161,8 +26501,12 @@ export const TestCaseNonHiddenGrade: core.schemas.ObjectSchema<
   TraceApi.TestCaseNonHiddenGrade
 > = core.schemas.object({
   passed: core.schemas.boolean(),
-  actualResult: TraceApiSerializers.VariableValue.optional(),
-  exception: TraceApiSerializers.ExceptionV2.optional(),
+  actualResult: core.schemas
+    .lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue)
+    .optional(),
+  exception: core.schemas
+    .lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionV2)
+    .optional(),
   stdout: core.schemas.string(),
 });
 
@@ -26190,8 +26534,10 @@ export const TestCaseResult: core.schemas.ObjectSchema<
   TraceApiSerializers.TestCaseResult.Raw,
   TraceApi.TestCaseResult
 > = core.schemas.object({
-  expectedResult: TraceApiSerializers.VariableValue,
-  actualResult: TraceApiSerializers.ActualResult,
+  expectedResult: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue
+  ),
+  actualResult: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ActualResult),
   passed: core.schemas.boolean(),
 });
 
@@ -26218,7 +26564,7 @@ export const TestCaseResultWithStdout: core.schemas.ObjectSchema<
   TraceApiSerializers.TestCaseResultWithStdout.Raw,
   TraceApi.TestCaseResultWithStdout
 > = core.schemas.object({
-  result: TraceApiSerializers.TestCaseResult,
+  result: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseResult),
   stdout: core.schemas.string(),
 });
 
@@ -26244,10 +26590,14 @@ export const TestSubmissionState: core.schemas.ObjectSchema<
   TraceApiSerializers.TestSubmissionState.Raw,
   TraceApi.TestSubmissionState
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
-  defaultTestCases: core.schemas.list(TraceApiSerializers.TestCase),
-  customTestCases: core.schemas.list(TraceApiSerializers.TestCase),
-  status: TraceApiSerializers.TestSubmissionStatus,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
+  defaultTestCases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCase)
+  ),
+  customTestCases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCase)
+  ),
+  status: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionStatus),
 });
 
 export declare namespace TestSubmissionState {
@@ -26277,13 +26627,20 @@ export const TestSubmissionStatus: core.schemas.Schema<
   .union(\\"type\\", {
     stopped: core.schemas.object({}),
     errored: core.schemas.object({
-      value: TraceApiSerializers.ErrorInfo,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ErrorInfo),
     }),
     running: core.schemas.object({
-      value: TraceApiSerializers.RunningSubmissionState,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RunningSubmissionState
+      ),
     }),
     testCaseIdToState: core.schemas.object({
-      value: core.schemas.record(core.schemas.string(), TraceApiSerializers.SubmissionStatusForTestCase),
+      value: core.schemas.record(
+        core.schemas.string(),
+        core.schemas.lazy(
+          async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionStatusForTestCase
+        )
+      ),
     }),
   })
   .transform<TraceApi.TestSubmissionStatus>({
@@ -26346,10 +26703,14 @@ export const TestSubmissionStatusV2: core.schemas.ObjectSchema<
   TraceApiSerializers.TestSubmissionStatusV2.Raw,
   TraceApi.TestSubmissionStatusV2
 > = core.schemas.object({
-  updates: core.schemas.list(TraceApiSerializers.TestSubmissionUpdate),
-  problemId: TraceApiSerializers.ProblemId,
+  updates: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionUpdate)
+  ),
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
   problemVersion: core.schemas.number(),
-  problemInfo: TraceApiSerializers.v2.ProblemInfoV2,
+  problemInfo: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ProblemInfoV2
+  ),
 });
 
 export declare namespace TestSubmissionStatusV2 {
@@ -26377,7 +26738,9 @@ export const TestSubmissionUpdate: core.schemas.ObjectSchema<
   TraceApi.TestSubmissionUpdate
 > = core.schemas.object({
   updateTime: core.schemas.date(),
-  updateInfo: TraceApiSerializers.TestSubmissionUpdateInfo,
+  updateInfo: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestSubmissionUpdateInfo
+  ),
 });
 
 export declare namespace TestSubmissionUpdate {
@@ -26404,14 +26767,20 @@ export const TestSubmissionUpdateInfo: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     running: core.schemas.object({
-      value: TraceApiSerializers.RunningSubmissionState,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RunningSubmissionState
+      ),
     }),
     stopped: core.schemas.object({}),
     errored: core.schemas.object({
-      value: TraceApiSerializers.ErrorInfo,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ErrorInfo),
     }),
-    gradedTestCase: TraceApiSerializers.GradedTestCaseUpdate,
-    recordedTestCase: TraceApiSerializers.RecordedTestCaseUpdate,
+    gradedTestCase: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.GradedTestCaseUpdate
+    ),
+    recordedTestCase: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RecordedTestCaseUpdate
+    ),
     finished: core.schemas.object({}),
   })
   .transform<TraceApi.TestSubmissionUpdateInfo>({
@@ -26485,11 +26854,17 @@ import * as core from \\"../../../core\\";
 
 export const TraceResponse: core.schemas.ObjectSchema<TraceApiSerializers.TraceResponse.Raw, TraceApi.TraceResponse> =
   core.schemas.object({
-    submissionId: TraceApiSerializers.SubmissionId,
+    submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
     lineNumber: core.schemas.number(),
-    returnValue: TraceApiSerializers.DebugVariableValue.optional(),
-    expressionLocation: TraceApiSerializers.ExpressionLocation.optional(),
-    stack: TraceApiSerializers.StackInformation,
+    returnValue: core.schemas
+      .lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugVariableValue)
+      .optional(),
+    expressionLocation: core.schemas
+      .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExpressionLocation)
+      .optional(),
+    stack: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.StackInformation
+    ),
     stdout: core.schemas.string().optional(),
   });
 
@@ -26519,12 +26894,18 @@ export const TraceResponseV2: core.schemas.ObjectSchema<
   TraceApiSerializers.TraceResponseV2.Raw,
   TraceApi.TraceResponseV2
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
   lineNumber: core.schemas.number(),
-  file: TraceApiSerializers.TracedFile,
-  returnValue: TraceApiSerializers.DebugVariableValue.optional(),
-  expressionLocation: TraceApiSerializers.ExpressionLocation.optional(),
-  stack: TraceApiSerializers.StackInformation,
+  file: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TracedFile),
+  returnValue: core.schemas
+    .lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.DebugVariableValue)
+    .optional(),
+  expressionLocation: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExpressionLocation)
+    .optional(),
+  stack: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.StackInformation
+  ),
   stdout: core.schemas.string().optional(),
 });
 
@@ -26556,7 +26937,9 @@ export const TraceResponsesPage: core.schemas.ObjectSchema<
   TraceApi.TraceResponsesPage
 > = core.schemas.object({
   offset: core.schemas.number().optional(),
-  traceResponses: core.schemas.list(TraceApiSerializers.TraceResponse),
+  traceResponses: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TraceResponse)
+  ),
 });
 
 export declare namespace TraceResponsesPage {
@@ -26582,7 +26965,9 @@ export const TraceResponsesPageV2: core.schemas.ObjectSchema<
   TraceApi.TraceResponsesPageV2
 > = core.schemas.object({
   offset: core.schemas.number().optional(),
-  traceResponses: core.schemas.list(TraceApiSerializers.TraceResponseV2),
+  traceResponses: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TraceResponseV2)
+  ),
 });
 
 export declare namespace TraceResponsesPageV2 {
@@ -26631,7 +27016,9 @@ export const TracedTestCase: core.schemas.ObjectSchema<
   TraceApiSerializers.TracedTestCase.Raw,
   TraceApi.TracedTestCase
 > = core.schemas.object({
-  result: TraceApiSerializers.TestCaseResultWithStdout,
+  result: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.TestCaseResultWithStdout
+  ),
   traceResponsesSize: core.schemas.number(),
 });
 
@@ -26657,8 +27044,8 @@ export const UnexpectedLanguageError: core.schemas.ObjectSchema<
   TraceApiSerializers.UnexpectedLanguageError.Raw,
   TraceApi.UnexpectedLanguageError
 > = core.schemas.object({
-  expectedLanguage: TraceApiSerializers.Language,
-  actualLanguage: TraceApiSerializers.Language,
+  expectedLanguage: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  actualLanguage: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
 });
 
 export declare namespace UnexpectedLanguageError {
@@ -26683,8 +27070,10 @@ export const WorkspaceFiles: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceFiles.Raw,
   TraceApi.WorkspaceFiles
 > = core.schemas.object({
-  mainFile: TraceApiSerializers.FileInfo,
-  readOnlyFiles: core.schemas.list(TraceApiSerializers.FileInfo),
+  mainFile: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.FileInfo),
+  readOnlyFiles: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.FileInfo)
+  ),
 });
 
 export declare namespace WorkspaceFiles {
@@ -26709,8 +27098,10 @@ export const WorkspaceRanResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceRanResponse.Raw,
   TraceApi.WorkspaceRanResponse
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  runDetails: TraceApiSerializers.WorkspaceRunDetails,
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  runDetails: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceRunDetails
+  ),
 });
 
 export declare namespace WorkspaceRanResponse {
@@ -26735,8 +27126,12 @@ export const WorkspaceRunDetails: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceRunDetails.Raw,
   TraceApi.WorkspaceRunDetails
 > = core.schemas.object({
-  exceptionV2: TraceApiSerializers.ExceptionV2.optional(),
-  exception: TraceApiSerializers.ExceptionInfo.optional(),
+  exceptionV2: core.schemas
+    .lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionV2)
+    .optional(),
+  exception: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ExceptionInfo)
+    .optional(),
   stdout: core.schemas.string(),
 });
 
@@ -26763,7 +27158,10 @@ export const WorkspaceStarterFilesResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceStarterFilesResponse.Raw,
   TraceApi.WorkspaceStarterFilesResponse
 > = core.schemas.object({
-  files: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.WorkspaceFiles),
+  files: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceFiles)
+  ),
 });
 
 export declare namespace WorkspaceStarterFilesResponse {
@@ -26787,7 +27185,10 @@ export const WorkspaceStarterFilesResponseV2: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceStarterFilesResponseV2.Raw,
   TraceApi.WorkspaceStarterFilesResponseV2
 > = core.schemas.object({
-  filesByLanguage: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.Files),
+  filesByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Files)
+  ),
 });
 
 export declare namespace WorkspaceStarterFilesResponseV2 {
@@ -26811,7 +27212,9 @@ export const WorkspaceSubmissionState: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceSubmissionState.Raw,
   TraceApi.WorkspaceSubmissionState
 > = core.schemas.object({
-  status: TraceApiSerializers.WorkspaceSubmissionStatus,
+  status: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionStatus
+  ),
 });
 
 export declare namespace WorkspaceSubmissionState {
@@ -26838,13 +27241,19 @@ export const WorkspaceSubmissionStatus: core.schemas.Schema<
   .union(\\"type\\", {
     stopped: core.schemas.object({}),
     errored: core.schemas.object({
-      value: TraceApiSerializers.ErrorInfo,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ErrorInfo),
     }),
     running: core.schemas.object({
-      value: TraceApiSerializers.RunningSubmissionState,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RunningSubmissionState
+      ),
     }),
-    ran: TraceApiSerializers.WorkspaceRunDetails,
-    traced: TraceApiSerializers.WorkspaceRunDetails,
+    ran: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceRunDetails
+    ),
+    traced: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceRunDetails
+    ),
   })
   .transform<TraceApi.WorkspaceSubmissionStatus>({
     parse: (value) => {
@@ -26912,7 +27321,11 @@ export const WorkspaceSubmissionStatusV2: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceSubmissionStatusV2.Raw,
   TraceApi.WorkspaceSubmissionStatusV2
 > = core.schemas.object({
-  updates: core.schemas.list(TraceApiSerializers.WorkspaceSubmissionUpdate),
+  updates: core.schemas.list(
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionUpdate
+    )
+  ),
 });
 
 export declare namespace WorkspaceSubmissionStatusV2 {
@@ -26937,7 +27350,9 @@ export const WorkspaceSubmissionUpdate: core.schemas.ObjectSchema<
   TraceApi.WorkspaceSubmissionUpdate
 > = core.schemas.object({
   updateTime: core.schemas.date(),
-  updateInfo: TraceApiSerializers.WorkspaceSubmissionUpdateInfo,
+  updateInfo: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceSubmissionUpdateInfo
+  ),
 });
 
 export declare namespace WorkspaceSubmissionUpdate {
@@ -26964,14 +27379,20 @@ export const WorkspaceSubmissionUpdateInfo: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     running: core.schemas.object({
-      value: TraceApiSerializers.RunningSubmissionState,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.RunningSubmissionState
+      ),
     }),
-    ran: TraceApiSerializers.WorkspaceRunDetails,
+    ran: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceRunDetails
+    ),
     stopped: core.schemas.object({}),
     traced: core.schemas.object({}),
-    tracedV2: TraceApiSerializers.WorkspaceTracedUpdate,
+    tracedV2: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.WorkspaceTracedUpdate
+    ),
     errored: core.schemas.object({
-      value: TraceApiSerializers.ErrorInfo,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ErrorInfo),
     }),
     finished: core.schemas.object({}),
   })
@@ -27055,9 +27476,11 @@ export const WorkspaceSubmitRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.WorkspaceSubmitRequest.Raw,
   TraceApi.WorkspaceSubmitRequest
 > = core.schemas.object({
-  submissionId: TraceApiSerializers.SubmissionId,
-  language: TraceApiSerializers.Language,
-  submissionFiles: core.schemas.list(TraceApiSerializers.SubmissionFileInfo),
+  submissionId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionId),
+  language: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  submissionFiles: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.SubmissionFileInfo)
+  ),
   userId: core.schemas.string().optional(),
 });
 
@@ -27205,7 +27628,10 @@ import * as core from \\"../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.sysprop.getNumWarmInstances.Response.Raw,
   Record<TraceApi.Language, number>
-> = core.schemas.record(TraceApiSerializers.Language, core.schemas.number());
+> = core.schemas.record(
+  core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+  core.schemas.number()
+);
 
 export declare namespace Response {
   type Raw = Record<TraceApiSerializers.Language.Raw, number>;
@@ -27267,7 +27693,7 @@ import * as core from \\"../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.problem.getLatestProblem.Response.Raw,
   TraceApi.v2.ProblemInfoV2
-> = TraceApiSerializers.v2.ProblemInfoV2;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ProblemInfoV2);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.ProblemInfoV2.Raw;
@@ -27287,7 +27713,11 @@ import * as core from \\"../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.problem.getLightweightProblems.Response.Raw,
   TraceApi.v2.LightweightProblemInfoV2[]
-> = core.schemas.list(TraceApiSerializers.v2.LightweightProblemInfoV2);
+> = core.schemas.list(
+  core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.LightweightProblemInfoV2
+  )
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.LightweightProblemInfoV2.Raw[];
@@ -27307,7 +27737,7 @@ import * as core from \\"../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.problem.getProblemVersion.Response.Raw,
   TraceApi.v2.ProblemInfoV2
-> = TraceApiSerializers.v2.ProblemInfoV2;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ProblemInfoV2);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.ProblemInfoV2.Raw;
@@ -27327,7 +27757,9 @@ import * as core from \\"../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.problem.getProblems.Response.Raw,
   TraceApi.v2.ProblemInfoV2[]
-> = core.schemas.list(TraceApiSerializers.v2.ProblemInfoV2);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ProblemInfoV2)
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.ProblemInfoV2.Raw[];
@@ -27371,8 +27803,13 @@ export const AssertCorrectnessCheck: core.schemas.Schema<
   TraceApi.v2.AssertCorrectnessCheck
 > = core.schemas
   .union(\\"type\\", {
-    deepEquality: TraceApiSerializers.v2.DeepEqualityCorrectnessCheck,
-    custom: TraceApiSerializers.v2.VoidFunctionDefinitionThatTakesActualResult,
+    deepEquality: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.DeepEqualityCorrectnessCheck
+    ),
+    custom: core.schemas.lazyObject(
+      async () =>
+        (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.VoidFunctionDefinitionThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.AssertCorrectnessCheck>({
     parse: (value) => {
@@ -27416,9 +27853,16 @@ export const BasicCustomFiles: core.schemas.ObjectSchema<
   TraceApi.v2.BasicCustomFiles
 > = core.schemas.object({
   methodName: core.schemas.string(),
-  signature: TraceApiSerializers.v2.NonVoidFunctionSignature,
-  additionalFiles: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.Files),
-  basicTestCaseTemplate: TraceApiSerializers.v2.BasicTestCaseTemplate,
+  signature: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.NonVoidFunctionSignature
+  ),
+  additionalFiles: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Files)
+  ),
+  basicTestCaseTemplate: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.BasicTestCaseTemplate
+  ),
 });
 
 export declare namespace BasicCustomFiles {
@@ -27445,10 +27889,16 @@ export const BasicTestCaseTemplate: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.BasicTestCaseTemplate.Raw,
   TraceApi.v2.BasicTestCaseTemplate
 > = core.schemas.object({
-  templateId: TraceApiSerializers.v2.TestCaseTemplateId,
+  templateId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplateId
+  ),
   name: core.schemas.string(),
-  description: TraceApiSerializers.v2.TestCaseImplementationDescription,
-  expectedValueParameterId: TraceApiSerializers.v2.ParameterId,
+  description: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseImplementationDescription
+  ),
+  expectedValueParameterId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ParameterId
+  ),
 });
 
 export declare namespace BasicTestCaseTemplate {
@@ -27476,11 +27926,19 @@ export const CreateProblemRequestV2: core.schemas.ObjectSchema<
   TraceApi.v2.CreateProblemRequestV2
 > = core.schemas.object({
   problemName: core.schemas.string(),
-  problemDescription: TraceApiSerializers.ProblemDescription,
-  customFiles: TraceApiSerializers.v2.CustomFiles,
-  customTestCaseTemplates: core.schemas.list(TraceApiSerializers.v2.TestCaseTemplate),
-  testcases: core.schemas.list(TraceApiSerializers.v2.TestCaseV2),
-  supportedLanguages: core.schemas.list(TraceApiSerializers.Language),
+  problemDescription: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescription
+  ),
+  customFiles: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.CustomFiles),
+  customTestCaseTemplates: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplate)
+  ),
+  testcases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseV2)
+  ),
+  supportedLanguages: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language)
+  ),
   isPublic: core.schemas.boolean(),
 });
 
@@ -27510,9 +27968,14 @@ import * as core from \\"../../../../../core\\";
 export const CustomFiles: core.schemas.Schema<TraceApiSerializers.v2.CustomFiles.Raw, TraceApi.v2.CustomFiles> =
   core.schemas
     .union(\\"type\\", {
-      basic: TraceApiSerializers.v2.BasicCustomFiles,
+      basic: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.BasicCustomFiles
+      ),
       custom: core.schemas.object({
-        value: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.Files),
+        value: core.schemas.record(
+          core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+          core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Files)
+        ),
       }),
     })
     .transform<TraceApi.v2.CustomFiles>({
@@ -27557,7 +28020,9 @@ export const DeepEqualityCorrectnessCheck: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.DeepEqualityCorrectnessCheck.Raw,
   TraceApi.v2.DeepEqualityCorrectnessCheck
 > = core.schemas.object({
-  expectedValueParameterId: TraceApiSerializers.v2.ParameterId,
+  expectedValueParameterId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ParameterId
+  ),
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
@@ -27581,8 +28046,10 @@ export const DefaultProvidedFile: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.DefaultProvidedFile.Raw,
   TraceApi.v2.DefaultProvidedFile
 > = core.schemas.object({
-  file: TraceApiSerializers.v2.FileInfoV2,
-  relatedTypes: core.schemas.list(TraceApiSerializers.VariableType),
+  file: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FileInfoV2),
+  relatedTypes: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType)
+  ),
 });
 
 export declare namespace DefaultProvidedFile {
@@ -27633,7 +28100,9 @@ import * as core from \\"../../../../../core\\";
 
 export const Files: core.schemas.ObjectSchema<TraceApiSerializers.v2.Files.Raw, TraceApi.v2.Files> =
   core.schemas.object({
-    files: core.schemas.list(TraceApiSerializers.v2.FileInfoV2),
+    files: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FileInfoV2)
+    ),
   });
 
 export declare namespace Files {
@@ -27683,7 +28152,12 @@ export const FunctionImplementationForMultipleLanguages: core.schemas.ObjectSche
   TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages.Raw,
   TraceApi.v2.FunctionImplementationForMultipleLanguages
 > = core.schemas.object({
-  codeByLanguage: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.FunctionImplementation),
+  codeByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FunctionImplementation
+    )
+  ),
 });
 
 export declare namespace FunctionImplementationForMultipleLanguages {
@@ -27708,9 +28182,16 @@ export const FunctionSignature: core.schemas.Schema<
   TraceApi.v2.FunctionSignature
 > = core.schemas
   .union(\\"type\\", {
-    void: TraceApiSerializers.v2.VoidFunctionSignature,
-    nonVoid: TraceApiSerializers.v2.NonVoidFunctionSignature,
-    voidThatTakesActualResult: TraceApiSerializers.v2.VoidFunctionSignatureThatTakesActualResult,
+    void: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.VoidFunctionSignature
+    ),
+    nonVoid: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.NonVoidFunctionSignature
+    ),
+    voidThatTakesActualResult: core.schemas.lazyObject(
+      async () =>
+        (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.VoidFunctionSignatureThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.FunctionSignature>({
     parse: (value) => {
@@ -27759,9 +28240,18 @@ export const GeneratedFiles: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.GeneratedFiles.Raw,
   TraceApi.v2.GeneratedFiles
 > = core.schemas.object({
-  generatedTestCaseFiles: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.Files),
-  generatedTemplateFiles: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.Files),
-  other: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.Files),
+  generatedTestCaseFiles: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Files)
+  ),
+  generatedTemplateFiles: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Files)
+  ),
+  other: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Files)
+  ),
 });
 
 export declare namespace GeneratedFiles {
@@ -27788,7 +28278,9 @@ export const GetBasicSolutionFileRequest: core.schemas.ObjectSchema<
   TraceApi.v2.GetBasicSolutionFileRequest
 > = core.schemas.object({
   methodName: core.schemas.string(),
-  signature: TraceApiSerializers.v2.NonVoidFunctionSignature,
+  signature: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.NonVoidFunctionSignature
+  ),
 });
 
 export declare namespace GetBasicSolutionFileRequest {
@@ -27813,7 +28305,10 @@ export const GetBasicSolutionFileResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.GetBasicSolutionFileResponse.Raw,
   TraceApi.v2.GetBasicSolutionFileResponse
 > = core.schemas.object({
-  solutionFileByLanguage: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.FileInfoV2),
+  solutionFileByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FileInfoV2)
+  ),
 });
 
 export declare namespace GetBasicSolutionFileResponse {
@@ -27837,7 +28332,9 @@ export const GetFunctionSignatureRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.GetFunctionSignatureRequest.Raw,
   TraceApi.v2.GetFunctionSignatureRequest
 > = core.schemas.object({
-  functionSignature: TraceApiSerializers.v2.FunctionSignature,
+  functionSignature: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FunctionSignature
+  ),
 });
 
 export declare namespace GetFunctionSignatureRequest {
@@ -27861,7 +28358,10 @@ export const GetFunctionSignatureResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.GetFunctionSignatureResponse.Raw,
   TraceApi.v2.GetFunctionSignatureResponse
 > = core.schemas.object({
-  functionByLanguage: core.schemas.record(TraceApiSerializers.Language, core.schemas.string()),
+  functionByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.string()
+  ),
 });
 
 export declare namespace GetFunctionSignatureResponse {
@@ -27885,8 +28385,12 @@ export const GetGeneratedTestCaseFileRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.GetGeneratedTestCaseFileRequest.Raw,
   TraceApi.v2.GetGeneratedTestCaseFileRequest
 > = core.schemas.object({
-  template: TraceApiSerializers.v2.TestCaseTemplate.optional(),
-  testCase: TraceApiSerializers.v2.TestCaseV2,
+  template: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplate)
+    .optional(),
+  testCase: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseV2
+  ),
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {
@@ -27911,7 +28415,9 @@ export const GetGeneratedTestCaseTemplateFileRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.GetGeneratedTestCaseTemplateFileRequest.Raw,
   TraceApi.v2.GetGeneratedTestCaseTemplateFileRequest
 > = core.schemas.object({
-  template: TraceApiSerializers.v2.TestCaseTemplate,
+  template: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplate
+  ),
 });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
@@ -27935,10 +28441,12 @@ export const LightweightProblemInfoV2: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.LightweightProblemInfoV2.Raw,
   TraceApi.v2.LightweightProblemInfoV2
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
-  variableTypes: core.schemas.list(TraceApiSerializers.VariableType),
+  variableTypes: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType)
+  ),
 });
 
 export declare namespace LightweightProblemInfoV2 {
@@ -27965,8 +28473,12 @@ export const NonVoidFunctionDefinition: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.NonVoidFunctionDefinition.Raw,
   TraceApi.v2.NonVoidFunctionDefinition
 > = core.schemas.object({
-  signature: TraceApiSerializers.v2.NonVoidFunctionSignature,
-  code: TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages,
+  signature: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.NonVoidFunctionSignature
+  ),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace NonVoidFunctionDefinition {
@@ -27991,8 +28503,10 @@ export const NonVoidFunctionSignature: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.NonVoidFunctionSignature.Raw,
   TraceApi.v2.NonVoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.Parameter),
-  returnType: TraceApiSerializers.VariableType,
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Parameter)
+  ),
+  returnType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
 });
 
 export declare namespace NonVoidFunctionSignature {
@@ -28015,9 +28529,11 @@ import * as core from \\"../../../../../core\\";
 
 export const Parameter: core.schemas.ObjectSchema<TraceApiSerializers.v2.Parameter.Raw, TraceApi.v2.Parameter> =
   core.schemas.object({
-    parameterId: TraceApiSerializers.v2.ParameterId,
+    parameterId: core.schemas.lazy(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ParameterId
+    ),
     name: core.schemas.string(),
-    variableType: TraceApiSerializers.VariableType,
+    variableType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
   });
 
 export declare namespace Parameter {
@@ -28064,15 +28580,25 @@ export const ProblemInfoV2: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.ProblemInfoV2.Raw,
   TraceApi.v2.ProblemInfoV2
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
-  problemDescription: TraceApiSerializers.ProblemDescription,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
+  problemDescription: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescription
+  ),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
-  supportedLanguages: core.schemas.list(TraceApiSerializers.Language),
-  customFiles: TraceApiSerializers.v2.CustomFiles,
-  generatedFiles: TraceApiSerializers.v2.GeneratedFiles,
-  customTestCaseTemplates: core.schemas.list(TraceApiSerializers.v2.TestCaseTemplate),
-  testcases: core.schemas.list(TraceApiSerializers.v2.TestCaseV2),
+  supportedLanguages: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language)
+  ),
+  customFiles: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.CustomFiles),
+  generatedFiles: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.GeneratedFiles
+  ),
+  customTestCaseTemplates: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplate)
+  ),
+  testcases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseV2)
+  ),
   isPublic: core.schemas.boolean(),
 });
 
@@ -28131,8 +28657,12 @@ export const TestCaseFunction: core.schemas.Schema<
   TraceApi.v2.TestCaseFunction
 > = core.schemas
   .union(\\"type\\", {
-    withActualResult: TraceApiSerializers.v2.TestCaseWithActualResultImplementation,
-    custom: TraceApiSerializers.v2.VoidFunctionDefinition,
+    withActualResult: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseWithActualResultImplementation
+    ),
+    custom: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.VoidFunctionDefinition
+    ),
   })
   .transform<TraceApi.v2.TestCaseFunction>({
     parse: (value) => {
@@ -28196,8 +28726,12 @@ export const TestCaseImplementation: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.TestCaseImplementation.Raw,
   TraceApi.v2.TestCaseImplementation
 > = core.schemas.object({
-  description: TraceApiSerializers.v2.TestCaseImplementationDescription,
-  function: TraceApiSerializers.v2.TestCaseFunction,
+  description: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseImplementationDescription
+  ),
+  function: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseFunction
+  ),
 });
 
 export declare namespace TestCaseImplementation {
@@ -28222,7 +28756,11 @@ export const TestCaseImplementationDescription: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.TestCaseImplementationDescription.Raw,
   TraceApi.v2.TestCaseImplementationDescription
 > = core.schemas.object({
-  boards: core.schemas.list(TraceApiSerializers.v2.TestCaseImplementationDescriptionBoard),
+  boards: core.schemas.list(
+    core.schemas.lazy(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseImplementationDescriptionBoard
+    )
+  ),
 });
 
 export declare namespace TestCaseImplementationDescription {
@@ -28251,7 +28789,7 @@ export const TestCaseImplementationDescriptionBoard: core.schemas.Schema<
       value: core.schemas.string(),
     }),
     paramId: core.schemas.object({
-      value: TraceApiSerializers.v2.ParameterId,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ParameterId),
     }),
   })
   .transform<TraceApi.v2.TestCaseImplementationDescriptionBoard>({
@@ -28299,9 +28837,13 @@ export const TestCaseImplementationReference: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     templateId: core.schemas.object({
-      value: TraceApiSerializers.v2.TestCaseTemplateId,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplateId
+      ),
     }),
-    implementation: TraceApiSerializers.v2.TestCaseImplementation,
+    implementation: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseImplementation
+    ),
   })
   .transform<TraceApi.v2.TestCaseImplementationReference>({
     parse: (value) => {
@@ -28345,7 +28887,7 @@ export const TestCaseMetadata: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.TestCaseMetadata.Raw,
   TraceApi.v2.TestCaseMetadata
 > = core.schemas.object({
-  id: TraceApiSerializers.v2.TestCaseId,
+  id: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseId),
   name: core.schemas.string(),
   hidden: core.schemas.boolean(),
 });
@@ -28373,9 +28915,13 @@ export const TestCaseTemplate: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.TestCaseTemplate.Raw,
   TraceApi.v2.TestCaseTemplate
 > = core.schemas.object({
-  templateId: TraceApiSerializers.v2.TestCaseTemplateId,
+  templateId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseTemplateId
+  ),
   name: core.schemas.string(),
-  implementation: TraceApiSerializers.v2.TestCaseImplementation,
+  implementation: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseImplementation
+  ),
 });
 
 export declare namespace TestCaseTemplate {
@@ -28422,10 +28968,19 @@ import * as core from \\"../../../../../core\\";
 
 export const TestCaseV2: core.schemas.ObjectSchema<TraceApiSerializers.v2.TestCaseV2.Raw, TraceApi.v2.TestCaseV2> =
   core.schemas.object({
-    metadata: TraceApiSerializers.v2.TestCaseMetadata,
-    implementation: TraceApiSerializers.v2.TestCaseImplementationReference,
-    arguments: core.schemas.record(TraceApiSerializers.v2.ParameterId, TraceApiSerializers.VariableValue),
-    expects: TraceApiSerializers.v2.TestCaseExpects.optional(),
+    metadata: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseMetadata
+    ),
+    implementation: core.schemas.lazy(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseImplementationReference
+    ),
+    arguments: core.schemas.record(
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.ParameterId),
+      core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue)
+    ),
+    expects: core.schemas
+      .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.TestCaseExpects)
+      .optional(),
   });
 
 export declare namespace TestCaseV2 {
@@ -28452,8 +29007,12 @@ export const TestCaseWithActualResultImplementation: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.TestCaseWithActualResultImplementation.Raw,
   TraceApi.v2.TestCaseWithActualResultImplementation
 > = core.schemas.object({
-  getActualResult: TraceApiSerializers.v2.NonVoidFunctionDefinition,
-  assertCorrectnessCheck: TraceApiSerializers.v2.AssertCorrectnessCheck,
+  getActualResult: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.NonVoidFunctionDefinition
+  ),
+  assertCorrectnessCheck: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.AssertCorrectnessCheck
+  ),
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
@@ -28478,8 +29037,12 @@ export const VoidFunctionDefinition: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.VoidFunctionDefinition.Raw,
   TraceApi.v2.VoidFunctionDefinition
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.Parameter),
-  code: TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages,
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinition {
@@ -28504,8 +29067,12 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.schemas.ObjectSch
   TraceApiSerializers.v2.VoidFunctionDefinitionThatTakesActualResult.Raw,
   TraceApi.v2.VoidFunctionDefinitionThatTakesActualResult
 > = core.schemas.object({
-  additionalParameters: core.schemas.list(TraceApiSerializers.v2.Parameter),
-  code: TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages,
+  additionalParameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {
@@ -28530,7 +29097,9 @@ export const VoidFunctionSignature: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.VoidFunctionSignature.Raw,
   TraceApi.v2.VoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.Parameter),
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Parameter)
+  ),
 });
 
 export declare namespace VoidFunctionSignature {
@@ -28554,8 +29123,12 @@ export const VoidFunctionSignatureThatTakesActualResult: core.schemas.ObjectSche
   TraceApiSerializers.v2.VoidFunctionSignatureThatTakesActualResult.Raw,
   TraceApi.v2.VoidFunctionSignatureThatTakesActualResult
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.Parameter),
-  actualResultType: TraceApiSerializers.VariableType,
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.Parameter)
+  ),
+  actualResultType: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType
+  ),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {
@@ -28654,7 +29227,7 @@ import * as core from \\"../../../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.v3.problem.getLatestProblem.Response.Raw,
   TraceApi.v2.v3.ProblemInfoV2
-> = TraceApiSerializers.v2.v3.ProblemInfoV2;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ProblemInfoV2);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.v3.ProblemInfoV2.Raw;
@@ -28674,7 +29247,11 @@ import * as core from \\"../../../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.v3.problem.getLightweightProblems.Response.Raw,
   TraceApi.v2.v3.LightweightProblemInfoV2[]
-> = core.schemas.list(TraceApiSerializers.v2.v3.LightweightProblemInfoV2);
+> = core.schemas.list(
+  core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.LightweightProblemInfoV2
+  )
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.v3.LightweightProblemInfoV2.Raw[];
@@ -28694,7 +29271,7 @@ import * as core from \\"../../../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.v3.problem.getProblemVersion.Response.Raw,
   TraceApi.v2.v3.ProblemInfoV2
-> = TraceApiSerializers.v2.v3.ProblemInfoV2;
+> = core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ProblemInfoV2);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.v3.ProblemInfoV2.Raw;
@@ -28714,7 +29291,9 @@ import * as core from \\"../../../../../../../core\\";
 export const Response: core.schemas.Schema<
   TraceApiSerializers.v2.v3.problem.getProblems.Response.Raw,
   TraceApi.v2.v3.ProblemInfoV2[]
-> = core.schemas.list(TraceApiSerializers.v2.v3.ProblemInfoV2);
+> = core.schemas.list(
+  core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ProblemInfoV2)
+);
 
 export declare namespace Response {
   type Raw = TraceApiSerializers.v2.v3.ProblemInfoV2.Raw[];
@@ -28758,8 +29337,13 @@ export const AssertCorrectnessCheck: core.schemas.Schema<
   TraceApi.v2.v3.AssertCorrectnessCheck
 > = core.schemas
   .union(\\"type\\", {
-    deepEquality: TraceApiSerializers.v2.v3.DeepEqualityCorrectnessCheck,
-    custom: TraceApiSerializers.v2.v3.VoidFunctionDefinitionThatTakesActualResult,
+    deepEquality: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.DeepEqualityCorrectnessCheck
+    ),
+    custom: core.schemas.lazyObject(
+      async () =>
+        (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.VoidFunctionDefinitionThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.v3.AssertCorrectnessCheck>({
     parse: (value) => {
@@ -28803,9 +29387,16 @@ export const BasicCustomFiles: core.schemas.ObjectSchema<
   TraceApi.v2.v3.BasicCustomFiles
 > = core.schemas.object({
   methodName: core.schemas.string(),
-  signature: TraceApiSerializers.v2.v3.NonVoidFunctionSignature,
-  additionalFiles: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.Files),
-  basicTestCaseTemplate: TraceApiSerializers.v2.v3.BasicTestCaseTemplate,
+  signature: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.NonVoidFunctionSignature
+  ),
+  additionalFiles: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Files)
+  ),
+  basicTestCaseTemplate: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.BasicTestCaseTemplate
+  ),
 });
 
 export declare namespace BasicCustomFiles {
@@ -28832,10 +29423,16 @@ export const BasicTestCaseTemplate: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.BasicTestCaseTemplate.Raw,
   TraceApi.v2.v3.BasicTestCaseTemplate
 > = core.schemas.object({
-  templateId: TraceApiSerializers.v2.v3.TestCaseTemplateId,
+  templateId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplateId
+  ),
   name: core.schemas.string(),
-  description: TraceApiSerializers.v2.v3.TestCaseImplementationDescription,
-  expectedValueParameterId: TraceApiSerializers.v2.v3.ParameterId,
+  description: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseImplementationDescription
+  ),
+  expectedValueParameterId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ParameterId
+  ),
 });
 
 export declare namespace BasicTestCaseTemplate {
@@ -28863,11 +29460,23 @@ export const CreateProblemRequestV2: core.schemas.ObjectSchema<
   TraceApi.v2.v3.CreateProblemRequestV2
 > = core.schemas.object({
   problemName: core.schemas.string(),
-  problemDescription: TraceApiSerializers.ProblemDescription,
-  customFiles: TraceApiSerializers.v2.v3.CustomFiles,
-  customTestCaseTemplates: core.schemas.list(TraceApiSerializers.v2.v3.TestCaseTemplate),
-  testcases: core.schemas.list(TraceApiSerializers.v2.v3.TestCaseV2),
-  supportedLanguages: core.schemas.list(TraceApiSerializers.Language),
+  problemDescription: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescription
+  ),
+  customFiles: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.CustomFiles
+  ),
+  customTestCaseTemplates: core.schemas.list(
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplate
+    )
+  ),
+  testcases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseV2)
+  ),
+  supportedLanguages: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language)
+  ),
   isPublic: core.schemas.boolean(),
 });
 
@@ -28897,9 +29506,14 @@ import * as core from \\"../../../../../../../core\\";
 export const CustomFiles: core.schemas.Schema<TraceApiSerializers.v2.v3.CustomFiles.Raw, TraceApi.v2.v3.CustomFiles> =
   core.schemas
     .union(\\"type\\", {
-      basic: TraceApiSerializers.v2.v3.BasicCustomFiles,
+      basic: core.schemas.lazyObject(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.BasicCustomFiles
+      ),
       custom: core.schemas.object({
-        value: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.Files),
+        value: core.schemas.record(
+          core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+          core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Files)
+        ),
       }),
     })
     .transform<TraceApi.v2.v3.CustomFiles>({
@@ -28944,7 +29558,9 @@ export const DeepEqualityCorrectnessCheck: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.DeepEqualityCorrectnessCheck.Raw,
   TraceApi.v2.v3.DeepEqualityCorrectnessCheck
 > = core.schemas.object({
-  expectedValueParameterId: TraceApiSerializers.v2.v3.ParameterId,
+  expectedValueParameterId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ParameterId
+  ),
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
@@ -28968,8 +29584,10 @@ export const DefaultProvidedFile: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.DefaultProvidedFile.Raw,
   TraceApi.v2.v3.DefaultProvidedFile
 > = core.schemas.object({
-  file: TraceApiSerializers.v2.v3.FileInfoV2,
-  relatedTypes: core.schemas.list(TraceApiSerializers.VariableType),
+  file: core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FileInfoV2),
+  relatedTypes: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType)
+  ),
 });
 
 export declare namespace DefaultProvidedFile {
@@ -29022,7 +29640,9 @@ import * as core from \\"../../../../../../../core\\";
 
 export const Files: core.schemas.ObjectSchema<TraceApiSerializers.v2.v3.Files.Raw, TraceApi.v2.v3.Files> =
   core.schemas.object({
-    files: core.schemas.list(TraceApiSerializers.v2.v3.FileInfoV2),
+    files: core.schemas.list(
+      core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FileInfoV2)
+    ),
   });
 
 export declare namespace Files {
@@ -29072,7 +29692,12 @@ export const FunctionImplementationForMultipleLanguages: core.schemas.ObjectSche
   TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw,
   TraceApi.v2.v3.FunctionImplementationForMultipleLanguages
 > = core.schemas.object({
-  codeByLanguage: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.FunctionImplementation),
+  codeByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FunctionImplementation
+    )
+  ),
 });
 
 export declare namespace FunctionImplementationForMultipleLanguages {
@@ -29097,9 +29722,16 @@ export const FunctionSignature: core.schemas.Schema<
   TraceApi.v2.v3.FunctionSignature
 > = core.schemas
   .union(\\"type\\", {
-    void: TraceApiSerializers.v2.v3.VoidFunctionSignature,
-    nonVoid: TraceApiSerializers.v2.v3.NonVoidFunctionSignature,
-    voidThatTakesActualResult: TraceApiSerializers.v2.v3.VoidFunctionSignatureThatTakesActualResult,
+    void: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.VoidFunctionSignature
+    ),
+    nonVoid: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.NonVoidFunctionSignature
+    ),
+    voidThatTakesActualResult: core.schemas.lazyObject(
+      async () =>
+        (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.VoidFunctionSignatureThatTakesActualResult
+    ),
   })
   .transform<TraceApi.v2.v3.FunctionSignature>({
     parse: (value) => {
@@ -29148,9 +29780,18 @@ export const GeneratedFiles: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.GeneratedFiles.Raw,
   TraceApi.v2.v3.GeneratedFiles
 > = core.schemas.object({
-  generatedTestCaseFiles: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.Files),
-  generatedTemplateFiles: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.Files),
-  other: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.Files),
+  generatedTestCaseFiles: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Files)
+  ),
+  generatedTemplateFiles: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Files)
+  ),
+  other: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Files)
+  ),
 });
 
 export declare namespace GeneratedFiles {
@@ -29177,7 +29818,9 @@ export const GetBasicSolutionFileRequest: core.schemas.ObjectSchema<
   TraceApi.v2.v3.GetBasicSolutionFileRequest
 > = core.schemas.object({
   methodName: core.schemas.string(),
-  signature: TraceApiSerializers.v2.v3.NonVoidFunctionSignature,
+  signature: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.NonVoidFunctionSignature
+  ),
 });
 
 export declare namespace GetBasicSolutionFileRequest {
@@ -29202,7 +29845,10 @@ export const GetBasicSolutionFileResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.GetBasicSolutionFileResponse.Raw,
   TraceApi.v2.v3.GetBasicSolutionFileResponse
 > = core.schemas.object({
-  solutionFileByLanguage: core.schemas.record(TraceApiSerializers.Language, TraceApiSerializers.v2.v3.FileInfoV2),
+  solutionFileByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FileInfoV2)
+  ),
 });
 
 export declare namespace GetBasicSolutionFileResponse {
@@ -29226,7 +29872,9 @@ export const GetFunctionSignatureRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.GetFunctionSignatureRequest.Raw,
   TraceApi.v2.v3.GetFunctionSignatureRequest
 > = core.schemas.object({
-  functionSignature: TraceApiSerializers.v2.v3.FunctionSignature,
+  functionSignature: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FunctionSignature
+  ),
 });
 
 export declare namespace GetFunctionSignatureRequest {
@@ -29250,7 +29898,10 @@ export const GetFunctionSignatureResponse: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.GetFunctionSignatureResponse.Raw,
   TraceApi.v2.v3.GetFunctionSignatureResponse
 > = core.schemas.object({
-  functionByLanguage: core.schemas.record(TraceApiSerializers.Language, core.schemas.string()),
+  functionByLanguage: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language),
+    core.schemas.string()
+  ),
 });
 
 export declare namespace GetFunctionSignatureResponse {
@@ -29274,8 +29925,12 @@ export const GetGeneratedTestCaseFileRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.GetGeneratedTestCaseFileRequest.Raw,
   TraceApi.v2.v3.GetGeneratedTestCaseFileRequest
 > = core.schemas.object({
-  template: TraceApiSerializers.v2.v3.TestCaseTemplate.optional(),
-  testCase: TraceApiSerializers.v2.v3.TestCaseV2,
+  template: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplate)
+    .optional(),
+  testCase: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseV2
+  ),
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {
@@ -29300,7 +29955,9 @@ export const GetGeneratedTestCaseTemplateFileRequest: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.GetGeneratedTestCaseTemplateFileRequest.Raw,
   TraceApi.v2.v3.GetGeneratedTestCaseTemplateFileRequest
 > = core.schemas.object({
-  template: TraceApiSerializers.v2.v3.TestCaseTemplate,
+  template: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplate
+  ),
 });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
@@ -29324,10 +29981,12 @@ export const LightweightProblemInfoV2: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.LightweightProblemInfoV2.Raw,
   TraceApi.v2.v3.LightweightProblemInfoV2
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
-  variableTypes: core.schemas.list(TraceApiSerializers.VariableType),
+  variableTypes: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType)
+  ),
 });
 
 export declare namespace LightweightProblemInfoV2 {
@@ -29354,8 +30013,13 @@ export const NonVoidFunctionDefinition: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.NonVoidFunctionDefinition.Raw,
   TraceApi.v2.v3.NonVoidFunctionDefinition
 > = core.schemas.object({
-  signature: TraceApiSerializers.v2.v3.NonVoidFunctionSignature,
-  code: TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages,
+  signature: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.NonVoidFunctionSignature
+  ),
+  code: core.schemas.lazyObject(
+    async () =>
+      (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace NonVoidFunctionDefinition {
@@ -29380,8 +30044,10 @@ export const NonVoidFunctionSignature: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.NonVoidFunctionSignature.Raw,
   TraceApi.v2.v3.NonVoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.v3.Parameter),
-  returnType: TraceApiSerializers.VariableType,
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Parameter)
+  ),
+  returnType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
 });
 
 export declare namespace NonVoidFunctionSignature {
@@ -29404,9 +30070,11 @@ import * as core from \\"../../../../../../../core\\";
 
 export const Parameter: core.schemas.ObjectSchema<TraceApiSerializers.v2.v3.Parameter.Raw, TraceApi.v2.v3.Parameter> =
   core.schemas.object({
-    parameterId: TraceApiSerializers.v2.v3.ParameterId,
+    parameterId: core.schemas.lazy(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ParameterId
+    ),
     name: core.schemas.string(),
-    variableType: TraceApiSerializers.VariableType,
+    variableType: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType),
   });
 
 export declare namespace Parameter {
@@ -29453,15 +30121,29 @@ export const ProblemInfoV2: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.ProblemInfoV2.Raw,
   TraceApi.v2.v3.ProblemInfoV2
 > = core.schemas.object({
-  problemId: TraceApiSerializers.ProblemId,
-  problemDescription: TraceApiSerializers.ProblemDescription,
+  problemId: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemId),
+  problemDescription: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.ProblemDescription
+  ),
   problemName: core.schemas.string(),
   problemVersion: core.schemas.number(),
-  supportedLanguages: core.schemas.list(TraceApiSerializers.Language),
-  customFiles: TraceApiSerializers.v2.v3.CustomFiles,
-  generatedFiles: TraceApiSerializers.v2.v3.GeneratedFiles,
-  customTestCaseTemplates: core.schemas.list(TraceApiSerializers.v2.v3.TestCaseTemplate),
-  testcases: core.schemas.list(TraceApiSerializers.v2.v3.TestCaseV2),
+  supportedLanguages: core.schemas.list(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.Language)
+  ),
+  customFiles: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.CustomFiles
+  ),
+  generatedFiles: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.GeneratedFiles
+  ),
+  customTestCaseTemplates: core.schemas.list(
+    core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplate
+    )
+  ),
+  testcases: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseV2)
+  ),
   isPublic: core.schemas.boolean(),
 });
 
@@ -29520,8 +30202,12 @@ export const TestCaseFunction: core.schemas.Schema<
   TraceApi.v2.v3.TestCaseFunction
 > = core.schemas
   .union(\\"type\\", {
-    withActualResult: TraceApiSerializers.v2.v3.TestCaseWithActualResultImplementation,
-    custom: TraceApiSerializers.v2.v3.VoidFunctionDefinition,
+    withActualResult: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseWithActualResultImplementation
+    ),
+    custom: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.VoidFunctionDefinition
+    ),
   })
   .transform<TraceApi.v2.v3.TestCaseFunction>({
     parse: (value) => {
@@ -29585,8 +30271,12 @@ export const TestCaseImplementation: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.TestCaseImplementation.Raw,
   TraceApi.v2.v3.TestCaseImplementation
 > = core.schemas.object({
-  description: TraceApiSerializers.v2.v3.TestCaseImplementationDescription,
-  function: TraceApiSerializers.v2.v3.TestCaseFunction,
+  description: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseImplementationDescription
+  ),
+  function: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseFunction
+  ),
 });
 
 export declare namespace TestCaseImplementation {
@@ -29611,7 +30301,11 @@ export const TestCaseImplementationDescription: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.TestCaseImplementationDescription.Raw,
   TraceApi.v2.v3.TestCaseImplementationDescription
 > = core.schemas.object({
-  boards: core.schemas.list(TraceApiSerializers.v2.v3.TestCaseImplementationDescriptionBoard),
+  boards: core.schemas.list(
+    core.schemas.lazy(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseImplementationDescriptionBoard
+    )
+  ),
 });
 
 export declare namespace TestCaseImplementationDescription {
@@ -29640,7 +30334,7 @@ export const TestCaseImplementationDescriptionBoard: core.schemas.Schema<
       value: core.schemas.string(),
     }),
     paramId: core.schemas.object({
-      value: TraceApiSerializers.v2.v3.ParameterId,
+      value: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ParameterId),
     }),
   })
   .transform<TraceApi.v2.v3.TestCaseImplementationDescriptionBoard>({
@@ -29688,9 +30382,13 @@ export const TestCaseImplementationReference: core.schemas.Schema<
 > = core.schemas
   .union(\\"type\\", {
     templateId: core.schemas.object({
-      value: TraceApiSerializers.v2.v3.TestCaseTemplateId,
+      value: core.schemas.lazy(
+        async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplateId
+      ),
     }),
-    implementation: TraceApiSerializers.v2.v3.TestCaseImplementation,
+    implementation: core.schemas.lazyObject(
+      async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseImplementation
+    ),
   })
   .transform<TraceApi.v2.v3.TestCaseImplementationReference>({
     parse: (value) => {
@@ -29734,7 +30432,7 @@ export const TestCaseMetadata: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.TestCaseMetadata.Raw,
   TraceApi.v2.v3.TestCaseMetadata
 > = core.schemas.object({
-  id: TraceApiSerializers.v2.v3.TestCaseId,
+  id: core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseId),
   name: core.schemas.string(),
   hidden: core.schemas.boolean(),
 });
@@ -29762,9 +30460,13 @@ export const TestCaseTemplate: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.TestCaseTemplate.Raw,
   TraceApi.v2.v3.TestCaseTemplate
 > = core.schemas.object({
-  templateId: TraceApiSerializers.v2.v3.TestCaseTemplateId,
+  templateId: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseTemplateId
+  ),
   name: core.schemas.string(),
-  implementation: TraceApiSerializers.v2.v3.TestCaseImplementation,
+  implementation: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseImplementation
+  ),
 });
 
 export declare namespace TestCaseTemplate {
@@ -29813,10 +30515,19 @@ export const TestCaseV2: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.TestCaseV2.Raw,
   TraceApi.v2.v3.TestCaseV2
 > = core.schemas.object({
-  metadata: TraceApiSerializers.v2.v3.TestCaseMetadata,
-  implementation: TraceApiSerializers.v2.v3.TestCaseImplementationReference,
-  arguments: core.schemas.record(TraceApiSerializers.v2.v3.ParameterId, TraceApiSerializers.VariableValue),
-  expects: TraceApiSerializers.v2.v3.TestCaseExpects.optional(),
+  metadata: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseMetadata
+  ),
+  implementation: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseImplementationReference
+  ),
+  arguments: core.schemas.record(
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.ParameterId),
+    core.schemas.lazy(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableValue)
+  ),
+  expects: core.schemas
+    .lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.TestCaseExpects)
+    .optional(),
 });
 
 export declare namespace TestCaseV2 {
@@ -29843,8 +30554,12 @@ export const TestCaseWithActualResultImplementation: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.TestCaseWithActualResultImplementation.Raw,
   TraceApi.v2.v3.TestCaseWithActualResultImplementation
 > = core.schemas.object({
-  getActualResult: TraceApiSerializers.v2.v3.NonVoidFunctionDefinition,
-  assertCorrectnessCheck: TraceApiSerializers.v2.v3.AssertCorrectnessCheck,
+  getActualResult: core.schemas.lazyObject(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.NonVoidFunctionDefinition
+  ),
+  assertCorrectnessCheck: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.AssertCorrectnessCheck
+  ),
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
@@ -29869,8 +30584,13 @@ export const VoidFunctionDefinition: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.VoidFunctionDefinition.Raw,
   TraceApi.v2.v3.VoidFunctionDefinition
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.v3.Parameter),
-  code: TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages,
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () =>
+      (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinition {
@@ -29895,8 +30615,13 @@ export const VoidFunctionDefinitionThatTakesActualResult: core.schemas.ObjectSch
   TraceApiSerializers.v2.v3.VoidFunctionDefinitionThatTakesActualResult.Raw,
   TraceApi.v2.v3.VoidFunctionDefinitionThatTakesActualResult
 > = core.schemas.object({
-  additionalParameters: core.schemas.list(TraceApiSerializers.v2.v3.Parameter),
-  code: TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages,
+  additionalParameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Parameter)
+  ),
+  code: core.schemas.lazyObject(
+    async () =>
+      (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.FunctionImplementationForMultipleLanguages
+  ),
 });
 
 export declare namespace VoidFunctionDefinitionThatTakesActualResult {
@@ -29921,7 +30646,9 @@ export const VoidFunctionSignature: core.schemas.ObjectSchema<
   TraceApiSerializers.v2.v3.VoidFunctionSignature.Raw,
   TraceApi.v2.v3.VoidFunctionSignature
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.v3.Parameter),
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Parameter)
+  ),
 });
 
 export declare namespace VoidFunctionSignature {
@@ -29945,8 +30672,12 @@ export const VoidFunctionSignatureThatTakesActualResult: core.schemas.ObjectSche
   TraceApiSerializers.v2.v3.VoidFunctionSignatureThatTakesActualResult.Raw,
   TraceApi.v2.v3.VoidFunctionSignatureThatTakesActualResult
 > = core.schemas.object({
-  parameters: core.schemas.list(TraceApiSerializers.v2.v3.Parameter),
-  actualResultType: TraceApiSerializers.VariableType,
+  parameters: core.schemas.list(
+    core.schemas.lazyObject(async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.v2.v3.Parameter)
+  ),
+  actualResultType: core.schemas.lazy(
+    async () => (await import(\\"@fern-trace/api-sdk\\")).TraceApiSerializers.VariableType
+  ),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {

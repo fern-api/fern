@@ -20,6 +20,7 @@ export declare namespace getReferenceToExportFromRoot {
         exportedFromPath: ExportedFilePath;
         importsManager: ImportsManager;
         namespaceImport?: string;
+        useDynamicImport?: boolean;
         subImport?: string[];
         packageName: string;
     }
@@ -31,6 +32,7 @@ export function getReferenceToExportFromRoot({
     importsManager,
     referencedIn,
     namespaceImport,
+    useDynamicImport = false,
     subImport = [],
     packageName,
 }: getReferenceToExportFromRoot.Args): Reference {
@@ -134,7 +136,15 @@ export function getReferenceToExportFromRoot({
         (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
         getExpressionToDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
-            prefix,
+            prefix: useDynamicImport
+                ? ts.factory.createParenthesizedExpression(
+                      ts.factory.createAwaitExpression(
+                          ts.factory.createCallExpression(ts.factory.createIdentifier("import"), undefined, [
+                              ts.factory.createStringLiteral(moduleSpecifier),
+                          ])
+                      )
+                  )
+                : prefix,
         })
     );
 
@@ -154,7 +164,7 @@ export function getReferenceToExportFromRoot({
             return entityName;
         },
         getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
-            if (!isForComment) {
+            if (!useDynamicImport && !isForComment) {
                 addImport();
             }
             return expression;
