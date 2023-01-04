@@ -84,14 +84,14 @@ export async function generatePackageJson({
                 packageName,
             }),
             [PackageJsonScript.BUILD_ESM]: generateEsbuildCommand({
-                platform: "node",
+                platform: "browser",
                 shouldIncludeSourceMaps: false,
                 format: "esm",
                 outfile: Outfile.ESM,
                 packageName,
             }),
             [PackageJsonScript.BUILD_CJS]: generateEsbuildCommand({
-                platform: "node",
+                platform: "browser",
                 shouldIncludeSourceMaps: false,
                 format: "cjs",
                 outfile: Outfile.CJS,
