@@ -64,8 +64,8 @@ export async function generatePackageJson({
         exports: {
             ".": {
                 import: `./${Outfile.ESM}`,
-                module: `./${Outfile.ESM}`,
                 require: `./${Outfile.CJS}`,
+                module: `./${Outfile.BROWSER}`,
                 browser: `./${Outfile.BROWSER}`,
                 default: `./${Outfile.CJS}`,
             },

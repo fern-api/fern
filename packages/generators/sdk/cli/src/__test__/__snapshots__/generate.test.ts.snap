@@ -61,8 +61,8 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"exports\\": {
         \\".\\": {
             \\"import\\": \\"./index.mjs\\",
-            \\"module\\": \\"./index.mjs\\",
             \\"require\\": \\"./index.cjs\\",
+            \\"module\\": \\"./browser.js\\",
             \\"browser\\": \\"./browser.js\\",
             \\"default\\": \\"./index.cjs\\"
         }
@@ -5062,8 +5062,8 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"exports\\": {
         \\".\\": {
             \\"import\\": \\"./index.mjs\\",
-            \\"module\\": \\"./index.mjs\\",
             \\"require\\": \\"./index.cjs\\",
+            \\"module\\": \\"./browser.js\\",
             \\"browser\\": \\"./browser.js\\",
             \\"default\\": \\"./index.cjs\\"
         }
@@ -8048,8 +8048,8 @@ node_modules
     \\"exports\\": {
         \\".\\": {
             \\"import\\": \\"./index.mjs\\",
-            \\"module\\": \\"./index.mjs\\",
             \\"require\\": \\"./index.cjs\\",
+            \\"module\\": \\"./browser.js\\",
             \\"browser\\": \\"./browser.js\\",
             \\"default\\": \\"./index.cjs\\"
         }
@@ -9398,8 +9398,8 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"exports\\": {
         \\".\\": {
             \\"import\\": \\"./index.mjs\\",
-            \\"module\\": \\"./index.mjs\\",
             \\"require\\": \\"./index.cjs\\",
+            \\"module\\": \\"./browser.js\\",
             \\"browser\\": \\"./browser.js\\",
             \\"default\\": \\"./index.cjs\\"
         }
