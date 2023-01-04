@@ -1,9 +1,8 @@
 import { ImportStrategy } from "../../declaration-referencers/DeclarationReferencer";
 
-export function getSchemaImportStrategy({ useDynamicImport }: { useDynamicImport: boolean }): ImportStrategy {
+export function getSchemaImportStrategy(): ImportStrategy {
     return {
         type: "fromRoot",
         namespaceImport: "serializers",
-        useDynamicImport,
     };
 }

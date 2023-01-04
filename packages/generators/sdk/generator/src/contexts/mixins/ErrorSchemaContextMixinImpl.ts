@@ -47,11 +47,7 @@ export class ErrorSchemaContextMixinImpl implements ErrorSchemaContextMixin {
         const referenceToSchema = this.errorSchemaDeclarationReferencer
             .getReferenceToError({
                 name: errorName,
-                importStrategy: getSchemaImportStrategy({
-                    // use dynamic imports when  schemas insides schemas,
-                    // to avoid issues with circular imports
-                    useDynamicImport: true,
-                }),
+                importStrategy: getSchemaImportStrategy(),
                 importsManager: this.importsManager,
                 referencedIn: this.sourceFile,
             })
@@ -70,7 +66,7 @@ export class ErrorSchemaContextMixinImpl implements ErrorSchemaContextMixin {
     public getReferenceToErrorSchema(errorName: DeclaredErrorName): Reference {
         return this.errorSchemaDeclarationReferencer.getReferenceToError({
             name: errorName,
-            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
+            importStrategy: getSchemaImportStrategy(),
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
         });

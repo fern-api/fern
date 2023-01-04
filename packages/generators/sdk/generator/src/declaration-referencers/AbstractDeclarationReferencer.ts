@@ -56,7 +56,6 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     referencedIn,
                     importsManager,
                     namespaceImport: importStrategy.namespaceImport,
-                    useDynamicImport: importStrategy.useDynamicImport,
                     subImport,
                     packageName: this.packageName,
                 });
