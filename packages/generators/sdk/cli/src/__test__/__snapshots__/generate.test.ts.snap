@@ -79,6 +79,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
         \\"axios\\": \\"^0.27.2\\",
+        \\"module\\": \\"^1.2.5\\",
         \\"url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
@@ -4986,6 +4987,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
         \\"axios\\": \\"^0.27.2\\",
+        \\"module\\": \\"^1.2.5\\",
         \\"url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
@@ -7966,6 +7968,9 @@ node_modules
         \\"build:browser\\": \\"esbuild src/index.ts --bundle --platform=browser --packages=external --alias:@fern/api=./src --sourcemap --outfile=browser.js\\",
         \\"build\\": \\"yarn compile && yarn build:esm && yarn build:cjs && yarn build:browser\\"
     },
+    \\"dependencies\\": {
+        \\"module\\": \\"^1.2.5\\"
+    },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
         \\"esbuild\\": \\"0.16.13\\",
@@ -9320,6 +9325,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
         \\"basic-auth\\": \\"^2.0.1\\",
         \\"buffer\\": \\"^6.0.3\\",
         \\"js-base64\\": \\"^3.7.2\\",
+        \\"module\\": \\"^1.2.5\\",
         \\"url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {

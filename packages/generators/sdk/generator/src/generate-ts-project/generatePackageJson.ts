@@ -108,13 +108,12 @@ export async function generatePackageJson({
     };
 
     packageJson = produce(packageJson, (draft) => {
-        if (dependencies != null) {
-            if (Object.keys(dependencies[DependencyType.PROD]).length > 0) {
-                draft.dependencies = dependencies[DependencyType.PROD];
-            }
-            if (Object.keys(dependencies[DependencyType.PEER]).length > 0) {
-                draft.peerDependencies = dependencies[DependencyType.PEER];
-            }
+        draft.dependencies = {
+            ...dependencies?.[DependencyType.PROD],
+            module: "^1.2.5",
+        };
+        if (dependencies != null && Object.keys(dependencies[DependencyType.PEER]).length > 0) {
+            draft.peerDependencies = dependencies[DependencyType.PEER];
         }
         draft.devDependencies = {
             ...dependencies?.[DependencyType.DEV],
