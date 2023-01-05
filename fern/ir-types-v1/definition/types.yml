@@ -218,14 +218,22 @@ types:
   ExampleSingleUnionTypeProperties:
     union:
       samePropertiesAsObject: ExampleNamedType
-      singleProperty: ExampleTypeReference
+      singleProperty:
+        type: ExampleTypeReference
+        key: singleProperty
       noProperties: {}
 
   ExampleTypeReference:
     union:
-      primitive: ExamplePrimitive
-      container: ExampleContainer
-      unknown: unknown
+      primitive:
+        type: ExamplePrimitive
+        key: primitive
+      container:
+        type: ExampleContainer
+        key: container
+      unknown:
+        type: unknown
+        key: unknown
       named: ExampleNamedType
 
   ExampleContainer:
