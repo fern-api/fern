@@ -9,7 +9,6 @@ import typing_extensions
 
 from .binary_tree_value import BinaryTreeValue as commons_binary_tree_value_BinaryTreeValue
 from .doubly_linked_list_value import DoublyLinkedListValue as commons_doubly_linked_list_value_DoublyLinkedListValue
-from .key_value_pair import KeyValuePair
 from .singly_linked_list_value import SinglyLinkedListValue as commons_singly_linked_list_value_SinglyLinkedListValue
 
 T_Result = typing.TypeVar("T_Result")
@@ -238,6 +237,7 @@ class VariableValue(pydantic.BaseModel):
         frozen = True
 
 
+from .key_value_pair import KeyValuePair  # noqa: E402
 from .map_value import MapValue as commons_map_value_MapValue  # noqa: E402
 
 

@@ -11,7 +11,6 @@ from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary
 from .doubly_linked_list_value import (
     DoublyLinkedListValue as resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue,
 )
-from .key_value_pair import KeyValuePair
 from .singly_linked_list_value import (
     SinglyLinkedListValue as resources_commons_types_singly_linked_list_value_SinglyLinkedListValue,
 )
@@ -251,6 +250,7 @@ class VariableValue(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+from .key_value_pair import KeyValuePair  # noqa: E402
 from .map_value import MapValue as resources_commons_types_map_value_MapValue  # noqa: E402
 
 

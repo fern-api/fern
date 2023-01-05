@@ -8,7 +8,6 @@ import pydantic
 import typing_extensions
 
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
-from .debug_key_value_pairs import DebugKeyValuePairs
 from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
 from .generic_value import GenericValue as resources_commons_types_generic_value_GenericValue
 from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
@@ -272,6 +271,7 @@ class DebugVariableValue(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
 from .debug_map_value import DebugMapValue  # noqa: E402
 
 

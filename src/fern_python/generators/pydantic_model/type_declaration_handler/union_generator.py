@@ -128,18 +128,30 @@ class UnionGenerator(AbstractTypeGenerator):
                     if shape.properties_type == "samePropertiesAsObject":
                         # we assume that the forward-refed types are the ones
                         # that circularly reference themselves
-                        forward_refed_types = {
-                            self._context.get_class_reference_for_type_name(referenced_type)
+                        forward_refed_types = [
+                            referenced_type
                             for referenced_type in self._context.get_declaration_for_type_name(shape).referenced_types
                             if self._context.does_circularly_reference_itself(referenced_type)
-                        }
+                        ]
                         if len(forward_refed_types) > 0:
                             # when calling update_forward_refs, Pydantic will throw
                             # if an inherited field's type is not defined in this
                             # file. https://github.com/pydantic/pydantic/issues/4902.
                             # as a workaround, we explicitly pass references to update_forward_refs
                             # so they are in scope
-                            internal_pydantic_model_for_single_union_type.update_forward_refs(list(forward_refed_types))
+                            internal_pydantic_model_for_single_union_type.update_forward_refs(
+                                {
+                                    self._context.get_class_reference_for_type_name(type_name)
+                                    for type_name in forward_refed_types
+                                }
+                            )
+
+                            # to avoid issues with circular dependencies, make sure all imports
+                            # that reference this type appear after the main (exported) model for the union.
+                            # FernAwarePydanticModel will automatically add the import constraint if the
+                            # referenced type_name circularly references this type.
+                            for type_name in forward_refed_types:
+                                external_pydantic_model.add_ghost_reference(type_name)
 
             root_type = AST.TypeHint.union(
                 *(

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import List, Optional, Sequence, Type, Union
+from typing import Iterable, List, Optional, Sequence, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
@@ -228,7 +228,7 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
-    def update_forward_refs(self, localns: Sequence[AST.ClassReference] = None) -> None:
+    def update_forward_refs(self, localns: Iterable[AST.ClassReference] = None) -> None:
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
