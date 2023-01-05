@@ -7,6 +7,12 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.list_type import ListType
+from ..commons.map_type import MapType
+from ..commons.map_value import MapValue
+from ..commons.variable_type import VariableType
+from ..commons.variable_value import VariableValue
 from .test_submission_status_v_2 import TestSubmissionStatusV2
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
 
@@ -104,4 +110,12 @@ class _SubmissionStatusV2:
             frozen = True
 
 
+_SubmissionStatusV2.Test.update_forward_refs(
+    KeyValuePair=KeyValuePair,
+    ListType=ListType,
+    MapType=MapType,
+    MapValue=MapValue,
+    VariableType=VariableType,
+    VariableValue=VariableValue,
+)
 SubmissionStatusV2.update_forward_refs()

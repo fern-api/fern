@@ -27,6 +27,10 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def does_circularly_reference_itself(self, type_name: ir_types.DeclaredTypeName) -> bool:
+        ...
+
+    @abstractmethod
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         ...
 

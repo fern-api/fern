@@ -228,6 +228,28 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
+    def update_forward_refs(self, localns: Sequence[AST.ClassReference] = None) -> None:
+        self._source_file.add_footer_expression(
+            AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=dataclasses.replace(
+                        self._local_class_reference,
+                        qualified_name_excluding_import=(
+                            *self._local_class_reference.qualified_name_excluding_import,
+                            "update_forward_refs",
+                        ),
+                    ),
+                    kwargs=sorted(
+                        [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
+                        # sort by name for consistency
+                        key=lambda kwarg: kwarg[0],
+                    )
+                    if localns is not None
+                    else None,
+                )
+            )
+        )
+
     def _add_config_class(self) -> None:
         config = AST.ClassDeclaration(name="Config")
 
@@ -309,3 +331,9 @@ def get_field_name_initializer(
         writer.write(")")
 
     return write
+
+
+def get_named_import_or_throw(reference: AST.Reference) -> str:
+    if reference.import_ is None or reference.import_.named_import is None:
+        raise RuntimeError("No named import defined on reference")
+    return reference.import_.named_import

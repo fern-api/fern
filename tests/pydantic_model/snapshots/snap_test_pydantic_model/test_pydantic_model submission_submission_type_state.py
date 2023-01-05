@@ -7,6 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.map_value import MapValue
+from ..commons.variable_value import VariableValue
 from .test_submission_state import TestSubmissionState
 from .workspace_submission_state import WorkspaceSubmissionState
 
@@ -104,4 +107,5 @@ class _SubmissionTypeState:
             frozen = True
 
 
+_SubmissionTypeState.Test.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
 SubmissionTypeState.update_forward_refs()

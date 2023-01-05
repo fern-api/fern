@@ -54,16 +54,6 @@ class UnionGenerator(AbstractTypeGenerator):
             )
 
             for single_union_type in self._union.types:
-                shape = single_union_type.shape.get_as_union()
-                if shape.properties_type == "samePropertiesAsObject":
-                    external_pydantic_model.add_ghost_reference(shape)
-                elif shape.properties_type == "singleProperty":
-                    if shape.type.__root__.type == "named":
-                        external_pydantic_model.add_ghost_reference(shape.type.__root__)
-                elif shape.properties_type == "noProperties":
-                    pass
-                else:
-                    assert_never(shape.properties_type)
 
                 with PydanticModel(
                     name=single_union_type.discriminant_value_v_2.name.safe_name.pascal_case,
@@ -87,6 +77,7 @@ class UnionGenerator(AbstractTypeGenerator):
 
                     internal_pydantic_model_for_single_union_type.add_field(discriminant_field)
 
+                    shape = single_union_type.shape.get_as_union()
                     if shape.properties_type == "singleProperty":
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
@@ -131,6 +122,24 @@ class UnionGenerator(AbstractTypeGenerator):
                             ),
                         ),
                     )
+
+                    # if any of our inherited fields are forward refs, we need to call
+                    # update_forwards_refs()
+                    if shape.properties_type == "samePropertiesAsObject":
+                        # we assume that the forward-refed types are the ones
+                        # that circularly reference themselves
+                        forward_refed_types = {
+                            self._context.get_class_reference_for_type_name(referenced_type)
+                            for referenced_type in self._context.get_declaration_for_type_name(shape).referenced_types
+                            if self._context.does_circularly_reference_itself(referenced_type)
+                        }
+                        if len(forward_refed_types) > 0:
+                            # when calling update_forward_refs, Pydantic will throw
+                            # if an inherited field's type is not defined in this
+                            # file. https://github.com/pydantic/pydantic/issues/4902.
+                            # as a workaround, we explicitly pass references to update_forward_refs
+                            # so they are in scope
+                            internal_pydantic_model_for_single_union_type.update_forward_refs(list(forward_refed_types))
 
             root_type = AST.TypeHint.union(
                 *(

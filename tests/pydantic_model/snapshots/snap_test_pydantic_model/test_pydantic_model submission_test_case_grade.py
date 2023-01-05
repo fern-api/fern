@@ -7,6 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.map_value import MapValue
+from ..commons.variable_value import VariableValue
 from .test_case_hidden_grade import TestCaseHiddenGrade
 from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
@@ -102,4 +105,5 @@ class _TestCaseGrade:
             frozen = True
 
 
+_TestCaseGrade.NonHidden.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
 TestCaseGrade.update_forward_refs()

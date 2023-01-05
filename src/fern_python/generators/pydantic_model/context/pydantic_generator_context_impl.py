@@ -49,6 +49,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             must_import_after_current_declaration=must_import_after_current_declaration,
         )
 
+    def does_circularly_reference_itself(self, type_name: ir_types.DeclaredTypeName) -> bool:
+        return HashableDeclaredTypeName.of(type_name) in self.get_referenced_types(type_name)
+
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         declaration = self.get_declaration_for_type_name(type_name)
         return set(map(HashableDeclaredTypeName.of, declaration.referenced_types))

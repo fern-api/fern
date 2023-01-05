@@ -27,7 +27,7 @@ class FernAwarePydanticModel:
 
     When generating a Pydantic model, certain type hints need to be
     imported below the class to avoid issues with circular references. For each
-    type hint. we need the original TypeReference to determine if that's
+    type hint, we need the original TypeReference to determine if that's
     necessary. To ensure the imports are done correctly, the non-unsafe
     methods in the class take TypeReference and handle converting the
     TypeReference to a TypeHint.
@@ -180,20 +180,9 @@ class FernAwarePydanticModel:
             self._get_validators_generator().add_validators()
         self._override_json()
         self._override_dict()
-        self._pydantic_model.finish()
         if self._model_contains_forward_refs:
-            self._source_file.add_footer_expression(
-                AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            qualified_name_excluding_import=(
-                                self.get_class_name(),
-                                "update_forward_refs",
-                            )
-                        )
-                    )
-                )
-            )
+            self._pydantic_model.update_forward_refs()
+        self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
         root_type = self._pydantic_model.get_root_type()

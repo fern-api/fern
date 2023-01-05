@@ -135,6 +135,7 @@ class SourceFileImpl(SourceFile):
             )
             for statement in self._footer_statements:
                 writer.write_node(node=statement.node)
+                writer.write_newline_if_last_line_not()
 
         if self._completion_listener is not None:
             self._completion_listener(self)
@@ -146,7 +147,7 @@ class SourceFileImpl(SourceFile):
         # generics declarations we need to prepend to the file
         generics_statements: List[TopLevelStatement] = []
 
-        for statement in self._statements:
+        for statement in self._statements + self._footer_statements:
             statement_metadata = statement.get_metadata()
             ast_metadata.update(statement_metadata)
 
@@ -170,7 +171,7 @@ class SourceFileImpl(SourceFile):
             # register refrence for resolving later
             self._reference_resolver.register_reference(reference)
 
-            # track depenency if this references relies on an external dep
+            # track dependency if this references relies on an external dep
             if reference.import_ is not None:
                 dependency = reference.import_.module.get_dependency()
                 if dependency is not None:

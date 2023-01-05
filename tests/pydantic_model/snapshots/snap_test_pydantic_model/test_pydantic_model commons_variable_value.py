@@ -9,6 +9,7 @@ import typing_extensions
 
 from .binary_tree_value import BinaryTreeValue as commons_binary_tree_value_BinaryTreeValue
 from .doubly_linked_list_value import DoublyLinkedListValue as commons_doubly_linked_list_value_DoublyLinkedListValue
+from .key_value_pair import KeyValuePair
 from .singly_linked_list_value import SinglyLinkedListValue as commons_singly_linked_list_value_SinglyLinkedListValue
 
 T_Result = typing.TypeVar("T_Result")
@@ -314,4 +315,7 @@ class _VariableValue:
             frozen = True
 
 
+_VariableValue.MapValue.update_forward_refs(
+    KeyValuePair=KeyValuePair, MapValue=commons_map_value_MapValue, VariableValue=VariableValue
+)
 VariableValue.update_forward_refs()

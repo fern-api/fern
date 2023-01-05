@@ -7,6 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....commons.list_type import ListType
+from ....commons.map_type import MapType
+from ....commons.variable_type import VariableType
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
@@ -125,4 +128,7 @@ class _TestCaseImplementationReference:
             frozen = True
 
 
+_TestCaseImplementationReference.Implementation.update_forward_refs(
+    ListType=ListType, MapType=MapType, VariableType=VariableType
+)
 TestCaseImplementationReference.update_forward_refs()

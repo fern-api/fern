@@ -8,6 +8,9 @@ import pydantic
 import typing_extensions
 
 from ...commons.language import Language
+from ...commons.list_type import ListType
+from ...commons.map_type import MapType
+from ...commons.variable_type import VariableType
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
 
@@ -104,4 +107,5 @@ class _CustomFiles:
             frozen = True
 
 
+_CustomFiles.Basic.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 CustomFiles.update_forward_refs()

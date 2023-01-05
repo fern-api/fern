@@ -7,6 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from .....commons.types.list_type import ListType
+from .....commons.types.map_type import MapType
+from .....commons.types.variable_type import VariableType
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
@@ -106,4 +109,5 @@ class _AssertCorrectnessCheck:
             frozen = True
 
 
+_AssertCorrectnessCheck.Custom.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 AssertCorrectnessCheck.update_forward_refs()

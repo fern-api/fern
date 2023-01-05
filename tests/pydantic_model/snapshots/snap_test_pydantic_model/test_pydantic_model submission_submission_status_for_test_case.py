@@ -7,6 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.map_value import MapValue
+from ..commons.variable_value import VariableValue
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
@@ -152,4 +155,10 @@ class _SubmissionStatusForTestCase:
             frozen = True
 
 
+_SubmissionStatusForTestCase.Graded.update_forward_refs(
+    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
+)
+_SubmissionStatusForTestCase.Traced.update_forward_refs(
+    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
+)
 SubmissionStatusForTestCase.update_forward_refs()

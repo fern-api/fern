@@ -11,6 +11,7 @@ from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary
 from .doubly_linked_list_value import (
     DoublyLinkedListValue as resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue,
 )
+from .key_value_pair import KeyValuePair
 from .singly_linked_list_value import (
     SinglyLinkedListValue as resources_commons_types_singly_linked_list_value_SinglyLinkedListValue,
 )
@@ -327,4 +328,7 @@ class _VariableValue:
             frozen = True
 
 
+_VariableValue.MapValue.update_forward_refs(
+    KeyValuePair=KeyValuePair, MapValue=resources_commons_types_map_value_MapValue, VariableValue=VariableValue
+)
 VariableValue.update_forward_refs()
