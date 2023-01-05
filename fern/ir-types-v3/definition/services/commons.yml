@@ -31,7 +31,8 @@ types:
         docs: this is deprecated. use the discriminant value on the error declaration.
       shape:
         type: ResponseErrorShape
-        docs: this is deprecated. if the error has a type, then use the errorBody constant.
+        docs: this is deprecated. if the error has a type, then use the errorBody
+          constant.
   ResponseErrorShape:
     union:
       singleProperty: SingleResponseErrorProperty
