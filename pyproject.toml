@@ -9,7 +9,7 @@ python = "^3.7"
 pydantic = "^1.9.2"
 typer = {extras = ["all"], version = "^0.6.1"}
 fern-fern-generator-exec = {version = "0.3.0", source = "fern-dev"}
-fern-fern-ir_v1-model = {version = "0.0.12", source = "fern-prod"}
+fern-fern-ir_v1-model = {version = "0.0.13", source = "fern-prod"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
