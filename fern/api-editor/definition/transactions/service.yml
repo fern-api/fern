@@ -56,10 +56,6 @@ types:
       renameError: error.RenameErrorTransaction
       deleteError: error.DeleteErrorTransaction
 
-  AddTransactionsRequest:
-    properties:
-      transactions: list<Transaction>
-
 services:
   http:
     TransactionService:
@@ -71,4 +67,8 @@ services:
         add:
           method: POST
           path: /
-          request: AddTransactionsRequest
+          request:
+            name: AddTransactionsRequest
+            body:
+              properties:
+                transactions: list<Transaction>

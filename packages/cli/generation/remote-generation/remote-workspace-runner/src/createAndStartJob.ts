@@ -18,6 +18,7 @@ export async function createAndStartJob({
     generatorInvocation,
     version,
     context,
+    printZipUrl,
 }: {
     workspace: Workspace;
     organization: string;
@@ -25,8 +26,9 @@ export async function createAndStartJob({
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
+    printZipUrl: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization, generatorInvocation, version, context });
+    const job = await createJob({ workspace, organization, generatorInvocation, version, context, printZipUrl });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
 }
@@ -37,12 +39,14 @@ async function createJob({
     generatorInvocation,
     version,
     context,
+    printZipUrl,
 }: {
     workspace: Workspace;
     organization: string;
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
+    printZipUrl: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -56,6 +60,7 @@ async function createJob({
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
+        uploadToS3: printZipUrl,
     });
 
     if (!createResponse.ok) {

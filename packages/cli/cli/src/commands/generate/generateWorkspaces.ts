@@ -7,11 +7,13 @@ export async function generateWorkspaces({
     cliContext,
     version,
     groupName,
+    printZipUrl,
 }: {
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
     groupName: string | undefined;
+    printZipUrl: boolean;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) =>
@@ -22,6 +24,7 @@ export async function generateWorkspaces({
                     context,
                     version,
                     groupName,
+                    printZipUrl,
                 })
             )
         )

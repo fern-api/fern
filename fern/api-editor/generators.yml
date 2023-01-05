@@ -3,6 +3,6 @@ groups:
   server:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.241
+        version: 0.0.249
         config:
           useBrandedStringAliases: true

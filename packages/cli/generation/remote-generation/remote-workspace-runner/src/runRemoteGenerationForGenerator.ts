@@ -13,6 +13,7 @@ export async function runRemoteGenerationForGenerator({
     generatorInvocation,
     version,
     audiences,
+    printZipUrl,
 }: {
     organization: string;
     workspace: Workspace;
@@ -20,6 +21,7 @@ export async function runRemoteGenerationForGenerator({
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     audiences: GeneratorAudiences;
+    printZipUrl: boolean;
 }): Promise<void> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -34,6 +36,7 @@ export async function runRemoteGenerationForGenerator({
         context: interactiveTaskContext,
         version,
         intermediateRepresentation,
+        printZipUrl,
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
