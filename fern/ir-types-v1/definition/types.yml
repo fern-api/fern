@@ -238,10 +238,18 @@ types:
 
   ExampleContainer:
     union:
-      list: list<ExampleTypeReference>
-      set: list<ExampleTypeReference>
-      optional: optional<ExampleTypeReference>
-      map: list<ExampleKeyValuePair>
+      list:
+        type: list<ExampleTypeReference>
+        key: list
+      set:
+        type: list<ExampleTypeReference>
+        key: set
+      optional:
+        type: optional<ExampleTypeReference>
+        key: optional
+      map:
+        type: list<ExampleKeyValuePair>
+        key: map
 
   ExampleKeyValuePair:
     properties:
@@ -250,13 +258,27 @@ types:
 
   ExamplePrimitive:
     union:
-      integer: integer
-      double: double
-      string: string
-      boolean: boolean
-      long: long
-      datetime: datetime
-      uuid: uuid
+      integer:
+        type: integer
+        key: integer
+      double:
+        type: double
+        key: double
+      string:
+        type: string
+        key: string
+      boolean:
+        type: boolean
+        key: boolean
+      long:
+        type: long
+        key: long
+      datetime:
+        type: datetime
+        key: datetime
+      uuid:
+        type: uuid
+        key: uuid
 
   ExampleNamedType:
     properties:
