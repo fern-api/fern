@@ -71,9 +71,4 @@
     "github": "https://github.com/fern-api/fern/",
     "website": "https://www.buildwithfern.com/"
   },
-  "analytics": {
-    "posthog": {
-      "apiKey": "${{ secrets.POSTHOG_PROJECT_API_KEY }}"
-    }
-  }
 }
