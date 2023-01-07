@@ -4,7 +4,7 @@ import { cp, rm } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 import { SourceFile } from "ts-morph";
-import { getReferenceToExportViaNamespaceImport } from "../declaration-referencers/utils/getReferenceToExportViaNamespaceImport";
+import { getReferenceToExportFromRoot } from "../declaration-referencers/utils/getReferenceToExportFromRoot";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 import { ExportsManager } from "../exports-manager/ExportsManager";
@@ -14,8 +14,6 @@ import { AuthImpl } from "./implementations/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./implementations/BaseCoreUtilitiesImpl";
 import { FetcherImpl } from "./implementations/FetcherImpl";
 import { ZurgImpl } from "./implementations/ZurgImpl";
-
-// const CORE_UTILITIES_FILEPATH: ExportedDirectory[] = [{ nameOnDisk: "core" }];
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -83,11 +81,12 @@ export class CoreUtilitiesManager {
     private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.referencedCoreUtilities[manifest.name] = manifest;
-            return getReferenceToExportViaNamespaceImport({
+            return getReferenceToExportFromRoot({
                 exportedName,
-                filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
-                filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
-                namespaceImport: "core",
+                exportedFromPath: {
+                    directories: [...this.getCoreUtilitiesFilepath(), ...manifest.pathInCoreUtilities],
+                    file: undefined,
+                },
                 referencedIn: sourceFile,
                 importsManager,
                 packageName: this.packageName,

@@ -3,7 +3,6 @@ import { ImportStrategy } from "../../declaration-referencers/DeclarationReferen
 export function getSchemaImportStrategy({ useDynamicImport }: { useDynamicImport: boolean }): ImportStrategy {
     return {
         type: "fromRoot",
-        namespaceImport: "serializers",
         useDynamicImport,
     };
 }
