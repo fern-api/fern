@@ -1,9 +1,8 @@
-import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { initiateLogin } from "@fern-api/login";
+import { auth0Login } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -12,6 +11,7 @@ import {
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import getStdin from "get-stdin";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -20,6 +20,8 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { storeToken } from "./commands/login/storeToken";
+import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
@@ -124,7 +126,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
-    addLoginCommand(cli);
+    addLoginCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -370,13 +372,25 @@ function addUpgradeCommand({
     );
 }
 
-function addLoginCommand(cli: Argv) {
+function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "login",
         false, // hide from help message
-        noop,
-        async () => {
-            await initiateLogin();
+        (yargs) =>
+            yargs.option("token-stdin", {
+                boolean: true,
+                hidden: true,
+                default: false,
+            }),
+        async (argv) => {
+            let token;
+            if (argv.tokenStdin) {
+                token = await getStdin();
+                await validateAccessToken({ token, cliContext });
+            } else {
+                token = await auth0Login();
+            }
+            await storeToken(token);
         }
     );
 }

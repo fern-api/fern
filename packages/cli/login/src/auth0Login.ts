@@ -1,7 +1,6 @@
 import { getToken } from "./getToken";
-import { storeToken } from "./storeToken";
 
-export declare namespace initiateLogin {
+export declare namespace Auth0Login {
     export interface Args {
         auth0Domain?: string;
         auth0ClientId?: string;
@@ -9,11 +8,11 @@ export declare namespace initiateLogin {
     }
 }
 
-export async function initiateLogin({
+export async function auth0Login({
     auth0Domain = process.env.AUTH0_DOMAIN,
     auth0ClientId = process.env.AUTH0_CLIENT_ID,
     venusAudience = process.env.VENUS_AUDIENCE,
-}: initiateLogin.Args = {}): Promise<void> {
+}: Auth0Login.Args = {}): Promise<string> {
     if (auth0Domain == null) {
         throw new Error("Cannot login because Auth0 domain is not defined.");
     }
@@ -23,7 +22,5 @@ export async function initiateLogin({
     if (venusAudience == null) {
         throw new Error("Cannot login because Venus Audience is not defined.");
     }
-
-    const token = await getToken({ auth0ClientId, auth0Domain, audience: venusAudience });
-    await storeToken(token);
+    return await getToken({ auth0ClientId, auth0Domain, audience: venusAudience });
 }
