@@ -16,53 +16,42 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "name": {
                 "fernFilepath": [
                     {
-                        "originalValue": "y",
-                        "camelCase": "y",
-                        "snakeCase": "y",
-                        "pascalCase": "Y",
-                        "screamingSnakeCase": "Y"
-                    }
-                ],
-                "fernFilepathV2": [
-                    {
-                        "unsafeName": {
-                            "originalValue": "y",
-                            "camelCase": "y",
-                            "snakeCase": "y",
-                            "pascalCase": "Y",
-                            "screamingSnakeCase": "Y"
+                        "originalName": "y",
+                        "camelCase": {
+                            "unsafeName": "y",
+                            "safeName": "y"
                         },
-                        "safeName": {
-                            "originalValue": "y",
-                            "camelCase": "y",
-                            "snakeCase": "y",
-                            "pascalCase": "Y",
-                            "screamingSnakeCase": "Y"
+                        "snakeCase": {
+                            "unsafeName": "y",
+                            "safeName": "y"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "Y",
+                            "safeName": "Y"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Y",
+                            "safeName": "Y"
                         }
                     }
                 ],
-                "name": "IntegerAlias",
-                "nameV2": {
-                    "originalValue": "IntegerAlias",
-                    "camelCase": "integerAlias",
-                    "snakeCase": "integer_alias",
-                    "pascalCase": "IntegerAlias",
-                    "screamingSnakeCase": "INTEGER_ALIAS"
-                },
-                "nameV3": {
-                    "unsafeName": {
-                        "originalValue": "IntegerAlias",
-                        "camelCase": "integerAlias",
-                        "snakeCase": "integer_alias",
-                        "pascalCase": "IntegerAlias",
-                        "screamingSnakeCase": "INTEGER_ALIAS"
+                "name": {
+                    "originalName": "IntegerAlias",
+                    "camelCase": {
+                        "unsafeName": "integerAlias",
+                        "safeName": "integerAlias"
                     },
-                    "safeName": {
-                        "originalValue": "IntegerAlias",
-                        "camelCase": "integerAlias",
-                        "snakeCase": "integer_alias",
-                        "pascalCase": "IntegerAlias",
-                        "screamingSnakeCase": "INTEGER_ALIAS"
+                    "snakeCase": {
+                        "unsafeName": "integer_alias",
+                        "safeName": "integer_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INTEGER_ALIAS",
+                        "safeName": "INTEGER_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IntegerAlias",
+                        "safeName": "IntegerAlias"
                     }
                 }
             },
@@ -87,76 +76,61 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "name": {
                 "fernFilepath": [
                     {
-                        "originalValue": "imported",
-                        "camelCase": "imported",
-                        "snakeCase": "imported",
-                        "pascalCase": "Imported",
-                        "screamingSnakeCase": "IMPORTED"
-                    },
-                    {
-                        "originalValue": "x",
-                        "camelCase": "x",
-                        "snakeCase": "x",
-                        "pascalCase": "X",
-                        "screamingSnakeCase": "X"
-                    }
-                ],
-                "fernFilepathV2": [
-                    {
-                        "unsafeName": {
-                            "originalValue": "imported",
-                            "camelCase": "imported",
-                            "snakeCase": "imported",
-                            "pascalCase": "Imported",
-                            "screamingSnakeCase": "IMPORTED"
+                        "originalName": "imported",
+                        "camelCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
                         },
-                        "safeName": {
-                            "originalValue": "imported",
-                            "camelCase": "imported",
-                            "snakeCase": "imported",
-                            "pascalCase": "Imported",
-                            "screamingSnakeCase": "IMPORTED"
+                        "snakeCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTED",
+                            "safeName": "IMPORTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imported",
+                            "safeName": "Imported"
                         }
                     },
                     {
-                        "unsafeName": {
-                            "originalValue": "x",
-                            "camelCase": "x",
-                            "snakeCase": "x",
-                            "pascalCase": "X",
-                            "screamingSnakeCase": "X"
+                        "originalName": "x",
+                        "camelCase": {
+                            "unsafeName": "x",
+                            "safeName": "x"
                         },
-                        "safeName": {
-                            "originalValue": "x",
-                            "camelCase": "x",
-                            "snakeCase": "x",
-                            "pascalCase": "X",
-                            "screamingSnakeCase": "X"
+                        "snakeCase": {
+                            "unsafeName": "x",
+                            "safeName": "x"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "X",
+                            "safeName": "X"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "X",
+                            "safeName": "X"
                         }
                     }
                 ],
-                "name": "StringAlias",
-                "nameV2": {
-                    "originalValue": "StringAlias",
-                    "camelCase": "stringAlias",
-                    "snakeCase": "string_alias",
-                    "pascalCase": "StringAlias",
-                    "screamingSnakeCase": "STRING_ALIAS"
-                },
-                "nameV3": {
-                    "unsafeName": {
-                        "originalValue": "StringAlias",
-                        "camelCase": "stringAlias",
-                        "snakeCase": "string_alias",
-                        "pascalCase": "StringAlias",
-                        "screamingSnakeCase": "STRING_ALIAS"
+                "name": {
+                    "originalName": "StringAlias",
+                    "camelCase": {
+                        "unsafeName": "stringAlias",
+                        "safeName": "stringAlias"
                     },
-                    "safeName": {
-                        "originalValue": "StringAlias",
-                        "camelCase": "stringAlias",
-                        "snakeCase": "string_alias",
-                        "pascalCase": "StringAlias",
-                        "screamingSnakeCase": "STRING_ALIAS"
+                    "snakeCase": {
+                        "unsafeName": "string_alias",
+                        "safeName": "string_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_ALIAS",
+                        "safeName": "STRING_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringAlias",
+                        "safeName": "StringAlias"
                     }
                 }
             },
@@ -176,100 +150,29 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         }
     ],
     "errors": [],
-    "services": {
-        "http": [],
-        "websocket": []
-    },
+    "services": [],
     "constants": {
-        "errorDiscriminant": "_error",
-        "errorInstanceIdKey": "_errorInstanceId",
-        "unknownErrorDiscriminantValue": "_unknown"
-    },
-    "constantsV2": {
-        "errors": {
-            "errorDiscriminant": {
-                "originalValue": "error",
-                "camelCase": "error",
-                "snakeCase": "error",
-                "pascalCase": "Error",
-                "screamingSnakeCase": "ERROR",
-                "wireValue": "error"
-            },
-            "errorInstanceIdKey": {
-                "originalValue": "errorInstanceId",
-                "camelCase": "errorInstanceId",
-                "snakeCase": "error_instance_id",
-                "pascalCase": "ErrorInstanceId",
-                "screamingSnakeCase": "ERROR_INSTANCE_ID",
-                "wireValue": "errorInstanceId"
-            },
-            "errorContentKey": {
-                "originalValue": "content",
-                "camelCase": "content",
-                "snakeCase": "content",
-                "pascalCase": "Content",
-                "screamingSnakeCase": "CONTENT",
-                "wireValue": "content"
-            }
-        },
-        "errorsV2": {
-            "errorDiscriminant": {
-                "name": {
-                    "unsafeName": {
-                        "originalValue": "error",
-                        "camelCase": "error",
-                        "snakeCase": "error",
-                        "pascalCase": "Error",
-                        "screamingSnakeCase": "ERROR"
-                    },
-                    "safeName": {
-                        "originalValue": "error",
-                        "camelCase": "error",
-                        "snakeCase": "error",
-                        "pascalCase": "Error",
-                        "screamingSnakeCase": "ERROR"
-                    }
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
                 },
-                "wireValue": "error"
-            },
-            "errorInstanceIdKey": {
-                "name": {
-                    "unsafeName": {
-                        "originalValue": "errorInstanceId",
-                        "camelCase": "errorInstanceId",
-                        "snakeCase": "error_instance_id",
-                        "pascalCase": "ErrorInstanceId",
-                        "screamingSnakeCase": "ERROR_INSTANCE_ID"
-                    },
-                    "safeName": {
-                        "originalValue": "errorInstanceId",
-                        "camelCase": "errorInstanceId",
-                        "snakeCase": "error_instance_id",
-                        "pascalCase": "ErrorInstanceId",
-                        "screamingSnakeCase": "ERROR_INSTANCE_ID"
-                    }
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
                 },
-                "wireValue": "errorInstanceId"
-            },
-            "errorContentKey": {
-                "name": {
-                    "unsafeName": {
-                        "originalValue": "content",
-                        "camelCase": "content",
-                        "snakeCase": "content",
-                        "pascalCase": "Content",
-                        "screamingSnakeCase": "CONTENT"
-                    },
-                    "safeName": {
-                        "originalValue": "content",
-                        "camelCase": "content",
-                        "snakeCase": "content",
-                        "pascalCase": "Content",
-                        "screamingSnakeCase": "CONTENT"
-                    }
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
                 },
-                "wireValue": "content"
-            }
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
         }
     },
     "environments": [],
