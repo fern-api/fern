@@ -7,6 +7,7 @@
     { "path": "../../commons/fs-utils" },
     { "path": "../config-management/project-configuration" },
     { "path": "../logger" },
+    { "path": "../login" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]

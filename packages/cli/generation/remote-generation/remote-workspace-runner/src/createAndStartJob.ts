@@ -1,6 +1,6 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
-import { getFiddleOrigin } from "@fern-api/services";
+import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -19,6 +19,7 @@ export async function createAndStartJob({
     version,
     context,
     printZipUrl,
+    token,
 }: {
     workspace: Workspace;
     organization: string;
@@ -27,8 +28,9 @@ export async function createAndStartJob({
     version: string | undefined;
     context: TaskContext;
     printZipUrl: boolean;
+    token: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization, generatorInvocation, version, context, printZipUrl });
+    const job = await createJob({ workspace, organization, generatorInvocation, version, context, printZipUrl, token });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
 }
@@ -40,6 +42,7 @@ async function createJob({
     version,
     context,
     printZipUrl,
+    token,
 }: {
     workspace: Workspace;
     organization: string;
@@ -47,6 +50,7 @@ async function createJob({
     version: string | undefined;
     context: TaskContext;
     printZipUrl: boolean;
+    token: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -55,13 +59,26 @@ async function createJob({
         customConfig: generatorInvocation.config,
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
-    const createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
-        apiName: workspace.name,
-        version,
-        organizationName: organization,
-        generators: [generatorConfigsWithEnvVarSubstitutions],
-        uploadToS3: printZipUrl,
-    });
+
+    let createResponse;
+    if (token == null) {
+        createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
+            apiName: workspace.name,
+            version,
+            organizationName: organization,
+            generators: [generatorConfigsWithEnvVarSubstitutions],
+            uploadToS3: printZipUrl,
+        });
+    } else {
+        const remoteGenerationService = createFiddleService({ token });
+        createResponse = await remoteGenerationService.remoteGen.createJobV3({
+            apiName: workspace.name,
+            version,
+            organizationName: organization,
+            generators: [generatorConfigsWithEnvVarSubstitutions],
+            uploadToS3: printZipUrl,
+        });
+    }
 
     if (!createResponse.ok) {
         return createResponse.error._visit({

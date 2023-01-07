@@ -1,9 +1,8 @@
-import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { initiateLogin } from "@fern-api/login";
+import { auth0Login, storeToken } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -12,6 +11,7 @@ import {
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import getStdin from "get-stdin";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -20,6 +20,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
@@ -124,7 +125,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
-    addLoginCommand(cli);
+    addLoginCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -292,23 +293,20 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
-                })
-                .option("token", {
-                    string: true,
-                    description: "The token for the organization",
                 }),
         async (argv) => {
-            if (argv.token == null) {
-                cliContext.fail("Token must be specified");
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineWorkspace: argv.api,
+                defaultToAllWorkspaces: false,
+            });
+            if (project.token == null) {
+                cliContext.fail("Please run fern login before registring.");
                 return;
             }
             await registerApiDefinitions({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
-                }),
+                project,
                 cliContext,
-                token: argv.token,
+                token: project.token,
                 version: argv.version,
             });
         }
@@ -370,13 +368,25 @@ function addUpgradeCommand({
     );
 }
 
-function addLoginCommand(cli: Argv) {
+function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "login",
         false, // hide from help message
-        noop,
-        async () => {
-            await initiateLogin();
+        (yargs) =>
+            yargs.option("token-stdin", {
+                boolean: true,
+                hidden: true,
+                default: false,
+            }),
+        async (argv) => {
+            let token;
+            if (argv.tokenStdin) {
+                token = (await getStdin()).replace(/\s/g, "");
+                await validateAccessToken({ token, cliContext });
+            } else {
+                token = await auth0Login();
+            }
+            await storeToken(token);
         }
     );
 }

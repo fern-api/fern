@@ -13,6 +13,7 @@ export async function generateWorkspace({
     groupName,
     version,
     printZipUrl,
+    token,
 }: {
     workspace: Workspace;
     organization: string;
@@ -20,6 +21,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     printZipUrl: boolean;
+    token: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration.groups.length === 0) {
         context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
@@ -49,5 +51,6 @@ export async function generateWorkspace({
         generatorGroup: group,
         version,
         printZipUrl,
+        token,
     });
 }
