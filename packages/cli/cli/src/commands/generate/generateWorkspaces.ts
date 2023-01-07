@@ -25,6 +25,7 @@ export async function generateWorkspaces({
                     version,
                     groupName,
                     printZipUrl,
+                    token: project.token,
                 })
             )
         )
