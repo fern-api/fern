@@ -385,7 +385,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             let token;
             if (argv.tokenStdin) {
-                token = await getStdin();
+                token = (await getStdin()).replace(/\s/g, "");
                 await validateAccessToken({ token, cliContext });
             } else {
                 token = await auth0Login();

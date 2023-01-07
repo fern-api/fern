@@ -9,7 +9,7 @@ test_dir="$(mktemp -d)"
 cd "$test_dir"
 
 echo "Logging in"
-echo "$token" | node "$cli_path" login --token-stdin
+echo "$token" | node "$cli_path" login --token-stdin --log-level debug
 
 echo "Running Fern Commands!"
 set -x
