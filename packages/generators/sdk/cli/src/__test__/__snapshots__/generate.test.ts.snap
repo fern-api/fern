@@ -81,7 +81,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.16.13\\",
+        \\"esbuild\\": \\"0.16.15\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"^1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
@@ -5079,7 +5079,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.16.13\\",
+        \\"esbuild\\": \\"0.16.15\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"^1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
@@ -8057,7 +8057,7 @@ node_modules
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.16.13\\",
+        \\"esbuild\\": \\"0.16.15\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"typescript\\": \\"4.6.4\\",
         \\"tsc-alias\\": \\"^1.7.1\\"
@@ -9411,7 +9411,7 @@ yarnPath: .yarn/releases/yarn-3.2.4.cjs
     },
     \\"devDependencies\\": {
         \\"@types/node\\": \\"17.0.33\\",
-        \\"esbuild\\": \\"0.16.13\\",
+        \\"esbuild\\": \\"0.16.15\\",
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"^1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
