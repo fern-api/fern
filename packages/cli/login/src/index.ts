@@ -1,1 +1,1 @@
-export { initiateLogin } from "./initiateLogin";
+export { auth0Login } from "./auth0Login";
