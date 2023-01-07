@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpResponse } from "@fern-fern/ir-model/services/http";
+import { HttpResponse } from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertHttpResponse({

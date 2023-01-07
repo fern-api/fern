@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -31,7 +31,7 @@ export function convertHttpService({
     return {
         ...convertDeclaration(serviceDefinition),
         name: {
-            name: serviceId,
+            name: file.casingsGenerator.generateName(serviceId),
             fernFilepath: file.fernFilepath,
         },
         basePath: constructHttpPath(serviceDefinition["base-path"]),
@@ -54,9 +54,8 @@ export function convertHttpService({
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 ...convertDeclaration(endpoint),
-                id: endpointKey,
-                displayName: endpoint["display-name"],
                 name: file.casingsGenerator.generateName(endpointKey),
+                displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),

@@ -1,6 +1,7 @@
 import { IrVersions } from "../../ir-versions";
 import { convertContainerType } from "./convertContainerType";
 import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
+import { convertExampleTypeShape } from "./convertExampleTypeReference";
 import { convertNameAndWireValueToV1, convertNameAndWireValueToV2 } from "./convertName";
 import { convertTypeReference } from "./convertTypeReference";
 
@@ -101,64 +102,6 @@ function convertExampleType(example: IrVersions.V5.types.ExampleType): IrVersion
         shape: convertExampleTypeShape(example.shape),
     };
 }
-
-function convertExampleTypeShape(example: IrVersions.V5.types.ExampleTypeShape): IrVersions.V4.types.ExampleTypeShape {
-    return IrVersions.V5.types.ExampleTypeShape._visit<IrVersions.V4.types.ExampleTypeShape>(example, {
-        alias: (aliasExample) =>
-            IrVersions.V4.types.ExampleTypeShape.alias({
-                value: convertExampleTypeReference(aliasExample.value),
-            }),
-        object: (objectExample) =>
-            IrVersions.V4.types.ExampleTypeShape.object({
-                properties: objectExample.properties.map((property) => ({
-                    wireKey: property.wireKey,
-                    value: convertExampleTypeReference(property.value),
-                    originalTypeDeclaration: convertDeclaredTypeName(property.originalTypeDeclaration),
-                })),
-            }),
-        union: (unionExample) =>
-            IrVersions.V4.types.ExampleTypeShape.union({
-                wireDiscriminantValue: unionExample.wireDiscriminantValue,
-                properties:
-                    IrVersions.V5.types.ExampleSingleUnionTypeProperties._visit<IrVersions.V4.types.ExampleSingleUnionTypeProperties>(
-                        unionExample.properties,
-                        {
-                            samePropertiesAsObject: (exampleNamedType) =>
-                                IrVersions.V4.types.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
-                                    typeName: convertDeclaredTypeName(exampleNamedType.typeName),
-                                    shape: convertExampleTypeShape(exampleNamedType.shape),
-                                }),
-                            singleProperty: (property) =>
-                                IrVersions.V4.types.ExampleSingleUnionTypeProperties.singleProperty({
-                                    jsonExample: property.jsonExample,
-                                    shape: convertExampleTypeReferenceShape(property.shape),
-                                }),
-                            noProperties: IrVersions.V4.types.ExampleSingleUnionTypeProperties.noProperties,
-                            _unknown: () => {
-                                throw new Error(
-                                    "Unknown ExampleSingleUnionTypeProperties: " + unionExample.properties.type
-                                );
-                            },
-                        }
-                    ),
-            }),
-        enum: (enumExample) =>
-            IrVersions.V4.types.ExampleTypeShape.enum({
-                wireValue: enumExample.wireValue,
-            }),
-        _unknown: () => {
-            throw new Error("Unknown ExampleTypeShape: " + example.type);
-        },
-    });
-}
-
-function convertExampleTypeReference(
-    example: IrVersions.V5.types.ExampleTypeReference
-): IrVersions.V4.types.ExampleTypeReference {}
-
-function convertExampleTypeReferenceShape(
-    example: IrVersions.V5.types.ExampleTypeReferenceShape
-): IrVersions.V4.types.ExampleTypeReferenceShape {}
 
 function convertResolvedTypeReference(
     resolvedTypeReference: IrVersions.V5.types.ResolvedTypeReference

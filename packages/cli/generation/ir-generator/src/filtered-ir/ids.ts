@@ -1,6 +1,5 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 
 export type AudienceId = string;
@@ -29,13 +28,13 @@ export function getEndpointId(declaredServiceName: DeclaredServiceName, httpEndp
     const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
     const serviceName = declaredServiceName.name;
     const endpointId = httpEndpoint.name.originalName;
-    return `endpoint_${joinedFernFilePath}:${serviceName}.${endpointId}`;
+    return `endpoint_${joinedFernFilePath}:${serviceName.originalName}.${endpointId}`;
 }
 
 export function getServiceId(declaredServiceName: DeclaredServiceName): ServiceId {
     const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
     const serviceName = declaredServiceName.name;
-    return `endpoint_${joinedFernFilePath}:${serviceName}`;
+    return `endpoint_${joinedFernFilePath}:${serviceName.originalName}`;
 }
 
 export function getErrorId(declaredErrorName: DeclaredErrorName): ErrorId {

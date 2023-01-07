@@ -4,8 +4,7 @@ imports:
   types: types.yml
   errors: errors.yml
   auth: auth.yml
-  serviceCommons: services/commons.yml
-  http: services/http.yml
+  http: http.yml
   constants: constants.yml
   environment: environment.yml
   commons: commons.yml

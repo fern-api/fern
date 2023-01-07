@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { DeclaredTypeName, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -36,22 +36,24 @@ export function convertTypeDeclaration({
         referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
         examples:
             typeof typeDeclaration !== "string" && typeDeclaration.examples != null
-                ? typeDeclaration.examples.map((example) => ({
-                      name: example.name,
-                      docs: example.docs,
-                      jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
-                          example: example.value,
-                          file,
-                      }).resolvedExample,
-                      shape: convertTypeExample({
-                          typeName: declaredTypeName,
-                          example: example.value,
-                          typeResolver,
-                          exampleResolver,
-                          typeDeclaration,
-                          file,
-                      }),
-                  }))
+                ? typeDeclaration.examples.map(
+                      (example): ExampleType => ({
+                          name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                          docs: example.docs,
+                          jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                              example: example.value,
+                              file,
+                          }).resolvedExample,
+                          shape: convertTypeExample({
+                              typeName: declaredTypeName,
+                              example: example.value,
+                              typeResolver,
+                              exampleResolver,
+                              typeDeclaration,
+                              file,
+                          }),
+                      })
+                  )
                 : [],
     };
 }

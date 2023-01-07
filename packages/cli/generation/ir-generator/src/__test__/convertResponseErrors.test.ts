@@ -1,4 +1,4 @@
-import { ResponseErrors } from "@fern-fern/ir-model/services/commons";
+import { ResponseErrors } from "@fern-fern/ir-model/http";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 import { constructFernFileContext } from "../FernFileContext";

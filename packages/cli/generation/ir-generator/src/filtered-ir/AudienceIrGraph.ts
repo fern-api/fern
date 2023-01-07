@@ -1,7 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpRequestBody } from "@fern-fern/ir-model/services/http";
+import { DeclaredServiceName, HttpEndpoint, HttpRequestBody } from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {

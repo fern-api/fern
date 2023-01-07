@@ -1,8 +1,8 @@
 import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
@@ -131,7 +131,7 @@ export async function generateIntermediateRepresentation({
                         const convertedEndpoints: Record<string, HttpEndpoint> = {};
                         convertedHttpService.endpoints.forEach((httpEndpoint) => {
                             audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
-                            convertedEndpoints[httpEndpoint.id] = httpEndpoint;
+                            convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                         });
                         if (serviceDefinition.audiences != null) {
                             audienceIrGraph?.markEndpointForAudience(
