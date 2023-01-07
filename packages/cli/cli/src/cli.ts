@@ -293,23 +293,20 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
-                })
-                .option("token", {
-                    string: true,
-                    description: "The token for the organization",
                 }),
         async (argv) => {
-            if (argv.token == null) {
-                cliContext.fail("Token must be specified");
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineWorkspace: argv.api,
+                defaultToAllWorkspaces: false,
+            });
+            if (project.token == null) {
+                cliContext.fail("Please run fern login before registring.");
                 return;
             }
             await registerApiDefinitions({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
-                }),
+                project,
                 cliContext,
-                token: argv.token,
+                token: project.token,
                 version: argv.version,
             });
         }
