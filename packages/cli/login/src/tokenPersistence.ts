@@ -23,6 +23,6 @@ export async function loadToken(): Promise<string | undefined> {
     if (!tokenFileExists) {
         return undefined;
     }
-    const tokenFileContents = await readFile(path.dirname(pathToTokenFile));
+    const tokenFileContents = await readFile(pathToTokenFile);
     return tokenFileContents.toString();
 }
