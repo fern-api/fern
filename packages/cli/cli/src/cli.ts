@@ -2,7 +2,7 @@ import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { auth0Login } from "@fern-api/login";
+import { auth0Login, storeToken } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -20,7 +20,6 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { storeToken } from "./commands/login/storeToken";
 import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
