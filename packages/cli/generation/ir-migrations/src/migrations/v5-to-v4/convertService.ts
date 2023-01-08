@@ -248,7 +248,7 @@ function convertExampleEndpointCall(
         servicePathParameters: example.servicePathParameters.map((pathParameter) =>
             convertExamplePathParameter(pathParameter)
         ),
-        endpointPathParameters: example.servicePathParameters.map((pathParameter) =>
+        endpointPathParameters: example.endpointPathParameters.map((pathParameter) =>
             convertExamplePathParameter(pathParameter)
         ),
         serviceHeaders: example.serviceHeaders.map((header) => convertExampleHeader(header)),
