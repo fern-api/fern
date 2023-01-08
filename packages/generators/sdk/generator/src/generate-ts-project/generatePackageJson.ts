@@ -2,15 +2,23 @@ import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
-import { SRC_DIRECTORY, TYPES_DIRECTORY } from "./constants";
+import {
+    API_BUNDLE_FILENAME,
+    BROWSER_CJS_DIST_DIRECTORY,
+    BROWSER_ESM_DIST_DIRECTORY,
+    BUILD_SCRIPT_NAME,
+    CORE_BUNDLE_FILENAME,
+    DIST_DIRECTORY,
+    NODE_DIST_DIRECTORY,
+    SERIALIZATION_BUNDLE_FILENAME,
+    TYPES_DIRECTORY,
+} from "./constants";
 import { getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
     COMPILE: "compile",
+    BUNDLE: "bundle",
     BUILD: "build",
-    BUILD_NODE: "build:node",
-    BUILD_ESM: "build:esm",
-    BUILD_CJS: "build:cjs",
     FORMAT: "format",
 } as const;
 
@@ -23,12 +31,6 @@ export const DEV_DEPENDENCIES: Record<string, string> = {
     typescript: "4.6.4",
     "tsc-alias": "^1.7.1",
 };
-
-const Outfile = {
-    NODE: "node.cjs",
-    ESM: "index.mjs",
-    CJS: "index.cjs",
-} as const;
 
 export async function generatePackageJson({
     volume,
@@ -60,49 +62,20 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: [Outfile.ESM, Outfile.CJS, Outfile.NODE, TYPES_DIRECTORY],
+        files: ["dist", TYPES_DIRECTORY],
         exports: {
-            ".": {
-                node: `./${Outfile.NODE}`,
-                import: `./${Outfile.ESM}`,
-                require: `./${Outfile.CJS}`,
-                default: `./${Outfile.CJS}`,
-            },
+            ".": getExports(API_BUNDLE_FILENAME),
+            "./core": getExports(CORE_BUNDLE_FILENAME),
+            "./serialization": getExports(SERIALIZATION_BUNDLE_FILENAME),
         },
         types: `./${TYPES_DIRECTORY}/index.d.ts`,
         scripts: {
             [PackageJsonScript.FORMAT]: PRETTIER_COMMAND.join(" "),
             [PackageJsonScript.COMPILE]: "tsc && tsc-alias",
-            [PackageJsonScript.BUILD_NODE]: generateEsbuildCommand({
-                platform: "node",
-                shouldIncludeSourceMaps: false,
-                format: undefined,
-                outfile: Outfile.NODE,
-                // Node's built-in modules cannot be required due to due an esbuild bug.
-                // this is a workaround until https://github.com/evanw/esbuild/pull/2067 merges.
-                jsBanner: "import { createRequire } from 'module';\nconst require = createRequire(import.meta.url);",
-                packageName,
-            }),
-            [PackageJsonScript.BUILD_ESM]: generateEsbuildCommand({
-                platform: "browser",
-                shouldIncludeSourceMaps: false,
-                format: "esm",
-                outfile: Outfile.ESM,
-                packageName,
-            }),
-            [PackageJsonScript.BUILD_CJS]: generateEsbuildCommand({
-                platform: "browser",
-                shouldIncludeSourceMaps: false,
-                format: "cjs",
-                outfile: Outfile.CJS,
-                packageName,
-            }),
-            [PackageJsonScript.BUILD]: [
-                `yarn ${PackageJsonScript.COMPILE}`,
-                `yarn ${PackageJsonScript.BUILD_NODE}`,
-                `yarn ${PackageJsonScript.BUILD_ESM}`,
-                `yarn ${PackageJsonScript.BUILD_CJS}`,
-            ].join(" && "),
+            [PackageJsonScript.BUNDLE]: `node ${BUILD_SCRIPT_NAME}`,
+            [PackageJsonScript.BUILD]: [`yarn ${PackageJsonScript.COMPILE}`, `yarn ${PackageJsonScript.BUNDLE}`].join(
+                " && "
+            ),
         },
     };
 
@@ -124,40 +97,27 @@ export async function generatePackageJson({
     await volume.promises.writeFile(getPathToProjectFile("package.json"), JSON.stringify(packageJson, undefined, 4));
 }
 
-function generateEsbuildCommand({
-    platform,
-    shouldIncludeSourceMaps,
-    format,
-    outfile,
-    jsBanner,
-    packageName,
-}: {
-    platform: "node" | "browser";
-    shouldIncludeSourceMaps: boolean;
-    format: "cjs" | "esm" | undefined;
-    outfile: string;
-    jsBanner?: string;
-    packageName: string;
-}): string {
-    const parts = [
-        "esbuild",
-        `${SRC_DIRECTORY}/index.ts`,
-        "--bundle",
-        `--platform=${platform}`,
-        "--packages=external",
-        // matches up with tsconfig paths
-        `--alias:${packageName}=./${SRC_DIRECTORY}`,
-    ];
-    if (shouldIncludeSourceMaps) {
-        parts.push("--sourcemap");
-    }
-    if (format != null) {
-        parts.push(`--format=${format}`);
-    }
-    if (jsBanner != null) {
-        parts.push(`--banner:js="${jsBanner}"`);
-    }
-    parts.push(`--outfile=${outfile}`);
+function getExports(filename: string) {
+    return {
+        node: getPathToNodeDistFile(filename),
+        import: getPathToBrowserEsmDistFile(filename),
+        require: getPathToBrowserCjsDistFile(filename),
+        default: getPathToBrowserCjsDistFile(filename),
+    };
+}
 
-    return parts.join(" ");
+function getPathToNodeDistFile(filename: string) {
+    return getPathToDistFile({ outdir: NODE_DIST_DIRECTORY, filename });
+}
+
+function getPathToBrowserEsmDistFile(filename: string) {
+    return getPathToDistFile({ outdir: BROWSER_ESM_DIST_DIRECTORY, filename });
+}
+
+function getPathToBrowserCjsDistFile(filename: string) {
+    return getPathToDistFile({ outdir: BROWSER_CJS_DIST_DIRECTORY, filename });
+}
+
+function getPathToDistFile({ outdir, filename }: { outdir: string; filename: string }) {
+    return `./${DIST_DIRECTORY}/${outdir}/${filename}`;
 }

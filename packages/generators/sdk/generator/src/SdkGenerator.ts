@@ -132,7 +132,6 @@ export class SdkGenerator {
         const schemaDirectory: ExportedDirectory[] = [
             {
                 nameOnDisk: "serialization",
-                exportDeclaration: { namespaceExport: `${apiName}Serializers` },
             },
         ];
 

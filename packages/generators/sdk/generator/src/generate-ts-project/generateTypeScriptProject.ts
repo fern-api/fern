@@ -2,6 +2,7 @@ import { Volume } from "memfs/lib/volume";
 import { Project } from "ts-morph";
 import { PackageDependencies } from "../dependency-manager/DependencyManager";
 import { SRC_DIRECTORY } from "./constants";
+import { generateEsbuildScript } from "./generateEsbuildScript";
 import { generateGitIgnore } from "./generateGitIgnore";
 import { generatePackageJson } from "./generatePackageJson";
 import { generatePrettierIgnore } from "./generatePrettierIgnore";
@@ -42,4 +43,5 @@ export async function generateTypeScriptProject({
     await generateTsConfig({ volume, packageName });
     await generatePrettierIgnore(volume);
     await generateGitIgnore(volume);
+    await generateEsbuildScript({ volume, packageName });
 }

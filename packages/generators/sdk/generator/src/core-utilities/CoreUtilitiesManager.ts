@@ -4,7 +4,7 @@ import { cp, rm } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 import { SourceFile } from "ts-morph";
-import { getReferenceToExportFromRoot } from "../declaration-referencers/utils/getReferenceToExportFromRoot";
+import { getReferenceToExportViaNamespaceImport } from "../declaration-referencers/utils/getReferenceToExportViaNamespaceImport";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 import { ExportsManager } from "../exports-manager/ExportsManager";
@@ -25,12 +25,10 @@ export declare namespace CoreUtilitiesManager {
 }
 
 export class CoreUtilitiesManager {
-    private apiName: string;
     private packageName: string;
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
 
-    constructor({ apiName, packageName }: { apiName: string; packageName: string }) {
-        this.apiName = apiName;
+    constructor({ packageName }: { apiName: string; packageName: string }) {
         this.packageName = packageName;
     }
 
@@ -81,12 +79,11 @@ export class CoreUtilitiesManager {
     private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.referencedCoreUtilities[manifest.name] = manifest;
-            return getReferenceToExportFromRoot({
+            return getReferenceToExportViaNamespaceImport({
                 exportedName,
-                exportedFromPath: {
-                    directories: [...this.getCoreUtilitiesFilepath(), ...manifest.pathInCoreUtilities],
-                    file: undefined,
-                },
+                filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
+                filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
+                namespaceImport: "core",
                 referencedIn: sourceFile,
                 importsManager,
                 packageName: this.packageName,
@@ -102,7 +99,6 @@ export class CoreUtilitiesManager {
         return [
             {
                 nameOnDisk: "core",
-                exportDeclaration: { namespaceExport: `${this.apiName}Core` },
             },
         ];
     }
