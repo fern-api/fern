@@ -109,7 +109,9 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     \\"version\\": \\"\\",
     \\"files\\": [
         \\"dist\\",
-        \\"*.d.ts\\"
+        \\"types\\",
+        \\"core.d.ts\\",
+        \\"serialization.d.ts\\"
     ],
     \\"exports\\": {
         \\".\\": {
@@ -5109,7 +5111,9 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     \\"repository\\": \\"https://github.com/fern/api}\\",
     \\"files\\": [
         \\"dist\\",
-        \\"*.d.ts\\"
+        \\"types\\",
+        \\"core.d.ts\\",
+        \\"serialization.d.ts\\"
     ],
     \\"exports\\": {
         \\".\\": {
@@ -8161,7 +8165,9 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     \\"private\\": false,
     \\"files\\": [
         \\"dist\\",
-        \\"*.d.ts\\"
+        \\"types\\",
+        \\"core.d.ts\\",
+        \\"serialization.d.ts\\"
     ],
     \\"exports\\": {
         \\".\\": {
@@ -9572,7 +9578,9 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     \\"version\\": \\"\\",
     \\"files\\": [
         \\"dist\\",
-        \\"*.d.ts\\"
+        \\"types\\",
+        \\"core.d.ts\\",
+        \\"serialization.d.ts\\"
     ],
     \\"exports\\": {
         \\".\\": {

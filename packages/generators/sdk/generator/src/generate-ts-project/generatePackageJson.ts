@@ -62,7 +62,7 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: ["dist", "*.d.ts"],
+        files: ["dist", "types", "core.d.ts", "serialization.d.ts"],
         exports: {
             ".": getExports(API_BUNDLE_FILENAME, {
                 pathToTypesFile: `./${TYPES_DIRECTORY}/index.d.ts`,
