@@ -174,9 +174,6 @@ export function validateTypeReferenceExample({
         unknown: () => {
             return [];
         },
-        void: () => {
-            return [];
-        },
         literal: (expectedLiteralValue) => {
             return createValidator((e) => e === expectedLiteralValue, `"${expectedLiteralValue}"`)(example);
         },
@@ -228,7 +225,7 @@ function createValidator(
 }
 
 function areResolvedTypesEquivalent(a: ResolvedType, b: ResolvedType): boolean {
-    if (a._type === "unknown" || a._type === "void") {
+    if (a._type === "unknown") {
         return true;
     }
     if (a._type === "primitive") {

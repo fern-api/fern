@@ -7,7 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
-} from "@fern-fern/ir-model/services/http";
+} from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -36,7 +36,7 @@ export function convertExampleEndpointCall({
     file: FernFileContext;
 }): ExampleEndpointCall {
     return {
-        name: example.name,
+        name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         ...convertPathParameters({ service, endpoint, example, typeResolver, exampleResolver, file }),
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file }),

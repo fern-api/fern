@@ -10,7 +10,6 @@ export interface RecursiveRawTypeReferenceVisitor<R> {
     literal: (literalValue: string) => R;
     named: (named: string) => R;
     unknown: () => R;
-    void: () => R;
 }
 
 export function recursivelyVisitRawTypeReference<R>(type: string, visitor: RecursiveRawTypeReferenceVisitor<R>): R {
@@ -27,6 +26,5 @@ export function recursivelyVisitRawTypeReference<R>(type: string, visitor: Recur
         literal: visitor.literal,
         named: visitor.named,
         unknown: visitor.unknown,
-        void: visitor.void,
     });
 }

@@ -1,7 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint, HttpRequestBody } from "@fern-fern/ir-model/services/http";
+import { DeclaredServiceName, HttpEndpoint, HttpRequestBody } from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
@@ -51,8 +50,8 @@ export class AudienceIrGraph {
     public addError(errorDeclaration: ErrorDeclaration): void {
         const errorId = getErrorId(errorDeclaration.name);
         const referencedTypes = new Set<TypeId>();
-        if (errorDeclaration.typeV3 != null) {
-            populateReferencesFromTypeReference(errorDeclaration.typeV3, referencedTypes);
+        if (errorDeclaration.type != null) {
+            populateReferencesFromTypeReference(errorDeclaration.type, referencedTypes);
         }
         const errorNode: ErrorNode = {
             errorId,
@@ -83,8 +82,8 @@ export class AudienceIrGraph {
                 },
             });
         }
-        if (httpEndpoint.response.typeV2 != null) {
-            populateReferencesFromTypeReference(httpEndpoint.response.typeV2, referencedTypes);
+        if (httpEndpoint.response.type != null) {
+            populateReferencesFromTypeReference(httpEndpoint.response.type, referencedTypes);
         }
         httpEndpoint.errors.forEach((responseError) => {
             referencedErrors.add(getErrorId(responseError.error));
@@ -188,7 +187,6 @@ function populateReferencesFromTypeReference(typeReference: TypeReference, refer
         },
         primitive: noop,
         unknown: noop,
-        void: noop,
         _unknown: noop,
     });
 }

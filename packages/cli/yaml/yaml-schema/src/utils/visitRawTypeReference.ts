@@ -16,7 +16,6 @@ export interface RawTypeReferenceVisitor<R> {
     literal: (literalValue: string) => R;
     named: (named: string) => R;
     unknown: () => R;
-    void: () => R;
 }
 
 export function visitRawTypeReference<R>(type: string, visitor: RawTypeReferenceVisitor<R>): R {
@@ -35,8 +34,6 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
             return visitor.primitive(PrimitiveType.DateTime);
         case RawPrimitiveType.uuid:
             return visitor.primitive(PrimitiveType.Uuid);
-        case RawPrimitiveType.void:
-            return visitor.void();
         case RawPrimitiveType.unknown:
             return visitor.unknown();
     }

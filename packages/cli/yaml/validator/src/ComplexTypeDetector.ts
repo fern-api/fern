@@ -37,8 +37,6 @@ export class ComplexTypeDetector {
                 return false;
             case "unknown":
                 return true;
-            case "void":
-                return false;
         }
     }
 

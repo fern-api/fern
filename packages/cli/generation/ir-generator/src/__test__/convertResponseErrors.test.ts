@@ -1,8 +1,8 @@
-import { ResponseErrors } from "@fern-fern/ir-model/services/commons";
+import { ResponseErrors } from "@fern-fern/ir-model/http";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 import { constructFernFileContext } from "../FernFileContext";
-import { convertToFernFilepath, convertToFernFilepathV2 } from "../utils/convertToFernFilepath";
+import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
@@ -25,29 +25,23 @@ describe("convertResponseErrors", () => {
                 docs: undefined,
                 error: {
                     fernFilepath: convertToFernFilepath({ relativeFilepath: "path/to/commons", casingsGenerator }),
-                    fernFilepathV2: convertToFernFilepathV2({ relativeFilepath: "path/to/commons", casingsGenerator }),
-                    name: "UnauthorizedError",
-                    nameV2: {
-                        originalValue: "UnauthorizedError",
-                        camelCase: "unauthorizedError",
-                        pascalCase: "UnauthorizedError",
-                        snakeCase: "unauthorized_error",
-                        screamingSnakeCase: "UNAUTHORIZED_ERROR",
-                    },
-                    nameV3: {
-                        unsafeName: {
-                            originalValue: "UnauthorizedError",
-                            camelCase: "unauthorizedError",
-                            pascalCase: "UnauthorizedError",
-                            snakeCase: "unauthorized_error",
-                            screamingSnakeCase: "UNAUTHORIZED_ERROR",
+                    name: {
+                        originalName: "UnauthorizedError",
+                        camelCase: {
+                            safeName: "unauthorizedError",
+                            unsafeName: "unauthorizedError",
                         },
-                        safeName: {
-                            originalValue: "UnauthorizedError",
-                            camelCase: "unauthorizedError",
-                            pascalCase: "UnauthorizedError",
-                            snakeCase: "unauthorized_error",
-                            screamingSnakeCase: "UNAUTHORIZED_ERROR",
+                        pascalCase: {
+                            safeName: "UnauthorizedError",
+                            unsafeName: "UnauthorizedError",
+                        },
+                        snakeCase: {
+                            safeName: "unauthorized_error",
+                            unsafeName: "unauthorized_error",
+                        },
+                        screamingSnakeCase: {
+                            safeName: "UNAUTHORIZED_ERROR",
+                            unsafeName: "UNAUTHORIZED_ERROR",
                         },
                     },
                 },
