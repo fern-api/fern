@@ -114,10 +114,10 @@ export class CliContext {
                 }
                 this.logger.info(upgradeMessage);
             }
-        } catch (error) {
+        } catch {
             logErrorMessage({
                 message: "Failed to check if upgrade is available",
-                error,
+                error: undefined,
                 logger: this.logger,
                 logLevel: LogLevel.Debug,
             });
