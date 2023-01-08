@@ -7,7 +7,7 @@ export async function generateGitIgnore(volume: Volume): Promise<void> {
         [
             "node_modules",
             ".DS_Store",
-            "types/",
+            "*.d.ts",
             "dist/",
             "",
             "# yarn berry",

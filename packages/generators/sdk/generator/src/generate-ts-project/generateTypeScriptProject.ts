@@ -6,6 +6,7 @@ import { generateEsbuildScript } from "./generateEsbuildScript";
 import { generateGitIgnore } from "./generateGitIgnore";
 import { generatePackageJson } from "./generatePackageJson";
 import { generatePrettierIgnore } from "./generatePrettierIgnore";
+import { generateStubTypeDeclarations } from "./generateStubTypeDeclarations";
 import { generateTsConfig } from "./generateTsConfig";
 import { writeProjectToVolume } from "./writeProjectToVolume";
 
@@ -44,4 +45,5 @@ export async function generateTypeScriptProject({
     await generatePrettierIgnore(volume);
     await generateGitIgnore(volume);
     await generateEsbuildScript({ volume, packageName });
+    await generateStubTypeDeclarations(volume);
 }

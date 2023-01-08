@@ -62,11 +62,17 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: ["dist", TYPES_DIRECTORY],
+        files: ["dist", "*.d.ts"],
         exports: {
-            ".": getExports(API_BUNDLE_FILENAME),
-            "./core": getExports(CORE_BUNDLE_FILENAME),
-            "./serialization": getExports(SERIALIZATION_BUNDLE_FILENAME),
+            ".": getExports(API_BUNDLE_FILENAME, {
+                pathToTypesFile: `./${TYPES_DIRECTORY}/index.d.ts`,
+            }),
+            "./core": getExports(CORE_BUNDLE_FILENAME, {
+                pathToTypesFile: `./${TYPES_DIRECTORY}/core/index.d.ts`,
+            }),
+            "./serialization": getExports(SERIALIZATION_BUNDLE_FILENAME, {
+                pathToTypesFile: `./${TYPES_DIRECTORY}/serialization/index.d.ts`,
+            }),
         },
         types: `./${TYPES_DIRECTORY}/index.d.ts`,
         scripts: {
@@ -97,12 +103,13 @@ export async function generatePackageJson({
     await volume.promises.writeFile(getPathToProjectFile("package.json"), JSON.stringify(packageJson, undefined, 4));
 }
 
-function getExports(filename: string) {
+function getExports(filename: string, { pathToTypesFile }: { pathToTypesFile: string }) {
     return {
         node: getPathToNodeDistFile(filename),
         import: getPathToBrowserEsmDistFile(filename),
         require: getPathToBrowserCjsDistFile(filename),
         default: getPathToBrowserCjsDistFile(filename),
+        types: pathToTypesFile,
     };
 }
 
