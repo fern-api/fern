@@ -2,7 +2,25 @@
 
 exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -1337,7 +1355,25 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
 
 exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -7208,7 +7244,25 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
 
 exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -8543,7 +8597,25 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
 
 exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -14414,7 +14486,25 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
 
 exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -15749,7 +15839,25 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
 
 exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -21620,7 +21728,25 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
 
 exports[`ir {"fixtureName":"simple"} 1`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",
@@ -27491,7 +27617,25 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
 
 exports[`ir {"fixtureName":"simple"} 2`] = `
 "{
-    "apiName": "my-api",
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
     "apiDocs": "foo bar baz",
     "auth": {
         "requirement": "ALL",

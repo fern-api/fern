@@ -2,7 +2,25 @@
 
 exports[`dependencies correctly incorporates dependencies 1`] = `
 "{
-    "apiName": "dependent",
+    "apiName": {
+        "originalName": "dependent",
+        "camelCase": {
+            "unsafeName": "dependent",
+            "safeName": "dependent"
+        },
+        "snakeCase": {
+            "unsafeName": "dependent",
+            "safeName": "dependent"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "DEPENDENT",
+            "safeName": "DEPENDENT"
+        },
+        "pascalCase": {
+            "unsafeName": "Dependent",
+            "safeName": "Dependent"
+        }
+    },
     "auth": {
         "requirement": "ALL",
         "schemes": []

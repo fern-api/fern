@@ -13,7 +13,7 @@ types:
     docs: "Complete representation of the API schema"
     properties:
       apiName:
-        type: string
+        type: commons.Name
         docs: This is the human readable unique id for the API.
       apiDisplayName: optional<string>
       apiDocs: optional<string>
