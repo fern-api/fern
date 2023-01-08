@@ -39,7 +39,7 @@ export async function generateIntermediateRepresentation({
     });
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig"> = {
-        apiName: workspace.name,
+        apiName: casingsGenerator.generateName(workspace.name),
         apiDisplayName: workspace.rootApiFile["display-name"],
         apiDocs: workspace.rootApiFile.docs,
         auth: convertApiAuth({

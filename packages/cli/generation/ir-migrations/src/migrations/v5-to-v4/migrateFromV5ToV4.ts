@@ -32,7 +32,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         const typeReferenceResolver = new TypeReferenceResolverImpl(v5);
         const errorResolver = new ErrorResolverImpl(v5);
         return {
-            apiName: v5.apiName,
+            apiName: v5.apiName.originalName,
             apiDisplayName: v5.apiDisplayName,
             apiDocs: v5.apiDocs,
             auth: convertAuth(v5.auth),
