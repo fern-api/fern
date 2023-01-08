@@ -228,7 +228,7 @@ jobs:
       - checkout
       - run:
           name: Publish ir sdks
-          command: npx fern-api generate --api ir-types-v4 --group sdks
+          command: npx fern-api generate --api ir-types-v5 --group sdks
 
 workflows:
   version: 2
