@@ -1,6 +1,6 @@
 from typing import Callable, Optional
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
@@ -26,7 +26,6 @@ class TypeReferenceToTypeHintConverter:
             ),
             primitive=self._get_type_hint_for_primitive,
             unknown=AST.TypeHint.any,
-            void=AST.TypeHint.none,
         )
 
     def _get_type_hint_for_container(

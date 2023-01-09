@@ -3,18 +3,6 @@ imports:
   problemV2: v2/problem.yml
 
 types:
-  StoreTracedTestCaseRequest:
-    properties:
-      result: submission.TestCaseResultWithStdout
-      traceResponses: list<submission.TraceResponse>
-
-  StoreTracedWorkspaceRequest:
-    properties:
-      workspaceRunDetails: submission.WorkspaceRunDetails
-      traceResponses:
-        type: list<submission.TraceResponse>
-        docs: the trace responses from the "server"
-
   Test:
     union:
       and: boolean
@@ -30,28 +18,36 @@ services:
           path: /store-test-submission-status/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request: submission.TestSubmissionStatus
+          request:
+            body:
+              type: submission.TestSubmissionStatus
           method: POST
 
         sendTestSubmissionUpdate:
           path: /store-test-submission-status-v2/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request: submission.TestSubmissionUpdate
+          request:
+            body:
+              type: submission.TestSubmissionUpdate
           method: POST
 
         updateWorkspaceSubmissionStatus:
           path: /store-workspace-submission-status/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request: submission.WorkspaceSubmissionStatus
+          request:
+            body:
+              type: submission.WorkspaceSubmissionStatus
           method: POST
 
         sendWorkspaceSubmissionUpdate:
           path: /store-workspace-submission-status-v2/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request: submission.WorkspaceSubmissionUpdate
+          request:
+            body:
+              type: submission.WorkspaceSubmissionUpdate
           method: POST
 
         storeTracedTestCase:
@@ -59,7 +55,12 @@ services:
           path-parameters:
             submissionId: submission.SubmissionId
             testCaseId: string
-          request: StoreTracedTestCaseRequest
+          request:
+            name: StoreTracedTestCaseRequest
+            body:
+              properties:
+                result: submission.TestCaseResultWithStdout
+                traceResponses: list<submission.TraceResponse>
           method: POST
 
         storeTracedTestCaseV2:
@@ -67,19 +68,28 @@ services:
           path-parameters:
             submissionId: submission.SubmissionId
             testCaseId: problemV2.TestCaseId
-          request: list<submission.TraceResponseV2>
+          request:
+            body:
+              type: list<submission.TraceResponseV2>
           method: POST
 
         storeTracedWorkspace:
           path: /store-workspace-trace/submission/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request: StoreTracedWorkspaceRequest
+          request:
+            name: StoreTracedWorkspaceRequest
+            body:
+              properties:
+                workspaceRunDetails: submission.WorkspaceRunDetails
+                traceResponses: list<submission.TraceResponse>
           method: POST
 
         storeTracedWorkspaceV2:
           path: /store-workspace-trace-v2/submission/{submissionId}
           path-parameters:
             submissionId: submission.SubmissionId
-          request: list<submission.TraceResponseV2>
+          request:
+            body:
+              type: list<submission.TraceResponseV2>
           method: POST

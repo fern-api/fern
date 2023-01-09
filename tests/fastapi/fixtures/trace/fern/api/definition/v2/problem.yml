@@ -158,7 +158,8 @@ types:
       nonVoid: NonVoidFunctionSignature
       voidThatTakesActualResult:
         type: VoidFunctionSignatureThatTakesActualResult
-        docs: Useful when specifying custom grading for a testcase where actualResult is defined.
+        docs: Useful when specifying custom grading for a testcase where actualResult is
+          defined.
   GetFunctionSignatureRequest:
     properties:
       functionSignature: FunctionSignature

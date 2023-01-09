@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Callable, Generic, Optional, Tuple, TypeVar
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, ExportStrategy, Filepath
 
@@ -49,7 +49,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         fern_filepath_parts = fern_filepath.get_as_list()
         return self._filepath_creator.generate_filepath_prefix() + tuple(
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case,
+                module_name=fern_filepath_part.snake_case.unsafe_name,
                 export_strategy=ExportStrategy.EXPORT_AS_NAMESPACE
                 if i < len(fern_filepath_parts) - 1
                 else ExportStrategy.EXPORT_ALL,

@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 from generator_exec.resources.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator

@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import ExportStrategy, Filepath
 
@@ -17,8 +17,8 @@ class TypeDeclarationReferencer(FastApiDeclarationReferencer[ir_types.DeclaredTy
                     export_strategy=ExportStrategy.EXPORT_ALL,
                 ),
             ),
-            file=Filepath.FilepathPart(module_name=name.name_v_2.snake_case),
+            file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name
+        return name.name.pascal_case.unsafe_name

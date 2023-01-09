@@ -22,17 +22,7 @@ class CreateProblemRequest(pydantic.BaseModel):
     input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
     output_type: VariableType = pydantic.Field(alias="outputType")
     testcases: typing.List[TestCaseWithExpectedResult]
-    method_name: str = pydantic.Field(
-        alias="methodName",
-        description=(
-            "The name of the `method` that the student has to complete.\n"
-            "The method name cannot include the following characters:\n"
-            "  - Greater Than `>`\n"
-            "  - Less Than `<``\n"
-            "  - Equals `=`\n"
-            "  - Period `.`\n"
-        ),
-    )
+    method_name: str = pydantic.Field(alias="methodName")
 
     class Partial(typing_extensions.TypedDict):
         problem_name: typing_extensions.NotRequired[str]

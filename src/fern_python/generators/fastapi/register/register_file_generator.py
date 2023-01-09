@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI, Starlette
@@ -24,7 +24,7 @@ class RegisterFileGenerator:
                 service=service,
                 is_in_development=service.availability.status == ir_types.AvailabilityStatus.IN_DEVELOPMENT,
             )
-            for service in self._context.ir.services.http
+            for service in self._context.ir.services
         ]
 
     def generate_registry_file(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:

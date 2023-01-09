@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
@@ -27,15 +27,33 @@ class FastApiGeneratorContext(ABC):
         self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
 
     @abstractmethod
-    def get_filepath_for_service(self, service_name: ir_types.services.DeclaredServiceName) -> Filepath:
+    def get_filepath_for_service(self, service_name: ir_types.DeclaredServiceName) -> Filepath:
         ...
 
     @abstractmethod
-    def get_class_name_for_service(self, service_name: ir_types.services.DeclaredServiceName) -> str:
+    def get_class_name_for_service(self, service_name: ir_types.DeclaredServiceName) -> str:
         ...
 
     @abstractmethod
-    def get_reference_to_service(self, service_name: ir_types.services.DeclaredServiceName) -> AST.ClassReference:
+    def get_reference_to_service(self, service_name: ir_types.DeclaredServiceName) -> AST.ClassReference:
+        ...
+
+    @abstractmethod
+    def get_filepath_for_inlined_request(
+        self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
+    ) -> Filepath:
+        ...
+
+    @abstractmethod
+    def get_class_name_for_inlined_request(
+        self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
+    ) -> str:
+        ...
+
+    @abstractmethod
+    def get_reference_to_inlined_request(
+        self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
+    ) -> AST.ClassReference:
         ...
 
     @abstractmethod

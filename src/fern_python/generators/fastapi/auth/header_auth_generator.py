@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
@@ -8,7 +8,7 @@ from .abstract_auth_generator import AbstractAuthGenerator
 
 
 class HeaderAuthGenerator(AbstractAuthGenerator):
-    def __init__(self, context: FastApiGeneratorContext, http_header: ir_types.services.HttpHeader):
+    def __init__(self, context: FastApiGeneratorContext, http_header: ir_types.HttpHeader):
         super().__init__(context=context)
         self._http_header = http_header
         self._context = context

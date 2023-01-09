@@ -31,7 +31,6 @@ types:
 services:
   http:
     PlaylistCrudService:
-      availability: in-development
       auth: true
       base-path: /v2/playlist/{serviceParam}
       path-parameters:
@@ -48,10 +47,12 @@ services:
           docs: Returns the user's playlists
           method: GET
           path: /all
-          query-parameters:
-            limit: optional<integer>
-            otherField: string
           response: list<Playlist>
+          request:
+            name: GetPlaylistsRequest
+            query-parameters:
+              limit: optional<integer>
+              otherField: string
 
         getPlaylist:
           docs: Returns a playlist
@@ -71,7 +72,9 @@ services:
           path: /{playlistId}
           path-parameters:
             playlistId: PlaylistId
-          request: optional<UpdatePlaylistRequest>
+          request:
+            body:
+              type: optional<UpdatePlaylistRequest>
           response: optional<Playlist>
           errors:
             - PlaylistIdNotFoundError

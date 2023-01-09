@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 
@@ -17,5 +17,5 @@ class AuthEndpointParameter(EndpointParameter):
         return SecurityFileGenerator.get_reference_to_fern_auth_dependency(context=self._context)
 
     @staticmethod
-    def get_variable_name_of_path_parameter(path_parameter: ir_types.services.PathParameter) -> str:
-        return path_parameter.name.snake_case
+    def get_variable_name_of_path_parameter(path_parameter: ir_types.PathParameter) -> str:
+        return path_parameter.name.snake_case.unsafe_name

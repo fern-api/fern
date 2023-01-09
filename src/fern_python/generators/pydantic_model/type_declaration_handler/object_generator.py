@@ -1,6 +1,6 @@
 from typing import Optional
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import SourceFile
 
@@ -34,8 +34,8 @@ class ObjectGenerator(AbstractTypeGenerator):
         ) as pydantic_model:
             for property in self._object.properties:
                 pydantic_model.add_field(
-                    name=property.name.snake_case,
-                    pascal_case_field_name=property.name.pascal_case,
+                    name=property.name.name.snake_case.unsafe_name,
+                    pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
                     type_reference=property.value_type,
                     json_field_name=property.name.wire_value,
                     description=property.docs,

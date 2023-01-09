@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.external_dependencies import FastAPI
@@ -10,7 +10,7 @@ from .endpoint_generator import EndpointGenerator
 class ServiceGenerator:
     _INIT_FERN_ROUTER_ARGUMENT = "router"
 
-    def __init__(self, context: FastApiGeneratorContext, service: ir_types.services.HttpService):
+    def __init__(self, context: FastApiGeneratorContext, service: ir_types.HttpService):
         self._context = context
         self._service = service
         self._endpoint_generators = [
@@ -38,7 +38,7 @@ class ServiceGenerator:
         self,
         source_file: SourceFile,
         context: FastApiGeneratorContext,
-        service: ir_types.services.HttpService,
+        service: ir_types.HttpService,
     ) -> AST.ClassDeclaration:
         class_name = context.get_class_name_for_service(service_name=service.name)
         return AST.ClassDeclaration(
@@ -48,7 +48,7 @@ class ServiceGenerator:
                 "\n".join(
                     [
                         f"{class_name} is an abstract class containing the methods that your",
-                        f"{service.name.name} implementation should implement.",
+                        f"{service.name.name.pascal_case.unsafe_name} implementation should implement.",
                         "",
                         "Each method is associated with an API route, which will be registered",
                         "with FastAPI when you register your implementation using Fern's register()",

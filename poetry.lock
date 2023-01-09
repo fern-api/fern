@@ -144,8 +144,8 @@ url = "https://pypi-dev.buildwithfern.com"
 reference = "fern-dev"
 
 [[package]]
-name = "fern-fern-ir-v1-model"
-version = "0.0.13"
+name = "fern-fern-ir-model"
+version = "0.0.635"
 description = ""
 category = "main"
 optional = false
@@ -222,11 +222,11 @@ testing = ["flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pep517",
 
 [[package]]
 name = "iniconfig"
-version = "1.1.1"
-description = "iniconfig: brain-dead simple config-ini parsing"
+version = "2.0.0"
+description = "brain-dead simple config-ini parsing"
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
 
 [[package]]
 name = "isort"
@@ -290,7 +290,7 @@ setuptools = "*"
 
 [[package]]
 name = "packaging"
-version = "22.0"
+version = "23.0"
 description = "Core utilities for Python packages"
 category = "dev"
 optional = false
@@ -638,7 +638,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "c88f836c07344ac3a8c98f9234d481708c731775722f623ab9f5b1fe36bc9204"
+content-hash = "849012b4e65ea5e0d38f98c6aab99f78e66861be740b31cfe00c3fb1e5be8a0d"
 
 [metadata.files]
 attrs = [
@@ -699,9 +699,9 @@ fern-fern-generator-exec = [
     {file = "fern-fern-generator-exec-0.3.0.tar.gz", hash = "sha256:f894c25007e051c8ccb627ac8e9616b35a1d6342a0426a51ffe9f13063f1c57c"},
     {file = "fern_fern_generator_exec-0.3.0-py3-none-any.whl", hash = "sha256:02406f828b38c6ed176a26bcd19344c53ac27b76ea79ebefb04ffecc594baf69"},
 ]
-fern-fern-ir-v1-model = [
-    {file = "fern_fern_ir_v1_model-0.0.13-py3-none-any.whl", hash = "sha256:c4f166c39fea933711d7dfb5df971ae31c036e82eddaa9fbe3be32c2868ec6e5"},
-    {file = "fern_fern_ir_v1_model-0.0.13.tar.gz", hash = "sha256:c28c67b78f166b09b4b9dc64c44742bc55f37f822679aad878183c3f301fdc7d"},
+fern-fern-ir-model = [
+    {file = "fern-fern-ir-model-0.0.635.tar.gz", hash = "sha256:6ff8981d2227ac6383154779c7e1bff052e156dd82758d6e2420bf9d613f4467"},
+    {file = "fern_fern_ir_model-0.0.635-py3-none-any.whl", hash = "sha256:6d9a2a1b8e54bb6f53ac16c7fcea043e5116ef3adf48a36c14b8e1d49a6a3fcd"},
 ]
 filelock = [
     {file = "filelock-3.9.0-py3-none-any.whl", hash = "sha256:f58d535af89bb9ad5cd4df046f741f8553a418c01a7856bf0d173bbc9f6bd16d"},
@@ -724,8 +724,8 @@ importlib-metadata = [
     {file = "importlib_metadata-4.2.0.tar.gz", hash = "sha256:b7e52a1f8dec14a75ea73e0891f3060099ca1d8e6a462a4dff11c3e119ea1b31"},
 ]
 iniconfig = [
-    {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
-    {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
+    {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
+    {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
 ]
 isort = [
     {file = "isort-5.11.4-py3-none-any.whl", hash = "sha256:c033fd0edb91000a7f09527fe5c75321878f98322a77ddcc81adbd83724afb7b"},
@@ -769,8 +769,8 @@ nodeenv = [
     {file = "nodeenv-1.7.0.tar.gz", hash = "sha256:e0e7f7dfb85fc5394c6fe1e8fa98131a2473e04311a45afb6508f7cf1836fa2b"},
 ]
 packaging = [
-    {file = "packaging-22.0-py3-none-any.whl", hash = "sha256:957e2148ba0e1a3b282772e791ef1d8083648bc131c8ab0c1feba110ce1146c3"},
-    {file = "packaging-22.0.tar.gz", hash = "sha256:2198ec20bd4c017b8f9717e00f0c8714076fc2fd93816750ab48e2c41de2cfd3"},
+    {file = "packaging-23.0-py3-none-any.whl", hash = "sha256:714ac14496c3e68c99c29b00845f7a2b85f3bb6f1078fd9f72fd20f0570002b2"},
+    {file = "packaging-23.0.tar.gz", hash = "sha256:b6ad297f8907de0fa2fe1ccbd26fdaf387f5f47c7275fedf8cce89f99446cf97"},
 ]
 pathspec = [
     {file = "pathspec-0.10.3-py3-none-any.whl", hash = "sha256:3c95343af8b756205e2aba76e843ba9520a24dd84f68c22b9f93251507509dd6"},

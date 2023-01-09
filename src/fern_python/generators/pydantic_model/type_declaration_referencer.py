@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import Filepath
@@ -16,8 +16,8 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
             directories=self._get_directories_for_fern_filepath(
                 fern_filepath=name.fern_filepath,
             ),
-            file=Filepath.FilepathPart(module_name=name.name_v_2.snake_case),
+            file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name
+        return name.name.pascal_case.unsafe_name

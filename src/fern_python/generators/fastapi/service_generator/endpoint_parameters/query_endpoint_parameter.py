@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
@@ -9,7 +9,7 @@ from .endpoint_parameter import EndpointParameter
 
 
 class QueryEndpointParameter(EndpointParameter):
-    def __init__(self, context: FastApiGeneratorContext, query_parameter: ir_types.services.QueryParameter):
+    def __init__(self, context: FastApiGeneratorContext, query_parameter: ir_types.QueryParameter):
         super().__init__(context=context)
         self._query_parameter = query_parameter
 
@@ -40,5 +40,5 @@ class QueryEndpointParameter(EndpointParameter):
         return convert_to_singular_type(self._context, self._query_parameter.value_type)
 
     @staticmethod
-    def get_variable_name_of_query_parameter(query_parameter: ir_types.services.QueryParameter) -> str:
-        return query_parameter.name.snake_case
+    def get_variable_name_of_query_parameter(query_parameter: ir_types.QueryParameter) -> str:
+        return query_parameter.name.name.snake_case.unsafe_name

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Tuple
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import ExportStrategy, Filepath
@@ -19,7 +19,7 @@ class FernFilepathCreator(ABC):
             download_files=lambda: EMPTY_DIRECTORIES,
             publish=lambda x: (
                 Filepath.DirectoryFilepathPart(
-                    module_name=self._ir.api_name, export_strategy=ExportStrategy.EXPORT_ALL
+                    module_name=self._ir.api_name.snake_case.unsafe_name, export_strategy=ExportStrategy.EXPORT_ALL
                 ),
                 Filepath.DirectoryFilepathPart(
                     module_name=self._get_generator_name_for_containing_folder(),

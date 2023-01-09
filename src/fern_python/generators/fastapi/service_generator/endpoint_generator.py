@@ -1,6 +1,6 @@
 from typing import List
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
@@ -10,9 +10,10 @@ from ..context import FastApiGeneratorContext
 from .endpoint_parameters import (
     AuthEndpointParameter,
     EndpointParameter,
+    InlinedRequestEndpointParameter,
     PathEndpointParameter,
     QueryEndpointParameter,
-    RequestEndpointParameter,
+    ReferencedRequestEndpointParameter,
 )
 
 
@@ -22,8 +23,8 @@ class EndpointGenerator:
     def __init__(
         self,
         *,
-        service: ir_types.services.HttpService,
-        endpoint: ir_types.services.HttpEndpoint,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
         context: FastApiGeneratorContext,
     ):
         self._service = service
@@ -31,11 +32,17 @@ class EndpointGenerator:
         self._context = context
 
         self._parameters: List[EndpointParameter] = []
-        if endpoint.request.type_v_2 is not None:
+        if endpoint.request_body is not None:
             self._parameters.append(
-                RequestEndpointParameter(
-                    context=context,
-                    request_type=endpoint.request.type_v_2,
+                endpoint.request_body.visit(
+                    inlined_request_body=lambda request: InlinedRequestEndpointParameter(
+                        context=context,
+                        request=request,
+                        service_name=self._service.name,
+                    ),
+                    reference=lambda request: ReferencedRequestEndpointParameter(
+                        context=context, request_type=request.request_body_type
+                    ),
                 )
             )
         for path_parameter in service.path_parameters:
@@ -58,13 +65,13 @@ class EndpointGenerator:
         )
 
     def _get_return_type(self) -> AST.TypeHint:
-        response_type = self._endpoint.response.type_v_2
+        response_type = self._endpoint.response.type
         if response_type is None:
             return AST.TypeHint.none()
         return self._context.pydantic_generator_context.get_type_hint_for_type_reference(response_type)
 
     def _get_endpoint_path(self) -> str:
-        base_path = self._service.base_path_v_2
+        base_path = self._service.base_path
         service_part = (
             base_path.head
             + "".join(
@@ -88,7 +95,7 @@ class EndpointGenerator:
             endpoint_path = endpoint_path[:-1]
         return endpoint_path
 
-    def _get_path_parameter_part_as_str(self, path_parameter: ir_types.services.PathParameter, tail: str) -> str:
+    def _get_path_parameter_part_as_str(self, path_parameter: ir_types.PathParameter, tail: str) -> str:
         path = ""
         path += "{" + PathEndpointParameter.get_variable_name_of_path_parameter(path_parameter) + "}"
         path += tail
@@ -151,7 +158,7 @@ class EndpointGenerator:
         writer.write_line("(")
         with writer.indent():
             writer.write_line(f'path="{self._get_endpoint_path()}",')
-            if self._endpoint.response.type_v_2 is not None:
+            if self._endpoint.response.type is not None:
                 writer.write("response_model=")
                 writer.write_node(self._get_return_type())
                 writer.write_line(",")
@@ -163,7 +170,7 @@ class EndpointGenerator:
             writer.write_line(",")
             writer.write("**")
             default_tag = ".".join(
-                [package.unsafe_name.snake_case for package in self._service.name.fern_filepath_v_2.get_as_list()]
+                [package.snake_case.unsafe_name for package in self._service.name.fern_filepath.get_as_list()]
             )
             writer.write_node(
                 self._context.core_utilities.get_route_args(
@@ -246,7 +253,7 @@ class EndpointGenerator:
         )
 
     def _get_method_name(self) -> str:
-        return self._endpoint.name.snake_case
+        return self._endpoint.name.get_as_name().snake_case.unsafe_name
 
     def _get_reference_to_method_on_cls(self) -> str:
         return f"cls.{self._get_method_name()}"
@@ -303,7 +310,7 @@ class EndpointGenerator:
             writer.write_line(f"raise {CAUGHT_ERROR_NAME}")
 
 
-def convert_http_method_to_fastapi_method_name(http_method: ir_types.services.HttpMethod) -> str:
+def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod) -> str:
     return http_method.visit(
         get=lambda: "get",
         post=lambda: "post",

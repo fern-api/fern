@@ -81,10 +81,10 @@ class FernHTTPExceptionGenerator:
             error_discriminant = self._get_error_discriminant()
             body_pydantic_model.add_field(
                 PydanticField(
-                    name=error_discriminant.name.safe_name.snake_case,
+                    name=error_discriminant.name.snake_case.unsafe_name,
                     type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                     json_field_name=error_discriminant.wire_value,
-                    pascal_case_field_name=error_discriminant.name.unsafe_name.pascal_case,
+                    pascal_case_field_name=error_discriminant.name.pascal_case.unsafe_name,
                 )
             )
             body_pydantic_model.add_field(
@@ -96,8 +96,10 @@ class FernHTTPExceptionGenerator:
                             qualified_name_excluding_import=("UUID",),
                         )
                     ),
-                    json_field_name=self._context.ir.constants_v_2.errors.error_instance_id_key.wire_value,
-                    pascal_case_field_name=self._context.ir.constants_v_2.errors.error_instance_id_key.pascal_case,
+                    json_field_name=self._context.ir.constants.error_instance_id_key.wire_value,
+                    pascal_case_field_name=(
+                        self._context.ir.constants.error_instance_id_key.name.pascal_case.unsafe_name
+                    ),
                     default_factory=AST.Expression(
                         AST.Reference(
                             import_=AST.ReferenceImport(module=AST.Module.built_in("uuid")),
@@ -110,8 +112,8 @@ class FernHTTPExceptionGenerator:
                 PydanticField(
                     name=self._get_error_content_field_name(),
                     type_hint=AST.TypeHint.optional(AST.TypeHint.any()),
-                    json_field_name=self._context.ir.constants_v_2.errors.error_content_key.wire_value,
-                    pascal_case_field_name=self._context.ir.constants_v_2.errors.error_content_key.pascal_case,
+                    json_field_name=self._get_content_property().wire_value,
+                    pascal_case_field_name=self._get_content_property().name.pascal_case.unsafe_name,
                 )
             )
             return body_pydantic_model.to_reference()
@@ -129,10 +131,18 @@ class FernHTTPExceptionGenerator:
         )
 
     def _get_error_instance_id_field_name(self) -> str:
-        return self._context.ir.constants_v_2.errors.error_instance_id_key.snake_case
+        return self._context.ir.constants.error_instance_id_key.name.snake_case.unsafe_name
 
     def _get_error_content_field_name(self) -> str:
-        return self._context.ir.constants_v_2.errors.error_content_key.snake_case
+        return self._get_content_property().name.snake_case.unsafe_name
+
+    def _get_content_property(self) -> NameAndWireValue:
+        error_discrimination_strategy = self._context.ir.error_discrimination_strategy.get_as_union()
+        if error_discrimination_strategy.type != "property":
+            raise RuntimeError(
+                "Error discrimination strategy is not yet supported: " + error_discrimination_strategy.type
+            )
+        return error_discrimination_strategy.content_property
 
     def _create_json_response_body_writer(self, reference_to_body: AST.ClassReference) -> AST.CodeWriter:
         def write_body(writer: AST.NodeWriter) -> None:
@@ -145,7 +155,7 @@ class FernHTTPExceptionGenerator:
                     class_=reference_to_body,
                     kwargs=[
                         (
-                            self._get_error_discriminant().name.safe_name.snake_case,
+                            self._get_error_discriminant().name.snake_case.unsafe_name,
                             AST.Expression("self." + self.FernHTTPException.NAME_MEMBER),
                         ),
                         (

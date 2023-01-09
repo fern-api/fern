@@ -1,6 +1,6 @@
 from typing import Optional
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, SourceFile
 
@@ -35,7 +35,7 @@ class AliasGenerator(AbstractTypeGenerator):
         if not self._custom_config.wrapped_aliases:
             self._source_file.add_declaration(
                 declaration=AST.TypeAliasDeclaration(
-                    name=self._name.name_v_3.safe_name.pascal_case,
+                    name=self._name.name.pascal_case.unsafe_name,
                     type_hint=self._context.get_type_hint_for_type_reference(self._alias.alias_of),
                 ),
                 should_export=True,
@@ -73,7 +73,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 optional=self._get_getter_name,
                 literal=self.visit_literal,
             ),
-            named=lambda type_name: "from_" + type_name.name_v_2.snake_case,
+            named=lambda type_name: "from_" + type_name.name.snake_case.unsafe_name,
             primitive=lambda primitive: primitive.visit(
                 integer=lambda: "from_int",
                 double=lambda: "from_float",
@@ -84,7 +84,6 @@ class AliasGenerator(AbstractTypeGenerator):
                 uuid=lambda: "from_uuid",
             ),
             unknown=lambda: "from_",
-            void=lambda: "from_",
         )
 
     def _get_getter_name(self, alias_of: ir_types.TypeReference) -> str:
@@ -96,7 +95,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 optional=self._get_getter_name,
                 literal=self.visit_literal,
             ),
-            named=lambda type_name: "get_as_" + type_name.name_v_2.snake_case,
+            named=lambda type_name: "get_as_" + type_name.name.snake_case.unsafe_name,
             primitive=lambda primitive: primitive.visit(
                 integer=lambda: "get_as_int",
                 double=lambda: "get_as_float",
@@ -107,7 +106,6 @@ class AliasGenerator(AbstractTypeGenerator):
                 uuid=lambda: "get_as_uuid",
             ),
             unknown=lambda: "get_value",
-            void=lambda: "get_value",
         )
 
     def visit_literal(self, wrapped_type: ir_types.Literal) -> str:

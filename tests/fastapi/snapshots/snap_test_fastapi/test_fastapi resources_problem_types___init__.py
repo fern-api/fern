@@ -4,7 +4,6 @@ from .create_problem_error import CreateProblemError
 from .create_problem_request import CreateProblemRequest
 from .create_problem_response import CreateProblemResponse
 from .generic_create_problem_error import GenericCreateProblemError
-from .get_default_starter_files_request import GetDefaultStarterFilesRequest
 from .get_default_starter_files_response import GetDefaultStarterFilesResponse
 from .problem_description import ProblemDescription
 from .problem_description_board import ProblemDescriptionBoard
@@ -18,7 +17,6 @@ __all__ = [
     "CreateProblemRequest",
     "CreateProblemResponse",
     "GenericCreateProblemError",
-    "GetDefaultStarterFilesRequest",
     "GetDefaultStarterFilesResponse",
     "ProblemDescription",
     "ProblemDescriptionBoard",

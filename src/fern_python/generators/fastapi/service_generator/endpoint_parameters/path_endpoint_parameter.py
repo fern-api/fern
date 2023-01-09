@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
@@ -9,7 +9,7 @@ from .endpoint_parameter import EndpointParameter
 
 
 class PathEndpointParameter(EndpointParameter):
-    def __init__(self, context: FastApiGeneratorContext, path_parameter: ir_types.services.PathParameter):
+    def __init__(self, context: FastApiGeneratorContext, path_parameter: ir_types.PathParameter):
         super().__init__(context=context)
         self._path_parameter = path_parameter
 
@@ -23,5 +23,5 @@ class PathEndpointParameter(EndpointParameter):
         return FastAPI.Path
 
     @staticmethod
-    def get_variable_name_of_path_parameter(path_parameter: ir_types.services.PathParameter) -> str:
-        return path_parameter.name.snake_case
+    def get_variable_name_of_path_parameter(path_parameter: ir_types.PathParameter) -> str:
+        return path_parameter.name.snake_case.unsafe_name

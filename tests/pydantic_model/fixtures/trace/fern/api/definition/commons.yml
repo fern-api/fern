@@ -18,7 +18,8 @@ types:
     properties:
       valueType: VariableType
       isFixedLength:
-        docs: Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+        docs: Whether this list is fixed-size (for languages that supports fixed-size
+          lists). Defaults to false.
         type: optional<boolean>
   MapType:
     properties:

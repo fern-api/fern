@@ -3,7 +3,7 @@ imports:
   problemV2: ./v2/problem.yml
 types:
   SubmissionId:
-    type: string
+    type: uuid
   ShareId:
     type: string
   SubmissionRequest:
@@ -55,7 +55,8 @@ types:
     union:
       buildingExecutor:
         type: BuildingExecutorResponse
-        docs: Statuses if an executor for the session isn't ready (Before RunningResponse).
+        docs: Statuses if an executor for the session isn't ready (Before
+          RunningResponse).
       running:
         type: RunningResponse
         docs: Sent once a test submission is executing.
@@ -412,7 +413,11 @@ types:
   ExecutionSessionState:
     properties:
       lastTimeContacted: optional<string>
-      sessionId: string
+      sessionId:
+        type: string
+        docs: >
+          The auto-generated session id.
+          Formatted as a uuid.
       isWarmInstance: boolean
       awsTaskId: optional<string>
       language: commons.Language
@@ -447,7 +452,8 @@ services:
           response: ExecutionSessionResponse
 
         getExecutionSession:
-          docs: Returns execution server URL for session. Returns empty if session isn't registered.
+          docs: Returns execution server URL for session. Returns empty if session isn't
+            registered.
           method: GET
           path: /{sessionId}
           path-parameters:

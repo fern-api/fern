@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
@@ -14,6 +14,7 @@ from .auth import SecurityFileGenerator
 from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
 from .error_generator import ErrorGenerator
 from .fern_http_exception import FernHTTPExceptionGenerator
+from .inlined_request_generator import InlinedRequestGenerator
 from .register import RegisterFileGenerator
 from .service_generator import ServiceGenerator
 
@@ -37,7 +38,7 @@ class FastApiGenerator(AbstractGenerator):
             context=context.pydantic_generator_context,
         )
 
-        for service in ir.services.http:
+        for service in ir.services:
             self._generate_service(
                 context=context,
                 ir=ir,
@@ -77,7 +78,7 @@ class FastApiGenerator(AbstractGenerator):
         context: FastApiGeneratorContext,
         ir: ir_types.IntermediateRepresentation,
         generator_exec_wrapper: GeneratorExecWrapper,
-        service: ir_types.services.HttpService,
+        service: ir_types.HttpService,
         project: Project,
     ) -> None:
         filepath = context.get_filepath_for_service(service.name)
@@ -85,6 +86,21 @@ class FastApiGenerator(AbstractGenerator):
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         ) as source_file:
             ServiceGenerator(context=context, service=service).generate(source_file=source_file)
+
+        for endpoint in service.endpoints:
+            if endpoint.request_body is not None:
+                request_body = endpoint.request_body.get_as_union()
+                if request_body.type == "inlinedRequestBody":
+                    with SourceFileGenerator.generate(
+                        project=project,
+                        filepath=context.get_filepath_for_inlined_request(
+                            service_name=service.name, request=request_body
+                        ),
+                        generator_exec_wrapper=generator_exec_wrapper,
+                    ) as source_file:
+                        InlinedRequestGenerator(context=context, request=request_body).generate(
+                            source_file=source_file,
+                        )
 
     def _generate_error(
         self,

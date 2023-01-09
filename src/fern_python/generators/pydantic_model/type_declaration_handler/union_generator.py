@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
@@ -56,7 +56,7 @@ class UnionGenerator(AbstractTypeGenerator):
             for single_union_type in self._union.types:
 
                 with PydanticModel(
-                    name=single_union_type.discriminant_value_v_2.name.safe_name.pascal_case,
+                    name=single_union_type.discriminant_value.name.pascal_case.safe_name,
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
@@ -81,8 +81,8 @@ class UnionGenerator(AbstractTypeGenerator):
                     if shape.properties_type == "singleProperty":
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
-                                name=shape.name.snake_case,
-                                pascal_case_field_name=shape.name.pascal_case,
+                                name=shape.name.name.snake_case.unsafe_name,
+                                pascal_case_field_name=shape.name.name.pascal_case.unsafe_name,
                                 json_field_name=shape.name.wire_value,
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
@@ -90,7 +90,7 @@ class UnionGenerator(AbstractTypeGenerator):
 
                     factory_declaration.add_method(
                         AST.FunctionDeclaration(
-                            name=single_union_type.discriminant_value_v_2.name.safe_name.snake_case,
+                            name=single_union_type.discriminant_value.name.snake_case.safe_name,
                             signature=AST.FunctionSignature(
                                 parameters=single_union_type.shape.visit(
                                     same_properties_as_object=lambda type_name: [
@@ -174,8 +174,8 @@ class UnionGenerator(AbstractTypeGenerator):
                 get_visit_method(
                     items=[
                         VisitableItem(
-                            parameter_name=single_union_type.discriminant_value_v_2.name.safe_name.snake_case,
-                            expected_value=f'"{single_union_type.discriminant_value_v_2.wire_value}"',
+                            parameter_name=single_union_type.discriminant_value.name.snake_case.safe_name,
+                            expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
                             visitor_argument=single_union_type.shape.visit(
                                 same_properties_as_object=lambda type_name: VisitorArgument(
                                     expression=AST.Expression("self.__root__"),
@@ -184,7 +184,9 @@ class UnionGenerator(AbstractTypeGenerator):
                                     ),
                                 ),
                                 single_property=lambda property: VisitorArgument(
-                                    expression=AST.Expression(f"self.__root__.{property.name.snake_case}"),
+                                    expression=AST.Expression(
+                                        f"self.__root__.{get_field_name_for_single_property(property)}"
+                                    ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(property.type),
                                 ),
                                 no_properties=lambda: None,
@@ -248,7 +250,7 @@ class UnionGenerator(AbstractTypeGenerator):
                 + single_union_type.shape.visit(
                     same_properties_as_object=lambda type_name: [],
                     single_property=lambda property: [
-                        (property.name.snake_case, AST.Expression(BUILDER_ARGUMENT_NAME))
+                        (get_field_name_for_single_property(property), AST.Expression(BUILDER_ARGUMENT_NAME))
                     ],
                     no_properties=lambda: [],
                 ),
@@ -269,20 +271,24 @@ class UnionGenerator(AbstractTypeGenerator):
     ) -> PydanticField:
         return PydanticField(
             name=self._get_discriminant_attr_name(),
-            pascal_case_field_name=self._union.discriminant_v_2.pascal_case,
+            pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
             type_hint=AST.TypeHint.literal(self._get_discriminant_value_for_single_union_type(single_union_type)),
-            json_field_name=self._union.discriminant_v_2.wire_value,
+            json_field_name=self._union.discriminant.wire_value,
         )
 
     def _get_discriminant_attr_name(self) -> str:
-        return self._union.discriminant_v_2.snake_case
+        return self._union.discriminant.name.snake_case.unsafe_name
 
     def _get_discriminant_value_for_single_union_type(
         self,
         single_union_type: ir_types.SingleUnionType,
     ) -> AST.Expression:
-        return AST.Expression(f'"{single_union_type.discriminant_value_v_2.wire_value}"')
+        return AST.Expression(f'"{single_union_type.discriminant_value.wire_value}"')
 
 
 def assert_never(arg: Never) -> Never:
     raise AssertionError("Expected code to be unreachable")
+
+
+def get_field_name_for_single_property(property: ir_types.SingleUnionTypeProperty) -> str:
+    return property.name.name.snake_case.unsafe_name

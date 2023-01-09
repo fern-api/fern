@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST
 
@@ -6,9 +6,7 @@ from ..context import FastApiGeneratorContext
 
 
 class ServiceInitializer:
-    def __init__(
-        self, service: ir_types.services.HttpService, context: FastApiGeneratorContext, is_in_development: bool
-    ):
+    def __init__(self, service: ir_types.HttpService, context: FastApiGeneratorContext, is_in_development: bool):
         self._service = service
         self._context = context
         self.is_in_development = is_in_development
@@ -23,4 +21,4 @@ class ServiceInitializer:
         )
 
     def get_parameter_name(self) -> str:
-        return "_".join(part.snake_case for part in self._service.name.fern_filepath.get_as_list())
+        return "_".join(part.snake_case.unsafe_name for part in self._service.name.fern_filepath.get_as_list())

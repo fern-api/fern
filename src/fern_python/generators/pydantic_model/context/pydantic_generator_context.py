@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, Optional, Set, Tuple
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, Filepath
 
@@ -55,6 +55,6 @@ class HashableDeclaredTypeName:
     @staticmethod
     def of(type_name: ir_types.DeclaredTypeName) -> HashableDeclaredTypeName:
         return HashableDeclaredTypeName(
-            fern_filepath=tuple(part.original_value for part in type_name.fern_filepath.get_as_list()),
-            name=type_name.name,
+            fern_filepath=tuple(part.original_name for part in type_name.fern_filepath.get_as_list()),
+            name=type_name.name.original_name,
         )

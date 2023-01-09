@@ -1,4 +1,4 @@
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, SourceFile
 
@@ -26,11 +26,11 @@ class ErrorGenerator:
                             AST.FunctionParameter(
                                 name=ErrorGenerator._BODY_PARAMETER_NAME,
                                 type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                    self._error.type_v_3
+                                    self._error.type
                                 ),
                             )
                         ]
-                        if self._error.type_v_3 is not None
+                        if self._error.type is not None
                         else [],
                     ),
                     body=AST.CodeWriter(self._write_constructor_body),
@@ -42,10 +42,8 @@ class ErrorGenerator:
         writer.write_node(
             self._context.core_utilities.exceptions.FernHTTPException.create(
                 status_code=AST.Expression(f"{self._error.status_code}"),
-                name=AST.Expression(f'"{self._error.discriminant_value_v_4.wire_value}"'),
-                content=AST.Expression(ErrorGenerator._BODY_PARAMETER_NAME)
-                if self._error.type_v_3 is not None
-                else None,
+                name=AST.Expression(f'"{self._error.discriminant_value.wire_value}"'),
+                content=AST.Expression(ErrorGenerator._BODY_PARAMETER_NAME) if self._error.type is not None else None,
                 is_super_call=True,
             )
         )

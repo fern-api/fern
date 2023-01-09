@@ -1,6 +1,6 @@
 from typing import Optional
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, SourceFile
 
@@ -25,7 +25,7 @@ class EnumGenerator(AbstractTypeGenerator):
 
     def generate(self) -> None:
         enum_class = AST.ClassDeclaration(
-            name=self._name.name,
+            name=self._get_class_name(),
             extends=[
                 AST.ClassReference(
                     qualified_name_excluding_import=("str",),
@@ -44,7 +44,7 @@ class EnumGenerator(AbstractTypeGenerator):
             enum_class.add_class_var(
                 AST.VariableDeclaration(
                     name=self._get_class_var_name(value),
-                    initializer=AST.Expression(f'"{value.value}"'),
+                    initializer=AST.Expression(f'"{value.name.wire_value}"'),
                     docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                 )
             )
@@ -54,7 +54,7 @@ class EnumGenerator(AbstractTypeGenerator):
                 items=[
                     VisitableItem(
                         parameter_name=self._get_visitor_parameter_name_for_enum_value(value),
-                        expected_value=f"{self._name.name}.{self._get_class_var_name(value)}",
+                        expected_value=f"{self._get_class_name()}.{self._get_class_var_name(value)}",
                         visitor_argument=None,
                     )
                     for value in self._enum.values
@@ -65,7 +65,10 @@ class EnumGenerator(AbstractTypeGenerator):
         )
 
     def _get_class_var_name(self, enum_value: ir_types.EnumValue) -> str:
-        return enum_value.name.screaming_snake_case
+        return enum_value.name.name.screaming_snake_case.unsafe_name
 
     def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
-        return enum_value.name_v_2.name.safe_name.snake_case
+        return enum_value.name.name.snake_case.safe_name
+
+    def _get_class_name(self) -> str:
+        return self._name.name.pascal_case.unsafe_name

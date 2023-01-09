@@ -3,7 +3,7 @@ from __future__ import annotations
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
 
-import fern.ir_v1.pydantic as ir_types
+import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
@@ -205,8 +205,8 @@ class FernAwarePydanticModel:
             if shape_union.type == "object":
                 for property in shape_union.properties:
                     field = self._create_pydantic_field(
-                        name=property.name.snake_case,
-                        pascal_case_field_name=property.name.pascal_case,
+                        name=property.name.name.snake_case.unsafe_name,
+                        pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
                         json_field_name=property.name.wire_value,
                         type_reference=property.value_type,
                         description=property.docs,

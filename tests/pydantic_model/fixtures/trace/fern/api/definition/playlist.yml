@@ -16,10 +16,17 @@ types:
   UpdatePlaylistRequest:
     properties:
       name: string
-      problems: list<commons.ProblemId>
+      problems:
+        type: list<commons.ProblemId>
+        docs: The problems that make up the playlist.
   PlaylistIdNotFoundErrorBody:
     union:
       playlistId: PlaylistId
+
+  ReservedKeywordEnum:
+    enum:
+      - is
+      - as
 
 services:
   http:
@@ -40,9 +47,12 @@ services:
           docs: Returns the user's playlists
           method: GET
           path: /all
-          query-parameters:
-            limit: optional<integer>
           response: list<Playlist>
+          request:
+            name: GetPlaylistsRequest
+            query-parameters:
+              limit: optional<integer>
+              otherField: string
 
         getPlaylist:
           docs: Returns a playlist
@@ -62,7 +72,9 @@ services:
           path: /{playlistId}
           path-parameters:
             playlistId: PlaylistId
-          request: optional<UpdatePlaylistRequest>
+          request:
+            body:
+              type: optional<UpdatePlaylistRequest>
           response: optional<Playlist>
           errors:
             - PlaylistIdNotFoundError

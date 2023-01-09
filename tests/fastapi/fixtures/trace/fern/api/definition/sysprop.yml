@@ -17,8 +17,4 @@ services:
         getNumWarmInstances:
           method: GET
           path: /num-warm-instances
-          query-parameters:
-            dummy:
-              type: optional<string>
-              allow-multiple: true
           response: map<commons.Language, integer>

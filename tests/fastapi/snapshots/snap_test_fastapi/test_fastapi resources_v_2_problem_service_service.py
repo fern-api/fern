@@ -11,8 +11,8 @@ import fastapi
 from .....core.abstract_fern_service import AbstractFernService
 from .....core.exceptions.fern_http_exception import FernHTTPException
 from .....core.route_args import get_route_args
-from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
-from .types.problem_info_v_2 import ProblemInfoV2
+from ..types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
+from ..types.problem_info_v_2 import ProblemInfoV2
 
 
 class AbstractProblemInfoServicV2(AbstractFernService):
@@ -96,7 +96,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
             description=cls.get_lightweight_problems.__doc__,
-            **get_route_args(cls.get_lightweight_problems, default_tag="v_2.v_3.problem"),
+            **get_route_args(cls.get_lightweight_problems, default_tag="v_2.problem"),
         )(wrapper)
 
     @classmethod
@@ -130,7 +130,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             path="/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
             description=cls.get_problems.__doc__,
-            **get_route_args(cls.get_problems, default_tag="v_2.v_3.problem"),
+            **get_route_args(cls.get_problems, default_tag="v_2.problem"),
         )(wrapper)
 
     @classmethod
@@ -166,7 +166,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             path="/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
             description=cls.get_latest_problem.__doc__,
-            **get_route_args(cls.get_latest_problem, default_tag="v_2.v_3.problem"),
+            **get_route_args(cls.get_latest_problem, default_tag="v_2.problem"),
         )(wrapper)
 
     @classmethod
@@ -204,5 +204,5 @@ class AbstractProblemInfoServicV2(AbstractFernService):
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
             description=cls.get_problem_version.__doc__,
-            **get_route_args(cls.get_problem_version, default_tag="v_2.v_3.problem"),
+            **get_route_args(cls.get_problem_version, default_tag="v_2.problem"),
         )(wrapper)
