@@ -109,6 +109,19 @@ services:
               limit: optional<integer>
 ```
 
+### `allow-multiple`
+
+You can use `allow-multiple` to specify that a query parameter is allowed
+multiple times in the URL, e.g. `?filter=jane&filter=smith`. This will alter
+the generated SDKs so that consumers can provide multiple values for the query
+parameter.
+
+```yaml user.yml
+query-parameters:
+  filter: string
+  allow-multiple: true # <---
+```
+
 ## Headers
 
 Each endpoint can specify request headers:
