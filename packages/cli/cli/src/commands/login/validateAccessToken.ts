@@ -12,7 +12,10 @@ export async function validateAccessToken({
     const venus = createVenusService({ token });
     const response = await venus.organization.getMyOrganizationFromScopedToken();
     if (!response.ok) {
-        cliContext.fail("Failed to login. Token is invalid.", response.error);
+        cliContext.fail("Failed to login. Token is invalid.");
+        cliContext.logger.debug(JSON.stringify(response.error));
         throw new FernCliError();
+    } else {
+        cliContext.logger.info("Logged in successfully.");
     }
 }

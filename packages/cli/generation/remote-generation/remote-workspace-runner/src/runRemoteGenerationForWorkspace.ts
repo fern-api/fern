@@ -18,7 +18,7 @@ export async function runRemoteGenerationForWorkspace({
     generatorGroup: GeneratorGroup;
     version: string | undefined;
     printZipUrl: boolean;
-    token: string;
+    token: string | undefined;
 }): Promise<void> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
