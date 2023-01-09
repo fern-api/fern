@@ -267,7 +267,7 @@ errors:
 
 You can learn more about how to define errors on the [Errors](./errors) page.
 
-## Examples
+## Specifying examples
 
 When you declare an example, you can also specify some examples of how that
 endpoint might be used. These are used by the compiler to enhance the generated
@@ -295,10 +295,6 @@ services:
                 body:
                   userId: alice-user-id
                   name: Alice
-            - path-parameters:
-                userId: missing-user-id
-                response:
-                  error: UserNotFoundError
 
 types:
   User:
@@ -311,7 +307,20 @@ errors:
     status-code: 404
 ```
 
-#### Referencing examples from types
+### Failed examples
+
+You can also specify examples of failed endpoints calls. Add the `error`
+property to a response example to designate which failure you're demonstrating.
+
+```yaml user.yml
+examples:
+  - path-parameters:
+      userId: missing-user-id
+    response:
+      error: UserNotFoundError # <--
+```
+
+### Referencing examples from types
 
 To avoid duplication, you can reference examples from types using `$`.
 
