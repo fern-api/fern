@@ -3,7 +3,7 @@ import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configurati
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { GROUP_CLI_OPTION } from "../../cli";
+import { GROUP_CLI_OPTION } from "../../constants";
 import { validateWorkspaceAndLogIssues } from "../validate/validateWorkspaceAndLogIssues";
 
 export async function generateWorkspace({
@@ -21,7 +21,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     printZipUrl: boolean;
-    token: string | undefined;
+    token: string;
 }): Promise<void> {
     if (workspace.generatorsConfiguration.groups.length === 0) {
         context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);

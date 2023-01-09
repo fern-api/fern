@@ -8,7 +8,6 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
-import { REMOTE_GENERATION_SERVICE } from "./service";
 import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function createAndStartJob({
@@ -28,7 +27,7 @@ export async function createAndStartJob({
     version: string | undefined;
     context: TaskContext;
     printZipUrl: boolean;
-    token: string | undefined;
+    token: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({ workspace, organization, generatorInvocation, version, context, printZipUrl, token });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
@@ -50,7 +49,7 @@ async function createJob({
     version: string | undefined;
     context: TaskContext;
     printZipUrl: boolean;
-    token: string | undefined;
+    token: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -60,25 +59,14 @@ async function createJob({
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
 
-    let createResponse;
-    if (token == null) {
-        createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
-            apiName: workspace.name,
-            version,
-            organizationName: organization,
-            generators: [generatorConfigsWithEnvVarSubstitutions],
-            uploadToS3: printZipUrl,
-        });
-    } else {
-        const remoteGenerationService = createFiddleService({ token });
-        createResponse = await remoteGenerationService.remoteGen.createJobV3({
-            apiName: workspace.name,
-            version,
-            organizationName: organization,
-            generators: [generatorConfigsWithEnvVarSubstitutions],
-            uploadToS3: printZipUrl,
-        });
-    }
+    const remoteGenerationService = createFiddleService({ token });
+    const createResponse = await remoteGenerationService.remoteGen.createJobV3({
+        apiName: workspace.name,
+        version,
+        organizationName: organization,
+        generators: [generatorConfigsWithEnvVarSubstitutions],
+        uploadToS3: printZipUrl,
+    });
 
     if (!createResponse.ok) {
         return createResponse.error._visit({
