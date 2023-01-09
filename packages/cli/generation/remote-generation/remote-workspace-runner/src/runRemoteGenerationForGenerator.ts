@@ -23,7 +23,7 @@ export async function runRemoteGenerationForGenerator({
     version: string | undefined;
     audiences: GeneratorAudiences;
     printZipUrl: boolean;
-    token: string | undefined;
+    token: string;
 }): Promise<void> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
