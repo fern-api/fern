@@ -20,7 +20,7 @@ export { ExampleTypeSchema } from "./ExampleTypeSchema";
 export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
 export * from "./file-schemas";
 export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
-export { HttpEndpointSchema } from "./HttpEndpointSchema";
+export { HttpEndpointSchema, HttpMethodSchema } from "./HttpEndpointSchema";
 export { HttpHeaderSchema } from "./HttpHeaderSchema";
 export { HttpInlineRequestBodySchema } from "./HttpInlineRequestBodySchema";
 export { HttpPathParameterSchema } from "./HttpPathParameterSchema";
