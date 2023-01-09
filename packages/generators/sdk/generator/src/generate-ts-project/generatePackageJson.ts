@@ -7,13 +7,13 @@ import {
     BROWSER_CJS_DIST_DIRECTORY,
     BROWSER_ESM_DIST_DIRECTORY,
     BUILD_SCRIPT_NAME,
-    CORE_BUNDLE_FILENAME,
     DIST_DIRECTORY,
     NODE_DIST_DIRECTORY,
-    SERIALIZATION_BUNDLE_FILENAME,
+    NON_EXPORTED_FOLDERS,
     TYPES_DIRECTORY,
 } from "./constants";
-import { getPathToProjectFile } from "./utils";
+import { getAllStubTypeFiles } from "./generateStubTypeDeclarations";
+import { getBundleForNonExportedFolder, getPathToProjectFile } from "./utils";
 
 export const PackageJsonScript = {
     COMPILE: "compile",
@@ -62,17 +62,20 @@ export async function generatePackageJson({
         ...packageJson,
         private: isPackagePrivate,
         repository: repositoryUrl,
-        files: ["dist", "types", "core.d.ts", "serialization.d.ts"],
+        files: ["dist", "types", ...getAllStubTypeFiles()],
         exports: {
-            ".": getExports(API_BUNDLE_FILENAME, {
+            ".": getExportsForBundle(API_BUNDLE_FILENAME, {
                 pathToTypesFile: `./${TYPES_DIRECTORY}/index.d.ts`,
             }),
-            "./core": getExports(CORE_BUNDLE_FILENAME, {
-                pathToTypesFile: `./${TYPES_DIRECTORY}/core/index.d.ts`,
-            }),
-            "./serialization": getExports(SERIALIZATION_BUNDLE_FILENAME, {
-                pathToTypesFile: `./${TYPES_DIRECTORY}/serialization/index.d.ts`,
-            }),
+            ...NON_EXPORTED_FOLDERS.reduce(
+                (acc, folder) => ({
+                    ...acc,
+                    [`./${folder}`]: getExportsForBundle(`${getBundleForNonExportedFolder(folder)}`, {
+                        pathToTypesFile: `./${TYPES_DIRECTORY}/${folder}/index.d.ts`,
+                    }),
+                }),
+                {}
+            ),
         },
         types: `./${TYPES_DIRECTORY}/index.d.ts`,
         scripts: {
@@ -103,12 +106,12 @@ export async function generatePackageJson({
     await volume.promises.writeFile(getPathToProjectFile("package.json"), JSON.stringify(packageJson, undefined, 4));
 }
 
-function getExports(filename: string, { pathToTypesFile }: { pathToTypesFile: string }) {
+function getExportsForBundle(bundleFilename: string, { pathToTypesFile }: { pathToTypesFile: string }) {
     return {
-        node: getPathToNodeDistFile(filename),
-        import: getPathToBrowserEsmDistFile(filename),
-        require: getPathToBrowserCjsDistFile(filename),
-        default: getPathToBrowserCjsDistFile(filename),
+        node: getPathToNodeDistFile(bundleFilename),
+        import: getPathToBrowserEsmDistFile(bundleFilename),
+        require: getPathToBrowserCjsDistFile(bundleFilename),
+        default: getPathToBrowserCjsDistFile(bundleFilename),
         types: pathToTypesFile,
     };
 }

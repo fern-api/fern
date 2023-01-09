@@ -9,5 +9,5 @@ export const BROWSER_ESM_DIST_DIRECTORY = `${BROWSER_DIST_DIRECTORY}/esm`;
 export const BROWSER_CJS_DIST_DIRECTORY = `${BROWSER_DIST_DIRECTORY}/cjs`;
 
 export const API_BUNDLE_FILENAME = "index.js";
-export const CORE_BUNDLE_FILENAME = "core.js";
-export const SERIALIZATION_BUNDLE_FILENAME = "serialization.js";
+
+export const NON_EXPORTED_FOLDERS = ["core", "serialization"];

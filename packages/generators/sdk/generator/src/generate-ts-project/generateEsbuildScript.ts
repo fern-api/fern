@@ -4,13 +4,12 @@ import {
     BROWSER_CJS_DIST_DIRECTORY,
     BROWSER_ESM_DIST_DIRECTORY,
     BUILD_SCRIPT_NAME,
-    CORE_BUNDLE_FILENAME,
     DIST_DIRECTORY,
     NODE_DIST_DIRECTORY,
-    SERIALIZATION_BUNDLE_FILENAME,
+    NON_EXPORTED_FOLDERS,
     SRC_DIRECTORY,
 } from "./constants";
-import { getPathToProjectFile } from "./utils";
+import { getBundleForNonExportedFolder, getPathToProjectFile } from "./utils";
 
 export async function generateEsbuildScript({
     volume,
@@ -54,20 +53,15 @@ async function bundle({ platform, target, format, outdir }) {
         entryPoint: "./${SRC_DIRECTORY}/index.ts",
         outfile: \`./${DIST_DIRECTORY}/\${outdir}/${API_BUNDLE_FILENAME}\`,
     });
-    await runEsbuild({
+    ${NON_EXPORTED_FOLDERS.map(
+        (folder) => `await runEsbuild({
         platform,
         target,
         format,
-        entryPoint: "./${SRC_DIRECTORY}/core/index.ts",
-        outfile: \`./${DIST_DIRECTORY}/\${outdir}/${CORE_BUNDLE_FILENAME}\`,
-    });
-    await runEsbuild({
-        platform,
-        target,
-        format,
-        entryPoint: "./${SRC_DIRECTORY}/serialization/index.ts",
-        outfile: \`./${DIST_DIRECTORY}/\${outdir}/${SERIALIZATION_BUNDLE_FILENAME}\`,
-    });
+        entryPoint: "./${SRC_DIRECTORY}/${folder}/index.ts",
+        outfile: \`./${DIST_DIRECTORY}/\${outdir}/${getBundleForNonExportedFolder(folder)}\`,
+    });`
+    ).join("\n    ")}
 }
 
 async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
