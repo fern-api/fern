@@ -2,13 +2,16 @@
 title: "CLI reference"
 ---
 
-## `fern generate [--group <group>]`
+## `fern generate [--group <group>] [--version <version>]`
 
 `fern generate` runs the compiler. It will validate your API and run the
 generators specified in `generators.yml`.
 
 If you don't have a `default-group` specified in `generators.yml`, then you must
 specify a group using the `--group` option.
+
+You can specify a version using the `--version` option. This version string is
+used when publishing SDKs to registries (e.g. npm).
 
 ## `fern upgrade`
 
