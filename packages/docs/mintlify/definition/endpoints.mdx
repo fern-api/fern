@@ -307,6 +307,22 @@ errors:
     status-code: 404
 ```
 
+Examples contain all the information about the endpoint call, including
+the request body, path paramters, query parameters, headers, and response body.
+
+```yaml user.yml
+examples:
+  - path-parameters:
+      userId: some-user-id
+    query-parameters:
+      limit: 50
+    headers:
+      X-My-Header: some-value
+    response:
+      body:
+        response-field: hello
+```
+
 ### Failed examples
 
 You can also specify examples of failed endpoints calls. Add the `error`
