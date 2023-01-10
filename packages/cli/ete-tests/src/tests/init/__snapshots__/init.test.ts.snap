@@ -71,7 +71,8 @@ errors:
         "type": "directory",
       },
       {
-        "contents": "groups: {}
+        "contents": "default-group: external
+groups: {}
 ",
         "name": "generators.yml",
         "type": "file",
