@@ -213,7 +213,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     string: true,
                     description: "Only run the command on the provided API",
                 })
-                .option("printZipUrl", {
+                .option("shouldLogS3Url", {
                     boolean: true,
                     hidden: true,
                     default: false,
@@ -227,7 +227,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                printZipUrl: argv.printZipUrl,
+                shouldLogS3Url: argv.shouldLogS3Url,
             });
         }
     );

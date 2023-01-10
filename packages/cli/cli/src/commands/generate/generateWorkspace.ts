@@ -12,7 +12,7 @@ export async function generateWorkspace({
     context,
     groupName,
     version,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     workspace: Workspace;
@@ -20,7 +20,7 @@ export async function generateWorkspace({
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
-    printZipUrl: boolean;
+    shouldLogS3Url: boolean;
     token: string;
 }): Promise<void> {
     if (workspace.generatorsConfiguration.groups.length === 0) {
@@ -50,7 +50,7 @@ export async function generateWorkspace({
         context,
         generatorGroup: group,
         version,
-        printZipUrl,
+        shouldLogS3Url,
         token,
     });
 }

@@ -17,7 +17,7 @@ export async function createAndStartJob({
     generatorInvocation,
     version,
     context,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     workspace: Workspace;
@@ -26,10 +26,18 @@ export async function createAndStartJob({
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
-    printZipUrl: boolean;
+    shouldLogS3Url: boolean;
     token: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization, generatorInvocation, version, context, printZipUrl, token });
+    const job = await createJob({
+        workspace,
+        organization,
+        generatorInvocation,
+        version,
+        context,
+        shouldLogS3Url,
+        token,
+    });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
 }
@@ -40,7 +48,7 @@ async function createJob({
     generatorInvocation,
     version,
     context,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     workspace: Workspace;
@@ -48,7 +56,7 @@ async function createJob({
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
-    printZipUrl: boolean;
+    shouldLogS3Url: boolean;
     token: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
@@ -65,7 +73,7 @@ async function createJob({
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
-        uploadToS3: printZipUrl,
+        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
     });
 
     if (!createResponse.ok) {
