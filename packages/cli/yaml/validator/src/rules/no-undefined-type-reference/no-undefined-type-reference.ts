@@ -91,7 +91,6 @@ function getAllNamedTypes({
     return recursivelyVisitRawTypeReference<ReferenceToTypeName[]>(type, {
         primitive: () => [],
         unknown: () => [],
-        void: () => [],
         map: ({ keyType: namesInKeyType, valueType: namesInValueType }) => {
             return [...namesInKeyType, ...namesInValueType];
         },

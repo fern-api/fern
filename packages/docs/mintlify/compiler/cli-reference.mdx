@@ -2,7 +2,7 @@
 title: "CLI reference"
 ---
 
-## `fern generate [--group <group>]`
+## `fern generate [--group <group>] [--version <version>]`
 
 `fern generate` runs the compiler. It will validate your API and run the
 generators specified in `generators.yml`.
@@ -10,15 +10,22 @@ generators specified in `generators.yml`.
 If you don't have a `default-group` specified in `generators.yml`, then you must
 specify a group using the `--group` option.
 
-## `fern upgrade`
-
-`fern upgrade` will upgrade your compiler version in `fern.config.json` to the
-latest version. It will also upgrade your generators to the _minimum_ versions that
-are compatible with the latest version of the compiler.
+You can specify a version using the `--version` option. This version string is
+used when publishing SDKs to registries (e.g. npm).
 
 ## `fern check`
 
 `fern check` will validate that your API is valid.
+
+## `fern upgrade`
+
+`fern upgrade` will upgrade your compiler version in `fern.config.json` to the
+latest version.
+
+## `fern add <generator>`
+
+`fern add` adds a new generator to your `generators.yml`. You can view the full
+list of supported generators in the [Generators](generators) section.
 
 ## `fern init`
 

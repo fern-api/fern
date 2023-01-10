@@ -6,8 +6,9 @@ types:
       - value: purple
         name: PURPLE
     examples:
-      - Red
-      - Blue
-      - purple
-      - PURPLE
-      - key: value
+      - value: Red
+      - value: Blue
+      - value: purple
+      - value: PURPLE
+      - value:
+          key: value

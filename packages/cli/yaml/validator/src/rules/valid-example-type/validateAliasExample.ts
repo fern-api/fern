@@ -1,4 +1,4 @@
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
@@ -9,12 +9,14 @@ export function validateAliasExample({
     example,
     file,
     typeResolver,
+    exampleResolver,
     workspace,
 }: {
     rawAlias: string | RawSchemas.AliasSchema;
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     workspace: Workspace;
 }): RuleViolation[] {
     return validateTypeReferenceExample({
@@ -22,6 +24,7 @@ export function validateAliasExample({
         example,
         file,
         typeResolver,
+        exampleResolver,
         workspace,
     });
 }

@@ -1,9 +1,11 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { RawSchemas } from "../../..";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
 import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
+import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
 import { visitTypeDeclaration } from "../visitTypeDeclarations";
 
 export async function visitHttpService({
@@ -187,65 +189,135 @@ async function visitEndpoint({
                 return;
             }
             for (const [index, example] of examples.entries()) {
-                const nodePathForExample: NodePath = [...nodePathForEndpoint, { key: "examples", arrayIndex: index }];
-                await visitor.exampleHttpEndpointCall?.(
-                    {
-                        service,
-                        endpoint,
-                        example,
-                    },
-                    nodePathForExample
-                );
-                await visitor.exampleHeaders?.(
-                    {
-                        service,
-                        endpoint,
-                        examples: example.headers,
-                    },
-                    [...nodePathForExample, "headers"]
-                );
-                await visitor.examplePathParameters?.(
-                    {
-                        service,
-                        endpoint,
-                        examples: example["path-parameters"],
-                    },
-                    [...nodePathForExample, "path-parameters"]
-                );
-                await visitor.exampleQueryParameters?.(
-                    {
-                        service,
-                        endpoint,
-                        examples: example["query-parameters"],
-                    },
-                    [...nodePathForExample, "query-parameters"]
-                );
-                await visitor.exampleRequest?.(
-                    {
-                        service,
-                        endpoint,
-                        example: example.request,
-                    },
-                    [...nodePathForExample, "request"]
-                );
-                await visitor.exampleResponse?.(
-                    {
-                        service,
-                        endpoint,
-                        example: example.response,
-                    },
-                    [...nodePathForExample, "response"]
-                );
-
-                if (example.response != null) {
-                    const nodePathForResponse = [...nodePathForExample, "response"];
-                    if (example.response.error != null) {
-                        await visitor.errorReference?.(example.response.error, [...nodePathForResponse, "error"]);
-                    }
-                }
+                await visitExampleEndpointCall({
+                    nodePathForExample: [...nodePathForEndpoint, { key: "examples", arrayIndex: index }],
+                    visitor,
+                    service,
+                    endpoint,
+                    example,
+                });
             }
         },
     });
+}
+
+async function visitExampleEndpointCall({
+    nodePathForExample,
+    visitor,
+    service,
+    endpoint,
+    example,
+}: {
+    nodePathForExample: NodePath;
+    visitor: Partial<FernServiceFileAstVisitor>;
+    service: RawSchemas.HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+}): Promise<void> {
+    await visitor.exampleHttpEndpointCall?.(
+        {
+            service,
+            endpoint,
+            example,
+        },
+        nodePathForExample
+    );
+
+    const nodePathForHeaders = [...nodePathForExample, "headers"];
+    await visitor.exampleHeaders?.(
+        {
+            service,
+            endpoint,
+            examples: example.headers,
+        },
+        nodePathForHeaders
+    );
+    if (example.headers != null) {
+        for (const exampleHeader of Object.values(example.headers)) {
+            await visitAllReferencesInExample({
+                example: exampleHeader,
+                visitor,
+                nodePath: nodePathForHeaders,
+            });
+        }
+    }
+
+    const nodePathForPathParameters = [...nodePathForExample, "path-parameters"];
+    await visitor.examplePathParameters?.(
+        {
+            service,
+            endpoint,
+            examples: example["path-parameters"],
+        },
+        nodePathForPathParameters
+    );
+    if (example["path-parameters"] != null) {
+        for (const examplePathParameter of Object.values(example["path-parameters"])) {
+            await visitAllReferencesInExample({
+                example: examplePathParameter,
+                visitor,
+                nodePath: nodePathForPathParameters,
+            });
+        }
+    }
+
+    const nodePathForQueryParameters = [...nodePathForExample, "query-parameters"];
+    await visitor.exampleQueryParameters?.(
+        {
+            service,
+            endpoint,
+            examples: example["query-parameters"],
+        },
+        nodePathForQueryParameters
+    );
+    if (example["query-parameters"] != null) {
+        for (const exampleQueryParameter of Object.values(example["query-parameters"])) {
+            await visitAllReferencesInExample({
+                example: exampleQueryParameter,
+                visitor,
+                nodePath: nodePathForQueryParameters,
+            });
+        }
+    }
+
+    const nodePathForRequest = [...nodePathForExample, "request"];
+    await visitor.exampleRequest?.(
+        {
+            service,
+            endpoint,
+            example: example.request,
+        },
+        nodePathForRequest
+    );
+    if (example.request != null) {
+        await visitAllReferencesInExample({
+            example: example.request,
+            visitor,
+            nodePath: nodePathForRequest,
+        });
+    }
+
+    const nodePathForResponse = [...nodePathForExample, "response"];
+    await visitor.exampleResponse?.(
+        {
+            service,
+            endpoint,
+            example: example.response,
+        },
+        nodePathForResponse
+    );
+    if (example.response != null) {
+        if (example.response.body != null) {
+            await visitAllReferencesInExample({
+                example: example.response.body,
+                visitor,
+                nodePath: nodePathForResponse,
+            });
+        }
+        if (example.response.error != null) {
+            await visitor.errorReference?.(example.response.error, [...nodePathForResponse, "error"]);
+        }
+    }
 }
 
 async function visitPathParameters({

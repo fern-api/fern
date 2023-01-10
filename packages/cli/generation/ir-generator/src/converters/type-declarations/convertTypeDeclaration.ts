@@ -1,6 +1,7 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { Type, TypeDeclaration } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
+import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
@@ -15,19 +16,18 @@ export function convertTypeDeclaration({
     typeDeclaration,
     file,
     typeResolver,
+    exampleResolver,
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
 }): TypeDeclaration {
     const declaration = convertDeclaration(typeDeclaration);
-    const declaredTypeName = {
+    const declaredTypeName: DeclaredTypeName = {
         fernFilepath: file.fernFilepath,
-        fernFilepathV2: file.fernFilepathV2,
-        name: typeName,
-        nameV2: file.casingsGenerator.generateNameCasingsV1(typeName),
-        nameV3: file.casingsGenerator.generateName(typeName),
+        name: file.casingsGenerator.generateName(typeName),
     };
     return {
         ...declaration,
@@ -36,13 +36,22 @@ export function convertTypeDeclaration({
         referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
         examples:
             typeof typeDeclaration !== "string" && typeDeclaration.examples != null
-                ? typeDeclaration.examples.map((example) =>
-                      convertTypeExample({
-                          typeName: declaredTypeName,
-                          example,
-                          typeResolver,
-                          typeDeclaration,
-                          file,
+                ? typeDeclaration.examples.map(
+                      (example): ExampleType => ({
+                          name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                          docs: example.docs,
+                          jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                              example: example.value,
+                              file,
+                          }).resolvedExample,
+                          shape: convertTypeExample({
+                              typeName: declaredTypeName,
+                              example: example.value,
+                              typeResolver,
+                              exampleResolver,
+                              typeDeclaration,
+                              file,
+                          }),
                       })
                   )
                 : [],

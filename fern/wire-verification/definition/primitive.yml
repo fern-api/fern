@@ -7,41 +7,55 @@ services:
         reflectString:
           method: POST
           path: /string
-          request: string
+          request:
+            body:
+              type: string
           response: string
 
         reflectInt:
           method: POST
           path: /int
-          request: integer
+          request:
+            body:
+              type: integer
           response: integer
 
         reflectDouble:
           method: POST
           path: /double
-          request: double
+          request:
+            body:
+              type: double
           response: double
 
         reflectBoolean:
           method: POST
           path: /boolean
-          request: boolean
+          request:
+            body:
+              type: boolean
           response: boolean
 
         reflectLong:
           method: POST
           path: /long
-          request: long
+          request:
+            body:
+              type: long
           response: long
 
         reflectDateTime:
           method: POST
           path: /datetime
-          request: datetime
+          request:
+            body:
+              type: datetime
           response: datetime
 
         reflectUUID:
           method: POST
           path: /uuid
-          request: uuid
+          request:
+            body:
+              type: uuid
           response: uuid

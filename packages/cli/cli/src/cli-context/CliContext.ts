@@ -29,7 +29,7 @@ export class CliContext {
 
     private logLevel: LogLevel = LogLevel.Info;
 
-    constructor(private readonly stream: NodeJS.WriteStream) {
+    constructor(stream: NodeJS.WriteStream) {
         this.ttyAwareLogger = new TtyAwareLogger(stream);
 
         const packageName = this.getPackageName();
@@ -88,9 +88,22 @@ export class CliContext {
     }
 
     public async exit(): Promise<never> {
-        this.ttyAwareLogger.finish();
         if (!this._suppressUpgradeMessage) {
-            const { isUpgradeAvailable, latestVersion } = await this.isUpgradeAvailable();
+            await this.nudgeUpgradeIfAvaialable();
+        }
+        this.ttyAwareLogger.finish();
+        this.exitProgram();
+    }
+
+    private async nudgeUpgradeIfAvaialable() {
+        try {
+            const { isUpgradeAvailable, latestVersion } = await Promise.race<
+                [Promise<FernCliUpgradeInfo>, Promise<never>]
+            >([
+                this.isUpgradeAvailable(),
+                new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300)),
+            ]);
+
             if (isUpgradeAvailable) {
                 let upgradeMessage = getFernCliUpgradeMessage({
                     toVersion: latestVersion,
@@ -99,10 +112,16 @@ export class CliContext {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
-                this.stream.write(upgradeMessage);
+                this.logger.info(upgradeMessage);
             }
+        } catch {
+            logErrorMessage({
+                message: "Failed to check if upgrade is available",
+                error: undefined,
+                logger: this.logger,
+                logLevel: LogLevel.Debug,
+            });
         }
-        this.exitProgram();
     }
 
     public async exitIfFailed(): Promise<void> {

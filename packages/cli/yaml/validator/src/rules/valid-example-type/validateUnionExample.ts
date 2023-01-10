@@ -1,7 +1,9 @@
-import { FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
+import { isPlainObject } from "@fern-api/core-utils";
+import { ExampleResolver, FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
-import { isRawObjectDefinition, RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
+import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
 import { validateObjectExample } from "./validateObjectExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
@@ -10,16 +12,22 @@ export function validateUnionExample({
     rawUnion,
     example,
     typeResolver,
+    exampleResolver,
     file,
     workspace,
 }: {
     typeName: string;
     rawUnion: RawSchemas.UnionSchema;
-    example: RawSchemas.ExampleTypeSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
     typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: Workspace;
 }): RuleViolation[] {
+    if (!isPlainObject(example)) {
+        return getRuleViolationsForMisshapenExample(example, "an object");
+    }
+
     const discriminant = getUnionDiscriminant(rawUnion);
     const { [discriminant]: discriminantValue, ...nonDiscriminantPropertyExamples } = example;
 
@@ -30,6 +38,10 @@ export function validateUnionExample({
                 message: `Missing discriminant property ("${discriminant}")`,
             },
         ];
+    }
+
+    if (typeof discriminantValue !== "string") {
+        return getRuleViolationsForMisshapenExample(discriminantValue, "a string");
     }
 
     const singleUnionTypeDefinition = rawUnion.union[discriminantValue];
@@ -71,6 +83,7 @@ export function validateUnionExample({
             file: resolvedType.file,
             example: nonDiscriminantPropertyExamples,
             typeResolver,
+            exampleResolver,
             workspace,
         });
     }
@@ -81,7 +94,7 @@ export function validateUnionExample({
             : undefined;
 
     // "key" is not defined, but this will be caught by other rules
-    if (singlePropertyKey == null || singlePropertyKey === RawPrimitiveType.void) {
+    if (singlePropertyKey == null) {
         return [];
     }
 
@@ -99,6 +112,7 @@ export function validateUnionExample({
                 rawTypeReference: type,
                 example: singlePropertyExample,
                 typeResolver,
+                exampleResolver,
                 file,
                 workspace,
             })

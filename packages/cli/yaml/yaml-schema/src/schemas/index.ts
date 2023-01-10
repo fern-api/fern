@@ -17,6 +17,7 @@ export { ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
 export { ExampleResponseSchema } from "./ExampleResponseSchema";
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 export { ExampleTypeSchema } from "./ExampleTypeSchema";
+export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
 export * from "./file-schemas";
 export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export { HttpEndpointSchema } from "./HttpEndpointSchema";
@@ -40,10 +41,4 @@ export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscrimina
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema } from "./TypeReferenceSchema";
 export { UnionSchema } from "./UnionSchema";
-export { WebSocketChannelSchema } from "./WebSocketChannelSchema";
-export { WebSocketErrorSchema } from "./WebSocketErrorSchema";
-export { WebSocketMessengerSchema } from "./WebSocketMessengerSchema";
-export { WebSocketOperationSchema } from "./WebSocketOperationSchema";
-export { WebSocketRequestSchema } from "./WebSocketRequestSchema";
-export { WebSocketResponseSchema } from "./WebSocketResponseSchema";
 export { WithDocsSchema } from "./WithDocsSchema";
