@@ -1,28 +1,31 @@
 # Fern
 
-<div align="right">
-  <a href="https://www.npmjs.com/package/fern-api" alt="fern-api npm package">
-    <img src="https://img.shields.io/npm/v/fern-api?style=flat-square" />
-  </a>
-</div>
+![Fern header](header.png)
 
-Fern keeps your docs and SDKs in sync with your API.
+<a href="https://www.npmjs.com/package/fern-api" alt="fern-api npm package">
+  <img src="https://img.shields.io/npm/v/fern-api?style=flat-square" />
+</a>
 
-[View our docs ➚](https://buildwithfern.com/docs/intro)
+---
 
-[Join the Discord ➚](https://discord.com/invite/JkkXumPzcG)
+**Fern is an open source format for defining REST APIs.**
+You can think of it like a programming language to describe
+your API: your endpoints, types, errors, and examples.
 
-**Fern** allows you to maintain a single source of truth for your API so that you can:
+This repository contains the **Fern compiler.** The compiler transforms the API description into useful outputs, like:
 
-1. **Generate idiomatic SDKs** in the most popular languages: TypeScript/JavaScript, Python, Java, Go, Ruby. Fern also handles publishing to registries.
-2. **Serve your API accurately**. Fern integrates with popular frameworks like Express, FastAPI, and Spring to add compile-time and run-time checks.
-3. **Auto-update** your API documentation, Postman collection, and OpenAPI description any time your API changes.
+### SDKs
 
-We’re in private beta with a handful of customers. If you’re interested in using Fern, [**reach out**](mailto:hey@buildwithfern.com?subject=%5BPrivate%20beta%5D%20Interest%20in%20joining).
+Client libraries speed up internal developement, and help acquire customers who use your API. Our auto-generated SDKs are idiomatic and feel handwritten.
 
-## Getting started
+### Server-side code generation.
 
-- [How do I get SDKs?](https://www.buildwithfern.com/docs/features/sdk)
-- [How do I get API documentation?](https://www.buildwithfern.com/docs/features/api-docs)
-- [How do I get server-side type safety?](https://www.buildwithfern.com/docs/features/server)
-- [How do I get a Postman integration?](https://www.buildwithfern.com/docs/features/postman)
+We automatically generate lots of boilerplate on the server side, like Pydantic models for FastAPI and Jersey interfaces for Spring Boot. We also add compile-time validation that all your endpoints are being served correctly.
+
+### Postman Collection
+
+Complete with examples of successful and unsuccessful requests!
+
+### An OpenAPI spec
+
+You can feed the generated OpenAPI into the endless list of tools that support OpenAPI.
