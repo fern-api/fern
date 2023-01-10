@@ -12,27 +12,29 @@ your API: your endpoints, types, errors, and examples.
 
 This repository contains the **Fern compiler.** The compiler transforms the API description into useful outputs, like:
 
-### SDKs
+### 🌿 SDKs
 
 Client libraries speed up internal developement, and help acquire customers who use your API. Our auto-generated SDKs are idiomatic and feel handwritten.
 
 [TypeScript SDK generator ➚](https://github.com/fern-api/fern-typescript)
+
 [Java SDK generator ➚](https://github.com/fern-api/fern-java)
 
-### Server-side code generation.
+### 🌿 Server-side code generation
 
 We automatically generate lots of boilerplate on the server side, like Pydantic models for FastAPI and Jersey interfaces for Spring Boot. We also add compile-time validation that all your endpoints are being served correctly.
 
 [FastAPI generator ➚](https://github.com/fern-api/fern-python)
+
 [Java Spring Boot generator ➚](https://github.com/fern-api/fern-java)
 
-### Postman Collection
+### 🌿 Postman Collection
 
 Complete with examples of successful and unsuccessful requests!
 
 [Postman generator ➚](https://github.com/fern-api/fern-postman)
 
-### An OpenAPI spec
+### 🌿 An OpenAPI spec
 
 You can feed the generated OpenAPI into the endless list of tools that support OpenAPI.
 
