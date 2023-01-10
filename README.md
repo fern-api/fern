@@ -1,16 +1,17 @@
-![Fern header](header.png)
-
-<p align="center">
-  <a href="https://www.npmjs.com/package/fern-api" alt="fern-api npm package">
-    <img src="https://img.shields.io/npm/v/fern-api?style=flat-square" />
-  </a>
-</p>
+<a href="https://www.buildwithfern.com/docs/intro">
+  <img src="header.png" alt="header" />
+</a>
 
 <div align="center">
   <a href="https://www.buildwithfern.com/docs" alt="documentation">Documentation</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Discord</a>
-  <br />
+  <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
+</div>
+
+<br />
+
+<div align="center">
+Backed by Y Combinator
 </div>
 
 ---
@@ -25,29 +26,17 @@ This repository contains the **Fern compiler.** The compiler transforms the API 
 
 Client libraries speed up internal developement, and help acquire customers who use your API. Our auto-generated SDKs are idiomatic and feel handwritten.
 
-[TypeScript SDK generator ➚](https://github.com/fern-api/fern-typescript)
-
-[Java SDK generator ➚](https://github.com/fern-api/fern-java)
-
 ### 🌿 Server-side code generation
 
 We automatically generate lots of boilerplate on the server side, like Pydantic models for FastAPI and Jersey interfaces for Spring Boot. We also add compile-time validation that all your endpoints are being served correctly.
-
-[FastAPI generator ➚](https://github.com/fern-api/fern-python)
-
-[Spring Boot generator ➚](https://github.com/fern-api/fern-java)
 
 ### 🌿 Postman Collection
 
 Complete with examples of successful and unsuccessful requests!
 
-[Postman generator ➚](https://github.com/fern-api/fern-postman)
-
 ### 🌿 An OpenAPI spec
 
 You can feed the generated OpenAPI into the endless list of tools that support OpenAPI.
-
-[OpenAPI generator ➚](https://github.com/fern-api/fern-postman)
 
 # Comparison with OpenAPI
 
