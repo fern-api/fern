@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: "Fern",
-    tagline: "Define your API once.",
+    tagline: "Production-ready SDKs for your API",
     url: "https://buildwithfern.com",
     baseUrl: "/",
     onBrokenLinks: "throw",
