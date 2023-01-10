@@ -1,21 +1,13 @@
-![Fern header](header.png)
-
-<p align="center">
-  <a href="https://www.npmjs.com/package/fern-api" alt="fern-api npm package">
-    <img src="https://img.shields.io/npm/v/fern-api?style=flat-square" />
-  </a>
-</p>
+<a href="https://www.buildwithfern.com/docs/intro">
+  <img src="header.png" alt="header" />
+</a>
 
 <div align="center">
   <a href="https://www.buildwithfern.com/docs" alt="documentation">Documentation</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Discord</a>
-  <br />
+  <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
 </div>
 
-<div align="center">
-  <img src="yc.png" alt="y combinator" />
-</div>
 ---
 
 **Fern is an open source format for defining REST APIs.**
