@@ -50,18 +50,16 @@ export async function upgrade({
             version: targetVersion,
         });
         if (!versionExists) {
-            cliContext.fail(
+            cliContext.failAndThrow(
                 `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
             );
-            return;
         }
 
         const versionAhead = isVersionAhead(targetVersion, cliContext.environment.packageVersion);
         if (!versionAhead) {
-            cliContext.fail(
+            cliContext.failAndThrow(
                 `Cannot upgrade because target version (${targetVersion}) is behind existing version ${cliContext.environment.packageVersion}`
             );
-            return;
         }
     }
 
@@ -93,8 +91,7 @@ export async function upgrade({
     } else {
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
-            cliContext.fail(`Directory "${FERN_DIRECTORY}" not found.`);
-            return;
+            return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
         }
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
@@ -116,15 +113,12 @@ export async function upgrade({
             `${cliContext.environment.packageName}@${fernCliUpgradeInfo.latestVersion}`,
         ]);
 
-        const { failed } = await rerunFernCliAtVersion({
+        await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
             cliContext,
             env: {
                 [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion,
             },
         });
-        if (failed) {
-            cliContext.fail();
-        }
     }
 }
