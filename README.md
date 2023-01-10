@@ -51,6 +51,16 @@ for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
 - [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
 - [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
 
+# Plant Store example
+
+Plant Store is full example of an API defined in Fern.
+
+- [API Definition](https://github.com/fern-api/plantstore-api)
+- [Generated TypeScript SDK](https://github.com/fern-api/plantstore-node)
+- [Generated Java SDK](https://github.com/fern-api/plantstore-java)
+- [Generated Postman Collection](https://github.com/fern-api/plantstore-postman)
+- [Generated OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
+
 # Get started
 
 ```bash
@@ -152,7 +162,7 @@ And voila! You just built and published a TypeScript SDK.
 
 **Next step:** define _your_ API in Fern. Check out our [docs](https://www.buildwithfern.com/docs/definition) to learn more.
 
-# CLI Reference
+# CLI reference
 
 ### `fern generate [--group <group>] [--version <version>]`
 
