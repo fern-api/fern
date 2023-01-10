@@ -8,7 +8,7 @@ const { default: Home } = require("./src/pages");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: "Fern",
-    tagline: "Build your API.",
+    tagline: "Production-ready SDKs for your API",
     url: "https://buildwithfern.com",
     baseUrl: "/",
     onBrokenLinks: "throw",
