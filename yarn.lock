@@ -3741,12 +3741,9 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/generators-configuration": "workspace:*"
-    "@fern-api/ir-migrations": "workspace:*"
-    "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
     immer: ^9.0.15
