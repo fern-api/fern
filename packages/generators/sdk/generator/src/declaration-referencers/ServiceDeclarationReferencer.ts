@@ -1,24 +1,10 @@
 import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { Reference } from "@fern-typescript/contexts";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { AbstractServiceDeclarationReferencer } from "./AbstractServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
-export declare namespace RootServiceDeclarationReferencer {
-    export interface Init extends AbstractDeclarationReferencer.Init {
-        apiName: string;
-    }
-}
-
 export class ServiceDeclarationReferencer extends AbstractServiceDeclarationReferencer<DeclaredServiceName> {
-    private apiName: string;
-
-    constructor({ apiName, ...superInit }: RootServiceDeclarationReferencer.Init) {
-        super(superInit);
-        this.apiName = apiName;
-    }
-
     public getExportedFilepath(serviceName: DeclaredServiceName): ExportedFilePath {
         if (this.isRootClient(serviceName)) {
             return {

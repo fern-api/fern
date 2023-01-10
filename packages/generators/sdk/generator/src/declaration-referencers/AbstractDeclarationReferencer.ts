@@ -7,16 +7,19 @@ import { getReferenceToExportFromRoot } from "./utils/getReferenceToExportFromRo
 
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
+        apiName: string;
         packageName: string;
         containingDirectory: ExportedDirectory[];
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
+    protected apiName: string;
     protected packageName: string;
     protected containingDirectory: ExportedDirectory[];
 
-    constructor({ containingDirectory, packageName }: AbstractDeclarationReferencer.Init) {
+    constructor({ apiName, containingDirectory, packageName }: AbstractDeclarationReferencer.Init) {
+        this.apiName = apiName;
         this.packageName = packageName;
         this.containingDirectory = containingDirectory;
     }

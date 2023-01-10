@@ -138,18 +138,22 @@ export class SdkGenerator {
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
             packageName,
+            apiName,
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
             packageName,
+            apiName,
         });
         this.errorDeclarationReferencer = new ErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
             packageName,
+            apiName,
         });
         this.errorSchemaDeclarationReferencer = new ErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
             packageName,
+            apiName,
         });
         this.serviceDeclarationReferencer = new ServiceDeclarationReferencer({
             apiName,
@@ -159,18 +163,22 @@ export class SdkGenerator {
         this.endpointDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
             packageName,
+            apiName,
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             packageName,
+            apiName,
         });
         this.endpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             packageName,
+            apiName,
         });
         this.environmentsEnumDeclarationReferencer = new EnvironmentEnumDeclarationReferencer({
             containingDirectory: [],
             packageName,
+            apiName,
         });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });

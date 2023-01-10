@@ -13,6 +13,9 @@ export class EnvironmentEnumDeclarationReferencer extends AbstractDeclarationRef
             directories: [...this.containingDirectory],
             file: {
                 nameOnDisk: this.getFilename(),
+                exportDeclaration: {
+                    namedExports: [this.getExportedName()],
+                },
             },
         };
     }
@@ -22,7 +25,7 @@ export class EnvironmentEnumDeclarationReferencer extends AbstractDeclarationRef
     }
 
     public getExportedName(): string {
-        return "Environment";
+        return `${this.apiName}Environment`;
     }
 
     public getReferenceToEnvironmentEnum({
