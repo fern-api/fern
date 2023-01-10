@@ -108,9 +108,7 @@ Next step: define _your_ API in Fern. Check out our [docs](https://www.buildwith
 OpenAPI is a great tool for documenting APIs, but falls short for code generation use cases.
 
 Read [Fern vs. OpenAPI](https://www.buildwithfern.com/docs/comparison-with-openapi)
-for an in-depth comparison.
-
-TL;DR: we differ from OpenAPI in these areas:
+for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
 
 - [Ease of use](https://www.buildwithfern.com/docs/comparison-with-openapi#ease-of-use)
 - [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
