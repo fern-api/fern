@@ -142,17 +142,6 @@ it's impossible to generate high-quality code. Here's some examples:
 Pitfalls like these are why it's common for OpenAPI generated code to
 [not compile](https://github.com/OpenAPITools/openapi-generator/issues?q=is%3Aissue+%22doesn%27t+compile%22).
 
-Beyond the format, we've built Fern based on best practices in compiling. This includes:
-
-- **Semantic validation** (e.g. disallowing references to types that haven't been defined)
-- **Building the compiler to be modular,** as we have multiple independent outputs
-  (e.g. TypeScript SDK, Postman Collection).
-- **Producing an intermediate representation** so that different generators don't
-  have implement duplicative logic. Beyond saving time, this reduces errors and
-  increases consistency among outputs.
-- **Using AST representations,** rather than templating, to enable more complex and
-  idiomatic code generation.
-
 ## Focus on server-side API development
 
 OpenAPI is focused primarily on documentation and SDK generation, and is not very
