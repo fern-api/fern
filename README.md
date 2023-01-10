@@ -163,3 +163,11 @@ _Advanced feature._ You can register your API so it can be depended on by other
 APIs. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis).
 
 ​
+
+# Documentation
+
+You can view our documentation [here](https://www.buildwithfern.com/docs).
+
+# Community
+
+[Join our Discord!](https://discord.com/invite/JkkXumPzcG)
