@@ -2,6 +2,7 @@ import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { auth0Login, storeToken } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -10,6 +11,8 @@ import {
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import chalk from "chalk";
+import getStdin from "get-stdin";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -18,13 +21,13 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
+import { TOKEN_STDIN_OPTION } from "./constants";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-
-export const GROUP_CLI_OPTION = "group";
 
 interface GlobalCliOptions {
     "log-level": LogLevel;
@@ -122,6 +125,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
+    addLoginCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -179,7 +183,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         (yargs) =>
             yargs
                 .positional("generator", {
-                    choices: ["typescript", "java", "postman", "openapi"] as const,
+                    type: "string",
                     demandOption: true,
                 })
                 .option("api", {
@@ -216,6 +220,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
+                })
+                .option("printZipUrl", {
+                    boolean: true,
+                    hidden: true,
+                    default: false,
                 }),
         async (argv) => {
             await generateWorkspaces({
@@ -226,6 +235,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
+                printZipUrl: argv.printZipUrl,
             });
         }
     );
@@ -283,23 +293,20 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
-                })
-                .option("token", {
-                    string: true,
-                    description: "The token for the organization",
                 }),
         async (argv) => {
-            if (argv.token == null) {
-                cliContext.fail("Token must be specified");
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineWorkspace: argv.api,
+                defaultToAllWorkspaces: false,
+            });
+            if (project.token == null) {
+                cliContext.fail("Please run fern login before registring.");
                 return;
             }
             await registerApiDefinitions({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
-                }),
+                project,
                 cliContext,
-                token: argv.token,
+                token: project.token,
                 version: argv.version,
             });
         }
@@ -340,17 +347,47 @@ function addUpgradeCommand({
         "upgrade",
         `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
         (yargs) =>
-            yargs.option("rc", {
+            yargs
+                .option("rc", {
+                    boolean: true,
+                    hidden: true,
+                    default: false,
+                })
+                .option("version", {
+                    string: true,
+                    description: "The version to upgrade to. Defaults to the latest release.",
+                }),
+        async (argv) => {
+            await upgrade({
+                cliContext,
+                includePreReleases: argv.rc,
+                targetVersion: argv.version,
+            });
+            onRun();
+        }
+    );
+}
+
+function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "login",
+        false, // hide from help message
+        (yargs) =>
+            yargs.option(TOKEN_STDIN_OPTION, {
                 boolean: true,
                 hidden: true,
                 default: false,
             }),
         async (argv) => {
-            await upgrade({
-                cliContext,
-                includePreReleases: argv.rc,
-            });
-            onRun();
+            let token;
+            if (argv.tokenStdin) {
+                token = (await getStdin()).replace(/\s/g, "");
+                await validateAccessToken({ token, cliContext });
+            } else {
+                token = await auth0Login();
+            }
+            await storeToken(token);
+            cliContext.logger.info(chalk.green("Logged in"));
         }
     );
 }

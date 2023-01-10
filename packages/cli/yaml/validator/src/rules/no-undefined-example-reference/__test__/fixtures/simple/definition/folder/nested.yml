@@ -1,0 +1,12 @@
+imports:
+  other: other.yml
+types:
+  NestedType:
+    properties:
+      foo: string
+      bar: string
+    examples:
+      - name: NestedExample1
+        value:
+          foo: $other.OtherType.OtherExample1
+          bar: $other.OtherType.OtherExample2

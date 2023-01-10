@@ -30,6 +30,7 @@ export class TtyAwareLogger {
         }
     }
 
+    // overwritten by start()
     public finish: () => void = noop;
 
     private paintAndStartInterval() {

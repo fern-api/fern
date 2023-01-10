@@ -73,13 +73,14 @@ errors:
             "type": "directory",
           },
           {
-            "contents": "groups:
+            "contents": "default-group: external
+groups:
   external:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.0.122
+        version: 0.0.132
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.241
+        version: 0.0.255
       - name: fernapi/fern-postman
         version: 0.0.25
       - name: fernapi/fern-openapi

@@ -1,0 +1,17 @@
+imports:
+  commons: ./commons.yml
+types:
+  Declaration:
+    extends: commons.WithDocs
+    properties:
+      availability: Availability
+  Availability:
+    properties:
+      status: AvailabilityStatus
+      message: optional<string>
+  AvailabilityStatus:
+    enum:
+      - IN_DEVELOPMENT
+      - PRE_RELEASE
+      - GENERAL_AVAILABILITY
+      - DEPRECATED

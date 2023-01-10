@@ -6,6 +6,5 @@ export const RawPrimitiveType = {
     boolean: "boolean",
     datetime: "datetime",
     uuid: "uuid",
-    void: "void",
     unknown: "unknown",
 } as const;

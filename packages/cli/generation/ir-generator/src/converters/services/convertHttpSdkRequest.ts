@@ -1,5 +1,5 @@
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { SdkRequest, SdkRequestShape } from "@fern-fern/ir-model/services/http";
+import { SdkRequest, SdkRequestShape } from "@fern-fern/ir-model/http";
 import { size } from "lodash-es";
 import { FernFileContext } from "../../FernFileContext";
 import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody";

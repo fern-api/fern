@@ -1,5 +1,5 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { EndpointId, ErrorId, getEndpointId, getErrorId, getServiceId, getTypeId, ServiceId, TypeId } from "./ids";
 

@@ -24,15 +24,6 @@ types:
       types: list<commons.TypeId>
       errors: list<commons.ErrorId>
 
-  CreateApiRequest:
-    properties:
-      apiName: string
-
-  UpdateApiRequest:
-    properties:
-      apiName: string
-      packages: list<Package>
-
 services:
   http:
     ApiCrudService:
@@ -44,7 +35,11 @@ services:
         create:
           method: POST
           path: /
-          request: CreateApiRequest
+          request:
+            name: CreateApiRequest
+            body:
+              properties:
+                apiName: string
           response: commons.ApiId
         get:
           method: GET
@@ -53,7 +48,12 @@ services:
         update:
           method: PUT
           path: /
-          request: UpdateApiRequest
+          request:
+            name: UpdateApiRequest
+            body:
+              properties:
+                apiName: string
+                packages: list<Package>
         delete:
           method: DELETE
           path: /

@@ -1,4 +1,4 @@
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
@@ -12,6 +12,7 @@ export function validateTypeExample({
     typeDeclaration,
     file,
     typeResolver,
+    exampleResolver,
     example,
     workspace,
 }: {
@@ -19,7 +20,8 @@ export function validateTypeExample({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-    example: RawSchemas.ExampleTypeSchema;
+    exampleResolver: ExampleResolver;
+    example: RawSchemas.ExampleTypeValueSchema;
     workspace: Workspace;
 }): RuleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
@@ -28,6 +30,7 @@ export function validateTypeExample({
                 rawAlias,
                 file,
                 typeResolver,
+                exampleResolver,
                 example,
                 workspace,
             });
@@ -46,6 +49,7 @@ export function validateTypeExample({
                 example,
                 file,
                 typeResolver,
+                exampleResolver,
                 workspace,
             });
         },
@@ -56,6 +60,7 @@ export function validateTypeExample({
                 example,
                 file,
                 typeResolver,
+                exampleResolver,
                 workspace,
             });
         },

@@ -51,7 +51,7 @@
       "pages": [
         "definition",
         "definition/types",
-        "definition/services",
+        "definition/endpoints",
         "definition/errors",
         "definition/imports",
         "definition/api-yml"
@@ -59,7 +59,7 @@
     },
     {
       "group": "Compiler",
-      "pages": ["compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
+      "pages": ["compiler/generate", "compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
     },
     {
       "group": "Advanced features",
@@ -70,10 +70,5 @@
     "discord": "https://discord.com/invite/JkkXumPzcG",
     "github": "https://github.com/fern-api/fern/",
     "website": "https://www.buildwithfern.com/"
-  },
-  "analytics": {
-    "posthog": {
-      "apiKey": "${{ secrets.POSTHOG_PROJECT_API_KEY }}"
-    }
   }
 }

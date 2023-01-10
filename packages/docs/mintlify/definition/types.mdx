@@ -17,6 +17,15 @@ description: "Types describe the data model of your API."
 - **`map`** _e.g. map\<string, integer\>_
 - **`optional`** _e.g. optional\<string\>_
 
+**`unknown`**
+
+Fern comes with a special type `unknown`, which signifies that the type cannot
+be represented in Fern. Often, this is because the value has a dynamic shape
+(e.g. user-supplied data).
+
+In cases where you use `unknown`, Fern will assume the value is optional. There's
+no difference between `unknown` and `optional<unknown>`.
+
 ## Custom types
 
 Creating your own types is easy in Fern!
@@ -197,7 +206,7 @@ types:
     docs: A unique identifier for a user
     type: string
     examples:
-      - user-id-123
+      - value: user-id-123
 ```
 
 ```typescript Generated TypeScript SDK
@@ -217,5 +226,28 @@ types:
   UserId:
     type: integer
     examples:
-      - hello # not an integer
+      - value: hello # not an integer
+```
+
+#### Referencing examples from other types
+
+Just like types, you can compose examples. To reference an example from another
+type, use `$`.
+
+```yaml
+types:
+  UserId:
+    type: integer
+    examples:
+      - name: Example1
+        value: user-id-123
+
+  User:
+    properties:
+      id: UserId
+      name: string
+    examples:
+      - value:
+          id: $UserId.Example1 # <---
+          name: Jane Smith
 ```

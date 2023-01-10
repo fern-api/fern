@@ -16,6 +16,7 @@ export { constructFernFileContext, type FernFileContext } from "./FernFileContex
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
 export { Language } from "./language";
 export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";
+export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";

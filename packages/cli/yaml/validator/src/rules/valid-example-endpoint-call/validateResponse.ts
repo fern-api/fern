@@ -1,4 +1,4 @@
-import { ErrorResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ErrorResolver, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
@@ -9,12 +9,14 @@ export function validateResponse({
     example,
     endpoint,
     typeResolver,
+    exampleResolver,
     file,
     workspace,
     errorResolver,
 }: {
     example: RawSchemas.ExampleResponseSchema | undefined;
     endpoint: RawSchemas.HttpEndpointSchema;
+    exampleResolver: ExampleResolver;
     typeResolver: TypeResolver;
     file: FernFileContext;
     workspace: Workspace;
@@ -29,6 +31,7 @@ export function validateResponse({
                         typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
                     example: example?.body,
                     typeResolver,
+                    exampleResolver,
                     file,
                     workspace,
                 })
@@ -68,6 +71,7 @@ export function validateResponse({
                         rawTypeReference: errorDeclaration.declaration.type,
                         example: example.body,
                         typeResolver,
+                        exampleResolver,
                         file: errorDeclaration.file,
                         workspace,
                     })

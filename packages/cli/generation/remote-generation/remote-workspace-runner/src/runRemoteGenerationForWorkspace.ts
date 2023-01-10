@@ -9,12 +9,16 @@ export async function runRemoteGenerationForWorkspace({
     context,
     generatorGroup,
     version,
+    printZipUrl,
+    token,
 }: {
     organization: string;
     workspace: Workspace;
     context: TaskContext;
     generatorGroup: GeneratorGroup;
     version: string | undefined;
+    printZipUrl: boolean;
+    token: string;
 }): Promise<void> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -32,6 +36,8 @@ export async function runRemoteGenerationForWorkspace({
                         generatorInvocation,
                         version,
                         audiences: generatorGroup.audiences,
+                        printZipUrl,
+                        token,
                     });
                 } catch (e) {
                     interactiveTaskContext.failWithoutThrowing(undefined, e);

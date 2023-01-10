@@ -182,8 +182,11 @@ types:
   # examples
 
   ExampleType:
-    extends: commons.WithJsonExample
+    extends:
+      - commons.WithJsonExample
+      - commons.WithDocs
     properties:
+      name: optional<string>
       shape: ExampleTypeShape
 
   ExampleTypeShape:

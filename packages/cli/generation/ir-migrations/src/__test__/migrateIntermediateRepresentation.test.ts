@@ -1,10 +1,10 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentation } from "../migrateIntermediateRepresentation";
-import { GeneratorName } from "../types/GeneratorName";
 import { AlwaysRunMigration } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 

@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
-import { GeneratorName } from "../../types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest";
 
@@ -8,6 +8,7 @@ export const V3_TO_V2_MIGRATION: IrMigration<
     IrVersions.V2.ir.IntermediateRepresentation
 > = {
     earlierVersion: "v2",
+    laterVersion: "v3",
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.249",

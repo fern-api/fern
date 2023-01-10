@@ -138,10 +138,7 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: "enum.yml",
-                message: `This example is not valid. Example is: {"key":"value"}. Enum values are:
-  - Red
-  - BLUE
-  - purple`,
+                message: 'Expected example to be a string. Example is: {"key":"value"}',
                 nodePath: ["types", "Color", { key: "examples", arrayIndex: 4 }],
             },
 
@@ -183,6 +180,27 @@ describe("valid-example-type", () => {
                 relativeFilepath: "object.yml",
                 message: 'Unexpected property "random-property"',
                 nodePath: ["types", "Object1", { key: "examples", arrayIndex: 7 }],
+            },
+
+            // references.yml
+            {
+                message: "Expected example to be: string. Example is $MyNumberAlias.Example1.",
+                nodePath: [
+                    "types",
+                    "MyAlias",
+                    {
+                        arrayIndex: 1,
+                        key: "examples",
+                    },
+                ],
+                relativeFilepath: "references.yml",
+                severity: "error",
+            },
+            {
+                severity: "error",
+                relativeFilepath: "references.yml",
+                message: "Expected example to be a string. Example is: 123",
+                nodePath: ["types", "MyStringAlias", { key: "examples", arrayIndex: 0 }],
             },
 
             // union.yml
