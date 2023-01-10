@@ -13,6 +13,7 @@
 <div align="center">
 Backed by Y Combinator
 </div>
+
 ---
 
 **Fern is an open source format for defining REST APIs.**
