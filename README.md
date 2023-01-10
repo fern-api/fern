@@ -4,6 +4,10 @@
   <img src="https://img.shields.io/npm/v/fern-api?style=flat-square" />
 </a>
 
+[Documentation ➚](https://www.buildwithfern.com/docs)
+
+[Discord ➚](https://discord.com/invite/JkkXumPzcG)
+
 ---
 
 **Fern is an open source format for defining REST APIs.**
@@ -26,7 +30,7 @@ We automatically generate lots of boilerplate on the server side, like Pydantic 
 
 [FastAPI generator ➚](https://github.com/fern-api/fern-python)
 
-[Java Spring Boot generator ➚](https://github.com/fern-api/fern-java)
+[Spring Boot generator ➚](https://github.com/fern-api/fern-java)
 
 ### 🌿 Postman Collection
 
