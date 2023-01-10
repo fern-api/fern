@@ -80,6 +80,53 @@ fern/
     └─ imdb.yml # endpoints, types, and errors
 ```
 
+Here's what the `imdb.yml` starter file looks like:
+
+```yaml
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+services:
+  http:
+    MoviesService:
+      auth: false
+      base-path: /movies
+      endpoints:
+        createMovie:
+          docs: Add a movie to the database
+          method: POST
+          path: /create-movie
+          request: CreateMovieRequest
+          response: MovieId
+
+        getMovie:
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response: Movie
+          errors:
+            - MovieDoesNotExistError
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+```
+
 ### Generating an SDK
 
 To generate SDKs, you can log in with GitHub from the CLI:
