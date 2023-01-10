@@ -13,6 +13,9 @@
   <br />
 </div>
 
+<div align="center">
+  <img src="yc.png" alt="y combinator" />
+</div>
 ---
 
 **Fern is an open source format for defining REST APIs.**
