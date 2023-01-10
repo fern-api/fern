@@ -118,7 +118,7 @@ And voila! You just built and published a TypeScript SDK.
 
 # CLI Reference
 
-### 🌿 `fern generate [--group <group>] [--version <version>]`
+### `fern generate [--group <group>] [--version <version>]`
 
 `fern generate` runs the compiler. It will validate your API and run the
 generators specified in `generators.yml`.
@@ -129,25 +129,35 @@ specify a group using the `--group` option.
 You can specify a version using the `--version` option. This version string is
 used when publishing SDKs to registries (e.g. npm).
 
-### 🌿 `fern check`
+---
+
+### `fern check`
 
 `fern check` will validate that your API is valid.
 
-### 🌿 `fern upgrade`
+---
+
+### `fern upgrade`
 
 `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
 latest version.
 
-### 🌿 `fern add <generator>`
+---
+
+### `fern add <generator>`
 
 `fern add` adds a new generator to your `generators.yml`. You can view the full
 list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).
 
-### 🌿 `fern init`
+---
+
+### `fern init`
 
 `fern init` adds a new API to your repo.
 
-### 🌿 `fern register`
+---
+
+### `fern register`
 
 _Advanced feature._ You can register your API so it can be depended on by other
 APIs. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis).
