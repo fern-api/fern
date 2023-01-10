@@ -112,9 +112,9 @@ for an in-depth comparison.
 
 TL;DR: we differ from OpenAPI in these areas:
 
-- Ease of use
-- Quality of code generation
-- Focus on server-side API development
-- Change management
-- Cloud-based code generation and publishing
+- [Ease of use](https://www.buildwithfern.com/docs/comparison-with-openapi#ease-of-use)
+- [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
+- [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
+- [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
+- [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
   ​
