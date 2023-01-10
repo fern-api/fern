@@ -18,7 +18,9 @@ export async function generateWorkspaces({
 }): Promise<void> {
     const { token } = project;
     if (token == null) {
-        return cliContext.failAndThrow(`Please run ${chalk.bold("fern login")} to log in with GitHub.`);
+        return cliContext.failAndThrow(
+            `Please run ${chalk.bold(`${cliContext.environment.cliName} login`)} to log in with GitHub.`
+        );
     }
 
     await Promise.all(
