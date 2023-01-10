@@ -49,6 +49,19 @@ You can feed the generated OpenAPI into the endless list of tools that support O
 
 [OpenAPI generator ➚](https://github.com/fern-api/fern-postman)
 
+# Comparison with OpenAPI
+
+OpenAPI is a great tool for documenting APIs, but falls short for code generation use cases.
+
+Read [Fern vs. OpenAPI](https://www.buildwithfern.com/docs/comparison-with-openapi)
+for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
+
+- [Ease of use](https://www.buildwithfern.com/docs/comparison-with-openapi#ease-of-use)
+- [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
+- [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
+- [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
+- [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
+
 # Get started
 
 ```bash
@@ -116,15 +129,14 @@ specify a group using the `--group` option.
 You can specify a version using the `--version` option. This version string is
 used when publishing SDKs to registries (e.g. npm).
 
-## `fern upgrade`
-
-`fern upgrade` will upgrade your compiler version in `fern.config.json` to the
-latest version. It will also upgrade your generators to the _minimum_ versions that
-are compatible with the latest version of the compiler.
-
 ## `fern check`
 
 `fern check` will validate that your API is valid.
+
+## `fern upgrade`
+
+`fern upgrade` will upgrade your compiler version in `fern.config.json` to the
+latest version.
 
 ## `fern add <generator>`
 
@@ -140,16 +152,4 @@ list of supported generators in our [docs](https://www.buildwithfern.com/docs/co
 _Advanced feature._ You can register your API so it can be depended on by other
 APIs. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis).
 
-# Comparison with OpenAPI
-
-OpenAPI is a great tool for documenting APIs, but falls short for code generation use cases.
-
-Read [Fern vs. OpenAPI](https://www.buildwithfern.com/docs/comparison-with-openapi)
-for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
-
-- [Ease of use](https://www.buildwithfern.com/docs/comparison-with-openapi#ease-of-use)
-- [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
-- [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
-- [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
-- [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
-  ​
+​
