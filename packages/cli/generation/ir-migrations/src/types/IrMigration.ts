@@ -1,4 +1,4 @@
-import { GeneratorName } from "./GeneratorName";
+import { GeneratorName } from "@fern-api/generators-configuration";
 
 export type GeneratorVersion = string | typeof AlwaysRunMigration;
 

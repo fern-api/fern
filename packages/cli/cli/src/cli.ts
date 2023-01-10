@@ -11,6 +11,7 @@ import {
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import chalk from "chalk";
 import getStdin from "get-stdin";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -24,10 +25,9 @@ import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
+import { TOKEN_STDIN_OPTION } from "./constants";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-
-export const GROUP_CLI_OPTION = "group";
 
 interface GlobalCliOptions {
     "log-level": LogLevel;
@@ -183,7 +183,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         (yargs) =>
             yargs
                 .positional("generator", {
-                    choices: ["typescript", "java", "postman", "openapi"] as const,
+                    type: "string",
                     demandOption: true,
                 })
                 .option("api", {
@@ -373,7 +373,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "login",
         false, // hide from help message
         (yargs) =>
-            yargs.option("token-stdin", {
+            yargs.option(TOKEN_STDIN_OPTION, {
                 boolean: true,
                 hidden: true,
                 default: false,
@@ -387,6 +387,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 token = await auth0Login();
             }
             await storeToken(token);
+            cliContext.logger.info(chalk.green("Logged in"));
         }
     );
 }

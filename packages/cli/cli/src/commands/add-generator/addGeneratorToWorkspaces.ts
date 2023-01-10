@@ -1,5 +1,5 @@
 import { loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { addGenerator, SimpleGeneratorName } from "@fern-api/manage-generator";
+import { addGenerator } from "@fern-api/manage-generator";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -8,7 +8,7 @@ import { CliContext } from "../../cli-context/CliContext";
 
 export async function addGeneratorToWorkspaces(
     { workspaces }: Project,
-    generatorName: SimpleGeneratorName,
+    generatorName: string,
     cliContext: CliContext
 ): Promise<void> {
     await Promise.all(

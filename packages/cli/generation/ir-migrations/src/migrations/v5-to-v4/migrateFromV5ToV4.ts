@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
-import { GeneratorName } from "../../types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 import { convertAuth } from "./convertAuth";
 import { convertEnvironment } from "./convertEnvironment";
