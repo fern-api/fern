@@ -183,7 +183,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         (yargs) =>
             yargs
                 .positional("generator", {
-                    choices: ["typescript", "java", "postman", "openapi"] as const,
+                    type: "string",
                     demandOption: true,
                 })
                 .option("api", {

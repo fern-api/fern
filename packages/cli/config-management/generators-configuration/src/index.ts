@@ -1,3 +1,4 @@
+export { GeneratorName } from "./GeneratorName";
 export {
     type GeneratorAudiences,
     type GeneratorGroup,
