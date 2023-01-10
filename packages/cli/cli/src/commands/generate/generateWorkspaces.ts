@@ -8,13 +8,13 @@ export async function generateWorkspaces({
     cliContext,
     version,
     groupName,
-    printZipUrl,
+    shouldLogS3Url,
 }: {
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
     groupName: string | undefined;
-    printZipUrl: boolean;
+    shouldLogS3Url: boolean;
 }): Promise<void> {
     const { token } = project;
     if (token == null) {
@@ -32,7 +32,7 @@ export async function generateWorkspaces({
                     context,
                     version,
                     groupName,
-                    printZipUrl,
+                    shouldLogS3Url,
                     token,
                 })
             )

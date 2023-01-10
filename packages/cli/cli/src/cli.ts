@@ -227,7 +227,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                printZipUrl: argv.printZipUrl,
+                shouldLogS3Url: argv.printZipUrl,
             });
         }
     );

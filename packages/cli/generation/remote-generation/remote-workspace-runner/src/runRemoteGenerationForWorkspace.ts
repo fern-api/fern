@@ -9,7 +9,7 @@ export async function runRemoteGenerationForWorkspace({
     context,
     generatorGroup,
     version,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     organization: string;
@@ -17,7 +17,7 @@ export async function runRemoteGenerationForWorkspace({
     context: TaskContext;
     generatorGroup: GeneratorGroup;
     version: string | undefined;
-    printZipUrl: boolean;
+    shouldLogS3Url: boolean;
     token: string;
 }): Promise<void> {
     if (generatorGroup.generators.length === 0) {
@@ -36,7 +36,7 @@ export async function runRemoteGenerationForWorkspace({
                         generatorInvocation,
                         version,
                         audiences: generatorGroup.audiences,
-                        printZipUrl,
+                        shouldLogS3Url,
                         token,
                     });
                 } catch (e) {
