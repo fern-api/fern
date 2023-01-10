@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -25,6 +25,7 @@ export async function createWorkspace({
 }
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
+    "default-group": DEFAULT_GROUP_NAME,
     groups: {},
 };
 

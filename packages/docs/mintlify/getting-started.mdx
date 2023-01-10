@@ -13,8 +13,13 @@ npm install -g fern-api
 The `fern/` directory contains your API definition. This generally lives in your
 backend repo, but you can also have an independent repo dedicated to your API (like [Raven's](https://github.com/ravenappdev/raven-api)).
 
-In the root of your repo, run `fern init`. This will create the following folder
-structure in your project:
+In the root of your repo, run:
+
+```bash
+fern init
+```
+
+This will create the following folder structure in your project:
 
 ```yaml
 fern/
@@ -24,6 +29,27 @@ fern/
   └─ definition/
     ├─ api.yml  # API-level configuration
     └─ imdb.yml # endpoints, types, and errors
+```
+
+### Generating an SDK
+
+To generate SDKs, you can log in with GitHub from the CLI:
+
+```bash
+fern login
+```
+
+You can add [generators](compiler/generators) using `fern add`. By default, this
+will publish your SDK to the Fern npm registry (npm.buildwithfern.com).
+
+```bash
+fern add fern-typescript-sdk
+```
+
+To generate the TypeScript SDK, run:
+
+```bash
+fern generate
 ```
 
 ### Defining your API
