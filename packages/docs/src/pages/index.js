@@ -10,7 +10,7 @@ function HomepageHeader() {
             <div className="container" style={{ textAlign: "left" }}>
                 <h1 className={styles.hero_title}>{siteConfig.tagline}</h1>
                 <p className="hero__subtitle" style={{ color: "black" }}>
-                    An open source specification for describing REST APIs.
+                    Fern is an open source format for defining REST APIs.
                 </p>
                 <div className={styles.buttons}>
                     <button
