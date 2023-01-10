@@ -1,9 +1,7 @@
-import { GeneratorName, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { DEFAULT_GROUP_NAME, GeneratorName, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import produce from "immer";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
-
-const DEFAULT_GROUP_NAME = "external";
 
 export function addGenerator({
     generatorName,

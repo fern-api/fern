@@ -73,7 +73,8 @@ errors:
             "type": "directory",
           },
           {
-            "contents": "groups:
+            "contents": "default-group: external
+groups:
   external:
     generators:
       - name: fernapi/fern-java-sdk

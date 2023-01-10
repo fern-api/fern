@@ -1,3 +1,4 @@
+export { DEFAULT_GROUP_NAME } from "./constants";
 export { GeneratorName } from "./GeneratorName";
 export {
     type GeneratorAudiences,
