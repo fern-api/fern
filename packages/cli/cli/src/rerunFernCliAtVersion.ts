@@ -1,6 +1,5 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
-import { ExecaChildProcess } from "execa";
 import { CliContext } from "./cli-context/CliContext";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 
@@ -12,7 +11,7 @@ export async function rerunFernCliAtVersion({
     version: string;
     cliContext: CliContext;
     env?: Record<string, string>;
-}): Promise<ExecaChildProcess> {
+}): Promise<void> {
     cliContext.suppressUpgradeMessage();
 
     const commandLineArgs = [
@@ -28,7 +27,7 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    return loggingExeca(cliContext.logger, "npx", commandLineArgs, {
+    const { failed } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,
         env: {
@@ -36,4 +35,8 @@ export async function rerunFernCliAtVersion({
             [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
         },
     });
+
+    if (failed) {
+        cliContext.failWithoutThrowing();
+    }
 }

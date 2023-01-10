@@ -82,7 +82,12 @@ export class CliContext {
         );
     }
 
-    public fail(message?: string, error?: unknown): void {
+    public failAndThrow(message?: string, error?: unknown): never {
+        this.failWithoutThrowing(message, error);
+        throw new FernCliError(message);
+    }
+
+    public failWithoutThrowing(message?: string, error?: unknown): void {
         this.didSucceed = false;
         logErrorMessage({ message, error, logger: this.logger });
     }
@@ -176,7 +181,7 @@ export class CliContext {
             result = await run(context);
         } catch (error) {
             context.failWithoutThrowing(undefined, error);
-            throw new FernCliError();
+            throw new FernCliError((error as Error).message);
         } finally {
             context.finish();
         }

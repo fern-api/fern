@@ -3256,7 +3256,6 @@ __metadata:
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
     eslint: ^8.26.0
-    execa: ^5.1.1
     get-stdin: ^9.0.0
     immer: ^9.0.15
     is-ci: ^3.0.1

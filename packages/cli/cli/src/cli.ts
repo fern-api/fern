@@ -55,25 +55,17 @@ async function runCli() {
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
         } else {
-            const { failed } = await rerunFernCliAtVersion({
+            await rerunFernCliAtVersion({
                 version: versionOfCliToRun,
                 cliContext,
             });
-            if (failed) {
-                cliContext.fail();
-            }
         }
     } catch (error) {
         if (error instanceof FernCliError) {
-            if (cliContext.getLogLevel() === LogLevel.Debug) {
-                if (error.stack != null) {
-                    cliContext.logger.error(error.stack);
-                }
-            }
-            // thrower is responsible for logging, so we don't need to log here
-            cliContext.fail();
+            // thrower is responsible for logging, so we generally don't need to log here.
+            cliContext.failWithoutThrowing();
         } else {
-            cliContext.fail("Failed to run", error);
+            cliContext.failWithoutThrowing("Failed.", error);
         }
     }
 
@@ -108,7 +100,7 @@ async function tryRunCli(cliContext: CliContext) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
                     cli.showHelp();
-                    cliContext.fail();
+                    cliContext.failAndThrow();
                 }
             }
         )
@@ -300,8 +292,7 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 defaultToAllWorkspaces: false,
             });
             if (project.token == null) {
-                cliContext.fail("Please run fern login before registring.");
-                return;
+                cliContext.failAndThrow("Please run fern login before registring.");
             }
             await registerApiDefinitions({
                 project,

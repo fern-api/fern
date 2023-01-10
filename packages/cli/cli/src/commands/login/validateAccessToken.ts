@@ -1,5 +1,4 @@
 import { createVenusService } from "@fern-api/services";
-import { FernCliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function validateAccessToken({
@@ -12,7 +11,6 @@ export async function validateAccessToken({
     const venus = createVenusService({ token });
     const response = await venus.organization.getMyOrganizationFromScopedToken();
     if (!response.ok) {
-        cliContext.fail("Failed to login. Token is invalid.", response.error);
-        throw new FernCliError();
+        cliContext.failAndThrow("Failed to login. Token is invalid.", response.error);
     }
 }
