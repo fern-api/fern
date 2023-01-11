@@ -1,7 +1,6 @@
-import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { askToLogin, createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { loginOrThrow } from "../../loginOrThrow";
 import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({
@@ -17,7 +16,9 @@ export async function generateWorkspaces({
     groupName: string | undefined;
     shouldLogS3Url: boolean;
 }): Promise<void> {
-    const token = await loginOrThrow(cliContext);
+    const token = await cliContext.runTask(async (context) => {
+        return askToLogin(context);
+    });
 
     if (token.type === "user") {
         await cliContext.runTask(async (context) => {

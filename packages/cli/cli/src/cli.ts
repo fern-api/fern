@@ -1,4 +1,4 @@
-import { login } from "@fern-api/auth";
+import { askToLogin, login } from "@fern-api/auth";
 import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
@@ -25,7 +25,6 @@ import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
-import { loginOrThrow } from "./loginOrThrow";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 interface GlobalCliOptions {
@@ -154,15 +153,14 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 alias: "org",
                 type: "string",
                 description: "Organization name",
+                hidden: true,
             }),
         async (argv) => {
-            const token = await login();
             await cliContext.runTask(async (context) => {
                 await initialize({
                     organization: argv.organization,
                     versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                     context,
-                    token,
                 });
             });
         }
@@ -292,7 +290,10 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 commandLineWorkspace: argv.api,
                 defaultToAllWorkspaces: false,
             });
-            const token = await loginOrThrow(cliContext);
+
+            const token = await cliContext.runTask((context) => {
+                return askToLogin(context);
+            });
             await registerApiDefinitions({
                 project,
                 cliContext,

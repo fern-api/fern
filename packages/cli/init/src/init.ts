@@ -1,9 +1,4 @@
-import {
-    createOrganizationIfDoesNotExist,
-    FernUserToken,
-    getCurrentUser,
-    getOrganizationNameValidationError,
-} from "@fern-api/auth";
+import { askToLogin, createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
@@ -14,7 +9,6 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
-import inquirer, { InputQuestion } from "inquirer";
 import path from "path";
 import { createWorkspace } from "./createWorkspace";
 
@@ -22,40 +16,35 @@ export async function initialize({
     organization,
     versionOfCli,
     context,
-    token,
 }: {
     organization: string | undefined;
     versionOfCli: string;
     context: TaskContext;
-    token: FernUserToken;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
-            await context.takeOverTerminal(async () => {
-                const user = await getCurrentUser({ token, context });
-                organization = await askForOrganization({
-                    username: user.username.toLowerCase(),
-                });
+            const token = await askToLogin(context);
+            if (token?.type !== "user") {
+                return context.failAndThrow("You must be logged into to initialize Fern.");
+            }
+            const user = await getCurrentUser({ token, context });
+            organization = user.username;
+            const didCreateOrganization = await createOrganizationIfDoesNotExist({
+                organization,
+                token,
+                context,
             });
-        }
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const castedOrganization = organization!;
-
-        const didCreateOrganization = await createOrganizationIfDoesNotExist({
-            organization: castedOrganization,
-            token,
-            context,
-        });
-        if (didCreateOrganization) {
-            context.logger.info(`${chalk.green(`Created organization ${chalk.bold(castedOrganization)}`)}`);
+            if (didCreateOrganization) {
+                context.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
+            }
         }
 
         await mkdir(FERN_DIRECTORY);
         await writeProjectConfig({
             filepath: join(pathToFernDirectory, PROJECT_CONFIG_FILENAME),
-            organization: castedOrganization,
+            organization,
             versionOfCli,
         });
     }
@@ -79,19 +68,6 @@ async function writeProjectConfig({
         version: versionOfCli,
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
-}
-
-async function askForOrganization({ username }: { username: string }) {
-    const name = "organization";
-    const organizationQuestion: InputQuestion<{ [name]: string }> = {
-        type: "input",
-        name,
-        message: "What's the name of your organization?",
-        default: username,
-        validate: (organization) => getOrganizationNameValidationError(organization) ?? true,
-    };
-    const answers = await inquirer.prompt(organizationQuestion);
-    return answers[name];
 }
 
 async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {

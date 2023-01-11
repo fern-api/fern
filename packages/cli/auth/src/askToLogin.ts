@@ -1,22 +1,20 @@
 import { FernToken, getToken, isLoggedIn, login } from "@fern-api/auth";
-import chalk from "chalk";
+import { TaskContext } from "@fern-api/task-context";
 import inquirer, { ConfirmQuestion } from "inquirer";
-import { CliContext } from "./cli-context/CliContext";
 
-export async function loginOrThrow(cliContext: CliContext): Promise<FernToken> {
-    if (!(await isLoggedIn()) && cliContext.isTTY) {
-        await cliContext.takeOverTerminal(async () => {
+export async function askToLogin(context: TaskContext): Promise<FernToken> {
+    if (!(await isLoggedIn()) && process.stdout.isTTY) {
+        await context.takeOverTerminal(async () => {
             if (await askForConfirmation("Login required. Continue?")) {
                 await login();
             } else {
-                cliContext.logger.info(`You can log in with ${chalk.bold(`${cliContext.environment.cliName} login`)}`);
-                cliContext.failAndThrow();
+                context.failAndThrow();
             }
         });
     }
     const token = await getToken();
     if (token == null) {
-        cliContext.failAndThrow("Login required.");
+        context.failAndThrow("Login required.");
     }
 
     return token;
