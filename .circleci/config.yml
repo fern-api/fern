@@ -255,6 +255,7 @@ workflows:
               only: /.*/
           context:
             - auth0-dev
+            - fern-tokens
 
       - live-test-dev:
           filters:
