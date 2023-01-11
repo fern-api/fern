@@ -61,7 +61,7 @@ function convertEndpoint({
         id: endpoint.name.originalName,
         name: convertNameToV1(endpoint.name),
         nameV2: convertNameToV2(endpoint.name),
-        displayName: endpoint.name.originalName,
+        displayName: endpoint.displayName,
         method: endpoint.method,
         headers: endpoint.headers.map((header) => convertHeader(header)),
         path: endpoint.path,
