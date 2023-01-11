@@ -27,7 +27,7 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    const { failed } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
+    const { failed } = await loggingExeca(cliContext.logger, "npx", ["--quiet", ...commandLineArgs], {
         stdio: "inherit",
         reject: false,
         env: {
