@@ -7916,7 +7916,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
-            ["get-stdin", "npm:9.0.0"],\
             ["immer", "npm:9.0.15"],\
             ["inquirer", "npm:9.1.0"],\
             ["is-ci", "npm:3.0.1"],\
@@ -8524,6 +8523,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
@@ -17936,15 +17936,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/get-port-npm-5.1.1-2f6074007a-0162663ffe.zip/node_modules/get-port/",\
           "packageDependencies": [\
             ["get-port", "npm:5.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["get-stdin", [\
-        ["npm:9.0.0", {\
-          "packageLocation": "./.yarn/cache/get-stdin-npm-9.0.0-4221477153-5972bc34d0.zip/node_modules/get-stdin/",\
-          "packageDependencies": [\
-            ["get-stdin", "npm:9.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

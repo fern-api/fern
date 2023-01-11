@@ -1,6 +1,6 @@
 import { Project } from "@fern-api/project-loader";
-import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext";
+import { loginOrThrow } from "../../loginOrThrow";
 import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({
@@ -16,12 +16,7 @@ export async function generateWorkspaces({
     groupName: string | undefined;
     shouldLogS3Url: boolean;
 }): Promise<void> {
-    const { token } = project;
-    if (token == null) {
-        return cliContext.failAndThrow(
-            `Please run ${chalk.bold(`${cliContext.environment.cliName} login`)} to log in with GitHub.`
-        );
-    }
+    const token = await loginOrThrow(cliContext);
 
     await Promise.all(
         project.workspaces.map(async (workspace) =>

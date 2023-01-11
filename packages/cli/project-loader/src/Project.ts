@@ -4,5 +4,4 @@ import { Workspace } from "@fern-api/workspace-loader";
 export interface Project {
     config: ProjectConfig;
     workspaces: Workspace[];
-    token: string | undefined;
 }

@@ -1,4 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
+import { FernToken } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { createFiddleService } from "@fern-api/services";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -17,10 +18,10 @@ export async function registerApiDefinitions({
 }: {
     project: Project;
     cliContext: CliContext;
-    token: string;
+    token: FernToken;
     version: string | undefined;
 }): Promise<void> {
-    const fiddle = createFiddleService({ token });
+    const fiddle = createFiddleService({ token: token.value });
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {

@@ -3,7 +3,7 @@ import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { isLoggedIn, login } from "@fern-api/login";
+import { login } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -13,7 +13,6 @@ import {
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
 import chalk from "chalk";
-import inquirer, { ConfirmQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -26,6 +25,7 @@ import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
+import { loginOrThrow } from "./loginOrThrow";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 interface GlobalCliOptions {
@@ -129,11 +129,6 @@ async function tryRunCli(cliContext: CliContext) {
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
         cliContext.logDebugInfo();
-
-        // ensure logged in for all commands except "login"
-        if (argv._[0] !== "login") {
-            await loginOrThrow(cliContext);
-        }
     });
 
     await cli.parse();
@@ -291,17 +286,15 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
+            const token = await loginOrThrow(cliContext);
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineWorkspace: argv.api,
                 defaultToAllWorkspaces: false,
             });
-            if (project.token == null) {
-                cliContext.failAndThrow("Please log in before registring.");
-            }
             await registerApiDefinitions({
                 project,
                 cliContext,
-                token: project.token,
+                token,
                 version: argv.version,
             });
         }
@@ -385,32 +378,4 @@ async function loadProjectAndRegisterWorkspacesWithContext(
 
     cliContext.registerWorkspaces(project.workspaces);
     return project;
-}
-
-async function askForConfirmation(message: string) {
-    const name = "question";
-    const question: ConfirmQuestion<{ [name]: boolean }> = {
-        type: "confirm",
-        name,
-        message,
-    };
-    const answers = await inquirer.prompt(question);
-    return answers[name];
-}
-
-async function loginOrThrow(cliContext: CliContext): Promise<void> {
-    if (await isLoggedIn()) {
-        return;
-    }
-    if (!cliContext.isTTY) {
-        cliContext.failAndThrow("Login required.");
-    }
-    await cliContext.takeOverTerminal(async () => {
-        if (await askForConfirmation("Login required. Continue?")) {
-            await login();
-        } else {
-            cliContext.logger.info(`You can log in with ${chalk.bold(`${cliContext.environment.cliName} login`)}`);
-            cliContext.failAndThrow();
-        }
-    });
 }
