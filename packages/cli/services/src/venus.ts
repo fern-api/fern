@@ -9,8 +9,6 @@ export function getVenusOrigin(): string {
 export function createVenusService({ token }: { token?: string } = {}): FernVenusApiClient {
     return new FernVenusApiClient({
         environment: VENUS_ORIGIN,
-        auth: {
-            token,
-        },
+        token,
     });
 }

@@ -8613,7 +8613,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.163"],\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.4-6-gdc28ef2"],\
+            ["@fern-fern/venus-api-sdk", "npm:0.0.11-1-g116b69e"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -8907,14 +8907,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/venus-api-sdk", [\
-        ["npm:0.0.4-6-gdc28ef2", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-venus-api-sdk-npm-0.0.4-6-gdc28ef2-688aa4dfda-dedf303c9c.zip/node_modules/@fern-fern/venus-api-sdk/",\
+        ["npm:0.0.11-1-g116b69e", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-venus-api-sdk-npm-0.0.11-1-g116b69e-628833157d-2c4ac90637.zip/node_modules/@fern-fern/venus-api-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.4-6-gdc28ef2"],\
+            ["@fern-fern/venus-api-sdk", "npm:0.0.11-1-g116b69e"],\
             ["@types/basic-auth", "npm:1.1.3"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["basic-auth", "npm:2.0.1"],\
+            ["buffer", "npm:6.0.3"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
