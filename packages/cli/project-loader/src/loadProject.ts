@@ -72,7 +72,7 @@ export async function loadProject({
     return {
         config: await loadProjectConfig({ directory: fernDirectory, context }),
         workspaces,
-        token: await getToken(),
+        token: (await getToken())?.value,
     };
 }
 
