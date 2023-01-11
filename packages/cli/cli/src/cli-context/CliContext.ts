@@ -84,7 +84,7 @@ export class CliContext {
 
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
-        throw new FernCliError(message);
+        throw new FernCliError();
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
@@ -181,7 +181,7 @@ export class CliContext {
             result = await run(context);
         } catch (error) {
             context.failWithoutThrowing(undefined, error);
-            throw new FernCliError((error as Error).message);
+            throw new FernCliError();
         } finally {
             context.finish();
         }

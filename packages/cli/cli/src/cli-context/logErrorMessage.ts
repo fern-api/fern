@@ -19,11 +19,12 @@ export function logErrorMessage({
         return;
     }
 
-    if (
-        error != null &&
-        // thrower is responsible for logging, so we don't need to log the error's message too
-        !(error instanceof FernCliError)
-    ) {
+    // thrower is responsible for logging, so we don't need to log the error's message too
+    if (error instanceof FernCliError) {
+        return;
+    }
+
+    if (error != null) {
         const errorMessage = convertErrorToString(error);
         if (errorMessage != null) {
             logger.log(logLevel, errorMessage);

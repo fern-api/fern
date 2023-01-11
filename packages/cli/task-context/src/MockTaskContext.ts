@@ -21,7 +21,7 @@ export function createMockTaskContext({
             if (parts.length > 0) {
                 context.logger.error(...parts);
             }
-            throw new FernCliError(message);
+            throw new FernCliError();
         },
         failWithoutThrowing: (message?: string, error?: unknown) => {
             // in mock contexts, any failures should throw

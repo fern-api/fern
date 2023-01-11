@@ -74,7 +74,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
         this.finish();
-        throw new FernCliError(message);
+        throw new FernCliError();
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
@@ -139,7 +139,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             await run(subtask);
         } catch (error) {
             subtask.failWithoutThrowing(undefined, error);
-            throw new FernCliError((error as Error).message);
+            throw new FernCliError();
         } finally {
             subtask.finish();
         }

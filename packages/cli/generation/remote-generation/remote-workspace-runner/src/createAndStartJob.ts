@@ -4,6 +4,7 @@ import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
@@ -77,7 +78,7 @@ async function createJob({
     });
 
     if (!createResponse.ok) {
-        return createResponse.error._visit({
+        return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.name);
             },
@@ -100,7 +101,7 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
-                return context.failAndThrow("Insufficient permissions. Do you have a token set in generators.yml?");
+                return context.failAndThrow("Insufficient permissions.");
             },
             _other: (content) => {
                 return context.failAndThrow("Failed to create job", content);
@@ -140,4 +141,27 @@ async function startJob({
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
         context.failAndThrow("Failed to start job", errorBody);
     }
+}
+
+// Fiddle is on the old version of error serialization. Until we upgrade the
+// java generator to support the new implementation, we manually migrate
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
+    if (error?.reason === "status-code") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const body = error.body as any;
+        switch (body?._error) {
+            case "IllegalApiNameError":
+                return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError();
+            case "GeneratorsDoNotExistError":
+                return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.body);
+            case "CannotPublishToNpmScope":
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.body);
+            case "CannotPublishToMavenScope":
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.body);
+            case "InsufficientPermissions":
+                return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
+        }
+    }
+    return error;
 }
