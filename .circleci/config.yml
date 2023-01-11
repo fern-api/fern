@@ -23,7 +23,7 @@ jobs:
           command: yarn compile
       - run:
           name: Run tests
-          command: | 
+          command: |
             npm install -g fern-api
             yarn test --ci
       - run:
@@ -38,7 +38,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update yarn.lock with new versions
+          name: Install
           command: yarn
       - run:
           name: Compile
