@@ -27,7 +27,7 @@ export async function initialize({
         if (organization == null) {
             const token = await askToLogin(context);
             if (token.type !== "user") {
-                return context.failAndThrow("You must be logged into to initialize Fern.");
+                return context.failAndThrow("You must be logged in to initialize Fern.");
             }
             const user = await getCurrentUser({ token, context });
             organization = user.username;
