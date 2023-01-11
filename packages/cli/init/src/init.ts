@@ -34,9 +34,9 @@ export async function initialize({
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
             await context.takeOverTerminal(async () => {
-                const user = await getCurrentUser({ token });
+                const user = await getCurrentUser({ token, context });
                 organization = await askForOrganization({
-                    username: user.username,
+                    username: user.username.toLowerCase(),
                 });
             });
         }
