@@ -5,9 +5,9 @@
   "references": [
     { "path": "../../../../commons/core-utils" },
     { "path": "../../../../commons/fs-utils" },
+    { "path": "../../../auth" },
     { "path": "../../../config-management/generators-configuration" },
     { "path": "../../../logger" },
-    { "path": "../../../login" },
     { "path": "../../../services" },
     { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },

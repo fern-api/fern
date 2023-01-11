@@ -1,5 +1,5 @@
+import { FernToken } from "@fern-api/auth";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "@fern-api/generators-configuration";
-import { FernToken } from "@fern-api/login";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";

@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/login",
+  "name": "@fern-api/auth",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/login"
+    "directory": "packages/cli/auth"
   },
   "files": [
     "lib"

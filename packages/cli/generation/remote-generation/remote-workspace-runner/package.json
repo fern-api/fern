@@ -25,13 +25,13 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/auth": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-api/login": "workspace:*",
     "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

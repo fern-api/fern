@@ -1,6 +1,6 @@
+import { FernToken } from "@fern-api/auth";
 import { GeneratorAudiences, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
-import { FernToken } from "@fern-api/login";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { createAndStartJob } from "./createAndStartJob";

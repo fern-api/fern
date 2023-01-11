@@ -1,4 +1,4 @@
-import { FernToken, getToken, isLoggedIn, login } from "@fern-api/login";
+import { FernToken, getToken, isLoggedIn, login } from "@fern-api/auth";
 import chalk from "chalk";
 import inquirer, { ConfirmQuestion } from "inquirer";
 import { CliContext } from "./cli-context/CliContext";

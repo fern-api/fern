@@ -1,5 +1,5 @@
+import { FernToken } from "@fern-api/auth";
 import { LogLevel } from "@fern-api/logger";
-import { FernToken } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { createFiddleService } from "@fern-api/services";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
