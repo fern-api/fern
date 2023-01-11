@@ -10,10 +10,10 @@ export async function isLoggedIn(): Promise<boolean> {
     }
     switch (token.type) {
         case "organization":
-            return verifyScopedToken(token.value);
+            return verifyScopedToken(token);
         case "user":
-            return verifyJwt(token.value);
+            return verifyJwt(token);
         default:
-            assertNever(token.type);
+            assertNever(token);
     }
 }

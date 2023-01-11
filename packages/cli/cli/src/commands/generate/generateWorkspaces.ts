@@ -16,7 +16,7 @@ export async function generateWorkspaces({
     groupName: string | undefined;
     shouldLogS3Url: boolean;
 }): Promise<void> {
-    const token = await loginOrThrow(cliContext);
+    const token = await loginOrThrow({ cliContext, project });
 
     await Promise.all(
         project.workspaces.map(async (workspace) =>

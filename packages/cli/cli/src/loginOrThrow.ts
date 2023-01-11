@@ -1,9 +1,16 @@
-import { FernToken, getToken, isLoggedIn, login } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, getToken, isLoggedIn, login } from "@fern-api/auth";
+import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import inquirer, { ConfirmQuestion } from "inquirer";
 import { CliContext } from "./cli-context/CliContext";
 
-export async function loginOrThrow(cliContext: CliContext): Promise<FernToken> {
+export async function loginOrThrow({
+    cliContext,
+    project,
+}: {
+    cliContext: CliContext;
+    project: Project;
+}): Promise<FernToken> {
     if (!(await isLoggedIn()) && cliContext.isTTY) {
         await cliContext.takeOverTerminal(async () => {
             if (await askForConfirmation("Login required. Continue?")) {
@@ -18,6 +25,17 @@ export async function loginOrThrow(cliContext: CliContext): Promise<FernToken> {
     if (token == null) {
         cliContext.failAndThrow("Login required.");
     }
+
+    if (token.type === "user") {
+        await cliContext.runTask(async (context) => {
+            await createOrganizationIfDoesNotExist({
+                organization: project.config.organization,
+                token,
+                context,
+            });
+        });
+    }
+
     return token;
 }
 

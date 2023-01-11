@@ -286,11 +286,11 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
-            const token = await loginOrThrow(cliContext);
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineWorkspace: argv.api,
                 defaultToAllWorkspaces: false,
             });
+            const token = await loginOrThrow({ cliContext, project });
             await registerApiDefinitions({
                 project,
                 cliContext,
