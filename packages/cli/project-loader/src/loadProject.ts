@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { loadToken } from "@fern-api/login";
+import { getToken } from "@fern-api/login";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadWorkspace, Workspace } from "@fern-api/workspace-loader";
@@ -72,7 +72,7 @@ export async function loadProject({
     return {
         config: await loadProjectConfig({ directory: fernDirectory, context }),
         workspaces,
-        token: await loadToken(),
+        token: await getToken(),
     };
 }
 

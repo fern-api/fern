@@ -1,8 +1,9 @@
+import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { auth0Login, storeToken } from "@fern-api/login";
+import { isLoggedIn, login } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -12,7 +13,7 @@ import {
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
 import chalk from "chalk";
-import getStdin from "get-stdin";
+import inquirer, { ConfirmQuestion } from "inquirer";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -21,11 +22,9 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { TOKEN_STDIN_OPTION } from "./constants";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
@@ -127,9 +126,14 @@ async function tryRunCli(cliContext: CliContext) {
         },
     });
 
-    cli.middleware((argv) => {
+    cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
         cliContext.logDebugInfo();
+
+        // ensure logged in for all commands except "login"
+        if (argv._[0] !== "login") {
+            await loginOrThrow(cliContext);
+        }
     });
 
     await cli.parse();
@@ -292,7 +296,7 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 defaultToAllWorkspaces: false,
             });
             if (project.token == null) {
-                cliContext.failAndThrow("Please run fern login before registring.");
+                cliContext.failAndThrow("Please log in before registring.");
             }
             await registerApiDefinitions({
                 project,
@@ -360,27 +364,10 @@ function addUpgradeCommand({
 }
 
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "login",
-        false, // hide from help message
-        (yargs) =>
-            yargs.option(TOKEN_STDIN_OPTION, {
-                boolean: true,
-                hidden: true,
-                default: false,
-            }),
-        async (argv) => {
-            let token;
-            if (argv.tokenStdin) {
-                token = (await getStdin()).replace(/\s/g, "");
-                await validateAccessToken({ token, cliContext });
-            } else {
-                token = await auth0Login();
-            }
-            await storeToken(token);
-            cliContext.logger.info(chalk.green("Logged in"));
-        }
-    );
+    cli.command("login", "Log in to Fern via GitHub", noop, async () => {
+        await login();
+        cliContext.logger.info(chalk.green("Logged in"));
+    });
 }
 
 async function loadProjectAndRegisterWorkspacesWithContext(
@@ -398,4 +385,32 @@ async function loadProjectAndRegisterWorkspacesWithContext(
 
     cliContext.registerWorkspaces(project.workspaces);
     return project;
+}
+
+async function askForConfirmation(message: string) {
+    const name = "question";
+    const question: ConfirmQuestion<{ [name]: boolean }> = {
+        type: "confirm",
+        name,
+        message,
+    };
+    const answers = await inquirer.prompt(question);
+    return answers[name];
+}
+
+async function loginOrThrow(cliContext: CliContext): Promise<void> {
+    if (await isLoggedIn()) {
+        return;
+    }
+    if (!cliContext.isTTY) {
+        cliContext.failAndThrow("Login required.");
+    }
+    await cliContext.takeOverTerminal(async () => {
+        if (await askForConfirmation("Login required. Continue?")) {
+            await login();
+        } else {
+            cliContext.logger.info(`You can log in with ${chalk.bold(`${cliContext.environment.cliName} login`)}`);
+            cliContext.failAndThrow();
+        }
+    });
 }

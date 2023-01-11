@@ -1,2 +1,3 @@
-export { auth0Login } from "./auth0Login";
-export { loadToken, storeToken } from "./tokenPersistence";
+export { login } from "./login";
+export { getToken } from "./persistence/getToken";
+export { isLoggedIn } from "./verify/isLoggedIn";

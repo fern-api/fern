@@ -216,7 +216,7 @@ export class CliContext {
     private constructTaskInit(): TaskContextImpl.Init {
         return {
             logImmediately: (content) => this.logImmediately(content),
-            takeOverTerminal: (run) => this.ttyAwareLogger.takeOverTerminal(run),
+            takeOverTerminal: (run) => this.takeOverTerminal(run),
             onResult: (result) => {
                 if (result === TaskResult.Failure) {
                     this.didSucceed = false;
@@ -224,6 +224,10 @@ export class CliContext {
             },
             shouldBufferLogs: this.logLevel !== LogLevel.Debug,
         };
+    }
+
+    public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
+        await this.ttyAwareLogger.takeOverTerminal(run);
     }
 
     private log(level: LogLevel, ...parts: string[]) {
@@ -274,6 +278,10 @@ export class CliContext {
             };
         }
         return this._isUpgradeAvailable;
+    }
+
+    public get isTTY(): boolean {
+        return this.ttyAwareLogger.isTTY;
     }
 }
 

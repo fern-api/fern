@@ -62,13 +62,14 @@ async function writeProjectConfig({
 }
 
 async function askForOrganization() {
-    const organizationQuestion: InputQuestion<{ organization: string }> = {
+    const name = "organization";
+    const organizationQuestion: InputQuestion<{ [name]: string }> = {
         type: "input",
-        name: "organization",
+        name,
         message: "What's the name of your organization?",
     };
     const answers = await inquirer.prompt(organizationQuestion);
-    return answers.organization;
+    return answers[name];
 }
 
 async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
