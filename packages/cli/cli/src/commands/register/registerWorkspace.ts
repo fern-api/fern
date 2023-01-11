@@ -21,13 +21,15 @@ export async function registerApiDefinitions({
     token: FernToken;
     version: string | undefined;
 }): Promise<void> {
-    await cliContext.runTask(async (context) => {
-        await createOrganizationIfDoesNotExist({
-            organization: project.config.organization,
-            token,
-            context,
+    if (token.type === "user") {
+        await cliContext.runTask(async (context) => {
+            await createOrganizationIfDoesNotExist({
+                organization: project.config.organization,
+                token,
+                context,
+            });
         });
-    });
+    }
 
     const fiddle = createFiddleService({ token: token.value });
     await Promise.all(

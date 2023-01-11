@@ -7879,12 +7879,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
+            ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/jsonwebtoken", "npm:9.0.0"],\
             ["@types/node", "npm:18.7.18"],\
             ["axios", "npm:0.27.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
+            ["inquirer", "npm:9.1.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["jsonwebtoken", "npm:9.0.0"],\
             ["jwks-rsa", "npm:3.0.0"],\
@@ -7925,7 +7928,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-model", "npm:0.0.627"],\
             ["@types/axios", "npm:0.14.0"],\
             ["@types/boxen", "npm:3.0.1"],\
-            ["@types/inquirer", "npm:9.0.1"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -7945,7 +7947,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
             ["immer", "npm:9.0.15"],\
-            ["inquirer", "npm:9.1.0"],\
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -8248,14 +8249,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
-            ["inquirer", "npm:9.1.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["js-yaml", "npm:4.1.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -8613,7 +8612,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.163"],\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.11-1-g116b69e"],\
+            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -8907,10 +8906,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/venus-api-sdk", [\
-        ["npm:0.0.11-1-g116b69e", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-venus-api-sdk-npm-0.0.11-1-g116b69e-628833157d-2c4ac90637.zip/node_modules/@fern-fern/venus-api-sdk/",\
+        ["npm:0.0.11-2-g9f28a55", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-venus-api-sdk-npm-0.0.11-2-g9f28a55-5f4126f0d1-dc6a0f7a98.zip/node_modules/@fern-fern/venus-api-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.11-1-g116b69e"],\
+            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
             ["@types/basic-auth", "npm:1.1.3"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\

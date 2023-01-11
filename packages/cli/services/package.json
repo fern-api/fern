@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@fern-fern/fiddle-sdk": "^0.0.163",
-    "@fern-fern/venus-api-sdk": "0.0.11-1-g116b69e"
+    "@fern-fern/venus-api-sdk": "0.0.11-2-g9f28a55"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
