@@ -30,7 +30,10 @@ export async function createOrganizationIfDoesNotExist({
                 organizationId: organization,
             });
             if (!createOrganizationResponse.ok) {
-                context.failAndThrow(`Failed to create organization: ${organization}`);
+                context.failAndThrow(
+                    `Failed to create organization: ${organization}`,
+                    createOrganizationResponse.error
+                );
             }
             return true;
         }
