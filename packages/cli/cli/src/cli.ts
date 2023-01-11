@@ -156,13 +156,14 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 description: "Organization name",
             }),
         async (argv) => {
-            await cliContext.runTask(async (context) =>
-                initialize({
+            await loginOrThrow(cliContext);
+            await cliContext.runTask(async (context) => {
+                await initialize({
                     organization: argv.organization,
                     versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                     context,
-                })
-            );
+                });
+            });
         }
     );
 }
@@ -290,7 +291,7 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 commandLineWorkspace: argv.api,
                 defaultToAllWorkspaces: false,
             });
-            const token = await loginOrThrow({ cliContext, project });
+            const token = await loginOrThrow(cliContext);
             await registerApiDefinitions({
                 project,
                 cliContext,
