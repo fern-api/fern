@@ -1,3 +1,4 @@
+import { FernToken } from "@fern-api/auth";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "@fern-api/generators-configuration";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
@@ -21,7 +22,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     shouldLogS3Url: boolean;
-    token: string;
+    token: FernToken;
 }): Promise<void> {
     if (workspace.generatorsConfiguration.groups.length === 0) {
         context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);

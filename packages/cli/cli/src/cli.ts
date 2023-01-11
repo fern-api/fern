@@ -1,8 +1,9 @@
+import { login } from "@fern-api/auth";
+import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { auth0Login, storeToken } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -12,7 +13,6 @@ import {
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
 import chalk from "chalk";
-import getStdin from "get-stdin";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -21,12 +21,11 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { TOKEN_STDIN_OPTION } from "./constants";
 import { FERN_CWD_ENV_VAR } from "./cwd";
+import { loginOrThrow } from "./loginOrThrow";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
 interface GlobalCliOptions {
@@ -127,7 +126,7 @@ async function tryRunCli(cliContext: CliContext) {
         },
     });
 
-    cli.middleware((argv) => {
+    cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
         cliContext.logDebugInfo();
     });
@@ -157,13 +156,15 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 description: "Organization name",
             }),
         async (argv) => {
-            await cliContext.runTask(async (context) =>
-                initialize({
+            const token = await loginOrThrow(cliContext);
+            await cliContext.runTask(async (context) => {
+                await initialize({
                     organization: argv.organization,
                     versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                     context,
-                })
-            );
+                    token,
+                });
+            });
         }
     );
 }
@@ -291,13 +292,11 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 commandLineWorkspace: argv.api,
                 defaultToAllWorkspaces: false,
             });
-            if (project.token == null) {
-                cliContext.failAndThrow("Please run fern login before registring.");
-            }
+            const token = await loginOrThrow(cliContext);
             await registerApiDefinitions({
                 project,
                 cliContext,
-                token: project.token,
+                token,
                 version: argv.version,
             });
         }
@@ -360,27 +359,10 @@ function addUpgradeCommand({
 }
 
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "login",
-        false, // hide from help message
-        (yargs) =>
-            yargs.option(TOKEN_STDIN_OPTION, {
-                boolean: true,
-                hidden: true,
-                default: false,
-            }),
-        async (argv) => {
-            let token;
-            if (argv.tokenStdin) {
-                token = (await getStdin()).replace(/\s/g, "");
-                await validateAccessToken({ token, cliContext });
-            } else {
-                token = await auth0Login();
-            }
-            await storeToken(token);
-            cliContext.logger.info(chalk.green("Logged in"));
-        }
-    );
+    cli.command("login", "Log in to Fern via GitHub", noop, async () => {
+        await login();
+        cliContext.logger.info(chalk.green("Logged in"));
+    });
 }
 
 async function loadProjectAndRegisterWorkspacesWithContext(

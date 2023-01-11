@@ -120,7 +120,7 @@ export class TtyAwareLogger {
         return paint;
     }
 
-    private get isTTY() {
+    public get isTTY(): boolean {
         return this.stream.isTTY && !IS_CI;
     }
 }

@@ -1,3 +1,4 @@
+import { FernToken } from "@fern-api/auth";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
@@ -28,7 +29,7 @@ export async function createAndStartJob({
     version: string | undefined;
     context: TaskContext;
     shouldLogS3Url: boolean;
-    token: string;
+    token: FernToken;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({
         workspace,
@@ -58,7 +59,7 @@ async function createJob({
     version: string | undefined;
     context: TaskContext;
     shouldLogS3Url: boolean;
-    token: string;
+    token: FernToken;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -68,7 +69,7 @@ async function createJob({
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
 
-    const remoteGenerationService = createFiddleService({ token });
+    const remoteGenerationService = createFiddleService({ token: token.value });
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.name,
         version,

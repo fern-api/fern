@@ -26,7 +26,7 @@ const SUCCESS_PAGE = `
 </html>
 `;
 
-export async function getToken({
+export async function doAuth0LoginFlow({
     auth0Domain,
     auth0ClientId,
     audience,

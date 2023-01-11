@@ -1,3 +1,4 @@
+import { FernToken } from "@fern-api/auth";
 import { GeneratorAudiences, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
@@ -23,7 +24,7 @@ export async function runRemoteGenerationForGenerator({
     version: string | undefined;
     audiences: GeneratorAudiences;
     shouldLogS3Url: boolean;
-    token: string;
+    token: FernToken;
 }): Promise<void> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,

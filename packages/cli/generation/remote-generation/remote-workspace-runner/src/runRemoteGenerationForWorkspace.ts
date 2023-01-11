@@ -1,3 +1,4 @@
+import { FernToken } from "@fern-api/auth";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
@@ -18,7 +19,7 @@ export async function runRemoteGenerationForWorkspace({
     generatorGroup: GeneratorGroup;
     version: string | undefined;
     shouldLogS3Url: boolean;
-    token: string;
+    token: FernToken;
 }): Promise<void> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
