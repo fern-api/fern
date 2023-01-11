@@ -1,6 +1,9 @@
-import { FernToken, getToken, isLoggedIn, login } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
 import inquirer, { ConfirmQuestion } from "inquirer";
+import { FernToken } from "./FernToken";
+import { login } from "./login";
+import { getToken } from "./persistence/getToken";
+import { isLoggedIn } from "./verify/isLoggedIn";
 
 export async function askToLogin(context: TaskContext): Promise<FernToken> {
     if (!(await isLoggedIn()) && process.stdout.isTTY) {
