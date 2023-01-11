@@ -26,6 +26,7 @@ export class TtyAwareLogger {
                 this.interval = undefined;
                 this.repaint();
                 this.write(ansiEscapes.cursorShow);
+                this.finish = noop;
             };
         }
     }

@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, getOrganizationNameValidationError } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
@@ -79,6 +79,7 @@ async function askForOrganization() {
         type: "input",
         name,
         message: "What's the name of your organization?",
+        validate: (organization) => getOrganizationNameValidationError(organization) ?? true,
     };
     const answers = await inquirer.prompt(organizationQuestion);
     return answers[name];

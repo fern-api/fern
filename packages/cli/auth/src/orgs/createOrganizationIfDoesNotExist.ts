@@ -1,7 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { createVenusService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
-import { FernToken } from "./FernToken";
+import { FernToken } from "../FernToken";
+import { getOrganizationNameValidationError } from "./getOrganizationNameValidationError";
 
 export async function createOrganizationIfDoesNotExist({
     organization,
@@ -24,6 +25,10 @@ export async function createOrganizationIfDoesNotExist({
         case "organization":
             return context.failAndThrow("Cannot create organization using an access token.");
         case "user": {
+            const validationError = getOrganizationNameValidationError(organization);
+            if (validationError != null) {
+                context.failAndThrow(validationError);
+            }
             const createOrganizationResponse = await venus.organization.create({
                 organizationId: organization,
             });
