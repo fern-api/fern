@@ -1,6 +1,6 @@
 import { createVenusService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
-import { FernUserToken } from "./FernToken";
+import { FernToken } from "./FernToken";
 
 export async function createOrganizationIfDoesNotExist({
     organization,
@@ -8,16 +8,16 @@ export async function createOrganizationIfDoesNotExist({
     context,
 }: {
     organization: string;
-    token: FernUserToken;
+    token: FernToken;
     context: TaskContext;
-}): Promise<void> {
+}): Promise<boolean> {
     const venus = createVenusService({ token: token.value });
     const getOrganizationResponse = await venus.organization.get({
         orgId: organization,
     });
 
     if (getOrganizationResponse.ok) {
-        return;
+        return false;
     }
     // if failed response, assume organization does not exist
 
@@ -27,4 +27,5 @@ export async function createOrganizationIfDoesNotExist({
     if (!createOrganizationResponse.ok) {
         context.failAndThrow(`Failed to create organization: ${organization}`);
     }
+    return true;
 }

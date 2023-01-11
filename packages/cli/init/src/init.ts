@@ -1,3 +1,4 @@
+import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
@@ -16,10 +17,12 @@ export async function initialize({
     organization,
     versionOfCli,
     context,
+    token,
 }: {
     organization: string | undefined;
     versionOfCli: string;
     context: TaskContext;
+    token: FernToken;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
 
@@ -31,6 +34,15 @@ export async function initialize({
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const castedOrganization = organization!;
+
+        const didCreateOrganization = await createOrganizationIfDoesNotExist({
+            organization: castedOrganization,
+            token,
+            context,
+        });
+        if (didCreateOrganization) {
+            context.logger.info(`${chalk.green(`Created organization ${chalk.bold(castedOrganization)}`)}`);
+        }
 
         await mkdir(FERN_DIRECTORY);
         await writeProjectConfig({
