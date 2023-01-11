@@ -1,9 +1,10 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { FernDefinition } from "../convertOpenApi";
 import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
+import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
 
 export class OpenAPIConverter {
@@ -11,11 +12,13 @@ export class OpenAPIConverter {
     private document: OpenAPIV3.Document;
     private context: OpenApiV3Context;
     private taskContext: TaskContext; 
+    private inlinedTypeNamer: InlinedTypeNamer;
 
     constructor(document: OpenAPIV3.Document, taskContext: TaskContext) {
         this.document = document;
         this.taskContext = taskContext;
         this.context = new OpenApiV3Context(document);
+        this.inlinedTypeNamer = new InlinedTypeNamer();
     }
 
     /**
@@ -40,6 +43,7 @@ export class OpenAPIConverter {
      */
     public async convert(): Promise<FernDefinition> {
         const globalHeaderScanner = new GlobalHeaderScanner(this.context, this.taskContext);
+        const globalHeaders = globalHeaderScanner.getGlobalHeaders();
         const serviceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
         const tags = this.context.getTags();
         for (const tag of tags) {
@@ -49,7 +53,7 @@ export class OpenAPIConverter {
         return {
             rootApiFile: {
                 name: "api",
-                headers: globalHeaderScanner.getGlobalHeaders(),
+                headers: globalHeaders,
             },
             serviceFiles,
         };

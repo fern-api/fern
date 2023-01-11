@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "./utils";
+import { APPLICATION_JSON_CONTENT, SCHEMA_REFERENCE_PREFIX, isReferenceObject } from "./utils";
 
 export interface OpenAPIV3Endpoint {
     path: string;
@@ -8,9 +8,7 @@ export interface OpenAPIV3Endpoint {
 }
 
 const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
-const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 
-const APPLICATION_JSON_CONTENT = "application/json";
 const TWO_HUNDRED_RESPONSE = 200;
 
 /**
@@ -167,6 +165,10 @@ export class OpenApiV3Context {
         return this.schemasGroupedByTag[tag] ?? [];
     }
 
+    public getTagForSchema(referenceObject: OpenAPIV3.ReferenceObject): string[] {
+        return this.referenceObjectToTags.getTags(referenceObject);
+    }
+
     public maybeResolveParameterReference(parameter: OpenAPIV3.ReferenceObject): OpenAPIV3.ParameterObject | undefined {
         if (this.document.components == null || this.document.components.parameters == null) {
             return undefined;
@@ -242,6 +244,10 @@ class ReferenceObjectsByTag {
         } else {
             this.refToTags[referenceObject.$ref] = [tag];
         }
+    }
+
+    public getTags(referenceObject: OpenAPIV3.ReferenceObject): string[] {
+        return this.refToTags[referenceObject.$ref] ?? [];
     }
 
     public getGroups(): { untaggedSchemaReferences: OpenAPIV3.ReferenceObject[], schemaReferencesGroupedByTag: Record<string, OpenAPIV3.ReferenceObject[]>, multiTaggedSchemaReferences: OpenAPIV3.ReferenceObject[]} {
