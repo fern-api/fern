@@ -26,7 +26,7 @@ export async function initialize({
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
             const token = await askToLogin(context);
-            if (token?.type !== "user") {
+            if (token.type !== "user") {
                 return context.failAndThrow("You must be logged into to initialize Fern.");
             }
             const user = await getCurrentUser({ token, context });
