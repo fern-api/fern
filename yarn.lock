@@ -3907,7 +3907,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/fiddle-sdk": ^0.0.163
-    "@fern-fern/venus-api-sdk": 0.0.4-6-gdc28ef2
+    "@fern-fern/venus-api-sdk": 0.0.11-1-g116b69e
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4172,17 +4172,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/venus-api-sdk@npm:0.0.4-6-gdc28ef2":
-  version: 0.0.4-6-gdc28ef2
-  resolution: "@fern-fern/venus-api-sdk@npm:0.0.4-6-gdc28ef2"
+"@fern-fern/venus-api-sdk@npm:0.0.11-1-g116b69e":
+  version: 0.0.11-1-g116b69e
+  resolution: "@fern-fern/venus-api-sdk@npm:0.0.11-1-g116b69e"
   dependencies:
     "@types/basic-auth": ^1.1.3
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     basic-auth: ^2.0.1
+    buffer: ^6.0.3
     js-base64: ^3.7.2
     url-join: 4.0.1
-  checksum: dedf303c9c3b2dccd0e9b3975656fd6524040a9faf8e7a688d6547d71c300d85a0cb07c7220298de3876c3cee4cc27488b770ad831da218e5a1222c3f688334c
+  checksum: 2c4ac9063791c7a7d531159099d8cb5d44559486438d4a2cae6a3b3000e0c32e23eca63e57374c947a32219ca918b3b31d46ef82efc434e3c2dbb6105022fa16
   languageName: node
   linkType: hard
 
