@@ -1,2 +1,2 @@
 export { createFiddleService, getFiddleOrigin } from "./fiddle";
-export { createVenusService, getVenusOrigin } from "./venus";
+export { createVenusService } from "./venus";

@@ -19,13 +19,15 @@ export async function generateWorkspaces({
 }): Promise<void> {
     const token = await loginOrThrow(cliContext);
 
-    await cliContext.runTask(async (context) => {
-        await createOrganizationIfDoesNotExist({
-            organization: project.config.organization,
-            token,
-            context,
+    if (token.type === "user") {
+        await cliContext.runTask(async (context) => {
+            await createOrganizationIfDoesNotExist({
+                organization: project.config.organization,
+                token,
+                context,
+            });
         });
-    });
+    }
 
     await Promise.all(
         project.workspaces.map(async (workspace) =>

@@ -1,4 +1,9 @@
-import { createOrganizationIfDoesNotExist, FernToken, getOrganizationNameValidationError } from "@fern-api/auth";
+import {
+    createOrganizationIfDoesNotExist,
+    FernUserToken,
+    getCurrentUser,
+    getOrganizationNameValidationError,
+} from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
@@ -22,14 +27,17 @@ export async function initialize({
     organization: string | undefined;
     versionOfCli: string;
     context: TaskContext;
-    token: FernToken;
+    token: FernUserToken;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
             await context.takeOverTerminal(async () => {
-                organization = await askForOrganization();
+                const user = await getCurrentUser({ token });
+                organization = await askForOrganization({
+                    username: user.username,
+                });
             });
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -73,12 +81,13 @@ async function writeProjectConfig({
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }
 
-async function askForOrganization() {
+async function askForOrganization({ username }: { username: string }) {
     const name = "organization";
     const organizationQuestion: InputQuestion<{ [name]: string }> = {
         type: "input",
         name,
         message: "What's the name of your organization?",
+        default: username,
         validate: (organization) => getOrganizationNameValidationError(organization) ?? true,
     };
     const answers = await inquirer.prompt(organizationQuestion);

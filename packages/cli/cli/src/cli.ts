@@ -156,7 +156,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 description: "Organization name",
             }),
         async (argv) => {
-            const token = await loginOrThrow(cliContext);
+            const token = await login();
             await cliContext.runTask(async (context) => {
                 await initialize({
                     organization: argv.organization,
