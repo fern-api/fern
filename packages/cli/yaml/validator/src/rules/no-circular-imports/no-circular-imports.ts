@@ -13,6 +13,7 @@ interface CircularImport {
 
 export const NoCircularImportsRule: Rule = {
     name: "no-circular-imports",
+    DISABLE_RULE: true,
     create: ({ workspace }) => {
         const circularImports = findCircularImports(workspace.serviceFiles);
 
