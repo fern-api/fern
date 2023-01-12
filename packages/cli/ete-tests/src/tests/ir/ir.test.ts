@@ -12,6 +12,9 @@ const FIXTURES: Fixture[] = [
         name: "simple",
         audiences: ["test"],
     },
+    {
+        name: "extended-examples",
+    },
 ];
 
 interface Fixture {

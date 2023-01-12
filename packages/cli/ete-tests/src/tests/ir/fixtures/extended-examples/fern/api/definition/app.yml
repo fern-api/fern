@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+services:
+  http:
+    AppsService:
+      auth: true
+      base-path: /
+      endpoints:
+        get:
+          display-name: Get App
+          method: GET
+          path: /
+          response: GetAppResponse
+          examples:
+            - response:
+                body: $GetAppResponse.Example
+types:
+  GetAppResponse:
+    extends: commons.Deployment
+    examples:
+      - name: Example
+        value:
+          appId: $commons.AppId.Example
