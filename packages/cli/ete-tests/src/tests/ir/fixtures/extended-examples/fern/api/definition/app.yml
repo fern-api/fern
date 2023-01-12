@@ -3,24 +3,13 @@
 imports:
   commons: commons.yml
 
-services:
-  http:
-    AppsService:
-      auth: true
-      base-path: /
-      endpoints:
-        get:
-          display-name: Get App
-          method: GET
-          path: /
-          response: GetAppResponse
-          examples:
-            - response:
-                body: $GetAppResponse.Example
 types:
   GetAppResponse:
     extends: commons.Deployment
+    properties:
+      property: string
     examples:
       - name: Example
         value:
           appId: $commons.AppId.Example
+          property: app-secret

@@ -6,7 +6,6 @@ types:
     examples:
       - name: Example
         value: your-app-id
-
   Deployment:
     properties:
       appId: AppId
