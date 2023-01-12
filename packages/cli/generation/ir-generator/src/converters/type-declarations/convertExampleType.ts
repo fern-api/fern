@@ -212,40 +212,29 @@ export function convertTypeReferenceExample({
             throw new Error("Examples are not supported for literals");
         },
         named: (named) => {
-            try {
-                const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
-                    referenceToNamedType: named,
-                    file: fileContainingRawTypeReference,
-                });
-                const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
-                if (parsedReferenceToNamedType._type !== "named") {
-                    throw new Error("Type reference is not to a named type.");
-                }
-                const typeName = {
-                    fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                    name: parsedReferenceToNamedType.name,
-                };
-                return ExampleTypeReferenceShape.named({
-                    typeName,
-                    shape: convertTypeExample({
-                        typeName,
-                        typeDeclaration: typeDeclaration.declaration,
-                        file: typeDeclaration.file,
-                        example,
-                        typeResolver,
-                        exampleResolver,
-                    }),
-                });
-            } catch {
-                throw new Error(
-                    JSON.stringify({
-                        rawTypeBeingExemplified,
-                        named,
-                        fileContainingExample,
-                        fileContainingRawTypeReference,
-                    })
-                );
+            const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                referenceToNamedType: named,
+                file: fileContainingRawTypeReference,
+            });
+            const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
+            if (parsedReferenceToNamedType._type !== "named") {
+                throw new Error("Type reference is not to a named type.");
             }
+            const typeName = {
+                fernFilepath: parsedReferenceToNamedType.fernFilepath,
+                name: parsedReferenceToNamedType.name,
+            };
+            return ExampleTypeReferenceShape.named({
+                typeName,
+                shape: convertTypeExample({
+                    typeName,
+                    typeDeclaration: typeDeclaration.declaration,
+                    file: typeDeclaration.file,
+                    example,
+                    typeResolver,
+                    exampleResolver,
+                }),
+            });
         },
         unknown: () => {
             return ExampleTypeReferenceShape.unknown(example);
