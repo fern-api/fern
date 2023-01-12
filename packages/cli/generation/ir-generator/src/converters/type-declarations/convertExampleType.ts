@@ -104,20 +104,22 @@ export function convertTypeExample({
 
 export function convertTypeReferenceExample({
     example,
+    file: fileContainingExample,
     rawTypeBeingExemplified,
+    fileContainingRawTypeReference = fileContainingExample,
     typeResolver,
     exampleResolver,
-    file,
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
+    file: FernFileContext;
     rawTypeBeingExemplified: string;
+    fileContainingRawTypeReference?: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-    file: FernFileContext;
 }): ExampleTypeReference {
     example = exampleResolver.resolveAllReferencesInExampleOrThrow({
         example,
-        file,
+        file: fileContainingExample,
     }).resolvedExample;
 
     const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
@@ -136,17 +138,19 @@ export function convertTypeReferenceExample({
                     Object.entries(example).map(([key, value]) => ({
                         key: convertTypeReferenceExample({
                             example: key,
+                            file: fileContainingExample,
                             rawTypeBeingExemplified: keyType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         }),
                         value: convertTypeReferenceExample({
                             example: value,
+                            file: fileContainingExample,
                             rawTypeBeingExemplified: valueType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         }),
                     }))
                 )
@@ -161,10 +165,11 @@ export function convertTypeReferenceExample({
                     example.map((exampleItem) =>
                         convertTypeReferenceExample({
                             example: exampleItem,
+                            file: fileContainingExample,
                             rawTypeBeingExemplified: itemType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         })
                     )
                 )
@@ -179,10 +184,11 @@ export function convertTypeReferenceExample({
                     example.map((exampleItem) =>
                         convertTypeReferenceExample({
                             example: exampleItem,
+                            file: fileContainingExample,
                             rawTypeBeingExemplified: itemType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         })
                     )
                 )
@@ -193,10 +199,11 @@ export function convertTypeReferenceExample({
                 ExampleContainer.optional(
                     convertTypeReferenceExample({
                         example,
+                        file: fileContainingExample,
                         rawTypeBeingExemplified: itemType,
+                        fileContainingRawTypeReference,
                         typeResolver,
                         exampleResolver,
-                        file,
                     })
                 )
             );
@@ -205,29 +212,40 @@ export function convertTypeReferenceExample({
             throw new Error("Examples are not supported for literals");
         },
         named: (named) => {
-            const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
-                referenceToNamedType: named,
-                file,
-            });
-            const parsedReferenceToNamedType = file.parseTypeReference(named);
-            if (parsedReferenceToNamedType._type !== "named") {
-                throw new Error("Type reference is not to a named type.");
-            }
-            const typeName = {
-                fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                name: parsedReferenceToNamedType.name,
-            };
-            return ExampleTypeReferenceShape.named({
-                typeName,
-                shape: convertTypeExample({
+            try {
+                const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType: named,
+                    file: fileContainingRawTypeReference,
+                });
+                const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
+                if (parsedReferenceToNamedType._type !== "named") {
+                    throw new Error("Type reference is not to a named type.");
+                }
+                const typeName = {
+                    fernFilepath: parsedReferenceToNamedType.fernFilepath,
+                    name: parsedReferenceToNamedType.name,
+                };
+                return ExampleTypeReferenceShape.named({
                     typeName,
-                    typeDeclaration: typeDeclaration.declaration,
-                    file: typeDeclaration.file,
-                    example,
-                    typeResolver,
-                    exampleResolver,
-                }),
-            });
+                    shape: convertTypeExample({
+                        typeName,
+                        typeDeclaration: typeDeclaration.declaration,
+                        file: typeDeclaration.file,
+                        example,
+                        typeResolver,
+                        exampleResolver,
+                    }),
+                });
+            } catch {
+                throw new Error(
+                    JSON.stringify({
+                        rawTypeBeingExemplified,
+                        named,
+                        fileContainingExample,
+                        fileContainingRawTypeReference,
+                    })
+                );
+            }
         },
         unknown: () => {
             return ExampleTypeReferenceShape.unknown(example);
@@ -333,13 +351,14 @@ function convertObject({
                               wireKey,
                               value: convertTypeReferenceExample({
                                   example: propertyExample,
+                                  file,
                                   rawTypeBeingExemplified:
                                       typeof originalTypeDeclaration.rawPropertyType === "string"
                                           ? originalTypeDeclaration.rawPropertyType
                                           : originalTypeDeclaration.rawPropertyType.type,
+                                  fileContainingRawTypeReference: originalTypeDeclaration.file,
                                   typeResolver,
                                   exampleResolver,
-                                  file,
                               }),
                               originalTypeDeclaration: originalTypeDeclaration.typeName,
                           });
@@ -363,10 +382,12 @@ function getOriginalTypeDeclarationForProperty({
     rawObject: RawSchemas.ObjectSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema } | undefined {
+}):
+    | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
+    | undefined {
     const rawPropertyType = rawObject.properties?.[wirePropertyKey];
     if (rawPropertyType != null) {
-        return { typeName, rawPropertyType };
+        return { typeName, rawPropertyType, file };
     } else {
         return getOriginalTypeDeclarationForPropertyFromExtensions({
             wirePropertyKey,
@@ -387,7 +408,9 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
     extends_: string | string[] | undefined;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema } | undefined {
+}):
+    | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
+    | undefined {
     if (extends_ != null) {
         const extendsList = typeof extends_ === "string" ? [extends_] : extends_;
         for (const typeName of extendsList) {
