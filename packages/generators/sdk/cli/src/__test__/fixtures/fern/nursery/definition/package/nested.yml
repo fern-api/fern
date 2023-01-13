@@ -1,0 +1,12 @@
+types:
+  NestedString: string
+services:
+  http:
+    NestedService:
+      base-path: /
+      auth: false
+      endpoints:
+        getString:
+          method: GET
+          path: /
+          response: NestedString

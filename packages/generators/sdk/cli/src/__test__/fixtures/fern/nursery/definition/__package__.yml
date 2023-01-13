@@ -1,0 +1,12 @@
+types:
+  RootString: string
+services:
+  http:
+    RootService:
+      base-path: /
+      auth: false
+      endpoints:
+        getString:
+          method: GET
+          path: /
+          response: RootString
