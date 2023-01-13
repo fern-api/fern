@@ -11,30 +11,17 @@ export abstract class AbstractKnownSingleUnionType<Context extends WithBaseConte
 {
     public abstract override getDiscriminantValue(): string | number;
 
-    protected getVariableWithoutVisitDeclaration({
-        referenceToTypeWithoutVisit,
+    protected getNonVisitProperties({
         context,
         generatedUnion,
     }: {
-        referenceToTypeWithoutVisit: ts.TypeNode;
         context: Context;
         generatedUnion: GeneratedUnionImpl<Context>;
-    }): ts.VariableDeclaration {
-        return ts.factory.createVariableDeclaration(
-            ts.factory.createIdentifier(AbstractParsedSingleUnionType.VALUE_WITHOUT_VISIT_VARIABLE_NAME),
-            undefined,
-            referenceToTypeWithoutVisit,
-            ts.factory.createObjectLiteralExpression(
-                [
-                    ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
-                    ts.factory.createPropertyAssignment(
-                        generatedUnion.discriminant,
-                        this.getDiscriminantValueAsExpression()
-                    ),
-                ],
-                true
-            )
-        );
+    }): ts.ObjectLiteralElementLike[] {
+        return [
+            ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
+            ts.factory.createPropertyAssignment(generatedUnion.discriminant, this.getDiscriminantValueAsExpression()),
+        ];
     }
 
     public getDiscriminantValueAsExpression(): ts.Expression {

@@ -65,12 +65,13 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
         return [
             ts.factory.createSpreadAssignment(
-                ts.factory.createIdentifier(UnknownSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
+                ts.factory.createParenthesizedExpression(
+                    ts.factory.createAsExpression(
+                        ts.factory.createIdentifier(UnknownSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                    )
+                )
             ),
         ];
-    }
-
-    public getBuilderParameterName(): string {
-        return UnknownSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME;
     }
 }

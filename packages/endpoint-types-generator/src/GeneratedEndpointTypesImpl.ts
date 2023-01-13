@@ -31,10 +31,11 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
         this.service = service;
         this.endpoint = endpoint;
 
-        const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator();
+        const discriminant = this.getErrorUnionDiscriminant(errorDiscriminationStrategy);
+        const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
         this.errorUnion = new GeneratedUnionImpl<EndpointTypesContext>({
             typeName: GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME,
-            discriminant: this.getErrorUnionDiscriminant(errorDiscriminationStrategy),
+            discriminant,
             getDocs: undefined,
             parsedSingleUnionTypes: endpoint.errors.map(
                 (error) => new ParsedSingleUnionTypeForError({ error, errorResolver, errorDiscriminationStrategy })
@@ -47,7 +48,6 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
                 ),
             unknownSingleUnionType: new UnknownErrorSingleUnionType({
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
-                builderParameterName: unknownErrorSingleUnionTypeGenerator.getBuilderParameterName(),
             }),
         });
     }

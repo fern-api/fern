@@ -41,7 +41,6 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
-                builderParameterName: unknownSingleUnionTypeGenerator.getBuilderParameterName(),
             }),
         });
     }
