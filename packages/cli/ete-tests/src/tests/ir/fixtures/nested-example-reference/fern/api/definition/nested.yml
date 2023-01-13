@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
+  http:
+    NestedService:
+      base-path: /nested
+      auth: true
+      endpoints:
+        calculate:
+          method: POST
+          path: /
+          response: Response
+          examples:
+            - response:
+                body:
+                  a:
+                    b:
+                      c:
+                        d:
+                          e: \$11
+
+types:
+  Response:
+    properties:
+      a: optional<map<string, Product>>
+
+  Product:
+    properties:
+      c: optional<unknown>

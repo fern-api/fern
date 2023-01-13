@@ -3060,6 +3060,3118 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
 }"
 `;
 
+exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer"
+            }
+        ]
+    },
+    "headers": [],
+    "types": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Response",
+                    "camelCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESPONSE",
+                        "safeName": "RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Response",
+                        "safeName": "Response"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "a",
+                                "camelCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                }
+                            },
+                            "wireValue": "a"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "container": {
+                                        "keyType": {
+                                            "primitive": "STRING",
+                                            "_type": "primitive"
+                                        },
+                                        "valueType": {
+                                            "name": {
+                                                "originalName": "Product",
+                                                "camelCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "PRODUCT",
+                                                    "safeName": "PRODUCT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Product",
+                                                    "safeName": "Product"
+                                                }
+                                            },
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "_type": "named"
+                                        },
+                                        "_type": "map"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [
+                {
+                    "name": {
+                        "originalName": "Product",
+                        "camelCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCT",
+                            "safeName": "PRODUCT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Product",
+                            "safeName": "Product"
+                        }
+                    },
+                    "fernFilepath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Product",
+                    "camelCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRODUCT",
+                        "safeName": "PRODUCT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Product",
+                        "safeName": "Product"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "c",
+                                "camelCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                }
+                            },
+                            "wireValue": "c"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "_type": "unknown"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [],
+            "examples": []
+        }
+    ],
+    "errors": [],
+    "services": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "NestedService",
+                    "camelCase": {
+                        "unsafeName": "nestedService",
+                        "safeName": "nestedService"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_service",
+                        "safeName": "nested_service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_SERVICE",
+                        "safeName": "NESTED_SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedService",
+                        "safeName": "NestedService"
+                    }
+                },
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ]
+            },
+            "basePath": {
+                "head": "/nested",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "calculate",
+                        "camelCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CALCULATE",
+                            "safeName": "CALCULATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Calculate",
+                            "safeName": "Calculate"
+                        }
+                    },
+                    "auth": true,
+                    "method": "POST",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "type": {
+                            "name": {
+                                "originalName": "Response",
+                                "camelCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESPONSE",
+                                    "safeName": "RESPONSE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Response",
+                                    "safeName": "Response"
+                                }
+                            },
+                            "fernFilepath": [
+                                {
+                                    "originalName": "nested",
+                                    "camelCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NESTED",
+                                        "safeName": "NESTED"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Nested",
+                                        "safeName": "Nested"
+                                    }
+                                }
+                            ],
+                            "_type": "named"
+                        }
+                    },
+                    "errors": [],
+                    "examples": [
+                        {
+                            "endpointPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointHeaders": [],
+                            "serviceHeaders": [],
+                            "queryParameters": [],
+                            "response": {
+                                "body": {
+                                    "shape": {
+                                        "typeName": {
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "name": {
+                                                "originalName": "Response",
+                                                "camelCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "RESPONSE",
+                                                    "safeName": "RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Response",
+                                                    "safeName": "Response"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "properties": [
+                                                {
+                                                    "wireKey": "a",
+                                                    "value": {
+                                                        "shape": {
+                                                            "container": {
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "container": {
+                                                                            "map": [
+                                                                                {
+                                                                                    "key": {
+                                                                                        "shape": {
+                                                                                            "primitive": {
+                                                                                                "string": "b",
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "type": "primitive"
+                                                                                        },
+                                                                                        "jsonExample": "b"
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "shape": {
+                                                                                            "typeName": {
+                                                                                                "fernFilepath": [
+                                                                                                    {
+                                                                                                        "originalName": "nested",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "NESTED",
+                                                                                                            "safeName": "NESTED"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "Nested",
+                                                                                                            "safeName": "Nested"
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "name": {
+                                                                                                    "originalName": "Product",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "PRODUCT",
+                                                                                                        "safeName": "PRODUCT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Product",
+                                                                                                        "safeName": "Product"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "shape": {
+                                                                                                "properties": [
+                                                                                                    {
+                                                                                                        "wireKey": "c",
+                                                                                                        "value": {
+                                                                                                            "shape": {
+                                                                                                                "container": {
+                                                                                                                    "optional": {
+                                                                                                                        "shape": {
+                                                                                                                            "unknown": {
+                                                                                                                                "d": {
+                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            "type": "unknown"
+                                                                                                                        },
+                                                                                                                        "jsonExample": {
+                                                                                                                            "d": {
+                                                                                                                                "e": "\\\\$11"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "type": "optional"
+                                                                                                                },
+                                                                                                                "type": "container"
+                                                                                                            },
+                                                                                                            "jsonExample": {
+                                                                                                                "d": {
+                                                                                                                    "e": "\\\\$11"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "originalTypeDeclaration": {
+                                                                                                            "fernFilepath": [
+                                                                                                                {
+                                                                                                                    "originalName": "nested",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "NESTED",
+                                                                                                                        "safeName": "NESTED"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Nested",
+                                                                                                                        "safeName": "Nested"
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "name": {
+                                                                                                                "originalName": "Product",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "PRODUCT",
+                                                                                                                    "safeName": "PRODUCT"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Product",
+                                                                                                                    "safeName": "Product"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "type": "named"
+                                                                                        },
+                                                                                        "jsonExample": {
+                                                                                            "c": {
+                                                                                                "d": {
+                                                                                                    "e": "\\\\$11"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "type": "map"
+                                                                        },
+                                                                        "type": "container"
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "b": {
+                                                                            "c": {
+                                                                                "d": {
+                                                                                    "e": "\\\\$11"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "type": "optional"
+                                                            },
+                                                            "type": "container"
+                                                        },
+                                                        "jsonExample": {
+                                                            "b": {
+                                                                "c": {
+                                                                    "d": {
+                                                                        "e": "\\\\$11"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "fernFilepath": [
+                                                            {
+                                                                "originalName": "nested",
+                                                                "camelCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "NESTED",
+                                                                    "safeName": "NESTED"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Nested",
+                                                                    "safeName": "Nested"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "name": {
+                                                            "originalName": "Response",
+                                                            "camelCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RESPONSE",
+                                                                "safeName": "RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Response",
+                                                                "safeName": "Response"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "named"
+                                    },
+                                    "jsonExample": {
+                                        "a": {
+                                            "b": {
+                                                "c": {
+                                                    "d": {
+                                                        "e": "\\\\$11"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "type": "ok"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": [],
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true
+    }
+}"
+`;
+
+exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer"
+            }
+        ]
+    },
+    "headers": [],
+    "types": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Response",
+                    "camelCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESPONSE",
+                        "safeName": "RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Response",
+                        "safeName": "Response"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "a",
+                                "camelCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                }
+                            },
+                            "wireValue": "a"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "container": {
+                                        "keyType": {
+                                            "primitive": "STRING",
+                                            "_type": "primitive"
+                                        },
+                                        "valueType": {
+                                            "name": {
+                                                "originalName": "Product",
+                                                "camelCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "PRODUCT",
+                                                    "safeName": "PRODUCT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Product",
+                                                    "safeName": "Product"
+                                                }
+                                            },
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "_type": "named"
+                                        },
+                                        "_type": "map"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [
+                {
+                    "name": {
+                        "originalName": "Product",
+                        "camelCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCT",
+                            "safeName": "PRODUCT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Product",
+                            "safeName": "Product"
+                        }
+                    },
+                    "fernFilepath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Product",
+                    "camelCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRODUCT",
+                        "safeName": "PRODUCT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Product",
+                        "safeName": "Product"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "c",
+                                "camelCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                }
+                            },
+                            "wireValue": "c"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "_type": "unknown"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [],
+            "examples": []
+        }
+    ],
+    "errors": [],
+    "services": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "NestedService",
+                    "camelCase": {
+                        "unsafeName": "nestedService",
+                        "safeName": "nestedService"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_service",
+                        "safeName": "nested_service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_SERVICE",
+                        "safeName": "NESTED_SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedService",
+                        "safeName": "NestedService"
+                    }
+                },
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ]
+            },
+            "basePath": {
+                "head": "/nested",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "calculate",
+                        "camelCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CALCULATE",
+                            "safeName": "CALCULATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Calculate",
+                            "safeName": "Calculate"
+                        }
+                    },
+                    "auth": true,
+                    "method": "POST",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "type": {
+                            "name": {
+                                "originalName": "Response",
+                                "camelCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESPONSE",
+                                    "safeName": "RESPONSE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Response",
+                                    "safeName": "Response"
+                                }
+                            },
+                            "fernFilepath": [
+                                {
+                                    "originalName": "nested",
+                                    "camelCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NESTED",
+                                        "safeName": "NESTED"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Nested",
+                                        "safeName": "Nested"
+                                    }
+                                }
+                            ],
+                            "_type": "named"
+                        }
+                    },
+                    "errors": [],
+                    "examples": [
+                        {
+                            "endpointPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointHeaders": [],
+                            "serviceHeaders": [],
+                            "queryParameters": [],
+                            "response": {
+                                "body": {
+                                    "shape": {
+                                        "typeName": {
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "name": {
+                                                "originalName": "Response",
+                                                "camelCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "RESPONSE",
+                                                    "safeName": "RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Response",
+                                                    "safeName": "Response"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "properties": [
+                                                {
+                                                    "wireKey": "a",
+                                                    "value": {
+                                                        "shape": {
+                                                            "container": {
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "container": {
+                                                                            "map": [
+                                                                                {
+                                                                                    "key": {
+                                                                                        "shape": {
+                                                                                            "primitive": {
+                                                                                                "string": "b",
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "type": "primitive"
+                                                                                        },
+                                                                                        "jsonExample": "b"
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "shape": {
+                                                                                            "typeName": {
+                                                                                                "fernFilepath": [
+                                                                                                    {
+                                                                                                        "originalName": "nested",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "NESTED",
+                                                                                                            "safeName": "NESTED"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "Nested",
+                                                                                                            "safeName": "Nested"
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "name": {
+                                                                                                    "originalName": "Product",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "PRODUCT",
+                                                                                                        "safeName": "PRODUCT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Product",
+                                                                                                        "safeName": "Product"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "shape": {
+                                                                                                "properties": [
+                                                                                                    {
+                                                                                                        "wireKey": "c",
+                                                                                                        "value": {
+                                                                                                            "shape": {
+                                                                                                                "container": {
+                                                                                                                    "optional": {
+                                                                                                                        "shape": {
+                                                                                                                            "unknown": {
+                                                                                                                                "d": {
+                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            "type": "unknown"
+                                                                                                                        },
+                                                                                                                        "jsonExample": {
+                                                                                                                            "d": {
+                                                                                                                                "e": "\\\\$11"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "type": "optional"
+                                                                                                                },
+                                                                                                                "type": "container"
+                                                                                                            },
+                                                                                                            "jsonExample": {
+                                                                                                                "d": {
+                                                                                                                    "e": "\\\\$11"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "originalTypeDeclaration": {
+                                                                                                            "fernFilepath": [
+                                                                                                                {
+                                                                                                                    "originalName": "nested",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "NESTED",
+                                                                                                                        "safeName": "NESTED"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Nested",
+                                                                                                                        "safeName": "Nested"
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "name": {
+                                                                                                                "originalName": "Product",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "PRODUCT",
+                                                                                                                    "safeName": "PRODUCT"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Product",
+                                                                                                                    "safeName": "Product"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "type": "named"
+                                                                                        },
+                                                                                        "jsonExample": {
+                                                                                            "c": {
+                                                                                                "d": {
+                                                                                                    "e": "\\\\$11"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "type": "map"
+                                                                        },
+                                                                        "type": "container"
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "b": {
+                                                                            "c": {
+                                                                                "d": {
+                                                                                    "e": "\\\\$11"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "type": "optional"
+                                                            },
+                                                            "type": "container"
+                                                        },
+                                                        "jsonExample": {
+                                                            "b": {
+                                                                "c": {
+                                                                    "d": {
+                                                                        "e": "\\\\$11"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "fernFilepath": [
+                                                            {
+                                                                "originalName": "nested",
+                                                                "camelCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "NESTED",
+                                                                    "safeName": "NESTED"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Nested",
+                                                                    "safeName": "Nested"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "name": {
+                                                            "originalName": "Response",
+                                                            "camelCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RESPONSE",
+                                                                "safeName": "RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Response",
+                                                                "safeName": "Response"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "named"
+                                    },
+                                    "jsonExample": {
+                                        "a": {
+                                            "b": {
+                                                "c": {
+                                                    "d": {
+                                                        "e": "\\\\$11"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "type": "ok"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": [],
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true
+    }
+}"
+`;
+
+exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer"
+            }
+        ]
+    },
+    "headers": [],
+    "types": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Response",
+                    "camelCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESPONSE",
+                        "safeName": "RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Response",
+                        "safeName": "Response"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "a",
+                                "camelCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                }
+                            },
+                            "wireValue": "a"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "container": {
+                                        "keyType": {
+                                            "primitive": "STRING",
+                                            "_type": "primitive"
+                                        },
+                                        "valueType": {
+                                            "name": {
+                                                "originalName": "Product",
+                                                "camelCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "PRODUCT",
+                                                    "safeName": "PRODUCT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Product",
+                                                    "safeName": "Product"
+                                                }
+                                            },
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "_type": "named"
+                                        },
+                                        "_type": "map"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [
+                {
+                    "name": {
+                        "originalName": "Product",
+                        "camelCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCT",
+                            "safeName": "PRODUCT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Product",
+                            "safeName": "Product"
+                        }
+                    },
+                    "fernFilepath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Product",
+                    "camelCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRODUCT",
+                        "safeName": "PRODUCT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Product",
+                        "safeName": "Product"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "c",
+                                "camelCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                }
+                            },
+                            "wireValue": "c"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "_type": "unknown"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [],
+            "examples": []
+        }
+    ],
+    "errors": [],
+    "services": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "NestedService",
+                    "camelCase": {
+                        "unsafeName": "nestedService",
+                        "safeName": "nestedService"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_service",
+                        "safeName": "nested_service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_SERVICE",
+                        "safeName": "NESTED_SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedService",
+                        "safeName": "NestedService"
+                    }
+                },
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ]
+            },
+            "basePath": {
+                "head": "/nested",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "calculate",
+                        "camelCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CALCULATE",
+                            "safeName": "CALCULATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Calculate",
+                            "safeName": "Calculate"
+                        }
+                    },
+                    "auth": true,
+                    "method": "POST",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "type": {
+                            "name": {
+                                "originalName": "Response",
+                                "camelCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESPONSE",
+                                    "safeName": "RESPONSE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Response",
+                                    "safeName": "Response"
+                                }
+                            },
+                            "fernFilepath": [
+                                {
+                                    "originalName": "nested",
+                                    "camelCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NESTED",
+                                        "safeName": "NESTED"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Nested",
+                                        "safeName": "Nested"
+                                    }
+                                }
+                            ],
+                            "_type": "named"
+                        }
+                    },
+                    "errors": [],
+                    "examples": [
+                        {
+                            "endpointPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointHeaders": [],
+                            "serviceHeaders": [],
+                            "queryParameters": [],
+                            "response": {
+                                "body": {
+                                    "shape": {
+                                        "typeName": {
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "name": {
+                                                "originalName": "Response",
+                                                "camelCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "RESPONSE",
+                                                    "safeName": "RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Response",
+                                                    "safeName": "Response"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "properties": [
+                                                {
+                                                    "wireKey": "a",
+                                                    "value": {
+                                                        "shape": {
+                                                            "container": {
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "container": {
+                                                                            "map": [
+                                                                                {
+                                                                                    "key": {
+                                                                                        "shape": {
+                                                                                            "primitive": {
+                                                                                                "string": "b",
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "type": "primitive"
+                                                                                        },
+                                                                                        "jsonExample": "b"
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "shape": {
+                                                                                            "typeName": {
+                                                                                                "fernFilepath": [
+                                                                                                    {
+                                                                                                        "originalName": "nested",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "NESTED",
+                                                                                                            "safeName": "NESTED"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "Nested",
+                                                                                                            "safeName": "Nested"
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "name": {
+                                                                                                    "originalName": "Product",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "PRODUCT",
+                                                                                                        "safeName": "PRODUCT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Product",
+                                                                                                        "safeName": "Product"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "shape": {
+                                                                                                "properties": [
+                                                                                                    {
+                                                                                                        "wireKey": "c",
+                                                                                                        "value": {
+                                                                                                            "shape": {
+                                                                                                                "container": {
+                                                                                                                    "optional": {
+                                                                                                                        "shape": {
+                                                                                                                            "unknown": {
+                                                                                                                                "d": {
+                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            "type": "unknown"
+                                                                                                                        },
+                                                                                                                        "jsonExample": {
+                                                                                                                            "d": {
+                                                                                                                                "e": "\\\\$11"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "type": "optional"
+                                                                                                                },
+                                                                                                                "type": "container"
+                                                                                                            },
+                                                                                                            "jsonExample": {
+                                                                                                                "d": {
+                                                                                                                    "e": "\\\\$11"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "originalTypeDeclaration": {
+                                                                                                            "fernFilepath": [
+                                                                                                                {
+                                                                                                                    "originalName": "nested",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "NESTED",
+                                                                                                                        "safeName": "NESTED"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Nested",
+                                                                                                                        "safeName": "Nested"
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "name": {
+                                                                                                                "originalName": "Product",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "PRODUCT",
+                                                                                                                    "safeName": "PRODUCT"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Product",
+                                                                                                                    "safeName": "Product"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "type": "named"
+                                                                                        },
+                                                                                        "jsonExample": {
+                                                                                            "c": {
+                                                                                                "d": {
+                                                                                                    "e": "\\\\$11"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "type": "map"
+                                                                        },
+                                                                        "type": "container"
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "b": {
+                                                                            "c": {
+                                                                                "d": {
+                                                                                    "e": "\\\\$11"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "type": "optional"
+                                                            },
+                                                            "type": "container"
+                                                        },
+                                                        "jsonExample": {
+                                                            "b": {
+                                                                "c": {
+                                                                    "d": {
+                                                                        "e": "\\\\$11"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "fernFilepath": [
+                                                            {
+                                                                "originalName": "nested",
+                                                                "camelCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "NESTED",
+                                                                    "safeName": "NESTED"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Nested",
+                                                                    "safeName": "Nested"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "name": {
+                                                            "originalName": "Response",
+                                                            "camelCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RESPONSE",
+                                                                "safeName": "RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Response",
+                                                                "safeName": "Response"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "named"
+                                    },
+                                    "jsonExample": {
+                                        "a": {
+                                            "b": {
+                                                "c": {
+                                                    "d": {
+                                                        "e": "\\\\$11"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "type": "ok"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": [],
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true
+    }
+}"
+`;
+
+exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer"
+            }
+        ]
+    },
+    "headers": [],
+    "types": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Response",
+                    "camelCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESPONSE",
+                        "safeName": "RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Response",
+                        "safeName": "Response"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "a",
+                                "camelCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                }
+                            },
+                            "wireValue": "a"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "container": {
+                                        "keyType": {
+                                            "primitive": "STRING",
+                                            "_type": "primitive"
+                                        },
+                                        "valueType": {
+                                            "name": {
+                                                "originalName": "Product",
+                                                "camelCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "product",
+                                                    "safeName": "product"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "PRODUCT",
+                                                    "safeName": "PRODUCT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Product",
+                                                    "safeName": "Product"
+                                                }
+                                            },
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "_type": "named"
+                                        },
+                                        "_type": "map"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [
+                {
+                    "name": {
+                        "originalName": "Product",
+                        "camelCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "product",
+                            "safeName": "product"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCT",
+                            "safeName": "PRODUCT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Product",
+                            "safeName": "Product"
+                        }
+                    },
+                    "fernFilepath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "Product",
+                    "camelCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "product",
+                        "safeName": "product"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRODUCT",
+                        "safeName": "PRODUCT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Product",
+                        "safeName": "Product"
+                    }
+                }
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "c",
+                                "camelCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "c",
+                                    "safeName": "c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "C",
+                                    "safeName": "C"
+                                }
+                            },
+                            "wireValue": "c"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "_type": "unknown"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [],
+            "examples": []
+        }
+    ],
+    "errors": [],
+    "services": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "NestedService",
+                    "camelCase": {
+                        "unsafeName": "nestedService",
+                        "safeName": "nestedService"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_service",
+                        "safeName": "nested_service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_SERVICE",
+                        "safeName": "NESTED_SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedService",
+                        "safeName": "NestedService"
+                    }
+                },
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ]
+            },
+            "basePath": {
+                "head": "/nested",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "calculate",
+                        "camelCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "calculate",
+                            "safeName": "calculate"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CALCULATE",
+                            "safeName": "CALCULATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Calculate",
+                            "safeName": "Calculate"
+                        }
+                    },
+                    "auth": true,
+                    "method": "POST",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "type": {
+                            "name": {
+                                "originalName": "Response",
+                                "camelCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESPONSE",
+                                    "safeName": "RESPONSE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Response",
+                                    "safeName": "Response"
+                                }
+                            },
+                            "fernFilepath": [
+                                {
+                                    "originalName": "nested",
+                                    "camelCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "nested",
+                                        "safeName": "nested"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NESTED",
+                                        "safeName": "NESTED"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Nested",
+                                        "safeName": "Nested"
+                                    }
+                                }
+                            ],
+                            "_type": "named"
+                        }
+                    },
+                    "errors": [],
+                    "examples": [
+                        {
+                            "endpointPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointHeaders": [],
+                            "serviceHeaders": [],
+                            "queryParameters": [],
+                            "response": {
+                                "body": {
+                                    "shape": {
+                                        "typeName": {
+                                            "fernFilepath": [
+                                                {
+                                                    "originalName": "nested",
+                                                    "camelCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "nested",
+                                                        "safeName": "nested"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NESTED",
+                                                        "safeName": "NESTED"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Nested",
+                                                        "safeName": "Nested"
+                                                    }
+                                                }
+                                            ],
+                                            "name": {
+                                                "originalName": "Response",
+                                                "camelCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "response",
+                                                    "safeName": "response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "RESPONSE",
+                                                    "safeName": "RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Response",
+                                                    "safeName": "Response"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "properties": [
+                                                {
+                                                    "wireKey": "a",
+                                                    "value": {
+                                                        "shape": {
+                                                            "container": {
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "container": {
+                                                                            "map": [
+                                                                                {
+                                                                                    "key": {
+                                                                                        "shape": {
+                                                                                            "primitive": {
+                                                                                                "string": "b",
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "type": "primitive"
+                                                                                        },
+                                                                                        "jsonExample": "b"
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "shape": {
+                                                                                            "typeName": {
+                                                                                                "fernFilepath": [
+                                                                                                    {
+                                                                                                        "originalName": "nested",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "nested",
+                                                                                                            "safeName": "nested"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "NESTED",
+                                                                                                            "safeName": "NESTED"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "Nested",
+                                                                                                            "safeName": "Nested"
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "name": {
+                                                                                                    "originalName": "Product",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "product",
+                                                                                                        "safeName": "product"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "PRODUCT",
+                                                                                                        "safeName": "PRODUCT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Product",
+                                                                                                        "safeName": "Product"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "shape": {
+                                                                                                "properties": [
+                                                                                                    {
+                                                                                                        "wireKey": "c",
+                                                                                                        "value": {
+                                                                                                            "shape": {
+                                                                                                                "container": {
+                                                                                                                    "optional": {
+                                                                                                                        "shape": {
+                                                                                                                            "unknown": {
+                                                                                                                                "d": {
+                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            "type": "unknown"
+                                                                                                                        },
+                                                                                                                        "jsonExample": {
+                                                                                                                            "d": {
+                                                                                                                                "e": "\\\\$11"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "type": "optional"
+                                                                                                                },
+                                                                                                                "type": "container"
+                                                                                                            },
+                                                                                                            "jsonExample": {
+                                                                                                                "d": {
+                                                                                                                    "e": "\\\\$11"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "originalTypeDeclaration": {
+                                                                                                            "fernFilepath": [
+                                                                                                                {
+                                                                                                                    "originalName": "nested",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "nested",
+                                                                                                                        "safeName": "nested"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "NESTED",
+                                                                                                                        "safeName": "NESTED"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Nested",
+                                                                                                                        "safeName": "Nested"
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "name": {
+                                                                                                                "originalName": "Product",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "product",
+                                                                                                                    "safeName": "product"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "PRODUCT",
+                                                                                                                    "safeName": "PRODUCT"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Product",
+                                                                                                                    "safeName": "Product"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                ],
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "type": "named"
+                                                                                        },
+                                                                                        "jsonExample": {
+                                                                                            "c": {
+                                                                                                "d": {
+                                                                                                    "e": "\\\\$11"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "type": "map"
+                                                                        },
+                                                                        "type": "container"
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "b": {
+                                                                            "c": {
+                                                                                "d": {
+                                                                                    "e": "\\\\$11"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "type": "optional"
+                                                            },
+                                                            "type": "container"
+                                                        },
+                                                        "jsonExample": {
+                                                            "b": {
+                                                                "c": {
+                                                                    "d": {
+                                                                        "e": "\\\\$11"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "fernFilepath": [
+                                                            {
+                                                                "originalName": "nested",
+                                                                "camelCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "nested",
+                                                                    "safeName": "nested"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "NESTED",
+                                                                    "safeName": "NESTED"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Nested",
+                                                                    "safeName": "Nested"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "name": {
+                                                            "originalName": "Response",
+                                                            "camelCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "response",
+                                                                "safeName": "response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RESPONSE",
+                                                                "safeName": "RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Response",
+                                                                "safeName": "Response"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "named"
+                                    },
+                                    "jsonExample": {
+                                        "a": {
+                                            "b": {
+                                                "c": {
+                                                    "d": {
+                                                        "e": "\\\\$11"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "type": "ok"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": [],
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true
+    }
+}"
+`;
+
 exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
 "{
     "apiName": {
@@ -7074,7 +10186,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "$4.50"
+                            "jsonExample": "\\\\$4.50"
                         },
                         "type": "alias"
                     }
@@ -8430,7 +11542,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": 20
+                                        "age": "$Age.Example1"
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -14344,7 +17456,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "$4.50"
+                            "jsonExample": "\\\\$4.50"
                         },
                         "type": "alias"
                     }
@@ -15700,7 +18812,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": 20
+                                        "age": "$Age.Example1"
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -21614,7 +24726,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "$4.50"
+                            "jsonExample": "\\\\$4.50"
                         },
                         "type": "alias"
                     }
@@ -22970,7 +26082,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": 20
+                                        "age": "$Age.Example1"
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -27531,7 +30643,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "$4.50"
+                            "jsonExample": "\\\\$4.50"
                         },
                         "type": "alias"
                     }
@@ -28887,7 +31999,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": 20
+                                        "age": "$Age.Example1"
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -33448,7 +36560,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "$4.50"
+                            "jsonExample": "\\\\$4.50"
                         },
                         "type": "alias"
                     }
@@ -34804,7 +37916,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": 20
+                                        "age": "$Age.Example1"
                                     }
                                 },
                                 "originalTypeDeclaration": {
