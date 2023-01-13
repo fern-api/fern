@@ -7885,6 +7885,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jsonwebtoken", "npm:9.0.0"],\
             ["@types/node", "npm:18.7.18"],\
             ["axios", "npm:0.27.2"],\
+            ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["inquirer", "npm:9.1.0"],\

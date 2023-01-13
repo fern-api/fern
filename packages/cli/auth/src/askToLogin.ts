@@ -8,12 +8,11 @@ import { isLoggedIn } from "./verify/isLoggedIn";
 export async function askToLogin(context: TaskContext): Promise<FernToken> {
     if (!(await isLoggedIn()) && process.stdout.isTTY) {
         await context.takeOverTerminal(async () => {
-            if (await askForConfirmation("Login required. Continue?")) {
-                await login();
-            } else {
+            if (!(await askForConfirmation("Login required. Continue?"))) {
                 context.failAndThrow();
             }
         });
+        await login(context);
     }
     const token = await getToken();
     if (token == null) {

@@ -361,7 +361,9 @@ function addUpgradeCommand({
 
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("login", "Log in to Fern via GitHub", noop, async () => {
-        await login();
+        await cliContext.runTask(async (context) => {
+            await login(context);
+        });
         cliContext.logger.info(chalk.green("Logged in"));
     });
 }

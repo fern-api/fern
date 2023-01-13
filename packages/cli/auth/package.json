@@ -31,6 +31,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/venus-api-sdk": "0.0.11-2-g9f28a55",
     "axios": "^0.27.2",
+    "chalk": "^5.0.1",
     "inquirer": "^9.1.0",
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^3.0.0",
