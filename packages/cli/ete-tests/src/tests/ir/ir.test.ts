@@ -15,6 +15,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "extended-examples",
     },
+    {
+        name: "packages",
+    },
 ];
 
 interface Fixture {

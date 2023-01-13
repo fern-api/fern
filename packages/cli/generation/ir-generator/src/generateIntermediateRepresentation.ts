@@ -33,7 +33,7 @@ export async function generateIntermediateRepresentation({
     const audienceIrGraph = audiences != null ? new AudienceIrGraph(audiences) : undefined;
 
     const rootApiFileContext = constructFernFileContext({
-        relativeFilepath: undefined,
+        relativeFilepath: ".",
         serviceFile: workspace.rootApiFile,
         casingsGenerator,
     });

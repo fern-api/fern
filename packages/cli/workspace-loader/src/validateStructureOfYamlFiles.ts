@@ -1,6 +1,6 @@
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_MODULE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { PackageMarkerFileSchema, RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
 import { ZodError } from "zod";
@@ -52,7 +52,7 @@ export function validateStructureOfYamlFiles(
             } else {
                 addFailure(parsed.error);
             }
-        } else if (path.basename(relativeFilepath) === FERN_MODULE_MARKER_FILENAME) {
+        } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
             const parsed = PackageMarkerFileSchema.safeParse(parsedFileContents);
             if (parsed.success) {
                 packageMarkers[relativeFilepath] = parsed.data;

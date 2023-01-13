@@ -1,11 +1,11 @@
 import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { DependenciesConfiguration, Dependency } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DEPENDENCIES_CONFIGURATION_FILENAME, ROOT_API_FILENAME } from "@fern-api/project-configuration";
+import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
 import { createFiddleService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
-import { PackageMarkerFileSchema, RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { createWriteStream } from "fs";
@@ -19,7 +19,7 @@ import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 
 const FIDDLE = createFiddleService();
 
-export declare namespace loadDependencies {
+export declare namespace loadDependency {
     export type Return = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
@@ -29,78 +29,64 @@ export declare namespace loadDependencies {
 
     export interface FailedResult {
         didSucceed: false;
-        failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure>;
+        failure: WorkspaceLoader.DependencyFailure;
     }
 }
 
-export async function loadDependencies({
+export async function loadDependency({
+    dependencyName,
     dependenciesConfiguration,
-    packageMarkers,
     context,
     rootApiFile,
     cliVersion,
+    pathOfPackageMarker,
 }: {
+    dependencyName: string;
     dependenciesConfiguration: DependenciesConfiguration;
-    packageMarkers: Record<RelativeFilePath, PackageMarkerFileSchema>;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
-}): Promise<loadDependencies.Return> {
+    pathOfPackageMarker: RelativeFilePath;
+}): Promise<loadDependency.Return> {
     const newServiceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
-    const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
+    let failure: WorkspaceLoader.DependencyFailure | undefined;
 
-    await Promise.all(
-        entries(packageMarkers).map(async ([relativeFilePathOfPackageMarker, { export: export_ }]) => {
-            // look up dependency in dependencies configuration
-            const dependency = dependenciesConfiguration.dependencies[export_];
-            if (dependency == null) {
-                context.logger.error(`Dependency ${export_} is not listed in ${DEPENDENCIES_CONFIGURATION_FILENAME}`);
-                failures[relativeFilePathOfPackageMarker] = {
-                    type: WorkspaceLoaderFailureType.DEPENDENCY,
-                    cause: "dependencyNotListed",
-                };
-                return;
-            }
-
-            await context.runInteractiveTask(
-                { name: stringifyDependency(dependency) },
-                async (contextForDependency) => {
-                    const serviceFileFromDependency = await validateDependencyAndGetServiceFiles({
-                        context: contextForDependency,
-                        rootApiFile,
-                        dependency,
-                        cliVersion,
-                    });
-
-                    if (serviceFileFromDependency == null) {
-                        failures[relativeFilePathOfPackageMarker] = {
-                            type: WorkspaceLoaderFailureType.DEPENDENCY,
-                            cause: "failedToLoadDependency",
-                        };
-                    } else {
-                        for (const [relativeFilePathOfDependencyServiceFile, serviceFile] of entries(
-                            serviceFileFromDependency
-                        )) {
-                            newServiceFiles[
-                                join(dirname(relativeFilePathOfPackageMarker), relativeFilePathOfDependencyServiceFile)
-                            ] = serviceFile;
-                        }
-                    }
-                }
-            );
-        })
-    );
-
-    if (Object.keys(failures).length > 0) {
-        return {
-            didSucceed: false,
-            failures,
+    // look up dependency in dependencies configuration
+    const dependency = dependenciesConfiguration.dependencies[dependencyName];
+    if (dependency == null) {
+        failure = {
+            type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED,
+            dependencyName,
         };
     } else {
-        return {
-            didSucceed: true,
-            newServiceFiles,
-        };
+        await context.runInteractiveTask({ name: stringifyDependency(dependency) }, async (contextForDependency) => {
+            const serviceFileFromDependency = await validateDependencyAndGetServiceFiles({
+                context: contextForDependency,
+                rootApiFile,
+                dependency,
+                cliVersion,
+            });
+
+            if (serviceFileFromDependency == null) {
+                failure = {
+                    type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
+                    dependencyName,
+                };
+            } else {
+                for (const [relativeFilePathOfDependencyServiceFile, serviceFile] of entries(
+                    serviceFileFromDependency
+                )) {
+                    newServiceFiles[join(dirname(pathOfPackageMarker), relativeFilePathOfDependencyServiceFile)] =
+                        serviceFile;
+                }
+            }
+        });
+    }
+
+    if (failure != null) {
+        return { didSucceed: false, failure };
+    } else {
+        return { didSucceed: true, newServiceFiles };
     }
 }
 

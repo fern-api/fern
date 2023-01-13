@@ -41,9 +41,24 @@ export declare namespace WorkspaceLoader {
         error: ZodError;
     }
 
-    export interface DependencyFailure {
-        type: WorkspaceLoaderFailureType.DEPENDENCY;
-        cause: "dependencyNotListed" | "failedToLoadDependency";
+    export type DependencyFailure =
+        | DependencyNotListedFailure
+        | FailedToLoadDependencyFailure
+        | ExportPackageHasDefinitionsFailure;
+
+    export interface DependencyNotListedFailure {
+        type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED;
+        dependencyName: string;
+    }
+
+    export interface FailedToLoadDependencyFailure {
+        type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY;
+        dependencyName: string;
+    }
+
+    export interface ExportPackageHasDefinitionsFailure {
+        type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS;
+        pathToPackage: RelativeFilePath;
     }
 }
 
@@ -52,5 +67,7 @@ export enum WorkspaceLoaderFailureType {
     FILE_PARSE = "FILE_PARSE",
     FILE_MISSING = "FILE_MISSING",
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
-    DEPENDENCY = "DEPENDENCY",
+    DEPENDENCY_NOT_LISTED = "DEPENDENCY_NOT_LISTED",
+    FAILED_TO_LOAD_DEPENDENCY = "FAILED_TO_LOAD_DEPENDENCY",
+    EXPORT_PACKAGE_HAS_DEFINITIONS = "EXPORT_PACKAGE_HAS_DEFINITIONS",
 }

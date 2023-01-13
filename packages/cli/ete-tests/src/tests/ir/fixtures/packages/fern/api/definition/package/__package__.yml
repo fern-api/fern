@@ -1,0 +1,8 @@
+types:
+  PackageString: string
+services:
+  http:
+    PackageService:
+      base-path: /
+      auth: false
+      endpoints: {}
