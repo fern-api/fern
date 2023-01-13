@@ -1,5 +1,6 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
+    EXAMPLE_REFERENCE_PREFIX,
     isRawObjectDefinition,
     RawSchemas,
     visitRawTypeDeclaration,
@@ -122,10 +123,14 @@ export function convertTypeReferenceExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
 }): ExampleTypeReference {
-    example = exampleResolver.resolveAllReferencesInExampleOrThrow({
-        example,
-        file: fileContainingExample,
-    }).resolvedExample;
+    if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
+        const resolvedExample = exampleResolver.resolveExampleOrThrow({
+            referenceToExample: example,
+            file: fileContainingExample,
+        });
+        example = resolvedExample.resolvedExample;
+        fileContainingExample = resolvedExample.file;
+    }
 
     const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
         primitive: (primitive) => {
@@ -264,7 +269,13 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
+            let stringExample = example;
+            // handle escaping \
+            if (stringExample.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+                // remove backslash
+                stringExample = stringExample.slice(1);
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(stringExample));
         },
         dateTime: () => {
             if (typeof example !== "string") {
