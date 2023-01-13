@@ -1,25 +1,25 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { Reference } from "@fern-typescript/contexts";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractServiceDeclarationReferencer } from "./AbstractServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
-export class ServiceDeclarationReferencer extends AbstractServiceDeclarationReferencer<DeclaredServiceName> {
-    public getExportedFilepath(serviceName: DeclaredServiceName): ExportedFilePath {
-        if (this.isRootClient(serviceName)) {
+export class ServiceDeclarationReferencer extends AbstractServiceDeclarationReferencer<FernFilepath> {
+    public getExportedFilepath(service: FernFilepath): ExportedFilePath {
+        if (this.isRootClient(service)) {
             return {
                 directories: [],
                 file: {
                     nameOnDisk: this.getFilename(),
                     exportDeclaration: {
-                        namedExports: [this.getExportedName(serviceName)],
+                        namedExports: [this.getExportedName(service)],
                     },
                 },
             };
         }
 
         return {
-            directories: this.getExportedDirectory(serviceName),
+            directories: this.getExportedDirectory(service),
             file: {
                 nameOnDisk: this.getFilename(),
             },
@@ -30,15 +30,15 @@ export class ServiceDeclarationReferencer extends AbstractServiceDeclarationRefe
         return "Client.ts";
     }
 
-    public getExportedName(serviceName: DeclaredServiceName): string {
-        return this.isRootClient(serviceName) ? `${this.apiName}Client` : "Client";
+    public getExportedName(service: FernFilepath): string {
+        return this.isRootClient(service) ? `${this.apiName}Client` : "Client";
     }
 
-    public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<DeclaredServiceName>): Reference {
+    public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<FernFilepath>): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 
-    private isRootClient(serviceName: DeclaredServiceName): boolean {
-        return serviceName.fernFilepathV2.length === 0;
+    private isRootClient(service: FernFilepath): boolean {
+        return service.length === 0;
     }
 }

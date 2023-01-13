@@ -23,7 +23,6 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             container: (container) => this.container(container).isOptional,
             primitive: (primitive) => this.primitive(primitive).isOptional,
             named: () => false,
-            void: () => this.void().isOptional,
             unknown: () => this.unknown().isOptional,
             _unknown: () => {
                 throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType._type);

@@ -32,7 +32,7 @@
     "@fern-api/logger": "0.0.248-7-gb4189be0",
     "@fern-api/logging-execa": "0.0.248-7-gb4189be0",
     "@fern-fern/generator-exec-sdk": "^0.0.46",
-    "@fern-fern/ir-model": "0.0.436",
+    "@fern-fern/ir-model": "0.0.627",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",

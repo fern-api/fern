@@ -1,6 +1,6 @@
 import { entries } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 import { ExportDeclaration } from "../exports-manager/ExportsManager";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -15,13 +15,13 @@ export abstract class AbstractServiceDeclarationReferencer<Name> extends Abstrac
     };
 
     protected getExportedDirectory(
-        serviceName: DeclaredServiceName,
+        service: FernFilepath,
         { subExports }: { subExports?: Record<RelativeFilePath, ExportDeclaration> } = {}
     ): ExportedDirectory[] {
         return [
             ...this.containingDirectory,
             ...getExportedDirectoriesForFernFilepath({
-                fernFilepath: serviceName.fernFilepathV2,
+                fernFilepath: service,
                 subExports:
                     subExports != null
                         ? entries(subExports).reduce(

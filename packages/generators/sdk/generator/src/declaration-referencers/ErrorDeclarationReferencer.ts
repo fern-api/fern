@@ -15,7 +15,7 @@ export class ErrorDeclarationReferencer extends AbstractDeclarationReferencer<De
             directories: [
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
-                    fernFilepath: errorName.fernFilepathV2,
+                    fernFilepath: errorName.fernFilepath,
                     subExports: {
                         [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                             exportAll: true,
@@ -39,7 +39,7 @@ export class ErrorDeclarationReferencer extends AbstractDeclarationReferencer<De
     }
 
     public getExportedName(errorName: DeclaredTypeName): string {
-        return errorName.nameV3.unsafeName.pascalCase;
+        return errorName.name.pascalCase.unsafeName;
     }
 
     public getReferenceToError(args: DeclarationReferencer.getReferenceTo.Options<DeclaredErrorName>): Reference {

@@ -1,9 +1,9 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpHeader, HttpService } from "@fern-fern/ir-model/services/http";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { HttpHeader, HttpService } from "@fern-fern/ir-model/http";
 
 export interface AugmentedService {
-    name: DeclaredServiceName;
+    fernFilepath: FernFilepath;
     originalService: HttpService | undefined;
-    wrappedServices: DeclaredServiceName[];
+    wrappedServices: FernFilepath[];
     apiWideHeaders: HttpHeader[];
 }

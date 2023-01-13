@@ -1,5 +1,5 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { Reference } from "@fern-typescript/contexts";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -13,14 +13,14 @@ export declare namespace EndpointDeclarationReferencer {
     }
 
     export interface Name {
-        serviceName: DeclaredServiceName;
+        service: FernFilepath;
         endpoint: HttpEndpoint;
     }
 }
 export class EndpointDeclarationReferencer extends AbstractServiceDeclarationReferencer<EndpointDeclarationReferencer.Name> {
     public getExportedFilepath(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
-            directories: this.getExportedDirectory(name.serviceName),
+            directories: this.getExportedDirectory(name.service),
             file: {
                 nameOnDisk: this.getFilename(name),
                 exportDeclaration: {
@@ -34,8 +34,8 @@ export class EndpointDeclarationReferencer extends AbstractServiceDeclarationRef
         return `${this.getNamespaceExport(name)}.ts`;
     }
 
-    private getNamespaceExport({ endpoint }: EndpointDeclarationReferencer.Name) {
-        return endpoint.name.camelCase;
+    private getNamespaceExport({ endpoint }: EndpointDeclarationReferencer.Name): string {
+        return endpoint.name.camelCase.unsafeName;
     }
 
     public getReferenceToEndpointExport(
@@ -46,7 +46,7 @@ export class EndpointDeclarationReferencer extends AbstractServiceDeclarationRef
 
     protected override getExportedFilepathForReference(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
-            directories: this.getExportedDirectory(name.serviceName),
+            directories: this.getExportedDirectory(name.service),
             file: undefined,
         };
     }

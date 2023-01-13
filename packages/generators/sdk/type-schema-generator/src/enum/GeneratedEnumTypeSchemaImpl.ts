@@ -13,7 +13,7 @@ export class GeneratedEnumTypeSchemaImpl<Context extends WithBaseContextMixin>
     public readonly type = "enum";
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        return context.base.coreUtilities.zurg.enum(this.shape.values.map((value) => value.value));
+        return context.base.coreUtilities.zurg.enum(this.shape.values.map((value) => value.name.wireValue));
     }
 
     protected override generateRawTypeDeclaration(_context: Context, module: ModuleDeclaration): void {
@@ -22,7 +22,7 @@ export class GeneratedEnumTypeSchemaImpl<Context extends WithBaseContextMixin>
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode(
                     this.shape.values.map((value) =>
-                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.value))
+                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
                     )
                 )
             ),

@@ -241,7 +241,7 @@ export class SdkGenerator {
                         sourceFile,
                         coreUtilitiesManager: this.coreUtilitiesManager,
                         dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constantsV2,
+                        fernConstants: this.intermediateRepresentation.constants,
                         importsManager,
                         typeResolver: this.typeResolver,
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -263,7 +263,7 @@ export class SdkGenerator {
                         sourceFile,
                         coreUtilitiesManager: this.coreUtilitiesManager,
                         dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constantsV2,
+                        fernConstants: this.intermediateRepresentation.constants,
                         importsManager,
                         typeResolver: this.typeResolver,
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -289,7 +289,7 @@ export class SdkGenerator {
                         sourceFile,
                         coreUtilitiesManager: this.coreUtilitiesManager,
                         dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constantsV2,
+                        fernConstants: this.intermediateRepresentation.constants,
                         importsManager,
                         typeResolver: this.typeResolver,
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -314,7 +314,7 @@ export class SdkGenerator {
                         sourceFile,
                         coreUtilitiesManager: this.coreUtilitiesManager,
                         dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constantsV2,
+                        fernConstants: this.intermediateRepresentation.constants,
                         importsManager,
                         typeResolver: this.typeResolver,
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -337,11 +337,11 @@ export class SdkGenerator {
     }
 
     private generateEndpointTypes() {
-        for (const service of this.intermediateRepresentation.services.http) {
+        for (const service of this.intermediateRepresentation.services) {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.endpointDeclarationReferencer.getExportedFilepath({
-                        serviceName: service.name,
+                        service: service.name.fernFilepath,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -349,7 +349,7 @@ export class SdkGenerator {
                             sourceFile,
                             coreUtilitiesManager: this.coreUtilitiesManager,
                             dependencyManager: this.dependencyManager,
-                            fernConstants: this.intermediateRepresentation.constantsV2,
+                            fernConstants: this.intermediateRepresentation.constants,
                             importsManager,
                             typeResolver: this.typeResolver,
                             typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -363,14 +363,14 @@ export class SdkGenerator {
                             endpointTypesGenerator: this.endpointTypesGenerator,
                         });
                         endpointTypesContext.endpointTypes
-                            .getGeneratedEndpointTypes(service.name, endpoint.id)
+                            .getGeneratedEndpointTypes(service.name.fernFilepath, endpoint.name)
                             .writeToFile(endpointTypesContext);
                     },
                 });
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
                     this.withSourceFile({
                         filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
-                            serviceName: service.name,
+                            service: service.name.fernFilepath,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -378,7 +378,7 @@ export class SdkGenerator {
                                 sourceFile,
                                 coreUtilitiesManager: this.coreUtilitiesManager,
                                 dependencyManager: this.dependencyManager,
-                                fernConstants: this.intermediateRepresentation.constantsV2,
+                                fernConstants: this.intermediateRepresentation.constants,
                                 importsManager,
                                 typeResolver: this.typeResolver,
                                 typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -394,7 +394,7 @@ export class SdkGenerator {
                                 requestWrapperGenerator: this.requestWrapperGenerator,
                             });
                             context.requestWrapper
-                                .getGeneratedRequestWrapper(service.name, endpoint.id)
+                                .getGeneratedRequestWrapper(service.name.fernFilepath, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
@@ -404,11 +404,11 @@ export class SdkGenerator {
     }
 
     private generateEndpointTypeSchemas() {
-        for (const service of this.intermediateRepresentation.services.http) {
+        for (const service of this.intermediateRepresentation.services) {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.endpointSchemaDeclarationReferencer.getExportedFilepath({
-                        serviceName: service.name,
+                        service: service.name.fernFilepath,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -416,7 +416,7 @@ export class SdkGenerator {
                             sourceFile,
                             coreUtilitiesManager: this.coreUtilitiesManager,
                             dependencyManager: this.dependencyManager,
-                            fernConstants: this.intermediateRepresentation.constantsV2,
+                            fernConstants: this.intermediateRepresentation.constants,
                             importsManager,
                             typeResolver: this.typeResolver,
                             typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -438,7 +438,7 @@ export class SdkGenerator {
                             errorSchemaGenerator: this.errorSchemaGenerator,
                         });
                         endpointTypeSchemasContext.endpointTypeSchemas
-                            .getGeneratedEndpointTypeSchemas(service.name, endpoint.id)
+                            .getGeneratedEndpointTypeSchemas(service.name.fernFilepath, endpoint.name)
                             .writeToFile(endpointTypeSchemasContext);
                     },
                 });
@@ -450,14 +450,14 @@ export class SdkGenerator {
         const services = this.serviceResolver.getAllAugmentedServices();
         for (const service of services) {
             this.withSourceFile({
-                filepath: this.serviceDeclarationReferencer.getExportedFilepath(service.name),
+                filepath: this.serviceDeclarationReferencer.getExportedFilepath(service.fernFilepath),
                 run: ({ sourceFile, importsManager }) => {
                     const serviceContext = new ServiceContextImpl({
                         intermediateRepresentation: this.intermediateRepresentation,
                         sourceFile,
                         coreUtilitiesManager: this.coreUtilitiesManager,
                         dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constantsV2,
+                        fernConstants: this.intermediateRepresentation.constants,
                         importsManager,
                         typeResolver: this.typeResolver,
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
@@ -482,7 +482,7 @@ export class SdkGenerator {
                         serviceDeclarationReferencer: this.serviceDeclarationReferencer,
                         serviceGenerator: this.serviceGenerator,
                     });
-                    serviceContext.service.getGeneratedService(service.name).writeToFile(serviceContext);
+                    serviceContext.service.getGeneratedService(service.fernFilepath).writeToFile(serviceContext);
                 },
             });
         }
@@ -496,7 +496,7 @@ export class SdkGenerator {
                     sourceFile,
                     coreUtilitiesManager: this.coreUtilitiesManager,
                     dependencyManager: this.dependencyManager,
-                    fernConstants: this.intermediateRepresentation.constantsV2,
+                    fernConstants: this.intermediateRepresentation.constants,
                     importsManager,
                     intermediateRepresentation: this.intermediateRepresentation,
                     environmentsGenerator: this.environmentsGenerator,

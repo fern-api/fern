@@ -1,5 +1,5 @@
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -42,8 +42,8 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
             ),
             getReferenceToUnion: (context) =>
                 context.endpointTypes.getReferenceToEndpointTypeExport(
-                    service.name,
-                    this.endpoint.id,
+                    service.name.fernFilepath,
+                    this.endpoint.name,
                     GeneratedEndpointTypesImpl.ERROR_INTERFACE_NAME
                 ),
             unknownSingleUnionType: new UnknownErrorSingleUnionType({
@@ -54,7 +54,7 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
 
     private getErrorUnionDiscriminant(errorDiscriminationStrategy: ErrorDiscriminationStrategy): string {
         return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
-            property: ({ discriminant }) => discriminant.name.unsafeName.camelCase,
+            property: ({ discriminant }) => discriminant.name.camelCase.unsafeName,
             statusCode: () => GeneratedEndpointTypesImpl.STATUS_CODE_DISCRIMINANT,
             _unknown: () => {
                 throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
@@ -74,8 +74,8 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
     public getReferenceToResponseType(context: EndpointTypesContext): ts.TypeNode {
         return context.endpointTypes
             .getReferenceToEndpointTypeExport(
-                this.service.name,
-                this.endpoint.id,
+                this.service.name.fernFilepath,
+                this.endpoint.name,
                 GeneratedEndpointTypesImpl.RESPONSE_INTERFACE_NAME
             )
             .getTypeNode();
@@ -87,9 +87,9 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
             isExported: true,
             type: getTextOfTsNode(
                 context.base.coreUtilities.fetcher.APIResponse._getReferenceToType(
-                    this.endpoint.response.typeV2 == null
+                    this.endpoint.response.type == null
                         ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                        : context.type.getReferenceToType(this.endpoint.response.typeV2).typeNode,
+                        : context.type.getReferenceToType(this.endpoint.response.type).typeNode,
                     this.errorUnion.getReferenceTo(context)
                 )
             ),

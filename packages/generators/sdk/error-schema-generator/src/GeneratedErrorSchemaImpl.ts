@@ -1,4 +1,5 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ResolvedTypeReference, Type, TypeReference } from "@fern-fern/ir-model/types";
 import { ErrorSchemaContext, GeneratedErrorSchema, GeneratedTypeSchema } from "@fern-typescript/contexts";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { ts } from "ts-morph";
@@ -7,6 +8,7 @@ export declare namespace GeneratedErrorSchemaImpl {
     export interface Init {
         errorName: string;
         errorDeclaration: ErrorDeclaration;
+        type: TypeReference;
         typeSchemaGenerator: TypeSchemaGenerator<ErrorSchemaContext>;
     }
 }
@@ -14,11 +16,13 @@ export declare namespace GeneratedErrorSchemaImpl {
 export class GeneratedErrorSchemaImpl implements GeneratedErrorSchema {
     private errorName: string;
     private errorDeclaration: ErrorDeclaration;
+    private type: TypeReference;
     private typeSchemaGenerator: TypeSchemaGenerator<ErrorSchemaContext>;
 
-    constructor({ errorName, errorDeclaration, typeSchemaGenerator }: GeneratedErrorSchemaImpl.Init) {
+    constructor({ errorName, errorDeclaration, type, typeSchemaGenerator }: GeneratedErrorSchemaImpl.Init) {
         this.errorName = errorName;
         this.errorDeclaration = errorDeclaration;
+        this.type = type;
         this.typeSchemaGenerator = typeSchemaGenerator;
     }
 
@@ -37,7 +41,11 @@ export class GeneratedErrorSchemaImpl implements GeneratedErrorSchema {
         }
         return this.typeSchemaGenerator.generateTypeSchema({
             typeName: this.errorName,
-            shape: this.errorDeclaration.type,
+            shape: Type.alias({
+                aliasOf: this.type,
+                // TODO do we need a real value for this?
+                resolvedType: ResolvedTypeReference.unknown(),
+            }),
             getGeneratedType: () => generatedError.getAsGeneratedType(),
             getReferenceToGeneratedType: () => context.error.getReferenceToError(this.errorDeclaration.name),
             getReferenceToGeneratedTypeSchema: (context) =>

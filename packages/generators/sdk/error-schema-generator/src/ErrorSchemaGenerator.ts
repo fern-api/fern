@@ -23,11 +23,12 @@ export class ErrorSchemaGenerator {
         errorDeclaration,
         errorName,
     }: ErrorSchemaGenerator.generateError.Args): GeneratedErrorSchema | undefined {
-        if (errorDeclaration.type._type === "alias" && errorDeclaration.type.aliasOf._type === "void") {
+        if (errorDeclaration.type == null) {
             return undefined;
         }
         return new GeneratedErrorSchemaImpl({
             errorDeclaration,
+            type: errorDeclaration.type,
             errorName,
             typeSchemaGenerator: this.typeSchemaGenerator,
         });

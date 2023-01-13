@@ -1,13 +1,12 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpointId } from "@fern-fern/ir-model/services/http";
+import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
 import { GeneratedEndpointTypes } from "../../generated-types";
 import { Reference } from "../../Reference";
 
 export interface EndpointTypesContextMixin {
-    getGeneratedEndpointTypes: (serviceName: DeclaredServiceName, endpointId: HttpEndpointId) => GeneratedEndpointTypes;
+    getGeneratedEndpointTypes: (service: FernFilepath, endpointName: Name) => GeneratedEndpointTypes;
     getReferenceToEndpointTypeExport: (
-        serviceName: DeclaredServiceName,
-        endpointId: HttpEndpointId,
+        service: FernFilepath,
+        endpointName: Name,
         export_: string | string[]
     ) => Reference;
 }

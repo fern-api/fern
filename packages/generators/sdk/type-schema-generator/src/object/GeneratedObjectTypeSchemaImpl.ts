@@ -21,8 +21,8 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
         let schema = context.base.coreUtilities.zurg.object(
             this.shape.properties.map((property) => ({
                 key: {
-                    raw: property.nameV2.wireValue,
-                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.nameV2.wireValue }),
+                    raw: property.name.wireValue,
+                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.name.wireValue }),
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType),
             }))
@@ -44,7 +44,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
             properties: this.shape.properties.map((property) => {
                 const type = context.typeSchema.getReferenceToRawType(property.valueType);
                 return {
-                    name: `"${property.nameV2.wireValue}"`,
+                    name: `"${property.name.wireValue}"`,
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                     hasQuestionToken: type.isOptional,
                 };

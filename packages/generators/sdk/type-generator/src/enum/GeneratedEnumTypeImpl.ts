@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration, EnumValue, ExampleType } from "@fern-fern/ir-model/types";
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, getWriterForMultiLineUnionType, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedEnumType, GetReferenceOpts, WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
@@ -17,7 +17,7 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
             type: getWriterForMultiLineUnionType(
                 this.shape.values.map((value) => ({
                     docs: value.docs,
-                    node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.nameV2.wireValue)),
+                    node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue)),
                 }))
             ),
         });
@@ -36,7 +36,7 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
                                 this.shape.values.map((value) =>
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier(this.getEnumValueName(value)),
-                                        ts.factory.createStringLiteral(value.nameV2.wireValue)
+                                        ts.factory.createStringLiteral(value.name.wireValue)
                                     )
                                 ),
                                 true
@@ -49,12 +49,12 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
         });
     }
 
-    public buildExample(example: ExampleType, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "enum") {
             throw new Error("Example is not for an enum");
         }
 
-        const enumValue = this.shape.values.find((enumValue) => enumValue.nameV2.wireValue === example.wireValue);
+        const enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.wireValue);
         if (enumValue == null) {
             throw new Error("No enum with wire value: " + example.wireValue);
         }
@@ -65,6 +65,6 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
     }
 
     private getEnumValueName(enumValue: EnumValue): string {
-        return enumValue.nameV2.name.unsafeName.pascalCase;
+        return enumValue.name.name.pascalCase.unsafeName;
     }
 }

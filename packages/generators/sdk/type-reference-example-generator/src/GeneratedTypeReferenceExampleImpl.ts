@@ -1,4 +1,9 @@
-import { ExampleContainer, ExamplePrimitive, ExampleTypeReference } from "@fern-fern/ir-model/types";
+import {
+    ExampleContainer,
+    ExamplePrimitive,
+    ExampleTypeReference,
+    ExampleTypeReferenceShape,
+} from "@fern-fern/ir-model/types";
 import {
     GeneratedTypeReferenceExample,
     GetReferenceOpts,
@@ -28,7 +33,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         context: TypeReferenceExampleContext,
         opts: GetReferenceOpts
     ): ts.Expression {
-        return ExampleTypeReference._visit(example, {
+        return ExampleTypeReferenceShape._visit(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample),
@@ -87,13 +92,13 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return parsed.expression;
             },
             _unknown: () => {
-                throw new Error("Unknown example type: " + example.type);
+                throw new Error("Unknown example type: " + example.shape.type);
             },
         });
     }
 
     private getExampleAsPropertyName(example: ExampleTypeReference): ts.PropertyName {
-        return ExampleTypeReference._visit<ts.PropertyName>(example, {
+        return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample),
@@ -123,7 +128,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 throw new Error("Cannot convert unknown to property name");
             },
             _unknown: () => {
-                throw new Error("Unknown example type: " + example.type);
+                throw new Error("Unknown example type: " + example.shape.type);
             },
         });
     }

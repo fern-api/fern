@@ -1,5 +1,4 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpointId } from "@fern-fern/ir-model/services/http";
+import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
 import { RequestWrapperContextMixin } from "@fern-typescript/contexts";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts/src/generated-types/GeneratedRequestWrapper";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
@@ -39,42 +38,40 @@ export class RequestWrapperContextMixinImpl implements RequestWrapperContextMixi
         this.sourceFile = sourceFile;
     }
 
-    public getGeneratedRequestWrapper(
-        serviceName: DeclaredServiceName,
-        endpointId: HttpEndpointId
-    ): GeneratedRequestWrapper {
-        const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        if (service.originalService == null) {
+    public getGeneratedRequestWrapper(service: FernFilepath, endpointName: Name): GeneratedRequestWrapper {
+        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        if (serviceDeclaration.originalService == null) {
             throw new Error("Service is a wrapper");
         }
-        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
+        const endpoint = serviceDeclaration.originalService.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointId} does not exist`);
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.requestWrapperGenerator.generateRequestWrapper({
-            service: service.originalService,
+            service: serviceDeclaration.originalService,
             endpoint,
             wrapperName: this.requestWrapperDeclarationReferencer.getExportedName({
-                serviceName: service.originalService.name,
+                service,
                 endpoint,
             }),
         });
     }
 
-    public getReferenceToRequestWrapper(serviceName: DeclaredServiceName, endpointId: HttpEndpointId): ts.TypeNode {
-        const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        if (service.originalService == null) {
+    public getReferenceToRequestWrapper(service: FernFilepath, endpointName: Name): ts.TypeNode {
+        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        if (serviceDeclaration.originalService == null) {
             throw new Error("Service is a wrapper");
         }
-        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
+        const endpoint = serviceDeclaration.originalService.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointId} does not exist`);
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
-            name: {
-                serviceName: service.originalService.name,
-                endpoint,
-            },
+            name: { service, endpoint },
             importsManager: this.importsManager,
             importStrategy: { type: "fromRoot" },
             referencedIn: this.sourceFile,

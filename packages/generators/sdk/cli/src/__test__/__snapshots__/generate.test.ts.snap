@@ -8281,7 +8281,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
           Object {
             "contents": Array [
               Object {
-                "contents": "export * as package_ from \\"./package\\";
+                "contents": "export * as package from \\"./package\\";
 export * from \\"./package/types\\";
 ",
                 "name": "index.ts",
@@ -9453,7 +9453,7 @@ export type RequiredKeys<T> = {
           Object {
             "contents": Array [
               Object {
-                "contents": "export * as package_ from \\"./package\\";
+                "contents": "export * as package from \\"./package\\";
 export * from \\"./package/types\\";
 ",
                 "name": "index.ts",

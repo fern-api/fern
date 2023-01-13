@@ -1,4 +1,4 @@
-import { HttpHeader, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-model/services/http";
+import { HttpHeader, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-model/http";
 import { ServiceContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";

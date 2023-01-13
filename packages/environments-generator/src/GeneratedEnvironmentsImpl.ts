@@ -80,6 +80,6 @@ export class GeneratedEnvironmentsImpl implements GeneratedEnvironments {
     }
 
     private getNameOfEnvironment(environment: Environment): string {
-        return environment.name.unsafeName.pascalCase;
+        return environment.name.pascalCase.unsafeName;
     }
 }

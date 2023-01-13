@@ -26,7 +26,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
         return {
-            name: this.discriminantValueWithAllCasings.name.unsafeName.pascalCase,
+            name: this.discriminantValueWithAllCasings.name.pascalCase.unsafeName,
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {

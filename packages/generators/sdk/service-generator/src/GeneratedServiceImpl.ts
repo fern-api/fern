@@ -1,6 +1,6 @@
 import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
+import { HttpHeader } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpHeader } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { AugmentedService } from "@fern-typescript/commons-v2";
 import { GeneratedService, ServiceContext } from "@fern-typescript/contexts";
@@ -183,7 +183,7 @@ export class GeneratedServiceImpl implements GeneratedService {
         }
 
         for (const header of this.authHeaders) {
-            const headerValues = (headerNameToValues[header.nameV2.wireValue] ??= []);
+            const headerValues = (headerNameToValues[header.name.wireValue] ??= []);
             headerValues.push(
                 context.base.coreUtilities.fetcher.Supplier.get(
                     this.getReferenceToOption(this.getOptionKeyForHeader(header))
@@ -213,7 +213,7 @@ export class GeneratedServiceImpl implements GeneratedService {
 
     public getApiHeaders(): GeneratedHeader[] {
         return this.apiHeaders.map((header) => ({
-            header: header.nameV2.wireValue,
+            header: header.name.wireValue,
             value: this.getReferenceToOption(this.getOptionKeyForHeader(header)),
         }));
     }
@@ -307,6 +307,6 @@ export class GeneratedServiceImpl implements GeneratedService {
     }
 
     private getOptionKeyForHeader(header: HttpHeader): string {
-        return header.nameV2.name.unsafeName.camelCase;
+        return header.name.name.camelCase.unsafeName;
     }
 }

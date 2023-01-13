@@ -1,7 +1,8 @@
-import { FernFilepathV2 } from "@fern-fern/ir-model/commons";
-import { ExampleType } from "@fern-fern/ir-model/types";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { ExampleType, ExampleTypeShape } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GetReferenceOpts, Reference } from "@fern-typescript/contexts";
+import { BaseGeneratedType } from "@fern-typescript/contexts/src/generated-types/BaseGeneratedType";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {
@@ -10,18 +11,18 @@ export declare namespace AbstractGeneratedType {
         shape: Shape;
         examples: ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepathV2;
+        fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }
 }
 
 const EXAMPLE_PREFIX = "    ";
 
-export abstract class AbstractGeneratedType<Shape, Context> {
+export abstract class AbstractGeneratedType<Shape, Context> implements BaseGeneratedType<Context> {
     protected typeName: string;
     protected shape: Shape;
     protected examples: ExampleType[];
-    protected fernFilepath: FernFilepathV2;
+    protected fernFilepath: FernFilepath;
     protected getReferenceToSelf: (context: Context) => Reference;
 
     private docs: string | undefined;
@@ -49,7 +50,7 @@ export abstract class AbstractGeneratedType<Shape, Context> {
         }
         for (const example of this.examples) {
             const exampleStr =
-                "@example\n" + getTextOfTsNode(this.buildExample(example, context, { isForComment: true }));
+                "@example\n" + getTextOfTsNode(this.buildExample(example.shape, context, { isForComment: true }));
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
         }
         if (groups.length === 0) {
@@ -58,5 +59,6 @@ export abstract class AbstractGeneratedType<Shape, Context> {
         return groups.join("\n\n");
     }
 
-    protected abstract buildExample(example: ExampleType, context: Context, opts: GetReferenceOpts): ts.Expression;
+    public abstract writeToFile(context: Context): void;
+    public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression;
 }

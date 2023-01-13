@@ -1,5 +1,5 @@
+import { HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/services/http";
 import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -56,12 +56,12 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
                   })
                 : undefined;
         this.generatedResponseSchema =
-            endpoint.response.typeV2 != null
+            endpoint.response.type != null
                 ? new GeneratedEndpointTypeSchemaImpl({
                       service,
                       endpoint,
                       typeName: GeneratedEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                      type: endpoint.response.typeV2,
+                      type: endpoint.response.type,
                   })
                 : undefined;
         this.generatedErrorSchema = this.getGeneratedEndpointErrorSchema({

@@ -22,7 +22,6 @@ export abstract class AbstractTypeReferenceConverter<T> {
             primitive: this.primitive.bind(this),
             container: this.container.bind(this),
             unknown: this.unknown.bind(this),
-            void: this.void.bind(this),
             _unknown: () => {
                 throw new Error("Unexpected type reference: " + typeReference._type);
             },
@@ -42,10 +41,6 @@ export abstract class AbstractTypeReferenceConverter<T> {
                 throw new Error("Unexpected container type: " + container._type);
             },
         });
-    }
-
-    protected void(): T {
-        throw new Error("Void is not supported here");
     }
 
     protected abstract named(typeName: DeclaredTypeName): T;

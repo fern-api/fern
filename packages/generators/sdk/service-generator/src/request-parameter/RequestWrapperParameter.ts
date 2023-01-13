@@ -1,4 +1,4 @@
-import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/services/http";
+import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/http";
 import { ServiceContext } from "@fern-typescript/contexts";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts/src/generated-types/GeneratedRequestWrapper";
 import { ts } from "ts-morph";
@@ -7,7 +7,10 @@ import { AbstractRequestParameter } from "./AbstractRequestParameter";
 export class RequestWrapperParameter extends AbstractRequestParameter {
     protected getParameterType(context: ServiceContext): { type: ts.TypeNode; isOptional: boolean } {
         return {
-            type: context.requestWrapper.getReferenceToRequestWrapper(this.service.name, this.endpoint.id),
+            type: context.requestWrapper.getReferenceToRequestWrapper(
+                this.service.name.fernFilepath,
+                this.endpoint.name
+            ),
             isOptional: this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context),
         };
     }
@@ -51,6 +54,6 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     }
 
     private getGeneratedRequestWrapper(context: ServiceContext): GeneratedRequestWrapper {
-        return context.requestWrapper.getGeneratedRequestWrapper(this.service.name, this.endpoint.id);
+        return context.requestWrapper.getGeneratedRequestWrapper(this.service.name.fernFilepath, this.endpoint.name);
     }
 }

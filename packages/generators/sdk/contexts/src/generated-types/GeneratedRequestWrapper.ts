@@ -1,4 +1,4 @@
-import { HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-model/services/http";
+import { HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-model/http";
 import { ts } from "ts-morph";
 import { RequestWrapperContext } from "../contexts/RequestWrapperContext";
 import { GeneratedFile } from "./GeneratedFile";

@@ -90,7 +90,7 @@ export class TypeContextMixinImpl implements TypeContextMixin {
             docs: typeDeclaration.docs ?? undefined,
             typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
             examples: typeDeclaration.examples,
-            fernFilepath: typeDeclaration.name.fernFilepathV2,
+            fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
         });
     }

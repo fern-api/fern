@@ -5,7 +5,7 @@ import {
     HttpService,
     InlinedRequestBodyProperty,
     QueryParameter,
-} from "@fern-fern/ir-model/services/http";
+} from "@fern-fern/ir-model/http";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { RequestWrapperContext } from "@fern-typescript/contexts";
@@ -270,7 +270,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKey(property: InlinedRequestBodyProperty): string {
-        return property.name.name.unsafeName.camelCase;
+        return property.name.name.camelCase.unsafeName;
     }
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: RequestWrapperContext): boolean {
@@ -324,11 +324,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getPropertyNameOfQueryParameter(queryParameter: QueryParameter): string {
-        return queryParameter.nameV2.name.unsafeName.camelCase;
+        return queryParameter.name.name.camelCase.unsafeName;
     }
 
     private getPropertyNameOfHeader(header: HttpHeader): string {
-        return header.nameV2.name.unsafeName.camelCase;
+        return header.name.name.camelCase.unsafeName;
     }
 
     public getAllQueryParameters(): QueryParameter[] {
@@ -346,7 +346,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (this.endpoint.sdkRequest.shape.type !== "wrapper") {
             throw new Error("Request body is defined but sdkRequest is not a wrapper");
         }
-        return this.endpoint.sdkRequest.shape.bodyKey.unsafeName.camelCase;
+        return this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
     }
 
     private accessRequestProperty({

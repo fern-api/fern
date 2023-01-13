@@ -1,4 +1,4 @@
-import { InlinedRequestBody } from "@fern-fern/ir-model/services/http";
+import { InlinedRequestBody } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
@@ -39,12 +39,12 @@ export class GeneratedInlinedRequestBodySchema extends AbstractGeneratedEndpoint
 
     protected getReferenceToParsedShape(context: EndpointTypeSchemasContext): ts.TypeNode {
         const referenceToRequestWrapper = context.requestWrapper.getReferenceToRequestWrapper(
-            this.service.name,
-            this.endpoint.id
+            this.service.name.fernFilepath,
+            this.endpoint.name
         );
         const generatedRequestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
-            this.service.name,
-            this.endpoint.id
+            this.service.name.fernFilepath,
+            this.endpoint.name
         );
         const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys();
         if (nonBodyKeys.length === 0) {
@@ -66,7 +66,7 @@ export class GeneratedInlinedRequestBodySchema extends AbstractGeneratedEndpoint
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.requestWrapper
-                        .getGeneratedRequestWrapper(this.service.name, this.endpoint.id)
+                        .getGeneratedRequestWrapper(this.service.name.fernFilepath, this.endpoint.name)
                         .getInlinedRequestBodyPropertyKey(property),
                     raw: property.name.wireValue,
                 },

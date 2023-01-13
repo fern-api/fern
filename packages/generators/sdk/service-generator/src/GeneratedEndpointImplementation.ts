@@ -1,5 +1,5 @@
+import { HttpEndpoint, HttpPath, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpPath, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/services/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
     Fetcher,
@@ -78,7 +78,7 @@ export class GeneratedEndpointImplementation {
     public getImplementation(context: ServiceContext): OptionalKind<MethodDeclarationStructure> {
         const generatedEndpointTypes = this.getGeneratedEndpointTypes(context);
         return {
-            name: this.endpoint.nameV2.unsafeName.camelCase,
+            name: this.endpoint.name.camelCase.unsafeName,
             parameters: this.getEndpointParameters(context),
             returnType: getTextOfTsNode(
                 ts.factory.createTypeReferenceNode("Promise", [
@@ -110,7 +110,7 @@ export class GeneratedEndpointImplementation {
     }
 
     private getParameterNameForPathParameter(pathParameter: PathParameter): string {
-        return pathParameter.nameV2.unsafeName.camelCase;
+        return pathParameter.name.camelCase.unsafeName;
     }
 
     private generateMethodBody(context: ServiceContext): (StatementStructures | WriterFunction | string)[] {
@@ -150,7 +150,7 @@ export class GeneratedEndpointImplementation {
                                         ),
                                         undefined,
                                         [
-                                            ts.factory.createStringLiteral(queryParameter.nameV2.wireValue),
+                                            ts.factory.createStringLiteral(queryParameter.name.wireValue),
                                             context.type.stringify(referenceToQueryParameter, queryParameter.valueType),
                                         ]
                                     )
@@ -195,10 +195,7 @@ export class GeneratedEndpointImplementation {
 
     private buildUrl(): ts.Expression {
         if (this.service.pathParameters.length === 0 && this.endpoint.pathParameters.length === 0) {
-            if (this.service.basePathV2 == null) {
-                return ts.factory.createStringLiteral(this.endpoint.path.head);
-            }
-            return ts.factory.createStringLiteral(urlJoin(this.service.basePathV2.head, this.endpoint.path.head));
+            return ts.factory.createStringLiteral(urlJoin(this.service.basePath.head, this.endpoint.path.head));
         }
 
         const httpPath = this.getHttpPath();
@@ -207,7 +204,7 @@ export class GeneratedEndpointImplementation {
             ts.factory.createTemplateHead(httpPath.head),
             httpPath.parts.map((part, index) => {
                 const pathParameter = this.getAllPathParameters().find(
-                    (param) => param.nameV2.unsafeName.originalValue === part.pathParameter
+                    (param) => param.name.originalName === part.pathParameter
                 );
                 if (pathParameter == null) {
                     throw new Error("Could not locate path parameter: " + part.pathParameter);
@@ -223,22 +220,18 @@ export class GeneratedEndpointImplementation {
     }
 
     private getHttpPath(): HttpPath {
-        if (this.service.basePathV2 == null) {
-            return this.endpoint.path;
-        }
-
-        const serviceBasePathPartsExceptLast = [...this.service.basePathV2.parts];
+        const serviceBasePathPartsExceptLast = [...this.service.basePath.parts];
         const lastServiceBasePathPart = serviceBasePathPartsExceptLast.pop();
 
         if (lastServiceBasePathPart == null) {
             return {
-                head: urlJoin(this.service.basePathV2.head, this.endpoint.path.head),
+                head: urlJoin(this.service.basePath.head, this.endpoint.path.head),
                 parts: this.endpoint.path.parts,
             };
         }
 
         return {
-            head: this.service.basePathV2.head,
+            head: this.service.basePath.head,
             parts: [
                 ...serviceBasePathPartsExceptLast,
                 {
@@ -255,7 +248,7 @@ export class GeneratedEndpointImplementation {
         if (this.requestParameter != null) {
             for (const header of this.requestParameter.getAllHeaders(context)) {
                 elements.push({
-                    header: header.nameV2.wireValue,
+                    header: header.name.wireValue,
                     value: this.requestParameter.getReferenceToHeader(header, context),
                 });
             }
@@ -310,7 +303,7 @@ export class GeneratedEndpointImplementation {
     }
 
     private getOkResponseBody(context: ServiceContext): ts.Expression {
-        if (this.endpoint.response.typeV2 == null) {
+        if (this.endpoint.response.type == null) {
             return ts.factory.createIdentifier("undefined");
         }
 
@@ -418,14 +411,14 @@ export class GeneratedEndpointImplementation {
                 ...allErrorsButLast.map((error) =>
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.error.getErrorDeclaration(error.error).discriminantValueV2.wireValue
+                            context.error.getErrorDeclaration(error.error).discriminantValue.wireValue
                         ),
                         []
                     )
                 ),
                 ts.factory.createCaseClause(
                     ts.factory.createStringLiteral(
-                        context.error.getErrorDeclaration(lastError.error).discriminantValueV2.wireValue
+                        context.error.getErrorDeclaration(lastError.error).discriminantValue.wireValue
                     ),
                     [
                         ts.factory.createReturnStatement(
@@ -465,7 +458,7 @@ export class GeneratedEndpointImplementation {
                         ts.factory.createReturnStatement(
                             context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
                                 context.endpointTypes
-                                    .getGeneratedEndpointTypes(this.service.name, this.endpoint.id)
+                                    .getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name)
                                     .getErrorUnion()
                                     .build({
                                         discriminantValueToBuild: errorDeclaration.statusCode,
@@ -513,10 +506,13 @@ export class GeneratedEndpointImplementation {
     }
 
     private getGeneratedEndpointTypes(context: ServiceContext): GeneratedEndpointTypes {
-        return context.endpointTypes.getGeneratedEndpointTypes(this.service.name, this.endpoint.id);
+        return context.endpointTypes.getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name);
     }
 
     private getGeneratedEndpointTypeSchemas(context: ServiceContext): GeneratedEndpointTypeSchemas {
-        return context.endpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.service.name, this.endpoint.id);
+        return context.endpointTypeSchemas.getGeneratedEndpointTypeSchemas(
+            this.service.name.fernFilepath,
+            this.endpoint.name
+        );
     }
 }

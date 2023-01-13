@@ -1,4 +1,4 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
 import { EndpointTypeSchemasContextMixin, GeneratedEndpointTypeSchemas, Reference } from "@fern-typescript/contexts";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
@@ -38,39 +38,40 @@ export class EndpointTypeSchemasContextMixinImpl implements EndpointTypeSchemasC
         this.endpointSchemaDeclarationReferencer = endpointSchemaDeclarationReferencer;
     }
 
-    public getGeneratedEndpointTypeSchemas(
-        serviceName: DeclaredServiceName,
-        endpointId: string
-    ): GeneratedEndpointTypeSchemas {
-        const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        if (service.originalService == null) {
+    public getGeneratedEndpointTypeSchemas(service: FernFilepath, endpointName: Name): GeneratedEndpointTypeSchemas {
+        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        if (serviceDeclaration.originalService == null) {
             throw new Error("Service is a wrapper");
         }
-        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
+        const endpoint = serviceDeclaration.originalService.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointId} does not exist`);
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.endpointTypeSchemasGenerator.generateEndpointTypeSchemas({
-            service: service.originalService,
+            service: serviceDeclaration.originalService,
             endpoint,
         });
     }
 
     public getReferenceToEndpointTypeSchemaExport(
-        serviceName: DeclaredServiceName,
-        endpointId: string,
+        service: FernFilepath,
+        endpointName: Name,
         export_: string | string[]
     ): Reference {
-        const service = this.serviceResolver.getServiceDeclarationFromName(serviceName);
-        if (service.originalService == null) {
+        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        if (serviceDeclaration.originalService == null) {
             throw new Error("Service is a wrapper");
         }
-        const endpoint = service.originalService.endpoints.find((endpoint) => endpoint.id === endpointId);
+        const endpoint = serviceDeclaration.originalService.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointId} does not exist`);
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.endpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
-            name: { serviceName, endpoint },
+            name: { service, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),

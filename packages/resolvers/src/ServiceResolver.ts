@@ -1,73 +1,60 @@
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
 import { AugmentedService } from "@fern-typescript/commons-v2";
 import { isEqual } from "lodash-es";
-import path from "path";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "./stringify-fern-filepath";
 
-type SimpleServiceName = string;
-const WRAPPER_SIMPLE_NAME: SimpleServiceName = "__WRAPPER";
-
 export class ServiceResolver {
-    private resolvedServices: Record<StringifiedFernFilepath, Record<SimpleServiceName, AugmentedService>> = {};
+    private resolvedServices: Record<StringifiedFernFilepath, AugmentedService> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         this.resolvedServices = constructAugmentedServices(intermediateRepresentation);
     }
 
     public getAllAugmentedServices(): AugmentedService[] {
-        return Object.values(this.resolvedServices).flatMap((nameToServices) => Object.values(nameToServices));
+        return Object.values(this.resolvedServices);
     }
 
-    public getServiceDeclarationFromName(serviceName: DeclaredServiceName): AugmentedService {
-        const resolvedService =
-            this.resolvedServices[stringifyFernFilepath(serviceName.fernFilepath)]?.[serviceName.name];
+    public getServiceDeclarationFromName(service: FernFilepath): AugmentedService {
+        const resolvedService = this.resolvedServices[stringifyFernFilepath(service)];
         if (resolvedService == null) {
-            throw new Error("Service not found: " + serviceNameToString(serviceName));
+            throw new Error("Service not found: " + serviceNameToString(service));
         }
         return resolvedService;
     }
 }
 
-function serviceNameToString(serviceName: DeclaredServiceName) {
-    return path.join(stringifyFernFilepath(serviceName.fernFilepath), serviceName.name);
+function serviceNameToString(service: FernFilepath) {
+    return stringifyFernFilepath(service);
 }
 
 function constructAugmentedServices(
     intermediateRepresentation: IntermediateRepresentation
-): Record<StringifiedFernFilepath, Record<SimpleServiceName, AugmentedService>> {
-    const resolvedServices: Record<StringifiedFernFilepath, Record<SimpleServiceName, AugmentedService>> = {};
+): Record<StringifiedFernFilepath, AugmentedService> {
+    const resolvedServices: Record<StringifiedFernFilepath, AugmentedService> = {};
 
-    for (const service of intermediateRepresentation.services.http) {
+    for (const service of intermediateRepresentation.services) {
+        const leafServiceFernFilepath = stringifyFernFilepath(service.name.fernFilepath);
         const leafService: AugmentedService = {
-            wrappedServices: [],
-            ...resolvedServices[stringifyFernFilepath(service.name.fernFilepath)],
+            wrappedServices: resolvedServices[leafServiceFernFilepath]?.wrappedServices ?? [],
             originalService: service,
-            name: service.name,
+            fernFilepath: service.name.fernFilepath,
             apiWideHeaders: intermediateRepresentation.headers,
         };
-        const servicesAtSameFernFilepath = (resolvedServices[stringifyFernFilepath(service.name.fernFilepath)] ??= {});
-        servicesAtSameFernFilepath[service.name.name] = leafService;
+        resolvedServices[leafServiceFernFilepath] = leafService;
 
         let lastDeclaredService = leafService;
         for (let index = service.name.fernFilepath.length - 1; index >= 0; index--) {
             const fernFilepath = service.name.fernFilepath.slice(0, index);
-            const fernFilepathV2 = service.name.fernFilepathV2.slice(0, index);
 
-            const servicesAtFernFilepath = (resolvedServices[stringifyFernFilepath(fernFilepath)] ??= {});
-
-            const wrapper = (servicesAtFernFilepath[WRAPPER_SIMPLE_NAME] ??= {
-                name: {
-                    name: WRAPPER_SIMPLE_NAME,
-                    fernFilepath,
-                    fernFilepathV2,
-                },
+            const wrapper = (resolvedServices[stringifyFernFilepath(fernFilepath)] ??= {
+                fernFilepath,
                 wrappedServices: [],
                 originalService: undefined,
                 apiWideHeaders: intermediateRepresentation.headers,
             });
-            if (!wrapper.wrappedServices.some((wrapped) => isEqual(wrapped, lastDeclaredService.name))) {
-                wrapper.wrappedServices.push(lastDeclaredService.name);
+            if (!wrapper.wrappedServices.some((wrapped) => isEqual(wrapped, lastDeclaredService.fernFilepath))) {
+                wrapper.wrappedServices.push(lastDeclaredService.fernFilepath);
             }
             lastDeclaredService = wrapper;
         }

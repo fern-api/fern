@@ -1,6 +1,6 @@
 import {
     ExampleSingleUnionTypeProperties,
-    ExampleType,
+    ExampleTypeShape,
     SingleUnionTypeProperty,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
@@ -37,7 +37,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
             typeName: this.typeName,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs(context),
-            discriminant: this.shape.discriminantV2.camelCase,
+            discriminant: this.shape.discriminant.name.camelCase.unsafeName,
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
@@ -57,7 +57,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
         return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty);
     }
 
-    public buildExample(example: ExampleType, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "union") {
             throw new Error("Example is not for an enum");
         }

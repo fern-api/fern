@@ -1,3 +1,4 @@
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     DeclaredTypeName,
@@ -23,12 +24,12 @@ export class TypeResolver {
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const type of intermediateRepresentation.types) {
             const typesAtFilepath = (this.allTypes[stringifyFernFilepath(type.name.fernFilepath)] ??= {});
-            typesAtFilepath[type.name.name] = type;
+            typesAtFilepath[getSimpleTypeName(type.name)] = type;
         }
     }
 
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): TypeDeclaration {
-        const type = this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[typeName.name];
+        const type = this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[getSimpleTypeName(typeName)];
         if (type == null) {
             throw new Error("Type not found: " + typeNameToString(typeName));
         }
@@ -46,7 +47,6 @@ export class TypeResolver {
             container: ResolvedTypeReference.container,
             primitive: ResolvedTypeReference.primitive,
             unknown: ResolvedTypeReference.unknown,
-            void: ResolvedTypeReference.void,
             _unknown: () => {
                 throw new Error("Unknown type reference type: " + type._type);
             },
@@ -78,10 +78,14 @@ export class TypeResolver {
     }
 
     public doesTypeExist(typeName: DeclaredTypeName): boolean {
-        return this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[typeName.name] != null;
+        return this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[getSimpleTypeName(typeName)] != null;
     }
 }
 
 function typeNameToString(typeName: DeclaredTypeName) {
-    return path.join(...typeName.fernFilepath.map((part) => part.originalValue), typeName.name);
+    return path.join(...typeName.fernFilepath.map((part) => part.originalName), typeName.name.originalName);
+}
+
+function getSimpleTypeName(typeName: DeclaredErrorName): SimpleTypeName {
+    return typeName.name.originalName;
 }

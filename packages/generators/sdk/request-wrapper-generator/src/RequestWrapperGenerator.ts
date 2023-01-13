@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts/src/generated-types/GeneratedRequestWrapper";
 import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
 

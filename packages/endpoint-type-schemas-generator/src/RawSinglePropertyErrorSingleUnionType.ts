@@ -1,4 +1,5 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
+import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
@@ -8,15 +9,18 @@ import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 export declare namespace RawSinglePropertyErrorSingleUnionType {
     export interface Init extends AbstractRawSingleUnionType.Init {
         errorName: DeclaredErrorName;
+        discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
     }
 }
 
 export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnionType<EndpointTypeSchemasContext> {
     private errorName: DeclaredErrorName;
+    private discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
 
-    constructor({ errorName, ...superInit }: RawSinglePropertyErrorSingleUnionType.Init) {
+    constructor({ errorName, discriminationStrategy, ...superInit }: RawSinglePropertyErrorSingleUnionType.Init) {
         super(superInit);
         this.errorName = errorName;
+        this.discriminationStrategy = discriminationStrategy;
     }
 
     protected getExtends(): ts.TypeNode[] {
@@ -32,7 +36,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
         }
         return [
             {
-                name: `"${context.base.fernConstants.errorsV2.errorContentKey.wireValue}"`,
+                name: `"${this.discriminationStrategy.contentProperty.wireValue}"`,
                 type: getTextOfTsNode(errorSchema.getReferenceToRawShape(context)),
             },
         ];
@@ -46,8 +50,8 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
             properties: [
                 {
                     key: {
-                        parsed: context.base.fernConstants.errorsV2.errorContentKey.name.unsafeName.camelCase,
-                        raw: context.base.fernConstants.errorsV2.errorContentKey.wireValue,
+                        parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,
+                        raw: this.discriminationStrategy.contentProperty.wireValue,
                     },
                     value: context.errorSchema.getSchemaOfError(this.errorName),
                 },

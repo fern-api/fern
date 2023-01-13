@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpHeader, HttpService, QueryParameter, SdkRequest } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpHeader, HttpService, QueryParameter, SdkRequest } from "@fern-fern/ir-model/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ServiceContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -34,7 +34,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     }
 
     protected getRequestParameterName(): string {
-        return this.sdkRequest.requestParameterName.unsafeName.camelCase;
+        return this.sdkRequest.requestParameterName.camelCase.unsafeName;
     }
 
     public abstract getAllQueryParameters(context: ServiceContext): QueryParameter[];

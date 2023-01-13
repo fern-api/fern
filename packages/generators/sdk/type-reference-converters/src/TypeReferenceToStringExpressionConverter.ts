@@ -43,7 +43,6 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 throw new Error("Cannot convert type to string: " + shape);
             },
             unknown: this.unknown.bind(this),
-            void: this.void.bind(this),
             _unknown: () => {
                 throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type);
             },

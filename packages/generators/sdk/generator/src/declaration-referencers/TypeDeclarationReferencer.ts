@@ -14,7 +14,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
             directories: [
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
-                    fernFilepath: typeName.fernFilepathV2,
+                    fernFilepath: typeName.fernFilepath,
                     subExports: {
                         [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
                             exportAll: true,
@@ -38,7 +38,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
     }
 
     public getExportedName(typeName: DeclaredTypeName): string {
-        return typeName.nameV3.unsafeName.pascalCase;
+        return typeName.name.pascalCase.unsafeName;
     }
 
     public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<DeclaredTypeName>): Reference {

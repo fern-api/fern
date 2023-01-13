@@ -1,4 +1,4 @@
-import { AliasTypeDeclaration, ExampleType } from "@fern-fern/ir-model/types";
+import { AliasTypeDeclaration, ExampleTypeShape } from "@fern-fern/ir-model/types";
 import { getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { BrandedGeneratedAliasType, GetReferenceOpts, TypeContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -20,7 +20,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
         return this.getReferenceToSelf(context).getExpression(opts);
     }
 
-    public buildExample(example: ExampleType, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "alias") {
             throw new Error("Example is not for an alias");
         }
@@ -80,6 +80,6 @@ export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
     }
 
     private getStringBrand(): string {
-        return [...this.fernFilepath.slice(0, -1).map((part) => part.unsafeName.camelCase), this.typeName].join("_");
+        return [...this.fernFilepath.slice(0, -1).map((part) => part.camelCase.unsafeName), this.typeName].join("_");
     }
 }

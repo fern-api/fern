@@ -1,4 +1,4 @@
-import { AliasTypeDeclaration, ExampleType } from "@fern-fern/ir-model/types";
+import { AliasTypeDeclaration, ExampleTypeShape } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GetReferenceOpts, NotBrandedGeneratedAliasType, TypeContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -15,7 +15,7 @@ export class GeneratedAliasTypeImpl<Context extends TypeContext>
         this.writeTypeAlias(context);
     }
 
-    public buildExample(example: ExampleType, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "alias") {
             throw new Error("Example is not for an alias");
         }

@@ -2,7 +2,7 @@ types:
   UserId:
     type: string
     examples:
-      - user12345
+      - value: user12345
   ProblemId: string
   NodeId: string
   VariableType:
@@ -21,7 +21,8 @@ types:
     properties:
       valueType: VariableType
       isFixedLength:
-        docs: Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+        docs: Whether this list is fixed-size (for languages that supports fixed-size
+          lists). Defaults to false.
         type: optional<boolean>
   MapType:
     properties:
@@ -132,11 +133,12 @@ types:
       - JAVASCRIPT
       - PYTHON
     examples:
-      - JAVA
+      - value: JAVA
 
   RandomUnknownType:
     type: unknown
     examples:
-      - foo: hello
-        bar:
-          yo: 123
+      - value:
+          foo: hello
+          bar:
+            yo: 123

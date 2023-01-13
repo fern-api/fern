@@ -1,4 +1,4 @@
-import { ExampleType, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedObjectType, GetReferenceOpts, TypeContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -37,7 +37,7 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
-        const property = this.shape.properties.find((property) => property.nameV2.wireValue === propertyWireKey);
+        const property = this.shape.properties.find((property) => property.name.wireValue === propertyWireKey);
         if (property == null) {
             throw new Error("Property does not exist: " + propertyWireKey);
         }
@@ -45,10 +45,10 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
     }
 
     private getPropertyKeyFromProperty(property: ObjectProperty): string {
-        return property.nameV2.name.unsafeName.camelCase;
+        return property.name.name.camelCase.unsafeName;
     }
 
-    public buildExample(example: ExampleType, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "object") {
             throw new Error("Example is not for an object");
         }
@@ -74,7 +74,7 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
     ): { propertyKey: string; wireKey: string; type: TypeReference }[] {
         return [
             ...this.shape.properties.map((property) => ({
-                wireKey: property.nameV2.wireValue,
+                wireKey: property.name.wireValue,
                 propertyKey: this.getPropertyKeyFromProperty(property),
                 type: property.valueType,
             })),

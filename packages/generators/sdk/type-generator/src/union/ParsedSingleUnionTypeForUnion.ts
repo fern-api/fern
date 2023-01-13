@@ -55,7 +55,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
     }
 
     public getInterfaceName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.pascalCase;
+        return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.unsafeName;
     }
 
     public getDiscriminantValue(): string {
@@ -63,18 +63,18 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
     }
 
     public getBuilderName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.camelCase;
+        return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
     }
 
     public getVisitorKey(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.camelCase;
+        return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
     }
 
     protected getDiscriminant(): NameAndWireValue {
-        return this.union.discriminantV3;
+        return this.union.discriminant;
     }
 
     public static getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
-        return singleProperty.nameV2.name.unsafeName.camelCase;
+        return singleProperty.name.name.camelCase.unsafeName;
     }
 }

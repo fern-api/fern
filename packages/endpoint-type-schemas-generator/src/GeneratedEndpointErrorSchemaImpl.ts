@@ -1,5 +1,5 @@
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
 import { Zurg } from "@fern-typescript/commons-v2";
 import { EndpointTypeSchemasContext, EndpointTypesContext, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -34,23 +34,24 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
             discriminant: discriminationStrategy.discriminant,
             getReferenceToSchema: (context) =>
                 context.endpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
-                    service.name,
-                    endpoint.id,
+                    service.name.fernFilepath,
+                    endpoint.name,
                     GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME
                 ),
             getGeneratedUnion: (context) => this.getErrorUnion(context),
             singleUnionTypes: endpoint.errors.map((responseError) => {
                 const errorDeclaration = errorResolver.getErrorDeclarationFromName(responseError.error);
-                if (errorDeclaration.typeV2 == null) {
+                if (errorDeclaration.type == null) {
                     return new RawNoPropertiesSingleUnionType({
                         discriminant: discriminationStrategy.discriminant,
-                        discriminantValue: errorDeclaration.discriminantValueV4,
+                        discriminantValue: errorDeclaration.discriminantValue,
                     });
                 } else {
                     return new RawSinglePropertyErrorSingleUnionType({
                         discriminant: discriminationStrategy.discriminant,
-                        discriminantValue: errorDeclaration.discriminantValueV4,
+                        discriminantValue: errorDeclaration.discriminantValue,
                         errorName: responseError.error,
+                        discriminationStrategy,
                     });
                 }
             }),
@@ -70,6 +71,8 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
     }
 
     private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointTypesContext> {
-        return context.endpointTypes.getGeneratedEndpointTypes(this.service.name, this.endpoint.id).getErrorUnion();
+        return context.endpointTypes
+            .getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name)
+            .getErrorUnion();
     }
 }

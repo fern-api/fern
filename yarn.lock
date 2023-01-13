@@ -1609,10 +1609,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.436":
-  version: 0.0.436
-  resolution: "@fern-fern/ir-model@npm:0.0.436"
-  checksum: 422e049ff381ffc41d31a3023f7982bc4c94f2495990ad4a1f8f53a7bada8d6853f932055d706e3b9858a6d72ab38cbbfe0cc87a73ff454ce7ae0c80a3875d98
+"@fern-fern/ir-model@npm:0.0.627":
+  version: 0.0.627
+  resolution: "@fern-fern/ir-model@npm:0.0.627"
+  checksum: abefc609df5538305f372770c87fb2d213112bb2ea9d794d838f509a1dbd87715e3bd93054663aea74d62b1defe660dff8fc412a218e279b4fc4bd3a7bef9ba0
   languageName: node
   linkType: hard
 
@@ -1682,7 +1682,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -1724,7 +1724,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/logger": 0.0.248-7-gb4189be0
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons-v2": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -1744,7 +1744,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
@@ -1769,7 +1769,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -1792,7 +1792,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
@@ -1813,7 +1813,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/type-generator": "workspace:*"
     "@types/jest": ^28.1.6
@@ -1833,7 +1833,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/type-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
@@ -1872,7 +1872,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
@@ -1893,7 +1893,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons-v2": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/lodash-es": ^4.17.6
@@ -1919,7 +1919,7 @@ __metadata:
     "@fern-api/logger": 0.0.248-7-gb4189be0
     "@fern-api/logging-execa": 0.0.248-7-gb4189be0
     "@fern-fern/generator-exec-sdk": ^0.0.46
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/sdk-generator": "workspace:*"
@@ -1961,7 +1961,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": 0.0.248-7-gb4189be0
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons-v2": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/endpoint-type-schemas-generator": "workspace:*"
@@ -1999,7 +1999,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -2025,7 +2025,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2047,7 +2047,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/union-generator": "workspace:*"
@@ -2069,7 +2069,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/commons-v2": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@types/jest": ^28.1.6
@@ -2090,7 +2090,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
@@ -2110,7 +2110,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"
@@ -2156,7 +2156,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.436
+    "@fern-fern/ir-model": 0.0.627
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/commons-v2": "workspace:*"

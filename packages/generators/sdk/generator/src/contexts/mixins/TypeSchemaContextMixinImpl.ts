@@ -77,7 +77,7 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
                     shape: typeDeclaration.shape,
                     docs: typeDeclaration.docs ?? undefined,
                     examples: typeDeclaration.examples,
-                    fernFilepath: typeDeclaration.name.fernFilepathV2,
+                    fernFilepath: typeDeclaration.name.fernFilepath,
                     typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                 }),

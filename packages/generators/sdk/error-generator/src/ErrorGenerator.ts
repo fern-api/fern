@@ -27,11 +27,12 @@ export class ErrorGenerator {
         errorDeclaration,
         errorName,
     }: ErrorGenerator.generateError.Args): GeneratedError | undefined {
-        if (errorDeclaration.typeV3 == null) {
+        if (errorDeclaration.type == null) {
             return undefined;
         }
         return new GeneratedErrorImpl({
             errorDeclaration,
+            type: errorDeclaration.type,
             errorName,
             typeGenerator: this.typeGenerator,
         });

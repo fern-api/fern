@@ -1,4 +1,4 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Reference, ServiceContext } from "@fern-typescript/contexts";
 import { ClassDeclaration, Scope, ts } from "ts-morph";
@@ -7,13 +7,13 @@ import { GeneratedServiceImpl } from "./GeneratedServiceImpl";
 export declare namespace GeneratedWrappedService {
     interface Init {
         wrapperService: GeneratedServiceImpl;
-        wrappedService: DeclaredServiceName;
+        wrappedService: FernFilepath;
     }
 }
 
 export class GeneratedWrappedService {
     private wrapperService: GeneratedServiceImpl;
-    private wrappedService: DeclaredServiceName;
+    private wrappedService: FernFilepath;
 
     constructor({ wrapperService, wrappedService }: GeneratedWrappedService.Init) {
         this.wrapperService = wrapperService;
@@ -65,19 +65,19 @@ export class GeneratedWrappedService {
     }
 
     private getGetterName(): string {
-        const lastFernFilepathPart = this.wrappedService.fernFilepath[this.wrappedService.fernFilepathV2.length - 1];
+        const lastFernFilepathPart = this.wrappedService[this.wrappedService.length - 1];
         if (lastFernFilepathPart == null) {
             throw new Error("Cannot generate wrapped service because FernFilepath is empty");
         }
-        return lastFernFilepathPart.camelCase;
+        return lastFernFilepathPart.camelCase.unsafeName;
     }
 
     private getImportAlias(): string {
-        const lastFernFilepathPart = this.wrappedService.fernFilepath[this.wrappedService.fernFilepathV2.length - 1];
+        const lastFernFilepathPart = this.wrappedService[this.wrappedService.length - 1];
         if (lastFernFilepathPart == null) {
             throw new Error("Cannot generate wrapped service because FernFilepath is empty");
         }
-        return `${lastFernFilepathPart.pascalCase}Client`;
+        return `${lastFernFilepathPart.pascalCase.unsafeName}Client`;
     }
 
     private getReferenceToWrappedService(context: ServiceContext): Reference {

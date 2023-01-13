@@ -11,12 +11,13 @@ export class ErrorResolver {
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const error of intermediateRepresentation.errors) {
             const errorsAtFilepath = (this.resolvedErrors[stringifyFernFilepath(error.name.fernFilepath)] ??= {});
-            errorsAtFilepath[error.name.name] = error;
+            errorsAtFilepath[getSimpleErrorName(error.name)] = error;
         }
     }
 
     public getErrorDeclarationFromName(errorName: DeclaredErrorName): ErrorDeclaration {
-        const resolvedError = this.resolvedErrors[stringifyFernFilepath(errorName.fernFilepath)]?.[errorName.name];
+        const resolvedError =
+            this.resolvedErrors[stringifyFernFilepath(errorName.fernFilepath)]?.[getSimpleErrorName(errorName)];
         if (resolvedError == null) {
             throw new Error("Error not found: " + errorNameToString(errorName));
         }
@@ -25,5 +26,9 @@ export class ErrorResolver {
 }
 
 function errorNameToString(errorName: DeclaredErrorName) {
-    return path.join(stringifyFernFilepath(errorName.fernFilepath), errorName.name);
+    return path.join(stringifyFernFilepath(errorName.fernFilepath), errorName.name.originalName);
+}
+
+function getSimpleErrorName(errorName: DeclaredErrorName): SimpleErrorName {
+    return errorName.name.originalName;
 }

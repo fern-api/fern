@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ts } from "ts-morph";
 import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -14,7 +14,7 @@ export declare namespace RequestWrapperDeclarationReferencer {
     }
 
     export interface Name {
-        serviceName: DeclaredServiceName;
+        service: FernFilepath;
         endpoint: HttpEndpoint;
     }
 }
@@ -25,7 +25,7 @@ export class RequestWrapperDeclarationReferencer extends AbstractServiceDeclarat
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [
-                ...this.getExportedDirectory(name.serviceName, {
+                ...this.getExportedDirectory(name.service, {
                     subExports: {
                         [RelativeFilePath.of(REQUESTS_DIRECTORY_NAME)]: { exportAll: true },
                     },
@@ -52,7 +52,7 @@ export class RequestWrapperDeclarationReferencer extends AbstractServiceDeclarat
         if (name.endpoint.sdkRequest == null || name.endpoint.sdkRequest.shape.type !== "wrapper") {
             throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped");
         }
-        return name.endpoint.sdkRequest.shape.wrapperName.unsafeName.pascalCase;
+        return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName;
     }
 
     public getReferenceToRequestWrapperType(

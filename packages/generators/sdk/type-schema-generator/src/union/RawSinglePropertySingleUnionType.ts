@@ -32,7 +32,7 @@ export class RawSinglePropertySingleUnionType<
         const type = context.typeSchema.getReferenceToRawType(this.singleProperty.type);
         return [
             {
-                name: `"${this.singleProperty.nameV2.wireValue}"`,
+                name: `"${this.singleProperty.name.wireValue}"`,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
             },
@@ -52,7 +52,7 @@ export class RawSinglePropertySingleUnionType<
                 {
                     key: {
                         parsed: unionBeingGenerated.getSinglePropertyKey(this.singleProperty),
-                        raw: this.singleProperty.nameV2.wireValue,
+                        raw: this.singleProperty.name.wireValue,
                     },
                     value: context.typeSchema.getSchemaOfTypeReference(this.singleProperty.type),
                 },

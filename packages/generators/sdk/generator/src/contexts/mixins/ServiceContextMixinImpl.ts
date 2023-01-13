@@ -1,4 +1,4 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/services/commons";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { GeneratedService, Reference, ServiceContextMixin } from "@fern-typescript/contexts";
 import { ServiceResolver } from "@fern-typescript/resolvers";
 import { ServiceGenerator } from "@fern-typescript/service-generator";
@@ -37,19 +37,16 @@ export class ServiceContextMixinImpl implements ServiceContextMixin {
         this.serviceResolver = serviceResolver;
     }
 
-    public getGeneratedService(serviceName: DeclaredServiceName): GeneratedService {
+    public getGeneratedService(service: FernFilepath): GeneratedService {
         return this.serviceGenerator.generateService({
-            service: this.serviceResolver.getServiceDeclarationFromName(serviceName),
-            serviceClassName: this.serviceDeclarationReferencer.getExportedName(serviceName),
+            service: this.serviceResolver.getServiceDeclarationFromName(service),
+            serviceClassName: this.serviceDeclarationReferencer.getExportedName(service),
         });
     }
 
-    public getReferenceToService(
-        serviceName: DeclaredServiceName,
-        { importAlias }: { importAlias: string }
-    ): Reference {
+    public getReferenceToService(service: FernFilepath, { importAlias }: { importAlias: string }): Reference {
         return this.serviceDeclarationReferencer.getReferenceToClient({
-            name: serviceName,
+            name: service,
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: { type: "direct", alias: importAlias },
