@@ -45,7 +45,7 @@ export function getReferencedTypesFromRawDeclaration({
         union: (unionDeclaration) => {
             return Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
                 const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
-                if (rawType != null) {
+                if (typeof rawType === "string") {
                     types.push(rawType);
                 }
                 return types;

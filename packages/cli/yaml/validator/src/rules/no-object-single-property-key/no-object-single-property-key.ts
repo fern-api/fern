@@ -19,7 +19,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                     for (const [discriminantValue, singleUnionType] of Object.entries(declaration.union)) {
                         if (typeof singleUnionType !== "string" && singleUnionType.key != null) {
                             const resolvedType =
-                                singleUnionType.type != null
+                                typeof singleUnionType.type === "string"
                                     ? typeResolver.resolveType({
                                           type: singleUnionType.type,
                                           file: constructFernFileContext({

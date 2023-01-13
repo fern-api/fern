@@ -87,7 +87,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 const specifiedType =
                                     typeof singleUnionType === "string"
                                         ? singleUnionType
-                                        : singleUnionType.type != null
+                                        : typeof singleUnionType.type === "string"
                                         ? singleUnionType.type
                                         : undefined;
 

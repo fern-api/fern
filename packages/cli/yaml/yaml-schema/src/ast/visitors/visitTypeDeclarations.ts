@@ -122,7 +122,7 @@ export async function visitTypeDeclaration({
                                 name: noop,
                                 key: noop,
                                 type: async (type) => {
-                                    if (type != null) {
+                                    if (typeof type === "string") {
                                         await visitor.typeReference?.(type, [...nodePathForType, "type"]);
                                     }
                                 },

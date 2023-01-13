@@ -61,7 +61,7 @@ export function validateUnionExample({
     const type =
         typeof singleUnionTypeDefinition === "string" ? singleUnionTypeDefinition : singleUnionTypeDefinition.type;
 
-    if (type == null) {
+    if (typeof type !== "string") {
         return getRuleViolationForExtraProperties(nonDiscriminantPropertyExamples);
     }
 
