@@ -117,6 +117,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             if (!shouldMigrate(migration)) {
                 break;
             }
+            if (migration.migrateBackwards == null) {
+                throw new Error(
+                    "Cannot backwards-migrate intermediate representation. Please upgrade your generators."
+                );
+            }
             migrated = migration.migrateBackwards(migrated);
         }
         return migrated;
