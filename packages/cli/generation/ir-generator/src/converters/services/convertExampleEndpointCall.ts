@@ -60,7 +60,8 @@ export function convertExampleEndpointCall({
                                       : queryParameterDeclaration.type,
                               typeResolver,
                               exampleResolver,
-                              file,
+                              fileContainingRawTypeReference: file,
+                              fileContainingExample: file,
                           }),
                       };
                   })
@@ -103,7 +104,8 @@ function convertPathParameters({
                                 : endpointPathParameterDeclaration.type,
                         typeResolver,
                         exampleResolver,
-                        file,
+                        fileContainingRawTypeReference: file,
+                        fileContainingExample: file,
                     }),
                 });
             } else if (servicePathParameterDeclaration != null) {
@@ -117,7 +119,8 @@ function convertPathParameters({
                                 : servicePathParameterDeclaration.type,
                         typeResolver,
                         exampleResolver,
-                        file,
+                        fileContainingRawTypeReference: file,
+                        fileContainingExample: file,
                     }),
                 });
             } else {
@@ -166,7 +169,8 @@ function convertHeaders({
                                 : endpointHeaderDeclaration.type,
                         typeResolver,
                         exampleResolver,
-                        file,
+                        fileContainingRawTypeReference: file,
+                        fileContainingExample: file,
                     }),
                 });
             } else if (serviceHeaderDeclaration != null) {
@@ -180,7 +184,8 @@ function convertHeaders({
                                 : serviceHeaderDeclaration.type,
                         typeResolver,
                         exampleResolver,
-                        file,
+                        fileContainingRawTypeReference: file,
+                        fileContainingExample: file,
                     }),
                 });
             } else {
@@ -219,7 +224,8 @@ function convertExampleRequestBody({
                 rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
                 typeResolver,
                 exampleResolver,
-                file,
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
             })
         );
     }
@@ -242,7 +248,8 @@ function convertExampleRequestBody({
                             : inlinedRequestPropertyDeclaration,
                     typeResolver,
                     exampleResolver,
-                    file,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
                 }),
                 originalTypeDeclaration: undefined,
             });
@@ -266,7 +273,8 @@ function convertExampleRequestBody({
                             : originalTypeDeclaration.rawPropertyType.type,
                     typeResolver,
                     exampleResolver,
-                    file,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
                 }),
                 originalTypeDeclaration: originalTypeDeclaration.typeName,
             });
@@ -309,7 +317,8 @@ function convertExampleResponse({
                           rawTypeBeingExemplified: errorDeclaration.declaration.type,
                           typeResolver,
                           exampleResolver,
-                          file: errorDeclaration.file,
+                          fileContainingRawTypeReference: errorDeclaration.file,
+                          fileContainingExample: file,
                       })
                     : undefined,
         });
@@ -342,6 +351,7 @@ function convertExampleResponseBody({
         rawTypeBeingExemplified: responseBodyType,
         typeResolver,
         exampleResolver,
-        file,
+        fileContainingRawTypeReference: file,
+        fileContainingExample: file,
     });
 }

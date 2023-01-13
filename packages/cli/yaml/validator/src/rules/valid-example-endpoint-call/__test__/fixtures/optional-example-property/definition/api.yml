@@ -1,5 +1,3 @@
 name: api
 auth: bearer
-environments:
-  Production: https://default.corrily.com/v1
 default-environment: Production

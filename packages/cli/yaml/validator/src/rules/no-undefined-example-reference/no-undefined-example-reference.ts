@@ -26,7 +26,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
 
                     const doesExist =
                         exampleResolver.resolveExample({
-                            referenceToExample: exampleReference,
+                            example: exampleReference,
                             file: constructFernFileContext({
                                 relativeFilepath,
                                 serviceFile: contents,
