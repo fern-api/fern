@@ -24,13 +24,13 @@ export function constructFernFileContext({
     serviceFile,
     casingsGenerator,
 }: {
-    relativeFilepath: RelativeFilePath | undefined;
+    relativeFilepath: RelativeFilePath;
     serviceFile: ServiceFileSchema;
     casingsGenerator: CasingsGenerator;
 }): FernFileContext {
     const file: FernFileContext = {
-        relativeFilepath: relativeFilepath != null ? RelativeFilePath.of(relativeFilepath) : ".",
-        fernFilepath: relativeFilepath != null ? convertToFernFilepath({ relativeFilepath, casingsGenerator }) : [],
+        relativeFilepath,
+        fernFilepath: convertToFernFilepath({ relativeFilepath, casingsGenerator }),
         imports: mapValues(serviceFile.imports ?? {}, RelativeFilePath.of),
         serviceFile,
         parseTypeReference: (type) => {

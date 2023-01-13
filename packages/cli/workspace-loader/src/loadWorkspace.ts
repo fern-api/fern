@@ -4,8 +4,8 @@ import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration"
 import { DEFINITION_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
-import { loadDependencies } from "./loadDependencies";
 import { parseYamlFiles } from "./parseYamlFiles";
+import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
@@ -33,15 +33,14 @@ export async function loadWorkspace({
         return structuralValidationResult;
     }
 
-    const loadDependenciesResult = await loadDependencies({
+    const processPackageMarkersResult = await processPackageMarkers({
         dependenciesConfiguration,
-        packageMarkers: structuralValidationResult.packageMarkers,
+        structuralValidationResult,
         context,
-        rootApiFile: structuralValidationResult.rootApiFile,
         cliVersion,
     });
-    if (!loadDependenciesResult.didSucceed) {
-        return loadDependenciesResult;
+    if (!processPackageMarkersResult.didSucceed) {
+        return processPackageMarkersResult;
     }
 
     return {
@@ -55,7 +54,7 @@ export async function loadWorkspace({
             rootApiFile: structuralValidationResult.rootApiFile,
             serviceFiles: {
                 ...structuralValidationResult.serviceFiles,
-                ...loadDependenciesResult.newServiceFiles,
+                ...processPackageMarkersResult.newServiceFiles,
             },
         },
     };
