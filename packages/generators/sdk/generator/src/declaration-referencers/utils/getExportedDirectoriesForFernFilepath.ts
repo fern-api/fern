@@ -11,13 +11,12 @@ export function getExportedDirectoriesForFernFilepath({
     subExports?: Record<RelativeFilePath, ExportDeclaration>;
 }): ExportedDirectory[] {
     return fernFilepath.flatMap((fernFilepathPart, index) => {
-        const directories: ExportedDirectory[] = [];
-        if (index > 0) {
-            directories.push({
+        const directories: ExportedDirectory[] = [
+            {
                 nameOnDisk: "resources",
                 exportDeclaration: { exportAll: true },
-            });
-        }
+            },
+        ];
         if (index < fernFilepath.length - 1) {
             directories.push(createExportForFernFilepathDirectory(fernFilepathPart));
         } else {
