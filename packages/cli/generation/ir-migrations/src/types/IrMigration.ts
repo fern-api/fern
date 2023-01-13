@@ -1,8 +1,9 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 
-export type GeneratorVersion = string | typeof AlwaysRunMigration;
+export type GeneratorVersion = string | AlwaysRunMigration;
 
 export const AlwaysRunMigration = Symbol();
+export type AlwaysRunMigration = typeof AlwaysRunMigration;
 
 export interface IrMigration<LaterVersion, EarlierVersion> {
     // the version of IR we're migrating to
