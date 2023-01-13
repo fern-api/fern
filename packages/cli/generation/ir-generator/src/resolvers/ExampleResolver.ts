@@ -12,10 +12,10 @@ export interface ExampleResolver {
         resolvedExample: unknown;
     };
     resolveExample: (args: {
-        referenceToExample: string;
+        example: unknown;
         file: FernFileContext;
     }) => { resolvedExample: unknown; file: FernFileContext } | undefined;
-    resolveExampleOrThrow: (args: { referenceToExample: string; file: FernFileContext }) => {
+    resolveExampleOrThrow: (args: { example: unknown; file: FernFileContext }) => {
         resolvedExample: unknown;
         file: FernFileContext;
     };
@@ -33,27 +33,17 @@ export class ExampleResolverImpl implements ExampleResolver {
         file: FernFileContext;
     }): { resolvedExample: unknown } | undefined {
         if (typeof example === "string") {
-            if (example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
-                const resolvedExample = this.resolveExample({
-                    referenceToExample: example,
-                    file,
-                });
-                if (resolvedExample == null) {
-                    return undefined;
-                }
-                return this.resolveAllReferencesInExample({
-                    example: resolvedExample.resolvedExample,
-                    file: resolvedExample.file,
-                });
+            const resolvedExample = this.resolveExample({
+                example,
+                file,
+            });
+            if (resolvedExample == null || typeof resolvedExample.resolvedExample === "string") {
+                return resolvedExample;
             }
-
-            // handle escaping \
-            if (example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
-                // remove backslash
-                return {
-                    resolvedExample: example.slice(1),
-                };
-            }
+            return this.resolveAllReferencesInExample({
+                example: resolvedExample.resolvedExample,
+                file: resolvedExample.file,
+            });
         } else if (isPlainObject(example)) {
             const newExample: typeof example = {};
             for (const [exampleKey, exampleValue] of Object.entries(example)) {
@@ -90,13 +80,35 @@ export class ExampleResolverImpl implements ExampleResolver {
     }
 
     public resolveExample({
-        referenceToExample,
+        example,
         file,
     }: {
-        referenceToExample: string;
+        example: unknown;
         file: FernFileContext;
     }): { resolvedExample: unknown; file: FernFileContext } | undefined {
-        const parsedExampleReference = this.parseExampleReference(referenceToExample);
+        if (typeof example !== "string") {
+            return {
+                resolvedExample: example,
+                file,
+            };
+        }
+
+        if (example.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)) {
+            return {
+                // remove backslash
+                resolvedExample: example.slice(1),
+                file,
+            };
+        }
+
+        if (!example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
+            return {
+                resolvedExample: example,
+                file,
+            };
+        }
+
+        const parsedExampleReference = this.parseExampleReference(example);
         if (parsedExampleReference == null) {
             return undefined;
         }
@@ -119,16 +131,16 @@ export class ExampleResolverImpl implements ExampleResolver {
         if (resolvedExample == null) {
             return undefined;
         }
-        return { resolvedExample: resolvedExample.value, file: typeDeclaration.file };
+        return this.resolveExample({ example: resolvedExample.value, file: typeDeclaration.file });
     }
 
-    public resolveExampleOrThrow({ referenceToExample, file }: { referenceToExample: string; file: FernFileContext }): {
+    public resolveExampleOrThrow({ example, file }: { example: unknown; file: FernFileContext }): {
         resolvedExample: unknown;
         file: FernFileContext;
     } {
-        const resolvedExample = this.resolveExample({ referenceToExample, file });
+        const resolvedExample = this.resolveExample({ example, file });
         if (resolvedExample == null) {
-            throw new Error("Cannot resolve example: " + referenceToExample);
+            throw new Error("Cannot resolve example: " + example);
         }
         return resolvedExample;
     }

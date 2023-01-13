@@ -3365,6 +3365,102 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
             },
             "referencedTypes": [],
             "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "StringAlias",
+                    "camelCase": {
+                        "unsafeName": "stringAlias",
+                        "safeName": "stringAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_alias",
+                        "safeName": "string_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_ALIAS",
+                        "safeName": "STRING_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringAlias",
+                        "safeName": "StringAlias"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "jsonExample": "hello",
+                    "shape": {
+                        "value": {
+                            "shape": {
+                                "primitive": {
+                                    "string": "hello",
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            },
+                            "jsonExample": "hello"
+                        },
+                        "type": "alias"
+                    }
+                }
+            ]
         }
     ],
     "errors": [],
@@ -3629,14 +3725,16 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                                                                                                                         "shape": {
                                                                                                                             "unknown": {
                                                                                                                                 "d": {
-                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                    "e": "$11",
+                                                                                                                                    "f": "hello"
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             "type": "unknown"
                                                                                                                         },
                                                                                                                         "jsonExample": {
                                                                                                                             "d": {
-                                                                                                                                "e": "\\\\$11"
+                                                                                                                                "e": "$11",
+                                                                                                                                "f": "hello"
                                                                                                                             }
                                                                                                                         }
                                                                                                                     },
@@ -3646,7 +3744,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                                                                                                             },
                                                                                                             "jsonExample": {
                                                                                                                 "d": {
-                                                                                                                    "e": "\\\\$11"
+                                                                                                                    "e": "$11",
+                                                                                                                    "f": "hello"
                                                                                                                 }
                                                                                                             }
                                                                                                         },
@@ -3701,7 +3800,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                                                                                         "jsonExample": {
                                                                                             "c": {
                                                                                                 "d": {
-                                                                                                    "e": "\\\\$11"
+                                                                                                    "e": "$11",
+                                                                                                    "f": "hello"
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -3716,7 +3816,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                                                                         "b": {
                                                                             "c": {
                                                                                 "d": {
-                                                                                    "e": "\\\\$11"
+                                                                                    "e": "$11",
+                                                                                    "f": "hello"
                                                                                 }
                                                                             }
                                                                         }
@@ -3730,7 +3831,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                                                             "b": {
                                                                 "c": {
                                                                     "d": {
-                                                                        "e": "\\\\$11"
+                                                                        "e": "$11",
+                                                                        "f": "hello"
                                                                     }
                                                                 }
                                                             }
@@ -3789,7 +3891,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                                             "b": {
                                                 "c": {
                                                     "d": {
-                                                        "e": "\\\\$11"
+                                                        "e": "$11",
+                                                        "f": "hello"
                                                     }
                                                 }
                                             }
@@ -4143,6 +4246,102 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
             },
             "referencedTypes": [],
             "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "StringAlias",
+                    "camelCase": {
+                        "unsafeName": "stringAlias",
+                        "safeName": "stringAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_alias",
+                        "safeName": "string_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_ALIAS",
+                        "safeName": "STRING_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringAlias",
+                        "safeName": "StringAlias"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "jsonExample": "hello",
+                    "shape": {
+                        "value": {
+                            "shape": {
+                                "primitive": {
+                                    "string": "hello",
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            },
+                            "jsonExample": "hello"
+                        },
+                        "type": "alias"
+                    }
+                }
+            ]
         }
     ],
     "errors": [],
@@ -4407,14 +4606,16 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                                                                                                                         "shape": {
                                                                                                                             "unknown": {
                                                                                                                                 "d": {
-                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                    "e": "$11",
+                                                                                                                                    "f": "hello"
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             "type": "unknown"
                                                                                                                         },
                                                                                                                         "jsonExample": {
                                                                                                                             "d": {
-                                                                                                                                "e": "\\\\$11"
+                                                                                                                                "e": "$11",
+                                                                                                                                "f": "hello"
                                                                                                                             }
                                                                                                                         }
                                                                                                                     },
@@ -4424,7 +4625,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                                                                                                             },
                                                                                                             "jsonExample": {
                                                                                                                 "d": {
-                                                                                                                    "e": "\\\\$11"
+                                                                                                                    "e": "$11",
+                                                                                                                    "f": "hello"
                                                                                                                 }
                                                                                                             }
                                                                                                         },
@@ -4479,7 +4681,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                                                                                         "jsonExample": {
                                                                                             "c": {
                                                                                                 "d": {
-                                                                                                    "e": "\\\\$11"
+                                                                                                    "e": "$11",
+                                                                                                    "f": "hello"
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -4494,7 +4697,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                                                                         "b": {
                                                                             "c": {
                                                                                 "d": {
-                                                                                    "e": "\\\\$11"
+                                                                                    "e": "$11",
+                                                                                    "f": "hello"
                                                                                 }
                                                                             }
                                                                         }
@@ -4508,7 +4712,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                                                             "b": {
                                                                 "c": {
                                                                     "d": {
-                                                                        "e": "\\\\$11"
+                                                                        "e": "$11",
+                                                                        "f": "hello"
                                                                     }
                                                                 }
                                                             }
@@ -4567,7 +4772,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                                             "b": {
                                                 "c": {
                                                     "d": {
-                                                        "e": "\\\\$11"
+                                                        "e": "$11",
+                                                        "f": "hello"
                                                     }
                                                 }
                                             }
@@ -4921,6 +5127,102 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
             },
             "referencedTypes": [],
             "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "StringAlias",
+                    "camelCase": {
+                        "unsafeName": "stringAlias",
+                        "safeName": "stringAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_alias",
+                        "safeName": "string_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_ALIAS",
+                        "safeName": "STRING_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringAlias",
+                        "safeName": "StringAlias"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "jsonExample": "hello",
+                    "shape": {
+                        "value": {
+                            "shape": {
+                                "primitive": {
+                                    "string": "hello",
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            },
+                            "jsonExample": "hello"
+                        },
+                        "type": "alias"
+                    }
+                }
+            ]
         }
     ],
     "errors": [],
@@ -5185,14 +5487,16 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                                                                                                                         "shape": {
                                                                                                                             "unknown": {
                                                                                                                                 "d": {
-                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                    "e": "$11",
+                                                                                                                                    "f": "hello"
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             "type": "unknown"
                                                                                                                         },
                                                                                                                         "jsonExample": {
                                                                                                                             "d": {
-                                                                                                                                "e": "\\\\$11"
+                                                                                                                                "e": "$11",
+                                                                                                                                "f": "hello"
                                                                                                                             }
                                                                                                                         }
                                                                                                                     },
@@ -5202,7 +5506,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                                                                                                             },
                                                                                                             "jsonExample": {
                                                                                                                 "d": {
-                                                                                                                    "e": "\\\\$11"
+                                                                                                                    "e": "$11",
+                                                                                                                    "f": "hello"
                                                                                                                 }
                                                                                                             }
                                                                                                         },
@@ -5257,7 +5562,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                                                                                         "jsonExample": {
                                                                                             "c": {
                                                                                                 "d": {
-                                                                                                    "e": "\\\\$11"
+                                                                                                    "e": "$11",
+                                                                                                    "f": "hello"
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -5272,7 +5578,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                                                                         "b": {
                                                                             "c": {
                                                                                 "d": {
-                                                                                    "e": "\\\\$11"
+                                                                                    "e": "$11",
+                                                                                    "f": "hello"
                                                                                 }
                                                                             }
                                                                         }
@@ -5286,7 +5593,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                                                             "b": {
                                                                 "c": {
                                                                     "d": {
-                                                                        "e": "\\\\$11"
+                                                                        "e": "$11",
+                                                                        "f": "hello"
                                                                     }
                                                                 }
                                                             }
@@ -5345,7 +5653,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                                             "b": {
                                                 "c": {
                                                     "d": {
-                                                        "e": "\\\\$11"
+                                                        "e": "$11",
+                                                        "f": "hello"
                                                     }
                                                 }
                                             }
@@ -5699,6 +6008,102 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
             },
             "referencedTypes": [],
             "examples": []
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "name": {
+                    "originalName": "StringAlias",
+                    "camelCase": {
+                        "unsafeName": "stringAlias",
+                        "safeName": "stringAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_alias",
+                        "safeName": "string_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_ALIAS",
+                        "safeName": "STRING_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringAlias",
+                        "safeName": "StringAlias"
+                    }
+                }
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "jsonExample": "hello",
+                    "shape": {
+                        "value": {
+                            "shape": {
+                                "primitive": {
+                                    "string": "hello",
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            },
+                            "jsonExample": "hello"
+                        },
+                        "type": "alias"
+                    }
+                }
+            ]
         }
     ],
     "errors": [],
@@ -5963,14 +6368,16 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                                                                                                                         "shape": {
                                                                                                                             "unknown": {
                                                                                                                                 "d": {
-                                                                                                                                    "e": "\\\\$11"
+                                                                                                                                    "e": "$11",
+                                                                                                                                    "f": "hello"
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             "type": "unknown"
                                                                                                                         },
                                                                                                                         "jsonExample": {
                                                                                                                             "d": {
-                                                                                                                                "e": "\\\\$11"
+                                                                                                                                "e": "$11",
+                                                                                                                                "f": "hello"
                                                                                                                             }
                                                                                                                         }
                                                                                                                     },
@@ -5980,7 +6387,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                                                                                                             },
                                                                                                             "jsonExample": {
                                                                                                                 "d": {
-                                                                                                                    "e": "\\\\$11"
+                                                                                                                    "e": "$11",
+                                                                                                                    "f": "hello"
                                                                                                                 }
                                                                                                             }
                                                                                                         },
@@ -6035,7 +6443,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                                                                                         "jsonExample": {
                                                                                             "c": {
                                                                                                 "d": {
-                                                                                                    "e": "\\\\$11"
+                                                                                                    "e": "$11",
+                                                                                                    "f": "hello"
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -6050,7 +6459,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                                                                         "b": {
                                                                             "c": {
                                                                                 "d": {
-                                                                                    "e": "\\\\$11"
+                                                                                    "e": "$11",
+                                                                                    "f": "hello"
                                                                                 }
                                                                             }
                                                                         }
@@ -6064,7 +6474,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                                                             "b": {
                                                                 "c": {
                                                                     "d": {
-                                                                        "e": "\\\\$11"
+                                                                        "e": "$11",
+                                                                        "f": "hello"
                                                                     }
                                                                 }
                                                             }
@@ -6123,7 +6534,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                                             "b": {
                                                 "c": {
                                                     "d": {
-                                                        "e": "\\\\$11"
+                                                        "e": "$11",
+                                                        "f": "hello"
                                                     }
                                                 }
                                             }
@@ -10186,7 +10598,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "\\\\$4.50"
+                            "jsonExample": "$4.50"
                         },
                         "type": "alias"
                     }
@@ -11542,7 +11954,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": "$Age.Example1"
+                                        "age": 20
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -17456,7 +17868,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "\\\\$4.50"
+                            "jsonExample": "$4.50"
                         },
                         "type": "alias"
                     }
@@ -18812,7 +19224,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": "$Age.Example1"
+                                        "age": 20
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -24726,7 +25138,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "\\\\$4.50"
+                            "jsonExample": "$4.50"
                         },
                         "type": "alias"
                     }
@@ -26082,7 +26494,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": "$Age.Example1"
+                                        "age": 20
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -30643,7 +31055,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "\\\\$4.50"
+                            "jsonExample": "$4.50"
                         },
                         "type": "alias"
                     }
@@ -31999,7 +32411,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": "$Age.Example1"
+                                        "age": 20
                                     }
                                 },
                                 "originalTypeDeclaration": {
@@ -36560,7 +36972,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                 },
                                 "type": "primitive"
                             },
-                            "jsonExample": "\\\\$4.50"
+                            "jsonExample": "$4.50"
                         },
                         "type": "alias"
                     }
@@ -37916,7 +38328,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                                     },
                                     "jsonExample": {
                                         "name": "George the Director",
-                                        "age": "$Age.Example1"
+                                        "age": 20
                                     }
                                 },
                                 "originalTypeDeclaration": {

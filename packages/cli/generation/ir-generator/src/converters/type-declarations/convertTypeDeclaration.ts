@@ -50,7 +50,8 @@ export function convertTypeDeclaration({
                               typeResolver,
                               exampleResolver,
                               typeDeclaration,
-                              file,
+                              fileContainingType: file,
+                              fileContainingExample: file,
                           }),
                       })
                   )

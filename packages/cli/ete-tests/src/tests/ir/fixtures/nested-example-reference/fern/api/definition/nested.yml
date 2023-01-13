@@ -18,6 +18,7 @@ services:
                       c:
                         d:
                           e: \$11
+                          f: $StringAlias.Example
 
 types:
   Response:
@@ -27,3 +28,9 @@ types:
   Product:
     properties:
       c: optional<unknown>
+
+  StringAlias:
+    type: string
+    examples:
+      - name: Example
+        value: hello
