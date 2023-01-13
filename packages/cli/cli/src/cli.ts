@@ -12,7 +12,6 @@ import {
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
-import chalk from "chalk";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -364,7 +363,6 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         await cliContext.runTask(async (context) => {
             await login(context);
         });
-        cliContext.logger.info(chalk.green("Logged in"));
     });
 }
 
