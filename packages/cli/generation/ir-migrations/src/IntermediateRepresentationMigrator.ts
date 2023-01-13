@@ -82,6 +82,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }): unknown {
         return this.migrate({
             intermediateRepresentation,
+            generatorName,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, generatorName, generatorVersion }),
         });
     }
@@ -89,9 +90,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     public migrateThroughMigration<LaterVersion, EarlierVersion>({
         migration,
         intermediateRepresentation,
+        generatorName,
     }: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
+        generatorName: string;
     }): EarlierVersion {
         let hasEncouneredMigrationYet = false;
         return this.migrate({
@@ -101,14 +104,17 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 hasEncouneredMigrationYet ||= isEncounteringMigration;
                 return isEncounteringMigration || !hasEncouneredMigrationYet;
             },
+            generatorName,
         }) as EarlierVersion;
     }
 
     private migrate({
         intermediateRepresentation,
+        generatorName,
         shouldMigrate,
     }: {
         intermediateRepresentation: IntermediateRepresentation;
+        generatorName: string;
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
     }): unknown {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -119,7 +125,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             }
             if (migration.migrateBackwards == null) {
                 throw new Error(
-                    "Cannot backwards-migrate intermediate representation. Please upgrade your generators."
+                    `Cannot backwards-migrate intermediate representation. Please upgrade ${generatorName}.`
                 );
             }
             migrated = migration.migrateBackwards(migrated);
