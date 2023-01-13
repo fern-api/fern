@@ -6765,6 +6765,34 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                         "shape": {
                             "_type": "noProperties"
                         }
+                    },
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "cinematographer",
+                                "camelCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CINEMATOGRAPHER",
+                                    "safeName": "CINEMATOGRAPHER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Cinematographer",
+                                    "safeName": "Cinematographer"
+                                }
+                            },
+                            "wireValue": "cinematographer"
+                        },
+                        "docs": "i am docs",
+                        "shape": {
+                            "_type": "noProperties"
+                        }
                     }
                 ],
                 "_type": "union"
@@ -14004,6 +14032,34 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                             },
                             "wireValue": "producer"
                         },
+                        "shape": {
+                            "_type": "noProperties"
+                        }
+                    },
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "cinematographer",
+                                "camelCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CINEMATOGRAPHER",
+                                    "safeName": "CINEMATOGRAPHER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Cinematographer",
+                                    "safeName": "Cinematographer"
+                                }
+                            },
+                            "wireValue": "cinematographer"
+                        },
+                        "docs": "i am docs",
                         "shape": {
                             "_type": "noProperties"
                         }
@@ -21249,6 +21305,34 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                         "shape": {
                             "_type": "noProperties"
                         }
+                    },
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "cinematographer",
+                                "camelCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CINEMATOGRAPHER",
+                                    "safeName": "CINEMATOGRAPHER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Cinematographer",
+                                    "safeName": "Cinematographer"
+                                }
+                            },
+                            "wireValue": "cinematographer"
+                        },
+                        "docs": "i am docs",
+                        "shape": {
+                            "_type": "noProperties"
+                        }
                     }
                 ],
                 "_type": "union"
@@ -27138,6 +27222,34 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                         "shape": {
                             "_type": "noProperties"
                         }
+                    },
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "cinematographer",
+                                "camelCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CINEMATOGRAPHER",
+                                    "safeName": "CINEMATOGRAPHER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Cinematographer",
+                                    "safeName": "Cinematographer"
+                                }
+                            },
+                            "wireValue": "cinematographer"
+                        },
+                        "docs": "i am docs",
+                        "shape": {
+                            "_type": "noProperties"
+                        }
                     }
                 ],
                 "_type": "union"
@@ -33024,6 +33136,34 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                             },
                             "wireValue": "producer"
                         },
+                        "shape": {
+                            "_type": "noProperties"
+                        }
+                    },
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "cinematographer",
+                                "camelCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cinematographer",
+                                    "safeName": "cinematographer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CINEMATOGRAPHER",
+                                    "safeName": "CINEMATOGRAPHER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Cinematographer",
+                                    "safeName": "Cinematographer"
+                                }
+                            },
+                            "wireValue": "cinematographer"
+                        },
+                        "docs": "i am docs",
                         "shape": {
                             "_type": "noProperties"
                         }

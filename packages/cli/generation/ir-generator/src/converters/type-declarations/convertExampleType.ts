@@ -76,7 +76,12 @@ export function convertTypeExample({
                 throw new Error(`${discriminantValueForExample} is not one of the specified discriminant values.`);
             }
 
-            const rawValueType = typeof rawSingleUnionType === "string" ? rawSingleUnionType : rawSingleUnionType.type;
+            const rawValueType =
+                typeof rawSingleUnionType === "string"
+                    ? rawSingleUnionType
+                    : typeof rawSingleUnionType.type === "string"
+                    ? rawSingleUnionType.type
+                    : undefined;
 
             return ExampleTypeShape.union({
                 wireDiscriminantValue: discriminantValueForExample,

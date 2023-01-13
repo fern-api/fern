@@ -25,7 +25,7 @@ export function convertUnionTypeDeclaration({
             const rawType: string | undefined =
                 typeof rawSingleUnionType === "string"
                     ? rawSingleUnionType
-                    : rawSingleUnionType.type != null
+                    : typeof rawSingleUnionType.type === "string"
                     ? rawSingleUnionType.type
                     : undefined;
 
