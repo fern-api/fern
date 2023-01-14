@@ -57,7 +57,7 @@ export function validateTypeReferenceExample({
             return [];
         }
 
-        if (areResolvedTypesEquivalent(resolvedExpectedType, resolvedActualType)) {
+        if (areResolvedTypesEquivalent({ expected: resolvedExpectedType, actual: resolvedActualType })) {
             return [];
         } else {
             return [
@@ -174,9 +174,6 @@ export function validateTypeReferenceExample({
         unknown: () => {
             return [];
         },
-        void: () => {
-            return [];
-        },
         literal: (expectedLiteralValue) => {
             return createValidator((e) => e === expectedLiteralValue, `"${expectedLiteralValue}"`)(example);
         },
@@ -227,44 +224,62 @@ function createValidator(
     };
 }
 
-function areResolvedTypesEquivalent(a: ResolvedType, b: ResolvedType): boolean {
-    if (a._type === "unknown" || a._type === "void") {
+function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedType; actual: ResolvedType }): boolean {
+    if (expected._type === "unknown") {
         return true;
     }
-    if (a._type === "primitive") {
-        return b._type === "primitive" && a.primitive === b.primitive;
+    if (expected._type === "primitive") {
+        return actual._type === "primitive" && expected.primitive === actual.primitive;
     }
-    if (a._type === "container") {
-        if (b._type !== "container") {
-            return false;
-        }
-        switch (a.container._type) {
+    if (expected._type === "container") {
+        switch (expected.container._type) {
             case "list":
             case "set":
-            case "optional":
                 return (
-                    b.container._type === a.container._type &&
-                    areResolvedTypesEquivalent(a.container.itemType, b.container.itemType)
+                    actual._type === "container" &&
+                    actual.container._type === expected.container._type &&
+                    areResolvedTypesEquivalent({
+                        expected: expected.container.itemType,
+                        actual: actual.container.itemType,
+                    })
                 );
+            case "optional":
+                // special case: if expected is an optional but actual is not, that's okay
+                return areResolvedTypesEquivalent({
+                    expected: expected.container.itemType,
+                    actual:
+                        actual._type === "container" && actual.container._type === "optional"
+                            ? actual.container.itemType
+                            : actual,
+                });
             case "map":
                 return (
-                    b.container._type === a.container._type &&
-                    areResolvedTypesEquivalent(a.container.keyType, b.container.keyType) &&
-                    areResolvedTypesEquivalent(a.container.valueType, b.container.valueType)
+                    actual._type === "container" &&
+                    actual.container._type === expected.container._type &&
+                    areResolvedTypesEquivalent({
+                        expected: expected.container.keyType,
+                        actual: actual.container.keyType,
+                    }) &&
+                    areResolvedTypesEquivalent({
+                        expected: expected.container.valueType,
+                        actual: actual.container.valueType,
+                    })
                 );
             case "literal":
                 return (
-                    b.container._type === a.container._type && a.container.literal.string === b.container.literal.string
+                    actual._type === "container" &&
+                    actual.container._type === expected.container._type &&
+                    expected.container.literal.string === actual.container.literal.string
                 );
             default:
-                assertNever(a.container);
+                assertNever(expected.container);
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (a._type === "named") {
-        return b._type === "named" && b.filepath === a.filepath && b.rawName === a.rawName;
+    if (expected._type === "named") {
+        return actual._type === "named" && actual.filepath === expected.filepath && actual.rawName === expected.rawName;
     }
 
-    assertNever(a);
+    assertNever(expected);
 }

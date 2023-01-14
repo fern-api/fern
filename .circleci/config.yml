@@ -187,14 +187,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Check release blockers
-          command: yarn check-release-blockers
-      - run:
-          name: Ensure JSON schema is up to date
-          command: |
-            yarn generate-json-schema
-            git --no-pager diff --exit-code
-      - run:
           name: Print version
           command: |
             git_version="$(./scripts/git-version.sh)"
@@ -228,7 +220,23 @@ jobs:
       - checkout
       - run:
           name: Publish ir sdks
-          command: npx fern-api generate --api ir-types-v4 --group sdks
+          command: npx fern-api generate --api ir-types-v5 --group sdks
+
+  check-release-is-allowed:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Check release blockers
+          command: yarn check-release-blockers
+      - run:
+          name: Ensure JSON schema is up to date
+          command: |
+            yarn generate-json-schema
+            git --no-pager diff --exit-code
 
 workflows:
   version: 2
@@ -255,6 +263,7 @@ workflows:
               only: /.*/
           context:
             - auth0-dev
+            - fern-tokens
 
       - live-test-dev:
           filters:
@@ -310,6 +319,7 @@ workflows:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
+            - check-release-is-allowed
             - check
             - organize-imports
             - test
@@ -332,3 +342,10 @@ workflows:
             - test
             - ete-tests
             - live-test-dev
+
+      - check-release-is-allowed:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/

@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
-import { GeneratorName } from "./types/GeneratorName";
 import { AlwaysRunMigration } from "./types/IrMigration";
 
 export function getMinimumVersionForGenerator({ generatorName }: { generatorName: string }): string | undefined {

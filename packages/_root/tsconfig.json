@@ -3,6 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../cli/auth" },
     { "path": "../cli/cli" },
     { "path": "../cli/config-management/commons" },
     { "path": "../cli/config-management/dependencies-configuration" },
@@ -17,7 +18,6 @@
     { "path": "../cli/generation/remote-generation/remote-workspace-runner" },
     { "path": "../cli/init" },
     { "path": "../cli/logger" },
-    { "path": "../cli/login" },
     { "path": "../cli/openapi-converter" },
     { "path": "../cli/project-loader" },
     { "path": "../cli/semver-utils" },

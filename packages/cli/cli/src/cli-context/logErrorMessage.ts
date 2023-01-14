@@ -1,6 +1,6 @@
-import { addPrefixToString } from "@fern-api/core-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import { FernCliError } from "@fern-api/task-context";
+import chalk from "chalk";
 
 export function logErrorMessage({
     message,
@@ -15,29 +15,26 @@ export function logErrorMessage({
 }): void {
     if (message != null) {
         logger.log(logLevel, message);
-    }
-
-    if (
-        error == null ||
-        // thrower is responsible for logging, so we don't need to log here
-        error instanceof FernCliError
-    ) {
+    } else if (error == null) {
         return;
     }
 
-    const errorMessage = convertErrorToString(error);
-    if (errorMessage != null) {
-        logger.log(
-            logLevel,
-            addPrefixToString({
-                prefix: "  ",
-                content: errorMessage,
-                includePrefixOnAllLines: true,
-            })
-        );
+    // thrower is responsible for logging, so we don't need to log the error's message too
+    if (error instanceof FernCliError) {
+        return;
     }
 
-    logger.debug(JSON.stringify(error));
+    if (error != null) {
+        const errorMessage = convertErrorToString(error);
+        if (errorMessage != null) {
+            logger.log(logLevel, errorMessage);
+        }
+    }
+
+    const stack = error instanceof Error ? error.stack : new Error(JSON.stringify(error)).stack;
+    if (stack != null) {
+        logger.debug(chalk.red(stack));
+    }
 }
 
 function convertErrorToString(error: unknown): string | undefined {
@@ -45,7 +42,7 @@ function convertErrorToString(error: unknown): string | undefined {
         return error;
     }
     if (error instanceof Error) {
-        return error.stack ?? error.message;
+        return error.message;
     }
     return undefined;
 }

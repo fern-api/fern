@@ -1,6 +1,7 @@
 import { assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { formatLog, Logger } from "@fern-api/logger";
+import { DEPENDENCIES_FILENAME } from "@fern-api/project-configuration";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
@@ -53,8 +54,14 @@ function handleWorkspaceParserFailureForFile({
                 }
             }
             break;
-        case WorkspaceLoaderFailureType.DEPENDENCY:
-            logger.error("Failed to load dependencies.");
+        case WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY:
+            logger.error("Failed to load dependency: " + failure.dependencyName);
+            break;
+        case WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED:
+            logger.error(`Dependency is not listed in ${DEPENDENCIES_FILENAME}: ` + failure.dependencyName);
+            break;
+        case WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS:
+            logger.error("Exported package contains API definitions: " + failure.pathToPackage);
             break;
         default:
             assertNever(failure);

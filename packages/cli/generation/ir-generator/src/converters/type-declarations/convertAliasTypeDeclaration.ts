@@ -33,7 +33,6 @@ function constructResolvedTypeReference({
     switch (resolvedType._type) {
         case "primitive":
         case "container":
-        case "void":
         case "unknown":
             return resolvedType.originalTypeReference;
         case "named": {

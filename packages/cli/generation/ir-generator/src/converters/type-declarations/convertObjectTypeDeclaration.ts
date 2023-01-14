@@ -17,11 +17,7 @@ export function convertObjectTypeDeclaration({
             object.properties != null
                 ? Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
                       ...convertDeclaration(propertyDefinition),
-                      name: file.casingsGenerator.generateWireCasingsV1({
-                          wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
-                      }),
-                      nameV2: file.casingsGenerator.generateNameAndWireValue({
+                      name: file.casingsGenerator.generateNameAndWireValue({
                           wireValue: propertyKey,
                           name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
                       }),

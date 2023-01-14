@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/services/http";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -12,7 +12,6 @@ import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
 import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
-import { convertResponseErrorsV2 } from "./convertResponseErrorsV2";
 
 export function convertHttpService({
     serviceDefinition,
@@ -32,12 +31,10 @@ export function convertHttpService({
     return {
         ...convertDeclaration(serviceDefinition),
         name: {
-            name: serviceId,
+            name: file.casingsGenerator.generateName(serviceId),
             fernFilepath: file.fernFilepath,
-            fernFilepathV2: file.fernFilepathV2,
         },
-        basePath: serviceDefinition["base-path"],
-        basePathV2: constructHttpPath(serviceDefinition["base-path"]),
+        basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
@@ -57,10 +54,8 @@ export function convertHttpService({
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 ...convertDeclaration(endpoint),
-                id: endpointKey,
+                name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
-                name: file.casingsGenerator.generateNameCasingsV1(endpointKey),
-                nameV2: file.casingsGenerator.generateName(endpointKey),
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
@@ -82,11 +77,7 @@ export function convertHttpService({
                                   const valueType = file.parseTypeReference(queryParameter);
                                   return {
                                       ...convertDeclaration(queryParameter),
-                                      name: file.casingsGenerator.generateWireCasingsV1({
-                                          wireValue: queryParameterKey,
-                                          name,
-                                      }),
-                                      nameV2: file.casingsGenerator.generateNameAndWireValue({
+                                      name: file.casingsGenerator.generateNameAndWireValue({
                                           wireValue: queryParameterKey,
                                           name,
                                       }),
@@ -109,7 +100,6 @@ export function convertHttpService({
                 sdkRequest: convertHttpSdkRequest({ request: endpoint.request, file }),
                 response: convertHttpResponse({ response: endpoint.response, file }),
                 errors: convertResponseErrors({ errors: endpoint.errors, file }),
-                errorsV2: convertResponseErrorsV2({ errors: endpoint.errors, file, errorResolver }),
                 examples:
                     endpoint.examples != null
                         ? endpoint.examples.map((example) =>
@@ -140,8 +130,7 @@ function convertPathParameter({
 }): PathParameter {
     return {
         ...convertDeclaration(parameter),
-        name: file.casingsGenerator.generateNameCasingsV1(parameterName),
-        nameV2: file.casingsGenerator.generateName(parameterName),
+        name: file.casingsGenerator.generateName(parameterName),
         valueType: file.parseTypeReference(parameter),
     };
 }
@@ -190,11 +179,7 @@ export function convertHttpHeader({
     const { name } = getHeaderName({ headerKey, header });
     return {
         ...convertDeclaration(header),
-        name: file.casingsGenerator.generateWireCasingsV1({
-            wireValue: headerKey,
-            name,
-        }),
-        nameV2: file.casingsGenerator.generateNameAndWireValue({
+        name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
             name,
         }),

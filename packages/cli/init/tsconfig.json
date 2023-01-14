@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/fs-utils" },
+    { "path": "../auth" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
     { "path": "../task-context" },

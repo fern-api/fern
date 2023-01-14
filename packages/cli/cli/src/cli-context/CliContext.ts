@@ -82,7 +82,12 @@ export class CliContext {
         );
     }
 
-    public fail(message?: string, error?: unknown): void {
+    public failAndThrow(message?: string, error?: unknown): never {
+        this.failWithoutThrowing(message, error);
+        throw new FernCliError();
+    }
+
+    public failWithoutThrowing(message?: string, error?: unknown): void {
         this.didSucceed = false;
         logErrorMessage({ message, error, logger: this.logger });
     }
@@ -114,13 +119,8 @@ export class CliContext {
                 }
                 this.logger.info(upgradeMessage);
             }
-        } catch (error) {
-            logErrorMessage({
-                message: "Failed to check if upgrade is available",
-                error,
-                logger: this.logger,
-                logLevel: LogLevel.Debug,
-            });
+        } catch {
+            // swallow error when failing to check for upgrade
         }
     }
 

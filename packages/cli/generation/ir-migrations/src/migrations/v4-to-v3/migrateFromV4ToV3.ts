@@ -1,5 +1,5 @@
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
-import { GeneratorName } from "../../types/GeneratorName";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
 export const V4_TO_V3_MIGRATION: IrMigration<
@@ -44,7 +44,16 @@ export const V4_TO_V3_MIGRATION: IrMigration<
             errorDiscriminant: v4.errorDiscriminant,
             errorDiscriminationStrategy: v4.errorDiscriminationStrategy,
             sdkConfig: v4.sdkConfig,
-            services: v4.services,
+            services: {
+                ...v4.services,
+                http: v4.services.http.map((service) => ({
+                    ...service,
+                    endpoints: service.endpoints.map((endpoint) => ({
+                        ...endpoint,
+                        examples: endpoint.examples.map((example) => convertExampleEndpointCall(example)),
+                    })),
+                })),
+            },
         };
     },
 };
@@ -152,4 +161,99 @@ function convertExampleAlias(v4Example: IrVersions.V4.types.ExampleAliasType): I
     return {
         value: convertExampleTypeReference(v4Example.value),
     };
+}
+
+function convertExampleEndpointCall(
+    example: IrVersions.V4.services.http.ExampleEndpointCall
+): IrVersions.V3.services.http.ExampleEndpointCall {
+    return {
+        servicePathParameters: example.servicePathParameters.map((pathParameter) =>
+            convertExamplePathParameter(pathParameter)
+        ),
+        endpointPathParameters: example.servicePathParameters.map((pathParameter) =>
+            convertExamplePathParameter(pathParameter)
+        ),
+        serviceHeaders: example.serviceHeaders.map((header) => convertExampleHeader(header)),
+        endpointHeaders: example.endpointHeaders.map((header) => convertExampleHeader(header)),
+        queryParameters: example.queryParameters.map((queryParameter) => convertExampleQueryParameter(queryParameter)),
+        request: example.request != null ? convertExampleRequest(example.request) : undefined,
+        response: convertExampleResponse(example.response),
+    };
+}
+
+function convertExamplePathParameter(
+    pathParameter: IrVersions.V4.services.http.ExamplePathParameter
+): IrVersions.V3.services.http.ExamplePathParameter {
+    return {
+        key: pathParameter.key,
+        value: convertExampleTypeReference(pathParameter.value),
+    };
+}
+
+function convertExampleHeader(
+    header: IrVersions.V4.services.http.ExampleHeader
+): IrVersions.V3.services.http.ExampleHeader {
+    return {
+        key: header.wireKey,
+        value: convertExampleTypeReference(header.value),
+    };
+}
+
+function convertExampleQueryParameter(
+    queryParameter: IrVersions.V4.services.http.ExampleQueryParameter
+): IrVersions.V3.services.http.ExampleQueryParameter {
+    return {
+        key: queryParameter.wireKey,
+        value: convertExampleTypeReference(queryParameter.value),
+    };
+}
+
+function convertExampleRequest(
+    request: IrVersions.V4.services.http.ExampleRequestBody
+): IrVersions.V3.services.http.ExampleRequestBody {
+    return IrVersions.V4.services.http.ExampleRequestBody._visit<IrVersions.V3.services.http.ExampleRequestBody>(
+        request,
+        {
+            inlinedRequestBody: (inlinedRequestBody) =>
+                IrVersions.V3.services.http.ExampleRequestBody.inlinedRequestBody({
+                    properties: inlinedRequestBody.properties.map((property) =>
+                        convertExampleInlinedRequestBodyProperty(property)
+                    ),
+                }),
+            reference: (reference) =>
+                IrVersions.V3.services.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
+            _unknown: () => {
+                throw new Error("Unknown ExampleRequestBody: " + request.type);
+            },
+        }
+    );
+}
+
+function convertExampleInlinedRequestBodyProperty(
+    property: IrVersions.V4.services.http.ExampleInlinedRequestBodyProperty
+): IrVersions.V3.services.http.ExampleInlinedRequestBodyProperty {
+    return {
+        wireKey: property.wireKey,
+        value: convertExampleTypeReference(property.value),
+        originalTypeDeclaration: property.originalTypeDeclaration,
+    };
+}
+
+function convertExampleResponse(
+    response: IrVersions.V4.services.http.ExampleResponse
+): IrVersions.V3.services.http.ExampleResponse {
+    return IrVersions.V4.services.http.ExampleResponse._visit<IrVersions.V3.services.http.ExampleResponse>(response, {
+        ok: (okResponse) =>
+            IrVersions.V3.services.http.ExampleResponse.ok({
+                body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined,
+            }),
+        error: (errorResponse) =>
+            IrVersions.V3.services.http.ExampleResponse.error({
+                error: errorResponse.error,
+                body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined,
+            }),
+        _unknown: () => {
+            throw new Error("Unknown ExampleResponse: " + response.type);
+        },
+    });
 }

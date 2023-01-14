@@ -26,6 +26,7 @@ export class TtyAwareLogger {
                 this.interval = undefined;
                 this.repaint();
                 this.write(ansiEscapes.cursorShow);
+                this.finish = noop;
             };
         }
     }
@@ -120,7 +121,7 @@ export class TtyAwareLogger {
         return paint;
     }
 
-    private get isTTY() {
+    public get isTTY(): boolean {
         return this.stream.isTTY && !IS_CI;
     }
 }

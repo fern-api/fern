@@ -1,0 +1,4 @@
+export: "@fern/dependency"
+
+types:
+  Foo: string

@@ -521,4 +521,14 @@ describe("valid-example-endpoint-call", () => {
 
         expect(violations).toEqual(expectedViolations);
     });
+
+    it("optional-example-property", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "optional-example-property"),
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+        expect(violations).toEqual(expectedViolations);
+    });
 });

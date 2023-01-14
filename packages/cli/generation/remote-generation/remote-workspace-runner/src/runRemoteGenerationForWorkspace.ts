@@ -1,3 +1,4 @@
+import { FernToken } from "@fern-api/auth";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
@@ -9,7 +10,7 @@ export async function runRemoteGenerationForWorkspace({
     context,
     generatorGroup,
     version,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     organization: string;
@@ -17,8 +18,8 @@ export async function runRemoteGenerationForWorkspace({
     context: TaskContext;
     generatorGroup: GeneratorGroup;
     version: string | undefined;
-    printZipUrl: boolean;
-    token: string | undefined;
+    shouldLogS3Url: boolean;
+    token: FernToken;
 }): Promise<void> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -36,7 +37,7 @@ export async function runRemoteGenerationForWorkspace({
                         generatorInvocation,
                         version,
                         audiences: generatorGroup.audiences,
-                        printZipUrl,
+                        shouldLogS3Url,
                         token,
                     });
                 } catch (e) {

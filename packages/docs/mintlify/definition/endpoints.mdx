@@ -109,6 +109,19 @@ services:
               limit: optional<integer>
 ```
 
+### `allow-multiple`
+
+You can use `allow-multiple` to specify that a query parameter is allowed
+multiple times in the URL, e.g. `?filter=jane&filter=smith`. This will alter
+the generated SDKs so that consumers can provide multiple values for the query
+parameter.
+
+```yaml user.yml
+query-parameters:
+  filter: string
+  allow-multiple: true # <---
+```
+
 ## Headers
 
 Each endpoint can specify request headers:
@@ -254,7 +267,7 @@ errors:
 
 You can learn more about how to define errors on the [Errors](./errors) page.
 
-## Examples
+## Specifying examples
 
 When you declare an example, you can also specify some examples of how that
 endpoint might be used. These are used by the compiler to enhance the generated
@@ -282,10 +295,6 @@ services:
                 body:
                   userId: alice-user-id
                   name: Alice
-            - path-parameters:
-                userId: missing-user-id
-                response:
-                  error: UserNotFoundError
 
 types:
   User:
@@ -298,7 +307,36 @@ errors:
     status-code: 404
 ```
 
-#### Referencing examples from types
+Examples contain all the information about the endpoint call, including
+the request body, path paramters, query parameters, headers, and response body.
+
+```yaml user.yml
+examples:
+  - path-parameters:
+      userId: some-user-id
+    query-parameters:
+      limit: 50
+    headers:
+      X-My-Header: some-value
+    response:
+      body:
+        response-field: hello
+```
+
+### Failed examples
+
+You can also specify examples of failed endpoints calls. Add the `error`
+property to a response example to designate which failure you're demonstrating.
+
+```yaml user.yml
+examples:
+  - path-parameters:
+      userId: missing-user-id
+    response:
+      error: UserNotFoundError # <--
+```
+
+### Referencing examples from types
 
 To avoid duplication, you can reference examples from types using `$`.
 

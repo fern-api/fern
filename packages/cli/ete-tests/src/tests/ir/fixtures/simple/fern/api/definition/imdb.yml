@@ -41,6 +41,9 @@ types:
       actor: ActorId
       director: director.Director
       producer: {}
+      cinematographer:
+        docs: i am docs
+        type: {}
     examples:
       - name: PersonExample1
         docs: this is a person example

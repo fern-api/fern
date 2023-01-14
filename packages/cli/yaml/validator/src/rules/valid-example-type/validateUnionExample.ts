@@ -1,7 +1,7 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { ExampleResolver, FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
 import { Workspace } from "@fern-api/workspace-loader";
-import { isRawObjectDefinition, RawPrimitiveType, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
 import { validateObjectExample } from "./validateObjectExample";
@@ -61,7 +61,7 @@ export function validateUnionExample({
     const type =
         typeof singleUnionTypeDefinition === "string" ? singleUnionTypeDefinition : singleUnionTypeDefinition.type;
 
-    if (type == null) {
+    if (typeof type !== "string") {
         return getRuleViolationForExtraProperties(nonDiscriminantPropertyExamples);
     }
 
@@ -94,7 +94,7 @@ export function validateUnionExample({
             : undefined;
 
     // "key" is not defined, but this will be caught by other rules
-    if (singlePropertyKey == null || singlePropertyKey === RawPrimitiveType.void) {
+    if (singlePropertyKey == null) {
         return [];
     }
 

@@ -6,11 +6,20 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
 
 const FIXTURES: Fixture[] = [
     {
+        name: "nested-example-reference",
+    },
+    {
         name: "simple",
     },
     {
         name: "simple",
         audiences: ["test"],
+    },
+    {
+        name: "extended-examples",
+    },
+    {
+        name: "packages",
     },
 ];
 

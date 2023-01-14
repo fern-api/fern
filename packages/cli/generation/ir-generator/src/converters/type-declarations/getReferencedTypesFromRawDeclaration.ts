@@ -45,7 +45,7 @@ export function getReferencedTypesFromRawDeclaration({
         union: (unionDeclaration) => {
             return Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
                 const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
-                if (rawType != null) {
+                if (typeof rawType === "string") {
                     types.push(rawType);
                 }
                 return types;
@@ -65,7 +65,6 @@ export function getReferencedTypesFromRawDeclaration({
             set: (valueType) => valueType,
             named: (name) => [name],
             literal: () => [],
-            void: () => [],
             unknown: () => [],
         });
 
@@ -108,6 +107,6 @@ class SeenTypeNamesImpl implements SeenTypeNames {
     }
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
-        return typeName.fernFilepath.join("/") + ":" + typeName.name;
+        return typeName.fernFilepath.join("/") + ":" + typeName.name.originalName;
     }
 }

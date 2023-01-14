@@ -1,7 +1,6 @@
-import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { GeneratorName, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
 import { addGenerator } from "../addGenerator";
-import { JAVA_GENERATOR_INVOCATION } from "../generatorInvocations";
 
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
@@ -9,7 +8,7 @@ describe("addGenerator", () => {
             groups: {},
         };
         const newConfiguration = addGenerator({
-            generatorName: "java",
+            generatorName: "fern-java",
             generatorsConfiguration,
             context: createMockTaskContext(),
         });
@@ -17,7 +16,12 @@ describe("addGenerator", () => {
         const expectedNewConfiguration: GeneratorsConfigurationSchema = {
             groups: {
                 external: {
-                    generators: [JAVA_GENERATOR_INVOCATION],
+                    generators: [
+                        {
+                            name: GeneratorName.JAVA,
+                            version: expect.any(String),
+                        },
+                    ],
                 },
             },
         };

@@ -19,7 +19,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                     for (const [discriminantValue, singleUnionType] of Object.entries(declaration.union)) {
                         if (typeof singleUnionType !== "string" && singleUnionType.key != null) {
                             const resolvedType =
-                                singleUnionType.type != null
+                                typeof singleUnionType.type === "string"
                                     ? typeResolver.resolveType({
                                           type: singleUnionType.type,
                                           file: constructFernFileContext({
@@ -29,7 +29,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                                           }),
                                       })
                                     : undefined;
-                            if (resolvedType == null || resolvedType._type === "void") {
+                            if (resolvedType == null) {
                                 violations.push({
                                     severity: "error",
                                     message: `Union subtype ${discriminantValue} has no body, so key cannot be defined`,

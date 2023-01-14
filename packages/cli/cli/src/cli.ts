@@ -1,8 +1,9 @@
+import { askToLogin, login } from "@fern-api/auth";
+import { noop } from "@fern-api/core-utils";
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { auth0Login, storeToken } from "@fern-api/login";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
@@ -11,7 +12,6 @@ import {
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
-import getStdin from "get-stdin";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -20,14 +20,11 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { validateAccessToken } from "./commands/login/validateAccessToken";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-
-export const GROUP_CLI_OPTION = "group";
 
 interface GlobalCliOptions {
     "log-level": LogLevel;
@@ -55,25 +52,17 @@ async function runCli() {
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
         } else {
-            const { failed } = await rerunFernCliAtVersion({
+            await rerunFernCliAtVersion({
                 version: versionOfCliToRun,
                 cliContext,
             });
-            if (failed) {
-                cliContext.fail();
-            }
         }
     } catch (error) {
         if (error instanceof FernCliError) {
-            if (cliContext.getLogLevel() === LogLevel.Debug) {
-                if (error.stack != null) {
-                    cliContext.logger.error(error.stack);
-                }
-            }
-            // thrower is responsible for logging, so we don't need to log here
-            cliContext.fail();
+            // thrower is responsible for logging, so we generally don't need to log here.
+            cliContext.failWithoutThrowing();
         } else {
-            cliContext.fail("Failed to run", error);
+            cliContext.failWithoutThrowing("Failed.", error);
         }
     }
 
@@ -108,7 +97,7 @@ async function tryRunCli(cliContext: CliContext) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
                     cli.showHelp();
-                    cliContext.fail();
+                    cliContext.failAndThrow();
                 }
             }
         )
@@ -135,7 +124,7 @@ async function tryRunCli(cliContext: CliContext) {
         },
     });
 
-    cli.middleware((argv) => {
+    cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
         cliContext.logDebugInfo();
     });
@@ -163,15 +152,16 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 alias: "org",
                 type: "string",
                 description: "Organization name",
+                hidden: true,
             }),
         async (argv) => {
-            await cliContext.runTask(async (context) =>
-                initialize({
+            await cliContext.runTask(async (context) => {
+                await initialize({
                     organization: argv.organization,
                     versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                     context,
-                })
-            );
+                });
+            });
         }
     );
 }
@@ -183,7 +173,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         (yargs) =>
             yargs
                 .positional("generator", {
-                    choices: ["typescript", "java", "postman", "openapi"] as const,
+                    type: "string",
                     demandOption: true,
                 })
                 .option("api", {
@@ -235,7 +225,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                printZipUrl: argv.printZipUrl,
+                shouldLogS3Url: argv.printZipUrl,
             });
         }
     );
@@ -299,14 +289,14 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 commandLineWorkspace: argv.api,
                 defaultToAllWorkspaces: false,
             });
-            if (project.token == null) {
-                cliContext.fail("Please run fern login before registring.");
-                return;
-            }
+
+            const token = await cliContext.runTask((context) => {
+                return askToLogin(context);
+            });
             await registerApiDefinitions({
                 project,
                 cliContext,
-                token: project.token,
+                token,
                 version: argv.version,
             });
         }
@@ -369,26 +359,11 @@ function addUpgradeCommand({
 }
 
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "login",
-        false, // hide from help message
-        (yargs) =>
-            yargs.option("token-stdin", {
-                boolean: true,
-                hidden: true,
-                default: false,
-            }),
-        async (argv) => {
-            let token;
-            if (argv.tokenStdin) {
-                token = (await getStdin()).replace(/\s/g, "");
-                await validateAccessToken({ token, cliContext });
-            } else {
-                token = await auth0Login();
-            }
-            await storeToken(token);
-        }
-    );
+    cli.command("login", "Log in to Fern via GitHub", noop, async () => {
+        await cliContext.runTask(async (context) => {
+            await login(context);
+        });
+    });
 }
 
 async function loadProjectAndRegisterWorkspacesWithContext(

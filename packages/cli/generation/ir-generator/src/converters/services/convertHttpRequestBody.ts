@@ -1,5 +1,5 @@
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpRequestBody, HttpRequestBodyReference } from "@fern-fern/ir-model/services/http";
+import { HttpRequestBody, HttpRequestBodyReference } from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";

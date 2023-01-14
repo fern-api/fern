@@ -1,14 +1,15 @@
+import { FernToken } from "@fern-api/auth";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
-import { REMOTE_GENERATION_SERVICE } from "./service";
 import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function createAndStartJob({
@@ -18,7 +19,7 @@ export async function createAndStartJob({
     generatorInvocation,
     version,
     context,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     workspace: Workspace;
@@ -27,10 +28,18 @@ export async function createAndStartJob({
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
-    printZipUrl: boolean;
-    token: string | undefined;
+    shouldLogS3Url: boolean;
+    token: FernToken;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const job = await createJob({ workspace, organization, generatorInvocation, version, context, printZipUrl, token });
+    const job = await createJob({
+        workspace,
+        organization,
+        generatorInvocation,
+        version,
+        context,
+        shouldLogS3Url,
+        token,
+    });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
 }
@@ -41,7 +50,7 @@ async function createJob({
     generatorInvocation,
     version,
     context,
-    printZipUrl,
+    shouldLogS3Url,
     token,
 }: {
     workspace: Workspace;
@@ -49,8 +58,8 @@ async function createJob({
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
-    printZipUrl: boolean;
-    token: string | undefined;
+    shouldLogS3Url: boolean;
+    token: FernToken;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -60,28 +69,17 @@ async function createJob({
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
 
-    let createResponse;
-    if (token == null) {
-        createResponse = await REMOTE_GENERATION_SERVICE.remoteGen.createJobV2({
-            apiName: workspace.name,
-            version,
-            organizationName: organization,
-            generators: [generatorConfigsWithEnvVarSubstitutions],
-            uploadToS3: printZipUrl,
-        });
-    } else {
-        const remoteGenerationService = createFiddleService({ token });
-        createResponse = await remoteGenerationService.remoteGen.createJobV3({
-            apiName: workspace.name,
-            version,
-            organizationName: organization,
-            generators: [generatorConfigsWithEnvVarSubstitutions],
-            uploadToS3: printZipUrl,
-        });
-    }
+    const remoteGenerationService = createFiddleService({ token: token.value });
+    const createResponse = await remoteGenerationService.remoteGen.createJobV3({
+        apiName: workspace.name,
+        version,
+        organizationName: organization,
+        generators: [generatorConfigsWithEnvVarSubstitutions],
+        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
+    });
 
     if (!createResponse.ok) {
-        return createResponse.error._visit({
+        return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.name);
             },
@@ -104,7 +102,7 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
-                return context.failAndThrow("Insufficient permissions. Do you have a token set in generators.yml?");
+                return context.failAndThrow("Insufficient permissions.");
             },
             _other: (content) => {
                 return context.failAndThrow("Failed to create job", content);
@@ -144,4 +142,27 @@ async function startJob({
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
         context.failAndThrow("Failed to start job", errorBody);
     }
+}
+
+// Fiddle is on the old version of error serialization. Until we upgrade the
+// java generator to support the new implementation, we manually migrate
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
+    if (error?.reason === "status-code") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const body = error.body as any;
+        switch (body?._error) {
+            case "IllegalApiNameError":
+                return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError();
+            case "GeneratorsDoNotExistError":
+                return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.body);
+            case "CannotPublishToNpmScope":
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.body);
+            case "CannotPublishToMavenScope":
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.body);
+            case "InsufficientPermissions":
+                return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
+        }
+    }
+    return error;
 }

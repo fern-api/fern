@@ -1,11 +1,11 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentation } from "../migrateIntermediateRepresentation";
-import { GeneratorName } from "../types/GeneratorName";
-import { AlwaysRunMigration } from "../types/IrMigration";
+import { AlwaysRunMigration, GeneratorVersion } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
@@ -14,10 +14,17 @@ describe("migrateIntermediateRepresentation", () => {
         for (const generatorName of Object.values(GeneratorName)) {
             // eslint-disable-next-line jest/valid-title
             it(generatorName, () => {
-                const versions = migrations.map((migration) => migration.minGeneratorVersionsToExclude[generatorName]);
-                const expectedVersions = versions.sort((a, b) => {
+                const versions = migrations
+                    .map((migration) => migration.minGeneratorVersionsToExclude[generatorName])
+                    // filter out AlwaysRunMigration's, since these can appear wherever
+                    .filter(
+                        (version): version is Exclude<GeneratorVersion | undefined, AlwaysRunMigration> =>
+                            version !== AlwaysRunMigration
+                    );
+                const expectedVersions = [...versions].sort((a, b) => {
                     // a null version signifies this migration should never be
-                    // run for this generator, so it should be at the end
+                    // run for this generator, so it should be at the end (i.e.
+                    // for the earliest IR versions)
                     if (a == null) {
                         return 1;
                     }
@@ -25,17 +32,7 @@ describe("migrateIntermediateRepresentation", () => {
                         return -1;
                     }
 
-                    // a LatestGeneratorVersion version signifies this migration
-                    // should always be run for this generator, so it should be
-                    // at the start
-                    if (a === AlwaysRunMigration) {
-                        return -1;
-                    }
-                    if (b === AlwaysRunMigration) {
-                        return 1;
-                    }
-
-                    // in general, versions should be sorted from latest to earlier
+                    // versions should be sorted from latest to earliest
                     return isVersionAhead(a, b) ? -1 : 1;
                 });
 

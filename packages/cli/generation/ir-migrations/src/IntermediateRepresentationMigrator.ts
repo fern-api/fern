@@ -1,9 +1,10 @@
+import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
 import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
-import { GeneratorName } from "./types/GeneratorName";
+import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { AlwaysRunMigration, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
@@ -81,6 +82,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }): unknown {
         return this.migrate({
             intermediateRepresentation,
+            generatorName,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, generatorName, generatorVersion }),
         });
     }
@@ -88,9 +90,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     public migrateThroughMigration<LaterVersion, EarlierVersion>({
         migration,
         intermediateRepresentation,
+        generatorName,
     }: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
+        generatorName: string;
     }): EarlierVersion {
         let hasEncouneredMigrationYet = false;
         return this.migrate({
@@ -100,14 +104,17 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 hasEncouneredMigrationYet ||= isEncounteringMigration;
                 return isEncounteringMigration || !hasEncouneredMigrationYet;
             },
+            generatorName,
         }) as EarlierVersion;
     }
 
     private migrate({
         intermediateRepresentation,
+        generatorName,
         shouldMigrate,
     }: {
         intermediateRepresentation: IntermediateRepresentation;
+        generatorName: string;
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
     }): unknown {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -115,6 +122,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
                 break;
+            }
+            if (migration.migrateBackwards == null) {
+                throw new Error(
+                    `Cannot backwards-migrate intermediate representation. Please upgrade ${generatorName}.`
+                );
             }
             migrated = migration.migrateBackwards(migrated);
         }
@@ -149,6 +161,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V5_TO_V4_MIGRATION)
     .withMigration(V4_TO_V3_MIGRATION)
     .withMigration(V3_TO_V2_MIGRATION)
     .withMigration(V2_TO_V1_MIGRATION)

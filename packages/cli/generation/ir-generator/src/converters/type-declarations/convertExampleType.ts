@@ -27,14 +27,16 @@ export function convertTypeExample({
     example,
     typeResolver,
     exampleResolver,
-    file,
+    fileContainingType,
+    fileContainingExample,
 }: {
     typeName: DeclaredTypeName;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     example: RawSchemas.ExampleTypeValueSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-    file: FernFileContext;
+    fileContainingType: FernFileContext;
+    fileContainingExample: FernFileContext;
 }): ExampleTypeShape {
     return visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
@@ -42,7 +44,8 @@ export function convertTypeExample({
                 value: convertTypeReferenceExample({
                     example,
                     rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
-                    file,
+                    fileContainingRawTypeReference: fileContainingType,
+                    fileContainingExample,
                     typeResolver,
                     exampleResolver,
                 }),
@@ -53,7 +56,8 @@ export function convertTypeExample({
                 typeName,
                 rawObject,
                 example,
-                file,
+                fileContainingType,
+                fileContainingExample,
                 typeResolver,
                 exampleResolver,
             });
@@ -76,14 +80,20 @@ export function convertTypeExample({
                 throw new Error(`${discriminantValueForExample} is not one of the specified discriminant values.`);
             }
 
-            const rawValueType = typeof rawSingleUnionType === "string" ? rawSingleUnionType : rawSingleUnionType.type;
+            const rawValueType =
+                typeof rawSingleUnionType === "string"
+                    ? rawSingleUnionType
+                    : typeof rawSingleUnionType.type === "string"
+                    ? rawSingleUnionType.type
+                    : undefined;
 
             return ExampleTypeShape.union({
                 wireDiscriminantValue: discriminantValueForExample,
                 properties: convertUnionProperties({
                     rawValueType,
                     rawSingleUnionType,
-                    file,
+                    fileContainingType,
+                    fileContainingExample,
                     typeResolver,
                     exampleResolver,
                     example,
@@ -104,85 +114,95 @@ export function convertTypeExample({
 
 export function convertTypeReferenceExample({
     example,
+    fileContainingExample,
     rawTypeBeingExemplified,
+    fileContainingRawTypeReference,
     typeResolver,
     exampleResolver,
-    file,
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
+    fileContainingExample: FernFileContext;
     rawTypeBeingExemplified: string;
+    fileContainingRawTypeReference: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-    file: FernFileContext;
 }): ExampleTypeReference {
-    example = exampleResolver.resolveAllReferencesInExampleOrThrow({
+    const { resolvedExample, file: fileContainingResolvedExample } = exampleResolver.resolveExampleOrThrow({
         example,
-        file,
+        file: fileContainingExample,
+    });
+    const jsonExample = exampleResolver.resolveAllReferencesInExampleOrThrow({
+        example,
+        file: fileContainingExample,
     }).resolvedExample;
 
     const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
         primitive: (primitive) => {
             return convertPrimitiveExample({
-                example,
+                example: resolvedExample,
                 typeBeingExemplified: primitive,
             });
         },
         map: ({ keyType, valueType }) => {
-            if (!isPlainObject(example)) {
+            if (!isPlainObject(resolvedExample)) {
                 throw new Error("Example is not an object");
             }
             return ExampleTypeReferenceShape.container(
                 ExampleContainer.map(
-                    Object.entries(example).map(([key, value]) => ({
+                    Object.entries(resolvedExample).map(([key, value]) => ({
                         key: convertTypeReferenceExample({
                             example: key,
+                            fileContainingExample: fileContainingResolvedExample,
                             rawTypeBeingExemplified: keyType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         }),
                         value: convertTypeReferenceExample({
                             example: value,
+                            fileContainingExample: fileContainingResolvedExample,
                             rawTypeBeingExemplified: valueType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         }),
                     }))
                 )
             );
         },
         list: (itemType) => {
-            if (!Array.isArray(example)) {
+            if (!Array.isArray(resolvedExample)) {
                 throw new Error("Example is not a list");
             }
             return ExampleTypeReferenceShape.container(
                 ExampleContainer.list(
-                    example.map((exampleItem) =>
+                    resolvedExample.map((exampleItem) =>
                         convertTypeReferenceExample({
                             example: exampleItem,
+                            fileContainingExample: fileContainingResolvedExample,
                             rawTypeBeingExemplified: itemType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         })
                     )
                 )
             );
         },
         set: (itemType) => {
-            if (!Array.isArray(example)) {
+            if (!Array.isArray(resolvedExample)) {
                 throw new Error("Example is not a list");
             }
             return ExampleTypeReferenceShape.container(
                 ExampleContainer.set(
-                    example.map((exampleItem) =>
+                    resolvedExample.map((exampleItem) =>
                         convertTypeReferenceExample({
                             example: exampleItem,
+                            fileContainingExample: fileContainingResolvedExample,
                             rawTypeBeingExemplified: itemType,
+                            fileContainingRawTypeReference,
                             typeResolver,
                             exampleResolver,
-                            file,
                         })
                     )
                 )
@@ -191,13 +211,16 @@ export function convertTypeReferenceExample({
         optional: (itemType) => {
             return ExampleTypeReferenceShape.container(
                 ExampleContainer.optional(
-                    convertTypeReferenceExample({
-                        example,
-                        rawTypeBeingExemplified: itemType,
-                        typeResolver,
-                        exampleResolver,
-                        file,
-                    })
+                    resolvedExample != null
+                        ? convertTypeReferenceExample({
+                              example: resolvedExample,
+                              fileContainingExample: fileContainingResolvedExample,
+                              rawTypeBeingExemplified: itemType,
+                              fileContainingRawTypeReference,
+                              typeResolver,
+                              exampleResolver,
+                          })
+                        : undefined
                 )
             );
         },
@@ -207,42 +230,37 @@ export function convertTypeReferenceExample({
         named: (named) => {
             const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: named,
-                file,
+                file: fileContainingRawTypeReference,
             });
-            const parsedReferenceToNamedType = file.parseTypeReference(named);
+            const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
             if (parsedReferenceToNamedType._type !== "named") {
                 throw new Error("Type reference is not to a named type.");
             }
             const typeName = {
                 fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                fernFilepathV2: parsedReferenceToNamedType.fernFilepathV2,
                 name: parsedReferenceToNamedType.name,
-                nameV2: parsedReferenceToNamedType.nameV2,
-                nameV3: parsedReferenceToNamedType.nameV3,
             };
             return ExampleTypeReferenceShape.named({
                 typeName,
                 shape: convertTypeExample({
                     typeName,
                     typeDeclaration: typeDeclaration.declaration,
-                    file: typeDeclaration.file,
-                    example,
+                    fileContainingType: typeDeclaration.file,
+                    fileContainingExample: fileContainingResolvedExample,
+                    example: resolvedExample,
                     typeResolver,
                     exampleResolver,
                 }),
             });
         },
         unknown: () => {
-            return ExampleTypeReferenceShape.unknown(example);
-        },
-        void: () => {
-            throw new Error("Examples are not supported for void");
+            return ExampleTypeReferenceShape.unknown(jsonExample);
         },
     });
 
     return {
         shape,
-        jsonExample: example,
+        jsonExample,
     };
 }
 
@@ -306,14 +324,16 @@ function convertObject({
     typeName,
     rawObject,
     example,
-    file,
+    fileContainingType,
+    fileContainingExample,
     typeResolver,
     exampleResolver,
 }: {
     typeName: DeclaredTypeName;
     rawObject: RawSchemas.ObjectSchema;
     example: RawSchemas.ExampleTypeValueSchema;
-    file: FernFileContext;
+    fileContainingType: FernFileContext;
+    fileContainingExample: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
 }): ExampleTypeShape {
@@ -330,7 +350,7 @@ function convertObject({
                               wirePropertyKey: wireKey,
                               rawObject,
                               typeResolver,
-                              file,
+                              file: fileContainingType,
                           });
                           if (originalTypeDeclaration == null) {
                               throw new Error("Could not find original type declaration for property: " + wireKey);
@@ -339,13 +359,14 @@ function convertObject({
                               wireKey,
                               value: convertTypeReferenceExample({
                                   example: propertyExample,
+                                  fileContainingExample,
                                   rawTypeBeingExemplified:
                                       typeof originalTypeDeclaration.rawPropertyType === "string"
                                           ? originalTypeDeclaration.rawPropertyType
                                           : originalTypeDeclaration.rawPropertyType.type,
+                                  fileContainingRawTypeReference: originalTypeDeclaration.file,
                                   typeResolver,
                                   exampleResolver,
-                                  file,
                               }),
                               originalTypeDeclaration: originalTypeDeclaration.typeName,
                           });
@@ -369,10 +390,12 @@ function getOriginalTypeDeclarationForProperty({
     rawObject: RawSchemas.ObjectSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema } | undefined {
+}):
+    | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
+    | undefined {
     const rawPropertyType = rawObject.properties?.[wirePropertyKey];
     if (rawPropertyType != null) {
-        return { typeName, rawPropertyType };
+        return { typeName, rawPropertyType, file };
     } else {
         return getOriginalTypeDeclarationForPropertyFromExtensions({
             wirePropertyKey,
@@ -393,7 +416,9 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
     extends_: string | string[] | undefined;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema } | undefined {
+}):
+    | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
+    | undefined {
     if (extends_ != null) {
         const extendsList = typeof extends_ === "string" ? [extends_] : extends_;
         for (const typeName of extendsList) {
@@ -423,7 +448,8 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
 function convertUnionProperties({
     rawValueType,
     rawSingleUnionType,
-    file,
+    fileContainingType,
+    fileContainingExample,
     typeResolver,
     exampleResolver,
     example,
@@ -431,7 +457,8 @@ function convertUnionProperties({
 }: {
     rawValueType: string | undefined;
     rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
-    file: FernFileContext;
+    fileContainingType: FernFileContext;
+    fileContainingExample: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -444,8 +471,8 @@ function convertUnionProperties({
     const parsedSingleUnionTypeProperties = getSingleUnionTypeProperties({
         rawSingleUnionType,
         rawValueType,
-        parsedValueType: file.parseTypeReference(rawValueType),
-        file,
+        parsedValueType: fileContainingType.parseTypeReference(rawValueType),
+        file: fileContainingType,
         typeResolver,
     });
 
@@ -456,11 +483,12 @@ function convertUnionProperties({
             }
             return ExampleSingleUnionTypeProperties.singleProperty(
                 convertTypeReferenceExample({
-                    example: example[parsedSingleUnionTypeProperties.nameV2.wireValue],
+                    example: example[parsedSingleUnionTypeProperties.name.wireValue],
                     rawTypeBeingExemplified: rawValueType,
                     typeResolver,
                     exampleResolver,
-                    file,
+                    fileContainingRawTypeReference: fileContainingType,
+                    fileContainingExample,
                 })
             );
         }
@@ -471,24 +499,22 @@ function convertUnionProperties({
             const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example;
             const rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
-                file,
+                file: fileContainingType,
             });
             if (!isRawObjectDefinition(rawDeclaration.declaration)) {
                 throw new Error(`${rawValueType} is not an object`);
             }
             const typeName: DeclaredTypeName = {
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
-                fernFilepathV2: parsedSingleUnionTypeProperties.fernFilepathV2,
                 name: parsedSingleUnionTypeProperties.name,
-                nameV2: parsedSingleUnionTypeProperties.nameV2,
-                nameV3: parsedSingleUnionTypeProperties.nameV3,
             };
             return ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                 typeName,
                 shape: convertObject({
                     rawObject: rawDeclaration.declaration,
                     example: nonDiscriminantPropertiesFromExample,
-                    file: rawDeclaration.file,
+                    fileContainingType: rawDeclaration.file,
+                    fileContainingExample,
                     typeResolver,
                     exampleResolver,
                     typeName,

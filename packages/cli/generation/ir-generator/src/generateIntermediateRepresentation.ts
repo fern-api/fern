@@ -1,18 +1,17 @@
 import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint } from "@fern-fern/ir-model/services/http";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
+import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
 import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
 import { convertHttpHeader, convertHttpService } from "./converters/services/convertHttpService";
-import { convertWebsocketChannel } from "./converters/services/convertWebsocketChannel";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { FERN_CONSTANTS, generateFernConstantsV2 } from "./FernConstants";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
 import { Language } from "./language";
@@ -34,13 +33,13 @@ export async function generateIntermediateRepresentation({
     const audienceIrGraph = audiences != null ? new AudienceIrGraph(audiences) : undefined;
 
     const rootApiFileContext = constructFernFileContext({
-        relativeFilepath: undefined,
+        relativeFilepath: ".",
         serviceFile: workspace.rootApiFile,
         casingsGenerator,
     });
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig"> = {
-        apiName: workspace.name,
+        apiName: casingsGenerator.generateName(workspace.name),
         apiDisplayName: workspace.rootApiFile["display-name"],
         apiDocs: workspace.rootApiFile.docs,
         auth: convertApiAuth({
@@ -55,19 +54,10 @@ export async function generateIntermediateRepresentation({
                 : [],
         types: [],
         errors: [],
-        services: {
-            http: [],
-            websocket: [],
-        },
-        constants: FERN_CONSTANTS,
-        constantsV2: generateFernConstantsV2(casingsGenerator),
+        services: [],
+        constants: generateFernConstants(casingsGenerator),
         defaultEnvironment: workspace.rootApiFile["default-environment"],
         environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile }),
-        errorDiscriminant:
-            workspace.rootApiFile["error-discrimination"] != null &&
-            workspace.rootApiFile["error-discrimination"].strategy === "property"
-                ? casingsGenerator.generateName(workspace.rootApiFile["error-discrimination"]["property-name"])
-                : undefined,
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
             workspace.rootApiFile["error-discrimination"],
             rootApiFileContext
@@ -115,8 +105,6 @@ export async function generateIntermediateRepresentation({
                         errorName,
                         errorDeclaration,
                         file,
-                        typeResolver,
-                        errorDiscriminationSchema,
                     });
                     audienceIrGraph?.addError(convertedErrorDeclaration);
                     intermediateRepresentation.errors.push(convertedErrorDeclaration);
@@ -138,12 +126,12 @@ export async function generateIntermediateRepresentation({
                             typeResolver,
                             exampleResolver,
                         });
-                        intermediateRepresentation.services.http.push(convertedHttpService);
+                        intermediateRepresentation.services.push(convertedHttpService);
 
                         const convertedEndpoints: Record<string, HttpEndpoint> = {};
                         convertedHttpService.endpoints.forEach((httpEndpoint) => {
                             audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
-                            convertedEndpoints[httpEndpoint.id] = httpEndpoint;
+                            convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                         });
                         if (serviceDefinition.audiences != null) {
                             audienceIrGraph?.markEndpointForAudience(
@@ -164,18 +152,6 @@ export async function generateIntermediateRepresentation({
                         });
                     }
                 }
-
-                if (services.websocket != null) {
-                    for (const [channelId, channelDefinition] of Object.entries(services.websocket)) {
-                        intermediateRepresentation.services.websocket.push(
-                            convertWebsocketChannel({
-                                channelId,
-                                channelDefinition,
-                                file,
-                            })
-                        );
-                    }
-                }
             },
         });
     };
@@ -194,7 +170,7 @@ export async function generateIntermediateRepresentation({
 
     const isAuthMandatory =
         workspace.rootApiFile.auth != null &&
-        intermediateRepresentationForAudiences.services.http.every((service) => {
+        intermediateRepresentationForAudiences.services.every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });
 
@@ -219,20 +195,17 @@ function filterIntermediateRepresentationForAudiences(
         errors: intermediateRepresentation.errors.filter((error) => {
             return filteredIr.hasError(error);
         }),
-        services: {
-            websocket: intermediateRepresentation.services.websocket,
-            http: intermediateRepresentation.services.http
-                .filter((httpService) => {
-                    return filteredIr.hasService(httpService);
-                })
-                .map((httpService) => {
-                    return {
-                        ...httpService,
-                        endpoints: httpService.endpoints.filter((httpEndpoint) => {
-                            return filteredIr.hasEndpoint(httpService, httpEndpoint);
-                        }),
-                    };
-                }),
-        },
+        services: intermediateRepresentation.services
+            .filter((httpService) => {
+                return filteredIr.hasService(httpService);
+            })
+            .map((httpService) => {
+                return {
+                    ...httpService,
+                    endpoints: httpService.endpoints.filter((httpEndpoint) => {
+                        return filteredIr.hasEndpoint(httpService, httpEndpoint);
+                    }),
+                };
+            }),
     };
 }

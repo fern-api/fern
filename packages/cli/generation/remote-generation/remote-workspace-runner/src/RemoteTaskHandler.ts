@@ -62,7 +62,7 @@ export class RemoteTaskHandler {
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
-        const log_s3_url = (s3Url: string) => {
+        const logS3Url = (s3Url: string) => {
             this.context.logger.debug(
                 `Generated files. ${terminalLink("View here", s3Url, {
                     fallback: (text, url) => `${text}: ${url}`,
@@ -75,16 +75,24 @@ export class RemoteTaskHandler {
             running: noop,
             failed: ({ message, s3PreSignedReadUrl }) => {
                 if (s3PreSignedReadUrl != null) {
-                    log_s3_url(s3PreSignedReadUrl);
+                    logS3Url(s3PreSignedReadUrl);
                 }
                 this.context.failAndThrow(message);
             },
             finished: async (finishedStatus) => {
-                await this.maybeDownloadFiles(finishedStatus);
+                if (finishedStatus.s3PreSignedReadUrlV2 != null) {
+                    logS3Url(finishedStatus.s3PreSignedReadUrlV2);
+                    if (this.generatorInvocation.absolutePathToLocalOutput != null) {
+                        await downloadFilesForTask({
+                            s3PreSignedReadUrl: finishedStatus.s3PreSignedReadUrlV2,
+                            absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
+                            context: this.context,
+                        });
+                    }
+                }
                 for (const coordinate of coordinates) {
                     this.context.logger.info(`Published ${coordinate}`);
                 }
-                log_s3_url(finishedStatus.s3PreSignedReadUrl);
                 this.#isFinished = true;
             },
             _other: () => {
@@ -96,16 +104,6 @@ export class RemoteTaskHandler {
     #isFinished = false;
     public get isFinished(): boolean {
         return this.#isFinished;
-    }
-
-    private async maybeDownloadFiles(status: FernFiddle.remoteGen.FinishedTaskStatus): Promise<void> {
-        if (this.generatorInvocation.absolutePathToLocalOutput != null) {
-            await downloadFilesForTask({
-                s3PreSignedReadUrl: status.s3PreSignedReadUrl,
-                absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
-                context: this.context,
-            });
-        }
     }
 }
 

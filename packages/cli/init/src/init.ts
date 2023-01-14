@@ -1,3 +1,4 @@
+import { askToLogin, createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
@@ -8,7 +9,6 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
-import inquirer, { InputQuestion } from "inquirer";
 import path from "path";
 import { createWorkspace } from "./createWorkspace";
 
@@ -25,17 +25,26 @@ export async function initialize({
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
-            await context.takeOverTerminal(async () => {
-                organization = await askForOrganization();
+            const token = await askToLogin(context);
+            if (token.type !== "user") {
+                return context.failAndThrow("You must be logged in to initialize Fern.");
+            }
+            const user = await getCurrentUser({ token, context });
+            organization = user.username;
+            const didCreateOrganization = await createOrganizationIfDoesNotExist({
+                organization,
+                token,
+                context,
             });
+            if (didCreateOrganization) {
+                context.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
+            }
         }
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const castedOrganization = organization!;
 
         await mkdir(FERN_DIRECTORY);
         await writeProjectConfig({
             filepath: join(pathToFernDirectory, PROJECT_CONFIG_FILENAME),
-            organization: castedOrganization,
+            organization,
             versionOfCli,
         });
     }
@@ -59,16 +68,6 @@ async function writeProjectConfig({
         version: versionOfCli,
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
-}
-
-async function askForOrganization() {
-    const organizationQuestion: InputQuestion<{ organization: string }> = {
-        type: "input",
-        name: "organization",
-        message: "What's the name of your organization?",
-    };
-    const answers = await inquirer.prompt(organizationQuestion);
-    return answers.organization;
 }
 
 async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {

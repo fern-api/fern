@@ -1,3 +1,4 @@
+import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { LogLevel } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { createFiddleService } from "@fern-api/services";
@@ -17,10 +18,20 @@ export async function registerApiDefinitions({
 }: {
     project: Project;
     cliContext: CliContext;
-    token: string;
+    token: FernToken;
     version: string | undefined;
 }): Promise<void> {
-    const fiddle = createFiddleService({ token });
+    if (token.type === "user") {
+        await cliContext.runTask(async (context) => {
+            await createOrganizationIfDoesNotExist({
+                organization: project.config.organization,
+                token,
+                context,
+            });
+        });
+    }
+
+    const fiddle = createFiddleService({ token: token.value });
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
