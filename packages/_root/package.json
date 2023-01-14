@@ -46,6 +46,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/manage-generator": "workspace:*",
+    "@fern-api/openapi-converter": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",

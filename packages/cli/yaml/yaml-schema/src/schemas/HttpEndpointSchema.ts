@@ -19,3 +19,7 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
 });
 
 export type HttpEndpointSchema = z.infer<typeof HttpEndpointSchema>;
+
+export const HttpMethodSchema = z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+
+export type HttpMethodSchema = z.infer<typeof HttpMethodSchema>;

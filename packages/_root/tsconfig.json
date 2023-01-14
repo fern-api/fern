@@ -18,6 +18,7 @@
     { "path": "../cli/generation/remote-generation/remote-workspace-runner" },
     { "path": "../cli/init" },
     { "path": "../cli/logger" },
+    { "path": "../cli/openapi-converter" },
     { "path": "../cli/project-loader" },
     { "path": "../cli/semver-utils" },
     { "path": "../cli/services" },
