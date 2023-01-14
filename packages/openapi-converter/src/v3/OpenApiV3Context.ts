@@ -236,12 +236,11 @@ export class OpenApiV3Context {
 }
 
 class ReferenceObjectsByTag {
-    // TODO: read unreferenced schemas from document
-    private _document: OpenAPIV3.Document;
     private refToTags: Record<string, string[]> = {};
 
-    constructor(document: OpenAPIV3.Document) {
-        this._document = document;
+    // TODO: read unreferenced schemas from document
+    constructor(_document: OpenAPIV3.Document) {
+        this.refToTags = {};
     }
 
     public add(referenceObject: OpenAPIV3.ReferenceObject, tag: string) {

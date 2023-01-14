@@ -8,15 +8,14 @@ import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV3Context";
 import { SchemaConverter } from "./SchemaConverter";
+import { COMMONS_SERVICE_FILE_NAME } from "./utils";
 
 export class OpenAPIConverter {
-    private document: OpenAPIV3.Document;
     private context: OpenApiV3Context;
     private taskContext: TaskContext;
     private inlinedTypeNamer: InlinedTypeNamer;
 
     constructor(document: OpenAPIV3.Document, taskContext: TaskContext) {
-        this.document = document;
         this.taskContext = taskContext;
         this.context = new OpenApiV3Context(document);
         this.inlinedTypeNamer = new InlinedTypeNamer();
@@ -63,7 +62,7 @@ export class OpenAPIConverter {
             ...multiTaggedSchemas,
             ...untaggedSchemas,
         ]);
-        serviceFiles[COMMONS_SERVICE_FILE_NAME] = serviceFile;
+        serviceFiles[COMMONS_SERVICE_FILE_NAME] = commonsServiceFile;
 
         return {
             rootApiFile: {
@@ -79,8 +78,8 @@ export class OpenAPIConverter {
         endpoints: OpenAPIV3Endpoint[],
         schemas: OpenAPIV3Schema[]
     ): ServiceFileSchema {
-        let types: Record<string, TypeDeclarationSchema> = {};
-        const convertedEndpoints: Record<string, HttpEndpointSchema> = {};
+        let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
+        const convertedEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
         schemas.forEach((schema) => {
             const schemaConverter = new SchemaConverter({
                 schema: schema.schemaObject,

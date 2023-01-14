@@ -26,6 +26,7 @@ export async function convertOpenApi({
     taskContext.failAndThrow(
         `Only OpenAPI V3 Documents are supported. ${isOpenApiV2(openApiDocument) ? "Received V2 instead." : ""}`
     );
+    return undefined;
 }
 
 function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {

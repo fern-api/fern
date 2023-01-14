@@ -28,7 +28,7 @@ export function maybeConvertSchemaToPrimitive(schemaObject: OpenAPIV3.SchemaObje
     return undefined;
 }
 
-const COMMONS_SERVICE_FILE_NAME = "commons";
+export const COMMONS_SERVICE_FILE_NAME = "commons";
 
 export function getFernReferenceForSchema(
     schemaReference: OpenAPIV3.ReferenceObject,
