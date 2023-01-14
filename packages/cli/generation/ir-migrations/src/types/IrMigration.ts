@@ -11,8 +11,7 @@ export interface IrMigration<LaterVersion, EarlierVersion> {
     // the version of IR we're migrating from
     laterVersion: string;
 
-    // this is optional because sometimes it's not possible to migrate backwards
-    migrateBackwards: ((next: LaterVersion) => EarlierVersion) | undefined;
+    migrateBackwards: (next: LaterVersion) => EarlierVersion;
 
     /**
      * if the targeted generator's version is greater than or equal to its value
