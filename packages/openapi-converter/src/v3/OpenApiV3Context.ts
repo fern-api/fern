@@ -1,10 +1,15 @@
 import { OpenAPIV3 } from "openapi-types";
-import { APPLICATION_JSON_CONTENT, SCHEMA_REFERENCE_PREFIX, isReferenceObject } from "./utils";
+import { APPLICATION_JSON_CONTENT, isReferenceObject, SCHEMA_REFERENCE_PREFIX } from "./utils";
 
 export interface OpenAPIV3Endpoint {
     path: string;
     httpMethod: OpenAPIV3.HttpMethods;
     definition: OpenAPIV3.OperationObject;
+}
+
+export interface OpenAPIV3Schema {
+    name: string;
+    schemaObject: OpenAPIV3.SchemaObject;
 }
 
 const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
@@ -20,9 +25,9 @@ export class OpenApiV3Context {
     private endpoints: OpenAPIV3Endpoint[] = [];
     private endpointsGroupedByTag: Record<string, OpenAPIV3Endpoint[]> = {};
     private untaggedEndpoints: OpenAPIV3Endpoint[] = [];
-    private schemasGroupedByTag: Record<string, OpenAPIV3.SchemaObject[]> = {};
-    private multiTaggedSchemas: OpenAPIV3.SchemaObject[] = [];
-    private untaggedSchemas: OpenAPIV3.SchemaObject[] = [];
+    private schemasGroupedByTag: Record<string, OpenAPIV3Schema[]> = {};
+    private multiTaggedSchemas: OpenAPIV3Schema[] = [];
+    private untaggedSchemas: OpenAPIV3Schema[] = [];
     private referenceObjectToTags: ReferenceObjectsByTag;
 
     constructor(document: OpenAPIV3.Document) {
@@ -126,7 +131,7 @@ export class OpenApiV3Context {
         }
         // initialize schemasGroupedByTag
         Object.entries(schemaGroups.schemaReferencesGroupedByTag).forEach(([tag, schemaReferences]) => {
-            const resolvedSchemaReferences: OpenAPIV3.SchemaObject[] = [];
+            const resolvedSchemaReferences: OpenAPIV3Schema[] = [];
             schemaReferences.forEach(schemaReference => {
                 const resolvedSchemaReference = this.maybeResolveSchemaReference(schemaReference);
                 if (resolvedSchemaReference != null) {
@@ -153,15 +158,15 @@ export class OpenApiV3Context {
         return this.endpointsGroupedByTag[tag] ?? [];
     }
 
-    public getUntaggedSchemas(): OpenAPIV3.SchemaObject[] {
+    public getUntaggedSchemas(): OpenAPIV3Schema[] {
         return this.untaggedSchemas;
     }
 
-    public getMultitaggedSchemas(): OpenAPIV3.SchemaObject[] {
+    public getMultitaggedSchemas(): OpenAPIV3Schema[] {
         return this.multiTaggedSchemas;
     }
 
-    public getSchemasForTag(tag: string): OpenAPIV3.SchemaObject[] {
+    public getSchemasForTag(tag: string): OpenAPIV3Schema[] {
         return this.schemasGroupedByTag[tag] ?? [];
     }
 
@@ -187,7 +192,7 @@ export class OpenApiV3Context {
         return resolvedParameter;
     }
 
-    public maybeResolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject | undefined {
+    public maybeResolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3Schema | undefined {
         if (this.document.components == null || this.document.components.schemas == null) {
             return undefined;
         }
@@ -202,7 +207,10 @@ export class OpenApiV3Context {
         if (isReferenceObject(resolvedSchema)) {
             return this.maybeResolveSchemaReference(resolvedSchema);
         }
-        return resolvedSchema;
+        return {
+            name: schemaKey, 
+            schemaObject: resolvedSchema,
+        };
     }
 
     /**
@@ -218,7 +226,7 @@ export class OpenApiV3Context {
                 schemaReferences.add(propertySchema);
                 const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
                 if (resolvedSchema != null) {
-                    this.getAllReferencedSchemas(resolvedSchema).forEach((referencedSchema) => {
+                    this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
                         schemaReferences.add(referencedSchema);
                     });
                 }

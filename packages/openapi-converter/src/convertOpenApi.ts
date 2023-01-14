@@ -3,6 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
+import { OpenAPIConverter } from "./v3/OpenApiV3Converter";
 
 export interface FernDefinition { 
     rootApiFile: RootApiFileSchema;
@@ -13,17 +14,8 @@ export async function convertOpenApi({ openApiPath, taskContext }: { openApiPath
     taskContext.logger.debug(`Reading ${openApiPath}`);
     const openApiDocument = await SwaggerParser.parse(openApiPath);
     if (isOpenApiV3(openApiDocument)) {
-        // const openApiV3Converter = new OpenApiV3Converter({
-        //     openApiV3: openApiDocument,
-        //     logger: this.logger,
-        // });
-        // return openApiV3Converter.convert();
-        return {
-            rootApiFile: {
-                name: "api"
-            },
-            serviceFiles: {},
-        };
+        const openApiV3Converter = new OpenAPIConverter(openApiDocument, taskContext);
+        return openApiV3Converter.convert();
     }
     taskContext.failAndThrow(`Only OpenAPI V3 Documents are supported. ${isOpenApiV2(openApiDocument) ? "Received V2 instead." : ""}`);
 }

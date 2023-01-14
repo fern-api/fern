@@ -1,11 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { ServiceFileSchema } from "@fern-api/yaml-schema";
+import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { FernDefinition } from "../convertOpenApi";
+import { EndpointConverter } from "./EndpointConverter";
 import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
-import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
+import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV3Context";
+import { SchemaConverter } from "./SchemaConverter";
 
 export class OpenAPIConverter {
 
@@ -46,10 +48,21 @@ export class OpenAPIConverter {
         const globalHeaders = globalHeaderScanner.getGlobalHeaders();
         const serviceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
         const tags = this.context.getTags();
+        
         for (const tag of tags) {
             const endpoints = this.context.getEndpointsForTag(tag);
             const schemas = this.context.getSchemasForTag(tag);
+            const serviceFile = this.convertToServiceFile(tag, endpoints, schemas);
+            const filepath = RelativeFilePath.of(`${tag}.yml`);
+            serviceFiles[filepath] = serviceFile;
         }
+
+        const untaggedEndpoints = this.context.getUntaggedEndpoints();
+        const untaggedSchemas = this.context.getUntaggedSchemas();
+        const multiTaggedSchemas = this.context.getMultitaggedSchemas();
+        const commonsServiceFile = this.convertToServiceFile(COMMONS_SERVICE_FILE_NAME, untaggedEndpoints, [...multiTaggedSchemas, ...untaggedSchemas]);
+        serviceFiles[COMMONS_SERVICE_FILE_NAME] = serviceFile;
+
         return {
             rootApiFile: {
                 name: "api",
@@ -59,7 +72,52 @@ export class OpenAPIConverter {
         };
     }
 
-    private convertToServiceFile(endpoints: OpenAPIV3Endpoint[], schemas: OpenAPIV3.SchemaObject): ServiceFileSchema {
-
+    private convertToServiceFile(tag: string, endpoints: OpenAPIV3Endpoint[], schemas: OpenAPIV3Schema[]): ServiceFileSchema {
+        let types: Record<string, TypeDeclarationSchema> = {};
+        const convertedEndpoints: Record<string, HttpEndpointSchema> = {};
+        schemas.forEach((schema) => {
+            const schemaConverter = new SchemaConverter({
+                schema: schema.schemaObject,
+                taskContext: this.taskContext,
+                inlinedTypeNamer: this.inlinedTypeNamer,
+                context: this.context,
+                breadcrumbs: []
+            });
+            const convertedSchema = schemaConverter.convert();
+            if (convertedSchema != null) {
+                types = {
+                    ...types, 
+                    [schema.name]: convertedSchema.typeDeclaration,
+                    ...convertedSchema.additionalTypeDeclarations
+                };
+            }
+        });
+        endpoints.forEach((endpoint) => {
+            const endpointConverter = new EndpointConverter(endpoint, this.context, this.taskContext, this.inlinedTypeNamer);
+            const convertedEndpoint = endpointConverter.convert();
+            if (convertedEndpoint != null) {
+                let operationId = endpoint.definition.operationId ?? endpoint.httpMethod;
+                if (operationId in convertedEndpoints) {
+                    operationId = this.inlinedTypeNamer.getName();
+                }
+                convertedEndpoints[operationId] = convertedEndpoint.endpoint;
+                types = {
+                    ...types,
+                    ...convertedEndpoint.additionalTypeDeclarations,
+                };
+            }
+        });
+        return {
+           types,
+           services: {
+            http: {
+                [`${tag}Service`]: {
+                    auth: false,
+                    "base-path": "", 
+                    endpoints: convertedEndpoints,
+                }
+            }
+           } 
+        };
     }
 }

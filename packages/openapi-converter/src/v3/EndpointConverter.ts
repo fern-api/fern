@@ -1,10 +1,9 @@
 import { TaskContext } from "@fern-api/task-context";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpQueryParameterSchema, TypeDeclarationSchema } from "@fern-api/yaml-schema/src/schemas";
 import { OpenAPIV3 } from "openapi-types";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
-import { ConvertedSchema, SchemaConverter } from "./SchemaConverter";
+import { SchemaConverter } from "./SchemaConverter";
 import { APPLICATION_JSON_CONTENT, getFernReferenceForSchema, isReferenceObject, maybeConvertSchemaToPrimitive } from "./utils";
 
 
@@ -13,6 +12,7 @@ export interface ConvertedEndpoint {
     additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>
 }
 
+const TWO_HUNDRED_STATUS_CODE = 200;
 
 export class EndpointConverter {
 
@@ -51,13 +51,16 @@ export class EndpointConverter {
         const requestBody = this.endpoint.definition.requestBody != null 
             ? this.convertRequestBody(this.endpoint.definition.requestBody) 
             : undefined;
-
-
+        const successResponse = this.endpoint.definition.responses[TWO_HUNDRED_STATUS_CODE];
+        const responseBody = successResponse != null
+            ? this.convertResponseBody(successResponse)
+            : undefined;
         const additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {
             ...requestBody?.additionalTypes,
+            ...responseBody?.additionalTypes,
         };
            
-        const endpoint: HttpEndpointSchema = {
+        const endpoint: RawSchemas.HttpEndpointSchema = {
             path: this.endpoint.path,
             method: convertedHttpMethod,
             docs: this.endpoint.definition.description,
@@ -68,14 +71,16 @@ export class EndpointConverter {
                 "headers": Object.keys(headerParameters).length === 0 ? headerParameters : undefined,
                 "body": requestBody?.value,
             },
+            "response": responseBody?.response
         };
         return {
             endpoint, 
+            additionalTypeDeclarations
         };
     }
 
-    private getPathParameters(): Record<string, HttpPathParameterSchema> {
-        const pathParameters: Record<string, HttpPathParameterSchema> = {};
+    private getPathParameters(): Record<string, RawSchemas.HttpPathParameterSchema> {
+        const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "path") {
                 const parameterType = this.convertParameterSchema(parameter);
@@ -94,8 +99,8 @@ export class EndpointConverter {
         return pathParameters;
     }
 
-    private getQueryParameters(): Record<string, HttpQueryParameterSchema> {
-        const queryParameters: Record<string, HttpPathParameterSchema> = {};
+    private getQueryParameters(): Record<string, RawSchemas.HttpQueryParameterSchema> {
+        const queryParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "path") {
                 const parameterType = this.convertParameterSchema(parameter);
@@ -114,10 +119,13 @@ export class EndpointConverter {
         return queryParameters;
     }
 
-    private getHeaderParameters(): Record<string, HttpHeaderSchema> {
-        const headerParameters: Record<string, HttpHeaderSchema> = {};
+    private getHeaderParameters(): Record<string, RawSchemas.HttpHeaderSchema> {
+        const headerParameters: Record<string, RawSchemas.HttpHeaderSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "header") {
+                if (this.globalHeaders.has(parameter.name)) {
+                    continue;
+                }
                 const parameterType = this.convertParameterSchema(parameter);
                 if (parameterType == null) {
                     continue;
@@ -140,7 +148,7 @@ export class EndpointConverter {
         }
 
         const resolvedSchema = isReferenceObject(parameter.schema)
-            ? this.context.maybeResolveSchemaReference(parameter.schema)
+            ? this.context.maybeResolveSchemaReference(parameter.schema)?.schemaObject
             : parameter.schema;
         if (resolvedSchema == null) {
             return undefined;
@@ -214,28 +222,30 @@ export class EndpointConverter {
         };
     }
 
-    private convertResponseBody(responseBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject): ConvertedResponse | undefined {
+    private convertResponseBody(responseBody: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject): ConvertedResponse | undefined {
         if (isReferenceObject(responseBody)) {
             return {
-                type: "referenced",
-                value: getFernReferenceForSchema(requestBody, this.context),
+                response: getFernReferenceForSchema(responseBody, this.context),
             };
         }
 
-        const requestBodySchema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
-        if (requestBodySchema == null) {
+        if (responseBody.content == null) {
             return undefined;
         }
-        if (isReferenceObject(requestBodySchema)) {
+
+        const responseBodySchema = responseBody.content[APPLICATION_JSON_CONTENT]?.schema;
+        if (responseBodySchema == null) {
+            return undefined;
+        }
+        if (isReferenceObject(responseBodySchema)) {
             return {
-                response: "referenced",
-                value: getFernReferenceForSchema(requestBodySchema, this.context),
+                response: getFernReferenceForSchema(responseBodySchema, this.context),
             };
         }
 
-        const breadcrumbs = [...this.breadcrumbs, "requestBody"];
+        const breadcrumbs = [...this.breadcrumbs, "responseBody"];
         const schemaConverter = new SchemaConverter({
-            schema: requestBodySchema, 
+            schema: responseBodySchema, 
             taskContext: this.taskContext, 
             inlinedTypeNamer: this.inlinedTypeNamer, 
             context: this.context,
@@ -244,25 +254,16 @@ export class EndpointConverter {
         const convertedSchema = schemaConverter.convert();
 
         if (convertedSchema == null) {
-            this.taskContext.logger.warn(`${breadcrumbs.join(" > ")}: Failed to convert request body`);
+            this.taskContext.logger.warn(`${breadcrumbs.join(" > ")}: Failed to convert response body`);
             return undefined;
         }
 
-        if (isRawObjectDefinition(convertedSchema.typeDeclaration)) {
-            return {
-                type: "inlined",
-                value: convertedSchema.typeDeclaration, 
-                additionalTypes: convertedSchema.additionalTypeDeclarations,
-            };
-        }
-
-        const requestTypeName = this.inlinedTypeNamer.getName();
+        const responseTypeName = this.inlinedTypeNamer.getName();
         return {
-            type: "referenced",
-            value: requestTypeName,
+            response: responseTypeName,
             additionalTypes: {
                 ...convertedSchema.additionalTypeDeclarations,
-                [requestTypeName]: convertedSchema.typeDeclaration
+                [responseTypeName]: convertedSchema.typeDeclaration
             }
         };
     }
@@ -271,22 +272,22 @@ export class EndpointConverter {
 interface ReferencedRequest {
     type: "referenced", 
     value: string | RawSchemas.HttpReferencedRequestBodySchema,
-    additionalTypes?: Record<string, TypeDeclarationSchema>,
+    additionalTypes?: Record<string, RawSchemas.TypeDeclarationSchema>,
 }
 
 interface InlinedRequest {
     type: "inlined", 
     value: RawSchemas.HttpInlineRequestBodySchema,
-    additionalTypes?: Record<string, TypeDeclarationSchema>,
+    additionalTypes?: Record<string, RawSchemas.TypeDeclarationSchema>,
 }
 
 interface ConvertedResponse {
     response: string,
-    additionalTypes?: Record<string, TypeDeclarationSchema>,
+    additionalTypes?: Record<string, RawSchemas.TypeDeclarationSchema>,
 }
 
 export function isObjectSchema(
-    parameter: TypeDeclarationSchema
+    parameter: RawSchemas.TypeDeclarationSchema
 ): parameter is RawSchemas.ObjectSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (parameter as RawSchemas.ObjectSchema).properties != null;
