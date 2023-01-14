@@ -4,7 +4,10 @@ import { WithDocsSchema } from "./WithDocsSchema";
 export const EnvironmentSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
-        url: z.string(),
+        "base-url": z.string(),
+    }),
+    WithDocsSchema.extend({
+        "base-urls": z.string(),
     }),
 ]);
 
