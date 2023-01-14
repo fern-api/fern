@@ -28,10 +28,12 @@ export function maybeConvertSchemaToPrimitive(schemaObject: OpenAPIV3.SchemaObje
     return undefined;
 }
 
-
 const COMMONS_SERVICE_FILE_NAME = "commons";
 
-export function getFernReferenceForSchema(schemaReference: OpenAPIV3.ReferenceObject, context: OpenApiV3Context): string {
+export function getFernReferenceForSchema(
+    schemaReference: OpenAPIV3.ReferenceObject,
+    context: OpenApiV3Context
+): string {
     const tags = context.getTagForSchema(schemaReference);
     let serviceFileName = COMMONS_SERVICE_FILE_NAME;
     if (tags.length === 1 && tags[0] != null) {

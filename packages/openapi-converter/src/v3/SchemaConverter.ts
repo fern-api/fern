@@ -7,18 +7,29 @@ import { getFernReferenceForSchema, isReferenceObject } from "./utils";
 
 export interface ConvertedSchema {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
-    additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>
+    additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 export class SchemaConverter {
-
     private schema: OpenAPIV3.SchemaObject;
     private taskContext: TaskContext;
     private inlinedTypeNamer: InlinedTypeNamer;
     private context: OpenApiV3Context;
     private rootBreadcrumbs: string[];
 
-    constructor({ schema, taskContext, inlinedTypeNamer, context, breadcrumbs }: { schema: OpenAPIV3.SchemaObject; taskContext: TaskContext; inlinedTypeNamer: InlinedTypeNamer; context: OpenApiV3Context, breadcrumbs: string[]}) {
+    constructor({
+        schema,
+        taskContext,
+        inlinedTypeNamer,
+        context,
+        breadcrumbs,
+    }: {
+        schema: OpenAPIV3.SchemaObject;
+        taskContext: TaskContext;
+        inlinedTypeNamer: InlinedTypeNamer;
+        context: OpenApiV3Context;
+        breadcrumbs: string[];
+    }) {
         this.schema = schema;
         this.taskContext = taskContext;
         this.inlinedTypeNamer = inlinedTypeNamer;
@@ -43,12 +54,14 @@ export class SchemaConverter {
         }
 
         if (primitiveSchema != null) {
-            return schema.description != null ? 
-                { typeDeclaration: primitiveSchema} : 
-                { typeDeclaration: {
-                    type: primitiveSchema,
-                    docs: schema.description
-                }};
+            return schema.description != null
+                ? { typeDeclaration: primitiveSchema }
+                : {
+                      typeDeclaration: {
+                          type: primitiveSchema,
+                          docs: schema.description,
+                      },
+                  };
         }
 
         if (schema.enum != null) {
@@ -56,14 +69,15 @@ export class SchemaConverter {
                 typeDeclaration: {
                     docs: schema.description,
                     enum: schema.enum,
-                }
+                },
             };
         }
-        
+
         let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
-        if (schema.properties != null) { // its an object
+        if (schema.properties != null) {
+            // its an object
             const objectDefinition: Record<string, string> = {};
-            for(const [property, propertyType] of Object.entries(schema.properties)) {
+            for (const [property, propertyType] of Object.entries(schema.properties)) {
                 let convertedPropertyType: RawSchemas.TypeDeclarationSchema;
                 if (isReferenceObject(propertyType)) {
                     convertedPropertyType = getFernReferenceForSchema(propertyType, this.context);
@@ -71,16 +85,19 @@ export class SchemaConverter {
                     const schemaName = this.inlinedTypeNamer.getName();
                     const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
 
-                    if (convertedSchema == null ) {
+                    if (convertedSchema == null) {
                         this.taskContext.logger.warn(`${breadcrumbs.join(" -> ")}: Failed to convert ${property}`);
                         continue;
                     }
 
-                    additionalTypeDeclarations = { ...additionalTypeDeclarations, ...convertedSchema.additionalTypeDeclarations };
+                    additionalTypeDeclarations = {
+                        ...additionalTypeDeclarations,
+                        ...convertedSchema.additionalTypeDeclarations,
+                    };
                     additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
                     convertedPropertyType = schemaName;
                 }
-                
+
                 if (schema.required == null || !schema.required.includes(property)) {
                     convertedPropertyType = `optional<${convertedPropertyType}>`;
                 }
@@ -89,8 +106,7 @@ export class SchemaConverter {
             }
             return { typeDeclaration: { properties: objectDefinition }, additionalTypeDeclarations };
         }
-        
+
         return undefined;
     }
-
 }

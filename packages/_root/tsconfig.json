@@ -46,6 +46,7 @@
     { "path": "../editor/ui/split-view" },
     { "path": "../editor/ui/theme" },
     { "path": "../editor/ui/toaster" },
+    { "path": "../openapi-converter" },
     { "path": "../scripts" }
   ]
 }

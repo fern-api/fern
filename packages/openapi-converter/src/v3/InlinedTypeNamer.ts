@@ -1,6 +1,4 @@
-
 export class InlinedTypeNamer {
-
     private count = 0;
 
     public getName(): string {

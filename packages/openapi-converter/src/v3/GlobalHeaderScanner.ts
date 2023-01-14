@@ -5,7 +5,6 @@ import { OpenApiV3Context } from "./OpenApiV3Context";
 import { isReferenceObject, maybeConvertSchemaToPrimitive } from "./utils";
 
 export class GlobalHeaderScanner {
-
     private openApiV3Context: OpenApiV3Context;
     private taskContext: TaskContext;
 
@@ -15,9 +14,9 @@ export class GlobalHeaderScanner {
     }
 
     public getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema> {
-        const globalHeaders: Record<string, RawSchemas.HttpHeaderSchema> =  {};
+        const globalHeaders: Record<string, RawSchemas.HttpHeaderSchema> = {};
         let visitedFirstEndpoint = false;
-        for (const endpoint of this.openApiV3Context.getEndpoints()) { 
+        for (const endpoint of this.openApiV3Context.getEndpoints()) {
             if (endpoint.definition.parameters == null) {
                 return {};
             }
@@ -44,7 +43,6 @@ export class GlobalHeaderScanner {
     ): Record<string, RawSchemas.HttpHeaderSchema> {
         const convertedHeaders: Record<string, RawSchemas.HttpHeaderSchema> = {};
         for (const parameter of parameters) {
-
             const isParamterReference = isReferenceObject(parameter);
             const resolvedParameter = isParamterReference
                 ? this.openApiV3Context.maybeResolveParameterReference(parameter)
@@ -61,7 +59,7 @@ export class GlobalHeaderScanner {
                 continue;
             } else if (parameterSchema == null) {
                 continue;
-            } 
+            }
 
             const isSchemaReference = isReferenceObject(parameterSchema);
             const resolvedSchema = isSchemaReference
@@ -73,18 +71,21 @@ export class GlobalHeaderScanner {
             const convertedPrimitive = maybeConvertSchemaToPrimitive(resolvedSchema);
             if (convertedPrimitive == null) {
                 if (isSchemaReference) {
-                    this.taskContext.logger.debug(`${parameterSchema.$ref} has non primitive schema: ${JSON.stringify(
-                        resolvedSchema,
-                        undefined,
-                        2
-                    )}`);
+                    this.taskContext.logger.debug(
+                        `${parameterSchema.$ref} has non primitive schema: ${JSON.stringify(
+                            resolvedSchema,
+                            undefined,
+                            2
+                        )}`
+                    );
                 }
                 continue;
             }
 
-            const headerType = resolvedParameter.required != null && resolvedParameter.required
-                ? convertedPrimitive
-                : `optional<${convertedPrimitive}>`;
+            const headerType =
+                resolvedParameter.required != null && resolvedParameter.required
+                    ? convertedPrimitive
+                    : `optional<${convertedPrimitive}>`;
             convertedHeaders[resolvedParameter.name] = {
                 docs: resolvedParameter.description,
                 type: headerType,

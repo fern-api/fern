@@ -19,8 +19,7 @@ const TWO_HUNDRED_RESPONSE = 200;
 /**
  * A class that provides helper methods to access information from an OpenAPI V3 Document.
  */
-export class OpenApiV3Context { 
-
+export class OpenApiV3Context {
     private document: OpenAPIV3.Document;
     private endpoints: OpenAPIV3Endpoint[] = [];
     private endpointsGroupedByTag: Record<string, OpenAPIV3Endpoint[]> = {};
@@ -35,18 +34,18 @@ export class OpenApiV3Context {
         // initialize this.endpoints with all endpoints
         Object.entries(this.document.paths).forEach(([path, pathDefinition]) => {
             if (pathDefinition == null) return;
-            Object.values(OpenAPIV3.HttpMethods).forEach(httpMethod => {
-              const httpMethodDefinition = pathDefinition[httpMethod];
-              if (httpMethodDefinition == null) return;
-              this.endpoints.push({
-                path,
-                httpMethod,
-                definition: httpMethodDefinition,
-              });
+            Object.values(OpenAPIV3.HttpMethods).forEach((httpMethod) => {
+                const httpMethodDefinition = pathDefinition[httpMethod];
+                if (httpMethodDefinition == null) return;
+                this.endpoints.push({
+                    path,
+                    httpMethod,
+                    definition: httpMethodDefinition,
+                });
             });
-          });
+        });
         // initialize endpoint groups based on tags. if not present, add to a "commons" group
-        this.endpoints.forEach(endpoint => {
+        this.endpoints.forEach((endpoint) => {
             if (endpoint.definition.tags != null && endpoint.definition.tags.length > 0) {
                 const tag = endpoint.definition.tags[0];
                 if (tag != null) {
@@ -54,7 +53,7 @@ export class OpenApiV3Context {
                     if (groupedEndpoints != null && tag in this.endpointsGroupedByTag) {
                         groupedEndpoints.push(endpoint);
                     } else {
-                        this.endpointsGroupedByTag[tag] = [ endpoint ];
+                        this.endpointsGroupedByTag[tag] = [endpoint];
                     }
                     return;
                 }
@@ -71,7 +70,7 @@ export class OpenApiV3Context {
                     if (isReferenceObject(requestBody)) {
                         this.referenceObjectToTags.add(requestBody, tag);
                         continue;
-                    } 
+                    }
 
                     const schema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
                     if (schema == null) {
@@ -80,7 +79,7 @@ export class OpenApiV3Context {
                     if (isReferenceObject(schema)) {
                         this.referenceObjectToTags.add(schema, tag);
                         continue;
-                    } 
+                    }
 
                     const referencedSchemas = this.getAllReferencedSchemas(schema);
                     for (const referencedSchema of referencedSchemas) {
@@ -93,7 +92,7 @@ export class OpenApiV3Context {
                     if (isReferenceObject(successResponse)) {
                         this.referenceObjectToTags.add(successResponse, tag);
                         continue;
-                    } 
+                    }
 
                     if (successResponse.content == null) {
                         continue;
@@ -132,7 +131,7 @@ export class OpenApiV3Context {
         // initialize schemasGroupedByTag
         Object.entries(schemaGroups.schemaReferencesGroupedByTag).forEach(([tag, schemaReferences]) => {
             const resolvedSchemaReferences: OpenAPIV3Schema[] = [];
-            schemaReferences.forEach(schemaReference => {
+            schemaReferences.forEach((schemaReference) => {
                 const resolvedSchemaReference = this.maybeResolveSchemaReference(schemaReference);
                 if (resolvedSchemaReference != null) {
                     resolvedSchemaReferences.push(resolvedSchemaReference);
@@ -208,7 +207,7 @@ export class OpenApiV3Context {
             return this.maybeResolveSchemaReference(resolvedSchema);
         }
         return {
-            name: schemaKey, 
+            name: schemaKey,
             schemaObject: resolvedSchema,
         };
     }
@@ -237,7 +236,6 @@ export class OpenApiV3Context {
 }
 
 class ReferenceObjectsByTag {
-
     // TODO: read unreferenced schemas from document
     private _document: OpenAPIV3.Document;
     private refToTags: Record<string, string[]> = {};
@@ -258,13 +256,17 @@ class ReferenceObjectsByTag {
         return this.refToTags[referenceObject.$ref] ?? [];
     }
 
-    public getGroups(): { untaggedSchemaReferences: OpenAPIV3.ReferenceObject[], schemaReferencesGroupedByTag: Record<string, OpenAPIV3.ReferenceObject[]>, multiTaggedSchemaReferences: OpenAPIV3.ReferenceObject[]} {
+    public getGroups(): {
+        untaggedSchemaReferences: OpenAPIV3.ReferenceObject[];
+        schemaReferencesGroupedByTag: Record<string, OpenAPIV3.ReferenceObject[]>;
+        multiTaggedSchemaReferences: OpenAPIV3.ReferenceObject[];
+    } {
         const untaggedSchemaReferences: OpenAPIV3.ReferenceObject[] = [];
         const multiTaggedSchemaReferences: OpenAPIV3.ReferenceObject[] = [];
         const schemaReferencesGroupedByTag: Record<string, OpenAPIV3.ReferenceObject[]> = {};
-        for(const [ref, tags] of Object.entries(this.refToTags)) {
+        for (const [ref, tags] of Object.entries(this.refToTags)) {
             const referenceObject: OpenAPIV3.ReferenceObject = {
-                $ref: ref
+                $ref: ref,
             };
             if (tags.length <= 0) {
                 untaggedSchemaReferences.push(referenceObject);
