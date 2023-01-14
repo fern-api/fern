@@ -34,6 +34,7 @@ export function convertHttpService({
             name: file.casingsGenerator.generateName(serviceId),
             fernFilepath: file.fernFilepath,
         },
+        baseUrl: serviceDefinition["base-url"],
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null

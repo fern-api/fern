@@ -1,4 +1,5 @@
 import { GeneratorName, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { NOOP_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
 import { addGenerator } from "../addGenerator";
 
@@ -47,7 +48,7 @@ describe("addGenerator", () => {
             addGenerator({
                 generatorName: "typescript",
                 generatorsConfiguration,
-                context: createMockTaskContext({ shouldSuppressOutput: true }),
+                context: createMockTaskContext({ logger: NOOP_LOGGER }),
             })
         ).toThrow(FernCliError);
     });

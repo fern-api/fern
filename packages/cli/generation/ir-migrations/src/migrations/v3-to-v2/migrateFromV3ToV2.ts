@@ -7,8 +7,8 @@ export const V3_TO_V2_MIGRATION: IrMigration<
     IrVersions.V3.ir.IntermediateRepresentation,
     IrVersions.V2.ir.IntermediateRepresentation
 > = {
-    earlierVersion: "v2",
     laterVersion: "v3",
+    earlierVersion: "v2",
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.249",

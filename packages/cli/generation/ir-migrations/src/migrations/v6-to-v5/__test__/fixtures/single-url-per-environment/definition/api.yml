@@ -1,0 +1,8 @@
+name: api
+
+default-environment: Production
+environments:
+  Production: prod.com
+  Staging:
+    docs: I'm staging
+    url: staging.com

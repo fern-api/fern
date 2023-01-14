@@ -125,9 +125,14 @@ async function startJob({
     context: TaskContext;
 }): Promise<void> {
     const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
-        generatorName: generatorInvocation.name,
-        generatorVersion: generatorInvocation.version,
         intermediateRepresentation,
+        context: {
+            taskContext: context,
+            targetGenerator: {
+                name: generatorInvocation.name,
+                version: generatorInvocation.version,
+            },
+        },
     });
 
     const formData = new FormData();

@@ -54,7 +54,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.163",
-    "@fern-fern/ir-model": "0.0.627",
+    "@fern-fern/ir-model": "0.0.741",
     "ansi-escapes": "^5.0.0",
     "axios": "^0.27.2",
     "boxen": "^7.0.0",

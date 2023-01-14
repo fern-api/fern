@@ -24,6 +24,11 @@ export {
     type AuthSchemeDeclarationVisitor,
 } from "./utils/visitRawAuthSchemeDeclaration";
 export {
+    isRawMultipleBaseUrlsEnvironment,
+    isRawSingleBaseUrlEnvironment,
+    visitRawEnvironmentDeclaration,
+} from "./utils/visitRawEnvironmentDeclaration";
+export {
     isRawAliasDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,

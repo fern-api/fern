@@ -56,7 +56,6 @@ export async function generateIntermediateRepresentation({
         errors: [],
         services: [],
         constants: generateFernConstants(casingsGenerator),
-        defaultEnvironment: workspace.rootApiFile["default-environment"],
         environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile }),
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
             workspace.rootApiFile["error-discrimination"],

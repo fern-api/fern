@@ -1,13 +1,13 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { getIntermediateRepresentationMigrator } from "../../../IntermediateRepresentationMigrator";
-import { getIrForApi } from "../../../__test__/utils/getIrForApi";
+import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
 import { V3_TO_V2_MIGRATION } from "../migrateFromV3ToV2";
+
+const runMigration = createMigrationTester(V3_TO_V2_MIGRATION);
 
 describe("migrateFromV3ToV2", () => {
     it("adds discriminantValue to errors", async () => {
-        const migrated = getIntermediateRepresentationMigrator().migrateThroughMigration({
-            migration: V3_TO_V2_MIGRATION,
-            intermediateRepresentation: await getIrForApi(join(AbsoluteFilePath.of(__dirname), "./fixtures/simple")),
+        const migrated = await runMigration({
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,0 +1,12 @@
+name: api
+
+default-environment: Production
+environments:
+  Production:
+    urls:
+      A: a.prod.com
+      B: b.prod.com
+  Staging:
+    urls:
+      A: a.staging.com
+      B: b.staging.com
