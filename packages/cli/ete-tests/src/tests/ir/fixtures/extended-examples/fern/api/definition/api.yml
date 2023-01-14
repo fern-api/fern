@@ -1,8 +1,5 @@
 name: api
-display-name: Hathora Cloud API
+display-name: API
 auth: bearer
-environments:
-  Production: https://cloud.hathora.dev/v1/
-default-environment: Production
 error-discrimination:
   strategy: status-code

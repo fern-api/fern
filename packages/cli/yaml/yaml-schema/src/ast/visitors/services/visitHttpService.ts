@@ -18,7 +18,7 @@ export async function visitHttpService({
     nodePathForService: NodePath;
 }): Promise<void> {
     await visitObject(service, {
-        "base-url": noop,
+        url: noop,
         "base-path": noop,
         docs: createDocsVisitor(visitor, nodePathForService),
         availability: noop,

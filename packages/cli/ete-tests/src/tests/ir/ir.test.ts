@@ -21,6 +21,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "packages",
     },
+    {
+        name: "multiple-environment-urls",
+    },
 ];
 
 interface Fixture {
