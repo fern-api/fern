@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { FernDefinition } from "../convertOpenApi";
 import { EndpointConverter } from "./EndpointConverter";
@@ -50,9 +51,8 @@ export class OpenAPIConverter {
         for (const tag of tags) {
             const endpoints = this.context.getEndpointsForTag(tag);
             const schemas = this.context.getSchemasForTag(tag);
-            const serviceFile = this.convertToServiceFile(tag, endpoints, schemas);
-            const filepath = RelativeFilePath.of(`${tag}.yml`);
-            serviceFiles[filepath] = serviceFile;
+            const convertedServiceFile = this.convertToServiceFile(tag, endpoints, schemas);
+            serviceFiles[RelativeFilePath.of(convertedServiceFile.filename)] = convertedServiceFile.serviceFile;
         }
 
         const untaggedEndpoints = this.context.getUntaggedEndpoints();
@@ -62,7 +62,7 @@ export class OpenAPIConverter {
             ...multiTaggedSchemas,
             ...untaggedSchemas,
         ]);
-        serviceFiles[COMMONS_SERVICE_FILE_NAME] = commonsServiceFile;
+        serviceFiles[RelativeFilePath.of(commonsServiceFile.filename)] = commonsServiceFile.serviceFile;
 
         return {
             rootApiFile: {
@@ -77,7 +77,9 @@ export class OpenAPIConverter {
         tag: string,
         endpoints: OpenAPIV3Endpoint[],
         schemas: OpenAPIV3Schema[]
-    ): ServiceFileSchema {
+    ): { serviceFile: ServiceFileSchema; filename: string } {
+        const camelCasedTag = camelCase(tag);
+        const pascalCasedTag = upperFirst(camelCasedTag);
         let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
         const convertedEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
         schemas.forEach((schema) => {
@@ -117,17 +119,21 @@ export class OpenAPIConverter {
                 };
             }
         });
-        return {
+        const serviceFile = {
             types,
             services: {
                 http: {
-                    [`${tag}Service`]: {
+                    [`${pascalCasedTag}Service`]: {
                         auth: false,
                         "base-path": "",
                         endpoints: convertedEndpoints,
                     },
                 },
             },
+        };
+        return {
+            filename: `${camelCasedTag}.yml`,
+            serviceFile,
         };
     }
 }

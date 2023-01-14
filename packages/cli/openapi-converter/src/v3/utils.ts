@@ -16,13 +16,13 @@ export function isReferenceObject(
 }
 
 export function maybeConvertSchemaToPrimitive(schemaObject: OpenAPIV3.SchemaObject): string | undefined {
-    if (schemaObject === "boolean") {
+    if (schemaObject === "boolean" || schemaObject.type === "boolean") {
         return "boolean";
-    } else if (schemaObject === "number") {
+    } else if (schemaObject === "number" || schemaObject.type === "number") {
         return "double";
-    } else if (schemaObject === "integer") {
+    } else if (schemaObject === "integer" || schemaObject.type === "integer") {
         return "integer";
-    } else if (schemaObject === "string") {
+    } else if (schemaObject === "string" || schemaObject.type === "string") {
         return "string";
     }
     return undefined;
