@@ -18,6 +18,7 @@
     { "path": "../cli/init" },
     { "path": "../cli/logger" },
     { "path": "../cli/login" },
+    { "path": "../cli/openapi-converter" },
     { "path": "../cli/project-loader" },
     { "path": "../cli/semver-utils" },
     { "path": "../cli/services" },
@@ -46,7 +47,6 @@
     { "path": "../editor/ui/split-view" },
     { "path": "../editor/ui/theme" },
     { "path": "../editor/ui/toaster" },
-    { "path": "../openapi-converter" },
     { "path": "../scripts" }
   ]
 }
