@@ -42,112 +42,120 @@ export class SchemaConverter {
     }
 
     private convertSchema(schema: OpenAPIV3.SchemaObject, breadcrumbs: string[]): ConvertedSchema | undefined {
-        let primitiveSchema: string | undefined = undefined;
-        if (schema === "boolean" || schema.type === "boolean") {
-            primitiveSchema = "boolean";
-        } else if (schema === "number" || schema.type === "number") {
-            primitiveSchema = "double";
-        } else if (schema === "integer" || schema.type === "integer") {
-            primitiveSchema = "integer";
-        } else if (schema === "string" || schema.type === "string") {
-            primitiveSchema = "string";
-        }
-
-        if (primitiveSchema != null) {
-            return schema.description != null
-                ? { typeDeclaration: primitiveSchema }
-                : {
-                      typeDeclaration: {
-                          type: primitiveSchema,
-                          docs: schema.description,
-                      },
-                  };
-        }
-
-        if (schema.enum != null) {
-            return {
-                typeDeclaration: {
-                    docs: schema.description,
-                    enum: schema.enum,
-                },
-            };
-        }
-
-        let extendedObjectAdditionalTypes: Record<string, RawSchemas.TypeDeclarationSchema> = {};
+        let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
+        let typeDeclaration: RawSchemas.TypeDeclarationSchema | undefined = undefined;
         const extendedObjects: string[] = [];
-        const allOf = schema.allOf;
-        if (allOf != null) {
-            schema.allOf?.map((parent, index) => {
-                const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
-                if (isReferenceObject(parent)) {
-                    extendedObjects.push(getFernReferenceForSchema(parent, this.context));
+
+        if (schema === "boolean" || schema.type === "boolean") {
+            typeDeclaration = "boolean";
+        } else if (schema === "number" || schema.type === "number") {
+            typeDeclaration = "double";
+        } else if (schema === "integer" || schema.type === "integer") {
+            typeDeclaration = "integer";
+        } else if (schema === "string" || schema.type === "string") {
+            typeDeclaration = "string";
+        } else if (schema.type === "array") {
+            if (schema.items == null) {
+                typeDeclaration = "list<unknown>";
+            } else if (isReferenceObject(schema.items)) {
+                typeDeclaration = `list<${getFernReferenceForSchema(schema.items, this.context)}>`;
+            } else {
+                const convertedSchema = this.convertSchema(schema.items, [...breadcrumbs, "items"]);
+                if (convertedSchema === undefined) {
+                    typeDeclaration = "list<unknown>";
                 } else {
                     const schemaName = this.inlinedTypeNamer.getName();
-                    const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
-                    if (convertedSchema == null) {
-                        this.taskContext.logger.warn(`${parentBreadcrumbs.join(" -> ")}: Failed to convert schema`);
-                    } else {
-                        extendedObjects.push(schemaName);
-                        extendedObjectAdditionalTypes = {
-                            ...extendedObjectAdditionalTypes,
-                            [schemaName]: convertedSchema.typeDeclaration,
-                        };
-                    }
+                    additionalTypeDeclarations = {
+                        ...additionalTypeDeclarations,
+                        ...convertedSchema.additionalTypeDeclarations,
+                    };
+                    additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
+                    typeDeclaration = `list<${schemaName}>`;
                 }
-            });
-        }
-
-        let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {
-            ...extendedObjectAdditionalTypes,
-        };
-        if (schema.properties != null) {
-            // its an object
-            const objectDefinition: Record<string, string | RawSchemas.AliasSchema> = {};
-            for (const [property, propertyType] of Object.entries(schema.properties)) {
-                let convertedPropertyType: string | RawSchemas.AliasSchema;
-                if (isReferenceObject(propertyType)) {
-                    convertedPropertyType = getFernReferenceForSchema(propertyType, this.context);
-                } else {
-                    const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
-                    if (convertedSchema == null) {
-                        this.taskContext.logger.warn(`${breadcrumbs.join(" -> ")}: Failed to convert ${property}`);
-                        continue;
-                    }
-                    const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
-                    if (maybeAliasType != null && isSchemaPrimitive(maybeAliasType)) {
-                        convertedPropertyType = maybeAliasType;
+            }
+        } else if (schema.enum != null) {
+            typeDeclaration = {
+                enum: schema.enum,
+            };
+        } else if (schema.type === "object" || schema.properties != null || schema.allOf != null) {
+            if (schema.allOf != null) {
+                schema.allOf?.map((parent, index) => {
+                    const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
+                    if (isReferenceObject(parent)) {
+                        extendedObjects.push(getFernReferenceForSchema(parent, this.context));
                     } else {
                         const schemaName = this.inlinedTypeNamer.getName();
-                        additionalTypeDeclarations = {
-                            ...additionalTypeDeclarations,
-                            ...convertedSchema.additionalTypeDeclarations,
-                        };
-                        additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
-                        convertedPropertyType = schemaName;
+                        const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
+                        if (convertedSchema == null) {
+                            this.taskContext.logger.warn(`${parentBreadcrumbs.join(" -> ")}: Failed to convert schema`);
+                        } else {
+                            extendedObjects.push(schemaName);
+                            additionalTypeDeclarations = {
+                                ...additionalTypeDeclarations,
+                                [schemaName]: convertedSchema.typeDeclaration,
+                            };
+                        }
                     }
-                }
-
-                if (schema.required == null || !schema.required.includes(property)) {
-                    convertedPropertyType = `optional<${convertedPropertyType}>`;
-                }
-
-                objectDefinition[property] = convertedPropertyType;
+                });
             }
-            return {
-                typeDeclaration: { extends: extendedObjects, properties: objectDefinition },
-                additionalTypeDeclarations,
-            };
+
+            if (schema.properties != null) {
+                // its an object
+                const objectDefinition: Record<string, string | RawSchemas.AliasSchema> = {};
+                for (const [property, propertyType] of Object.entries(schema.properties)) {
+                    let convertedPropertyType: string | RawSchemas.AliasSchema;
+                    if (isReferenceObject(propertyType)) {
+                        convertedPropertyType = getFernReferenceForSchema(propertyType, this.context);
+                    } else {
+                        const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
+                        if (convertedSchema == null) {
+                            this.taskContext.logger.warn(`${breadcrumbs.join(" -> ")}: Failed to convert ${property}`);
+                            continue;
+                        }
+                        const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
+                        if (maybeAliasType != null && isSchemaPrimitive(maybeAliasType)) {
+                            convertedPropertyType = maybeAliasType;
+                        } else {
+                            const schemaName = this.inlinedTypeNamer.getName();
+                            additionalTypeDeclarations = {
+                                ...additionalTypeDeclarations,
+                                ...convertedSchema.additionalTypeDeclarations,
+                            };
+                            additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
+                            convertedPropertyType = schemaName;
+                        }
+                    }
+
+                    if (schema.required == null || !schema.required.includes(property)) {
+                        convertedPropertyType = `optional<${convertedPropertyType}>`;
+                    }
+
+                    objectDefinition[property] = convertedPropertyType;
+                }
+                typeDeclaration = {
+                    extends: extendedObjects.length > 0 ? extendedObjects : undefined,
+                    properties: objectDefinition,
+                };
+            } else if (extendedObjects.length > 0) {
+                typeDeclaration = { extends: extendedObjects };
+            }
         }
 
-        // no properties but extends other objects
-        if (extendedObjects.length > 0) {
-            return {
-                typeDeclaration: { extends: extendedObjects },
-                additionalTypeDeclarations,
-            };
+        if (typeDeclaration != null && schema.description != null) {
+            if (typeof typeDeclaration === "string") {
+                typeDeclaration = {
+                    docs: schema.description,
+                    type: typeDeclaration,
+                };
+            } else {
+                typeDeclaration = {
+                    docs: schema.description,
+                    ...typeDeclaration,
+                };
+            }
         }
 
-        return undefined;
+        return typeDeclaration != null ? { typeDeclaration, additionalTypeDeclarations } : undefined;
     }
 }
 
