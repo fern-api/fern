@@ -1,0 +1,16 @@
+services:
+  http:
+    ServiceWithoutUrl:
+      base-path: /
+      auth: false
+      endpoints: {}
+    ServiceWithValidUrl:
+      url: A
+      base-path: /
+      auth: false
+      endpoints: {}
+    ServiceWithInvalidUrl:
+      url: InvalidUrl
+      base-path: /
+      auth: false
+      endpoints: {}

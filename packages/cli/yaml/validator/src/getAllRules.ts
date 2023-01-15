@@ -1,5 +1,6 @@
 import { Rule } from "./Rule";
 import ImportFileExistsRule from "./rules/import-file-exists";
+import MatchingEnvironmentUrlsRule from "./rules/matching-environment-urls";
 import NoCircularImportsRule from "./rules/no-circular-imports";
 import NoComplexQueryParamsRule from "./rules/no-complex-query-params";
 import NoConflictingEndpointParametersRule from "./rules/no-conflicting-endpoint-parameters";
@@ -22,6 +23,7 @@ import ValidDefaultEnvironmentRule from "./rules/valid-default-environment";
 import ValidExampleEndpointCallRule from "./rules/valid-example-endpoint-call";
 import ValidExampleTypeRule from "./rules/valid-example-type";
 import ValidFieldNamesRule from "./rules/valid-field-names";
+import ValidServiceUrlsRule from "./rules/valid-service-urls";
 
 export function getAllRules(): Rule[] {
     return [
@@ -48,6 +50,8 @@ export function getAllRules(): Rule[] {
         ValidExampleEndpointCallRule,
         NoDuplicateExampleNamesRule,
         NoUndefinedExampleReferenceRule,
+        MatchingEnvironmentUrlsRule,
+        ValidServiceUrlsRule,
     ];
 }
 

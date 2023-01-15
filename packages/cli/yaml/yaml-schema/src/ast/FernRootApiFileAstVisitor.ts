@@ -1,4 +1,8 @@
-import { ErrorDiscriminationSchema } from "../schemas";
+import {
+    ErrorDiscriminationSchema,
+    MultipleBaseUrlsEnvironmentSchema,
+    SingleBaseUrlEnvironmentSchema,
+} from "../schemas";
 import { NodePath } from "./NodePath";
 
 export type FernRootApiFileAstVisitor<R = void | Promise<void>> = {
@@ -7,6 +11,10 @@ export type FernRootApiFileAstVisitor<R = void | Promise<void>> = {
 
 export interface FernRootApiFileAstNodeTypes {
     defaultEnvironment: string | null | undefined;
+    environment: {
+        environmentId: string;
+        environment: string | SingleBaseUrlEnvironmentSchema | MultipleBaseUrlsEnvironmentSchema;
+    };
     errorDiscrimination: ErrorDiscriminationSchema | null | undefined;
 }
 
