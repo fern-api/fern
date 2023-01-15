@@ -58,10 +58,10 @@ in most generated outputs, like SDKs and in Postman Collections.
 ```yaml api.yml
 name: api
 environments:
-  Production: https://www.google.com
+  Production: https://www.yoursite.com
   Staging:
     docs: This staging environment is helpful for testing!
-    url: https://www.staging.google.com
+    url: https://www.staging.yoursite.com
 ```
 
 You can also provide a default environment:
@@ -69,11 +69,40 @@ You can also provide a default environment:
 ```yaml api.yml
 name: api
 environments:
-  Production: https://www.google.com
+  Production: https://www.yoursite.com
     Staging:
       docs: This staging environment is helpful for testing!
-      url: https://www.staging.google.com
+      url: https://www.staging.yoursite.com
 default-environment: Production
+```
+
+### Multiple URLs per environment
+
+You can specify multiple URLs per environment. This is helpful if you have a
+microservice architecture, and you want a single SDK to interact with multiple
+servers.
+
+```yaml api.yml
+environments:
+  Production:
+    urls:
+      Auth: https://auth.yoursite.com
+      Plants: https://plants.yoursite.com
+  Staging:
+    urls:
+      Auth: https://auth.staging.yoursite.com
+      Plants: https://plants.staging.yoursite.com
+```
+
+If you choose to use this feature, you must specify a `url` for each service you define:
+
+```yaml auth.yml
+services:
+  http:
+    AuthService:
+      url: Auth
+      base-path: /auth
+      ...
 ```
 
 ## Error discrimination strategy
