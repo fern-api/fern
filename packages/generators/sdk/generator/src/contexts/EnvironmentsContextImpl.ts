@@ -1,7 +1,7 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { EnvironmentsContext } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
-import { EnvironmentEnumDeclarationReferencer } from "../declaration-referencers/EnvironmentEnumDeclarationReferencer";
+import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { EnvironmentsContextMixinImpl } from "./mixins/EnvironmentsContextMixinImpl";
 
@@ -9,7 +9,7 @@ export declare namespace EnvironmentsContextImpl {
     export interface Init extends BaseContextImpl.Init {
         intermediateRepresentation: IntermediateRepresentation;
         environmentsGenerator: EnvironmentsGenerator;
-        environmentsEnumDeclarationReferencer: EnvironmentEnumDeclarationReferencer;
+        environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
     }
 }
 
@@ -19,14 +19,14 @@ export class EnvironmentsContextImpl extends BaseContextImpl implements Environm
     constructor({
         intermediateRepresentation,
         environmentsGenerator,
-        environmentsEnumDeclarationReferencer,
+        environmentsDeclarationReferencer,
         ...superInit
     }: EnvironmentsContextImpl.Init) {
         super(superInit);
         this.environments = new EnvironmentsContextMixinImpl({
             intermediateRepresentation,
             environmentsGenerator,
-            environmentsEnumDeclarationReferencer,
+            environmentsDeclarationReferencer,
             importsManager: this.importsManager,
             sourceFile: this.sourceFile,
         });

@@ -6,3 +6,14 @@ headers:
 
 error-discrimination:
   strategy: status-code
+
+default-environment: Production
+environments:
+  Production:
+    urls:
+      ServerA: a.prod.com
+      ServerB: b.prod.com
+  Staging:
+    urls:
+      ServerA: a.staging.com
+      ServerB: b.staging.com

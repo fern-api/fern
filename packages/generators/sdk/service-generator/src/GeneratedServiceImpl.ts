@@ -146,16 +146,23 @@ export class GeneratedServiceImpl implements GeneratedService {
     }
 
     public getEnvironment(context: ServiceContext): ts.Expression {
-        let environment = this.getReferenceToEnvironment();
-        const defaultEnvironment = context.environments.getReferenceToDefaultEnvironment();
+        let referenceToEnvironmentValue = this.getReferenceToEnvironment();
+
+        const defaultEnvironment = context.environments
+            .getGeneratedEnvironments()
+            .getReferenceToDefaultEnvironment(context);
         if (defaultEnvironment != null) {
-            environment = ts.factory.createBinaryExpression(
-                environment,
+            referenceToEnvironmentValue = ts.factory.createBinaryExpression(
+                referenceToEnvironmentValue,
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                 defaultEnvironment
             );
         }
-        return environment;
+
+        return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
+            referenceToEnvironmentValue,
+            baseUrlId: this.service.originalService?.baseUrl ?? undefined,
+        });
     }
 
     public getAuthorizationHeaders(context: ServiceContext): GeneratedHeader[] {
@@ -228,15 +235,8 @@ export class GeneratedServiceImpl implements GeneratedService {
         const properties: OptionalKind<PropertySignatureStructure>[] = [
             {
                 name: GeneratedServiceImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
-                type: getTextOfTsNode(
-                    generatedEnvironments != null
-                        ? ts.factory.createUnionTypeNode([
-                              context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ])
-                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                ),
-                hasQuestionToken: generatedEnvironments?.defaultEnvironmentEnumMemberName != null,
+                type: getTextOfTsNode(generatedEnvironments.getTypeForUserSuppliedEnvironment(context)),
+                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
             },
         ];
 

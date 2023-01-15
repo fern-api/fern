@@ -1,34 +1,35 @@
-import { Environment, EnvironmentId } from "@fern-fern/ir-model/environment";
+import {
+    EnvironmentBaseUrlId,
+    EnvironmentId,
+    SingleBaseUrlEnvironment,
+    SingleBaseUrlEnvironments,
+} from "@fern-fern/ir-model/environment";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 
-export declare namespace GeneratedEnvironmentsImpl {
+export declare namespace GeneratedSingleUrlEnvironmentsImpl {
     export interface Init {
         environmentEnumName: string;
-        environments: Environment[];
-        defaultEnvironment: EnvironmentId | undefined;
+        defaultEnvironmentId: EnvironmentId | undefined;
+        environments: SingleBaseUrlEnvironments;
     }
 }
 
-export class GeneratedEnvironmentsImpl implements GeneratedEnvironments {
+export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments {
     private environmentEnumName: string;
-    private environments: Environment[];
+    private environments: SingleBaseUrlEnvironments;
     private defaultEnvironmentId: EnvironmentId | undefined;
 
-    constructor({ environments, defaultEnvironment, environmentEnumName }: GeneratedEnvironmentsImpl.Init) {
+    constructor({ environments, environmentEnumName, defaultEnvironmentId }: GeneratedSingleUrlEnvironmentsImpl.Init) {
         this.environments = environments;
         this.environmentEnumName = environmentEnumName;
-        this.defaultEnvironmentId = defaultEnvironment;
+        this.defaultEnvironmentId = defaultEnvironmentId;
     }
 
     public writeToFile(context: EnvironmentsContext): void {
-        if (this.environments.length === 0) {
-            return;
-        }
-
         const objectWriter = FernWriters.object.writer({ asConst: true });
-        for (const environment of this.environments) {
+        for (const environment of this.environments.environments) {
             objectWriter.addProperty({
                 key: this.getNameOfEnvironment(environment),
                 value: `"${environment.url}"`,
@@ -52,7 +53,7 @@ export class GeneratedEnvironmentsImpl implements GeneratedEnvironments {
             isExported: true,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode(
-                    this.environments.map((environment) =>
+                    this.environments.environments.map((environment) =>
                         ts.factory.createTypeQueryNode(
                             ts.factory.createQualifiedName(
                                 ts.factory.createIdentifier(this.environmentEnumName),
@@ -66,20 +67,47 @@ export class GeneratedEnvironmentsImpl implements GeneratedEnvironments {
         });
     }
 
-    public get defaultEnvironmentEnumMemberName(): string | undefined {
+    public getReferenceToDefaultEnvironment(context: EnvironmentsContext): ts.Expression | undefined {
         if (this.defaultEnvironmentId == null) {
             return undefined;
         }
-        const defaultEnvironment = this.environments.find(
+        const defaultEnvironment = this.environments.environments.find(
             (environment) => environment.id === this.defaultEnvironmentId
         );
         if (defaultEnvironment == null) {
             throw new Error("Default environment does not exist");
         }
-        return this.getNameOfEnvironment(defaultEnvironment);
+        return ts.factory.createPropertyAccessExpression(
+            context.environments.getReferenceToEnvironmentsEnum().getExpression(),
+            this.getNameOfEnvironment(defaultEnvironment)
+        );
     }
 
-    private getNameOfEnvironment(environment: Environment): string {
+    public getTypeForUserSuppliedEnvironment(context: EnvironmentsContext): ts.TypeNode {
+        return ts.factory.createUnionTypeNode([
+            context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+        ]);
+    }
+
+    public hasDefaultEnvironment(): boolean {
+        return this.defaultEnvironmentId != null;
+    }
+
+    public getReferenceToEnvironmentUrl({
+        referenceToEnvironmentValue,
+        baseUrlId,
+    }: {
+        referenceToEnvironmentValue: ts.Expression;
+        baseUrlId: EnvironmentBaseUrlId | undefined;
+    }): ts.Expression {
+        if (baseUrlId != null) {
+            throw new Error(`Cannot get reference to environment URL because baseUrlId is defined ("${baseUrlId}")`);
+        }
+        return referenceToEnvironmentValue;
+    }
+
+    private getNameOfEnvironment(environment: SingleBaseUrlEnvironment): string {
         return environment.name.pascalCase.unsafeName;
     }
 }

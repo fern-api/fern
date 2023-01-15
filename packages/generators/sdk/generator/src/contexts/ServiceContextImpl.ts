@@ -12,7 +12,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
-import { EnvironmentEnumDeclarationReferencer } from "../declaration-referencers/EnvironmentEnumDeclarationReferencer";
+import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "../declaration-referencers/ServiceDeclarationReferencer";
@@ -52,7 +52,7 @@ export declare namespace ServiceContextImpl {
         serviceGenerator: ServiceGenerator;
         serviceResolver: ServiceResolver;
         environmentsGenerator: EnvironmentsGenerator;
-        environmentsEnumDeclarationReferencer: EnvironmentEnumDeclarationReferencer;
+        environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
     }
 }
 
@@ -90,7 +90,7 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
         serviceDeclarationReferencer,
         serviceGenerator,
         environmentsGenerator,
-        environmentsEnumDeclarationReferencer,
+        environmentsDeclarationReferencer,
         ...superInit
     }: ServiceContextImpl.Init) {
         super(superInit);
@@ -160,7 +160,7 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
             intermediateRepresentation,
-            environmentsEnumDeclarationReferencer,
+            environmentsDeclarationReferencer,
             environmentsGenerator,
         });
     }

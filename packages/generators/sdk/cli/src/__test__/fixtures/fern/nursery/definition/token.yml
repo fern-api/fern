@@ -27,6 +27,7 @@ services:
   http:
     TokenService:
       auth: false
+      url: ServerB
       base-path: /tokens
       endpoints:
         create:

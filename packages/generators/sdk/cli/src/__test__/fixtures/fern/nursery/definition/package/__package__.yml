@@ -3,6 +3,7 @@ types:
 services:
   http:
     PackageService:
+      url: ServerA
       base-path: /
       auth: false
       endpoints:

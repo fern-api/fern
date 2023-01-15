@@ -29,7 +29,7 @@ export function getExportedDirectoriesForFernFilepath({
 export function createExportForFernFilepathDirectory(fernFilepathPart: Name): ExportedDirectory {
     return {
         nameOnDisk: fernFilepathPart.camelCase.unsafeName,
-        exportDeclaration: { namespaceExport: fernFilepathPart.camelCase.unsafeName },
+        exportDeclaration: { namespaceExport: fernFilepathPart.camelCase.safeName },
     };
 }
 

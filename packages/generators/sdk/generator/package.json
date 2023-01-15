@@ -27,7 +27,7 @@
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-model": "0.0.627",
+    "@fern-fern/ir-model": "0.0.741",
     "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/endpoint-type-schemas-generator": "workspace:*",

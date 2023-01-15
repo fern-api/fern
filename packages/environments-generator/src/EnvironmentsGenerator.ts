@@ -1,13 +1,15 @@
-import { Environment, EnvironmentId } from "@fern-fern/ir-model/environment";
+import { Environments, EnvironmentsConfig } from "@fern-fern/ir-model/environment";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
-import { GeneratedEnvironmentsImpl } from "./GeneratedEnvironmentsImpl";
+import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl";
+import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl";
+import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironmentsImpl";
 
 export declare namespace EnvironmentsGenerator {
     export namespace generateEnvironments {
         export interface Args {
-            environments: Environment[];
+            environmentsConfig: EnvironmentsConfig | undefined;
             environmentEnumName: string;
-            defaultEnvironment: EnvironmentId | undefined;
+            environmentUrlsTypeName: string;
         }
     }
 }
@@ -15,9 +17,29 @@ export declare namespace EnvironmentsGenerator {
 export class EnvironmentsGenerator {
     public generateEnvironments({
         environmentEnumName,
-        environments,
-        defaultEnvironment,
+        environmentUrlsTypeName,
+        environmentsConfig,
     }: EnvironmentsGenerator.generateEnvironments.Args): GeneratedEnvironments {
-        return new GeneratedEnvironmentsImpl({ environmentEnumName, environments, defaultEnvironment });
+        if (environmentsConfig == null) {
+            return new EmptyGeneratedEnvironmentsImpl();
+        }
+        return Environments._visit<GeneratedEnvironments>(environmentsConfig.environments, {
+            singleBaseUrl: (singleBaseUrlEnvironments) =>
+                new GeneratedSingleUrlEnvironmentsImpl({
+                    environments: singleBaseUrlEnvironments,
+                    environmentEnumName,
+                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
+                }),
+            multipleBaseUrls: (mulitpleBaseUrlEnvironments) =>
+                new GeneratedMultipleUrlsEnvironmentsImpl({
+                    environments: mulitpleBaseUrlEnvironments,
+                    environmentEnumName,
+                    environmentUrlsTypeName,
+                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
+                }),
+            _unknown: () => {
+                throw new Error("Unknown environments: " + environmentsConfig.environments.type);
+            },
+        });
     }
 }

@@ -12,6 +12,7 @@ services:
   http:
     OwnerService:
       auth: false
+      url: ServerA
       base-path: /owner
       endpoints:
         create:

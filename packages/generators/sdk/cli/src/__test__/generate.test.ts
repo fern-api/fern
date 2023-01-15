@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { PackageJsonScript } from "@fern-typescript/sdk-generator/src/generate-ts-project/generatePackageJson";
 import decompress from "decompress";
 import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
@@ -100,11 +101,26 @@ describe("runGenerator", () => {
 
                 await runGenerator(configJsonPath);
 
-                const runCommandInOutputDirectory = async (command: string, args: string[]) => {
+                const runCommandInOutputDirectory = async (
+                    command: string,
+                    args?: string[],
+                    { env }: { env?: Record<string, string> } = {}
+                ) => {
                     await execa(command, args, {
                         cwd: outputPath,
+                        env,
                     });
                 };
+
+                if (fixture.outputMode !== "publish") {
+                    await runCommandInOutputDirectory("yarn", undefined, {
+                        env: {
+                            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+                        },
+                    });
+                    await runCommandInOutputDirectory("yarn", [PackageJsonScript.BUILD]);
+                }
 
                 // check that the non-git-ignored files match snapshot
                 const pathToGitArchive = path.join(outputPath, "archive.zip");

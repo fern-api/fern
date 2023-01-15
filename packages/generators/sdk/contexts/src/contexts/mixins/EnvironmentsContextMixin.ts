@@ -1,11 +1,10 @@
-import { ts } from "ts-morph";
 import { GeneratedEnvironments } from "../../generated-types";
 import { Reference } from "../../Reference";
 
 export interface EnvironmentsContextMixin {
-    getGeneratedEnvironments: () => GeneratedEnvironments | undefined;
+    getGeneratedEnvironments: () => GeneratedEnvironments;
     getReferenceToEnvironmentsEnum: () => Reference;
-    getReferenceToDefaultEnvironment: () => ts.Expression | undefined;
+    getReferenceToEnvironmentUrls: () => Reference;
 }
 
 export interface WithEnvironmentsContextMixin {

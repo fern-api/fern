@@ -25,7 +25,7 @@ import { TypeContextImpl } from "./contexts/TypeContextImpl";
 import { TypeSchemaContextImpl } from "./contexts/TypeSchemaContextImpl";
 import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
-import { EnvironmentEnumDeclarationReferencer } from "./declaration-referencers/EnvironmentEnumDeclarationReferencer";
+import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
@@ -83,7 +83,7 @@ export class SdkGenerator {
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
     private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
     private endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
-    private environmentsEnumDeclarationReferencer: EnvironmentEnumDeclarationReferencer;
+    private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
@@ -175,10 +175,11 @@ export class SdkGenerator {
             packageName,
             apiName,
         });
-        this.environmentsEnumDeclarationReferencer = new EnvironmentEnumDeclarationReferencer({
+        this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             packageName,
             apiName,
+            environmentsConfig: intermediateRepresentation.environments ?? undefined,
         });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
@@ -478,7 +479,7 @@ export class SdkGenerator {
                         typeSchemaGenerator: this.typeSchemaGenerator,
                         errorSchemaGenerator: this.errorSchemaGenerator,
                         environmentsGenerator: this.environmentsGenerator,
-                        environmentsEnumDeclarationReferencer: this.environmentsEnumDeclarationReferencer,
+                        environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
                         serviceDeclarationReferencer: this.serviceDeclarationReferencer,
                         serviceGenerator: this.serviceGenerator,
                     });
@@ -490,7 +491,7 @@ export class SdkGenerator {
 
     private generateEnvironments(): void {
         this.withSourceFile({
-            filepath: this.environmentsEnumDeclarationReferencer.getExportedFilepath(),
+            filepath: this.environmentsDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
                 const environmentsContext = new EnvironmentsContextImpl({
                     sourceFile,
@@ -500,9 +501,9 @@ export class SdkGenerator {
                     importsManager,
                     intermediateRepresentation: this.intermediateRepresentation,
                     environmentsGenerator: this.environmentsGenerator,
-                    environmentsEnumDeclarationReferencer: this.environmentsEnumDeclarationReferencer,
+                    environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
                 });
-                environmentsContext.environments.getGeneratedEnvironments()?.writeToFile(environmentsContext);
+                environmentsContext.environments.getGeneratedEnvironments().writeToFile(environmentsContext);
             },
         });
     }
