@@ -55,9 +55,7 @@ export class SchemaConverter {
         } else if (schema === "string" || schema.type === "string") {
             typeDeclaration = "string";
         } else if (schema.type === "array") {
-            if (schema.items == null) {
-                typeDeclaration = "list<unknown>";
-            } else if (isReferenceObject(schema.items)) {
+            if (isReferenceObject(schema.items)) {
                 typeDeclaration = `list<${getFernReferenceForSchema(schema.items, this.context)}>`;
             } else {
                 const convertedSchema = this.convertSchema(schema.items, [...breadcrumbs, "items"]);
@@ -83,26 +81,24 @@ export class SchemaConverter {
                 enum: schema.enum,
             };
         } else if (schema.type === "object" || schema.properties != null || schema.allOf != null) {
-            if (schema.allOf != null) {
-                schema.allOf?.map((parent, index) => {
-                    const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
-                    if (isReferenceObject(parent)) {
-                        extendedObjects.push(getFernReferenceForSchema(parent, this.context));
+            schema.allOf?.map((parent, index) => {
+                const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
+                if (isReferenceObject(parent)) {
+                    extendedObjects.push(getFernReferenceForSchema(parent, this.context));
+                } else {
+                    const schemaName = this.inlinedTypeNamer.getName();
+                    const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
+                    if (convertedSchema == null) {
+                        this.taskContext.logger.warn(`${parentBreadcrumbs.join(" -> ")}: Failed to convert schema`);
                     } else {
-                        const schemaName = this.inlinedTypeNamer.getName();
-                        const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
-                        if (convertedSchema == null) {
-                            this.taskContext.logger.warn(`${parentBreadcrumbs.join(" -> ")}: Failed to convert schema`);
-                        } else {
-                            extendedObjects.push(schemaName);
-                            additionalTypeDeclarations = {
-                                ...additionalTypeDeclarations,
-                                [schemaName]: convertedSchema.typeDeclaration,
-                            };
-                        }
+                        extendedObjects.push(schemaName);
+                        additionalTypeDeclarations = {
+                            ...additionalTypeDeclarations,
+                            [schemaName]: convertedSchema.typeDeclaration,
+                        };
                     }
-                });
-            }
+                }
+            });
 
             if (schema.properties != null) {
                 // its an object
