@@ -1,7 +1,12 @@
-import { doesPathExist, getDirectoryContents, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
+
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
+const OPEN_API_FILENAME = "openapi.json";
+
+const FIXTURES = ["gigs", "telematica"];
 
 describe("fern init", () => {
     it("no existing fern directory", async () => {
@@ -22,4 +27,12 @@ describe("fern init", () => {
         });
         expect(await doesPathExist(join(pathOfDirectory, FERN_DIRECTORY, "api1"))).toBe(true);
     }, 60_000);
+
+    for (const fixture of FIXTURES) {
+        it(`${fixture} openapi`, async () => {
+            const openApiPath = join(FIXTURES_DIR, RelativeFilePath.of(fixture), OPEN_API_FILENAME);
+            const pathOfDirectory = await init({ openApiPath });
+            expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+        }, 60_000);
+    }
 });
