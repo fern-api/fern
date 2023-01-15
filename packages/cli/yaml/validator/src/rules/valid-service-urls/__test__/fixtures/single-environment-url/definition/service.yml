@@ -1,0 +1,11 @@
+services:
+  http:
+    ServiceWithoutUrl:
+      base-path: /
+      auth: false
+      endpoints: {}
+    ServiceWithUrl:
+      url: SomeUrl
+      base-path: /
+      auth: false
+      endpoints: {}

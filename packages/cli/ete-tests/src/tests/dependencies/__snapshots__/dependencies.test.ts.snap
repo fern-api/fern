@@ -193,7 +193,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "wireValue": "errorInstanceId"
         }
     },
-    "environments": [],
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },

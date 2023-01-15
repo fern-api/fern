@@ -1,13 +1,13 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { getIntermediateRepresentationMigrator } from "../../../IntermediateRepresentationMigrator";
-import { getIrForApi } from "../../../__test__/utils/getIrForApi";
+import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
 import { V2_TO_V1_MIGRATION } from "../migrateFromV2ToV1";
+
+const runMigration = createMigrationTester(V2_TO_V1_MIGRATION);
 
 describe("migrateFromV2ToV1", () => {
     it("adds discriminantValue to errors", async () => {
-        const migrated = getIntermediateRepresentationMigrator().migrateThroughMigration({
-            migration: V2_TO_V1_MIGRATION,
-            intermediateRepresentation: await getIrForApi(join(AbsoluteFilePath.of(__dirname), "./fixtures/simple")),
+        const migrated = await runMigration({
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
         });
         expect(migrated.errors[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",

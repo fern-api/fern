@@ -17,7 +17,14 @@ export async function visitFernRootApiFileYamlAst(
         },
         docs: noop,
         headers: noop,
-        environments: noop,
+        environments: async (environments) => {
+            if (environments == null) {
+                return;
+            }
+            for (const [environmentId, environment] of Object.entries(environments)) {
+                await visitor.environment?.({ environmentId, environment }, ["environments", environmentId]);
+            }
+        },
         "error-discrimination": async (errorDiscrimination) => {
             await visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"]);
         },

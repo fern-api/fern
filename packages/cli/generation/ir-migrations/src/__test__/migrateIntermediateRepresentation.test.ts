@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
@@ -43,9 +44,14 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("does not run migration if generator version is equal to migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript-sdk",
-            generatorVersion: "0.0.246",
             intermediateRepresentation: await getIrForSimpleApi(),
+            context: {
+                taskContext: createMockTaskContext(),
+                targetGenerator: {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.246",
+                },
+            },
         });
         expect(
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -55,9 +61,14 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript-sdk",
-            generatorVersion: "0.0.245-1-ga1ce47f",
             intermediateRepresentation: await getIrForSimpleApi(),
+            context: {
+                taskContext: createMockTaskContext(),
+                targetGenerator: {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.245-1-ga1ce47f",
+                },
+            },
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
@@ -72,9 +83,14 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("runs migration if generator (release) version is less than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript-sdk",
-            generatorVersion: "0.0.245",
             intermediateRepresentation: await getIrForSimpleApi(),
+            context: {
+                taskContext: createMockTaskContext(),
+                targetGenerator: {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.245",
+                },
+            },
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
@@ -89,9 +105,14 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("does not run migration if generator (dev) version is greater than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript-sdk",
-            generatorVersion: "0.0.246-1-ga1ce47f",
             intermediateRepresentation: await getIrForSimpleApi(),
+            context: {
+                taskContext: createMockTaskContext(),
+                targetGenerator: {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.246-1-ga1ce47f",
+                },
+            },
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
@@ -99,9 +120,14 @@ describe("migrateIntermediateRepresentation", () => {
 
     it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", async () => {
         const migrated = migrateIntermediateRepresentation({
-            generatorName: "fernapi/fern-typescript-sdk",
-            generatorVersion: "0.0.247",
             intermediateRepresentation: await getIrForSimpleApi(),
+            context: {
+                taskContext: createMockTaskContext(),
+                targetGenerator: {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.247",
+                },
+            },
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();

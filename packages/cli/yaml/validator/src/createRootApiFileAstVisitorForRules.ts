@@ -48,6 +48,7 @@ export function createRootApiFileAstVisitorForRules({
 
     return {
         ...createAstNodeVisitor("defaultEnvironment"),
+        ...createAstNodeVisitor("environment"),
         ...createAstNodeVisitor("errorDiscrimination"),
     };
 }

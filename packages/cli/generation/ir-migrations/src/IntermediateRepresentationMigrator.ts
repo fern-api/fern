@@ -1,10 +1,12 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IrMigrationContext } from "./IrMigrationContext";
 import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
 import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
+import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
 import { AlwaysRunMigration, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
@@ -14,20 +16,20 @@ export function getIntermediateRepresentationMigrator(): IntermediateRepresentat
 export interface IntermediateRepresentationMigrator {
     readonly migrations: IrMigration<unknown, unknown>[];
     migrateBackwards: ({
-        generatorName,
-        generatorVersion,
         intermediateRepresentation,
+        context,
     }: {
-        generatorName: string;
-        generatorVersion: string;
         intermediateRepresentation: IntermediateRepresentation;
+        context: IrMigrationContext;
     }) => unknown;
     migrateThroughMigration<LaterVersion, EarlierVersion>({
         migration,
         intermediateRepresentation,
+        context,
     }: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
+        context: IrMigrationContext;
     }): EarlierVersion;
 }
 
@@ -72,29 +74,27 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     constructor(public readonly migrations: IrMigration<any, any>[]) {}
 
     public migrateBackwards({
-        generatorName,
-        generatorVersion,
         intermediateRepresentation,
+        context,
     }: {
-        generatorName: string;
-        generatorVersion: string;
         intermediateRepresentation: IntermediateRepresentation;
+        context: IrMigrationContext;
     }): unknown {
         return this.migrate({
             intermediateRepresentation,
-            generatorName,
-            shouldMigrate: (migration) => this.shouldRunMigration({ migration, generatorName, generatorVersion }),
+            shouldMigrate: (migration) => this.shouldRunMigration({ migration, context }),
+            context,
         });
     }
 
     public migrateThroughMigration<LaterVersion, EarlierVersion>({
         migration,
         intermediateRepresentation,
-        generatorName,
+        context,
     }: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
-        generatorName: string;
+        context: IrMigrationContext;
     }): EarlierVersion {
         let hasEncouneredMigrationYet = false;
         return this.migrate({
@@ -104,18 +104,18 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 hasEncouneredMigrationYet ||= isEncounteringMigration;
                 return isEncounteringMigration || !hasEncouneredMigrationYet;
             },
-            generatorName,
+            context,
         }) as EarlierVersion;
     }
 
     private migrate({
         intermediateRepresentation,
-        generatorName,
         shouldMigrate,
+        context,
     }: {
         intermediateRepresentation: IntermediateRepresentation;
-        generatorName: string;
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
+        context: IrMigrationContext;
     }): unknown {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let migrated: any = intermediateRepresentation;
@@ -123,35 +123,34 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             if (!shouldMigrate(migration)) {
                 break;
             }
-            if (migration.migrateBackwards == null) {
-                throw new Error(
-                    `Cannot backwards-migrate intermediate representation. Please upgrade ${generatorName}.`
-                );
-            }
-            migrated = migration.migrateBackwards(migrated);
+            migrated = migration.migrateBackwards(migrated, context);
         }
         return migrated;
     }
 
     private shouldRunMigration({
         migration,
-        generatorName,
-        generatorVersion,
+        context,
     }: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         migration: IrMigration<any, any>;
-        generatorName: string;
-        generatorVersion: string;
+        context: IrMigrationContext;
     }): boolean {
-        if (!(generatorName in migration.minGeneratorVersionsToExclude)) {
-            throw new Error(`Cannot migrate intermediate representation. Unrecognized generator: ${generatorName}.`);
+        if (!(context.targetGenerator.name in migration.minGeneratorVersionsToExclude)) {
+            throw new Error(
+                `Cannot migrate intermediate representation. Unrecognized generator: ${context.targetGenerator.name}.`
+            );
         }
-        const minVersionToExclude = migration.minGeneratorVersionsToExclude[generatorName as GeneratorName];
+        const minVersionToExclude =
+            migration.minGeneratorVersionsToExclude[context.targetGenerator.name as GeneratorName];
         if (!minVersionToExclude) {
             return false;
         }
 
-        return minVersionToExclude === AlwaysRunMigration || isVersionAhead(minVersionToExclude, generatorVersion);
+        return (
+            minVersionToExclude === AlwaysRunMigration ||
+            isVersionAhead(minVersionToExclude, context.targetGenerator.version)
+        );
     }
 }
 
@@ -161,6 +160,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V6_TO_V5_MIGRATION)
     .withMigration(V5_TO_V4_MIGRATION)
     .withMigration(V4_TO_V3_MIGRATION)
     .withMigration(V3_TO_V2_MIGRATION)
