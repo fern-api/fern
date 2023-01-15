@@ -40,4 +40,12 @@ describe("valid-default-environment", () => {
         });
         expect(violations).toEqual([]);
     });
+
+    it("default-env-null", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidDefaultEnvironmentRule,
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "default-env-null"),
+        });
+        expect(violations).toEqual([]);
+    });
 });

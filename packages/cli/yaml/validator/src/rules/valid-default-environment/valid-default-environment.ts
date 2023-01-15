@@ -16,7 +16,8 @@ export const ValidDefaultEnvironmentRule: Rule = {
                                 },
                             ];
                         }
-                    } else if (environments != null) {
+                    }
+                    if (environments != null && defaultEnvironment === undefined) {
                         return [
                             {
                                 severity: "error",
