@@ -8,7 +8,6 @@ import {
     APPLICATION_JSON_CONTENT,
     getFernReferenceForSchema,
     isReferenceObject,
-    isSchemaPrimitive,
     maybeConvertSchemaToPrimitive,
     maybeGetAliasReference,
 } from "./utils";
@@ -274,9 +273,12 @@ export class EndpointConverter {
         }
 
         const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
-        if (maybeAliasType != null && isSchemaPrimitive(maybeAliasType)) {
+        if (maybeAliasType != null) {
             return {
                 response: maybeAliasType,
+                additionalTypes: {
+                    ...convertedSchema.additionalTypeDeclarations,
+                },
             };
         } else {
             const responseTypeName = this.inlinedTypeNamer.getName();

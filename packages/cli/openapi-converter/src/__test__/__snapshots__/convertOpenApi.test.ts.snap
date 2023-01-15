@@ -27,7 +27,7 @@ exports[`open api converter telematica simple 1`] = `
         "Location_ResponseDTO": {
           "extends": undefined,
           "properties": {
-            "location": "_InlinedType1",
+            "location": "_InlinedType0",
           },
         },
         "Odo_ResponseDTO": {
@@ -65,7 +65,7 @@ exports[`open api converter telematica simple 1`] = `
             "year": "double",
           },
         },
-        "_InlinedType1": {
+        "_InlinedType0": {
           "extends": [
             "commons.ILocation",
           ],
@@ -91,7 +91,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                     "extends": undefined,
                     "properties": {
                       "user": "optional<string>",
-                      "vehicles": "optional<_InlinedType0>",
+                      "vehicles": "optional<list<commons.Callback_DTO>>",
                     },
                   },
                   "headers": {},
@@ -103,9 +103,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
           },
         },
       },
-      "types": {
-        "_InlinedType0": "list<commons.Callback_DTO>",
-      },
+      "types": {},
     },
     "testingEndpoints.yml": {
       "services": {

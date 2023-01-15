@@ -1,4 +1,4 @@
-import { RawSchemas, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenApiV3Context } from "./OpenApiV3Context";
 
@@ -50,18 +50,5 @@ export function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarati
         object: () => undefined,
         union: () => undefined,
         enum: () => undefined,
-    });
-}
-
-export function isSchemaPrimitive(schema: string): boolean {
-    return visitRawTypeReference(schema, {
-        primitive: () => true,
-        map: () => false,
-        list: () => false,
-        set: () => false,
-        optional: () => false,
-        literal: () => false,
-        named: () => false,
-        unknown: () => false,
     });
 }

@@ -3,7 +3,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context } from "./OpenApiV3Context";
-import { getFernReferenceForSchema, isReferenceObject, isSchemaPrimitive, maybeGetAliasReference } from "./utils";
+import { getFernReferenceForSchema, isReferenceObject, maybeGetAliasReference } from "./utils";
 
 export interface ConvertedSchema {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -113,14 +113,14 @@ export class SchemaConverter {
                             continue;
                         }
                         const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
-                        if (maybeAliasType != null && isSchemaPrimitive(maybeAliasType)) {
+                        additionalTypeDeclarations = {
+                            ...additionalTypeDeclarations,
+                            ...convertedSchema.additionalTypeDeclarations,
+                        };
+                        if (maybeAliasType != null) {
                             convertedPropertyType = maybeAliasType;
                         } else {
                             const schemaName = this.inlinedTypeNamer.getName();
-                            additionalTypeDeclarations = {
-                                ...additionalTypeDeclarations,
-                                ...convertedSchema.additionalTypeDeclarations,
-                            };
                             additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
                             convertedPropertyType = schemaName;
                         }
