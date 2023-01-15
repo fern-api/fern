@@ -1,5 +1,6 @@
 import { askToLogin, createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
+import { convertOpenApi, FernDefinition } from "@fern-api/openapi-converter";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
     FERN_DIRECTORY,
@@ -15,10 +16,12 @@ import { createWorkspace } from "./createWorkspace";
 export async function initialize({
     organization,
     versionOfCli,
+    openApiPath,
     context,
 }: {
     organization: string | undefined;
     versionOfCli: string;
+    openApiPath: AbsoluteFilePath | undefined;
     context: TaskContext;
 }): Promise<void> {
     const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
@@ -49,8 +52,15 @@ export async function initialize({
         });
     }
 
+    let fernDefinition: undefined | FernDefinition = undefined;
+    if (openApiPath != null) {
+        fernDefinition = await convertOpenApi({
+            openApiPath: AbsoluteFilePath.of(openApiPath),
+            taskContext: context,
+        });
+    }
     const directoryOfWorkspace = await getDirectoryOfNewWorkspace({ pathToFernDirectory });
-    await createWorkspace({ directoryOfWorkspace });
+    await createWorkspace({ directoryOfWorkspace, fernDefinition });
     context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
 
