@@ -1,6 +1,6 @@
 import { askToLogin, login } from "@fern-api/auth";
 import { noop } from "@fern-api/core-utils";
-import { cwd, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { initialize } from "@fern-api/init";
 import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
@@ -148,18 +148,32 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "init",
         "Initialize a Fern API",
         (yargs) =>
-            yargs.option("organization", {
-                alias: "org",
-                type: "string",
-                description: "Organization name",
-                hidden: true,
-            }),
+            yargs
+                .option("openapi", {
+                    type: "string",
+                    description: "(Alpha) Path to existing OpenAPI spec",
+                })
+                .option("organization", {
+                    alias: "org",
+                    type: "string",
+                    description: "Organization name",
+                    hidden: true,
+                }),
         async (argv) => {
+            let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
+            if (argv.openapi != null) {
+                absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
+                const pathExists = await doesPathExist(absoluteOpenApiPath);
+                if (!pathExists) {
+                    cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
+                }
+            }
             await cliContext.runTask(async (context) => {
                 await initialize({
                     organization: argv.organization,
                     versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                     context,
+                    openApiPath: absoluteOpenApiPath,
                 });
             });
         }

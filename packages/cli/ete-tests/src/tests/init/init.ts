@@ -2,12 +2,21 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli";
 
-export async function init({ directory }: { directory?: AbsoluteFilePath } = {}): Promise<AbsoluteFilePath> {
+export async function init({
+    directory,
+    openApiPath,
+}: { directory?: AbsoluteFilePath; openApiPath?: string } = {}): Promise<AbsoluteFilePath> {
     if (directory == null) {
         const tmpDir = await tmp.dir();
         directory = AbsoluteFilePath.of(tmpDir.path);
     }
-    await runFernCli(["init", "--organization", "fern"], {
+
+    const cliArgs = ["init", "--organization", "fern"];
+    if (openApiPath != null) {
+        cliArgs.push("--openapi", openApiPath);
+    }
+
+    await runFernCli(cliArgs, {
         cwd: directory,
     });
     return directory;

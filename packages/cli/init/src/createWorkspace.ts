@@ -1,5 +1,7 @@
+import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import { FernDefinition } from "@fern-api/openapi-converter";
 import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -12,16 +14,27 @@ import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
 export async function createWorkspace({
     directoryOfWorkspace,
+    fernDefinition,
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
+    fernDefinition: FernDefinition | undefined;
 }): Promise<void> {
     await mkdir(directoryOfWorkspace);
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, GENERATORS_CONFIGURATION_FILENAME),
     });
-    await writeSampleApiDefinition({
-        directoryOfDefinition: join(directoryOfWorkspace, DEFINITION_DIRECTORY),
-    });
+    const directoryOfDefinition = join(directoryOfWorkspace, DEFINITION_DIRECTORY);
+    if (fernDefinition == null) {
+        await writeSampleApiDefinition({
+            directoryOfDefinition,
+        });
+    } else {
+        await mkdir(directoryOfDefinition);
+        await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(fernDefinition.rootApiFile));
+        for (const [relativePath, serviceFile] of entries(fernDefinition.serviceFiles)) {
+            await writeFile(join(directoryOfDefinition, relativePath), yaml.dump(serviceFile));
+        }
+    }
 }
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {

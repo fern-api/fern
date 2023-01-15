@@ -3,10 +3,12 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../auth" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
+    { "path": "../openapi-converter" },
     { "path": "../task-context" },
     { "path": "../yaml/yaml-schema" }
   ]
