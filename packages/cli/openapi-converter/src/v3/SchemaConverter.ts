@@ -1,9 +1,9 @@
 import { TaskContext } from "@fern-api/task-context";
-import { RawSchemas, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context } from "./OpenApiV3Context";
-import { getFernReferenceForSchema, isReferenceObject } from "./utils";
+import { getFernReferenceForSchema, isReferenceObject, isSchemaPrimitive, maybeGetAliasReference } from "./utils";
 
 export interface ConvertedSchema {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -157,26 +157,4 @@ export class SchemaConverter {
 
         return typeDeclaration != null ? { typeDeclaration, additionalTypeDeclarations } : undefined;
     }
-}
-
-function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarationSchema): string | undefined {
-    return visitRawTypeDeclaration(typeDeclaration, {
-        alias: (schema) => (typeof schema === "string" ? schema : schema.type),
-        object: () => undefined,
-        union: () => undefined,
-        enum: () => undefined,
-    });
-}
-
-function isSchemaPrimitive(schema: string): boolean {
-    return visitRawTypeReference(schema, {
-        primitive: () => true,
-        map: () => false,
-        list: () => false,
-        set: () => false,
-        optional: () => false,
-        literal: () => false,
-        named: () => false,
-        unknown: () => false,
-    });
 }

@@ -8,7 +8,9 @@ import {
     APPLICATION_JSON_CONTENT,
     getFernReferenceForSchema,
     isReferenceObject,
+    isSchemaPrimitive,
     maybeConvertSchemaToPrimitive,
+    maybeGetAliasReference,
 } from "./utils";
 
 export interface ConvertedEndpoint {
@@ -271,14 +273,21 @@ export class EndpointConverter {
             return undefined;
         }
 
-        const responseTypeName = this.inlinedTypeNamer.getName();
-        return {
-            response: responseTypeName,
-            additionalTypes: {
-                ...convertedSchema.additionalTypeDeclarations,
-                [responseTypeName]: convertedSchema.typeDeclaration,
-            },
-        };
+        const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
+        if (maybeAliasType != null && isSchemaPrimitive(maybeAliasType)) {
+            return {
+                response: maybeAliasType,
+            };
+        } else {
+            const responseTypeName = this.inlinedTypeNamer.getName();
+            return {
+                response: responseTypeName,
+                additionalTypes: {
+                    ...convertedSchema.additionalTypeDeclarations,
+                    [responseTypeName]: convertedSchema.typeDeclaration,
+                },
+            };
+        }
     }
 }
 
