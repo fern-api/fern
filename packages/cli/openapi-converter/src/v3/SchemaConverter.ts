@@ -61,16 +61,21 @@ export class SchemaConverter {
                 typeDeclaration = `list<${getFernReferenceForSchema(schema.items, this.context)}>`;
             } else {
                 const convertedSchema = this.convertSchema(schema.items, [...breadcrumbs, "items"]);
-                if (convertedSchema === undefined) {
+                if (convertedSchema == null) {
                     typeDeclaration = "list<unknown>";
                 } else {
-                    const schemaName = this.inlinedTypeNamer.getName();
+                    const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
                     additionalTypeDeclarations = {
                         ...additionalTypeDeclarations,
                         ...convertedSchema.additionalTypeDeclarations,
                     };
-                    additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
-                    typeDeclaration = `list<${schemaName}>`;
+                    if (maybeAliasType != null) {
+                        typeDeclaration = `list<${maybeAliasType}>`;
+                    } else {
+                        const schemaName = this.inlinedTypeNamer.getName();
+                        additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
+                        typeDeclaration = `list<${schemaName}>`;
+                    }
                 }
             }
         } else if (schema.enum != null) {

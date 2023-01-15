@@ -46,7 +46,12 @@ export function getFernReferenceForSchema(
 
 export function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarationSchema): string | undefined {
     return visitRawTypeDeclaration(typeDeclaration, {
-        alias: (schema) => (typeof schema === "string" ? schema : schema.type),
+        alias: (schema) => {
+            if (typeof schema === "string") {
+                return schema;
+            }
+            return schema.type;
+        },
         object: () => undefined,
         union: () => undefined,
         enum: () => undefined,

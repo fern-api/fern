@@ -21,26 +21,19 @@ headers: {}
     properties:
       object: string
       id: string
-      model: _InlinedType41
-      sims: _InlinedType42
-      user: _InlinedType43
+      model: _InlinedType17
+      sims: list<SIMs.sim>
+      user: _InlinedType18
       createdAt: string
-  _InlinedType39: string
-  _InlinedType40:
-    docs: List of SIM types supported by this device model.
-    type: list<_InlinedType39>
-  _InlinedType41:
+  _InlinedType17:
     properties:
       object: string
       id: string
       brand: string
       name: string
-      simTypes: _InlinedType40
+      simTypes: list<string>
       type: string
-  _InlinedType42:
-    docs: List of SIMs added to this device.
-    type: list<SIMs.sim>
-  _InlinedType43:
+  _InlinedType18:
     properties:
       object: string
       id: string
@@ -56,37 +49,29 @@ headers: {}
       data: integer
       dataUnit: string
       name: string
-      price: _InlinedType44
+      price: _InlinedType19
       provider: string
-      requirements: _InlinedType45
-      simTypes: _InlinedType47
+      requirements: _InlinedType20
+      simTypes: list<string>
       sms: integer
       smsUnit: string
       status: string
-      tags: _InlinedType49
-      validity: _InlinedType50
+      tags: list<string>
+      validity: _InlinedType21
       voice: integer
       voiceUnit: string
       createdAt: string
-  _InlinedType44:
+  _InlinedType19:
     properties:
       amount: integer
       currency: string
-  _InlinedType45:
+  _InlinedType20:
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
-  _InlinedType46: string
-  _InlinedType47:
-    docs: List of SIM types supported by this plan. Can be \`eSIM\`, \`pSIM\`, or both.
-    type: list<_InlinedType46>
-  _InlinedType48: string
-  _InlinedType49:
-    docs: List of tags describing this plan.
-    type: list<_InlinedType48>
-  _InlinedType50:
+  _InlinedType21:
     properties:
       minimumPeriods: integer
       type: string
@@ -97,62 +82,44 @@ headers: {}
       object: string
       id: string
       declinedAttempts: integer
-      donorProvider: _InlinedType53
+      donorProvider: _InlinedType22
       phoneNumber: string
       provider: string
-      recipientProvider: _InlinedType56
-      required: _InlinedType58
+      recipientProvider: _InlinedType23
+      required: list<string>
       status: string
       user: string
       createdAt: string
-  _InlinedType51: string
-  _InlinedType52:
-    docs: >-
-      List of network providers IDs that can receive portings from the service
-      provider.
-    type: list<_InlinedType51>
-  _InlinedType53:
+  _InlinedType22:
     docs: The service provider from whom the number is ported.
     properties:
       object: string
       id: string
       name: string
-      recipientProviders: _InlinedType52
-  _InlinedType54: string
-  _InlinedType55:
-    docs: >-
-      List of network providers IDs that can receive portings from the service
-      provider.
-    type: list<_InlinedType54>
-  _InlinedType56:
+      recipientProviders: list<string>
+  _InlinedType23:
     docs: The service provider to whom the number is ported.
     properties:
       object: string
       id: string
       name: string
-      recipientProviders: _InlinedType55
-  _InlinedType57: string
-  _InlinedType58:
-    docs: >-
-      List of fields required for the porting to be processable. The fields
-      depend on the donor and recipient providers.
-    type: list<_InlinedType57>
+      recipientProviders: list<string>
   subscription:
     properties:
       object: string
       id: string
-      currentPeriod: _InlinedType59
+      currentPeriod: _InlinedType24
       plan: commons.plan
-      sim: _InlinedType60
+      sim: _InlinedType25
       status: string
       user: commons.user
       createdAt: string
-  _InlinedType59:
+  _InlinedType24:
     properties:
       number: integer
       start: string
       end: string
-  _InlinedType60:
+  _InlinedType25:
     properties:
       object: string
       id: string
@@ -191,45 +158,21 @@ services:
               {
                 "contents": "types:
   _InlinedType0:
-    docs: List of objects of type \`deviceModel\`.
-    type: list<Devices.deviceModel>
+    properties:
+      object: string
+      items: list<Devices.deviceModel>
   _InlinedType1:
     properties:
       object: string
-      items: _InlinedType0
+      items: list<Devices.deviceModel>
   _InlinedType2:
-    docs: List of objects of type \`deviceModel\`.
-    type: list<Devices.deviceModel>
+    properties:
+      object: string
+      items: list<commons.device>
   _InlinedType3:
     properties:
       object: string
-      items: _InlinedType2
-  _InlinedType4:
-    docs: Unique SIM identifier.
-    type: string
-  _InlinedType5:
-    docs: List of identifiers for all SIMs currently attached to the device.
-    type: list<_InlinedType4>
-  _InlinedType6:
-    docs: List of objects of type \`device\`.
-    type: list<commons.device>
-  _InlinedType7:
-    properties:
-      object: string
-      items: _InlinedType6
-  _InlinedType8:
-    docs: List of objects of type \`device\`.
-    type: list<commons.device>
-  _InlinedType9:
-    properties:
-      object: string
-      items: _InlinedType8
-  _InlinedType10:
-    docs: Unique SIM identifier.
-    type: string
-  _InlinedType11:
-    docs: List of identifiers for all SIMs to attach to the device.
-    type: list<_InlinedType10>
+      items: list<commons.device>
 services:
   http:
     DevicesService:
@@ -258,7 +201,7 @@ services:
             body:
               properties:
                 imei: string
-          response: _InlinedType1
+          response: _InlinedType0
         DeviceModelsList:
           path: /deviceModels
           method: GET
@@ -271,7 +214,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType3
+          response: _InlinedType1
         DevicesRetrieve:
           path: /projects/{project}/devices/{id}
           method: GET
@@ -322,7 +265,7 @@ services:
             headers: {}
             body:
               properties:
-                sims: optional<_InlinedType5>
+                sims: optional<list<string>>
           response: commons.device
         DevicesSearch:
           path: /projects/{project}/devices/search
@@ -339,7 +282,7 @@ services:
             body:
               properties:
                 imei: string
-          response: _InlinedType7
+          response: _InlinedType2
         DevicesList:
           path: /projects/{project}/devices
           method: GET
@@ -352,7 +295,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType9
+          response: _InlinedType3
         DevicesCreate:
           path: /projects/{project}/devices
           method: POST
@@ -366,27 +309,21 @@ services:
               properties:
                 imei: string
                 user: string
-                sims: optional<_InlinedType11>
+                sims: optional<list<string>>
 ",
                 "name": "devices.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType12:
-    docs: List of objects of type \`planDocument\`.
-    type: list<Plans.planDocument>
-  _InlinedType13:
+  _InlinedType4:
     properties:
       object: string
-      items: _InlinedType12
-  _InlinedType14:
-    docs: List of objects of type \`plan\`.
-    type: list<commons.plan>
-  _InlinedType15:
+      items: list<Plans.planDocument>
+  _InlinedType5:
     properties:
       object: string
-      items: _InlinedType14
+      items: list<commons.plan>
 services:
   http:
     PlansService:
@@ -443,7 +380,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType13
+          response: _InlinedType4
         PlansRetrieve:
           path: /projects/{project}/plans/{id}
           method: GET
@@ -506,27 +443,21 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType15
+          response: _InlinedType5
 ",
                 "name": "plans.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType16:
-    docs: List of objects of type \`porting\`.
-    type: list<commons.porting>
-  _InlinedType17:
+  _InlinedType6:
     properties:
       object: string
-      items: _InlinedType16
-  _InlinedType18:
-    docs: List of objects of type \`serviceProvider\`.
-    type: list<Portings.serviceProvider>
-  _InlinedType19:
+      items: list<commons.porting>
+  _InlinedType7:
     properties:
       object: string
-      items: _InlinedType18
+      items: list<Portings.serviceProvider>
 services:
   http:
     PortingsService:
@@ -654,7 +585,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType17
+          response: _InlinedType6
         PortingsCreate:
           path: /projects/{project}/portings
           method: POST
@@ -753,23 +684,20 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType19
+          response: _InlinedType7
 ",
                 "name": "portings.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType20:
+  _InlinedType8:
     properties:
       object: string
-  _InlinedType21:
-    docs: List of objects of type \`project\`.
-    type: list<Projects.project>
-  _InlinedType22:
+  _InlinedType9:
     properties:
       object: string
-      items: _InlinedType21
+      items: list<Projects.project>
 services:
   http:
     ProjectsService:
@@ -814,7 +742,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType20
+          response: _InlinedType8
         ProjectsList:
           path: /projects
           method: GET
@@ -827,31 +755,21 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType22
+          response: _InlinedType9
 ",
                 "name": "projects.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType23: string
-  _InlinedType24:
-    docs: Optional type of the SIM card, either \`eSIM\`, \`pSIM\` or both.
-    type: list<_InlinedType23>
-  _InlinedType25:
-    docs: List of objects of type \`sim\`.
-    type: list<SIMs.sim>
-  _InlinedType26:
+  _InlinedType10:
     properties:
       object: string
-      items: _InlinedType25
-  _InlinedType27:
-    docs: List of objects of type \`sim\`.
-    type: list<SIMs.sim>
-  _InlinedType28:
+      items: list<SIMs.sim>
+  _InlinedType11:
     properties:
       object: string
-      items: _InlinedType27
+      items: list<SIMs.sim>
 services:
   http:
     SiMsService:
@@ -892,8 +810,8 @@ services:
             body:
               properties:
                 iccid: string
-                type: optional<_InlinedType24>
-          response: _InlinedType26
+                type: optional<list<string>>
+          response: _InlinedType10
         SIMsList:
           path: /projects/{project}/sims
           method: GET
@@ -905,20 +823,17 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType28
+          response: _InlinedType11
 ",
                 "name": "siMs.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType29:
-    docs: List of objects of type \`subscription\`.
-    type: list<commons.subscription>
-  _InlinedType30:
+  _InlinedType12:
     properties:
       object: string
-      items: _InlinedType29
+      items: list<commons.subscription>
 services:
   http:
     SubscriptionsService:
@@ -989,7 +904,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType30
+          response: _InlinedType12
         SubscriptionsCreate:
           path: /projects/{project}/subscriptions
           method: POST
@@ -1011,13 +926,10 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType31:
-    docs: List of objects of type \`usageRecord\`.
-    type: list<commons.usageRecord>
-  _InlinedType32:
+  _InlinedType13:
     properties:
       object: string
-      items: _InlinedType31
+      items: list<commons.usageRecord>
 services:
   http:
     UsageService:
@@ -1036,20 +948,17 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType32
+          response: _InlinedType13
 ",
                 "name": "usage.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType33:
-    docs: List of objects of type \`userAddress\`.
-    type: list<commons.userAddress>
-  _InlinedType34:
+  _InlinedType14:
     properties:
       object: string
-      items: _InlinedType33
+      items: list<commons.userAddress>
 services:
   http:
     UserAddressesService:
@@ -1068,7 +977,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType34
+          response: _InlinedType14
         UserAddressesCreate:
           path: /projects/{project}/users/{user}/addresses
           method: POST
@@ -1110,20 +1019,14 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType35:
-    docs: List of objects of type \`user\`.
-    type: list<commons.user>
-  _InlinedType36:
+  _InlinedType15:
     properties:
       object: string
-      items: _InlinedType35
-  _InlinedType37:
-    docs: List of objects of type \`user\`.
-    type: list<commons.user>
-  _InlinedType38:
+      items: list<commons.user>
+  _InlinedType16:
     properties:
       object: string
-      items: _InlinedType37
+      items: list<commons.user>
 services:
   http:
     UsersService:
@@ -1183,7 +1086,7 @@ services:
             body:
               properties:
                 email: string
-          response: _InlinedType36
+          response: _InlinedType15
         UsersList:
           path: /projects/{project}/users
           method: GET
@@ -1195,7 +1098,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType38
+          response: _InlinedType16
         UsersCreate:
           path: /projects/{project}/users
           method: POST
@@ -1365,8 +1268,8 @@ headers: {}
       soc: double
   Location_ResponseDTO:
     properties:
-      location: _InlinedType1
-  _InlinedType1:
+      location: _InlinedType0
+  _InlinedType0:
     extends:
       - commons.ILocation
   ChargingStatus_ResponseDTO:
@@ -1393,8 +1296,7 @@ services:
                 "type": "file",
               },
               {
-                "contents": "types:
-  _InlinedType0: list<commons.Callback_DTO>
+                "contents": "types: {}
 services:
   http:
     SampleCallbackService:
@@ -1417,7 +1319,7 @@ services:
             body:
               properties:
                 user: optional<string>
-                vehicles: optional<_InlinedType0>
+                vehicles: optional<list<commons.Callback_DTO>>
 ",
                 "name": "sampleCallback.yml",
                 "type": "file",
