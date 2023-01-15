@@ -9,6 +9,7 @@ import {
     getFernReferenceForSchema,
     isReferenceObject,
     maybeConvertSchemaToPrimitive,
+    maybeGetAliasReference,
 } from "./utils";
 
 export interface ConvertedEndpoint {
@@ -271,14 +272,24 @@ export class EndpointConverter {
             return undefined;
         }
 
-        const responseTypeName = this.inlinedTypeNamer.getName();
-        return {
-            response: responseTypeName,
-            additionalTypes: {
-                ...convertedSchema.additionalTypeDeclarations,
-                [responseTypeName]: convertedSchema.typeDeclaration,
-            },
-        };
+        const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
+        if (maybeAliasType != null) {
+            return {
+                response: maybeAliasType,
+                additionalTypes: {
+                    ...convertedSchema.additionalTypeDeclarations,
+                },
+            };
+        } else {
+            const responseTypeName = this.inlinedTypeNamer.getName();
+            return {
+                response: responseTypeName,
+                additionalTypes: {
+                    ...convertedSchema.additionalTypeDeclarations,
+                    [responseTypeName]: convertedSchema.typeDeclaration,
+                },
+            };
+        }
     }
 }
 

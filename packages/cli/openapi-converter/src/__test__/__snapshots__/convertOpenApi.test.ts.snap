@@ -19,44 +19,44 @@ exports[`open api converter telematica simple 1`] = `
       },
       "types": {
         "ChargingStatus_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "isCharging": "boolean",
           },
         },
         "Location_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "location": "_InlinedType0",
           },
         },
         "Odo_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "odo": "double",
           },
         },
         "RangeSoc_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "range": "double",
             "soc": "double",
           },
         },
         "Range_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "range": "double",
           },
         },
         "SOC_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "soc": "double",
           },
         },
         "StaticAttributes_ResponseDTO": {
-          "extends": [],
+          "extends": undefined,
           "properties": {
             "make": "string",
             "model": "string",
@@ -88,9 +88,10 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "path-parameters": {},
                 "request": {
                   "body": {
-                    "extends": [],
+                    "extends": undefined,
                     "properties": {
                       "user": "optional<string>",
+                      "vehicles": "optional<list<commons.Callback_DTO>>",
                     },
                   },
                   "headers": {},

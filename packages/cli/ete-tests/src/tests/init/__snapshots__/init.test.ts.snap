@@ -18,23 +18,22 @@ headers: {}
               {
                 "contents": "types:
   device:
-    extends: []
     properties:
       object: string
       id: string
       model: _InlinedType17
+      sims: list<SIMs.sim>
       user: _InlinedType18
       createdAt: string
   _InlinedType17:
-    extends: []
     properties:
       object: string
       id: string
       brand: string
       name: string
+      simTypes: list<string>
       type: string
   _InlinedType18:
-    extends: []
     properties:
       object: string
       id: string
@@ -43,7 +42,6 @@ headers: {}
       preferredLocale: string
       createdAt: string
   plan:
-    extends: []
     properties:
       object: string
       id: string
@@ -54,34 +52,32 @@ headers: {}
       price: _InlinedType19
       provider: string
       requirements: _InlinedType20
+      simTypes: list<string>
       sms: integer
       smsUnit: string
       status: string
+      tags: list<string>
       validity: _InlinedType21
       voice: integer
       voiceUnit: string
       createdAt: string
   _InlinedType19:
-    extends: []
     properties:
       amount: integer
       currency: string
   _InlinedType20:
-    extends: []
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
   _InlinedType21:
-    extends: []
     properties:
       minimumPeriods: integer
       type: string
       unit: string
       value: integer
   porting:
-    extends: []
     properties:
       object: string
       id: string
@@ -90,23 +86,25 @@ headers: {}
       phoneNumber: string
       provider: string
       recipientProvider: _InlinedType23
+      required: list<string>
       status: string
       user: string
       createdAt: string
   _InlinedType22:
-    extends: []
+    docs: The service provider from whom the number is ported.
     properties:
       object: string
       id: string
       name: string
+      recipientProviders: list<string>
   _InlinedType23:
-    extends: []
+    docs: The service provider to whom the number is ported.
     properties:
       object: string
       id: string
       name: string
+      recipientProviders: list<string>
   subscription:
-    extends: []
     properties:
       object: string
       id: string
@@ -117,13 +115,11 @@ headers: {}
       user: commons.user
       createdAt: string
   _InlinedType24:
-    extends: []
     properties:
       number: integer
       start: string
       end: string
   _InlinedType25:
-    extends: []
     properties:
       object: string
       id: string
@@ -133,7 +129,6 @@ headers: {}
       type: string
       createdAt: string
   userAddress:
-    extends: []
     properties:
       object: string
       id: string
@@ -143,7 +138,6 @@ headers: {}
       user: string
       createdAt: string
   user:
-    extends: []
     properties:
       object: string
       id: string
@@ -164,21 +158,21 @@ services:
               {
                 "contents": "types:
   _InlinedType0:
-    extends: []
     properties:
       object: string
+      items: list<Devices.deviceModel>
   _InlinedType1:
-    extends: []
     properties:
       object: string
+      items: list<Devices.deviceModel>
   _InlinedType2:
-    extends: []
     properties:
       object: string
+      items: list<commons.device>
   _InlinedType3:
-    extends: []
     properties:
       object: string
+      items: list<commons.device>
 services:
   http:
     DevicesService:
@@ -205,7 +199,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 imei: string
           response: _InlinedType0
@@ -271,8 +264,8 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
-              properties: {}
+              properties:
+                sims: optional<list<string>>
           response: commons.device
         DevicesSearch:
           path: /projects/{project}/devices/search
@@ -287,7 +280,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 imei: string
           response: _InlinedType2
@@ -314,10 +306,10 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 imei: string
                 user: string
+                sims: optional<list<string>>
 ",
                 "name": "devices.yml",
                 "type": "file",
@@ -325,13 +317,13 @@ services:
               {
                 "contents": "types:
   _InlinedType4:
-    extends: []
     properties:
       object: string
+      items: list<Plans.planDocument>
   _InlinedType5:
-    extends: []
     properties:
       object: string
+      items: list<commons.plan>
 services:
   http:
     PlansService:
@@ -411,7 +403,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 name: optional<string>
           response: commons.plan
@@ -460,13 +451,13 @@ services:
               {
                 "contents": "types:
   _InlinedType6:
-    extends: []
     properties:
       object: string
+      items: list<commons.porting>
   _InlinedType7:
-    extends: []
     properties:
       object: string
+      items: list<Portings.serviceProvider>
 services:
   http:
     PortingsService:
@@ -556,7 +547,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 accountNumber: optional<string>
                 accountPin: optional<string>
@@ -631,7 +621,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 accountNumber: optional<string>
                 accountPin: optional<string>
@@ -703,13 +692,12 @@ services:
               {
                 "contents": "types:
   _InlinedType8:
-    extends: []
     properties:
       object: string
   _InlinedType9:
-    extends: []
     properties:
       object: string
+      items: list<Projects.project>
 services:
   http:
     ProjectsService:
@@ -775,13 +763,13 @@ services:
               {
                 "contents": "types:
   _InlinedType10:
-    extends: []
     properties:
       object: string
+      items: list<SIMs.sim>
   _InlinedType11:
-    extends: []
     properties:
       object: string
+      items: list<SIMs.sim>
 services:
   http:
     SiMsService:
@@ -820,9 +808,9 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 iccid: string
+                type: optional<list<string>>
           response: _InlinedType10
         SIMsList:
           path: /projects/{project}/sims
@@ -843,9 +831,9 @@ services:
               {
                 "contents": "types:
   _InlinedType12:
-    extends: []
     properties:
       object: string
+      items: list<commons.subscription>
 services:
   http:
     SubscriptionsService:
@@ -929,7 +917,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 plan: string
                 user: string
@@ -940,9 +927,9 @@ services:
               {
                 "contents": "types:
   _InlinedType13:
-    extends: []
     properties:
       object: string
+      items: list<commons.usageRecord>
 services:
   http:
     UsageService:
@@ -969,9 +956,9 @@ services:
               {
                 "contents": "types:
   _InlinedType14:
-    extends: []
     properties:
       object: string
+      items: list<commons.userAddress>
 services:
   http:
     UserAddressesService:
@@ -1001,7 +988,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 object: optional<string>
                 line1: string
@@ -1034,13 +1020,13 @@ services:
               {
                 "contents": "types:
   _InlinedType15:
-    extends: []
     properties:
       object: string
+      items: list<commons.user>
   _InlinedType16:
-    extends: []
     properties:
       object: string
+      items: list<commons.user>
 services:
   http:
     UsersService:
@@ -1081,7 +1067,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 object: optional<string>
                 birthday: optional<string>
@@ -1099,7 +1084,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 email: string
           response: _InlinedType15
@@ -1125,7 +1109,6 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 object: optional<string>
                 email: string
@@ -1274,35 +1257,28 @@ headers: {}
               {
                 "contents": "types:
   SOC_ResponseDTO:
-    extends: []
     properties:
       soc: double
   Range_ResponseDTO:
-    extends: []
     properties:
       range: double
   RangeSoc_ResponseDTO:
-    extends: []
     properties:
       range: double
       soc: double
   Location_ResponseDTO:
-    extends: []
     properties:
       location: _InlinedType0
   _InlinedType0:
     extends:
       - commons.ILocation
   ChargingStatus_ResponseDTO:
-    extends: []
     properties:
       isCharging: boolean
   Odo_ResponseDTO:
-    extends: []
     properties:
       odo: double
   StaticAttributes_ResponseDTO:
-    extends: []
     properties:
       vin: string
       model: string
@@ -1341,9 +1317,9 @@ services:
             query-parameters: {}
             headers: {}
             body:
-              extends: []
               properties:
                 user: optional<string>
+                vehicles: optional<list<commons.Callback_DTO>>
 ",
                 "name": "sampleCallback.yml",
                 "type": "file",
