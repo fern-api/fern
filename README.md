@@ -1,9 +1,9 @@
-<a href="https://www.buildwithfern.com/docs/intro">
+<a href="https://docs.buildwithfern.com/intro">
   <img src="header.png" alt="header" />
 </a>
 
 <div align="center">
-  <a href="https://www.buildwithfern.com/docs" alt="documentation">Documentation</a>
+  <a href="https://docs.buildwithfern.com/intro" alt="documentation">Documentation</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
 </div>
@@ -42,15 +42,15 @@ You can feed the generated OpenAPI into the endless list of tools that support O
 
 OpenAPI is a great tool for documenting APIs, but falls short for code generation use cases.
 
-Read [Fern vs. OpenAPI](https://www.buildwithfern.com/docs/comparison-with-openapi)
+Read [Fern vs. OpenAPI](https://docs.buildwithfern.com/comparison-with-openapi)
 for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
 
-- [Simplicity](https://www.buildwithfern.com/docs/comparison-with-openapi#simplicity)
-- [New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
-- [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
-- [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
-- [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
-- [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
+- [Simplicity](https://docs.buildwithfern.com/comparison-with-openapi#simplicity)
+- [New features in specification](https://docs.buildwithfern.com/comparison-with-openapi#new-features-in-specification)
+- [Quality of code generation](https://docs.buildwithfern.com/comparison-with-openapi#quality-of-code-generation)
+- [Focus on server-side API development](https://docs.buildwithfern.com/comparison-with-openapi#focus-on-server-side-api-development)
+- [Change management](https://docs.buildwithfern.com/comparison-with-openapi#change-management)
+- [Cloud-based code generation and publishing](https://docs.buildwithfern.com/comparison-with-openapi#cloud-based-code-generation-and-publishing)
 
 # Plant Store example
 
