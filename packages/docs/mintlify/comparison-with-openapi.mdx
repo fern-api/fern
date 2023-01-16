@@ -150,8 +150,7 @@ it's impossible to generate high-quality code. Here are examples:
 - It's easy to define non-discriminated unions in OpenAPI, which makes for
   tricky-to-use SDKs. In many languages, it's difficult or impossible to
   deserialize non-discriminated unions correctly.
-- Common errors (like `PetNotFoundError` in the above example) cannot be reused
-  in OpenAPI.
+- Common errors cannot be reused in OpenAPI.
   This results in duplicative generated code that doesn't feel handwritten.
 - OpenAPI's `anyOf` concept is impossible to represent in most programming
   languages in sub-exponential time.
