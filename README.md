@@ -45,7 +45,8 @@ OpenAPI is a great tool for documenting APIs, but falls short for code generatio
 Read [Fern vs. OpenAPI](https://www.buildwithfern.com/docs/comparison-with-openapi)
 for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
 
-- [Ease of use](https://www.buildwithfern.com/docs/comparison-with-openapi#ease-of-use)
+- [Simplicity](https://www.buildwithfern.com/docs/comparison-with-openapi#simplicity)
+- [New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
 - [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
 - [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
 - [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)

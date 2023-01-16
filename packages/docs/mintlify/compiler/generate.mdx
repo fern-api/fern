@@ -67,13 +67,13 @@ groups:
         version: 0.0.249
         output:
           location: npm
-          package-name: "@fern-api/nursery"
+          package-name: "@fern-api/plantstore"
           token: ${NPM_TOKEN}
       - name: fernapi/fern-java-sdk
         version: 0.0.125
         output:
           location: maven
-          coordinate: io.github.fern-api:nursery
+          coordinate: io.github.fern-api:plantstore
           username: ${MAVEN_USERNAME}
           password: ${MAVEN_PASSWORD}
   # when we release, we publish our external-facing SDKs
@@ -319,7 +319,7 @@ Some generators allow for custom configuration, which you can specify using the 
        - name: fernapi/fern-openapi
          version: 0.0.11-4-g1c29f6c
          github:
-           repository: fern-api/nursery-openapi
+           repository: fern-api/plantstore-openapi
 +        config:
 +          format: yaml
 ```
