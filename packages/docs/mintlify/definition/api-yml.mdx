@@ -50,6 +50,16 @@ auth-schemes:
     type: string
 ```
 
+## API-wide headers
+
+You can specify headers that are meant to be included on every request:
+
+```yaml api.yml
+name: api
+headers:
+  X-App-Id: string
+```
+
 ## Environments
 
 You can specify the environments where you backend is deployed. These are useful
