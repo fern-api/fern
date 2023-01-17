@@ -1,5 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
@@ -74,14 +75,43 @@ export class EndpointConverter {
             method: convertedHttpMethod,
             docs: this.endpoint.definition.description,
             "display-name": this.endpoint.definition.summary,
-            "path-parameters": pathParameters,
-            request: {
-                "query-parameters": Object.keys(queryParameters).length === 0 ? queryParameters : undefined,
-                headers: Object.keys(headerParameters).length === 0 ? headerParameters : undefined,
-                body: requestBody?.value,
-            },
-            response: responseBody?.response,
         };
+
+        if (size(pathParameters) > 0) {
+            endpoint["path-parameters"] = pathParameters;
+        }
+
+        let request: RawSchemas.HttpRequestSchema | undefined;
+
+        if (size(queryParameters) > 0) {
+            if (request == null) {
+                request = {};
+            }
+            request["query-parameters"] = queryParameters;
+        }
+
+        if (size(headerParameters) > 0) {
+            if (request == null) {
+                request = {};
+            }
+            request.headers = headerParameters;
+        }
+
+        if (requestBody != null) {
+            if (request == null) {
+                request = {};
+            }
+            request.body = requestBody.value;
+        }
+
+        if (request != null) {
+            endpoint.request = request;
+        }
+
+        if (responseBody != null) {
+            endpoint.response = responseBody.response;
+        }
+
         return {
             endpoint,
             additionalTypeDeclarations,

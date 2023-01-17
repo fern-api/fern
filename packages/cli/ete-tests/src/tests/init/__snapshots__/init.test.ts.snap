@@ -21,11 +21,11 @@ headers: {}
     properties:
       object: string
       id: string
-      model: _InlinedType17
+      model: _InlinedType21
       sims: list<SIMs.sim>
-      user: _InlinedType18
+      user: _InlinedType22
       createdAt: string
-  _InlinedType17:
+  _InlinedType21:
     properties:
       object: string
       id: string
@@ -33,7 +33,7 @@ headers: {}
       name: string
       simTypes: list<string>
       type: string
-  _InlinedType18:
+  _InlinedType22:
     properties:
       object: string
       id: string
@@ -49,29 +49,29 @@ headers: {}
       data: integer
       dataUnit: string
       name: string
-      price: _InlinedType19
+      price: _InlinedType23
       provider: string
-      requirements: _InlinedType20
+      requirements: _InlinedType24
       simTypes: list<string>
       sms: integer
       smsUnit: string
       status: string
       tags: list<string>
-      validity: _InlinedType21
+      validity: _InlinedType25
       voice: integer
       voiceUnit: string
       createdAt: string
-  _InlinedType19:
+  _InlinedType23:
     properties:
       amount: integer
       currency: string
-  _InlinedType20:
+  _InlinedType24:
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
-  _InlinedType21:
+  _InlinedType25:
     properties:
       minimumPeriods: integer
       type: string
@@ -88,22 +88,22 @@ headers: {}
       object: string
       id: string
       declinedAttempts: integer
-      donorProvider: _InlinedType22
+      donorProvider: _InlinedType26
       phoneNumber: string
       provider: string
-      recipientProvider: _InlinedType23
+      recipientProvider: _InlinedType27
       required: list<string>
       status: string
       user: string
       createdAt: string
-  _InlinedType22:
+  _InlinedType26:
     docs: The service provider from whom the number is ported.
     properties:
       object: string
       id: string
       name: string
       recipientProviders: list<string>
-  _InlinedType23:
+  _InlinedType27:
     docs: The service provider to whom the number is ported.
     properties:
       object: string
@@ -120,18 +120,18 @@ headers: {}
     properties:
       object: string
       id: string
-      currentPeriod: _InlinedType24
+      currentPeriod: _InlinedType28
       plan: commons.plan
-      sim: _InlinedType25
+      sim: _InlinedType29
       status: string
       user: commons.user
       createdAt: string
-  _InlinedType24:
+  _InlinedType28:
     properties:
       number: integer
       start: string
       end: string
-  _InlinedType25:
+  _InlinedType29:
     properties:
       object: string
       id: string
@@ -157,18 +157,20 @@ headers: {}
       line1: string
       user: string
       createdAt: string
-services:
-  http:
-    CommonsService:
-      auth: false
-      base-path: ''
-      endpoints: {}
 ",
                 "name": "commons.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
+  deviceModel:
+    properties:
+      object: string
+      id: string
+      brand: string
+      name: string
+      simTypes: list<string>
+      type: string
   _InlinedType0:
     properties:
       object: string
@@ -196,20 +198,13 @@ services:
           method: GET
           docs: Retrieves the details of an existing device model.
           display-name: Retrieve a device model
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: Devices.deviceModel
         DeviceModelsSearch:
           path: /deviceModels/search
           method: POST
           docs: Searches for existing devices models matching the given parameters.
           display-name: Search for device models
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 imei: string
@@ -222,10 +217,6 @@ services:
             creation date, with the most recently created models appearing
             first.
           display-name: List all device models
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: _InlinedType1
         DevicesRetrieve:
           path: /projects/{project}/devices/{id}
@@ -234,20 +225,12 @@ services:
             Retrieves the details of an existing device owned by the
             authenticated user.
           display-name: Retrieve a device
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.device
         DevicesDelete:
           path: /projects/{project}/devices/{id}
           method: DELETE
           docs: Retrieves the details of an existing device and deletes it.
           display-name: Delete a device
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.device
         DevicesUpdate:
           path: /projects/{project}/devices/{id}
@@ -271,10 +254,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Update a device
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 sims: optional<list<string>>
@@ -287,10 +267,7 @@ services:
             search will only return factory devices not yet assigned to any
             user, or devices already owned by the current user.
           display-name: Search for devices
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 imei: string
@@ -303,20 +280,13 @@ services:
             creation date, with the most recently created devices appearing
             first.
           display-name: List all devices
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: _InlinedType3
         DevicesCreate:
           path: /projects/{project}/devices
           method: POST
           docs: Creates a new device with the given parameters.
           display-name: Create a device
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 imei: string
@@ -328,6 +298,15 @@ services:
               },
               {
                 "contents": "types:
+  planDocument:
+    properties:
+      object: string
+      id: string
+      name: string
+      plan: string
+      type: string
+      url: string
+      createdAt: string
   _InlinedType4:
     properties:
       object: string
@@ -365,20 +344,12 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Archive a plan
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.plan
         PlanDocumentRetrieve:
           path: /projects/{project}/plans/{plan}/documents/{id}
           method: GET
           docs: Retrieves the details of an existing document for a given plan.
           display-name: Retrieve a plan document
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: Plans.planDocument
         PlanDocumentsList:
           path: /projects/{project}/plans/{plan}/documents
@@ -388,20 +359,12 @@ services:
             returned are sorted by creation date, with the most recently created
             documents appearing first.
           display-name: List all plan documents
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: _InlinedType4
         PlansRetrieve:
           path: /projects/{project}/plans/{id}
           method: GET
           docs: Retrieve the details of an existing plan.
           display-name: Retrieve a plan
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.plan
         PlansUpdate:
           path: /projects/{project}/plans/{id}
@@ -410,10 +373,7 @@ services:
             Updates the specified plan by setting the values of the parameters
             passed.
           display-name: Update a plan
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 name: optional<string>
@@ -441,20 +401,12 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Publish a plan
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.plan
         PlansList:
           path: /projects/{project}/plans
           method: GET
           docs: Returns a list of plans.
           display-name: List all plans
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: _InlinedType5
 ",
                 "name": "plans.yml",
@@ -462,6 +414,12 @@ services:
               },
               {
                 "contents": "types:
+  serviceProvider:
+    properties:
+      object: string
+      id: string
+      name: string
+      recipientProviders: list<string>
   _InlinedType6:
     properties:
       object: string
@@ -499,10 +457,6 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Cancel a porting
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.porting
         PortingRetrieve:
           path: /projects/{project}/portings/{id}
@@ -526,10 +480,6 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a Porting
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.porting
         PortingUpdate:
           path: /projects/{project}/portings/{id}
@@ -554,10 +504,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Update a porting
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 accountNumber: optional<string>
@@ -593,10 +540,6 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all portings
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: _InlinedType6
         PortingsCreate:
           path: /projects/{project}/portings
@@ -628,10 +571,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Create a porting
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 accountNumber: optional<string>
@@ -665,10 +605,6 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a service provider
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: Portings.serviceProvider
         ServiceProvidersList:
           path: /serviceProviders
@@ -692,10 +628,6 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all service providers
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: _InlinedType7
 ",
                 "name": "portings.yml",
@@ -703,10 +635,44 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType8:
+  project:
     properties:
       object: string
+      id: string
+      images: _InlinedType8
+      legal: _InlinedType9
+      locales: list<string>
+      name: string
+      organization: commons.organization
+      payments: _InlinedType10
+      subscriptionOwner: string
+      support: _InlinedType11
+      createdAt: string
+  _InlinedType8:
+    docs: >-
+      Deprecated object of project images. Please use the image property
+      instead.
+    properties: {}
   _InlinedType9:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name: string
+      city: string
+      country: string
+      line1: string
+      postalCode: string
+  _InlinedType10:
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency: string
+      mode: string
+  _InlinedType11:
+    docs: Contact details for consumer support requests regarding the project.
+    properties: {}
+  _InlinedType12:
+    properties:
+      object: string
+  _InlinedType13:
     properties:
       object: string
       items: list<Projects.project>
@@ -723,10 +689,6 @@ services:
             Retrieves the details of an existing project accessible by the API
             client.
           display-name: Retrieve a project
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: Projects.project
         ProjectsCredentialsRetrieve:
           path: /projects/{project}/credentials
@@ -750,11 +712,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve the project credentials
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType8
+          response: _InlinedType12
         ProjectsList:
           path: /projects
           method: GET
@@ -763,22 +721,31 @@ services:
             creation date, with the most recently created projects appearing
             first.
           display-name: List all projects
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType9
+          response: _InlinedType13
 ",
                 "name": "projects.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType10:
+  simCredentials:
+    properties:
+      object: string
+      sim: string
+  sim:
+    properties:
+      object: string
+      id: string
+      iccid: string
+      provider: string
+      status: string
+      type: string
+      createdAt: string
+  _InlinedType14:
     properties:
       object: string
       items: list<SIMs.sim>
-  _InlinedType11:
+  _InlinedType15:
     properties:
       object: string
       items: list<SIMs.sim>
@@ -793,10 +760,6 @@ services:
           method: GET
           docs: Retrieve the credentials of an existing SIM.
           display-name: Retrieve the SIM credentials
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: SIMs.simCredentials
         SIMsRetrieve:
           path: /projects/{project}/sims/{id}
@@ -805,25 +768,18 @@ services:
             Retrieve the details of an existing SIM which the authenticated user
             is authorized to view.
           display-name: Retrieve a SIM
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: SIMs.sim
         SIMsSearch:
           path: /projects/{project}/sims/search
           method: POST
           docs: Searches for existing SIMs matching the given parameters.
           display-name: Search for SIMs
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 iccid: string
                 type: optional<list<string>>
-          response: _InlinedType10
+          response: _InlinedType14
         SIMsList:
           path: /projects/{project}/sims
           method: GET
@@ -831,18 +787,14 @@ services:
             Returns a list of SIMs. The SIMs returned are sorted by creation
             date, with the most recently created SIMs appearing first.
           display-name: List all SIMs
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType11
+          response: _InlinedType15
 ",
                 "name": "siMs.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType12:
+  _InlinedType16:
     properties:
       object: string
       items: list<commons.subscription>
@@ -861,10 +813,6 @@ services:
             need only supply the unique subscription identifier that was
             returned upon purchasing a plan.
           display-name: Cancel an active subscription
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.subscription
         SubscriptionsRetrieve:
           path: /projects/{project}/subscriptions/{id}
@@ -874,10 +822,6 @@ services:
             supply the unique subscription identifier that was returned upon
             purchasing a plan.
           display-name: Retrieve a subscription
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.subscription
         SubscriptionsEnd:
           path: /projects/{project}/subscriptions/{id}
@@ -887,10 +831,6 @@ services:
             supply the unique subscription identifier that was returned upon
             purchasing a plan.
           display-name: End an active subscription
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.subscription
         SubscriptionsResume:
           path: /projects/{project}/subscriptions/{id}/resume
@@ -899,10 +839,6 @@ services:
             Removes the cancellation and end times of the subscription. The
             subscription will continue to auto-renew until canceled again.
           display-name: Resume a canceled subscription
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.subscription
         SubscriptionsList:
           path: /projects/{project}/subscriptions
@@ -912,11 +848,7 @@ services:
             sorted by creation date, with the most recently created
             subscriptions appearing first.
           display-name: List all subscriptions
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType12
+          response: _InlinedType16
         SubscriptionsCreate:
           path: /projects/{project}/subscriptions
           method: POST
@@ -924,10 +856,7 @@ services:
             Creates a new subscription for an existing user in the specified
             project.
           display-name: Create a subscription
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 plan: string
@@ -938,7 +867,7 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType13:
+  _InlinedType17:
     properties:
       object: string
       items: list<commons.usageRecord>
@@ -956,18 +885,14 @@ services:
             defaulting to \`daily\` aggregation for the latest subscription
             period.
           display-name: List subscription usage records
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType13
+          response: _InlinedType17
 ",
                 "name": "usage.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType14:
+  _InlinedType18:
     properties:
       object: string
       items: list<commons.userAddress>
@@ -985,20 +910,13 @@ services:
             returned are sorted by creation date, with the most recently created
             addresses appearing first.
           display-name: List all user addresses
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType14
+          response: _InlinedType18
         UserAddressesCreate:
           path: /projects/{project}/users/{user}/addresses
           method: POST
           docs: Create a new address for the given user with the given parameters.
           display-name: Create a user address
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 object: optional<string>
@@ -1010,20 +928,12 @@ services:
           method: GET
           docs: Retrieves the details of an existing address for a given user.
           display-name: Retrieve a user address
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.userAddress
         UserAddressesDelete:
           path: /projects/{project}/users/{user}/addresses/{id}
           method: DELETE
           docs: Retrieves the details of an existing user address and deletes it.
           display-name: Delete a user address
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.userAddress
 ",
                 "name": "userAddresses.yml",
@@ -1031,11 +941,11 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType15:
+  _InlinedType19:
     properties:
       object: string
       items: list<commons.user>
-  _InlinedType16:
+  _InlinedType20:
     properties:
       object: string
       items: list<commons.user>
@@ -1052,20 +962,12 @@ services:
             Retrieves the details of an existing user. You need only supply the
             unique user identifier that was returned upon user creation.
           display-name: Retrieve a user
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.user
         UsersDelete:
           path: /projects/{project}/users/{id}
           method: DELETE
           docs: Retrieves the details of an existing user and deletes it.
           display-name: Delete a user
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: commons.user
         UsersUpdate:
           path: /projects/{project}/users/{id}
@@ -1074,10 +976,7 @@ services:
             Updates the specified user by setting the values of the parameters
             passed.
           display-name: Update a user
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 object: optional<string>
@@ -1091,14 +990,11 @@ services:
           method: POST
           docs: Searches for existing users matching the given parameters.
           display-name: Search for users
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 email: string
-          response: _InlinedType15
+          response: _InlinedType19
         UsersList:
           path: /projects/{project}/users
           method: GET
@@ -1106,20 +1002,13 @@ services:
             Returns a list of users. The users returned are sorted by creation
             date, with the most recently created users appearing first.
           display-name: List all users
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
-          response: _InlinedType16
+          response: _InlinedType20
         UsersCreate:
           path: /projects/{project}/users
           method: POST
           docs: Creates a new user with the given parameters.
           display-name: Create a user
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 object: optional<string>
@@ -1284,18 +1173,18 @@ headers: {}
     docs: A matchmaker lobby player.
     properties:
       token: string
-services:
-  http:
-    CommonsService:
-      auth: false
-      base-path: ''
-      endpoints: {}
 ",
                 "name": "commons.yml",
                 "type": "file",
               },
               {
-                "contents": "types: {}
+                "contents": "types:
+  PlayerConnectedRequestContent:
+    properties:
+      player_token: string
+  PlayerDisconnectedRequestContent:
+    properties:
+      player_token: string
 services:
   http:
     LobbyService:
@@ -1310,10 +1199,6 @@ services:
             not be
 
             able to connect to this lobby until the lobby is flagged as ready.
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
         PlayerConnected:
           path: /players/connected
           method: POST
@@ -1405,10 +1290,7 @@ services:
             happen until
 
             the player token is validated.
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body: lobby.PlayerConnectedRequestContent
         PlayerDisconnected:
           path: /players/disconnected
@@ -1427,17 +1309,41 @@ services:
             connected to the
 
             lobby.
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body: lobby.PlayerDisconnectedRequestContent
 ",
                 "name": "lobby.yml",
                 "type": "file",
               },
               {
-                "contents": "types: {}
+                "contents": "types:
+  SetLobbyClosedRequestContent:
+    properties:
+      is_closed: boolean
+  FindLobbyRequestContent:
+    properties:
+      game_modes: list<string>
+      regions: optional<list<string>>
+      prevent_auto_create_lobby: optional<boolean>
+      captcha: optional<commons.CaptchaConfig>
+  FindLobbyResponseContent:
+    properties:
+      lobby: commons.MatchmakerLobbyJoinInfo
+  JoinLobbyRequestContent:
+    properties:
+      lobby_id: string
+      captcha: optional<commons.CaptchaConfig>
+  JoinLobbyResponseContent:
+    properties:
+      lobby: commons.MatchmakerLobbyJoinInfo
+  ListLobbiesResponseContent:
+    properties:
+      game_modes: list<commons.GameModeInfo>
+      regions: list<commons.RegionInfo>
+      lobbies: list<commons.LobbyInfo>
+  ListRegionsResponseContent:
+    properties:
+      regions: list<commons.RegionInfo>
 services:
   http:
     PublicService:
@@ -1453,10 +1359,7 @@ services:
 
 
             Does not shutdown the lobby.
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body: public.SetLobbyClosedRequestContent
         FindLobby:
           path: /lobbies/find
@@ -1467,9 +1370,9 @@ services:
 
             If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a
             new lobby will be created.
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              origin: optional<string>
             body: public.FindLobbyRequestContent
           response: public.FindLobbyResponseContent
         JoinLobby:
@@ -1483,20 +1386,13 @@ services:
             lobby
 
             group.
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body: public.JoinLobbyRequestContent
           response: public.JoinLobbyResponseContent
         ListLobbies:
           path: /lobbies/list
           method: GET
           docs: Lists all open lobbies.
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: public.ListLobbiesResponseContent
         ListRegions:
           path: /regions
@@ -1509,10 +1405,6 @@ services:
             address
 
             is used to calculate the regions' optimality.
-          path-parameters: {}
-          request:
-            query-parameters: {}
-            headers: {}
           response: public.ListRegionsResponseContent
 ",
                 "name": "public.yml",
@@ -1594,12 +1486,6 @@ headers: {}
       year: double
       make: string
       registration: string
-services:
-  http:
-    CommonsService:
-      auth: false
-      base-path: ''
-      endpoints: {}
 ",
                 "name": "commons.yml",
                 "type": "file",
@@ -1621,10 +1507,7 @@ services:
             Please share the POST callback endpoint created in your app's
             backend with Telematica to get callback requests of this format.
           display-name: Dummy callback endpoint
-          path-parameters: {}
           request:
-            query-parameters: {}
-            headers: {}
             body:
               properties:
                 user: optional<string>
@@ -1645,57 +1528,71 @@ services:
           path: /vehicle-data/soc/test
           method: GET
           display-name: Test SOC (battery level)
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.SOC_ResponseDTO
         getRangeTest:
           path: /vehicle-data/range/test
           method: GET
           display-name: Test range
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.Range_ResponseDTO
         getRangeSocTest:
           path: /vehicle-data/range-soc/test
           method: GET
           display-name: Test range-soc
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.RangeSoc_ResponseDTO
         getLocationTest:
           path: /vehicle-data/location/test
           method: GET
           display-name: Test location
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.Location_ResponseDTO
         getChargingStatusTest:
           path: /vehicle-data/charging-status/test
           method: GET
           display-name: Test charging status
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdoTest:
           path: /vehicle-data/odo/test
           method: GET
           display-name: Test odo
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributesTest:
           path: /vehicle-data/static-attributes/test
           method: GET
           display-name: Test static attributes
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "testingEndpoints.yml",
@@ -1713,17 +1610,21 @@ services:
           path: /vehicle-data/soc
           method: GET
           display-name: SOC (battery level)
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.SOC_ResponseDTO
         getRange:
           path: /vehicle-data/range
           method: GET
           display-name: Range
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.Range_ResponseDTO
         getRangeSoc:
           path: /vehicle-data/range-soc
@@ -1732,33 +1633,41 @@ services:
             This endpoint returns the SOC and range for the vehicle in a single
             call
           display-name: Range-SOC
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.RangeSoc_ResponseDTO
         getLocation:
           path: /vehicle-data/location
           method: GET
           display-name: Location
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.Location_ResponseDTO
         getChargingStatus:
           path: /vehicle-data/charging-status
           method: GET
           display-name: Charging Status
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdo:
           path: /vehicle-data/odo
           method: GET
           display-name: Odometer
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributes:
           path: /vehicle-data/static-attributes
@@ -1767,9 +1676,11 @@ services:
             Static vehicle attributes like VIN, registration number, model, year
             and make
           display-name: Static attributes
-          path-parameters: {}
           request:
-            query-parameters: {}
+            headers:
+              Authorization:
+                docs: Bearer JWT token for authN and authZ
+                type: string
           response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "vehicleData.yml",
