@@ -7,7 +7,7 @@ const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), "fixtures");
 const OPENAPI_JSON_FILENAME = "openapi.json";
 
 describe("open api converter", () => {
-    // testFixture("telematica");
+    testFixture("telematica");
     testFixture("rivet");
 });
 
