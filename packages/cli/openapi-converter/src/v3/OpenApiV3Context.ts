@@ -64,26 +64,21 @@ export class OpenApiV3Context {
         // group types into tag
         this.referenceObjectToTags = new ReferenceObjectsByTag(this.document);
         Object.entries(this.endpointsGroupedByTag).forEach(([tag, endpoints]) => {
+            const referencedSchemas = new Set<OpenAPIV3.ReferenceObject>();
             for (const endpoint of endpoints) {
                 const requestBody = endpoint.definition.requestBody;
                 if (requestBody != null) {
                     if (isReferenceObject(requestBody)) {
                         this.referenceObjectToTags.add(requestBody, tag);
-                        continue;
-                    }
-
-                    const schema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
-                    if (schema == null) {
-                        continue;
-                    }
-                    if (isReferenceObject(schema)) {
-                        this.referenceObjectToTags.add(schema, tag);
-                        continue;
-                    }
-
-                    const referencedSchemas = this.getAllReferencedSchemas(schema);
-                    for (const referencedSchema of referencedSchemas) {
-                        this.referenceObjectToTags.add(referencedSchema, tag);
+                        this.addAllReferencedSchemas(requestBody, referencedSchemas);
+                    } else {
+                        const schema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
+                        if (schema != null) {
+                            if (isReferenceObject(schema)) {
+                                this.referenceObjectToTags.add(schema, tag);
+                            }
+                            this.addAllReferencedSchemas(schema, referencedSchemas);
+                        }
                     }
                 }
 
@@ -91,25 +86,20 @@ export class OpenApiV3Context {
                 if (successResponse != null) {
                     if (isReferenceObject(successResponse)) {
                         this.referenceObjectToTags.add(successResponse, tag);
-                        continue;
+                        this.addAllReferencedSchemas(successResponse, referencedSchemas);
+                    } else if (successResponse.content != null) {
+                        const schema = successResponse.content[APPLICATION_JSON_CONTENT]?.schema;
+                        if (schema != null) {
+                            if (isReferenceObject(schema)) {
+                                this.referenceObjectToTags.add(schema, tag);
+                            }
+                            this.addAllReferencedSchemas(schema, referencedSchemas);
+                        }
                     }
+                }
 
-                    if (successResponse.content == null) {
-                        continue;
-                    }
-                    const schema = successResponse.content[APPLICATION_JSON_CONTENT]?.schema;
-                    if (schema == null) {
-                        continue;
-                    }
-                    if (isReferenceObject(schema)) {
-                        this.referenceObjectToTags.add(schema, tag);
-                        continue;
-                    }
-
-                    const referencedSchemas = this.getAllReferencedSchemas(schema);
-                    for (const referencedSchema of referencedSchemas) {
-                        this.referenceObjectToTags.add(referencedSchema, tag);
-                    }
+                for (const referencedSchema of referencedSchemas) {
+                    this.referenceObjectToTags.add(referencedSchema, tag);
                 }
             }
         });
@@ -210,6 +200,22 @@ export class OpenApiV3Context {
             name: schemaKey,
             schemaObject: resolvedSchema,
         };
+    }
+
+    private addAllReferencedSchemas(
+        schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+        referencedSchemas: Set<OpenAPIV3.ReferenceObject>
+    ) {
+        const resolvedSchema = isReferenceObject(schema)
+            ? this.maybeResolveSchemaReference(schema)?.schemaObject
+            : schema;
+        if (resolvedSchema == null) {
+            return;
+        }
+        const schemasToAdd = this.getAllReferencedSchemas(resolvedSchema);
+        for (const schemaToAdd of schemasToAdd) {
+            referencedSchemas.add(schemaToAdd);
+        }
     }
 
     /**

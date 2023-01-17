@@ -11,6 +11,9 @@ import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV
 import { SchemaConverter } from "./SchemaConverter";
 import { COMMONS_SERVICE_FILE_NAME } from "./utils";
 
+const SCHEMAS_BREADCRUMBS = ["components", "schemas"];
+const ENDPOINT_BREADCRUMBS = ["paths"];
+
 export class OpenAPIConverter {
     private context: OpenApiV3Context;
     private taskContext: TaskContext;
@@ -88,7 +91,7 @@ export class OpenAPIConverter {
                 taskContext: this.taskContext,
                 inlinedTypeNamer: this.inlinedTypeNamer,
                 context: this.context,
-                breadcrumbs: [],
+                breadcrumbs: SCHEMAS_BREADCRUMBS,
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
@@ -97,6 +100,8 @@ export class OpenAPIConverter {
                     [schema.name]: convertedSchema.typeDeclaration,
                     ...convertedSchema.additionalTypeDeclarations,
                 };
+            } else {
+                this.taskContext.logger.debug();
             }
         });
         endpoints.forEach((endpoint) => {
@@ -104,7 +109,8 @@ export class OpenAPIConverter {
                 endpoint,
                 this.context,
                 this.taskContext,
-                this.inlinedTypeNamer
+                this.inlinedTypeNamer,
+                ENDPOINT_BREADCRUMBS
             );
             const convertedEndpoint = endpointConverter.convert();
             if (convertedEndpoint != null) {
