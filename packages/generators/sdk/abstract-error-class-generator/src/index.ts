@@ -1,0 +1,1 @@
+export { AbstractErrorClassGenerator } from "./AbstractErrorClassGenerator";

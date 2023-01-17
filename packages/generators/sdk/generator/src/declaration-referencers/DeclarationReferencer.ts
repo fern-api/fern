@@ -13,7 +13,7 @@ export interface DeclarationReferencer<Name> {
 
 export declare namespace DeclarationReferencer {
     namespace getReferenceTo {
-        export interface Options<Name> {
+        export interface Options<Name = never> {
             name: Name;
             importStrategy: ImportStrategy;
             importsManager: ImportsManager;

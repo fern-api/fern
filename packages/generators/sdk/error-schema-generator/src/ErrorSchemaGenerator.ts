@@ -1,9 +1,13 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { ErrorSchemaContext, GeneratedErrorSchema } from "@fern-typescript/contexts";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { GeneratedErrorSchema } from "@fern-typescript/contexts";
+import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { GeneratedErrorSchemaImpl } from "./GeneratedErrorSchemaImpl";
 
 export declare namespace ErrorSchemaGenerator {
+    export interface Init {
+        errorGenerator: ErrorGenerator;
+    }
+
     export namespace generateError {
         export interface Args {
             errorName: string;
@@ -13,10 +17,10 @@ export declare namespace ErrorSchemaGenerator {
 }
 
 export class ErrorSchemaGenerator {
-    private typeSchemaGenerator: TypeSchemaGenerator<ErrorSchemaContext>;
+    private errorGenerator: ErrorGenerator;
 
-    constructor() {
-        this.typeSchemaGenerator = new TypeSchemaGenerator();
+    constructor({ errorGenerator }: ErrorSchemaGenerator.Init) {
+        this.errorGenerator = errorGenerator;
     }
 
     public generateErrorSchema({
@@ -30,7 +34,7 @@ export class ErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
-            typeSchemaGenerator: this.typeSchemaGenerator,
+            errorGenerator: this.errorGenerator,
         });
     }
 }

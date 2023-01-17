@@ -3,9 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../abstract-schema-generator" },
     { "path": "../../../commons" },
     { "path": "../../../commons-v2" },
+    { "path": "../abstract-schema-generator" },
     { "path": "../contexts" },
     { "path": "../union-schema-generator" }
   ]

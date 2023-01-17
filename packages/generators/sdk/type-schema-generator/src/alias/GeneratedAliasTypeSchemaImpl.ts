@@ -1,4 +1,4 @@
-import { AliasTypeDeclaration } from "@fern-fern/ir-model/types";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Zurg } from "@fern-typescript/commons-v2";
@@ -7,13 +7,13 @@ import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
 export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
-    extends AbstractGeneratedTypeSchema<AliasTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<TypeReference, Context>
     implements GeneratedAliasTypeSchema<Context>
 {
     public readonly type = "alias";
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        const schemaOfAlias = context.typeSchema.getSchemaOfTypeReference(this.shape.aliasOf);
+        const schemaOfAlias = context.typeSchema.getSchemaOfTypeReference(this.shape);
         const generatedAliasType = this.getGeneratedType();
         if (generatedAliasType.type !== "alias") {
             throw new Error("Type is not an alias: " + this.typeName);
@@ -49,7 +49,7 @@ export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
     protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode),
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape).typeNode),
         });
     }
 }

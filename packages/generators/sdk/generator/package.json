@@ -35,6 +35,7 @@
     "@fern-typescript/environments-generator": "workspace:*",
     "@fern-typescript/error-generator": "workspace:*",
     "@fern-typescript/error-schema-generator": "workspace:*",
+    "@fern-typescript/generic-error-generators": "workspace:*",
     "@fern-typescript/request-wrapper-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/service-generator": "workspace:*",

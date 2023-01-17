@@ -1,11 +1,11 @@
-import { AliasTypeDeclaration, ExampleTypeShape } from "@fern-fern/ir-model/types";
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { BrandedGeneratedAliasType, GetReferenceOpts, TypeContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
-    extends AbstractGeneratedType<AliasTypeDeclaration, Context>
+    extends AbstractGeneratedType<TypeReference, Context>
     implements BrandedGeneratedAliasType<Context>
 {
     public readonly type = "alias";
@@ -30,7 +30,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
     }
 
     private writeTypeAlias(context: Context) {
-        const referenceToAliasedType = context.type.getReferenceToType(this.shape.aliasOf).typeNode;
+        const referenceToAliasedType = context.type.getReferenceToType(this.shape).typeNode;
         const typeAlias = context.base.sourceFile.addTypeAlias({
             name: this.typeName,
             type: getTextOfTsNode(

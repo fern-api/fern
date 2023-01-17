@@ -1,10 +1,17 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { EnvironmentsContextMixin, ServiceContext, ServiceContextMixin } from "@fern-typescript/contexts";
+import {
+    EnvironmentsContextMixin,
+    GenericAPIErrorContextMixin,
+    ServiceContext,
+    ServiceContextMixin,
+    TimeoutErrorContextMixin,
+} from "@fern-typescript/contexts";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { GenericAPIErrorGenerator, TimeoutErrorGenerator } from "@fern-typescript/generic-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { ServiceGenerator } from "@fern-typescript/service-generator";
@@ -14,8 +21,10 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
+import { GenericAPIErrorDeclarationReferencer } from "../declaration-referencers/GenericAPIErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "../declaration-referencers/ServiceDeclarationReferencer";
+import { TimeoutErrorDeclarationReferencer } from "../declaration-referencers/TimeoutErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { EndpointTypeSchemasContextMixinImpl } from "./mixins/EndpointTypeSchemasContextMixinImpl";
@@ -23,8 +32,10 @@ import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixi
 import { EnvironmentsContextMixinImpl } from "./mixins/EnvironmentsContextMixinImpl";
 import { ErrorContextMixinImpl } from "./mixins/ErrorContextMixinImpl";
 import { ErrorSchemaContextMixinImpl } from "./mixins/ErrorSchemaContextMixinImpl";
+import { GenericAPIErrorContextMixinImpl } from "./mixins/GenericAPIErrorContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "./mixins/RequestWrapperContextMixinImpl";
 import { ServiceContextMixinImpl } from "./mixins/ServiceContextMixinImpl";
+import { TimeoutErrorContextMixinImpl } from "./mixins/TimeoutErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 import { TypeSchemaContextMixinImpl } from "./mixins/TypeSchemaContextMixinImpl";
 
@@ -53,6 +64,10 @@ export declare namespace ServiceContextImpl {
         serviceResolver: ServiceResolver;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
+        genericAPIErrorDeclarationReferencer: GenericAPIErrorDeclarationReferencer;
+        genericAPIErrorGenerator: GenericAPIErrorGenerator;
+        timeoutErrorDeclarationReferencer: TimeoutErrorDeclarationReferencer;
+        timeoutErrorGenerator: TimeoutErrorGenerator;
     }
 }
 
@@ -66,6 +81,8 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
     public readonly endpointTypeSchemas: EndpointTypeSchemasContextMixinImpl;
     public readonly service: ServiceContextMixin;
     public readonly environments: EnvironmentsContextMixin;
+    public readonly genericAPIError: GenericAPIErrorContextMixin;
+    public readonly timeoutError: TimeoutErrorContextMixin;
 
     constructor({
         intermediateRepresentation,
@@ -91,6 +108,10 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
         serviceGenerator,
         environmentsGenerator,
         environmentsDeclarationReferencer,
+        genericAPIErrorDeclarationReferencer,
+        genericAPIErrorGenerator,
+        timeoutErrorDeclarationReferencer,
+        timeoutErrorGenerator,
         ...superInit
     }: ServiceContextImpl.Init) {
         super(superInit);
@@ -162,6 +183,18 @@ export class ServiceContextImpl extends BaseContextImpl implements ServiceContex
             intermediateRepresentation,
             environmentsDeclarationReferencer,
             environmentsGenerator,
+        });
+        this.genericAPIError = new GenericAPIErrorContextMixinImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            genericAPIErrorDeclarationReferencer,
+            genericAPIErrorGenerator,
+        });
+        this.timeoutError = new TimeoutErrorContextMixinImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            timeoutErrorDeclarationReferencer,
+            timeoutErrorGenerator,
         });
     }
 }

@@ -25,6 +25,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             useBrandedStringAliases: true,
+            neverThrowErrors: true,
         },
     },
     {
@@ -32,6 +33,9 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "fern",
         outputMode: "local",
         apiName: "api",
+        customConfig: {
+            neverThrowErrors: true,
+        },
     },
     {
         path: "nursery",
@@ -49,6 +53,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "fiddle",
         customConfig: {
             useBrandedStringAliases: true,
+            neverThrowErrors: true,
         },
     },
 ];

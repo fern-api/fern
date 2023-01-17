@@ -5,28 +5,29 @@ export interface Fetcher {
         Args: { [Arg in keyof Fetcher.Args]-?: string };
         Error: {
             _getReferenceToType: () => ts.TypeNode;
-            reason: string;
+            reason: "reason";
         };
         FailedStatusCodeError: {
             _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: string;
-            statusCode: string;
-            body: string;
+            _reasonLiteralValue: "status-code";
+            statusCode: "statusCode";
+            body: "body";
+            rawBody: "rawBody";
         };
         NonJsonError: {
             _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: string;
-            statusCode: string;
-            rawBody: string;
+            _reasonLiteralValue: "non-json";
+            statusCode: "statusCode";
+            rawBody: "rawBody";
         };
         TimeoutError: {
             _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: string;
+            _reasonLiteralValue: "timeout";
         };
         UnknownError: {
             _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: string;
-            message: string;
+            _reasonLiteralValue: "unknown";
+            message: "errorMessage";
         };
 
         _invoke: (args: Fetcher.Args) => ts.Expression;

@@ -8,6 +8,7 @@ export declare namespace ServiceGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         errorResolver: ErrorResolver;
+        neverThrowErrors: boolean;
     }
 
     export namespace generateService {
@@ -21,11 +22,14 @@ export declare namespace ServiceGenerator {
 export class ServiceGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private errorResolver: ErrorResolver;
+    private neverThrowErrors: boolean;
 
-    constructor({ intermediateRepresentation, errorResolver }: ServiceGenerator.Init) {
+    constructor({ intermediateRepresentation, errorResolver, neverThrowErrors }: ServiceGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
+        this.neverThrowErrors = neverThrowErrors;
     }
+
     public generateService({ service, serviceClassName }: ServiceGenerator.generateService.Args): GeneratedService {
         return new GeneratedServiceImpl({
             apiHeaders: this.intermediateRepresentation.headers,
@@ -34,6 +38,7 @@ export class ServiceGenerator {
             serviceClassName,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             errorResolver: this.errorResolver,
+            neverThrowErrors: this.neverThrowErrors,
         });
     }
 }

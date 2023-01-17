@@ -17,12 +17,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
     };
 
-    public readonly Fetcher = {
+    public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             url: "url",
             method: "method",
             headers: "headers",
-            authHeader: "authHeader",
             queryParameters: "queryParameters",
             body: "body",
             timeoutMs: "timeoutMs",
@@ -36,12 +35,13 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             _reasonLiteralValue: "status-code",
             statusCode: "statusCode",
             body: "body",
+            rawBody: "rawBody",
         },
         NonJsonError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("NonJsonError"),
             _reasonLiteralValue: "non-json",
             statusCode: "statusCode",
-            rawBody: "body",
+            rawBody: "rawBody",
         },
         TimeoutError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutError"),
@@ -50,7 +50,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         UnknownError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
             _reasonLiteralValue: "unknown",
-            message: "message",
+            message: "errorMessage",
         },
         _invoke: this.withExportedName("fetcher", (fetcher) => (args: Fetcher.Args) => {
             const properties: ts.PropertyAssignment[] = [

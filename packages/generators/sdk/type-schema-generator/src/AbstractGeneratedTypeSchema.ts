@@ -7,7 +7,7 @@ export declare namespace AbstractGeneratedTypeSchema {
         typeName: string;
         shape: Shape;
         getGeneratedType: () => GeneratedType<Context>;
-        getReferenceToGeneratedType: (context: Context) => Reference;
+        getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }
 }
@@ -18,7 +18,7 @@ export abstract class AbstractGeneratedTypeSchema<
 > extends AbstractGeneratedSchema<Context> {
     protected shape: Shape;
     protected getGeneratedType: () => GeneratedType<Context>;
-    protected getReferenceToGeneratedType: (context: Context) => Reference;
+    protected getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
     protected getReferenceToSchema: (context: Context) => Reference;
 
     constructor({
@@ -40,6 +40,6 @@ export abstract class AbstractGeneratedTypeSchema<
     }
 
     protected override getReferenceToParsedShape(context: Context): ts.TypeNode {
-        return this.getReferenceToGeneratedType(context).getTypeNode();
+        return this.getReferenceToGeneratedType(context);
     }
 }

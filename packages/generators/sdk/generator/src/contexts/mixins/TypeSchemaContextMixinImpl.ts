@@ -82,12 +82,14 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                 }),
             getReferenceToGeneratedType: () =>
-                this.typeDeclarationReferencer.getReferenceToType({
-                    name: typeDeclaration.name,
-                    importsManager: this.importsManager,
-                    referencedIn: this.sourceFile,
-                    importStrategy: { type: "fromRoot" },
-                }),
+                this.typeDeclarationReferencer
+                    .getReferenceToType({
+                        name: typeDeclaration.name,
+                        importsManager: this.importsManager,
+                        referencedIn: this.sourceFile,
+                        importStrategy: { type: "fromRoot" },
+                    })
+                    .getTypeNode(),
             getReferenceToGeneratedTypeSchema: () =>
                 this.typeSchemaDeclarationReferencer.getReferenceToType({
                     name: typeDeclaration.name,

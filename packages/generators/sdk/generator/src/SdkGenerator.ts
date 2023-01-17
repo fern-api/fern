@@ -6,6 +6,7 @@ import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generato
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { GenericAPIErrorGenerator, TimeoutErrorGenerator } from "@fern-typescript/generic-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { ServiceGenerator } from "@fern-typescript/service-generator";
@@ -19,16 +20,20 @@ import { EndpointTypesContextImpl } from "./contexts/EndpointTypesContextImpl";
 import { EnvironmentsContextImpl } from "./contexts/EnvironmentsContextImpl";
 import { ErrorContextImpl } from "./contexts/ErrorContextImpl";
 import { ErrorSchemaContextImpl } from "./contexts/ErrorSchemaContextImpl";
+import { GenericAPIErrorContextImpl } from "./contexts/GenericAPIErrorContextImpl";
 import { RequestWrapperContextImpl } from "./contexts/RequestWrapperContextImpl";
 import { ServiceContextImpl } from "./contexts/ServiceContextImpl";
+import { TimeoutErrorContextImpl } from "./contexts/TimeoutErrorContextImpl";
 import { TypeContextImpl } from "./contexts/TypeContextImpl";
 import { TypeSchemaContextImpl } from "./contexts/TypeSchemaContextImpl";
 import { CoreUtilitiesManager } from "./core-utilities/CoreUtilitiesManager";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { ErrorDeclarationReferencer } from "./declaration-referencers/ErrorDeclarationReferencer";
+import { GenericAPIErrorDeclarationReferencer } from "./declaration-referencers/GenericAPIErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { ServiceDeclarationReferencer } from "./declaration-referencers/ServiceDeclarationReferencer";
+import { TimeoutErrorDeclarationReferencer } from "./declaration-referencers/TimeoutErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { DependencyManager } from "./dependency-manager/DependencyManager";
 import {
@@ -60,12 +65,14 @@ export declare namespace SdkGenerator {
     export interface Config {
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
+        neverThrowErrors: boolean;
     }
 }
 
 export class SdkGenerator {
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
+    private config: SdkGenerator.Config;
 
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
@@ -84,6 +91,8 @@ export class SdkGenerator {
     private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
     private endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
+    private genericAPIErrorDeclarationReferencer: GenericAPIErrorDeclarationReferencer;
+    private timeoutErrorDeclarationReferencer: TimeoutErrorDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
@@ -95,6 +104,8 @@ export class SdkGenerator {
     private endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
     private serviceGenerator: ServiceGenerator;
+    private genericAPIErrorGenerator: GenericAPIErrorGenerator;
+    private timeoutErrorGenerator: TimeoutErrorGenerator;
 
     private generatePackage: () => Promise<void>;
 
@@ -110,6 +121,7 @@ export class SdkGenerator {
     }: SdkGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
+        this.config = config;
 
         this.exportsManager = new ExportsManager({ packageName });
         this.coreUtilitiesManager = new CoreUtilitiesManager({ apiName, packageName });
@@ -181,15 +193,31 @@ export class SdkGenerator {
             apiName,
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
         });
+        this.genericAPIErrorDeclarationReferencer = new GenericAPIErrorDeclarationReferencer({
+            containingDirectory: [],
+            packageName,
+            apiName,
+        });
+        this.timeoutErrorDeclarationReferencer = new TimeoutErrorDeclarationReferencer({
+            containingDirectory: [],
+            packageName,
+            apiName,
+        });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.typeSchemaGenerator = new TypeSchemaGenerator();
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
-        this.errorGenerator = new ErrorGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
-        this.errorSchemaGenerator = new ErrorSchemaGenerator();
+        this.errorGenerator = new ErrorGenerator({
+            useBrandedStringAliases: config.shouldUseBrandedStringAliases,
+            neverThrowErrors: config.neverThrowErrors,
+        });
+        this.errorSchemaGenerator = new ErrorSchemaGenerator({
+            errorGenerator: this.errorGenerator,
+        });
         this.endpointTypesGenerator = new EndpointTypesGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
+            neverThrowErrors: config.neverThrowErrors,
         });
         this.endpointTypeSchemasGenerator = new EndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
@@ -200,7 +228,10 @@ export class SdkGenerator {
         this.serviceGenerator = new ServiceGenerator({
             intermediateRepresentation: this.intermediateRepresentation,
             errorResolver: this.errorResolver,
+            neverThrowErrors: config.neverThrowErrors,
         });
+        this.genericAPIErrorGenerator = new GenericAPIErrorGenerator();
+        this.timeoutErrorGenerator = new TimeoutErrorGenerator();
 
         this.generatePackage = async () => {
             await generateTypeScriptProject({
@@ -224,6 +255,12 @@ export class SdkGenerator {
         this.generateEndpointTypeSchemas();
         this.generateServiceDeclarations();
         this.generateEnvironments();
+
+        if (!this.config.neverThrowErrors) {
+            this.generateGenericAPIError();
+            this.generateTimeoutError();
+        }
+
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         await this.generatePackage();
@@ -482,6 +519,10 @@ export class SdkGenerator {
                         environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
                         serviceDeclarationReferencer: this.serviceDeclarationReferencer,
                         serviceGenerator: this.serviceGenerator,
+                        genericAPIErrorDeclarationReferencer: this.genericAPIErrorDeclarationReferencer,
+                        genericAPIErrorGenerator: this.genericAPIErrorGenerator,
+                        timeoutErrorDeclarationReferencer: this.timeoutErrorDeclarationReferencer,
+                        timeoutErrorGenerator: this.timeoutErrorGenerator,
                     });
                     serviceContext.service.getGeneratedService(service.fernFilepath).writeToFile(serviceContext);
                 },
@@ -504,6 +545,50 @@ export class SdkGenerator {
                     environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
                 });
                 environmentsContext.environments.getGeneratedEnvironments().writeToFile(environmentsContext);
+            },
+        });
+    }
+
+    private generateGenericAPIError(): void {
+        this.withSourceFile({
+            filepath: this.genericAPIErrorDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = new GenericAPIErrorContextImpl({
+                    sourceFile,
+                    coreUtilitiesManager: this.coreUtilitiesManager,
+                    dependencyManager: this.dependencyManager,
+                    fernConstants: this.intermediateRepresentation.constants,
+                    importsManager,
+                    genericAPIErrorDeclarationReferencer: this.genericAPIErrorDeclarationReferencer,
+                    genericAPIErrorGenerator: this.genericAPIErrorGenerator,
+                });
+                this.genericAPIErrorGenerator
+                    .generateGenericAPIError({
+                        errorClassName: this.genericAPIErrorDeclarationReferencer.getExportedName(),
+                    })
+                    .writeToFile(context);
+            },
+        });
+    }
+
+    private generateTimeoutError(): void {
+        this.withSourceFile({
+            filepath: this.timeoutErrorDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = new TimeoutErrorContextImpl({
+                    sourceFile,
+                    coreUtilitiesManager: this.coreUtilitiesManager,
+                    dependencyManager: this.dependencyManager,
+                    fernConstants: this.intermediateRepresentation.constants,
+                    importsManager,
+                    timeoutErrorDeclarationReferencer: this.timeoutErrorDeclarationReferencer,
+                    timeoutErrorGenerator: this.timeoutErrorGenerator,
+                });
+                this.timeoutErrorGenerator
+                    .generateTimeoutError({
+                        errorClassName: this.timeoutErrorDeclarationReferencer.getExportedName(),
+                    })
+                    .writeToFile(context);
             },
         });
     }

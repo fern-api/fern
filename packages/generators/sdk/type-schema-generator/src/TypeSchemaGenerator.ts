@@ -1,8 +1,8 @@
 import {
-    AliasTypeDeclaration,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
     Type,
+    TypeReference,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import {
@@ -15,6 +15,7 @@ import {
     Reference,
     TypeSchemaContext,
 } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
 import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";
 import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchemaImpl";
@@ -26,7 +27,7 @@ export declare namespace TypeSchemaGenerator {
             typeName: string;
             shape: Type;
             getGeneratedType: () => GeneratedType<Context>;
-            getReferenceToGeneratedType: () => Reference;
+            getReferenceToGeneratedType: () => ts.TypeNode;
             getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
         }
     }
@@ -68,7 +69,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
             alias: (shape) =>
                 this.generateAlias({
                     typeName,
-                    shape,
+                    aliasOf: shape.aliasOf,
                     getGeneratedType,
                     getReferenceToGeneratedType,
                     getReferenceToGeneratedTypeSchema,
@@ -79,7 +80,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         });
     }
 
-    public generateUnion({
+    private generateUnion({
         typeName,
         shape,
         getGeneratedType,
@@ -89,7 +90,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         typeName: string;
         shape: UnionTypeDeclaration;
         getGeneratedType: () => GeneratedType<Context>;
-        getReferenceToGeneratedType: () => Reference;
+        getReferenceToGeneratedType: () => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedUnionTypeSchema<Context> {
         return new GeneratedUnionTypeSchemaImpl({
@@ -101,7 +102,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         });
     }
 
-    public generateObject({
+    private generateObject({
         typeName,
         shape,
         getGeneratedType,
@@ -111,7 +112,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         typeName: string;
         shape: ObjectTypeDeclaration;
         getGeneratedType: () => GeneratedType<Context>;
-        getReferenceToGeneratedType: () => Reference;
+        getReferenceToGeneratedType: () => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedObjectTypeSchema<Context> {
         return new GeneratedObjectTypeSchemaImpl({
@@ -123,7 +124,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         });
     }
 
-    public generateEnum({
+    private generateEnum({
         typeName,
         shape,
         getGeneratedType,
@@ -133,7 +134,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         typeName: string;
         shape: EnumTypeDeclaration;
         getGeneratedType: () => GeneratedType<Context>;
-        getReferenceToGeneratedType: () => Reference;
+        getReferenceToGeneratedType: () => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedEnumTypeSchema<Context> {
         return new GeneratedEnumTypeSchemaImpl({
@@ -145,22 +146,22 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         });
     }
 
-    public generateAlias({
+    private generateAlias({
         typeName,
-        shape,
+        aliasOf,
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema,
     }: {
         typeName: string;
-        shape: AliasTypeDeclaration;
+        aliasOf: TypeReference;
         getGeneratedType: () => GeneratedType<Context>;
-        getReferenceToGeneratedType: () => Reference;
+        getReferenceToGeneratedType: () => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedAliasTypeSchema<Context> {
         return new GeneratedAliasTypeSchemaImpl({
             typeName,
-            shape,
+            shape: aliasOf,
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,

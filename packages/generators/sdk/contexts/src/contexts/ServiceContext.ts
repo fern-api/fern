@@ -5,8 +5,10 @@ import {
     WithEnvironmentsContextMixin,
     WithErrorContextMixin,
     WithErrorSchemaContextMixin,
+    WithGenericAPIErrorContextMixin,
     WithRequestWrapperContextMixin,
     WithServiceContextMixin,
+    WithTimeoutErrorContextMixin,
     WithTypeContextMixin,
     WithTypeSchemaContextMixin,
 } from "./mixins";
@@ -21,4 +23,6 @@ export interface ServiceContext
         WithEndpointTypesContextMixin,
         WithRequestWrapperContextMixin,
         WithEndpointTypeSchemasContextMixin,
-        WithEnvironmentsContextMixin {}
+        WithEnvironmentsContextMixin,
+        WithGenericAPIErrorContextMixin,
+        WithTimeoutErrorContextMixin {}

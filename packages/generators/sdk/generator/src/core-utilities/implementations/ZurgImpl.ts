@@ -12,7 +12,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             ignoreGlob: "**/__test__",
         },
         originalPathOnDocker: "/assets/zurg" as const,
-        pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "schemas" } }],
+        pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }],
     };
 
     public object = this.withExportedName("object", (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {

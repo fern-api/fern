@@ -9,11 +9,6 @@ import { getExportedDirectoriesForFernFilepath } from "./utils/getExportedDirect
 const CLIENT_DIRECTORY = "client";
 
 export abstract class AbstractServiceDeclarationReferencer<Name> extends AbstractDeclarationReferencer<Name> {
-    protected static EXPORTED_CLIENT_DIRECTORY: ExportedDirectory = {
-        nameOnDisk: CLIENT_DIRECTORY,
-        exportDeclaration: { exportAll: true },
-    };
-
     protected getExportedDirectory(
         service: FernFilepath,
         { subExports }: { subExports?: Record<RelativeFilePath, ExportDeclaration> } = {}
@@ -33,7 +28,10 @@ export abstract class AbstractServiceDeclarationReferencer<Name> extends Abstrac
                           )
                         : undefined,
             }),
-            AbstractServiceDeclarationReferencer.EXPORTED_CLIENT_DIRECTORY,
+            {
+                nameOnDisk: CLIENT_DIRECTORY,
+                exportDeclaration: { exportAll: true },
+            },
         ];
     }
 }

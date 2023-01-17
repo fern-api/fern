@@ -1,11 +1,11 @@
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import {
-    AliasTypeDeclaration,
     EnumTypeDeclaration,
     ExampleType,
     ObjectTypeDeclaration,
     PrimitiveType,
     Type,
+    TypeReference,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import {
@@ -60,7 +60,15 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
             object: (shape) =>
                 this.generateObject({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
             enum: (shape) => this.generateEnum({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
-            alias: (shape) => this.generateAlias({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
+            alias: (shape) =>
+                this.generateAlias({
+                    typeName,
+                    aliasOf: shape.aliasOf,
+                    examples,
+                    docs,
+                    fernFilepath,
+                    getReferenceToSelf,
+                }),
             _unknown: () => {
                 throw new Error("Unknown type declaration shape: " + shape._type);
             },
@@ -121,32 +129,39 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
         return new GeneratedEnumTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
     }
 
-    private generateAlias({
+    public generateAlias({
         typeName,
-        shape,
+        aliasOf,
         examples,
         docs,
         fernFilepath,
         getReferenceToSelf,
     }: {
         typeName: string;
-        shape: AliasTypeDeclaration;
+        aliasOf: TypeReference;
         examples: ExampleType[];
         docs: string | undefined;
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedAliasType<Context> {
         return this.useBrandedStringAliases &&
-            shape.aliasOf._type === "primitive" &&
-            shape.aliasOf.primitive === PrimitiveType.String
+            aliasOf._type === "primitive" &&
+            aliasOf.primitive === PrimitiveType.String
             ? new GeneratedBrandedStringAliasImpl({
                   typeName,
-                  shape,
+                  shape: aliasOf,
                   examples,
                   docs,
                   fernFilepath,
                   getReferenceToSelf,
               })
-            : new GeneratedAliasTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
+            : new GeneratedAliasTypeImpl({
+                  typeName,
+                  shape: aliasOf,
+                  examples,
+                  docs,
+                  fernFilepath,
+                  getReferenceToSelf,
+              });
     }
 }

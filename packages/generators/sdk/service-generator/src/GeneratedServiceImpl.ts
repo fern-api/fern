@@ -8,6 +8,8 @@ import { ErrorResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { GeneratedHeader } from "./GeneratedHeader";
+import { GeneratedNonThrowingEndpointImplementation } from "./GeneratedNonThrowingEndpointImplementation";
+import { GeneratedThrowingEndpointImplementation } from "./GeneratedThrowingEndpointImplementation";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
 export declare namespace GeneratedServiceImpl {
@@ -18,6 +20,7 @@ export declare namespace GeneratedServiceImpl {
         serviceClassName: string;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        neverThrowErrors: boolean;
     }
 }
 
@@ -44,6 +47,7 @@ export class GeneratedServiceImpl implements GeneratedService {
         apiHeaders,
         errorResolver,
         errorDiscriminationStrategy,
+        neverThrowErrors,
     }: GeneratedServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -53,15 +57,22 @@ export class GeneratedServiceImpl implements GeneratedService {
             this.generatedEndpointImplementations = [];
         } else {
             const { originalService } = service;
-            this.generatedEndpointImplementations = service.originalService.endpoints.map(
-                (endpoint) =>
-                    new GeneratedEndpointImplementation({
-                        endpoint,
-                        service: originalService,
-                        generatedService: this,
-                        errorResolver,
-                        errorDiscriminationStrategy,
-                    })
+            this.generatedEndpointImplementations = service.originalService.endpoints.map((endpoint) =>
+                neverThrowErrors
+                    ? new GeneratedNonThrowingEndpointImplementation({
+                          endpoint,
+                          service: originalService,
+                          generatedService: this,
+                          errorResolver,
+                          errorDiscriminationStrategy,
+                      })
+                    : new GeneratedThrowingEndpointImplementation({
+                          endpoint,
+                          service: originalService,
+                          generatedService: this,
+                          errorResolver,
+                          errorDiscriminationStrategy,
+                      })
             );
         }
 
@@ -137,7 +148,8 @@ export class GeneratedServiceImpl implements GeneratedService {
         });
 
         for (const endpoint of this.generatedEndpointImplementations) {
-            serviceClass.addMethod(endpoint.getImplementation(context));
+            const method = serviceClass.addMethod(endpoint.getImplementation(context));
+            maybeAddDocs(method, endpoint.getDocs(context));
         }
 
         for (const wrappedService of this.generatedWrappedServices) {
