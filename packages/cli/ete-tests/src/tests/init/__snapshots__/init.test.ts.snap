@@ -157,12 +157,6 @@ headers: {}
       line1: string
       user: string
       createdAt: string
-services:
-  http:
-    CommonsService:
-      auth: false
-      base-path: ''
-      endpoints: {}
 ",
                 "name": "commons.yml",
                 "type": "file",
@@ -1354,12 +1348,6 @@ headers: {}
     docs: A matchmaker lobby player.
     properties:
       token: string
-services:
-  http:
-    CommonsService:
-      auth: false
-      base-path: ''
-      endpoints: {}
 ",
                 "name": "commons.yml",
                 "type": "file",
@@ -1697,12 +1685,6 @@ headers: {}
       year: double
       make: string
       registration: string
-services:
-  http:
-    CommonsService:
-      auth: false
-      base-path: ''
-      endpoints: {}
 ",
                 "name": "commons.yml",
                 "type": "file",

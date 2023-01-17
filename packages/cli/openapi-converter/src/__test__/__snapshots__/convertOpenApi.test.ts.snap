@@ -8,15 +8,6 @@ exports[`open api converter rivet simple 1`] = `
   },
   "serviceFiles": {
     "commons.yml": {
-      "services": {
-        "http": {
-          "CommonsService": {
-            "auth": false,
-            "base-path": "",
-            "endpoints": {},
-          },
-        },
-      },
       "types": {
         "MatchmakerLobbyJoinInfo": {
           "docs": "A matchmaker lobby.",
@@ -305,15 +296,6 @@ exports[`open api converter telematica simple 1`] = `
   },
   "serviceFiles": {
     "commons.yml": {
-      "services": {
-        "http": {
-          "CommonsService": {
-            "auth": false,
-            "base-path": "",
-            "endpoints": {},
-          },
-        },
-      },
       "types": {
         "ChargingStatus_ResponseDTO": {
           "extends": undefined,

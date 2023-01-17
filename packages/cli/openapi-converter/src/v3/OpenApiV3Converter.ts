@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
-import { camelCase, upperFirst } from "lodash-es";
+import { camelCase, size, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { FernDefinition } from "../convertOpenApi";
 import { EndpointConverter } from "./EndpointConverter";
@@ -125,9 +125,10 @@ export class OpenAPIConverter {
                 };
             }
         });
-        const serviceFile = {
-            types,
-            services: {
+
+        const serviceFile: ServiceFileSchema = { types };
+        if (size(convertedEndpoints) > 0) {
+            serviceFile.services = {
                 http: {
                     [`${pascalCasedTag}Service`]: {
                         auth: false,
@@ -135,8 +136,9 @@ export class OpenAPIConverter {
                         endpoints: convertedEndpoints,
                     },
                 },
-            },
-        };
+            };
+        }
+
         return {
             filename: `${camelCasedTag}.yml`,
             serviceFile,
