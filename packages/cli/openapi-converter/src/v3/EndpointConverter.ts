@@ -168,6 +168,7 @@ export class EndpointConverter {
                     continue;
                 } else if (parameter.name.toLowerCase() === "authorization") {
                     // Authorization header will already be configured based on security schemes
+                    continue;
                 }
                 const parameterType = this.convertParameterSchema(parameter);
                 if (parameterType == null) {

@@ -358,14 +358,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/charging-status/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.ChargingStatus_ResponseDTO",
               },
               "getLocationTest": {
@@ -373,14 +365,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/location/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.Location_ResponseDTO",
               },
               "getOdoTest": {
@@ -388,14 +372,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/odo/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.Odo_ResponseDTO",
               },
               "getRangeSocTest": {
@@ -403,14 +379,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/range-soc/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.RangeSoc_ResponseDTO",
               },
               "getRangeTest": {
@@ -418,14 +386,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/range/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.Range_ResponseDTO",
               },
               "getSOCTest": {
@@ -433,14 +393,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/soc/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.SOC_ResponseDTO",
               },
               "getStaticAttributesTest": {
@@ -448,14 +400,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/static-attributes/test",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.StaticAttributes_ResponseDTO",
               },
             },
@@ -476,14 +420,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/charging-status",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.ChargingStatus_ResponseDTO",
               },
               "getLocation": {
@@ -491,14 +427,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/location",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.Location_ResponseDTO",
               },
               "getOdo": {
@@ -506,14 +434,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/odo",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.Odo_ResponseDTO",
               },
               "getRange": {
@@ -521,14 +441,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/range",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.Range_ResponseDTO",
               },
               "getRangeSoc": {
@@ -536,14 +448,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": "This endpoint returns the SOC and range for the vehicle in a single call",
                 "method": "GET",
                 "path": "/vehicle-data/range-soc",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.RangeSoc_ResponseDTO",
               },
               "getSOC": {
@@ -551,14 +455,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/soc",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.SOC_ResponseDTO",
               },
               "getStaticAttributes": {
@@ -566,14 +462,6 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": "Static vehicle attributes like VIN, registration number, model, year and make",
                 "method": "GET",
                 "path": "/vehicle-data/static-attributes",
-                "request": {
-                  "headers": {
-                    "Authorization": {
-                      "docs": "Bearer JWT token for authN and authZ",
-                      "type": "string",
-                    },
-                  },
-                },
                 "response": "commons.StaticAttributes_ResponseDTO",
               },
             },

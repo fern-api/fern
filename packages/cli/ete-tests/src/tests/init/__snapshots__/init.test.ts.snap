@@ -1528,71 +1528,36 @@ services:
           path: /vehicle-data/soc/test
           method: GET
           display-name: Test SOC (battery level)
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.SOC_ResponseDTO
         getRangeTest:
           path: /vehicle-data/range/test
           method: GET
           display-name: Test range
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.Range_ResponseDTO
         getRangeSocTest:
           path: /vehicle-data/range-soc/test
           method: GET
           display-name: Test range-soc
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.RangeSoc_ResponseDTO
         getLocationTest:
           path: /vehicle-data/location/test
           method: GET
           display-name: Test location
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.Location_ResponseDTO
         getChargingStatusTest:
           path: /vehicle-data/charging-status/test
           method: GET
           display-name: Test charging status
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdoTest:
           path: /vehicle-data/odo/test
           method: GET
           display-name: Test odo
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributesTest:
           path: /vehicle-data/static-attributes/test
           method: GET
           display-name: Test static attributes
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "testingEndpoints.yml",
@@ -1610,21 +1575,11 @@ services:
           path: /vehicle-data/soc
           method: GET
           display-name: SOC (battery level)
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.SOC_ResponseDTO
         getRange:
           path: /vehicle-data/range
           method: GET
           display-name: Range
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.Range_ResponseDTO
         getRangeSoc:
           path: /vehicle-data/range-soc
@@ -1633,41 +1588,21 @@ services:
             This endpoint returns the SOC and range for the vehicle in a single
             call
           display-name: Range-SOC
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.RangeSoc_ResponseDTO
         getLocation:
           path: /vehicle-data/location
           method: GET
           display-name: Location
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.Location_ResponseDTO
         getChargingStatus:
           path: /vehicle-data/charging-status
           method: GET
           display-name: Charging Status
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdo:
           path: /vehicle-data/odo
           method: GET
           display-name: Odometer
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributes:
           path: /vehicle-data/static-attributes
@@ -1676,11 +1611,6 @@ services:
             Static vehicle attributes like VIN, registration number, model, year
             and make
           display-name: Static attributes
-          request:
-            headers:
-              Authorization:
-                docs: Bearer JWT token for authN and authZ
-                type: string
           response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "vehicleData.yml",
