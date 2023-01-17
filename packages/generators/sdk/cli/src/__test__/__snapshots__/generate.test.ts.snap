@@ -7809,9 +7809,8 @@ export type FernApiEnvironment = typeof FernApiEnvironment.Production | typeof F
  */
 
 export class FernApiError extends Error {
-    readonly statusCode: number | undefined;
-    readonly responseBody?: string;
-    readonly rawResponseBody?: string;
+    readonly statusCode?: number;
+    readonly responseBody?: unknown;
 
     constructor({
         message,
@@ -7824,12 +7823,16 @@ export class FernApiError extends Error {
     }) {
         super(message);
         Object.setPrototypeOf(this, FernApiError.prototype);
-        this.statusCode = statusCode;
+        if (statusCode != null) {
+            this.statusCode = statusCode;
+        }
+
         if (responseBody != null) {
-            this.rawResponseBody = responseBody;
             try {
                 this.responseBody = JSON.parse(responseBody);
-            } catch {}
+            } catch {
+                this.responseBody = responseBody;
+            }
         }
     }
 }
@@ -11443,9 +11446,8 @@ export type FernApiEnvironment = typeof FernApiEnvironment.Production | typeof F
  */
 
 export class FernApiError extends Error {
-    readonly statusCode: number | undefined;
-    readonly responseBody?: string;
-    readonly rawResponseBody?: string;
+    readonly statusCode?: number;
+    readonly responseBody?: unknown;
 
     constructor({
         message,
@@ -11458,12 +11460,16 @@ export class FernApiError extends Error {
     }) {
         super(message);
         Object.setPrototypeOf(this, FernApiError.prototype);
-        this.statusCode = statusCode;
+        if (statusCode != null) {
+            this.statusCode = statusCode;
+        }
+
         if (responseBody != null) {
-            this.rawResponseBody = responseBody;
             try {
                 this.responseBody = JSON.parse(responseBody);
-            } catch {}
+            } catch {
+                this.responseBody = responseBody;
+            }
         }
     }
 }

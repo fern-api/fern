@@ -9,7 +9,6 @@ export class GeneratedGenericAPIErrorImpl
 {
     private static STATUS_CODE_PROPERTY_NAME = "statusCode";
     private static RESPONSE_BODY_PROPERTY_NAME = "responseBody";
-    private static RAW_RESPONSE_BODY_PROPERTY_NAME = "rawResponseBody";
 
     private static MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
     private static STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME = GeneratedGenericAPIErrorImpl.STATUS_CODE_PROPERTY_NAME;
@@ -69,24 +68,14 @@ export class GeneratedGenericAPIErrorImpl
             {
                 name: GeneratedGenericAPIErrorImpl.STATUS_CODE_PROPERTY_NAME,
                 isReadonly: true,
-                type: getTextOfTsNode(
-                    ts.factory.createUnionTypeNode([
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                    ])
-                ),
+                hasQuestionToken: true,
+                type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
             },
             {
                 name: GeneratedGenericAPIErrorImpl.RESPONSE_BODY_PROPERTY_NAME,
                 isReadonly: true,
                 hasQuestionToken: true,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-            },
-            {
-                name: GeneratedGenericAPIErrorImpl.RAW_RESPONSE_BODY_PROPERTY_NAME,
-                isReadonly: true,
-                hasQuestionToken: true,
-                type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
+                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
             },
         ];
     }
@@ -153,14 +142,28 @@ export class GeneratedGenericAPIErrorImpl
 
     protected getConstructorStatements(): ts.Statement[] {
         return [
-            ts.factory.createExpressionStatement(
+            ts.factory.createIfStatement(
                 ts.factory.createBinaryExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        ts.factory.createIdentifier(GeneratedGenericAPIErrorImpl.STATUS_CODE_PROPERTY_NAME)
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                    ts.factory.createIdentifier(GeneratedGenericAPIErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME)
+                    ts.factory.createIdentifier(GeneratedGenericAPIErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    ts.factory.createIdentifier(GeneratedGenericAPIErrorImpl.STATUS_CODE_PROPERTY_NAME)
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createIdentifier(
+                                    GeneratedGenericAPIErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME
+                                )
+                            )
+                        ),
+                    ],
+                    true
                 )
             ),
             ts.factory.createIfStatement(
@@ -171,18 +174,6 @@ export class GeneratedGenericAPIErrorImpl
                 ),
                 ts.factory.createBlock(
                     [
-                        ts.factory.createExpressionStatement(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createThis(),
-                                    ts.factory.createIdentifier(
-                                        GeneratedGenericAPIErrorImpl.RAW_RESPONSE_BODY_PROPERTY_NAME
-                                    )
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                ts.factory.createIdentifier(GeneratedGenericAPIErrorImpl.RESPONSE_BODY_PROPERTY_NAME)
-                            )
-                        ),
                         ts.factory.createTryStatement(
                             ts.factory.createBlock(
                                 [
@@ -212,7 +203,28 @@ export class GeneratedGenericAPIErrorImpl
                                 ],
                                 true
                             ),
-                            ts.factory.createCatchClause(undefined, ts.factory.createBlock([], false)),
+                            ts.factory.createCatchClause(
+                                undefined,
+                                ts.factory.createBlock(
+                                    [
+                                        ts.factory.createExpressionStatement(
+                                            ts.factory.createBinaryExpression(
+                                                ts.factory.createPropertyAccessExpression(
+                                                    ts.factory.createThis(),
+                                                    ts.factory.createIdentifier(
+                                                        GeneratedGenericAPIErrorImpl.RESPONSE_BODY_PROPERTY_NAME
+                                                    )
+                                                ),
+                                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                                ts.factory.createIdentifier(
+                                                    GeneratedGenericAPIErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
+                                                )
+                                            )
+                                        ),
+                                    ],
+                                    false
+                                )
+                            ),
                             undefined
                         ),
                     ],
