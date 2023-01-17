@@ -49,13 +49,6 @@ exports[`open api converter rivet simple 1`] = `
 able to connect to this lobby until the lobby is flagged as ready.",
                 "method": "POST",
                 "path": "/lobbies/ready",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": {},
-                  "query-parameters": {},
-                },
-                "response": undefined,
               },
               "PlayerConnected": {
                 "display-name": undefined,
@@ -101,13 +94,9 @@ once the socket opens. As mentioned above, nothing else should happen until
 the player token is validated.",
                 "method": "POST",
                 "path": "/players/connected",
-                "path-parameters": {},
                 "request": {
                   "body": "lobby.PlayerConnectedRequestContent",
-                  "headers": {},
-                  "query-parameters": {},
                 },
-                "response": undefined,
               },
               "PlayerDisconnected": {
                 "display-name": undefined,
@@ -120,13 +109,9 @@ players" that the matchmaker thinks exist but are no longer connected to the
 lobby.",
                 "method": "POST",
                 "path": "/players/disconnected",
-                "path-parameters": {},
                 "request": {
                   "body": "lobby.PlayerDisconnectedRequestContent",
-                  "headers": {},
-                  "query-parameters": {},
                 },
-                "response": undefined,
               },
             },
           },
@@ -161,11 +146,11 @@ lobby.",
 If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a new lobby will be created.",
                 "method": "POST",
                 "path": "/lobbies/find",
-                "path-parameters": {},
                 "request": {
                   "body": "public.FindLobbyRequestContent",
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "origin": "optional<string>",
+                  },
                 },
                 "response": "public.FindLobbyResponseContent",
               },
@@ -177,11 +162,8 @@ This request will use the direct player count configured for the lobby
 group.",
                 "method": "POST",
                 "path": "/lobbies/join",
-                "path-parameters": {},
                 "request": {
                   "body": "public.JoinLobbyRequestContent",
-                  "headers": {},
-                  "query-parameters": {},
                 },
                 "response": "public.JoinLobbyResponseContent",
               },
@@ -190,12 +172,6 @@ group.",
                 "docs": "Lists all open lobbies.",
                 "method": "GET",
                 "path": "/lobbies/list",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": {},
-                  "query-parameters": {},
-                },
                 "response": "public.ListLobbiesResponseContent",
               },
               "ListRegions": {
@@ -206,12 +182,6 @@ Regions are sorted by most optimal to least optimal. The player's IP address
 is used to calculate the regions' optimality.",
                 "method": "GET",
                 "path": "/regions",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": {},
-                  "query-parameters": {},
-                },
                 "response": "public.ListRegionsResponseContent",
               },
               "SetLobbyClosed": {
@@ -221,13 +191,9 @@ is used to calculate the regions' optimality.",
 Does not shutdown the lobby.",
                 "method": "PUT",
                 "path": "/lobbies/closed",
-                "path-parameters": {},
                 "request": {
                   "body": "public.SetLobbyClosedRequestContent",
-                  "headers": {},
-                  "query-parameters": {},
                 },
-                "response": undefined,
               },
             },
           },
@@ -364,7 +330,6 @@ exports[`open api converter telematica simple 1`] = `
 Please share the POST callback endpoint created in your app's backend with Telematica to get callback requests of this format.",
                 "method": "POST",
                 "path": "/callback",
-                "path-parameters": {},
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -373,10 +338,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                       "vehicles": "optional<list<commons.Callback_DTO>>",
                     },
                   },
-                  "headers": {},
-                  "query-parameters": {},
                 },
-                "response": undefined,
               },
             },
           },
@@ -396,11 +358,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/charging-status/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.ChargingStatus_ResponseDTO",
               },
@@ -409,11 +373,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/location/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.Location_ResponseDTO",
               },
@@ -422,11 +388,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/odo/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.Odo_ResponseDTO",
               },
@@ -435,11 +403,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/range-soc/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.RangeSoc_ResponseDTO",
               },
@@ -448,11 +418,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/range/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.Range_ResponseDTO",
               },
@@ -461,11 +433,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/soc/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.SOC_ResponseDTO",
               },
@@ -474,11 +448,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/static-attributes/test",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.StaticAttributes_ResponseDTO",
               },
@@ -500,11 +476,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/charging-status",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.ChargingStatus_ResponseDTO",
               },
@@ -513,11 +491,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/location",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.Location_ResponseDTO",
               },
@@ -526,11 +506,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/odo",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.Odo_ResponseDTO",
               },
@@ -539,11 +521,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/range",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.Range_ResponseDTO",
               },
@@ -552,11 +536,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": "This endpoint returns the SOC and range for the vehicle in a single call",
                 "method": "GET",
                 "path": "/vehicle-data/range-soc",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.RangeSoc_ResponseDTO",
               },
@@ -565,11 +551,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": undefined,
                 "method": "GET",
                 "path": "/vehicle-data/soc",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.SOC_ResponseDTO",
               },
@@ -578,11 +566,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "docs": "Static vehicle attributes like VIN, registration number, model, year and make",
                 "method": "GET",
                 "path": "/vehicle-data/static-attributes",
-                "path-parameters": {},
                 "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
+                  "headers": {
+                    "Authorization": {
+                      "docs": "Bearer JWT token for authN and authZ",
+                      "type": "string",
+                    },
+                  },
                 },
                 "response": "commons.StaticAttributes_ResponseDTO",
               },
