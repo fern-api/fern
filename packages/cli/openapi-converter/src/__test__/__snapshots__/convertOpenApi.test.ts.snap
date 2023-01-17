@@ -40,7 +40,7 @@ exports[`open api converter rivet simple 1`] = `
       "services": {
         "http": {
           "LobbyService": {
-            "auth": false,
+            "auth": true,
             "base-path": "",
             "endpoints": {
               "LobbyReady": {
@@ -136,7 +136,7 @@ lobby.",
       "services": {
         "http": {
           "PublicService": {
-            "auth": false,
+            "auth": true,
             "base-path": "",
             "endpoints": {
               "FindLobby": {
@@ -321,7 +321,7 @@ exports[`open api converter telematica simple 1`] = `
       "services": {
         "http": {
           "SampleCallbackService": {
-            "auth": false,
+            "auth": true,
             "base-path": "",
             "endpoints": {
               "AppController_callback": {
@@ -350,7 +350,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
       "services": {
         "http": {
           "TestingEndpointsService": {
-            "auth": false,
+            "auth": true,
             "base-path": "",
             "endpoints": {
               "getChargingStatusTest": {
@@ -468,7 +468,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
       "services": {
         "http": {
           "VehicleDataService": {
-            "auth": false,
+            "auth": true,
             "base-path": "",
             "endpoints": {
               "getChargingStatus": {

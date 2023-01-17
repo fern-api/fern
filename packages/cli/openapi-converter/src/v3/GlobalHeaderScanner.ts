@@ -14,6 +14,7 @@ export class GlobalHeaderScanner {
     }
 
     public getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema> {
+        // Authorization is treated as a global header by default
         const globalHeaders: Record<string, RawSchemas.HttpHeaderSchema> = {};
         let visitedFirstEndpoint = false;
         for (const endpoint of this.openApiV3Context.getEndpoints()) {
@@ -30,7 +31,11 @@ export class GlobalHeaderScanner {
                 }
             } else {
                 Object.entries(endpointHeaders).forEach(([headerName, httpHeader]) => {
-                    globalHeaders[headerName] = httpHeader;
+                    if (headerName === "Authorization") {
+                        // Authorization header will already be configured based on security schemes
+                    } else {
+                        globalHeaders[headerName] = httpHeader;
+                    }
                 });
                 visitedFirstEndpoint = true;
             }
