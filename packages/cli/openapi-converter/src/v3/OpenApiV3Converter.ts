@@ -131,7 +131,7 @@ export class OpenAPIConverter {
             serviceFile.services = {
                 http: {
                     [`${pascalCasedTag}Service`]: {
-                        auth: false,
+                        auth: true,
                         "base-path": "",
                         endpoints: convertedEndpoints,
                     },
