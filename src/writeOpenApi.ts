@@ -29,7 +29,6 @@ export async function writeOpenApi(pathToConfig: string): Promise<void> {
             const ir = await loadIntermediateRepresentation(config.irFilepath);
             const openApiDefinition = convertToOpenApi({
                 apiName: config.workspaceName,
-                apiVersion: config.publish?.version ?? "",
                 ir,
             });
             if (customConfig.format === "json") {

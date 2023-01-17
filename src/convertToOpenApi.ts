@@ -8,11 +8,9 @@ import { constructEndpointSecurity, constructSecuritySchemes } from "./security"
 
 export function convertToOpenApi({
     apiName,
-    apiVersion,
     ir,
 }: {
     apiName: string;
-    apiVersion: string;
     ir: IntermediateRepresentation;
 }): OpenAPIV3.Document | undefined {
     const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
@@ -45,7 +43,7 @@ export function convertToOpenApi({
         info: {
             title: ir.apiDisplayName ?? apiName,
             description: ir.apiDocs ?? undefined,
-            version: apiVersion,
+            version: "",
         },
         paths,
         components: {
