@@ -1,0 +1,13 @@
+types:
+  PackageString: string
+services:
+  http:
+    PackageService:
+      url: ServerA
+      base-path: /
+      auth: false
+      endpoints:
+        getString:
+          method: GET
+          path: /
+          response: PackageString

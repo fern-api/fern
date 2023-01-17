@@ -38,7 +38,16 @@ const FIXTURES: FixtureInfo[] = [
         },
     },
     {
-        path: "nursery",
+        path: "nursery-status-code",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        customConfig: {
+            private: true,
+        },
+    },
+    {
+        path: "nursery-property-discriminant",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",

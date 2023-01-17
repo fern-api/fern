@@ -3,13 +3,12 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { GeneratedEndpointTypes } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedEndpointTypesImpl } from "./GeneratedEndpointTypesImpl";
-import { NoopGeneratedEndpointTypes } from "./NoopGeneratedEndpointTypes";
 
 export declare namespace EndpointTypesGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         errorResolver: ErrorResolver;
-        neverThrowErrors: boolean;
+        shouldGenerateErrors: boolean;
     }
 
     export namespace generateEndpointTypes {
@@ -23,25 +22,24 @@ export declare namespace EndpointTypesGenerator {
 export class EndpointTypesGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private errorResolver: ErrorResolver;
-    private neverThrowErrors: boolean;
+    private shouldGenerateErrors: boolean;
 
-    constructor({ intermediateRepresentation, errorResolver, neverThrowErrors }: EndpointTypesGenerator.Init) {
+    constructor({ intermediateRepresentation, errorResolver, shouldGenerateErrors }: EndpointTypesGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
-        this.neverThrowErrors = neverThrowErrors;
+        this.shouldGenerateErrors = shouldGenerateErrors;
     }
 
     public generateEndpointTypes({
         service,
         endpoint,
     }: EndpointTypesGenerator.generateEndpointTypes.Args): GeneratedEndpointTypes {
-        return this.neverThrowErrors
-            ? new GeneratedEndpointTypesImpl({
-                  service,
-                  endpoint,
-                  errorResolver: this.errorResolver,
-                  errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
-              })
-            : new NoopGeneratedEndpointTypes();
+        return new GeneratedEndpointTypesImpl({
+            service,
+            endpoint,
+            errorResolver: this.errorResolver,
+            errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
+            shouldGenerateErrors: this.shouldGenerateErrors,
+        });
     }
 }

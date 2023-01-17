@@ -3507,6 +3507,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/sdk/type-reference-example-generator"],\
             ["@fern-typescript/type-schema-generator", "workspace:packages/generators/sdk/type-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
+            ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
@@ -3514,6 +3515,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["glob-promise", "virtual:3ee50a5b3792b570ec68499546a46f1a1c0207ebe79287972d9500f1b080e4d058fefda0c1d14fc0fddd4b2770203fe939e2e9dd274a86653a5755d2cf0c9c35#npm:5.0.0"],\
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["js-yaml", "npm:4.1.0"],\
             ["memfs", "npm:3.4.7"],\
             ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
@@ -4533,6 +4535,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:28.1.6"],\
             ["jest-matcher-utils", "npm:28.1.3"],\
             ["pretty-format", "npm:28.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/js-yaml", [\
+        ["npm:4.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-js-yaml-npm-4.0.5-bb64d71397-7dcac8c50f.zip/node_modules/@types/js-yaml/",\
+          "packageDependencies": [\
+            ["@types/js-yaml", "npm:4.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\

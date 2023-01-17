@@ -16,6 +16,7 @@ export declare namespace GeneratedEndpointTypeSchemasImpl {
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        shouldGenerateErrors: boolean;
     }
 }
 
@@ -25,13 +26,14 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
 
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
-    private generatedErrorSchema: GeneratedEndpointErrorSchema;
+    private generatedErrorSchema: GeneratedEndpointErrorSchema | undefined;
 
     constructor({
         service,
         endpoint,
         errorResolver,
         errorDiscriminationStrategy,
+        shouldGenerateErrors,
     }: GeneratedEndpointTypeSchemasImpl.Init) {
         this.generatedRequestSchema =
             endpoint.requestBody != null
@@ -64,12 +66,14 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
                       type: endpoint.response.type,
                   })
                 : undefined;
-        this.generatedErrorSchema = this.getGeneratedEndpointErrorSchema({
-            service,
-            endpoint,
-            errorResolver,
-            errorDiscriminationStrategy,
-        });
+        this.generatedErrorSchema = shouldGenerateErrors
+            ? this.getGeneratedEndpointErrorSchema({
+                  service,
+                  endpoint,
+                  errorResolver,
+                  errorDiscriminationStrategy,
+              })
+            : undefined;
     }
 
     private getGeneratedEndpointErrorSchema({
@@ -109,7 +113,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
             context.base.sourceFile.addStatements("\n");
         }
 
-        this.generatedErrorSchema.writeToFile(context);
+        this.generatedErrorSchema?.writeToFile(context);
     }
 
     public getReferenceToRawResponse(context: EndpointTypeSchemasContext): ts.TypeNode {
@@ -120,6 +124,9 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     }
 
     public getReferenceToRawError(context: EndpointTypeSchemasContext): ts.TypeNode {
+        if (this.generatedErrorSchema == null) {
+            throw new Error("Cannot get reference to raw endpoint error because it is not defined.");
+        }
         return this.generatedErrorSchema.getReferenceToRawShape(context);
     }
 
@@ -144,6 +151,9 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     }
 
     public deserializeError(referenceToRawError: ts.Expression, context: EndpointTypeSchemasContext): ts.Expression {
+        if (this.generatedErrorSchema == null) {
+            throw new Error("Cannot deserialize endpoint error because it is not defined.");
+        }
         return this.generatedErrorSchema.getReferenceToZurgSchema(context).parse(referenceToRawError);
     }
 }

@@ -159,16 +159,14 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
-        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
-
         return ts.factory.createSwitchStatement(
-            ts.factory.createPropertyAccessChain(
+            ts.factory.createElementAccessChain(
                 ts.factory.createAsExpression(
                     this.getReferenceToErrorBody(context),
-                    generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                 ),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                propertyErrorDiscriminationStrategy.discriminant.wireValue
+                ts.factory.createStringLiteral(propertyErrorDiscriminationStrategy.discriminant.wireValue)
             ),
             ts.factory.createCaseBlock([
                 ...this.endpoint.errors.map((error) =>

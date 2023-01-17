@@ -8,6 +8,7 @@ export declare namespace EndpointTypeSchemasGenerator {
     export interface Init {
         errorResolver: ErrorResolver;
         intermediateRepresentation: IntermediateRepresentation;
+        shouldGenerateErrors: boolean;
     }
 
     export namespace generateEndpointTypeSchemas {
@@ -21,10 +22,16 @@ export declare namespace EndpointTypeSchemasGenerator {
 export class EndpointTypeSchemasGenerator {
     private errorResolver: ErrorResolver;
     private intermediateRepresentation: IntermediateRepresentation;
+    private shouldGenerateErrors: boolean;
 
-    constructor({ errorResolver, intermediateRepresentation }: EndpointTypeSchemasGenerator.Init) {
+    constructor({
+        errorResolver,
+        intermediateRepresentation,
+        shouldGenerateErrors,
+    }: EndpointTypeSchemasGenerator.Init) {
         this.errorResolver = errorResolver;
         this.intermediateRepresentation = intermediateRepresentation;
+        this.shouldGenerateErrors = shouldGenerateErrors;
     }
 
     public generateEndpointTypeSchemas({
@@ -36,6 +43,7 @@ export class EndpointTypeSchemasGenerator {
             endpoint,
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
+            shouldGenerateErrors: this.shouldGenerateErrors,
         });
     }
 }

@@ -22,7 +22,7 @@ export const PackageJsonScript = {
     FORMAT: "format",
 } as const;
 
-export const PRETTIER_COMMAND = ["prettier", "--write", "--print-width", "120", "src/**/*.ts"];
+export const PRETTIER_COMMAND = ["prettier", "--write", "src/**/*.ts"];
 
 export const DEV_DEPENDENCIES: Record<string, string> = {
     "@types/node": "17.0.33",

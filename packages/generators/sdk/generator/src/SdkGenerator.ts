@@ -217,11 +217,12 @@ export class SdkGenerator {
         this.endpointTypesGenerator = new EndpointTypesGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
-            neverThrowErrors: config.neverThrowErrors,
+            shouldGenerateErrors: config.neverThrowErrors,
         });
         this.endpointTypeSchemasGenerator = new EndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
+            shouldGenerateErrors: config.neverThrowErrors,
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
@@ -251,10 +252,11 @@ export class SdkGenerator {
         this.generateTypeSchemas();
         this.generateErrorDeclarations();
         this.generateErrorSchemas();
-        this.generateEndpointTypes();
-        this.generateEndpointTypeSchemas();
         this.generateServiceDeclarations();
         this.generateEnvironments();
+        this.generateRequestWrappers();
+        this.generateEndpointTypes();
+        this.generateEndpointTypeSchemas();
 
         if (!this.config.neverThrowErrors) {
             this.generateGenericAPIError();
@@ -405,38 +407,6 @@ export class SdkGenerator {
                             .writeToFile(endpointTypesContext);
                     },
                 });
-                if (endpoint.sdkRequest?.shape.type === "wrapper") {
-                    this.withSourceFile({
-                        filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
-                            service: service.name.fernFilepath,
-                            endpoint,
-                        }),
-                        run: ({ sourceFile, importsManager }) => {
-                            const context = new RequestWrapperContextImpl({
-                                sourceFile,
-                                coreUtilitiesManager: this.coreUtilitiesManager,
-                                dependencyManager: this.dependencyManager,
-                                fernConstants: this.intermediateRepresentation.constants,
-                                importsManager,
-                                typeResolver: this.typeResolver,
-                                typeDeclarationReferencer: this.typeDeclarationReferencer,
-                                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                                typeGenerator: this.typeGenerator,
-                                errorDeclarationReferencer: this.errorDeclarationReferencer,
-                                errorGenerator: this.errorGenerator,
-                                errorResolver: this.errorResolver,
-                                serviceResolver: this.serviceResolver,
-                                endpointDeclarationReferencer: this.endpointDeclarationReferencer,
-                                endpointTypesGenerator: this.endpointTypesGenerator,
-                                requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
-                                requestWrapperGenerator: this.requestWrapperGenerator,
-                            });
-                            context.requestWrapper
-                                .getGeneratedRequestWrapper(service.name.fernFilepath, endpoint.name)
-                                .writeToFile(context);
-                        },
-                    });
-                }
             }
         }
     }
@@ -480,6 +450,45 @@ export class SdkGenerator {
                             .writeToFile(endpointTypeSchemasContext);
                     },
                 });
+            }
+        }
+    }
+
+    private generateRequestWrappers() {
+        for (const service of this.intermediateRepresentation.services) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                    this.withSourceFile({
+                        filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
+                            service: service.name.fernFilepath,
+                            endpoint,
+                        }),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = new RequestWrapperContextImpl({
+                                sourceFile,
+                                coreUtilitiesManager: this.coreUtilitiesManager,
+                                dependencyManager: this.dependencyManager,
+                                fernConstants: this.intermediateRepresentation.constants,
+                                importsManager,
+                                typeResolver: this.typeResolver,
+                                typeDeclarationReferencer: this.typeDeclarationReferencer,
+                                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                                typeGenerator: this.typeGenerator,
+                                errorDeclarationReferencer: this.errorDeclarationReferencer,
+                                errorGenerator: this.errorGenerator,
+                                errorResolver: this.errorResolver,
+                                serviceResolver: this.serviceResolver,
+                                endpointDeclarationReferencer: this.endpointDeclarationReferencer,
+                                endpointTypesGenerator: this.endpointTypesGenerator,
+                                requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
+                                requestWrapperGenerator: this.requestWrapperGenerator,
+                            });
+                            context.requestWrapper
+                                .getGeneratedRequestWrapper(service.name.fernFilepath, endpoint.name)
+                                .writeToFile(context);
+                        },
+                    });
+                }
             }
         }
     }

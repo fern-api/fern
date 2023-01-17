@@ -5,7 +5,7 @@ import { SRC_DIRECTORY } from "./constants";
 import { generateEsbuildScript } from "./generateEsbuildScript";
 import { generateGitIgnore } from "./generateGitIgnore";
 import { generatePackageJson } from "./generatePackageJson";
-import { generatePrettierIgnore } from "./generatePrettierIgnore";
+import { generatePrettierRc } from "./generatePrettierRc";
 import { generateStubTypeDeclarations } from "./generateStubTypeDeclarations";
 import { generateTsConfig } from "./generateTsConfig";
 import { writeProjectToVolume } from "./writeProjectToVolume";
@@ -42,7 +42,7 @@ export async function generateTypeScriptProject({
         dependencies,
     });
     await generateTsConfig({ volume, packageName });
-    await generatePrettierIgnore(volume);
+    await generatePrettierRc(volume);
     await generateGitIgnore(volume);
     await generateEsbuildScript({ volume, packageName });
     await generateStubTypeDeclarations(volume);
