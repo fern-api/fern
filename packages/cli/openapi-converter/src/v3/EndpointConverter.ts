@@ -32,13 +32,14 @@ export class EndpointConverter {
         endpoint: OpenAPIV3Endpoint,
         context: OpenApiV3Context,
         taskContext: TaskContext,
-        inlinedTypeNamer: InlinedTypeNamer
+        inlinedTypeNamer: InlinedTypeNamer,
+        breadcrumbs: string[]
     ) {
         this.endpoint = endpoint;
         this.context = context;
         this.taskContext = taskContext;
         this.inlinedTypeNamer = inlinedTypeNamer;
-        this.breadcrumbs = [`${endpoint.httpMethod} ${endpoint.path}`];
+        this.breadcrumbs = [...breadcrumbs, endpoint.path, endpoint.httpMethod];
         (this.endpoint.definition.parameters ?? []).forEach((parameter) => {
             const resolvedParameter = isReferenceObject(parameter)
                 ? this.context.maybeResolveParameterReference(parameter)
