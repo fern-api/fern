@@ -279,7 +279,11 @@ class ReferenceObjectsByTag {
             } else if (tags.length === 1) {
                 const tag = tags[0];
                 if (tag != null) {
-                    schemaReferencesGroupedByTag[tag]?.push(referenceObject);
+                    if (tag in schemaReferencesGroupedByTag) {
+                        schemaReferencesGroupedByTag[tag]?.push(referenceObject);
+                    } else {
+                        schemaReferencesGroupedByTag[tag] = [referenceObject];
+                    }
                 }
             } else {
                 multiTaggedSchemaReferences.push(referenceObject);

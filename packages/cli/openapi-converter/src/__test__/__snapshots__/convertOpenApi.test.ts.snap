@@ -141,7 +141,20 @@ lobby.",
           },
         },
       },
-      "types": {},
+      "types": {
+        "PlayerConnectedRequestContent": {
+          "extends": undefined,
+          "properties": {
+            "player_token": "string",
+          },
+        },
+        "PlayerDisconnectedRequestContent": {
+          "extends": undefined,
+          "properties": {
+            "player_token": "string",
+          },
+        },
+      },
     },
     "public.yml": {
       "services": {
@@ -229,324 +242,56 @@ Does not shutdown the lobby.",
           },
         },
       },
-      "types": {},
-    },
-  },
-}
-`;
-
-exports[`open api converter telematica simple 1`] = `
-{
-  "rootApiFile": {
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
-    "commons.yml": {
-      "services": {
-        "http": {
-          "CommonsService": {
-            "auth": false,
-            "base-path": "",
-            "endpoints": {},
-          },
-        },
-      },
       "types": {
-        "ChargingStatus_ResponseDTO": {
+        "FindLobbyRequestContent": {
           "extends": undefined,
           "properties": {
-            "isCharging": "boolean",
+            "captcha": "optional<commons.CaptchaConfig>",
+            "game_modes": "list<string>",
+            "prevent_auto_create_lobby": "optional<boolean>",
+            "regions": "optional<list<string>>",
           },
         },
-        "Location_ResponseDTO": {
+        "FindLobbyResponseContent": {
           "extends": undefined,
           "properties": {
-            "location": "_InlinedType0",
+            "lobby": "commons.MatchmakerLobbyJoinInfo",
           },
         },
-        "Odo_ResponseDTO": {
+        "JoinLobbyRequestContent": {
           "extends": undefined,
           "properties": {
-            "odo": "double",
+            "captcha": "optional<commons.CaptchaConfig>",
+            "lobby_id": "string",
           },
         },
-        "RangeSoc_ResponseDTO": {
+        "JoinLobbyResponseContent": {
           "extends": undefined,
           "properties": {
-            "range": "double",
-            "soc": "double",
+            "lobby": "commons.MatchmakerLobbyJoinInfo",
           },
         },
-        "Range_ResponseDTO": {
+        "ListLobbiesResponseContent": {
           "extends": undefined,
           "properties": {
-            "range": "double",
+            "game_modes": "list<commons.GameModeInfo>",
+            "lobbies": "list<commons.LobbyInfo>",
+            "regions": "list<commons.RegionInfo>",
           },
         },
-        "SOC_ResponseDTO": {
+        "ListRegionsResponseContent": {
           "extends": undefined,
           "properties": {
-            "soc": "double",
+            "regions": "list<commons.RegionInfo>",
           },
         },
-        "StaticAttributes_ResponseDTO": {
+        "SetLobbyClosedRequestContent": {
           "extends": undefined,
           "properties": {
-            "make": "string",
-            "model": "string",
-            "registration": "string",
-            "vin": "string",
-            "year": "double",
-          },
-        },
-        "_InlinedType0": {
-          "extends": [
-            "commons.ILocation",
-          ],
-        },
-      },
-    },
-    "sampleCallback.yml": {
-      "services": {
-        "http": {
-          "SampleCallbackService": {
-            "auth": false,
-            "base-path": "",
-            "endpoints": {
-              "AppController_callback": {
-                "display-name": "Dummy callback endpoint",
-                "docs": "This is a dummy callback endpoint.
-Please share the POST callback endpoint created in your app's backend with Telematica to get callback requests of this format.",
-                "method": "POST",
-                "path": "/callback",
-                "path-parameters": {},
-                "request": {
-                  "body": {
-                    "extends": undefined,
-                    "properties": {
-                      "user": "optional<string>",
-                      "vehicles": "optional<list<commons.Callback_DTO>>",
-                    },
-                  },
-                  "headers": {},
-                  "query-parameters": {},
-                },
-                "response": undefined,
-              },
-            },
+            "is_closed": "boolean",
           },
         },
       },
-      "types": {},
-    },
-    "testingEndpoints.yml": {
-      "services": {
-        "http": {
-          "TestingEndpointsService": {
-            "auth": false,
-            "base-path": "",
-            "endpoints": {
-              "getChargingStatusTest": {
-                "display-name": "Test charging status",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/charging-status/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.ChargingStatus_ResponseDTO",
-              },
-              "getLocationTest": {
-                "display-name": "Test location",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/location/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.Location_ResponseDTO",
-              },
-              "getOdoTest": {
-                "display-name": "Test odo",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/odo/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.Odo_ResponseDTO",
-              },
-              "getRangeSocTest": {
-                "display-name": "Test range-soc",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/range-soc/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.RangeSoc_ResponseDTO",
-              },
-              "getRangeTest": {
-                "display-name": "Test range",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/range/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.Range_ResponseDTO",
-              },
-              "getSOCTest": {
-                "display-name": "Test SOC (battery level)",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/soc/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.SOC_ResponseDTO",
-              },
-              "getStaticAttributesTest": {
-                "display-name": "Test static attributes",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/static-attributes/test",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.StaticAttributes_ResponseDTO",
-              },
-            },
-          },
-        },
-      },
-      "types": {},
-    },
-    "vehicleData.yml": {
-      "services": {
-        "http": {
-          "VehicleDataService": {
-            "auth": false,
-            "base-path": "",
-            "endpoints": {
-              "getChargingStatus": {
-                "display-name": "Charging Status",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/charging-status",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.ChargingStatus_ResponseDTO",
-              },
-              "getLocation": {
-                "display-name": "Location",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/location",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.Location_ResponseDTO",
-              },
-              "getOdo": {
-                "display-name": "Odometer",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/odo",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.Odo_ResponseDTO",
-              },
-              "getRange": {
-                "display-name": "Range",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/range",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.Range_ResponseDTO",
-              },
-              "getRangeSoc": {
-                "display-name": "Range-SOC",
-                "docs": "This endpoint returns the SOC and range for the vehicle in a single call",
-                "method": "GET",
-                "path": "/vehicle-data/range-soc",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.RangeSoc_ResponseDTO",
-              },
-              "getSOC": {
-                "display-name": "SOC (battery level)",
-                "docs": undefined,
-                "method": "GET",
-                "path": "/vehicle-data/soc",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.SOC_ResponseDTO",
-              },
-              "getStaticAttributes": {
-                "display-name": "Static attributes",
-                "docs": "Static vehicle attributes like VIN, registration number, model, year and make",
-                "method": "GET",
-                "path": "/vehicle-data/static-attributes",
-                "path-parameters": {},
-                "request": {
-                  "body": undefined,
-                  "headers": undefined,
-                  "query-parameters": {},
-                },
-                "response": "commons.StaticAttributes_ResponseDTO",
-              },
-            },
-          },
-        },
-      },
-      "types": {},
     },
   },
 }

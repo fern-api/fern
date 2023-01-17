@@ -21,11 +21,11 @@ headers: {}
     properties:
       object: string
       id: string
-      model: _InlinedType17
+      model: _InlinedType21
       sims: list<SIMs.sim>
-      user: _InlinedType18
+      user: _InlinedType22
       createdAt: string
-  _InlinedType17:
+  _InlinedType21:
     properties:
       object: string
       id: string
@@ -33,7 +33,7 @@ headers: {}
       name: string
       simTypes: list<string>
       type: string
-  _InlinedType18:
+  _InlinedType22:
     properties:
       object: string
       id: string
@@ -49,29 +49,29 @@ headers: {}
       data: integer
       dataUnit: string
       name: string
-      price: _InlinedType19
+      price: _InlinedType23
       provider: string
-      requirements: _InlinedType20
+      requirements: _InlinedType24
       simTypes: list<string>
       sms: integer
       smsUnit: string
       status: string
       tags: list<string>
-      validity: _InlinedType21
+      validity: _InlinedType25
       voice: integer
       voiceUnit: string
       createdAt: string
-  _InlinedType19:
+  _InlinedType23:
     properties:
       amount: integer
       currency: string
-  _InlinedType20:
+  _InlinedType24:
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
-  _InlinedType21:
+  _InlinedType25:
     properties:
       minimumPeriods: integer
       type: string
@@ -88,22 +88,22 @@ headers: {}
       object: string
       id: string
       declinedAttempts: integer
-      donorProvider: _InlinedType22
+      donorProvider: _InlinedType26
       phoneNumber: string
       provider: string
-      recipientProvider: _InlinedType23
+      recipientProvider: _InlinedType27
       required: list<string>
       status: string
       user: string
       createdAt: string
-  _InlinedType22:
+  _InlinedType26:
     docs: The service provider from whom the number is ported.
     properties:
       object: string
       id: string
       name: string
       recipientProviders: list<string>
-  _InlinedType23:
+  _InlinedType27:
     docs: The service provider to whom the number is ported.
     properties:
       object: string
@@ -120,18 +120,18 @@ headers: {}
     properties:
       object: string
       id: string
-      currentPeriod: _InlinedType24
+      currentPeriod: _InlinedType28
       plan: commons.plan
-      sim: _InlinedType25
+      sim: _InlinedType29
       status: string
       user: commons.user
       createdAt: string
-  _InlinedType24:
+  _InlinedType28:
     properties:
       number: integer
       start: string
       end: string
-  _InlinedType25:
+  _InlinedType29:
     properties:
       object: string
       id: string
@@ -169,6 +169,14 @@ services:
               },
               {
                 "contents": "types:
+  deviceModel:
+    properties:
+      object: string
+      id: string
+      brand: string
+      name: string
+      simTypes: list<string>
+      type: string
   _InlinedType0:
     properties:
       object: string
@@ -328,6 +336,15 @@ services:
               },
               {
                 "contents": "types:
+  planDocument:
+    properties:
+      object: string
+      id: string
+      name: string
+      plan: string
+      type: string
+      url: string
+      createdAt: string
   _InlinedType4:
     properties:
       object: string
@@ -462,6 +479,12 @@ services:
               },
               {
                 "contents": "types:
+  serviceProvider:
+    properties:
+      object: string
+      id: string
+      name: string
+      recipientProviders: list<string>
   _InlinedType6:
     properties:
       object: string
@@ -703,10 +726,44 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType8:
+  project:
     properties:
       object: string
+      id: string
+      images: _InlinedType8
+      legal: _InlinedType9
+      locales: list<string>
+      name: string
+      organization: commons.organization
+      payments: _InlinedType10
+      subscriptionOwner: string
+      support: _InlinedType11
+      createdAt: string
+  _InlinedType8:
+    docs: >-
+      Deprecated object of project images. Please use the image property
+      instead.
+    properties: {}
   _InlinedType9:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name: string
+      city: string
+      country: string
+      line1: string
+      postalCode: string
+  _InlinedType10:
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency: string
+      mode: string
+  _InlinedType11:
+    docs: Contact details for consumer support requests regarding the project.
+    properties: {}
+  _InlinedType12:
+    properties:
+      object: string
+  _InlinedType13:
     properties:
       object: string
       items: list<Projects.project>
@@ -754,7 +811,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType8
+          response: _InlinedType12
         ProjectsList:
           path: /projects
           method: GET
@@ -767,18 +824,31 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType9
+          response: _InlinedType13
 ",
                 "name": "projects.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType10:
+  simCredentials:
+    properties:
+      object: string
+      sim: string
+  sim:
+    properties:
+      object: string
+      id: string
+      iccid: string
+      provider: string
+      status: string
+      type: string
+      createdAt: string
+  _InlinedType14:
     properties:
       object: string
       items: list<SIMs.sim>
-  _InlinedType11:
+  _InlinedType15:
     properties:
       object: string
       items: list<SIMs.sim>
@@ -823,7 +893,7 @@ services:
               properties:
                 iccid: string
                 type: optional<list<string>>
-          response: _InlinedType10
+          response: _InlinedType14
         SIMsList:
           path: /projects/{project}/sims
           method: GET
@@ -835,14 +905,14 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType11
+          response: _InlinedType15
 ",
                 "name": "siMs.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType12:
+  _InlinedType16:
     properties:
       object: string
       items: list<commons.subscription>
@@ -916,7 +986,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType12
+          response: _InlinedType16
         SubscriptionsCreate:
           path: /projects/{project}/subscriptions
           method: POST
@@ -938,7 +1008,7 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType13:
+  _InlinedType17:
     properties:
       object: string
       items: list<commons.usageRecord>
@@ -960,14 +1030,14 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType13
+          response: _InlinedType17
 ",
                 "name": "usage.yml",
                 "type": "file",
               },
               {
                 "contents": "types:
-  _InlinedType14:
+  _InlinedType18:
     properties:
       object: string
       items: list<commons.userAddress>
@@ -989,7 +1059,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType14
+          response: _InlinedType18
         UserAddressesCreate:
           path: /projects/{project}/users/{user}/addresses
           method: POST
@@ -1031,11 +1101,11 @@ services:
               },
               {
                 "contents": "types:
-  _InlinedType15:
+  _InlinedType19:
     properties:
       object: string
       items: list<commons.user>
-  _InlinedType16:
+  _InlinedType20:
     properties:
       object: string
       items: list<commons.user>
@@ -1098,7 +1168,7 @@ services:
             body:
               properties:
                 email: string
-          response: _InlinedType15
+          response: _InlinedType19
         UsersList:
           path: /projects/{project}/users
           method: GET
@@ -1110,7 +1180,7 @@ services:
           request:
             query-parameters: {}
             headers: {}
-          response: _InlinedType16
+          response: _InlinedType20
         UsersCreate:
           path: /projects/{project}/users
           method: POST
@@ -1295,7 +1365,13 @@ services:
                 "type": "file",
               },
               {
-                "contents": "types: {}
+                "contents": "types:
+  PlayerConnectedRequestContent:
+    properties:
+      player_token: string
+  PlayerDisconnectedRequestContent:
+    properties:
+      player_token: string
 services:
   http:
     LobbyService:
@@ -1437,7 +1513,34 @@ services:
                 "type": "file",
               },
               {
-                "contents": "types: {}
+                "contents": "types:
+  SetLobbyClosedRequestContent:
+    properties:
+      is_closed: boolean
+  FindLobbyRequestContent:
+    properties:
+      game_modes: list<string>
+      regions: optional<list<string>>
+      prevent_auto_create_lobby: optional<boolean>
+      captcha: optional<commons.CaptchaConfig>
+  FindLobbyResponseContent:
+    properties:
+      lobby: commons.MatchmakerLobbyJoinInfo
+  JoinLobbyRequestContent:
+    properties:
+      lobby_id: string
+      captcha: optional<commons.CaptchaConfig>
+  JoinLobbyResponseContent:
+    properties:
+      lobby: commons.MatchmakerLobbyJoinInfo
+  ListLobbiesResponseContent:
+    properties:
+      game_modes: list<commons.GameModeInfo>
+      regions: list<commons.RegionInfo>
+      lobbies: list<commons.LobbyInfo>
+  ListRegionsResponseContent:
+    properties:
+      regions: list<commons.RegionInfo>
 services:
   http:
     PublicService:
