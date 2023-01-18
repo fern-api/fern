@@ -88,6 +88,7 @@ export class OpenAPIConverter {
         const pascalCasedTag = upperFirst(camelCasedTag);
         let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
         const convertedEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
+        const imports = new Set<string>();
         schemas.forEach((schema) => {
             const schemaConverter = new SchemaConverter({
                 schema: schema.schemaObject,
@@ -104,6 +105,7 @@ export class OpenAPIConverter {
                     [schema.name]: convertedSchema.typeDeclaration,
                     ...convertedSchema.additionalTypeDeclarations,
                 };
+                convertedSchema.imports.forEach((fernImport) => imports.add(fernImport));
             } else {
                 this.taskContext.logger.debug();
             }
@@ -128,10 +130,20 @@ export class OpenAPIConverter {
                     ...types,
                     ...convertedEndpoint.additionalTypeDeclarations,
                 };
+                convertedEndpoint.imports.forEach((fernImport) => imports.add(fernImport));
             }
         });
 
         const serviceFile: ServiceFileSchema = {};
+
+        if (size(imports) > 0) {
+            const serviceFileImports: Record<string, string> = {};
+            imports.forEach((fernImport) => {
+                serviceFileImports[fernImport] = `${fernImport}.yml`;
+            });
+            serviceFile.imports = serviceFileImports;
+        }
+
         if (size(convertedEndpoints) > 0) {
             serviceFile.services = {
                 http: {

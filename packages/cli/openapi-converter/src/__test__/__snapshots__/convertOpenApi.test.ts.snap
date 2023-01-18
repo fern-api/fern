@@ -3160,6 +3160,9 @@ lobby.",
       },
     },
     "public.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
       "services": {
         "http": {
           "PublicService": {
@@ -3373,6 +3376,9 @@ Please share the POST callback endpoint created in your app's backend with Telem
       },
     },
     "testingEndpoints.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
       "services": {
         "http": {
           "TestingEndpointsService": {
@@ -3490,6 +3496,9 @@ Please share the POST callback endpoint created in your app's backend with Telem
       },
     },
     "vehicleData.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
       "services": {
         "http": {
           "VehicleDataService": {

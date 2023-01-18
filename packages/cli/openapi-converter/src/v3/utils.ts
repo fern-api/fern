@@ -31,10 +31,12 @@ export function maybeConvertSchemaToPrimitive(schemaObject: OpenAPIV3.SchemaObje
 
 export const COMMONS_SERVICE_FILE_NAME = "commons";
 
+// adds imports to import array
 export function getFernReferenceForSchema(
     schemaReference: OpenAPIV3.ReferenceObject,
     context: OpenApiV3Context,
-    tag: string
+    tag: string,
+    imports: Set<string>
 ): string {
     const tags = context.getTagForSchema(schemaReference);
     let serviceFileName = COMMONS_SERVICE_FILE_NAME;
@@ -42,10 +44,10 @@ export function getFernReferenceForSchema(
         serviceFileName = tags[0];
     }
     const typeName = schemaReference.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
-    if (tag === serviceFileName) {
-        return typeName;
+    if (tag !== serviceFileName) {
+        imports.add(serviceFileName);
     }
-    return `${serviceFileName}.${typeName}`;
+    return tag === serviceFileName ? typeName : `${serviceFileName}.${typeName}`;
 }
 
 export function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarationSchema): string | undefined {
