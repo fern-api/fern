@@ -1,5 +1,5 @@
 import { NameAndWireValue } from "@fern-fern/ir-model/commons";
-import { ExampleInlinedRequestBodyProperty } from "@fern-fern/ir-model/services/http";
+import { ExampleInlinedRequestBodyProperty } from "@fern-fern/ir-model/http";
 import { DeclaredTypeName, ExampleObjectProperty, TypeReference } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
@@ -27,14 +27,14 @@ export function convertObject({
 
         let example: unknown = undefined;
         if (objectProperty.example != null && objectProperty.valueType._type === "primitive") {
-            example = objectProperty.example?.value.jsonExample;
+            example = objectProperty.example.value.jsonExample;
         } else if (
             objectProperty.example != null &&
             objectProperty.valueType._type === "container" &&
             objectProperty.valueType.container._type === "list" &&
             objectProperty.valueType.container.list._type === "primitive"
         ) {
-            example = objectProperty.example?.value.jsonExample;
+            example = objectProperty.example.value.jsonExample;
         }
 
         convertedProperties[objectProperty.name.wireValue] = {

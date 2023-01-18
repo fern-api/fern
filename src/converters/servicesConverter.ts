@@ -1,6 +1,4 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { ResponseError, ResponseErrors } from "@fern-fern/ir-model/services/commons";
 import {
     ExampleEndpointCall,
     ExampleInlinedRequestBodyProperty,
@@ -13,11 +11,14 @@ import {
     HttpService,
     PathParameter,
     QueryParameter,
-} from "@fern-fern/ir-model/services/http";
+    ResponseError,
+    ResponseErrors,
+} from "@fern-fern/ir-model/http";
+import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-import path from "path";
+import urlJoin from "url-join";
 import { getDeclaredTypeNameKey } from "../convertToOpenApi";
 import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
@@ -77,8 +78,7 @@ function convertHttpEndpoint({
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
 }): ConvertedHttpEndpoint {
-    const endpointPath = getEndpointPath(httpEndpoint.path);
-    const fullPath = path.join(httpService.basePath ?? "", endpointPath);
+    const fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
         convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
@@ -100,8 +100,8 @@ function convertHttpEndpoint({
     ];
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
-        operationId: httpService.name.name + "." + httpEndpoint.id,
-        tags: [httpService.name.fernFilepathV2.map((name) => name.safeName.pascalCase).join("")],
+        operationId: httpService.name.name.originalName + "." + httpEndpoint.name.originalName,
+        tags: [httpService.name.fernFilepath.map((name) => name.pascalCase.unsafeName).join("")],
         parameters,
         responses: {
             ...convertResponse({
@@ -242,13 +242,13 @@ function convertResponse({
     examples: ExampleEndpointCall[];
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
-    if (httpResponse.typeV2 == null) {
+    if (httpResponse.type == null) {
         responseByStatusCode["204"] = {
             description: httpResponse.docs ?? "",
         };
     } else {
         const convertedResponse: OpenAPIV3.MediaTypeObject = {
-            schema: convertTypeReference(httpResponse.typeV2),
+            schema: convertTypeReference(httpResponse.type),
         };
 
         const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
@@ -281,9 +281,9 @@ function convertResponse({
                 const responseForStatusCode: OpenAPIV3.ResponseObject = {
                     description: responseError.docs ?? "",
                 };
-                if (errorDeclaration.typeV3 != null) {
+                if (errorDeclaration.type != null) {
                     const convertedResponse: OpenAPIV3.MediaTypeObject = {
-                        schema: convertTypeReference(errorDeclaration.typeV3),
+                        schema: convertTypeReference(errorDeclaration.type),
                     };
 
                     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
@@ -389,7 +389,7 @@ function getDiscriminatedErrorInfoOpenApiSchema({
     errorInfo: ErrorInfo;
     property: ErrorDiscriminationByPropertyStrategy;
 }): OpenAPIV3.SchemaObject {
-    const discriminantValue = errorInfo.errorDeclaration.discriminantValueV4.wireValue;
+    const discriminantValue = errorInfo.errorDeclaration.discriminantValue.wireValue;
     const description = errorInfo.responseError.docs ?? undefined;
 
     const properties: Record<string, OpenApiComponentSchema> = {
@@ -399,8 +399,8 @@ function getDiscriminatedErrorInfoOpenApiSchema({
         },
     };
 
-    if (errorInfo.errorDeclaration.typeV3 != null) {
-        properties[property.contentProperty.wireValue] = convertTypeReference(errorInfo.errorDeclaration.typeV3);
+    if (errorInfo.errorDeclaration.type != null) {
+        properties[property.contentProperty.wireValue] = convertTypeReference(errorInfo.errorDeclaration.type);
     }
 
     return {
@@ -447,7 +447,7 @@ function convertPathParameter({
     examples: ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
-        name: pathParameter.name.originalValue,
+        name: pathParameter.name.originalName,
         in: "path",
         description: pathParameter.docs ?? undefined,
         required: true,
@@ -457,7 +457,7 @@ function convertPathParameter({
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const pathParameterExample = [...example.servicePathParameters, ...example.endpointPathParameters].find(
-            (param) => param.key === pathParameter.nameV2.unsafeName.originalValue
+            (param) => param.key === pathParameter.name.originalName
         );
         if (pathParameterExample != null) {
             openapiExamples[`Example${size(openapiExamples) + 1}`] = {
@@ -492,7 +492,7 @@ function convertQueryParameter({
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const queryParameterExample = example.queryParameters.find(
-            (param) => param.wireKey === queryParameter.nameV2.wireValue
+            (param) => param.wireKey === queryParameter.name.wireValue
         );
         if (queryParameterExample != null) {
             openapiExamples[`Example${size(openapiExamples) + 1}`] = {
@@ -527,7 +527,7 @@ function convertHeader({
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const headerExample = [...example.serviceHeaders, ...example.endpointHeaders].find(
-            (headerFromExample) => headerFromExample.wireKey === httpHeader.nameV2.wireValue
+            (headerFromExample) => headerFromExample.wireKey === httpHeader.name.wireValue
         );
         if (headerExample != null) {
             openapiExamples[`Example${size(openapiExamples) + 1}`] = {
@@ -542,7 +542,7 @@ function convertHeader({
     return convertedParameter;
 }
 
-function getEndpointPath(httpPath: HttpPath): string {
+function convertHttpPathToString(httpPath: HttpPath): string {
     let endpointPath = httpPath.head;
     for (const httpPathPart of httpPath.parts) {
         endpointPath += `{${httpPathPart.pathParameter}}${httpPathPart.tail}`;

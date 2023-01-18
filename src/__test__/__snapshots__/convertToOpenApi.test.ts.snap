@@ -99,7 +99,6 @@ components:
       type: apiKey
       in: header
       name: My-Header
-servers: []
 "
 `;
 
@@ -254,20 +253,26 @@ components:
       oneOf:
         - type: object
           properties:
-            type: {}
+            type:
+              type: string
+              enum:
+                - anonymous
         - type: object
           properties:
             type:
               type: string
+              enum:
+                - name
+            value:
+              type: string
         - type: object
-          allOf:
-            - $ref: '#/components/schemas/PostType'
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - type
+          properties:
+            type:
+              type: string
+              enum:
+                - type
+            value:
+              $ref: '#/components/schemas/PostType'
     PostNotFoundErrorBody:
       type: object
       properties:

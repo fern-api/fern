@@ -1,5 +1,5 @@
+import { ExampleEndpointSuccessResponse, ExampleRequestBody } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { ExampleEndpointSuccessResponse, ExampleRequestBody } from "@fern-fern/ir-model/services/http";
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -8,6 +8,7 @@ import {
     ExampleObjectProperty,
     ExampleType,
     PrimitiveType,
+    SingleUnionTypeProperties,
     Type,
     TypeDeclaration,
     TypeReference,
@@ -48,7 +49,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                     let exampleProperty: ExampleObjectProperty | undefined = undefined;
                     if (exampleType != null && exampleType.shape.type === "object") {
                         exampleProperty = exampleType.shape.properties.find((example) => {
-                            return example.wireKey === property.nameV2.wireValue;
+                            return example.wireKey === property.name.wireValue;
                         });
                     } else if (exampleTypeFromEndpointRequest != null) {
                         if (
@@ -57,24 +58,24 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                             exampleTypeFromEndpointRequest.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointRequest.shape.shape.properties.find((example) => {
-                                return example.wireKey === property.nameV2.wireValue;
+                                return example.wireKey === property.name.wireValue;
                             });
                         }
                     } else if (exampleTypeFromEndpointResponse != null) {
                         if (
                             exampleTypeFromEndpointResponse.body?.shape.type === "named" &&
-                            exampleTypeFromEndpointResponse.body?.shape.shape.type === "object"
+                            exampleTypeFromEndpointResponse.body.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointResponse.body.shape.shape.properties.find(
                                 (example) => {
-                                    return example.wireKey === property.nameV2.wireValue;
+                                    return example.wireKey === property.name.wireValue;
                                 }
                             );
                         }
                     }
                     return {
                         docs: property.docs ?? undefined,
-                        name: property.nameV2,
+                        name: property.name,
                         valueType: property.valueType,
                         example: exampleProperty,
                     };
@@ -120,7 +121,7 @@ export function convertEnum({
     return {
         type: "string",
         enum: enumTypeDeclaration.values.map((enumValue) => {
-            return enumValue.value;
+            return enumValue.name.wireValue;
         }),
         description: docs,
     };
@@ -134,38 +135,40 @@ export function convertUnion({
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
     const oneOfTypes: OpenAPIV3.SchemaObject[] = unionTypeDeclaration.types.map((singleUnionType) => {
-        const valueType = singleUnionType.valueType;
-        const convertedValueType = convertTypeReference(valueType);
-        if (valueType._type === "named") {
-            const properties = {};
-            properties[unionTypeDeclaration.discriminant] = {
+        const discriminantProperty: OpenAPIV3.BaseSchemaObject["properties"] = {
+            [unionTypeDeclaration.discriminant.wireValue]: {
                 type: "string",
                 enum: [singleUnionType.discriminantValue.wireValue],
-            };
-            return {
+            },
+        };
+        return SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
+            noProperties: () => ({
+                type: "object",
+                properties: discriminantProperty,
+            }),
+            singleProperty: (singleProperty) => ({
+                type: "object",
+                properties: {
+                    ...discriminantProperty,
+                    [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type),
+                },
+            }),
+            samePropertiesAsObject: (typeName) => ({
                 type: "object",
                 allOf: [
                     {
-                        $ref: getReferenceFromDeclaredTypeName(valueType),
+                        $ref: getReferenceFromDeclaredTypeName(typeName),
                     },
                     {
                         type: "object",
-                        properties,
+                        properties: discriminantProperty,
                     },
                 ],
-            };
-        } else {
-            const properties = {};
-            properties[unionTypeDeclaration.discriminant] = {
-                type: "string",
-                enum: [singleUnionType.discriminantValue.wireValue],
-            };
-            properties[unionTypeDeclaration.discriminant] = convertedValueType;
-            return {
-                type: "object",
-                properties,
-            };
-        }
+            }),
+            _unknown: () => {
+                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
+            },
+        });
     });
     return {
         oneOf: oneOfTypes,
@@ -187,9 +190,6 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
             return convertPrimitiveType(primitiveType);
         },
         unknown: () => {
-            return {};
-        },
-        void: () => {
             return {};
         },
         _unknown: () => {
@@ -282,15 +282,15 @@ export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName):
         .filter((_part, idx) => {
             return idx !== declaredTypeName.fernFilepath.length - 1;
         })
-        .map((part) => part.pascalCase);
-    return [...pascalCaseFolders, declaredTypeName.name].join("");
+        .map((part) => part.pascalCase.unsafeName);
+    return [...pascalCaseFolders, declaredTypeName.name.pascalCase.unsafeName].join("");
 }
 
 function getExampleFromEndpointRequest(
     ir: IntermediateRepresentation,
     declaredTypeName: DeclaredTypeName
 ): ExampleRequestBody | undefined {
-    for (const service of ir.services.http) {
+    for (const service of ir.services) {
         for (const endpoint of service.endpoints) {
             if (endpoint.examples.length <= 0) {
                 continue;
@@ -311,14 +311,14 @@ function getExampleFromEndpointResponse(
     ir: IntermediateRepresentation,
     declaredTypeName: DeclaredTypeName
 ): ExampleEndpointSuccessResponse | undefined {
-    for (const service of ir.services.http) {
+    for (const service of ir.services) {
         for (const endpoint of service.endpoints) {
             if (endpoint.examples.length <= 0) {
                 continue;
             }
             if (
-                endpoint.response.typeV2?._type === "named" &&
-                areDeclaredTypeNamesEqual(endpoint.response.typeV2, declaredTypeName)
+                endpoint.response.type?._type === "named" &&
+                areDeclaredTypeNamesEqual(endpoint.response.type, declaredTypeName)
             ) {
                 const okResponseExample = endpoint.examples.find((exampleEndpoint) => {
                     return exampleEndpoint.response.type === "ok";
@@ -333,5 +333,5 @@ function getExampleFromEndpointResponse(
 }
 
 function areDeclaredTypeNamesEqual(one: DeclaredTypeName, two: DeclaredTypeName): boolean {
-    return isEqual(one.fernFilepathV2, two.fernFilepathV2) && isEqual(one.nameV3, two.nameV3);
+    return isEqual(one.fernFilepath, two.fernFilepath) && isEqual(one.name, two.name);
 }

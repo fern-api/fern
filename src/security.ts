@@ -55,7 +55,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
     return AuthScheme._visit(authScheme, {
         bearer: () => "BearerAuth",
         basic: () => "BasicAuth",
-        header: (header) => `${header.name.pascalCase}Auth`,
+        header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
         _unknown: () => {
             throw new Error("Unknown auth scheme: " + authScheme._type);
         },

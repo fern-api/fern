@@ -32,34 +32,44 @@ export function convertToOpenApi({
     const security = constructEndpointSecurity(ir.auth);
 
     const paths = convertServices({
-        httpServices: ir.services.http,
+        httpServices: ir.services,
         typesByName,
         errorsByName,
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
     });
-    return {
+
+    const info: OpenAPIV3.InfoObject = {
+        title: ir.apiDisplayName ?? apiName,
+        version: "",
+    };
+    if (ir.apiDocs != null) {
+        info.description = ir.apiDocs;
+    }
+
+    const openAPISpec: OpenAPIV3.Document = {
         openapi: "3.0.1",
-        info: {
-            title: ir.apiDisplayName ?? apiName,
-            description: ir.apiDocs ?? undefined,
-            version: "",
-        },
+        info,
         paths,
         components: {
             schemas,
             securitySchemes: constructSecuritySchemes(ir.auth),
         },
-        servers: ir.environments.map((environment) => {
+    };
+
+    if (ir.environments != null && ir.environments.environments.type === "singleBaseUrl") {
+        openAPISpec.servers = ir.environments.environments.environments.map((environment) => {
             return {
                 url: environment.url,
                 description:
                     environment.docs != null
-                        ? `${environment.name.safeName.originalValue} (${environment.docs})`
-                        : environment.name.safeName.originalValue,
+                        ? `${environment.name.originalName} (${environment.docs})`
+                        : environment.name.originalName,
             };
-        }),
-    };
+        });
+    }
+
+    return openAPISpec;
 }
 
 export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
