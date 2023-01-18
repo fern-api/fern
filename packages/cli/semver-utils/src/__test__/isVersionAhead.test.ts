@@ -25,6 +25,7 @@ describe("isVersionAhead", () => {
         ${"0.1.3-rc9-1-g23dc3c70"} | ${"0.1.3-rc10"}            | ${false}
         ${"0.1.3-rc9-1-g23dc3c70"} | ${"0.1.2"}                 | ${true}
         ${"0.1.3-rc9-1-g23dc3c70"} | ${"0.1.3"}                 | ${false}
+        ${"0.0.33-9-gf683b5e"}     | ${"0.0.34"}                | ${false}
     `("$a vs. $b", ({ a, b, expected }) => {
         expect(isVersionAhead(a, b)).toBe(expected);
     });
