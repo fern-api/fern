@@ -15,13 +15,13 @@ exports[`fern init covie openapi 1`] = `
       auth: true
       base-path: ''
       endpoints:
-        enable-account-mfa-required:
+        enableAccountMfaRequired:
           path: /accounts/{account_id}/mfa_requirements
           method: POST
           docs: Require all account users to have an MFA application configured
           display-name: Enable Account MFA Requirement
           response: AccountWithConfig
-        disable-account-mfa-required:
+        disableAccountMfaRequired:
           path: /accounts/{account_id}/mfa_requirements
           method: DELETE
           docs: >-
@@ -51,7 +51,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        get-application-links:
+        getApplicationLinks:
           path: /applications/{application_id}/links
           method: GET
           docs: Lists an application's links.
@@ -105,7 +105,7 @@ services:
                   integration IDs, comma-separated.
                 type: optional<string>
           response: commons.Links
-        get-application-policies:
+        getApplicationPolicies:
           path: /applications/{application_id}/policies
           method: GET
           docs: Lists an application's policies.
@@ -267,7 +267,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        post-events-event_id-broadcasts:
+        postEventsEventIdBroadcasts:
           path: /events/{event_id}/broadcasts
           method: POST
           docs: Rebroadcast an event.
@@ -294,7 +294,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        list-integrations:
+        listIntegrations:
           path: /integrations
           method: GET
           docs: List integrations associated to an application
@@ -310,7 +310,7 @@ services:
                 docs: Filter active or archived integrations
                 type: optional<string>
           response: Integrations
-        create-integration:
+        createIntegration:
           path: /integrations
           method: POST
           docs: Creates a new integration.
@@ -321,18 +321,18 @@ services:
                 name: string
                 policyRequirements: optional<_InlinedType10>
                 configuration: optional<_InlinedType13>
-        get-integration:
+        getIntegration:
           path: /integrations/{integration_id}
           method: GET
           docs: Retrieve the details of an integration.
           display-name: Get Integration
           response: commons.Integration_2
-        delete-integration:
+        deleteIntegration:
           path: /integrations/{integration_id}
           method: DELETE
           docs: Deletes an integration.
           display-name: Delete Integration
-        update-integration:
+        updateIntegration:
           path: /integrations/{integration_id}
           method: PATCH
           docs: Edit the name and archived status of an integration.
@@ -345,7 +345,7 @@ services:
                 configuration: optional<_InlinedType16>
                 policy_requirements: optional<_InlinedType17>
           response: commons.Integration_2
-        get-integration-policies:
+        getIntegrationPolicies:
           path: /integrations/{integration_id}/policies
           method: GET
           docs: List all policies that have been linked to an integration.
@@ -359,7 +359,7 @@ services:
                 docs: Specifies the offset of the first result to return.
                 type: optional<integer>
           response: commons.Policies
-        get-integration-providers:
+        getIntegrationProviders:
           path: /integrations/{integration_id}/providers
           method: GET
           docs: >-
@@ -375,7 +375,7 @@ services:
                   excluded. 
                 type: optional<string>
           response: Providers
-        regenerate-integration-key:
+        regenerateIntegrationKey:
           path: /integrations/{integration_id}/regenerate_key
           method: POST
           docs: >-
@@ -383,50 +383,50 @@ services:
             key.
           display-name: Regenerate Integration Key
           response: commons.Integration_2
-        get-integrations-integration_id-agency_logo:
+        getIntegrationsIntegrationIdAgencyLogo:
           path: /integrations/{integration_id}/agency_logo
           method: GET
           docs: View the agency logo for the hosted integration.
           display-name: View Agency Logo
-        put-integrations-integration_id-agency_logo:
+        putIntegrationsIntegrationIdAgencyLogo:
           path: /integrations/{integration_id}/agency_logo
           method: PUT
           docs: Upload the agency logo for the hosted integration.
           display-name: Update Agency Logo
           response: _InlinedType18
-        delete-integrations-integration_id-agency_logo:
+        deleteIntegrationsIntegrationIdAgencyLogo:
           path: /integrations/{integration_id}/agency_logo
           method: DELETE
           docs: Delete the agency logo and/or config if present.
           display-name: Delete Agency Logo
-        get-integrations-integration_id-agent_photo:
+        getIntegrationsIntegrationIdAgentPhoto:
           path: /integrations/{integration_id}/agent_photo
           method: GET
           docs: View the agent photo for the hosted integration.
           display-name: View Agent Photo
-        put-integrations-integration_id-agent_photo:
+        putIntegrationsIntegrationIdAgentPhoto:
           path: /integrations/{integration_id}/agent_photo
           method: PUT
           docs: Upload an agent photo for the hosted integration.
           display-name: Update Agent Photo
           response: _InlinedType19
-        delete-integrations-integration_id-agent_photo:
+        deleteIntegrationsIntegrationIdAgentPhoto:
           path: /integrations/{integration_id}/agent_photo
           method: DELETE
           docs: Delete the agent photo and/or config if present.
           display-name: Delete Agent Photo
-        get-integrations-integration_id-brand_logo:
+        getIntegrationsIntegrationIdBrandLogo:
           path: /integrations/{integration_id}/brand_logo
           method: GET
           docs: View the brand logo for the integration.
           display-name: View Brand Logo
-        put-integrations-integration_id-brand_logo:
+        putIntegrationsIntegrationIdBrandLogo:
           path: /integrations/{integration_id}/brand_logo
           method: PUT
           docs: Upload the brand logo for the hosted integration.
           display-name: Update Brand Logo
           response: _InlinedType20
-        delete-integrations-integration_id-brand_logo:
+        deleteIntegrationsIntegrationIdBrandLogo:
           path: /integrations/{integration_id}/brand_logo
           method: DELETE
           docs: Delete the brand logo and/or config if present.
@@ -518,18 +518,18 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        get-link:
+        getLink:
           path: /links/{id}
           method: GET
           docs: Retrieves a Link
           display-name: Retrieve link
           response: commons.Link
-        delete-link:
+        deleteLink:
           path: /links/{id}
           method: DELETE
           docs: Deletes a link.
           display-name: Delete Link
-        update-link-settings:
+        updateLinkSettings:
           path: /links/{id}
           method: PATCH
           display-name: Update Link Settings
@@ -538,7 +538,7 @@ services:
               properties:
                 tracking_frequency: optional<string>
           response: commons.Link
-        get-link-policies:
+        getLinkPolicies:
           path: /links/{id}/policies
           method: GET
           docs: Retrieves a list of policies associated with the requested link
@@ -552,7 +552,7 @@ services:
                 docs: Specifies the offset of the first result to return.
                 type: optional<integer>
           response: commons.Policies
-        get-link-events:
+        getLinkEvents:
           path: /links/{id}/events
           method: GET
           docs: Retrieves a list of events triggered for the requested link
@@ -569,21 +569,21 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: commons.Events
-        attach-link-document:
+        attachLinkDocument:
           path: /links/{id}/documents
           method: POST
           docs: >-
             Attach a policy document to a Link. If the document can be parsed,
             select the parsed policy for sharing.
           display-name: Upload Document To Link
-        sync-link-manually:
+        syncLinkManually:
           path: /links/{id}/syncs
           method: POST
           docs: >-
             Sync a tracked link with the provider using the stored user
             credentials
           display-name: Manually Sync Link
-        get-integration-links:
+        getIntegrationLinks:
           path: /integrations/{integration_id}/links
           method: GET
           docs: Retrieves a list of links associated to the requested integration
@@ -632,7 +632,7 @@ services:
                 docs: The type of policy linked.
                 type: optional<string>
           response: commons.Links
-        initialize-link-via-integration:
+        initializeLinkViaIntegration:
           path: /integrations/{integration_id}/links
           method: POST
           docs: >-
@@ -645,7 +645,7 @@ services:
               properties:
                 provider_id: optional<string>
           response: commons.Link
-        get-integration-links-with-policies:
+        getIntegrationLinksWithPolicies:
           path: /integrations/{integration_id}/links_with_policies
           method: GET
           docs: >-
@@ -713,19 +713,19 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        get-policies-policy_id:
+        getPoliciesPolicyId:
           path: /policies/{policy_id}
           method: GET
           docs: Retrieve a Policy object that was previously connected via a Link
           display-name: Retrieve Policy
           response: Policy_2
-        get-policy-document:
+        getPolicyDocument:
           path: /policies/{policy_id}/documents/{document_type}
           method: GET
           docs: Retrieve the contents of a Policy document
           display-name: Retrieve Policy Document
           response: FileContents
-        list-policy-events:
+        listPolicyEvents:
           path: /policies/{policy_id}/events
           method: GET
           docs: List all events that have been triggered for the selected policy
@@ -808,7 +808,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        list-webhooks:
+        listWebhooks:
           path: /webhooks
           method: GET
           docs: List an application's configured webhooks.
@@ -825,7 +825,7 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: Webhooks
-        create-webhook:
+        createWebhook:
           path: /webhooks
           method: POST
           docs: Create a new webhook
@@ -835,13 +835,13 @@ services:
               properties:
                 uri: optional<string>
                 event_types: optional<list<string>>
-        get-webhook:
+        getWebhook:
           path: /webhooks/{webhook_id}
           method: GET
           docs: Get the details of a webhook.
           display-name: Get Webhook
           response: commons.Webhook_2
-        update-webhook:
+        updateWebhook:
           path: /webhooks/{webhook_id}
           method: PATCH
           docs: Update a webhook.
@@ -853,7 +853,7 @@ services:
                 is_enabled: optional<boolean>
                 event_types: optional<list<string>>
           response: commons.Webhook_2
-        list-webhook-events:
+        listWebhookEvents:
           path: /webhooks/{webhook_id}/events
           method: GET
           docs: List the events that have been triggered for a webhook.
@@ -1085,13 +1085,13 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        DeviceModelsRetrieve:
+        deviceModelsRetrieve:
           path: /deviceModels/{id}
           method: GET
           docs: Retrieves the details of an existing device model.
           display-name: Retrieve a device model
           response: deviceModel
-        DeviceModelsSearch:
+        deviceModelsSearch:
           path: /deviceModels/search
           method: POST
           docs: Searches for existing devices models matching the given parameters.
@@ -1101,7 +1101,7 @@ services:
               properties:
                 imei: string
           response: _InlinedType0
-        DeviceModelsList:
+        deviceModelsList:
           path: /deviceModels
           method: GET
           docs: >-
@@ -1138,7 +1138,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType1
-        DevicesRetrieve:
+        devicesRetrieve:
           path: /projects/{project}/devices/{id}
           method: GET
           docs: >-
@@ -1146,13 +1146,13 @@ services:
             authenticated user.
           display-name: Retrieve a device
           response: commons.device
-        DevicesDelete:
+        devicesDelete:
           path: /projects/{project}/devices/{id}
           method: DELETE
           docs: Retrieves the details of an existing device and deletes it.
           display-name: Delete a device
           response: commons.device
-        DevicesUpdate:
+        devicesUpdate:
           path: /projects/{project}/devices/{id}
           method: PATCH
           docs: >
@@ -1179,7 +1179,7 @@ services:
               properties:
                 sims: optional<list<string>>
           response: commons.device
-        DevicesSearch:
+        devicesSearch:
           path: /projects/{project}/devices/search
           method: POST
           docs: >-
@@ -1192,7 +1192,7 @@ services:
               properties:
                 imei: string
           response: _InlinedType2
-        DevicesList:
+        devicesList:
           path: /projects/{project}/devices
           method: GET
           docs: >-
@@ -1226,7 +1226,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType3
-        DevicesCreate:
+        devicesCreate:
           path: /projects/{project}/devices
           method: POST
           docs: Creates a new device with the given parameters.
@@ -1275,7 +1275,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        PlansArchive:
+        plansArchive:
           path: /projects/{project}/plans/{id}/archive
           method: POST
           docs: >
@@ -1299,13 +1299,13 @@ services:
             thoughts.
           display-name: Archive a plan
           response: commons.plan
-        PlanDocumentRetrieve:
+        planDocumentRetrieve:
           path: /projects/{project}/plans/{plan}/documents/{id}
           method: GET
           docs: Retrieves the details of an existing document for a given plan.
           display-name: Retrieve a plan document
           response: planDocument
-        PlanDocumentsList:
+        planDocumentsList:
           path: /projects/{project}/plans/{plan}/documents
           method: GET
           docs: >-
@@ -1314,13 +1314,13 @@ services:
             documents appearing first.
           display-name: List all plan documents
           response: _InlinedType4
-        PlansRetrieve:
+        plansRetrieve:
           path: /projects/{project}/plans/{id}
           method: GET
           docs: Retrieve the details of an existing plan.
           display-name: Retrieve a plan
           response: commons.plan
-        PlansUpdate:
+        plansUpdate:
           path: /projects/{project}/plans/{id}
           method: PATCH
           docs: >-
@@ -1332,7 +1332,7 @@ services:
               properties:
                 name: optional<string>
           response: commons.plan
-        PlansPublish:
+        plansPublish:
           path: /projects/{project}/plans/{id}/publish
           method: POST
           docs: >
@@ -1356,7 +1356,7 @@ services:
             thoughts.
           display-name: Publish a plan
           response: commons.plan
-        PlansList:
+        plansList:
           path: /projects/{project}/plans
           method: GET
           docs: Returns a list of plans.
@@ -1423,7 +1423,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        PortingCancel:
+        portingCancel:
           path: /projects/{project}/portings/{id}/cancel
           method: POST
           docs: >
@@ -1447,7 +1447,7 @@ services:
             thoughts.
           display-name: Cancel a porting
           response: commons.porting
-        PortingRetrieve:
+        portingRetrieve:
           path: /projects/{project}/portings/{id}
           method: GET
           docs: >
@@ -1470,7 +1470,7 @@ services:
             thoughts.
           display-name: Retrieve a Porting
           response: commons.porting
-        PortingUpdate:
+        portingUpdate:
           path: /projects/{project}/portings/{id}
           method: PATCH
           docs: >
@@ -1505,7 +1505,7 @@ services:
                 phoneNumber: optional<string>
                 provider: optional<string>
           response: commons.porting
-        PortingsList:
+        portingsList:
           path: /projects/{project}/portings
           method: GET
           docs: >
@@ -1549,7 +1549,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType6
-        PortingsCreate:
+        portingsCreate:
           path: /projects/{project}/portings
           method: POST
           docs: >
@@ -1591,7 +1591,7 @@ services:
                 phoneNumber: string
                 provider: string
                 user: string
-        ServiceProviderRetrieve:
+        serviceProviderRetrieve:
           path: /serviceProviders/{id}
           method: GET
           docs: >
@@ -1614,7 +1614,7 @@ services:
             thoughts.
           display-name: Retrieve a service provider
           response: serviceProvider
-        ServiceProvidersList:
+        serviceProvidersList:
           path: /serviceProviders
           method: GET
           docs: >
@@ -1672,7 +1672,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        ProjectsRetrieve:
+        projectsRetrieve:
           path: /projects/{project}
           method: GET
           docs: >-
@@ -1680,7 +1680,7 @@ services:
             client.
           display-name: Retrieve a project
           response: project
-        ProjectsCredentialsRetrieve:
+        projectsCredentialsRetrieve:
           path: /projects/{project}/credentials
           method: GET
           docs: >
@@ -1703,7 +1703,7 @@ services:
             thoughts.
           display-name: Retrieve the project credentials
           response: _InlinedType12
-        ProjectsList:
+        projectsList:
           path: /projects
           method: GET
           docs: >-
@@ -1787,13 +1787,13 @@ types:
       auth: true
       base-path: ''
       endpoints:
-        SIMsCredentialsRetrieve:
+        siMsCredentialsRetrieve:
           path: /projects/{project}/sims/{id}/credentials
           method: GET
           docs: Retrieve the credentials of an existing SIM.
           display-name: Retrieve the SIM credentials
           response: simCredentials
-        SIMsRetrieve:
+        siMsRetrieve:
           path: /projects/{project}/sims/{id}
           method: GET
           docs: >-
@@ -1801,7 +1801,7 @@ types:
             is authorized to view.
           display-name: Retrieve a SIM
           response: sim
-        SIMsSearch:
+        siMsSearch:
           path: /projects/{project}/sims/search
           method: POST
           docs: Searches for existing SIMs matching the given parameters.
@@ -1812,7 +1812,7 @@ types:
                 iccid: string
                 type: optional<list<string>>
           response: _InlinedType14
-        SIMsList:
+        siMsList:
           path: /projects/{project}/sims
           method: GET
           docs: >-
@@ -1886,7 +1886,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        SubscriptionsCancel:
+        subscriptionsCancel:
           path: /projects/{project}/subscriptions/{id}/cancel
           method: POST
           docs: >-
@@ -1896,7 +1896,7 @@ services:
             returned upon purchasing a plan.
           display-name: Cancel an active subscription
           response: commons.subscription
-        SubscriptionsRetrieve:
+        subscriptionsRetrieve:
           path: /projects/{project}/subscriptions/{id}
           method: GET
           docs: >-
@@ -1905,7 +1905,7 @@ services:
             purchasing a plan.
           display-name: Retrieve a subscription
           response: commons.subscription
-        SubscriptionsEnd:
+        subscriptionsEnd:
           path: /projects/{project}/subscriptions/{id}
           method: DELETE
           docs: >-
@@ -1914,7 +1914,7 @@ services:
             purchasing a plan.
           display-name: End an active subscription
           response: commons.subscription
-        SubscriptionsResume:
+        subscriptionsResume:
           path: /projects/{project}/subscriptions/{id}/resume
           method: POST
           docs: >-
@@ -1922,7 +1922,7 @@ services:
             subscription will continue to auto-renew until canceled again.
           display-name: Resume a canceled subscription
           response: commons.subscription
-        SubscriptionsList:
+        subscriptionsList:
           path: /projects/{project}/subscriptions
           method: GET
           docs: >-
@@ -1965,7 +1965,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType16
-        SubscriptionsCreate:
+        subscriptionsCreate:
           path: /projects/{project}/subscriptions
           method: POST
           docs: >-
@@ -1993,7 +1993,7 @@ types:
       auth: true
       base-path: ''
       endpoints:
-        SubscriptionUsageRecordList:
+        subscriptionUsageRecordList:
           path: /projects/{project}/subscriptions/{id}/usage
           method: GET
           docs: >-
@@ -2044,7 +2044,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        UserAddressesList:
+        userAddressesList:
           path: /projects/{project}/users/{user}/addresses
           method: GET
           docs: >-
@@ -2053,7 +2053,7 @@ services:
             addresses appearing first.
           display-name: List all user addresses
           response: _InlinedType18
-        UserAddressesCreate:
+        userAddressesCreate:
           path: /projects/{project}/users/{user}/addresses
           method: POST
           docs: Create a new address for the given user with the given parameters.
@@ -2065,13 +2065,13 @@ services:
                 line1: string
                 city: string
                 country: string
-        UserAddressesRetrieve:
+        userAddressesRetrieve:
           path: /projects/{project}/users/{user}/addresses/{id}
           method: GET
           docs: Retrieves the details of an existing address for a given user.
           display-name: Retrieve a user address
           response: commons.userAddress
-        UserAddressesDelete:
+        userAddressesDelete:
           path: /projects/{project}/users/{user}/addresses/{id}
           method: DELETE
           docs: Retrieves the details of an existing user address and deletes it.
@@ -2095,7 +2095,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        UsersRetrieve:
+        usersRetrieve:
           path: /projects/{project}/users/{id}
           method: GET
           docs: >-
@@ -2103,13 +2103,13 @@ services:
             unique user identifier that was returned upon user creation.
           display-name: Retrieve a user
           response: commons.user
-        UsersDelete:
+        usersDelete:
           path: /projects/{project}/users/{id}
           method: DELETE
           docs: Retrieves the details of an existing user and deletes it.
           display-name: Delete a user
           response: commons.user
-        UsersUpdate:
+        usersUpdate:
           path: /projects/{project}/users/{id}
           method: PATCH
           docs: >-
@@ -2125,7 +2125,7 @@ services:
                 fullName: optional<string>
                 preferredLocale: optional<string>
           response: commons.user
-        UsersSearch:
+        usersSearch:
           path: /projects/{project}/users/search
           method: POST
           docs: Searches for existing users matching the given parameters.
@@ -2135,7 +2135,7 @@ services:
               properties:
                 email: string
           response: _InlinedType19
-        UsersList:
+        usersList:
           path: /projects/{project}/users
           method: GET
           docs: >-
@@ -2162,7 +2162,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType20
-        UsersCreate:
+        usersCreate:
           path: /projects/{project}/users
           method: POST
           docs: Creates a new user with the given parameters.
@@ -2352,7 +2352,7 @@ headers: {}
       auth: true
       base-path: ''
       endpoints:
-        LobbyReady:
+        lobbyReady:
           path: /lobbies/ready
           method: POST
           docs: >-
@@ -2360,7 +2360,7 @@ headers: {}
             not be
 
             able to connect to this lobby until the lobby is flagged as ready.
-        PlayerConnected:
+        playerConnected:
           path: /players/connected
           method: POST
           docs: >-
@@ -2453,7 +2453,7 @@ headers: {}
             the player token is validated.
           request:
             body: PlayerConnectedRequestContent
-        PlayerDisconnected:
+        playerDisconnected:
           path: /players/disconnected
           method: POST
           docs: >-
@@ -2492,7 +2492,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        SetLobbyClosed:
+        setLobbyClosed:
           path: /lobbies/closed
           method: PUT
           docs: >-
@@ -2503,7 +2503,7 @@ services:
             Does not shutdown the lobby.
           request:
             body: SetLobbyClosedRequestContent
-        FindLobby:
+        findLobby:
           path: /lobbies/find
           method: POST
           docs: >-
@@ -2517,7 +2517,7 @@ services:
               origin: optional<string>
             body: FindLobbyRequestContent
           response: FindLobbyResponseContent
-        JoinLobby:
+        joinLobby:
           path: /lobbies/join
           method: POST
           docs: >-
@@ -2531,12 +2531,12 @@ services:
           request:
             body: JoinLobbyRequestContent
           response: JoinLobbyResponseContent
-        ListLobbies:
+        listLobbies:
           path: /lobbies/list
           method: GET
           docs: Lists all open lobbies.
           response: ListLobbiesResponseContent
-        ListRegions:
+        listRegions:
           path: /regions
           method: GET
           docs: >-
@@ -2667,7 +2667,7 @@ headers: {}
       auth: true
       base-path: ''
       endpoints:
-        AppController_callback:
+        appControllerCallback:
           path: /callback
           method: POST
           docs: >-
@@ -2694,7 +2694,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        getSOCTest:
+        getSocTest:
           path: /vehicle-data/soc/test
           method: GET
           display-name: Test SOC (battery level)
@@ -2791,7 +2791,7 @@ services:
       auth: true
       base-path: ''
       endpoints:
-        getSOC:
+        getSoc:
           path: /vehicle-data/soc
           method: GET
           display-name: SOC (battery level)

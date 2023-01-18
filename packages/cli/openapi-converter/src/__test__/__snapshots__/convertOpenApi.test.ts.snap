@@ -14,20 +14,7 @@ exports[`open api converter partnerstack simple 1`] = `
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "delete": {
-                "display-name": "Archive an action",
-                "docs": "Archives an action. Any associated rewards or drip rewards will be archived as well.",
-                "method": "DELETE",
-                "path": "/v2/actions/{action_key}",
-                "path-parameters": {
-                  "action_key": {
-                    "docs": "Unique identifier for actions",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType89",
-              },
-              "get": {
+              "": {
                 "display-name": "List all actions",
                 "docs": "Returns a list of your actions. The actions are returned sorted by creation date by default, with the most recent actions appearing first.",
                 "method": "GET",
@@ -78,7 +65,20 @@ exports[`open api converter partnerstack simple 1`] = `
                 },
                 "response": "_InlinedType82",
               },
-              "post": {
+              "_unnamedOperation10": {
+                "display-name": "Archive an action",
+                "docs": "Archives an action. Any associated rewards or drip rewards will be archived as well.",
+                "method": "DELETE",
+                "path": "/v2/actions/{action_key}",
+                "path-parameters": {
+                  "action_key": {
+                    "docs": "Unique identifier for actions",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType89",
+              },
+              "_unnamedOperation9": {
                 "display-name": "Record action",
                 "docs": "Records a new action taken by a given partner or customer, and the number of times that action was performed.",
                 "method": "POST",
@@ -201,7 +201,25 @@ exports[`open api converter partnerstack simple 1`] = `
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "_unnamedOperation6": {
+              "": {
+                "display-name": "Bulk Decision Applications",
+                "docs": "Update the decision of the given Applications provided",
+                "method": "PATCH",
+                "path": "/v2/applications/decision",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "application_keys": "optional<list<unknown>>",
+                      "approved": "optional<boolean>",
+                      "decline_reason": "optional<string>",
+                      "group_id_override": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "_InlinedType95",
+              },
+              "_unnamedOperation11": {
                 "display-name": "Decision an Application",
                 "docs": "Update the decision of the given Application",
                 "method": "PATCH",
@@ -224,24 +242,6 @@ exports[`open api converter partnerstack simple 1`] = `
                   },
                 },
                 "response": "_InlinedType100",
-              },
-              "patch": {
-                "display-name": "Bulk Decision Applications",
-                "docs": "Update the decision of the given Applications provided",
-                "method": "PATCH",
-                "path": "/v2/applications/decision",
-                "request": {
-                  "body": {
-                    "extends": undefined,
-                    "properties": {
-                      "application_keys": "optional<list<unknown>>",
-                      "approved": "optional<boolean>",
-                      "decline_reason": "optional<string>",
-                      "group_id_override": "optional<integer>",
-                    },
-                  },
-                },
-                "response": "_InlinedType95",
               },
             },
           },
@@ -342,33 +342,7 @@ exports[`open api converter partnerstack simple 1`] = `
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "_unnamedOperation7": {
-                "display-name": "Retrieve a customer",
-                "docs": "Gets a customer with a given customer key.",
-                "method": "GET",
-                "path": "/v2/customers/{customer_key}",
-                "path-parameters": {
-                  "customer_key": {
-                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType125",
-              },
-              "delete": {
-                "display-name": "Delete a customer",
-                "docs": "Deletes a customer with a given customer key.",
-                "method": "DELETE",
-                "path": "/v2/customers/{customer_key}",
-                "path-parameters": {
-                  "customer_key": {
-                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType127",
-              },
-              "get": {
+              "": {
                 "display-name": "List all customers",
                 "docs": "Returns a list of your customers. The customers are returned sorted by creation date by default, with the most recent customers appearing first.",
                 "method": "GET",
@@ -415,7 +389,48 @@ exports[`open api converter partnerstack simple 1`] = `
                 },
                 "response": "_InlinedType108",
               },
-              "patch": {
+              "_unnamedOperation12": {
+                "display-name": "Create a customer",
+                "docs": "Creates a new customer with the data provided.",
+                "method": "POST",
+                "path": "/v2/customers",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType109",
+                      "_InlinedType110",
+                    ],
+                  },
+                },
+                "response": "_InlinedType118",
+              },
+              "_unnamedOperation13": {
+                "display-name": "Retrieve a customer",
+                "docs": "Gets a customer with a given customer key.",
+                "method": "GET",
+                "path": "/v2/customers/{customer_key}",
+                "path-parameters": {
+                  "customer_key": {
+                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType125",
+              },
+              "_unnamedOperation14": {
+                "display-name": "Delete a customer",
+                "docs": "Deletes a customer with a given customer key.",
+                "method": "DELETE",
+                "path": "/v2/customers/{customer_key}",
+                "path-parameters": {
+                  "customer_key": {
+                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType127",
+              },
+              "_unnamedOperation15": {
                 "display-name": "Update a customer",
                 "docs": "Updates a customer with the data provided. Any parameters not passed will not be updated.",
                 "method": "PATCH",
@@ -438,21 +453,6 @@ exports[`open api converter partnerstack simple 1`] = `
                   },
                 },
                 "response": "_InlinedType134",
-              },
-              "post": {
-                "display-name": "Create a customer",
-                "docs": "Creates a new customer with the data provided.",
-                "method": "POST",
-                "path": "/v2/customers",
-                "request": {
-                  "body": {
-                    "extends": [
-                      "_InlinedType109",
-                      "_InlinedType110",
-                    ],
-                  },
-                },
-                "response": "_InlinedType118",
               },
             },
           },
@@ -644,7 +644,45 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
+              "": {
+                "display-name": "Assign partnership to deal",
+                "docs": "Assign the provided partnership to the provided deal.",
+                "method": "POST",
+                "path": "/deals/{deal_key}/assignment/{partnership_key}/{stack_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of the deal",
+                    "type": "string",
+                  },
+                  "partnership_key": {
+                    "docs": "Unique identifier of the partnership",
+                    "type": "string",
+                  },
+                  "stack_key": {
+                    "docs": "Personal stack key",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType0",
+              },
               "_unnamedOperation0": {
+                "display-name": "Get deal file",
+                "docs": "Get the file for the deal.",
+                "method": "GET",
+                "path": "/deals/{deal_key}/file/{file_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of the deal",
+                    "type": "string",
+                  },
+                  "file_key": {
+                    "docs": "Unique identifier of the file",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType2",
+              },
+              "_unnamedOperation1": {
                 "display-name": "List all deals",
                 "docs": "Returns a list of your deals. The deals are
     returned sorted by creation date, with the most recent deals
@@ -693,7 +731,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType14",
               },
-              "_unnamedOperation1": {
+              "_unnamedOperation2": {
                 "display-name": "Create a deal",
                 "docs": "Creates a deal with desired params.",
                 "method": "POST",
@@ -707,7 +745,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType27",
               },
-              "_unnamedOperation2": {
+              "_unnamedOperation3": {
                 "display-name": "Retrieve the form templates for a deal",
                 "docs": "Fetches the specified form templates for a deal.",
                 "method": "GET",
@@ -721,7 +759,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType35",
               },
-              "_unnamedOperation3": {
+              "_unnamedOperation4": {
                 "display-name": "Retrieve a deal",
                 "docs": "Retrieves the details of an existing deal. You need only supply the unique deal key that was returned upon deal creation.",
                 "method": "GET",
@@ -734,42 +772,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType46",
               },
-              "_unnamedOperation4": {
-                "display-name": "Convert a deal",
-                "docs": "Converts a deal to a customer",
-                "method": "POST",
-                "path": "/v2/deals/{deal_key}/convert",
-                "path-parameters": {
-                  "deal_key": {
-                    "docs": "Unique identifier of deal.",
-                    "type": "string",
-                  },
-                },
-                "request": {
-                  "body": {
-                    "extends": undefined,
-                    "properties": {
-                      "customer_key": "optional<string>",
-                      "email": "string",
-                    },
-                  },
-                },
-                "response": "_InlinedType72",
-              },
               "_unnamedOperation5": {
-                "display-name": "Get files attached to a deal",
-                "docs": "Gets the files attached to the specified deal",
-                "method": "GET",
-                "path": "/v2/deals/{deal_key}/files",
-                "path-parameters": {
-                  "deal_key": {
-                    "docs": "Unique identifier of the deal",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType75",
-              },
-              "delete": {
                 "display-name": "Archive a deal",
                 "docs": "Archives the specified deal",
                 "method": "DELETE",
@@ -782,24 +785,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType47",
               },
-              "get": {
-                "display-name": "Get deal file",
-                "docs": "Get the file for the deal.",
-                "method": "GET",
-                "path": "/deals/{deal_key}/file/{file_key}",
-                "path-parameters": {
-                  "deal_key": {
-                    "docs": "Unique identifier of the deal",
-                    "type": "string",
-                  },
-                  "file_key": {
-                    "docs": "Unique identifier of the file",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType2",
-              },
-              "patch": {
+              "_unnamedOperation6": {
                 "display-name": "Update a deal",
                 "docs": "Updates the specified deal by setting the values of
     the parameters passed. Any parameters not provided will be left
@@ -839,26 +825,40 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
                 },
                 "response": "_InlinedType65",
               },
-              "post": {
-                "display-name": "Assign partnership to deal",
-                "docs": "Assign the provided partnership to the provided deal.",
+              "_unnamedOperation7": {
+                "display-name": "Convert a deal",
+                "docs": "Converts a deal to a customer",
                 "method": "POST",
-                "path": "/deals/{deal_key}/assignment/{partnership_key}/{stack_key}",
+                "path": "/v2/deals/{deal_key}/convert",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of deal.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "customer_key": "optional<string>",
+                      "email": "string",
+                    },
+                  },
+                },
+                "response": "_InlinedType72",
+              },
+              "_unnamedOperation8": {
+                "display-name": "Get files attached to a deal",
+                "docs": "Gets the files attached to the specified deal",
+                "method": "GET",
+                "path": "/v2/deals/{deal_key}/files",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of the deal",
                     "type": "string",
                   },
-                  "partnership_key": {
-                    "docs": "Unique identifier of the partnership",
-                    "type": "string",
-                  },
-                  "stack_key": {
-                    "docs": "Personal stack key",
-                    "type": "string",
-                  },
                 },
-                "response": "_InlinedType0",
+                "response": "_InlinedType75",
               },
             },
           },
@@ -1260,7 +1260,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "get_form_templates": {
+              "getFormTemplates": {
                 "display-name": "List all form templates",
                 "docs": "Returns a list of your form templates. The form templates are returned sorted by creation date, with the most recent form templates appearing first.",
                 "method": "GET",
@@ -1367,7 +1367,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "get": {
+              "": {
                 "display-name": "List all groups",
                 "docs": "Returns a list of your groups. The groups are returned sorted by creation date, with the most recent groups appearing first.",
                 "method": "GET",
@@ -1460,70 +1460,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "_unnamedOperation10": {
-                "display-name": "Convert a lead",
-                "docs": "Converts a lead to a customer",
-                "method": "POST",
-                "path": "/v2/leads/{lead_key}/convert",
-                "path-parameters": {
-                  "lead_key": {
-                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
-                    "type": "string",
-                  },
-                },
-                "request": {
-                  "body": {
-                    "extends": undefined,
-                    "properties": {
-                      "customer_key": "optional<string>",
-                      "email": "optional<string>",
-                    },
-                  },
-                },
-                "response": "_InlinedType194",
-              },
-              "_unnamedOperation8": {
-                "display-name": "Retrieve the form templates for a lead",
-                "docs": "Fetches the specified form templates for a lead.",
-                "method": "GET",
-                "path": "/v2/leads/form-templates",
-                "request": {
-                  "query-parameters": {
-                    "group_key": "optional<string>",
-                    "mold_key": "optional<string>",
-                  },
-                },
-                "response": "_InlinedType172",
-              },
-              "_unnamedOperation9": {
-                "display-name": "Retrieve a lead",
-                "docs": "Retrieves the details of an existing
-    lead. You need only supply the unique lead key that was returned
-    upon lead creation.",
-                "method": "GET",
-                "path": "/v2/leads/{lead_key}",
-                "path-parameters": {
-                  "lead_key": {
-                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType178",
-              },
-              "delete": {
-                "display-name": "Archive a lead",
-                "docs": "Archives the specified lead.",
-                "method": "DELETE",
-                "path": "/v2/leads/{lead_key}",
-                "path-parameters": {
-                  "lead_key": {
-                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType179",
-              },
-              "get": {
+              "": {
                 "display-name": "List all leads",
                 "docs": "Returns a list of your leads. The leads are
     returned sorted by creation date, with the most recent leads
@@ -1560,7 +1497,62 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType155",
               },
-              "patch": {
+              "_unnamedOperation16": {
+                "display-name": "Create a lead",
+                "docs": "Creates a lead with desired params.",
+                "method": "POST",
+                "path": "/v2/leads",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType156",
+                    ],
+                  },
+                },
+                "response": "_InlinedType164",
+              },
+              "_unnamedOperation17": {
+                "display-name": "Retrieve the form templates for a lead",
+                "docs": "Fetches the specified form templates for a lead.",
+                "method": "GET",
+                "path": "/v2/leads/form-templates",
+                "request": {
+                  "query-parameters": {
+                    "group_key": "optional<string>",
+                    "mold_key": "optional<string>",
+                  },
+                },
+                "response": "_InlinedType172",
+              },
+              "_unnamedOperation18": {
+                "display-name": "Retrieve a lead",
+                "docs": "Retrieves the details of an existing
+    lead. You need only supply the unique lead key that was returned
+    upon lead creation.",
+                "method": "GET",
+                "path": "/v2/leads/{lead_key}",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType178",
+              },
+              "_unnamedOperation19": {
+                "display-name": "Archive a lead",
+                "docs": "Archives the specified lead.",
+                "method": "DELETE",
+                "path": "/v2/leads/{lead_key}",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType179",
+              },
+              "_unnamedOperation20": {
                 "display-name": "Update a lead",
                 "docs": "Updates the specified lead by setting the values
     of the parameters passed. Any parameters not provided will be left
@@ -1593,19 +1585,27 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType187",
               },
-              "post": {
-                "display-name": "Create a lead",
-                "docs": "Creates a lead with desired params.",
+              "_unnamedOperation21": {
+                "display-name": "Convert a lead",
+                "docs": "Converts a lead to a customer",
                 "method": "POST",
-                "path": "/v2/leads",
-                "request": {
-                  "body": {
-                    "extends": [
-                      "_InlinedType156",
-                    ],
+                "path": "/v2/leads/{lead_key}/convert",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
                   },
                 },
-                "response": "_InlinedType164",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "customer_key": "optional<string>",
+                      "email": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType194",
               },
             },
           },
@@ -1902,20 +1902,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "_unnamedOperation11": {
-                "display-name": "Retrieve a marketplace program",
-                "docs": "Retrieves a marketplace program given its program key.",
-                "method": "GET",
-                "path": "/v2/marketplace/programs/{company_key}",
-                "path-parameters": {
-                  "company_key": {
-                    "docs": "Unique identifier of the program.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType203",
-              },
-              "get": {
+              "": {
                 "display-name": "List all programs",
                 "docs": "Returns a list of all active marketplace-listed programs and their details. The programs are returned sorted by creation date by default, with the most recent programs appearing first.",
                 "method": "GET",
@@ -1949,6 +1936,19 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   },
                 },
                 "response": "_InlinedType199",
+              },
+              "_unnamedOperation22": {
+                "display-name": "Retrieve a marketplace program",
+                "docs": "Retrieves a marketplace program given its program key.",
+                "method": "GET",
+                "path": "/v2/marketplace/programs/{company_key}",
+                "path-parameters": {
+                  "company_key": {
+                    "docs": "Unique identifier of the program.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType203",
               },
             },
           },
@@ -2028,56 +2028,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "_unnamedOperation12": {
-                "display-name": "Retrieve a partnership",
-                "docs": "Retrieves the details of an existing partnership.",
-                "method": "GET",
-                "path": "/v2/partnerships/{partnership_key}",
-                "path-parameters": {
-                  "partnership_key": {
-                    "docs": "Unique identifier of partnership. Can be \`partner_key\`, if one configured for partnership.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType241",
-              },
-              "_unnamedOperation13": {
-                "display-name": "Updates a partnership's tags",
-                "docs": "Add or remove tags from the specified partnership.",
-                "method": "PATCH",
-                "path": "/v2/partnerships/{partnership_key}/tags",
-                "path-parameters": {
-                  "partnership_key": {
-                    "docs": "The specific key for the partnership",
-                    "type": "string",
-                  },
-                },
-                "request": {
-                  "body": {
-                    "docs": "UpdateTagsForTarget",
-                    "extends": undefined,
-                    "properties": {
-                      "add": "optional<list<string>>",
-                      "remove": "optional<list<string>>",
-                    },
-                  },
-                },
-                "response": "_InlinedType264",
-              },
-              "delete": {
-                "display-name": "Archive a partnership",
-                "docs": "Archives a partnership.",
-                "method": "DELETE",
-                "path": "/v2/partnerships/{partnership_key}",
-                "path-parameters": {
-                  "partnership_key": {
-                    "docs": "The specific internal key that identifies the partnership.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType242",
-              },
-              "get": {
+              "": {
                 "display-name": "List all partnerships",
                 "docs": "Returns a list of your partnerships. The partnerships are returned sorted by creation date by default, with the most recent partnerships appearing first.",
                 "method": "GET",
@@ -2128,7 +2079,48 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType213",
               },
-              "patch": {
+              "_unnamedOperation23": {
+                "display-name": "Create a partnership",
+                "docs": "Creates a new partnership with the data provided.",
+                "method": "POST",
+                "path": "/v2/partnerships",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType214",
+                      "_InlinedType216",
+                    ],
+                  },
+                },
+                "response": "_InlinedType227",
+              },
+              "_unnamedOperation24": {
+                "display-name": "Retrieve a partnership",
+                "docs": "Retrieves the details of an existing partnership.",
+                "method": "GET",
+                "path": "/v2/partnerships/{partnership_key}",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "Unique identifier of partnership. Can be \`partner_key\`, if one configured for partnership.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType241",
+              },
+              "_unnamedOperation25": {
+                "display-name": "Archive a partnership",
+                "docs": "Archives a partnership.",
+                "method": "DELETE",
+                "path": "/v2/partnerships/{partnership_key}",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "The specific internal key that identifies the partnership.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType242",
+              },
+              "_unnamedOperation26": {
                 "display-name": "Update a partnership",
                 "docs": "Updates the specific partnership by setting the values of the parameters passed.",
                 "method": "PATCH",
@@ -2153,20 +2145,28 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType252",
               },
-              "post": {
-                "display-name": "Create a partnership",
-                "docs": "Creates a new partnership with the data provided.",
-                "method": "POST",
-                "path": "/v2/partnerships",
-                "request": {
-                  "body": {
-                    "extends": [
-                      "_InlinedType214",
-                      "_InlinedType216",
-                    ],
+              "_unnamedOperation27": {
+                "display-name": "Updates a partnership's tags",
+                "docs": "Add or remove tags from the specified partnership.",
+                "method": "PATCH",
+                "path": "/v2/partnerships/{partnership_key}/tags",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "The specific key for the partnership",
+                    "type": "string",
                   },
                 },
-                "response": "_InlinedType227",
+                "request": {
+                  "body": {
+                    "docs": "UpdateTagsForTarget",
+                    "extends": undefined,
+                    "properties": {
+                      "add": "optional<list<string>>",
+                      "remove": "optional<list<string>>",
+                    },
+                  },
+                },
+                "response": "_InlinedType264",
               },
             },
           },
@@ -2408,7 +2408,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "get": {
+              "": {
                 "display-name": "List all rewards",
                 "docs": "Returns a list of your rewards. The rewards are returned sorted by creation date by default, with the most recent rewards appearing first.",
                 "method": "GET",
@@ -2499,7 +2499,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType280",
               },
-              "post": {
+              "_unnamedOperation28": {
                 "display-name": "Create a reward",
                 "docs": "Creates a new reward for a given target.",
                 "method": "POST",
@@ -2607,7 +2607,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "get": {
+              "": {
                 "display-name": "List all transactions",
                 "docs": "Returns a list of your transactions. The transactions are returned sorted by creation date, with the most recent transactions appearing first. ",
                 "method": "GET",
@@ -2642,7 +2642,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "response": "_InlinedType295",
               },
-              "post": {
+              "_unnamedOperation29": {
                 "display-name": "Create a transaction",
                 "docs": "Creates a new transaction
 
@@ -2746,35 +2746,7 @@ These customer reference fields are required, but mutually exclusive
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "_unnamedOperation14": {
-                "display-name": "Retrieve a webhook",
-                "docs": "Retrieves the details of an existing webhook. You
-    need only supply the unique webhook key that was returned upon
-    webhook creation.",
-                "method": "GET",
-                "path": "/v2/webhooks/{webhook_key}",
-                "path-parameters": {
-                  "webhook_key": {
-                    "docs": "Unique identifier of a webhook.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType322",
-              },
-              "delete": {
-                "display-name": "Archive a webhook",
-                "docs": "Webhook events will no longer be delivered to the attached endpoints.",
-                "method": "DELETE",
-                "path": "/v2/webhooks/{webhook_key}",
-                "path-parameters": {
-                  "webhook_key": {
-                    "docs": "Unique identifier of a webhook.",
-                    "type": "string",
-                  },
-                },
-                "response": "_InlinedType326",
-              },
-              "get": {
+              "": {
                 "display-name": "List all webhooks",
                 "docs": "Returns a list of your webhooks. The webhooks are
     returned sorted by creation date, with the most recent webhooks
@@ -2799,7 +2771,49 @@ These customer reference fields are required, but mutually exclusive
                 },
                 "response": "_InlinedType312",
               },
-              "patch": {
+              "_unnamedOperation30": {
+                "display-name": "Create a webhook",
+                "docs": "Webhooks deliver POST requests to the target URL when the specified events are triggered.",
+                "method": "POST",
+                "path": "/v2/webhooks",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType313",
+                    ],
+                  },
+                },
+                "response": "_InlinedType318",
+              },
+              "_unnamedOperation31": {
+                "display-name": "Retrieve a webhook",
+                "docs": "Retrieves the details of an existing webhook. You
+    need only supply the unique webhook key that was returned upon
+    webhook creation.",
+                "method": "GET",
+                "path": "/v2/webhooks/{webhook_key}",
+                "path-parameters": {
+                  "webhook_key": {
+                    "docs": "Unique identifier of a webhook.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType322",
+              },
+              "_unnamedOperation32": {
+                "display-name": "Archive a webhook",
+                "docs": "Webhook events will no longer be delivered to the attached endpoints.",
+                "method": "DELETE",
+                "path": "/v2/webhooks/{webhook_key}",
+                "path-parameters": {
+                  "webhook_key": {
+                    "docs": "Unique identifier of a webhook.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType326",
+              },
+              "_unnamedOperation33": {
                 "display-name": "Update a webhook",
                 "docs": "Updates the specified webhook by setting the values of the parameters passed.",
                 "method": "PATCH",
@@ -2818,20 +2832,6 @@ These customer reference fields are required, but mutually exclusive
                   },
                 },
                 "response": "_InlinedType332",
-              },
-              "post": {
-                "display-name": "Create a webhook",
-                "docs": "Webhooks deliver POST requests to the target URL when the specified events are triggered.",
-                "method": "POST",
-                "path": "/v2/webhooks",
-                "request": {
-                  "body": {
-                    "extends": [
-                      "_InlinedType313",
-                    ],
-                  },
-                },
-                "response": "_InlinedType318",
               },
             },
           },
@@ -3070,14 +3070,14 @@ exports[`open api converter rivet simple 1`] = `
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "LobbyReady": {
+              "lobbyReady": {
                 "display-name": undefined,
                 "docs": "Marks the current lobby as ready to accept connections. Players will not be
 able to connect to this lobby until the lobby is flagged as ready.",
                 "method": "POST",
                 "path": "/lobbies/ready",
               },
-              "PlayerConnected": {
+              "playerConnected": {
                 "display-name": undefined,
                 "docs": "Validates the player token is valid and has not already been consumed then
 marks the player as connected.
@@ -3125,7 +3125,7 @@ the player token is validated.",
                   "body": "PlayerConnectedRequestContent",
                 },
               },
-              "PlayerDisconnected": {
+              "playerDisconnected": {
                 "display-name": undefined,
                 "docs": "Marks a player as disconnected.
 
@@ -3169,7 +3169,7 @@ lobby.",
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "FindLobby": {
+              "findLobby": {
                 "display-name": undefined,
                 "docs": "Finds a lobby based on the given criteria.
 
@@ -3184,7 +3184,7 @@ If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a new lob
                 },
                 "response": "FindLobbyResponseContent",
               },
-              "JoinLobby": {
+              "joinLobby": {
                 "display-name": undefined,
                 "docs": "Joins a specific lobby.
 
@@ -3197,14 +3197,14 @@ group.",
                 },
                 "response": "JoinLobbyResponseContent",
               },
-              "ListLobbies": {
+              "listLobbies": {
                 "display-name": undefined,
                 "docs": "Lists all open lobbies.",
                 "method": "GET",
                 "path": "/lobbies/list",
                 "response": "ListLobbiesResponseContent",
               },
-              "ListRegions": {
+              "listRegions": {
                 "display-name": undefined,
                 "docs": "Returns a list of regions available to this namespace.
 
@@ -3214,7 +3214,7 @@ is used to calculate the regions' optimality.",
                 "path": "/regions",
                 "response": "ListRegionsResponseContent",
               },
-              "SetLobbyClosed": {
+              "setLobbyClosed": {
                 "display-name": undefined,
                 "docs": "If \`is_closed\` is \`true\`, players will be prevented from joining the lobby.
 
@@ -3354,7 +3354,7 @@ exports[`open api converter telematica simple 1`] = `
             "auth": true,
             "base-path": "",
             "endpoints": {
-              "AppController_callback": {
+              "appControllerCallback": {
                 "display-name": "Dummy callback endpoint",
                 "docs": "This is a dummy callback endpoint.
 Please share the POST callback endpoint created in your app's backend with Telematica to get callback requests of this format.",
@@ -3460,7 +3460,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 },
                 "response": "commons.Range_ResponseDTO",
               },
-              "getSOCTest": {
+              "getSocTest": {
                 "display-name": "Test SOC (battery level)",
                 "docs": undefined,
                 "method": "GET",
@@ -3580,7 +3580,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 },
                 "response": "commons.RangeSoc_ResponseDTO",
               },
-              "getSOC": {
+              "getSoc": {
                 "display-name": "SOC (battery level)",
                 "docs": undefined,
                 "method": "GET",
