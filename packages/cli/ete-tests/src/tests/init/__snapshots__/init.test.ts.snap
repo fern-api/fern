@@ -1,5 +1,918 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`fern init covie openapi 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": [
+          {
+            "contents": [
+              {
+                "contents": "services:
+  http:
+    AccountService:
+      auth: true
+      base-path: ''
+      endpoints:
+        enable-account-mfa-required:
+          path: /accounts/{account_id}/mfa_requirements
+          method: POST
+          docs: Require all account users to have an MFA application configured
+          display-name: Enable Account MFA Requirement
+          response: AccountWithConfig
+        disable-account-mfa-required:
+          path: /accounts/{account_id}/mfa_requirements
+          method: DELETE
+          docs: >-
+            Remove requirement for all account users to have an MFA application
+            configured
+          display-name: Disable Account MFA Requirement
+types:
+  AccountWithConfig:
+    properties: {}
+",
+                "name": "account.yml",
+                "type": "file",
+              },
+              {
+                "contents": "name: api
+headers: {}
+",
+                "name": "api.yml",
+                "type": "file",
+              },
+              {
+                "contents": "imports:
+  commons: commons.yml
+services:
+  http:
+    ApplicationService:
+      auth: true
+      base-path: ''
+      endpoints:
+        get-application-links:
+          path: /applications/{application_id}/links
+          method: GET
+          docs: Lists an application's links.
+          display-name: List Application Links
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              provider:
+                docs: Partial name of a provider to search against
+                type: optional<string>
+              created_since:
+                docs: Limit results to links created on or after this date.
+                type: optional<string>
+              created_until:
+                docs: Limit results to links created on or before this date.
+                type: optional<string>
+              updated_since:
+                docs: Limit results to links last updated on or since this date.
+                type: optional<string>
+              updated_until:
+                docs: Limit results to links last updated on or before this date.
+                type: optional<string>
+              synced_since:
+                docs: Limit results to links last synced on or after this date.
+                type: optional<string>
+              synced_until:
+                docs: Limit results to links last synced on or before this date.
+                type: optional<string>
+              q:
+                docs: Search for link via ID
+                type: optional<string>
+              status:
+                docs: >-
+                  Filter link status; separate multiple statuses (OR'd) with
+                  commas
+                type: optional<string>
+              has_metadata:
+                docs: Filter whether a link has metadata attached
+                type: optional<boolean>
+              policy_type:
+                docs: The type of policy linked.
+                type: optional<string>
+              integration_ids:
+                docs: >-
+                  If provided, only show items with any of the specified
+                  integration IDs, comma-separated.
+                type: optional<string>
+          response: commons.Links
+        get-application-policies:
+          path: /applications/{application_id}/policies
+          method: GET
+          docs: Lists an application's policies.
+          display-name: List Application Policies
+          request:
+            query-parameters:
+              integration_ids:
+                docs: >-
+                  If provided, only show items with any of the specified
+                  integration IDs, comma-separated.
+                type: optional<string>
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+          response: commons.Policies
+",
+                "name": "application.yml",
+                "type": "file",
+              },
+              {
+                "contents": "types:
+  Carrier:
+    docs: >-
+      A basic object describing the individual insurance company which has
+      issued a policy.
+    properties:
+      name: optional<string>
+  PeriodValue:
+    docs: >-
+      Describes a value that represents a period of time, such as days, weeks,
+      or months.
+    properties:
+      unit: optional<string>
+      value: optional<integer>
+  Events:
+    properties:
+      count: optional<integer>
+      filtered_count: optional<integer>
+      _embedded: optional<_InlinedType25>
+  _InlinedType25:
+    properties:
+      events: optional<list<Event>>
+  Integration:
+    docs: >-
+      Represents a connection between a client application and Covie's systems
+      allowing a client users to create and process links.
+    properties:
+      id: optional<string>
+      key: optional<string>
+      name: optional<string>
+      status: optional<string>
+      created_at: optional<string>
+      updated_at: optional<string>
+      configuration: optional<_InlinedType30>
+  _InlinedType26:
+    properties:
+      primary: optional<string>
+  _InlinedType27:
+    docs: Branding configuration for the embed.
+    properties:
+      logo: optional<string>
+      hide_logo: optional<boolean>
+      colors: optional<_InlinedType26>
+  _InlinedType28:
+    properties:
+      agency_logo: optional<string>
+      agency_photo: optional<string>
+  _InlinedType29:
+    properties:
+      agency_name: optional<string>
+      agent_name: optional<string>
+      agent_email: optional<string>
+      image_urls: optional<_InlinedType28>
+  _InlinedType30:
+    properties:
+      brand: optional<_InlinedType27>
+      display_name: optional<string>
+      use_name_as_display_name: optional<boolean>
+      hosted: optional<_InlinedType29>
+  Policies:
+    properties:
+      count: optional<integer>
+      filtered_count: optional<integer>
+      _embedded: optional<_InlinedType31>
+  _InlinedType31:
+    properties:
+      policies: optional<list<Policy>>
+  Link_2:
+    docs: >-
+      Represents the individual connections between Covie and a Policyholder's
+      account with a carrier and wraps the policies retrieved from it that have
+      been made available to the consumer.
+    properties:
+      id: optional<string>
+      object: optional<string>
+      integration_id: optional<string>
+      policy_count: optional<integer>
+      status: optional<string>
+      is_tracked: optional<boolean>
+      tracking_frequency: optional<_InlinedType32>
+      updated_at: optional<string>
+      created_at: optional<string>
+      _links: optional<_InlinedType36>
+  _InlinedType32:
+    docs: >-
+      The frequency of which tracking should be performed. This value is \`never\`
+      when tracking is disabled.
+    enum:
+      - daily
+      - weekly
+      - monthly
+      - never
+      - on_demand
+  _InlinedType33:
+    docs: Link to retrieve the link's details.
+    properties:
+      href: optional<string>
+  _InlinedType34:
+    docs: Link to the carrier's logo.
+    properties:
+      href: optional<string>
+  _InlinedType35:
+    properties:
+      href: optional<string>
+      content_type: optional<string>
+  _InlinedType36:
+    properties:
+      self: optional<_InlinedType33>
+      carrier_logo: optional<_InlinedType34>
+      uploaded_documents: optional<list<_InlinedType35>>
+  Links:
+    properties:
+      count: optional<integer>
+      filtered_count: optional<integer>
+      _embedded: optional<_InlinedType37>
+  _InlinedType37:
+    properties:
+      links: optional<list<Link_2>>
+  Webhook:
+    docs: Represents a webhook in the Covie system.
+    properties:
+      id: optional<string>
+      uri: optional<string>
+      is_enabled: optional<boolean>
+      event_types: optional<list<string>>
+      created_at: optional<string>
+      updated_at: optional<string>
+",
+                "name": "commons.yml",
+                "type": "file",
+              },
+              {
+                "contents": "services:
+  http:
+    EventService:
+      auth: true
+      base-path: ''
+      endpoints:
+        post-events-event_id-broadcasts:
+          path: /events/{event_id}/broadcasts
+          method: POST
+          docs: Rebroadcast an event.
+          display-name: Rebroadcast Event
+          response: _InlinedType24
+types:
+  _InlinedType23:
+    properties:
+      broadcasts: optional<list<commons.EventBroadcast>>
+  _InlinedType24:
+    properties:
+      count: optional<integer>
+      _embedded: optional<_InlinedType23>
+",
+                "name": "event.yml",
+                "type": "file",
+              },
+              {
+                "contents": "imports:
+  commons: commons.yml
+services:
+  http:
+    IntegrationService:
+      auth: true
+      base-path: ''
+      endpoints:
+        list-integrations:
+          path: /integrations
+          method: GET
+          docs: List integrations associated to an application
+          display-name: List Integrations
+          request:
+            query-parameters:
+              q:
+                docs: >-
+                  Partial integration name, ID, or integration key to search
+                  against, with or without leading in_/ik_
+                type: optional<string>
+              status:
+                docs: Filter active or archived integrations
+                type: optional<string>
+          response: Integrations
+        create-integration:
+          path: /integrations
+          method: POST
+          docs: Creates a new integration.
+          display-name: Create Integration
+          request:
+            body:
+              properties:
+                name: string
+                policyRequirements: optional<_InlinedType10>
+                configuration: optional<_InlinedType13>
+        get-integration:
+          path: /integrations/{integration_id}
+          method: GET
+          docs: Retrieve the details of an integration.
+          display-name: Get Integration
+          response: commons.Integration_2
+        delete-integration:
+          path: /integrations/{integration_id}
+          method: DELETE
+          docs: Deletes an integration.
+          display-name: Delete Integration
+        update-integration:
+          path: /integrations/{integration_id}
+          method: PATCH
+          docs: Edit the name and archived status of an integration.
+          display-name: Update Integration
+          request:
+            body:
+              properties:
+                name: optional<string>
+                status: optional<string>
+                configuration: optional<_InlinedType16>
+                policy_requirements: optional<_InlinedType17>
+          response: commons.Integration_2
+        get-integration-policies:
+          path: /integrations/{integration_id}/policies
+          method: GET
+          docs: List all policies that have been linked to an integration.
+          display-name: List Integration Policies
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+          response: commons.Policies
+        get-integration-providers:
+          path: /integrations/{integration_id}/providers
+          method: GET
+          docs: >-
+            Retrieve a list of supported carriers for a given integration, along
+            with their identifiers.
+          display-name: Supported Providers List
+          request:
+            query-parameters:
+              required_policy_types:
+                docs: >-
+                  A pipe delineated list of policy types desired. Providers who
+                  do not support at least one required policy type will be
+                  excluded. 
+                type: optional<string>
+          response: Providers
+        regenerate-integration-key:
+          path: /integrations/{integration_id}/regenerate_key
+          method: POST
+          docs: >-
+            Replaces the existing integration key with a new randomly generated
+            key.
+          display-name: Regenerate Integration Key
+          response: commons.Integration_2
+        get-integrations-integration_id-agency_logo:
+          path: /integrations/{integration_id}/agency_logo
+          method: GET
+          docs: View the agency logo for the hosted integration.
+          display-name: View Agency Logo
+        put-integrations-integration_id-agency_logo:
+          path: /integrations/{integration_id}/agency_logo
+          method: PUT
+          docs: Upload the agency logo for the hosted integration.
+          display-name: Update Agency Logo
+          response: _InlinedType18
+        delete-integrations-integration_id-agency_logo:
+          path: /integrations/{integration_id}/agency_logo
+          method: DELETE
+          docs: Delete the agency logo and/or config if present.
+          display-name: Delete Agency Logo
+        get-integrations-integration_id-agent_photo:
+          path: /integrations/{integration_id}/agent_photo
+          method: GET
+          docs: View the agent photo for the hosted integration.
+          display-name: View Agent Photo
+        put-integrations-integration_id-agent_photo:
+          path: /integrations/{integration_id}/agent_photo
+          method: PUT
+          docs: Upload an agent photo for the hosted integration.
+          display-name: Update Agent Photo
+          response: _InlinedType19
+        delete-integrations-integration_id-agent_photo:
+          path: /integrations/{integration_id}/agent_photo
+          method: DELETE
+          docs: Delete the agent photo and/or config if present.
+          display-name: Delete Agent Photo
+        get-integrations-integration_id-brand_logo:
+          path: /integrations/{integration_id}/brand_logo
+          method: GET
+          docs: View the brand logo for the integration.
+          display-name: View Brand Logo
+        put-integrations-integration_id-brand_logo:
+          path: /integrations/{integration_id}/brand_logo
+          method: PUT
+          docs: Upload the brand logo for the hosted integration.
+          display-name: Update Brand Logo
+          response: _InlinedType20
+        delete-integrations-integration_id-brand_logo:
+          path: /integrations/{integration_id}/brand_logo
+          method: DELETE
+          docs: Delete the brand logo and/or config if present.
+          display-name: Delete Brand Logo
+types:
+  Integrations:
+    properties:
+      count: optional<integer>
+      _links: optional<_InlinedType5>
+      _embedded: optional<_InlinedType6>
+  _InlinedType4:
+    properties:
+      href: optional<string>
+  _InlinedType5:
+    properties:
+      self: optional<_InlinedType4>
+  _InlinedType6:
+    properties:
+      integrations: optional<list<commons.Integration>>
+  Providers:
+    properties:
+      count: optional<integer>
+      _links: optional<_InlinedType8>
+      _embedded: optional<_InlinedType9>
+  _InlinedType7:
+    properties:
+      href: optional<string>
+  _InlinedType8:
+    properties:
+      self: optional<_InlinedType7>
+  _InlinedType9:
+    properties:
+      providers: optional<list<commons.Provider>>
+  _InlinedType10:
+    properties:
+      effective_date: optional<string>
+      allow_inactive: optional<boolean>
+  _InlinedType11:
+    properties:
+      primary: optional<string>
+  _InlinedType12:
+    docs: Branding configuration for the embed.
+    properties:
+      logo: optional<string>
+      hide_logo: optional<boolean>
+      colors: optional<_InlinedType11>
+  _InlinedType13:
+    properties:
+      brand: optional<_InlinedType12>
+      display_name: optional<string>
+      use_name_as_display_name: optional<boolean>
+  _InlinedType14:
+    properties:
+      primary: optional<string>
+  _InlinedType15:
+    docs: Branding configuration for the embed.
+    properties:
+      logo: optional<string>
+      hide_logo: optional<boolean>
+      colors: optional<_InlinedType14>
+  _InlinedType16:
+    properties:
+      brand: optional<_InlinedType15>
+      display_name: optional<string>
+      use_name_as_display_name: optional<boolean>
+  _InlinedType17:
+    properties:
+      allow_inactive: optional<boolean>
+      effective_date: optional<string>
+  _InlinedType18:
+    properties:
+      href: optional<string>
+  _InlinedType19:
+    properties:
+      href: optional<string>
+  _InlinedType20:
+    properties:
+      href: optional<string>
+",
+                "name": "integration.yml",
+                "type": "file",
+              },
+              {
+                "contents": "imports:
+  commons: commons.yml
+services:
+  http:
+    LinkService:
+      auth: true
+      base-path: ''
+      endpoints:
+        get-link:
+          path: /links/{id}
+          method: GET
+          docs: Retrieves a Link
+          display-name: Retrieve link
+          response: commons.Link
+        delete-link:
+          path: /links/{id}
+          method: DELETE
+          docs: Deletes a link.
+          display-name: Delete Link
+        update-link-settings:
+          path: /links/{id}
+          method: PATCH
+          display-name: Update Link Settings
+          request:
+            body:
+              properties:
+                tracking_frequency: optional<string>
+          response: commons.Link
+        get-link-policies:
+          path: /links/{id}/policies
+          method: GET
+          docs: Retrieves a list of policies associated with the requested link
+          display-name: List Link Policies
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+          response: commons.Policies
+        get-link-events:
+          path: /links/{id}/events
+          method: GET
+          docs: Retrieves a list of events triggered for the requested link
+          display-name: List Link Events
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              event_type:
+                docs: Filter events by type.
+                type: optional<string>
+          response: commons.Events
+        attach-link-document:
+          path: /links/{id}/documents
+          method: POST
+          docs: >-
+            Attach a policy document to a Link. If the document can be parsed,
+            select the parsed policy for sharing.
+          display-name: Upload Document To Link
+        sync-link-manually:
+          path: /links/{id}/syncs
+          method: POST
+          docs: >-
+            Sync a tracked link with the provider using the stored user
+            credentials
+          display-name: Manually Sync Link
+        get-integration-links:
+          path: /integrations/{integration_id}/links
+          method: GET
+          docs: Retrieves a list of links associated to the requested integration
+          display-name: List Integration Links
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              provider:
+                docs: Partial name of a provider to search against
+                type: optional<string>
+              created_since:
+                docs: Limit results to links created on or after this date.
+                type: optional<string>
+              created_until:
+                docs: Limit results to links created on or before this date.
+                type: optional<string>
+              updated_since:
+                docs: Limit results to links last updated on or since this date.
+                type: optional<string>
+              updated_until:
+                docs: Limit results to links last updated on or before this date.
+                type: optional<string>
+              synced_since:
+                docs: Limit results to links last synced on or after this date.
+                type: optional<string>
+              synced_until:
+                docs: Limit results to links last synced on or before this date.
+                type: optional<string>
+              q:
+                docs: Search for link via ID
+                type: optional<string>
+              status:
+                docs: >-
+                  Filter link status; separate multiple statuses (OR'd) with
+                  commas
+                type: optional<string>
+              has_metadata:
+                docs: Filter whether a link has metadata attached
+                type: optional<boolean>
+              policy_type:
+                docs: The type of policy linked.
+                type: optional<string>
+          response: commons.Links
+        initialize-link-via-integration:
+          path: /integrations/{integration_id}/links
+          method: POST
+          docs: >-
+            Creates a link and optionally sets metadata and selects a carrier,
+            allowing for seeding initial data before an insured continues the
+            linking process via the embed
+          display-name: Initialize link
+          request:
+            body:
+              properties:
+                provider_id: optional<string>
+          response: commons.Link
+        get-integration-links-with-policies:
+          path: /integrations/{integration_id}/links_with_policies
+          method: GET
+          docs: >-
+            Retrieves a list of links and selected policies associated to the
+            requested integration
+          display-name: List Integration Links With Policies
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              provider:
+                docs: Partial name of a provider to search against
+                type: optional<string>
+              created_since:
+                docs: Limit results to links created on or after this date.
+                type: optional<string>
+              created_until:
+                docs: Limit results to links created on or before this date.
+                type: optional<string>
+              updated_since:
+                docs: Limit results to links last updated on or since this date.
+                type: optional<string>
+              updated_until:
+                docs: Limit results to links last updated on or before this date.
+                type: optional<string>
+              synced_since:
+                docs: Limit results to links last synced on or after this date.
+                type: optional<string>
+              synced_until:
+                docs: Limit results to links last synced on or before this date.
+                type: optional<string>
+              policy_type:
+                docs: The type of policy linked.
+                type: optional<string>
+              policy_filter_type:
+                docs: >-
+                  Show only these types of policies within each link. Does not
+                  affect which links are shown. Comma-separate to allow multiple
+                  policy types.
+                type: optional<string>
+          response: LinksWithPolicies
+types:
+  LinksWithPolicies:
+    properties:
+      count: optional<integer>
+      filtered_count: optional<integer>
+      _embedded: optional<_InlinedType21>
+  _InlinedType21:
+    properties:
+      links: optional<list<commons.LinkWithPolicies>>
+",
+                "name": "link.yml",
+                "type": "file",
+              },
+              {
+                "contents": "imports:
+  commons: commons.yml
+services:
+  http:
+    PolicyService:
+      auth: true
+      base-path: ''
+      endpoints:
+        get-policies-policy_id:
+          path: /policies/{policy_id}
+          method: GET
+          docs: Retrieve a Policy object that was previously connected via a Link
+          display-name: Retrieve Policy
+          response: Policy_2
+        get-policy-document:
+          path: /policies/{policy_id}/documents/{document_type}
+          method: GET
+          docs: Retrieve the contents of a Policy document
+          display-name: Retrieve Policy Document
+          response: FileContents
+        list-policy-events:
+          path: /policies/{policy_id}/events
+          method: GET
+          docs: List all events that have been triggered for the selected policy
+          display-name: List Policy Events
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              event_type:
+                docs: Filter events by type.
+                type: optional<string>
+          response: commons.Events
+types:
+  Policy:
+    docs: >-
+      This describes, in high level, the insurance policy record that is
+      provided by a link. This object encapsulates all the necessary details to
+      understand the policy's status, policyholders, and covered persons or
+      properties. 
+    properties:
+      id: optional<string>
+      object: optional<string>
+      fingerprint: optional<string>
+      carrier: optional<commons.Carrier>
+      masked_number: optional<string>
+      line: optional<string>
+      policyholders: optional<list<commons.Policyholder>>
+      vehicles: optional<list<commons.Vehicle>>
+      locations: optional<list<commons.Location>>
+      status: optional<string>
+      term_length: optional<commons.PeriodValue>
+      inception_date: optional<string>
+      expiration_date: optional<string>
+      cancellation_reason: optional<_InlinedType0>
+      linked_at: optional<string>
+      last_synced_at: optional<string>
+      _links: optional<_InlinedType2>
+      _embedded: optional<_InlinedType3>
+      link_id: optional<string>
+  _InlinedType0:
+    docs: >-
+      The determined reason for the cancellation, such as insured_non_payment or
+      carrier_non_renew or insured_action. This value is null when cancellation
+      is not active or not explicitly indicated by the carrier systems and is
+      not guaranteed to be provided in any circumstance.
+    enum:
+      - carrier_non_renew
+      - insured_non_payment
+      - insured_requested
+      - other
+  _InlinedType1:
+    docs: A link to the logo for the carrier on the policy.
+    properties:
+      href: optional<string>
+  _InlinedType2:
+    docs: >-
+      A polymorphic list of externally linked resources related to this policy
+      such as documents or logos for carriers.
+    properties:
+      documents: optional<list<commons.DocumentRef>>
+      carrier_logo: optional<_InlinedType1>
+  _InlinedType3:
+    docs: A container for objects wrapped by the current object.
+    properties:
+      missing_fields: optional<list<string>>
+",
+                "name": "policy.yml",
+                "type": "file",
+              },
+              {
+                "contents": "imports:
+  commons: commons.yml
+services:
+  http:
+    WebhookService:
+      auth: true
+      base-path: ''
+      endpoints:
+        list-webhooks:
+          path: /webhooks
+          method: GET
+          docs: List an application's configured webhooks.
+          display-name: List Webhooks
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              event_type:
+                docs: Filter events by type.
+                type: optional<string>
+          response: Webhooks
+        create-webhook:
+          path: /webhooks
+          method: POST
+          docs: Create a new webhook
+          display-name: Create Webhook
+          request:
+            body:
+              properties:
+                uri: optional<string>
+                event_types: optional<list<string>>
+        get-webhook:
+          path: /webhooks/{webhook_id}
+          method: GET
+          docs: Get the details of a webhook.
+          display-name: Get Webhook
+          response: commons.Webhook_2
+        update-webhook:
+          path: /webhooks/{webhook_id}
+          method: PATCH
+          docs: Update a webhook.
+          display-name: Update Webhook
+          request:
+            body:
+              properties:
+                uri: optional<string>
+                is_enabled: optional<boolean>
+                event_types: optional<list<string>>
+          response: commons.Webhook_2
+        list-webhook-events:
+          path: /webhooks/{webhook_id}/events
+          method: GET
+          docs: List the events that have been triggered for a webhook.
+          display-name: List Webhook Events
+          request:
+            query-parameters:
+              limit:
+                docs: Number of results to return.
+                type: optional<integer>
+              offset:
+                docs: Specifies the offset of the first result to return.
+                type: optional<integer>
+              event_type:
+                docs: Filter events by type.
+                type: optional<string>
+          response: commons.Events
+types:
+  Webhooks:
+    properties:
+      count: optional<integer>
+      filtered_count: optional<integer>
+      _embedded: optional<_InlinedType22>
+  _InlinedType22:
+    properties:
+      webhooks: optional<list<commons.Webhook>>
+",
+                "name": "webhook.yml",
+                "type": "file",
+              },
+            ],
+            "name": "definition",
+            "type": "directory",
+          },
+          {
+            "contents": "default-group: external
+groups: {}
+",
+            "name": "generators.yml",
+            "type": "file",
+          },
+        ],
+        "name": "api",
+        "type": "directory",
+      },
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+]
+`;
+
 exports[`fern init gigs openapi 1`] = `
 [
   {

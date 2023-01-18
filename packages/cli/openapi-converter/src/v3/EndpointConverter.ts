@@ -7,10 +7,13 @@ import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
 import { SchemaConverter } from "./SchemaConverter";
 import {
     APPLICATION_JSON_CONTENT,
+    COMMONS_SERVICE_FILE_NAME,
     getFernReferenceForSchema,
     isReferenceObject,
     maybeConvertSchemaToPrimitive,
     maybeGetAliasReference,
+    REQUEST_REFERENCE_PREFIX,
+    RESPONSE_REFERENCE_PREFIX,
 } from "./utils";
 
 export interface ConvertedEndpoint {
@@ -225,7 +228,7 @@ export class EndpointConverter {
         if (isReferenceObject(requestBody)) {
             return {
                 type: "referenced",
-                value: getFernReferenceForSchema(requestBody, this.context, this.tag, this.imports),
+                value: getFernReferenceForRequest(requestBody, this.context, this.tag, this.imports),
             };
         }
 
@@ -280,7 +283,7 @@ export class EndpointConverter {
     ): ConvertedResponse | undefined {
         if (isReferenceObject(responseBody)) {
             return {
-                response: getFernReferenceForSchema(responseBody, this.context, this.tag, this.imports),
+                response: getFernReferenceForResponse(responseBody, this.context, this.tag, this.imports),
             };
         }
 
@@ -355,6 +358,42 @@ interface ConvertedResponse {
 export function isObjectSchema(parameter: RawSchemas.TypeDeclarationSchema): parameter is RawSchemas.ObjectSchema {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (parameter as RawSchemas.ObjectSchema).properties != null;
+}
+
+function getFernReferenceForRequest(
+    requestReference: OpenAPIV3.ReferenceObject,
+    context: OpenApiV3Context,
+    tag: string,
+    imports: Set<string>
+): string {
+    const tags = context.getTagForReference(requestReference);
+    let serviceFileName = COMMONS_SERVICE_FILE_NAME;
+    if (tags.length === 1 && tags[0] != null) {
+        serviceFileName = tags[0];
+    }
+    const responseName = requestReference.$ref.replace(REQUEST_REFERENCE_PREFIX, "");
+    if (tag !== serviceFileName) {
+        imports.add(serviceFileName);
+    }
+    return tag === serviceFileName ? responseName : `${serviceFileName}.${responseName}`;
+}
+
+function getFernReferenceForResponse(
+    responseReference: OpenAPIV3.ReferenceObject,
+    context: OpenApiV3Context,
+    tag: string,
+    imports: Set<string>
+): string {
+    const tags = context.getTagForReference(responseReference);
+    let serviceFileName = COMMONS_SERVICE_FILE_NAME;
+    if (tags.length === 1 && tags[0] != null) {
+        serviceFileName = tags[0];
+    }
+    const requestName = responseReference.$ref.replace(RESPONSE_REFERENCE_PREFIX, "");
+    if (tag !== serviceFileName) {
+        imports.add(serviceFileName);
+    }
+    return tag === serviceFileName ? requestName : `${serviceFileName}.${requestName}`;
 }
 
 function convertHttpMethod(httpMethod: OpenAPIV3.HttpMethods): RawSchemas.HttpMethodSchema | undefined {
