@@ -122,6 +122,7 @@ export class OpenAPIConverter {
             const convertedEndpoint = endpointConverter.convert();
             if (convertedEndpoint != null) {
                 let operationId = endpoint.definition.operationId ?? endpoint.httpMethod;
+                operationId = camelCase(endpoint.definition.operationId);
                 if (operationId in convertedEndpoints) {
                     operationId = this.endpointNamer.getName();
                 }
