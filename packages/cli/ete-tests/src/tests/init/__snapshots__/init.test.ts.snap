@@ -45,7 +45,7 @@ headers: {}
     properties:
       object: string
       id: string
-      coverage: commons.coverage
+      coverage: coverage
       data: integer
       dataUnit: string
       name: string
@@ -121,10 +121,10 @@ headers: {}
       object: string
       id: string
       currentPeriod: _InlinedType28
-      plan: commons.plan
+      plan: plan
       sim: _InlinedType29
       status: string
-      user: commons.user
+      user: user
       createdAt: string
   _InlinedType28:
     properties:
@@ -162,32 +162,7 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types:
-  deviceModel:
-    properties:
-      object: string
-      id: string
-      brand: string
-      name: string
-      simTypes: list<string>
-      type: string
-  _InlinedType0:
-    properties:
-      object: string
-      items: list<Devices.deviceModel>
-  _InlinedType1:
-    properties:
-      object: string
-      items: list<Devices.deviceModel>
-  _InlinedType2:
-    properties:
-      object: string
-      items: list<commons.device>
-  _InlinedType3:
-    properties:
-      object: string
-      items: list<commons.device>
-services:
+                "contents": "services:
   http:
     DevicesService:
       auth: true
@@ -198,7 +173,7 @@ services:
           method: GET
           docs: Retrieves the details of an existing device model.
           display-name: Retrieve a device model
-          response: Devices.deviceModel
+          response: deviceModel
         DeviceModelsSearch:
           path: /deviceModels/search
           method: POST
@@ -345,30 +320,37 @@ services:
                 imei: string
                 user: string
                 sims: optional<list<string>>
+types:
+  deviceModel:
+    properties:
+      object: string
+      id: string
+      brand: string
+      name: string
+      simTypes: list<string>
+      type: string
+  _InlinedType0:
+    properties:
+      object: string
+      items: list<deviceModel>
+  _InlinedType1:
+    properties:
+      object: string
+      items: list<deviceModel>
+  _InlinedType2:
+    properties:
+      object: string
+      items: list<commons.device>
+  _InlinedType3:
+    properties:
+      object: string
+      items: list<commons.device>
 ",
                 "name": "devices.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  planDocument:
-    properties:
-      object: string
-      id: string
-      name: string
-      plan: string
-      type: string
-      url: string
-      createdAt: string
-  _InlinedType4:
-    properties:
-      object: string
-      items: list<Plans.planDocument>
-  _InlinedType5:
-    properties:
-      object: string
-      items: list<commons.plan>
-services:
+                "contents": "services:
   http:
     PlansService:
       auth: true
@@ -403,7 +385,7 @@ services:
           method: GET
           docs: Retrieves the details of an existing document for a given plan.
           display-name: Retrieve a plan document
-          response: Plans.planDocument
+          response: planDocument
         PlanDocumentsList:
           path: /projects/{project}/plans/{plan}/documents
           method: GET
@@ -491,27 +473,30 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType5
+types:
+  planDocument:
+    properties:
+      object: string
+      id: string
+      name: string
+      plan: string
+      type: string
+      url: string
+      createdAt: string
+  _InlinedType4:
+    properties:
+      object: string
+      items: list<planDocument>
+  _InlinedType5:
+    properties:
+      object: string
+      items: list<commons.plan>
 ",
                 "name": "plans.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  serviceProvider:
-    properties:
-      object: string
-      id: string
-      name: string
-      recipientProviders: list<string>
-  _InlinedType6:
-    properties:
-      object: string
-      items: list<commons.porting>
-  _InlinedType7:
-    properties:
-      object: string
-      items: list<Portings.serviceProvider>
-services:
+                "contents": "services:
   http:
     PortingsService:
       auth: true
@@ -707,7 +692,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a service provider
-          response: Portings.serviceProvider
+          response: serviceProvider
         ServiceProvidersList:
           path: /serviceProviders
           method: GET
@@ -738,54 +723,27 @@ services:
                   provider as supported porting recipient.
                 type: optional<string>
           response: _InlinedType7
+types:
+  serviceProvider:
+    properties:
+      object: string
+      id: string
+      name: string
+      recipientProviders: list<string>
+  _InlinedType6:
+    properties:
+      object: string
+      items: list<commons.porting>
+  _InlinedType7:
+    properties:
+      object: string
+      items: list<serviceProvider>
 ",
                 "name": "portings.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  project:
-    properties:
-      object: string
-      id: string
-      images: _InlinedType8
-      legal: _InlinedType9
-      locales: list<string>
-      name: string
-      organization: commons.organization
-      payments: _InlinedType10
-      subscriptionOwner: string
-      support: _InlinedType11
-      createdAt: string
-  _InlinedType8:
-    docs: >-
-      Deprecated object of project images. Please use the image property
-      instead.
-    properties: {}
-  _InlinedType9:
-    docs: The legal address for the company that manages the project.
-    properties:
-      name: string
-      city: string
-      country: string
-      line1: string
-      postalCode: string
-  _InlinedType10:
-    docs: Configuration parameters for the project use of payments.
-    properties:
-      currency: string
-      mode: string
-  _InlinedType11:
-    docs: Contact details for consumer support requests regarding the project.
-    properties: {}
-  _InlinedType12:
-    properties:
-      object: string
-  _InlinedType13:
-    properties:
-      object: string
-      items: list<Projects.project>
-services:
+                "contents": "services:
   http:
     ProjectsService:
       auth: true
@@ -798,7 +756,7 @@ services:
             Retrieves the details of an existing project accessible by the API
             client.
           display-name: Retrieve a project
-          response: Projects.project
+          response: project
         ProjectsCredentialsRetrieve:
           path: /projects/{project}/credentials
           method: GET
@@ -853,34 +811,54 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType13
+types:
+  project:
+    properties:
+      object: string
+      id: string
+      images: _InlinedType8
+      legal: _InlinedType9
+      locales: list<string>
+      name: string
+      organization: commons.organization
+      payments: _InlinedType10
+      subscriptionOwner: string
+      support: _InlinedType11
+      createdAt: string
+  _InlinedType8:
+    docs: >-
+      Deprecated object of project images. Please use the image property
+      instead.
+    properties: {}
+  _InlinedType9:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name: string
+      city: string
+      country: string
+      line1: string
+      postalCode: string
+  _InlinedType10:
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency: string
+      mode: string
+  _InlinedType11:
+    docs: Contact details for consumer support requests regarding the project.
+    properties: {}
+  _InlinedType12:
+    properties:
+      object: string
+  _InlinedType13:
+    properties:
+      object: string
+      items: list<project>
 ",
                 "name": "projects.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  simCredentials:
-    properties:
-      object: string
-      sim: string
-  sim:
-    properties:
-      object: string
-      id: string
-      iccid: string
-      provider: string
-      status: string
-      type: string
-      createdAt: string
-  _InlinedType14:
-    properties:
-      object: string
-      items: list<SIMs.sim>
-  _InlinedType15:
-    properties:
-      object: string
-      items: list<SIMs.sim>
-services:
+                "contents": "services:
   http:
     SiMsService:
       auth: true
@@ -891,7 +869,7 @@ services:
           method: GET
           docs: Retrieve the credentials of an existing SIM.
           display-name: Retrieve the SIM credentials
-          response: SIMs.simCredentials
+          response: simCredentials
         SIMsRetrieve:
           path: /projects/{project}/sims/{id}
           method: GET
@@ -899,7 +877,7 @@ services:
             Retrieve the details of an existing SIM which the authenticated user
             is authorized to view.
           display-name: Retrieve a SIM
-          response: SIMs.sim
+          response: sim
         SIMsSearch:
           path: /projects/{project}/sims/search
           method: POST
@@ -950,17 +928,34 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType15
+types:
+  simCredentials:
+    properties:
+      object: string
+      sim: string
+  sim:
+    properties:
+      object: string
+      id: string
+      iccid: string
+      provider: string
+      status: string
+      type: string
+      createdAt: string
+  _InlinedType14:
+    properties:
+      object: string
+      items: list<sim>
+  _InlinedType15:
+    properties:
+      object: string
+      items: list<sim>
 ",
                 "name": "siMs.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  _InlinedType16:
-    properties:
-      object: string
-      items: list<commons.subscription>
-services:
+                "contents": "services:
   http:
     SubscriptionsService:
       auth: true
@@ -1057,17 +1052,17 @@ services:
               properties:
                 plan: string
                 user: string
+types:
+  _InlinedType16:
+    properties:
+      object: string
+      items: list<commons.subscription>
 ",
                 "name": "subscriptions.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  _InlinedType17:
-    properties:
-      object: string
-      items: list<commons.usageRecord>
-services:
+                "contents": "services:
   http:
     UsageService:
       auth: true
@@ -1106,17 +1101,17 @@ services:
                   or period requested.
                 type: optional<string>
           response: _InlinedType17
+types:
+  _InlinedType17:
+    properties:
+      object: string
+      items: list<commons.usageRecord>
 ",
                 "name": "usage.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  _InlinedType18:
-    properties:
-      object: string
-      items: list<commons.userAddress>
-services:
+                "contents": "services:
   http:
     UserAddressesService:
       auth: true
@@ -1155,21 +1150,17 @@ services:
           docs: Retrieves the details of an existing user address and deletes it.
           display-name: Delete a user address
           response: commons.userAddress
+types:
+  _InlinedType18:
+    properties:
+      object: string
+      items: list<commons.userAddress>
 ",
                 "name": "userAddresses.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
-  _InlinedType19:
-    properties:
-      object: string
-      items: list<commons.user>
-  _InlinedType20:
-    properties:
-      object: string
-      items: list<commons.user>
-services:
+                "contents": "services:
   http:
     UsersService:
       auth: true
@@ -1253,6 +1244,15 @@ services:
                 object: optional<string>
                 email: string
                 preferredLocale: optional<string>
+types:
+  _InlinedType19:
+    properties:
+      object: string
+      items: list<commons.user>
+  _InlinedType20:
+    properties:
+      object: string
+      items: list<commons.user>
 ",
                 "name": "users.yml",
                 "type": "file",
@@ -1400,9 +1400,9 @@ headers: {}
     docs: A matchmaker lobby.
     properties:
       lobby_id: string
-      region: commons.MatchmakerLobbyJoinInfoRegion
-      ports: commons.MatchmakerLobbyJoinInfoPorts
-      player: commons.MatchmakerLobbyJoinInfoPlayer
+      region: MatchmakerLobbyJoinInfoRegion
+      ports: MatchmakerLobbyJoinInfoPorts
+      player: MatchmakerLobbyJoinInfoPlayer
   MatchmakerLobbyJoinInfoRegion:
     docs: A matchmaker lobby region.
     properties:
@@ -1417,14 +1417,7 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types:
-  PlayerConnectedRequestContent:
-    properties:
-      player_token: string
-  PlayerDisconnectedRequestContent:
-    properties:
-      player_token: string
-services:
+                "contents": "services:
   http:
     LobbyService:
       auth: true
@@ -1530,7 +1523,7 @@ services:
 
             the player token is validated.
           request:
-            body: lobby.PlayerConnectedRequestContent
+            body: PlayerConnectedRequestContent
         PlayerDisconnected:
           path: /players/disconnected
           method: POST
@@ -1549,13 +1542,82 @@ services:
 
             lobby.
           request:
-            body: lobby.PlayerDisconnectedRequestContent
+            body: PlayerDisconnectedRequestContent
+types:
+  PlayerConnectedRequestContent:
+    properties:
+      player_token: string
+  PlayerDisconnectedRequestContent:
+    properties:
+      player_token: string
 ",
                 "name": "lobby.yml",
                 "type": "file",
               },
               {
-                "contents": "types:
+                "contents": "services:
+  http:
+    PublicService:
+      auth: true
+      base-path: ''
+      endpoints:
+        SetLobbyClosed:
+          path: /lobbies/closed
+          method: PUT
+          docs: >-
+            If \`is_closed\` is \`true\`, players will be prevented from joining the
+            lobby.
+
+
+            Does not shutdown the lobby.
+          request:
+            body: SetLobbyClosedRequestContent
+        FindLobby:
+          path: /lobbies/find
+          method: POST
+          docs: >-
+            Finds a lobby based on the given criteria.
+
+
+            If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a
+            new lobby will be created.
+          request:
+            headers:
+              origin: optional<string>
+            body: FindLobbyRequestContent
+          response: FindLobbyResponseContent
+        JoinLobby:
+          path: /lobbies/join
+          method: POST
+          docs: >-
+            Joins a specific lobby.
+
+
+            This request will use the direct player count configured for the
+            lobby
+
+            group.
+          request:
+            body: JoinLobbyRequestContent
+          response: JoinLobbyResponseContent
+        ListLobbies:
+          path: /lobbies/list
+          method: GET
+          docs: Lists all open lobbies.
+          response: ListLobbiesResponseContent
+        ListRegions:
+          path: /regions
+          method: GET
+          docs: >-
+            Returns a list of regions available to this namespace.
+
+
+            Regions are sorted by most optimal to least optimal. The player's IP
+            address
+
+            is used to calculate the regions' optimality.
+          response: ListRegionsResponseContent
+types:
   SetLobbyClosedRequestContent:
     properties:
       is_closed: boolean
@@ -1583,68 +1645,6 @@ services:
   ListRegionsResponseContent:
     properties:
       regions: list<commons.RegionInfo>
-services:
-  http:
-    PublicService:
-      auth: true
-      base-path: ''
-      endpoints:
-        SetLobbyClosed:
-          path: /lobbies/closed
-          method: PUT
-          docs: >-
-            If \`is_closed\` is \`true\`, players will be prevented from joining the
-            lobby.
-
-
-            Does not shutdown the lobby.
-          request:
-            body: public.SetLobbyClosedRequestContent
-        FindLobby:
-          path: /lobbies/find
-          method: POST
-          docs: >-
-            Finds a lobby based on the given criteria.
-
-
-            If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a
-            new lobby will be created.
-          request:
-            headers:
-              origin: optional<string>
-            body: public.FindLobbyRequestContent
-          response: public.FindLobbyResponseContent
-        JoinLobby:
-          path: /lobbies/join
-          method: POST
-          docs: >-
-            Joins a specific lobby.
-
-
-            This request will use the direct player count configured for the
-            lobby
-
-            group.
-          request:
-            body: public.JoinLobbyRequestContent
-          response: public.JoinLobbyResponseContent
-        ListLobbies:
-          path: /lobbies/list
-          method: GET
-          docs: Lists all open lobbies.
-          response: public.ListLobbiesResponseContent
-        ListRegions:
-          path: /regions
-          method: GET
-          docs: >-
-            Returns a list of regions available to this namespace.
-
-
-            Regions are sorted by most optimal to least optimal. The player's IP
-            address
-
-            is used to calculate the regions' optimality.
-          response: public.ListRegionsResponseContent
 ",
                 "name": "public.yml",
                 "type": "file",
@@ -1711,7 +1711,7 @@ headers: {}
       location: _InlinedType0
   _InlinedType0:
     extends:
-      - commons.ILocation
+      - ILocation
   ChargingStatus_ResponseDTO:
     properties:
       isCharging: boolean
@@ -1730,8 +1730,7 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types: {}
-services:
+                "contents": "services:
   http:
     SampleCallbackService:
       auth: true
@@ -1756,8 +1755,7 @@ services:
                 "type": "file",
               },
               {
-                "contents": "types: {}
-services:
+                "contents": "services:
   http:
     TestingEndpointsService:
       auth: true
@@ -1852,8 +1850,7 @@ services:
                 "type": "file",
               },
               {
-                "contents": "types: {}
-services:
+                "contents": "services:
   http:
     VehicleDataService:
       auth: true

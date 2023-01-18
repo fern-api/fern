@@ -33,7 +33,8 @@ export const COMMONS_SERVICE_FILE_NAME = "commons";
 
 export function getFernReferenceForSchema(
     schemaReference: OpenAPIV3.ReferenceObject,
-    context: OpenApiV3Context
+    context: OpenApiV3Context,
+    tag: string
 ): string {
     const tags = context.getTagForSchema(schemaReference);
     let serviceFileName = COMMONS_SERVICE_FILE_NAME;
@@ -41,6 +42,9 @@ export function getFernReferenceForSchema(
         serviceFileName = tags[0];
     }
     const typeName = schemaReference.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
+    if (tag === serviceFileName) {
+        return typeName;
+    }
     return `${serviceFileName}.${typeName}`;
 }
 
