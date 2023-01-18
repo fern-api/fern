@@ -16,6 +16,7 @@ import {
 export interface ConvertedEndpoint {
     endpoint: RawSchemas.HttpEndpointSchema;
     additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>;
+    imports: Set<string>;
 }
 
 const TWO_HUNDRED_STATUS_CODE = 200;
@@ -29,6 +30,7 @@ export class EndpointConverter {
     private inlinedTypeNamer: InlinedTypeNamer;
     private breadcrumbs: string[];
     private tag: string;
+    private imports = new Set<string>();
 
     constructor(
         endpoint: OpenAPIV3Endpoint,
@@ -118,6 +120,7 @@ export class EndpointConverter {
         return {
             endpoint,
             additionalTypeDeclarations,
+            imports: this.imports,
         };
     }
 
@@ -222,7 +225,7 @@ export class EndpointConverter {
         if (isReferenceObject(requestBody)) {
             return {
                 type: "referenced",
-                value: getFernReferenceForSchema(requestBody, this.context, this.tag),
+                value: getFernReferenceForSchema(requestBody, this.context, this.tag, this.imports),
             };
         }
 
@@ -233,7 +236,7 @@ export class EndpointConverter {
         if (isReferenceObject(requestBodySchema)) {
             return {
                 type: "referenced",
-                value: getFernReferenceForSchema(requestBodySchema, this.context, this.tag),
+                value: getFernReferenceForSchema(requestBodySchema, this.context, this.tag, this.imports),
             };
         }
 
@@ -277,7 +280,7 @@ export class EndpointConverter {
     ): ConvertedResponse | undefined {
         if (isReferenceObject(responseBody)) {
             return {
-                response: getFernReferenceForSchema(responseBody, this.context, this.tag),
+                response: getFernReferenceForSchema(responseBody, this.context, this.tag, this.imports),
             };
         }
 
@@ -291,7 +294,7 @@ export class EndpointConverter {
         }
         if (isReferenceObject(responseBodySchema)) {
             return {
-                response: getFernReferenceForSchema(responseBodySchema, this.context, this.tag),
+                response: getFernReferenceForSchema(responseBodySchema, this.context, this.tag, this.imports),
             };
         }
 

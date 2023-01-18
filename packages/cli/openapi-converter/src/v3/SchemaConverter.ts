@@ -8,6 +8,7 @@ import { getFernReferenceForSchema, isReferenceObject, maybeGetAliasReference } 
 export interface ConvertedSchema {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>;
+    imports: Set<string>;
 }
 
 export class SchemaConverter {
@@ -17,6 +18,7 @@ export class SchemaConverter {
     private context: OpenApiV3Context;
     private rootBreadcrumbs: string[];
     private tag: string;
+    private imports = new Set<string>();
 
     constructor({
         schema,
@@ -64,7 +66,12 @@ export class SchemaConverter {
             if (schema.items == null) {
                 typeDeclaration = "list<unknown>";
             } else if (isReferenceObject(schema.items)) {
-                typeDeclaration = `list<${getFernReferenceForSchema(schema.items, this.context, this.tag)}>`;
+                typeDeclaration = `list<${getFernReferenceForSchema(
+                    schema.items,
+                    this.context,
+                    this.tag,
+                    this.imports
+                )}>`;
             } else {
                 const convertedSchema = this.convertSchema(schema.items, [...breadcrumbs, "items"]);
                 if (convertedSchema == null) {
@@ -92,7 +99,7 @@ export class SchemaConverter {
             schema.allOf?.map((parent, index) => {
                 const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
                 if (isReferenceObject(parent)) {
-                    extendedObjects.push(getFernReferenceForSchema(parent, this.context, this.tag));
+                    extendedObjects.push(getFernReferenceForSchema(parent, this.context, this.tag, this.imports));
                 } else {
                     const schemaName = this.inlinedTypeNamer.getName();
                     const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
@@ -114,7 +121,12 @@ export class SchemaConverter {
                 for (const [property, propertyType] of Object.entries(schema.properties)) {
                     let convertedPropertyType: string | RawSchemas.AliasSchema;
                     if (isReferenceObject(propertyType)) {
-                        convertedPropertyType = getFernReferenceForSchema(propertyType, this.context, this.tag);
+                        convertedPropertyType = getFernReferenceForSchema(
+                            propertyType,
+                            this.context,
+                            this.tag,
+                            this.imports
+                        );
                     } else {
                         const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
                         if (convertedSchema == null) {
@@ -164,6 +176,8 @@ export class SchemaConverter {
             }
         }
 
-        return typeDeclaration != null ? { typeDeclaration, additionalTypeDeclarations } : undefined;
+        return typeDeclaration != null
+            ? { typeDeclaration, additionalTypeDeclarations, imports: this.imports }
+            : undefined;
     }
 }

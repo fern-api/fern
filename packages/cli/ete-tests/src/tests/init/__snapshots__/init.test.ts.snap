@@ -16,7 +16,9 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types:
+                "contents": "imports:
+  SIMs: SIMs.yml
+types:
   device:
     properties:
       object: string
@@ -162,7 +164,9 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     DevicesService:
       auth: true
@@ -350,7 +354,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     PlansService:
       auth: true
@@ -496,7 +502,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     PortingsService:
       auth: true
@@ -743,7 +751,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     ProjectsService:
       auth: true
@@ -955,7 +965,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     SubscriptionsService:
       auth: true
@@ -1111,7 +1123,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     UserAddressesService:
       auth: true
@@ -1160,7 +1174,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     UsersService:
       auth: true
@@ -1555,7 +1571,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     PublicService:
       auth: true
@@ -1755,7 +1773,9 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     TestingEndpointsService:
       auth: true
@@ -1850,7 +1870,9 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     VehicleDataService:
       auth: true
