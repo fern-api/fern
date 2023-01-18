@@ -6,7 +6,7 @@ from ..context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .alias_generator import AliasGenerator
 from .enum_generator import EnumGenerator
-from .object_generator import ObjectGenerator
+from .object_generator import ObjectGenerator, ObjectProperty
 from .union_generator import UnionGenerator
 
 
@@ -41,9 +41,18 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
             ),
-            object=lambda object: ObjectGenerator(
+            object=lambda object_: ObjectGenerator(
                 name=self._declaration.name,
-                object=object,
+                class_name=self._context.get_class_name_for_type_name(self._declaration.name),
+                extends=object_.extends,
+                properties=[
+                    ObjectProperty(
+                        name=property.name,
+                        value_type=property.value_type,
+                        docs=property.docs,
+                    )
+                    for property in object_.properties
+                ],
                 context=self._context,
                 custom_config=self._custom_config,
                 source_file=self._source_file,

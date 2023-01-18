@@ -30,16 +30,17 @@ class FastApiGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
+        self._pydantic_model_custom_config = PydanticModelCustomConfig(
+            forbid_extra_fields=True,
+            wrapped_aliases=True,
+            include_validators=custom_config.include_validators,
+        )
 
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)
 
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
-            custom_config=PydanticModelCustomConfig(
-                forbid_extra_fields=True,
-                wrapped_aliases=True,
-                include_validators=custom_config.include_validators,
-            ),
+            custom_config=self._pydantic_model_custom_config,
             ir=ir,
             project=project,
             context=context.pydantic_generator_context,
@@ -105,7 +106,11 @@ class FastApiGenerator(AbstractGenerator):
                         ),
                         generator_exec_wrapper=generator_exec_wrapper,
                     ) as source_file:
-                        InlinedRequestGenerator(context=context, request=request_body).generate(
+                        InlinedRequestGenerator(
+                            context=context,
+                            request=request_body,
+                            pydantic_model_custom_config=self._pydantic_model_custom_config,
+                        ).generate(
                             source_file=source_file,
                         )
 

@@ -38,17 +38,19 @@ class FernAwarePydanticModel:
         context: PydanticGeneratorContext,
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
-        type_name: ir_types.DeclaredTypeName,
+        class_name: str,
+        type_name: Optional[ir_types.DeclaredTypeName],
         extends: Sequence[ir_types.DeclaredTypeName] = None,
         docstring: Optional[str] = None,
     ):
+        self._class_name = class_name
         self._type_name = type_name
         self._context = context
         self._custom_config = custom_config
         self._source_file = source_file
         self._extends = extends
         self._pydantic_model = PydanticModel(
-            name=self.get_class_name(),
+            name=class_name,
             source_file=source_file,
             base_models=[context.get_class_reference_for_type_name(extended) for extended in extends]
             if extends is not None
@@ -62,7 +64,7 @@ class FernAwarePydanticModel:
         return self._pydantic_model.to_reference()
 
     def get_class_name(self) -> str:
-        return self._context.get_class_name_for_type_name(self._type_name)
+        return self._class_name
 
     def add_field(
         self,
@@ -110,6 +112,8 @@ class FernAwarePydanticModel:
         )
 
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
+        if self._type_name is None:
+            return False
         is_circular_reference = HashableDeclaredTypeName.of(self._type_name) in self._context.get_referenced_types(
             type_name
         )

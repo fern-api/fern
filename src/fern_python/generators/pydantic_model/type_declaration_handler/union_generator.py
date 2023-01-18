@@ -27,7 +27,8 @@ class UnionGenerator(AbstractTypeGenerator):
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        self._name = name
         self._union = union
 
     def generate(self) -> None:
@@ -35,6 +36,7 @@ class UnionGenerator(AbstractTypeGenerator):
         factory = self._source_file.add_class_declaration(factory_declaration)
 
         with FernAwarePydanticModel(
+            class_name=self._context.get_class_name_for_type_name(self._name),
             type_name=self._name,
             context=self._context,
             custom_config=self._custom_config,

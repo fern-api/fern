@@ -20,7 +20,8 @@ class EnumGenerator(AbstractTypeGenerator):
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
     ):
-        super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        self._name = name
         self._enum = enum
 
     def generate(self) -> None:
