@@ -16,6 +16,7 @@ export class SchemaConverter {
     private inlinedTypeNamer: InlinedTypeNamer;
     private context: OpenApiV3Context;
     private rootBreadcrumbs: string[];
+    private tag: string;
 
     constructor({
         schema,
@@ -23,18 +24,21 @@ export class SchemaConverter {
         inlinedTypeNamer,
         context,
         breadcrumbs,
+        tag,
     }: {
         schema: OpenAPIV3.SchemaObject;
         taskContext: TaskContext;
         inlinedTypeNamer: InlinedTypeNamer;
         context: OpenApiV3Context;
         breadcrumbs: string[];
+        tag: string;
     }) {
         this.schema = schema;
         this.taskContext = taskContext;
         this.inlinedTypeNamer = inlinedTypeNamer;
         this.context = context;
         this.rootBreadcrumbs = breadcrumbs;
+        this.tag = tag;
     }
 
     public convert(): ConvertedSchema | undefined {
@@ -55,8 +59,12 @@ export class SchemaConverter {
         } else if (schema === "string" || schema.type === "string") {
             typeDeclaration = "string";
         } else if (schema.type === "array") {
-            if (isReferenceObject(schema.items)) {
-                typeDeclaration = `list<${getFernReferenceForSchema(schema.items, this.context)}>`;
+            // schema.items is sometimes actually undefined
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (schema.items == null) {
+                typeDeclaration = "list<unknown>";
+            } else if (isReferenceObject(schema.items)) {
+                typeDeclaration = `list<${getFernReferenceForSchema(schema.items, this.context, this.tag)}>`;
             } else {
                 const convertedSchema = this.convertSchema(schema.items, [...breadcrumbs, "items"]);
                 if (convertedSchema == null) {
@@ -84,7 +92,7 @@ export class SchemaConverter {
             schema.allOf?.map((parent, index) => {
                 const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
                 if (isReferenceObject(parent)) {
-                    extendedObjects.push(getFernReferenceForSchema(parent, this.context));
+                    extendedObjects.push(getFernReferenceForSchema(parent, this.context, this.tag));
                 } else {
                     const schemaName = this.inlinedTypeNamer.getName();
                     const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
@@ -106,7 +114,7 @@ export class SchemaConverter {
                 for (const [property, propertyType] of Object.entries(schema.properties)) {
                     let convertedPropertyType: string | RawSchemas.AliasSchema;
                     if (isReferenceObject(propertyType)) {
-                        convertedPropertyType = getFernReferenceForSchema(propertyType, this.context);
+                        convertedPropertyType = getFernReferenceForSchema(propertyType, this.context, this.tag);
                     } else {
                         const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
                         if (convertedSchema == null) {

@@ -5,6 +5,7 @@ import { camelCase, size, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { FernDefinition } from "../convertOpenApi";
 import { EndpointConverter } from "./EndpointConverter";
+import { EndpointNamer } from "./EndpointNamer";
 import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV3Context";
@@ -18,11 +19,13 @@ export class OpenAPIConverter {
     private context: OpenApiV3Context;
     private taskContext: TaskContext;
     private inlinedTypeNamer: InlinedTypeNamer;
+    private endpointNamer: EndpointNamer;
 
     constructor(document: OpenAPIV3.Document, taskContext: TaskContext) {
         this.taskContext = taskContext;
         this.context = new OpenApiV3Context(document);
         this.inlinedTypeNamer = new InlinedTypeNamer();
+        this.endpointNamer = new EndpointNamer();
     }
 
     /**
@@ -92,6 +95,7 @@ export class OpenAPIConverter {
                 inlinedTypeNamer: this.inlinedTypeNamer,
                 context: this.context,
                 breadcrumbs: SCHEMAS_BREADCRUMBS,
+                tag,
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
@@ -110,13 +114,14 @@ export class OpenAPIConverter {
                 this.context,
                 this.taskContext,
                 this.inlinedTypeNamer,
-                ENDPOINT_BREADCRUMBS
+                ENDPOINT_BREADCRUMBS,
+                tag
             );
             const convertedEndpoint = endpointConverter.convert();
             if (convertedEndpoint != null) {
                 let operationId = endpoint.definition.operationId ?? endpoint.httpMethod;
                 if (operationId in convertedEndpoints) {
-                    operationId = this.inlinedTypeNamer.getName();
+                    operationId = this.endpointNamer.getName();
                 }
                 convertedEndpoints[operationId] = convertedEndpoint.endpoint;
                 types = {
@@ -126,7 +131,7 @@ export class OpenAPIConverter {
             }
         });
 
-        const serviceFile: ServiceFileSchema = { types };
+        const serviceFile: ServiceFileSchema = {};
         if (size(convertedEndpoints) > 0) {
             serviceFile.services = {
                 http: {
@@ -137,6 +142,10 @@ export class OpenAPIConverter {
                     },
                 },
             };
+        }
+
+        if (size(types) > 0) {
+            serviceFile.types = types;
         }
 
         return {

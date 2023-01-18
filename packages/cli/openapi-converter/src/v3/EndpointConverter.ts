@@ -28,19 +28,22 @@ export class EndpointConverter {
     private taskContext: TaskContext;
     private inlinedTypeNamer: InlinedTypeNamer;
     private breadcrumbs: string[];
+    private tag: string;
 
     constructor(
         endpoint: OpenAPIV3Endpoint,
         context: OpenApiV3Context,
         taskContext: TaskContext,
         inlinedTypeNamer: InlinedTypeNamer,
-        breadcrumbs: string[]
+        breadcrumbs: string[],
+        tag: string
     ) {
         this.endpoint = endpoint;
         this.context = context;
         this.taskContext = taskContext;
         this.inlinedTypeNamer = inlinedTypeNamer;
         this.breadcrumbs = [...breadcrumbs, endpoint.path, endpoint.httpMethod];
+        this.tag = tag;
         (this.endpoint.definition.parameters ?? []).forEach((parameter) => {
             const resolvedParameter = isReferenceObject(parameter)
                 ? this.context.maybeResolveParameterReference(parameter)
@@ -219,7 +222,7 @@ export class EndpointConverter {
         if (isReferenceObject(requestBody)) {
             return {
                 type: "referenced",
-                value: getFernReferenceForSchema(requestBody, this.context),
+                value: getFernReferenceForSchema(requestBody, this.context, this.tag),
             };
         }
 
@@ -230,7 +233,7 @@ export class EndpointConverter {
         if (isReferenceObject(requestBodySchema)) {
             return {
                 type: "referenced",
-                value: getFernReferenceForSchema(requestBodySchema, this.context),
+                value: getFernReferenceForSchema(requestBodySchema, this.context, this.tag),
             };
         }
 
@@ -241,6 +244,7 @@ export class EndpointConverter {
             inlinedTypeNamer: this.inlinedTypeNamer,
             context: this.context,
             breadcrumbs,
+            tag: this.tag,
         });
         const convertedSchema = schemaConverter.convert();
 
@@ -273,7 +277,7 @@ export class EndpointConverter {
     ): ConvertedResponse | undefined {
         if (isReferenceObject(responseBody)) {
             return {
-                response: getFernReferenceForSchema(responseBody, this.context),
+                response: getFernReferenceForSchema(responseBody, this.context, this.tag),
             };
         }
 
@@ -287,7 +291,7 @@ export class EndpointConverter {
         }
         if (isReferenceObject(responseBodySchema)) {
             return {
-                response: getFernReferenceForSchema(responseBodySchema, this.context),
+                response: getFernReferenceForSchema(responseBodySchema, this.context, this.tag),
             };
         }
 
@@ -298,6 +302,7 @@ export class EndpointConverter {
             inlinedTypeNamer: this.inlinedTypeNamer,
             context: this.context,
             breadcrumbs,
+            tag: this.tag,
         });
         const convertedSchema = schemaConverter.convert();
 
