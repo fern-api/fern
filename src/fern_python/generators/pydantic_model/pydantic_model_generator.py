@@ -7,7 +7,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.source_file_generator import SourceFileGenerator
 
 from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
-from .custom_config import CustomConfig
+from .custom_config import PydanticModelCustomConfig
 from .type_declaration_handler import TypeDeclarationHandler
 from .type_declaration_referencer import TypeDeclarationReferencer
 
@@ -21,7 +21,7 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
         project: Project,
     ) -> None:
-        custom_config = CustomConfig.parse_obj(generator_config.custom_config or {})
+        custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
             ir=ir,
@@ -41,7 +41,7 @@ class PydanticModelGenerator(AbstractGenerator):
         *,
         generator_exec_wrapper: GeneratorExecWrapper,
         ir: ir_types.IntermediateRepresentation,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
         project: Project,
         context: PydanticGeneratorContext,
     ) -> None:
@@ -61,7 +61,7 @@ class PydanticModelGenerator(AbstractGenerator):
         ir: ir_types.IntermediateRepresentation,
         type: ir_types.TypeDeclaration,
         generator_exec_wrapper: GeneratorExecWrapper,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
         context: PydanticGeneratorContext,
     ) -> None:
         filepath = context.get_filepath_for_type_name(type_name=type.name)

@@ -3,7 +3,7 @@ import fern.ir.pydantic as ir_types
 from fern_python.codegen import SourceFile
 
 from ..context import PydanticGeneratorContext
-from ..custom_config import CustomConfig
+from ..custom_config import PydanticModelCustomConfig
 from .alias_generator import AliasGenerator
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectGenerator
@@ -16,7 +16,7 @@ class TypeDeclarationHandler:
         declaration: ir_types.TypeDeclaration,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
     ):
         self._declaration = declaration
         self._context = context

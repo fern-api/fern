@@ -9,7 +9,7 @@ from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from .context import HashableDeclaredTypeName, PydanticGeneratorContext
-from .custom_config import CustomConfig
+from .custom_config import PydanticModelCustomConfig
 from .validators import (
     CustomRootTypeValidatorsGenerator,
     PydanticValidatorsGenerator,
@@ -37,7 +37,7 @@ class FernAwarePydanticModel:
         self,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
         type_name: ir_types.DeclaredTypeName,
         extends: Sequence[ir_types.DeclaredTypeName] = None,
         docstring: Optional[str] = None,
@@ -176,7 +176,7 @@ class FernAwarePydanticModel:
     def finish(self) -> None:
         if self._pydantic_model._root_type is None:
             self._pydantic_model.add_partial_class()
-        if not self._custom_config.exclude_validators:
+        if self._custom_config.include_validators:
             self._get_validators_generator().add_validators()
         self._override_json()
         self._override_dict()

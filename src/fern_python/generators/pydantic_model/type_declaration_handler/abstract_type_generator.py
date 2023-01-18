@@ -6,7 +6,7 @@ import fern.ir.pydantic as ir_types
 from fern_python.codegen import SourceFile
 
 from ..context import PydanticGeneratorContext
-from ..custom_config import CustomConfig
+from ..custom_config import PydanticModelCustomConfig
 
 
 class AbstractTypeGenerator(ABC):
@@ -15,7 +15,7 @@ class AbstractTypeGenerator(ABC):
         name: ir_types.DeclaredTypeName,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
     ):
         self._name = name

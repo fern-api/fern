@@ -1,5 +1,5 @@
 from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
-from .custom_config import CustomConfig as PydanticModelCustomConfig
+from .custom_config import PydanticModelCustomConfig
 from .pydantic_model_generator import PydanticModelGenerator
 
 __all__ = [

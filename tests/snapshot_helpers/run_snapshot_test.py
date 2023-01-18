@@ -31,7 +31,7 @@ def run_snapshot_test(
         output=config.GeneratorOutputConfig(path=path_to_output, mode=config.OutputMode.factory.download_files()),
         workspace_name="ir",
         organization="fern",
-        custom_config=None,
+        custom_config={"include_validators": True},
         environment=config.GeneratorEnvironment.factory.local(),
     )
 

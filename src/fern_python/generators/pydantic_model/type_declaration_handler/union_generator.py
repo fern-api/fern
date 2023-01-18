@@ -8,7 +8,7 @@ from fern_python.external_dependencies import Pydantic
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
-from ..custom_config import CustomConfig
+from ..custom_config import PydanticModelCustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
@@ -24,7 +24,7 @@ class UnionGenerator(AbstractTypeGenerator):
         union: ir_types.UnionTypeDeclaration,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
     ):
         super().__init__(name=name, context=context, custom_config=custom_config, source_file=source_file, docs=docs)

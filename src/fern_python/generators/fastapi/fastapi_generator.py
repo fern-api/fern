@@ -12,6 +12,7 @@ from fern_python.source_file_generator import SourceFileGenerator
 
 from .auth import SecurityFileGenerator
 from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
+from .custom_config import FastAPICustomConfig
 from .error_generator import ErrorGenerator
 from .fern_http_exception import FernHTTPExceptionGenerator
 from .inlined_request_generator import InlinedRequestGenerator
@@ -28,11 +29,17 @@ class FastApiGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
         project: Project,
     ) -> None:
+        custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
+
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)
 
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
-            custom_config=PydanticModelCustomConfig.parse_obj({"forbid_extra_fields": True, "wrapped_aliases": True}),
+            custom_config=PydanticModelCustomConfig(
+                forbid_extra_fields=True,
+                wrapped_aliases=True,
+                include_validators=custom_config.include_validators,
+            ),
             ir=ir,
             project=project,
             context=context.pydantic_generator_context,

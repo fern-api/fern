@@ -5,7 +5,7 @@ import fern.ir.pydantic as ir_types
 from fern_python.codegen import AST, SourceFile
 
 from ..context import PydanticGeneratorContext
-from ..custom_config import CustomConfig
+from ..custom_config import PydanticModelCustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
 
@@ -17,7 +17,7 @@ class AliasGenerator(AbstractTypeGenerator):
         alias: ir_types.AliasTypeDeclaration,
         context: PydanticGeneratorContext,
         source_file: SourceFile,
-        custom_config: CustomConfig,
+        custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
     ):
         super().__init__(
