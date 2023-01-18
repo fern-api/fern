@@ -20,4 +20,4 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name.pascal_case.unsafe_name
+        return name.name.original_name

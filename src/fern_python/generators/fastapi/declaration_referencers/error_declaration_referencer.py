@@ -21,4 +21,4 @@ class ErrorDeclarationReferencer(FastApiDeclarationReferencer[ir_types.DeclaredE
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredErrorName) -> str:
-        return name.name.pascal_case.unsafe_name
+        return name.name.original_name

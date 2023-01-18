@@ -35,7 +35,7 @@ class AliasGenerator(AbstractTypeGenerator):
         if not self._custom_config.wrapped_aliases:
             self._source_file.add_declaration(
                 declaration=AST.TypeAliasDeclaration(
-                    name=self._name.name.pascal_case.unsafe_name,
+                    name=self._context.get_class_name_for_type_name(self._name),
                     type_hint=self._context.get_type_hint_for_type_reference(self._alias.alias_of),
                 ),
                 should_export=True,

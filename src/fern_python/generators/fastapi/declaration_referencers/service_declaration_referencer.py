@@ -18,4 +18,4 @@ class ServiceDeclarationReferencer(FastApiDeclarationReferencer[ir_types.http.De
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredServiceName) -> str:
-        return f"Abstract{name.name.pascal_case.unsafe_name}"
+        return f"Abstract{name.name.original_name}"
