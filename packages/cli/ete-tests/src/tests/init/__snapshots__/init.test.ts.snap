@@ -217,6 +217,34 @@ services:
             creation date, with the most recently created models appearing
             first.
           display-name: List all device models
+          request:
+            query-parameters:
+              type:
+                docs: A comma-separated list of types to be filtered by.
+                type: optional<undefined>
+              brand:
+                docs: A comma-separated list of brands to be filtered by.
+                type: optional<undefined>
+              simType:
+                docs: A comma-separated list of SIM types to be filtered by.
+                type: optional<undefined>
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType1
         DevicesRetrieve:
           path: /projects/{project}/devices/{id}
@@ -280,6 +308,31 @@ services:
             creation date, with the most recently created devices appearing
             first.
           display-name: List all devices
+          request:
+            query-parameters:
+              sim:
+                docs: The unique identifier for the sim to be filtered by.
+                type: optional<string>
+              user:
+                docs: The unique identifier for the user to be filtered by.
+                type: optional<string>
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType3
         DevicesCreate:
           path: /projects/{project}/devices
@@ -407,6 +460,36 @@ services:
           method: GET
           docs: Returns a list of plans.
           display-name: List all plans
+          request:
+            query-parameters:
+              provider:
+                docs: The network provider ID to filter the plans by.
+                type: optional<undefined>
+              simType:
+                docs: The type of SIM card to filter the plans by.
+                type: optional<undefined>
+              status:
+                docs: >-
+                  The status to filter the plans by. Only available plans are
+                  returned by default.
+                type: optional<undefined>
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType5
 ",
                 "name": "plans.yml",
@@ -540,6 +623,25 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all portings
+          request:
+            query-parameters:
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType6
         PortingsCreate:
           path: /projects/{project}/portings
@@ -628,6 +730,13 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all service providers
+          request:
+            query-parameters:
+              recipientProvider:
+                docs: >-
+                  Only return service providers that have the given network
+                  provider as supported porting recipient.
+                type: optional<string>
           response: _InlinedType7
 ",
                 "name": "portings.yml",
@@ -721,6 +830,28 @@ services:
             creation date, with the most recently created projects appearing
             first.
           display-name: List all projects
+          request:
+            query-parameters:
+              organization:
+                docs: The unique identifier for the organization to be filtered by.
+                type: optional<string>
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType13
 ",
                 "name": "projects.yml",
@@ -787,6 +918,37 @@ services:
             Returns a list of SIMs. The SIMs returned are sorted by creation
             date, with the most recently created SIMs appearing first.
           display-name: List all SIMs
+          request:
+            query-parameters:
+              provider:
+                docs: The network provider ID for the sim to be filtered by.
+                type: optional<undefined>
+              status:
+                docs: A comma-separated list of statuses to filter the sims by.
+                type: optional<undefined>
+              type:
+                docs: The type for the sim to be filtered by.
+                type: optional<string>
+              user:
+                docs: The unique identifier for the user to be filtered by.
+                type: optional<string>
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType15
 ",
                 "name": "siMs.yml",
@@ -848,6 +1010,40 @@ services:
             sorted by creation date, with the most recently created
             subscriptions appearing first.
           display-name: List all subscriptions
+          request:
+            query-parameters:
+              user:
+                docs: The unique identifier for the user to be filtered by.
+                type: optional<string>
+              plan:
+                docs: The unique identifier for the plan to be filtered by.
+                type: optional<string>
+              sim:
+                docs: The unique identifier for the sim to be filtered by.
+                type: optional<string>
+              status:
+                docs: >-
+                  A comma-separated list of statuses to filter the subscriptions
+                  by. Only pending and active subscriptions are returned by
+                  default.
+                type: optional<undefined>
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType16
         SubscriptionsCreate:
           path: /projects/{project}/subscriptions
@@ -885,6 +1081,30 @@ services:
             defaulting to \`daily\` aggregation for the latest subscription
             period.
           display-name: List subscription usage records
+          request:
+            query-parameters:
+              period:
+                docs: >-
+                  Limits the usage data returned to the subscription period
+                  provided. This option is incompatible with the \`start\` and
+                  \`end\` parameters.
+                type: optional<integer>
+              start:
+                docs: >-
+                  Limits the usage data to dates greater than or equal to the
+                  provided date. Can only be used in combination with \`end\`.
+                type: optional<string>
+              end:
+                docs: >-
+                  Limits the usage data to dates up to and including the
+                  provided date. Can only be used in combination with \`start\`.
+                type: optional<string>
+              aggregation:
+                docs: >-
+                  Determines the aggregation method used, defaulting to \`daily\`.
+                  \`period\` provides a single aggregated value for the time range
+                  or period requested.
+                type: optional<string>
           response: _InlinedType17
 ",
                 "name": "usage.yml",
@@ -1002,6 +1222,25 @@ services:
             Returns a list of users. The users returned are sorted by creation
             date, with the most recently created users appearing first.
           display-name: List all users
+          request:
+            query-parameters:
+              after:
+                docs: >-
+                  A cursor for use in pagination. The \`after\` parameter takes an
+                  object ID that defines the position in the list, only items
+                  immediately following the item with that ID will be returned.
+                type: optional<string>
+              before:
+                docs: >-
+                  A cursor for use in pagination. The \`before\` parameter takes
+                  an object ID that defines the position in the list, only items
+                  immediately preceding the item with that ID will be returned.
+                type: optional<string>
+              limit:
+                docs: >-
+                  The limit of items to be returned in the list, between 0 and
+                  200.
+                type: optional<integer>
           response: _InlinedType20
         UsersCreate:
           path: /projects/{project}/users
@@ -1528,36 +1767,85 @@ services:
           path: /vehicle-data/soc/test
           method: GET
           display-name: Test SOC (battery level)
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.SOC_ResponseDTO
         getRangeTest:
           path: /vehicle-data/range/test
           method: GET
           display-name: Test range
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.Range_ResponseDTO
         getRangeSocTest:
           path: /vehicle-data/range-soc/test
           method: GET
           display-name: Test range-soc
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.RangeSoc_ResponseDTO
         getLocationTest:
           path: /vehicle-data/location/test
           method: GET
           display-name: Test location
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.Location_ResponseDTO
         getChargingStatusTest:
           path: /vehicle-data/charging-status/test
           method: GET
           display-name: Test charging status
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdoTest:
           path: /vehicle-data/odo/test
           method: GET
           display-name: Test odo
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributesTest:
           path: /vehicle-data/static-attributes/test
           method: GET
           display-name: Test static attributes
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "testingEndpoints.yml",
@@ -1575,11 +1863,25 @@ services:
           path: /vehicle-data/soc
           method: GET
           display-name: SOC (battery level)
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.SOC_ResponseDTO
         getRange:
           path: /vehicle-data/range
           method: GET
           display-name: Range
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.Range_ResponseDTO
         getRangeSoc:
           path: /vehicle-data/range-soc
@@ -1588,21 +1890,49 @@ services:
             This endpoint returns the SOC and range for the vehicle in a single
             call
           display-name: Range-SOC
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.RangeSoc_ResponseDTO
         getLocation:
           path: /vehicle-data/location
           method: GET
           display-name: Location
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.Location_ResponseDTO
         getChargingStatus:
           path: /vehicle-data/charging-status
           method: GET
           display-name: Charging Status
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdo:
           path: /vehicle-data/odo
           method: GET
           display-name: Odometer
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributes:
           path: /vehicle-data/static-attributes
@@ -1611,6 +1941,13 @@ services:
             Static vehicle attributes like VIN, registration number, model, year
             and make
           display-name: Static attributes
+          request:
+            query-parameters:
+              vehicleId:
+                docs: >-
+                  24-char hex identifier for the vehicle. The owner must have
+                  provided consent through Telematica consent flow
+                type: string
           response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "vehicleData.yml",
