@@ -283,7 +283,7 @@ export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName):
             return idx !== declaredTypeName.fernFilepath.length - 1;
         })
         .map((part) => part.pascalCase.unsafeName);
-    return [...pascalCaseFolders, declaredTypeName.name.pascalCase.unsafeName].join("");
+    return [...pascalCaseFolders, declaredTypeName.name.originalName].join("");
 }
 
 function getExampleFromEndpointRequest(
