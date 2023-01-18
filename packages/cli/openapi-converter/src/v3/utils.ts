@@ -4,6 +4,8 @@ import { OpenApiV3Context } from "./OpenApiV3Context";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
+export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
+export const REQUEST_REFERENCE_PREFIX = "#/components/requests/";
 
 export function isReferenceObject(
     parameter:
@@ -38,7 +40,7 @@ export function getFernReferenceForSchema(
     tag: string,
     imports: Set<string>
 ): string {
-    const tags = context.getTagForSchema(schemaReference);
+    const tags = context.getTagForReference(schemaReference);
     let serviceFileName = COMMONS_SERVICE_FILE_NAME;
     if (tags.length === 1 && tags[0] != null) {
         serviceFileName = tags[0];

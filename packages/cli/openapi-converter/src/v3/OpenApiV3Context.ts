@@ -1,5 +1,11 @@
 import { OpenAPIV3 } from "openapi-types";
-import { APPLICATION_JSON_CONTENT, isReferenceObject, SCHEMA_REFERENCE_PREFIX } from "./utils";
+import {
+    APPLICATION_JSON_CONTENT,
+    isReferenceObject,
+    REQUEST_REFERENCE_PREFIX,
+    RESPONSE_REFERENCE_PREFIX,
+    SCHEMA_REFERENCE_PREFIX,
+} from "./utils";
 
 export interface OpenAPIV3Endpoint {
     path: string;
@@ -103,25 +109,24 @@ export class OpenApiV3Context {
                 }
             }
         });
-        const schemaGroups = this.referenceObjectToTags.getGroups();
-        // initialize untaggedSchemas
-        for (const schemaReference of schemaGroups.untaggedSchemaReferences) {
-            const resolvedSchemaReference = this.maybeResolveSchemaReference(schemaReference);
+        const referenceGroups = this.referenceObjectToTags.getGroups();
+        for (const untaggedReference of referenceGroups.untaggedReferences) {
+            const resolvedSchemaReference = this.maybeResolveSchemaReference(untaggedReference);
             if (resolvedSchemaReference != null) {
                 this.untaggedSchemas.push(resolvedSchemaReference);
             }
         }
-        // initialize multiTaggedSchemaReferences
-        for (const schemaReference of schemaGroups.multiTaggedSchemaReferences) {
-            const resolvedSchemaReference = this.maybeResolveSchemaReference(schemaReference);
+
+        for (const multiTaggedReference of referenceGroups.multiTaggedReferences) {
+            const resolvedSchemaReference = this.maybeResolveSchemaReference(multiTaggedReference);
             if (resolvedSchemaReference != null) {
                 this.multiTaggedSchemas.push(resolvedSchemaReference);
             }
         }
-        // initialize schemasGroupedByTag
-        Object.entries(schemaGroups.schemaReferencesGroupedByTag).forEach(([tag, schemaReferences]) => {
+
+        Object.entries(referenceGroups.tagToReferences).forEach(([tag, reference]) => {
             const resolvedSchemaReferences: OpenAPIV3Schema[] = [];
-            schemaReferences.forEach((schemaReference) => {
+            reference.forEach((schemaReference) => {
                 const resolvedSchemaReference = this.maybeResolveSchemaReference(schemaReference);
                 if (resolvedSchemaReference != null) {
                     resolvedSchemaReferences.push(resolvedSchemaReference);
@@ -159,7 +164,7 @@ export class OpenApiV3Context {
         return this.schemasGroupedByTag[tag] ?? [];
     }
 
-    public getTagForSchema(referenceObject: OpenAPIV3.ReferenceObject): string[] {
+    public getTagForReference(referenceObject: OpenAPIV3.ReferenceObject): string[] {
         return this.referenceObjectToTags.getTags(referenceObject);
     }
 
@@ -182,24 +187,78 @@ export class OpenApiV3Context {
     }
 
     public maybeResolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3Schema | undefined {
-        if (this.document.components == null || this.document.components.schemas == null) {
+        if (this.document.components == null) {
             return undefined;
         }
-        if (!schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-            return undefined;
+        if (schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
+            if (this.document.components.schemas == null) {
+                return undefined;
+            }
+            const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
+            const resolvedSchema = this.document.components.schemas[schemaKey];
+            if (resolvedSchema == null) {
+                return undefined;
+            }
+            if (isReferenceObject(resolvedSchema)) {
+                return this.maybeResolveSchemaReference(resolvedSchema);
+            }
+            return {
+                name: schemaKey,
+                schemaObject: resolvedSchema,
+            };
+        } else if (schema.$ref.startsWith(REQUEST_REFERENCE_PREFIX)) {
+            if (this.document.components.requestBodies == null) {
+                return undefined;
+            }
+            const requestKey = schema.$ref.substring(REQUEST_REFERENCE_PREFIX.length);
+            const resolvedSchema = this.document.components.requestBodies[requestKey];
+            if (resolvedSchema == null) {
+                return undefined;
+            }
+            if (isReferenceObject(resolvedSchema)) {
+                return this.maybeResolveSchemaReference(resolvedSchema);
+            }
+
+            const requestBodySchema = resolvedSchema.content[APPLICATION_JSON_CONTENT]?.schema;
+            if (requestBodySchema == null) {
+                return undefined;
+            }
+            if (isReferenceObject(requestBodySchema)) {
+                return this.maybeResolveSchemaReference(requestBodySchema);
+            }
+            return {
+                name: requestKey,
+                schemaObject: requestBodySchema,
+            };
+        } else if (schema.$ref.startsWith(RESPONSE_REFERENCE_PREFIX)) {
+            if (this.document.components.responses == null) {
+                return undefined;
+            }
+            const responseKey = schema.$ref.substring(RESPONSE_REFERENCE_PREFIX.length);
+            const resolvedSchema = this.document.components.responses[responseKey];
+            if (resolvedSchema == null) {
+                return undefined;
+            }
+            if (isReferenceObject(resolvedSchema)) {
+                return this.maybeResolveSchemaReference(resolvedSchema);
+            }
+
+            if (resolvedSchema.content == null) {
+                return undefined;
+            }
+            const responseBodySchema = resolvedSchema.content[APPLICATION_JSON_CONTENT]?.schema;
+            if (responseBodySchema == null) {
+                return undefined;
+            }
+            if (isReferenceObject(responseBodySchema)) {
+                return this.maybeResolveSchemaReference(responseBodySchema);
+            }
+            return {
+                name: responseKey,
+                schemaObject: responseBodySchema,
+            };
         }
-        const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
-        const resolvedSchema = this.document.components.schemas[schemaKey];
-        if (resolvedSchema == null) {
-            return undefined;
-        }
-        if (isReferenceObject(resolvedSchema)) {
-            return this.maybeResolveSchemaReference(resolvedSchema);
-        }
-        return {
-            name: schemaKey,
-            schemaObject: resolvedSchema,
-        };
+        return undefined;
     }
 
     private addAllReferencedSchemas(
@@ -262,9 +321,9 @@ class ReferenceObjectsByTag {
     }
 
     public getGroups(): {
-        untaggedSchemaReferences: OpenAPIV3.ReferenceObject[];
-        schemaReferencesGroupedByTag: Record<string, OpenAPIV3.ReferenceObject[]>;
-        multiTaggedSchemaReferences: OpenAPIV3.ReferenceObject[];
+        untaggedReferences: OpenAPIV3.ReferenceObject[];
+        tagToReferences: Record<string, OpenAPIV3.ReferenceObject[]>;
+        multiTaggedReferences: OpenAPIV3.ReferenceObject[];
     } {
         const untaggedSchemaReferences: OpenAPIV3.ReferenceObject[] = [];
         const multiTaggedSchemaReferences: OpenAPIV3.ReferenceObject[] = [];
@@ -289,6 +348,10 @@ class ReferenceObjectsByTag {
                 multiTaggedSchemaReferences.push(referenceObject);
             }
         }
-        return { untaggedSchemaReferences, schemaReferencesGroupedByTag, multiTaggedSchemaReferences };
+        return {
+            untaggedReferences: untaggedSchemaReferences,
+            tagToReferences: schemaReferencesGroupedByTag,
+            multiTaggedReferences: multiTaggedSchemaReferences,
+        };
     }
 }
