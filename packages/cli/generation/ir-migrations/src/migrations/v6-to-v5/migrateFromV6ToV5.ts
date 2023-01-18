@@ -16,7 +16,7 @@ export const V6_TO_V5_MIGRATION: IrMigration<
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
-        [GeneratorName.OPENAPI]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI]: "0.0.16-1-ga2c0ada",
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v6, { taskContext, targetGenerator }): IrVersions.V5.ir.IntermediateRepresentation => {
@@ -40,7 +40,7 @@ export const V6_TO_V5_MIGRATION: IrMigration<
                                   singleBaseUrlEnvironments.environments,
                               multipleBaseUrls: () => {
                                   return taskContext.failAndThrow(
-                                      `Genereator ${targetGenerator.name}@${targetGenerator.version}` +
+                                      `Generator ${targetGenerator.name}@${targetGenerator.version}` +
                                           " does not support specifying multiple URLs for a single environment." +
                                           ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                                           " to a compatible version."
