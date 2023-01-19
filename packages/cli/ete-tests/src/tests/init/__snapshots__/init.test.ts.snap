@@ -1270,7 +1270,7 @@ services:
                 imei: string
                 user: string
                 sims: optional<list<string>>
-                name: optional<optional<string>>
+                name: optional<string>
 types:
   deviceModel:
     properties:
@@ -1373,8 +1373,8 @@ services:
             body:
               properties:
                 name: optional<string>
-                description: optional<optional<string>>
-                image: optional<optional<string>>
+                description: optional<string>
+                image: optional<string>
           response: commons.plan
         plansPublish:
           path: /projects/{project}/plans/{id}/publish
@@ -2046,10 +2046,10 @@ services:
             body:
               properties:
                 plan: string
-                sim: optional<optional<string>>
-                userAddress: optional<optional<string>>
+                sim: optional<string>
+                userAddress: optional<string>
                 user: string
-                porting: optional<optional<string>>
+                porting: optional<string>
 types:
   _InlinedType16:
     properties:
@@ -2140,10 +2140,10 @@ services:
               properties:
                 object: optional<string>
                 line1: string
-                line2: optional<optional<string>>
+                line2: optional<string>
                 city: string
-                state: optional<optional<string>>
-                postalCode: optional<optional<string>>
+                state: optional<string>
+                postalCode: optional<string>
                 country: string
         userAddressesRetrieve:
           path: /projects/{project}/users/{user}/addresses/{id}
@@ -2253,9 +2253,9 @@ services:
             body:
               properties:
                 object: optional<string>
-                birthday: optional<optional<string>>
+                birthday: optional<string>
                 email: string
-                fullName: optional<optional<string>>
+                fullName: optional<string>
                 preferredLocale: optional<string>
 types:
   _InlinedType19:

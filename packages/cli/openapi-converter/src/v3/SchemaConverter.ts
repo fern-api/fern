@@ -147,7 +147,10 @@ export class SchemaConverter {
                         }
                     }
 
-                    if (schema.required == null || !schema.required.includes(property)) {
+                    if (
+                        schema.required == null ||
+                        (!schema.required.includes(property) && !convertedPropertyType.startsWith("optional"))
+                    ) {
                         convertedPropertyType = `optional<${convertedPropertyType}>`;
                     }
 
