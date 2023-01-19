@@ -183,10 +183,11 @@ export class SchemaConverter {
                     boxedType = val;
                 }
             }
+            let arrayType = `list<${boxedType}>`;
             if (schema.type.includes("null")) {
-                boxedType = `optional${boxedType}`;
+                arrayType = `optional<${boxedType}>`;
             }
-            typeDeclaration = boxedType;
+            typeDeclaration = arrayType;
         }
 
         return typeDeclaration != null
