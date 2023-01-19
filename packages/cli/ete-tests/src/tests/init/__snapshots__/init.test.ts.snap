@@ -208,7 +208,7 @@ services:
       policy_count: optional<integer>
       status: optional<string>
       is_tracked: optional<boolean>
-      tracking_frequency: optional<optional<unknown>>
+      tracking_frequency: optional<optional<string>>
       updated_at: optional<string>
       created_at: optional<string>
       _links: optional<_InlinedType34>
@@ -244,9 +244,9 @@ services:
       uri: optional<string>
       is_enabled: optional<boolean>
       event_types: optional<list<string>>
-      last_response_body: optional<optional<unknown>>
-      last_response_code: optional<optional<unknown>>
-      last_called_at: optional<optional<unknown>>
+      last_response_body: optional<optional<string>>
+      last_response_code: optional<optional<string>>
+      last_called_at: optional<optional<string>>
       created_at: optional<string>
       updated_at: optional<string>
 ",
@@ -747,7 +747,7 @@ types:
       object: optional<string>
       fingerprint: optional<string>
       carrier: optional<commons.Carrier>
-      number: optional<optional<unknown>>
+      number: optional<optional<string>>
       masked_number: optional<string>
       line: optional<string>
       policyholders: optional<list<commons.Policyholder>>
@@ -757,8 +757,8 @@ types:
       term_length: optional<commons.PeriodValue>
       inception_date: optional<string>
       expiration_date: optional<string>
-      cancellation_date: optional<optional<unknown>>
-      cancellation_reason: optional<optional<unknown>>
+      cancellation_date: optional<optional<string>>
+      cancellation_reason: optional<optional<string>>
       linked_at: optional<string>
       last_synced_at: optional<string>
       _links: optional<_InlinedType1>
@@ -920,9 +920,9 @@ types:
     properties:
       object: string
       id: string
-      imei: optional<unknown>
+      imei: optional<string>
       model: optional<unknown>
-      name: optional<unknown>
+      name: optional<string>
       sims: list<SIMs.sim>
       user: optional<unknown>
       createdAt: string
@@ -933,8 +933,8 @@ types:
       coverage: coverage
       data: integer
       dataUnit: string
-      description: optional<unknown>
-      image: optional<unknown>
+      description: optional<string>
+      image: optional<string>
       name: string
       price: _InlinedType18
       provider: string
@@ -974,24 +974,24 @@ types:
     properties:
       object: string
       id: string
-      accountNumber: optional<unknown>
-      birthday: optional<unknown>
+      accountNumber: optional<string>
+      birthday: optional<string>
       declinedAttempts: integer
       donorProvider: optional<unknown>
-      firstName: optional<unknown>
-      lastName: optional<unknown>
+      firstName: optional<string>
+      lastName: optional<string>
       phoneNumber: string
       provider: string
       recipientProvider: list<unknown>
       required: list<string>
       status: string
-      subscription: optional<unknown>
+      subscription: optional<string>
       user: string
-      canceledAt: optional<unknown>
-      completedAt: optional<unknown>
+      canceledAt: optional<string>
+      completedAt: optional<string>
       createdAt: string
-      lastDeclinedAt: optional<unknown>
-      lastRequestedAt: optional<unknown>
+      lastDeclinedAt: optional<string>
+      lastRequestedAt: optional<string>
   organization:
     properties:
       object: string
@@ -1003,25 +1003,25 @@ types:
       object: string
       id: string
       currentPeriod: optional<unknown>
-      phoneNumber: optional<unknown>
+      phoneNumber: optional<string>
       plan: plan
-      porting: optional<unknown>
+      porting: optional<string>
       sim: optional<unknown>
       status: string
       user: user
-      activatedAt: optional<unknown>
-      canceledAt: optional<unknown>
+      activatedAt: optional<string>
+      canceledAt: optional<string>
       createdAt: string
-      endedAt: optional<unknown>
-      firstUsageAt: optional<unknown>
+      endedAt: optional<string>
+      firstUsageAt: optional<string>
   user:
     properties:
       object: string
       id: string
-      birthday: optional<unknown>
+      birthday: optional<string>
       email: string
       emailVerified: boolean
-      fullName: optional<unknown>
+      fullName: optional<string>
       preferredLocale: string
       createdAt: string
   userAddress:
@@ -1031,9 +1031,9 @@ types:
       city: string
       country: string
       line1: string
-      line2: optional<unknown>
-      postalCode: optional<unknown>
-      state: optional<unknown>
+      line2: optional<string>
+      postalCode: optional<string>
+      state: optional<string>
       user: string
       createdAt: string
 ",
@@ -1141,9 +1141,9 @@ services:
           request:
             body:
               properties:
-                name: optional<optional<unknown>>
+                name: optional<optional<string>>
                 sims: optional<list<string>>
-                user: optional<optional<unknown>>
+                user: optional<optional<string>>
           response: commons.device
         devicesSearch:
           path: /projects/{project}/devices/search
@@ -1203,7 +1203,7 @@ services:
                 imei: string
                 user: string
                 sims: optional<list<string>>
-                name: optional<optional<unknown>>
+                name: optional<optional<string>>
 types:
   deviceModel:
     properties:
@@ -1217,26 +1217,26 @@ types:
     properties:
       object: string
       items: list<deviceModel>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType1:
     properties:
       object: string
       items: list<deviceModel>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType2:
     properties:
       object: string
       items: list<commons.device>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType3:
     properties:
       object: string
       items: list<commons.device>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "devices.yml",
                 "type": "file",
@@ -1306,8 +1306,8 @@ services:
             body:
               properties:
                 name: optional<string>
-                description: optional<optional<unknown>>
-                image: optional<optional<unknown>>
+                description: optional<optional<string>>
+                image: optional<optional<string>>
           response: commons.plan
         plansPublish:
           path: /projects/{project}/plans/{id}/publish
@@ -1383,14 +1383,14 @@ types:
     properties:
       object: string
       items: list<planDocument>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType5:
     properties:
       object: string
       items: list<commons.plan>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "plans.yml",
                 "type": "file",
@@ -1636,14 +1636,14 @@ types:
     properties:
       object: string
       items: list<commons.porting>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType7:
     properties:
       object: string
       items: list<serviceProvider>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "portings.yml",
                 "type": "file",
@@ -1724,8 +1724,8 @@ types:
     properties:
       object: string
       id: string
-      domain: optional<unknown>
-      image: optional<unknown>
+      domain: optional<string>
+      image: optional<string>
       images: _InlinedType8
       legal: optional<unknown>
       locales: list<string>
@@ -1740,19 +1740,19 @@ types:
       Deprecated object of project images. Please use the image property
       instead.
     properties:
-      favicon: optional<unknown>
-      icon: optional<unknown>
-      logoHorizontal: optional<unknown>
+      favicon: optional<string>
+      icon: optional<string>
+      logoHorizontal: optional<string>
   _InlinedType9:
     properties:
       object: string
-      paymentsKey: optional<unknown>
+      paymentsKey: optional<string>
   _InlinedType10:
     properties:
       object: string
       items: list<project>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "projects.yml",
                 "type": "file",
@@ -1832,8 +1832,8 @@ types:
   simCredentials:
     properties:
       object: string
-      activationCode: optional<unknown>
-      qrCodeUrl: optional<unknown>
+      activationCode: optional<string>
+      qrCodeUrl: optional<string>
       sim: string
   sim:
     properties:
@@ -1848,14 +1848,14 @@ types:
     properties:
       object: string
       items: list<sim>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType12:
     properties:
       object: string
       items: list<sim>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "siMs.yml",
                 "type": "file",
@@ -1959,17 +1959,17 @@ services:
             body:
               properties:
                 plan: string
-                sim: optional<optional<unknown>>
-                userAddress: optional<optional<unknown>>
+                sim: optional<optional<string>>
+                userAddress: optional<optional<string>>
                 user: string
-                porting: optional<optional<unknown>>
+                porting: optional<optional<string>>
 types:
   _InlinedType13:
     properties:
       object: string
       items: list<commons.subscription>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "subscriptions.yml",
                 "type": "file",
@@ -2019,8 +2019,8 @@ types:
     properties:
       object: string
       items: list<commons.usageRecord>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "usage.yml",
                 "type": "file",
@@ -2053,10 +2053,10 @@ services:
               properties:
                 object: optional<string>
                 line1: string
-                line2: optional<optional<unknown>>
+                line2: optional<optional<string>>
                 city: string
-                state: optional<optional<unknown>>
-                postalCode: optional<optional<unknown>>
+                state: optional<optional<string>>
+                postalCode: optional<optional<string>>
                 country: string
         userAddressesRetrieve:
           path: /projects/{project}/users/{user}/addresses/{id}
@@ -2075,8 +2075,8 @@ types:
     properties:
       object: string
       items: list<commons.userAddress>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "userAddresses.yml",
                 "type": "file",
@@ -2166,23 +2166,23 @@ services:
             body:
               properties:
                 object: optional<string>
-                birthday: optional<optional<unknown>>
+                birthday: optional<optional<string>>
                 email: string
-                fullName: optional<optional<unknown>>
+                fullName: optional<optional<string>>
                 preferredLocale: optional<string>
 types:
   _InlinedType16:
     properties:
       object: string
       items: list<commons.user>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
   _InlinedType17:
     properties:
       object: string
       items: list<commons.user>
-      moreItemsAfter: optional<unknown>
-      moreItemsBefore: optional<unknown>
+      moreItemsAfter: optional<string>
+      moreItemsBefore: optional<string>
 ",
                 "name": "users.yml",
                 "type": "file",

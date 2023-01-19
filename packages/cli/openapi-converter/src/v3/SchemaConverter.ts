@@ -179,7 +179,7 @@ export class SchemaConverter {
         if (isListOfStrings(schema.type)) {
             let boxedType = "unknown";
             for (const val of schema.type) {
-                if (VALID_BOXED_TYPES.has(boxedType)) {
+                if (VALID_BOXED_TYPES.has(val)) {
                     boxedType = val;
                 }
             }
