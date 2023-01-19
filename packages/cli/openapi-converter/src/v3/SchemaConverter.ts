@@ -176,17 +176,14 @@ export class SchemaConverter {
             }
         }
 
-        // cast as unknown so we can handle extra cases
-        const unknownSchemaType = schema.type as unknown;
-        if (typeof unknownSchemaType === "array") {
-            const listSchemaType = unknownSchemaType as string[];
+        if (isListOfStrings(schema.type)) {
             let boxedType = "unknown";
-            for (const val of listSchemaType) {
+            for (const val of schema.type) {
                 if (VALID_BOXED_TYPES.has(boxedType)) {
                     boxedType = val;
                 }
             }
-            if (listSchemaType.find("null") != null) {
+            if (schema.type.includes("null")) {
                 boxedType = `optional${boxedType}`;
             }
             typeDeclaration = boxedType;
@@ -199,3 +196,7 @@ export class SchemaConverter {
 }
 
 const VALID_BOXED_TYPES = new Set<string>(["string", "integer", "boolean"]);
+
+function isListOfStrings(x: unknown): x is string[] {
+    return Array.isArray(x) && x.every((item) => typeof item === "string");
+}
