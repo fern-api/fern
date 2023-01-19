@@ -254,9 +254,9 @@ services:
       uri: optional<string>
       is_enabled: optional<boolean>
       event_types: optional<list<string>>
-      last_response_body: optional<optional<string>>
-      last_response_code: optional<optional<string>>
-      last_called_at: optional<optional<string>>
+      last_response_body: optional<string>
+      last_response_code: optional<string>
+      last_called_at: optional<string>
       created_at: optional<string>
       updated_at: optional<string>
 ",
@@ -757,7 +757,7 @@ types:
       object: optional<string>
       fingerprint: optional<string>
       carrier: optional<commons.Carrier>
-      number: optional<optional<string>>
+      number: optional<string>
       masked_number: optional<string>
       line: optional<string>
       policyholders: optional<list<commons.Policyholder>>
@@ -767,7 +767,7 @@ types:
       term_length: optional<commons.PeriodValue>
       inception_date: optional<string>
       expiration_date: optional<string>
-      cancellation_date: optional<optional<string>>
+      cancellation_date: optional<string>
       cancellation_reason: optional<_InlinedType0>
       linked_at: optional<string>
       last_synced_at: optional<string>
@@ -1208,9 +1208,9 @@ services:
           request:
             body:
               properties:
-                name: optional<optional<string>>
+                name: optional<string>
                 sims: optional<list<string>>
-                user: optional<optional<string>>
+                user: optional<string>
           response: commons.device
         devicesSearch:
           path: /projects/{project}/devices/search
