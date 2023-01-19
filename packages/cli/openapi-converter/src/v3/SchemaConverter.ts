@@ -147,7 +147,10 @@ export class SchemaConverter {
                         }
                     }
 
-                    if (schema.required == null || !schema.required.includes(property)) {
+                    if (
+                        (schema.required == null || !schema.required.includes(property)) &&
+                        !convertedPropertyType.startsWith("optional")
+                    ) {
                         convertedPropertyType = `optional<${convertedPropertyType}>`;
                     }
 
@@ -160,6 +163,18 @@ export class SchemaConverter {
             } else if (extendedObjects.length > 0) {
                 typeDeclaration = { extends: extendedObjects };
             }
+        } else if (isListOfStrings(schema.type)) {
+            const types: string[] = schema.type;
+            let resolvedType = "unknown";
+            for (const type of types) {
+                if (VALID_BOXED_TYPES.has(type)) {
+                    resolvedType = type;
+                }
+            }
+            if (types.includes("null")) {
+                resolvedType = `optional<${resolvedType}>`;
+            }
+            typeDeclaration = resolvedType;
         }
 
         if (typeDeclaration != null && schema.description != null) {
@@ -180,4 +195,10 @@ export class SchemaConverter {
             ? { typeDeclaration, additionalTypeDeclarations, imports: this.imports }
             : undefined;
     }
+}
+
+const VALID_BOXED_TYPES = new Set<string>(["string", "integer", "boolean"]);
+
+function isListOfStrings(x: unknown): x is string[] {
+    return Array.isArray(x) && x.every((item) => typeof item === "string");
 }
