@@ -147,8 +147,8 @@ services:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType24>
-  _InlinedType24:
+      _embedded: optional<_InlinedType25>
+  _InlinedType25:
     properties:
       events: optional<list<Event>>
   Integration:
@@ -162,38 +162,38 @@ services:
       status: optional<string>
       created_at: optional<string>
       updated_at: optional<string>
-      configuration: optional<_InlinedType29>
-  _InlinedType25:
+      configuration: optional<_InlinedType30>
+  _InlinedType26:
     properties:
       primary: optional<string>
-  _InlinedType26:
+  _InlinedType27:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
-      colors: optional<_InlinedType25>
-  _InlinedType27:
+      colors: optional<_InlinedType26>
+  _InlinedType28:
     properties:
       agency_logo: optional<string>
       agency_photo: optional<string>
-  _InlinedType28:
+  _InlinedType29:
     properties:
       agency_name: optional<string>
       agent_name: optional<string>
       agent_email: optional<string>
-      image_urls: optional<_InlinedType27>
-  _InlinedType29:
+      image_urls: optional<_InlinedType28>
+  _InlinedType30:
     properties:
-      brand: optional<_InlinedType26>
+      brand: optional<_InlinedType27>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
-      hosted: optional<_InlinedType28>
+      hosted: optional<_InlinedType29>
   Policies:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType30>
-  _InlinedType30:
+      _embedded: optional<_InlinedType31>
+  _InlinedType31:
     properties:
       policies: optional<list<Policy>>
   Link_2:
@@ -208,33 +208,43 @@ services:
       policy_count: optional<integer>
       status: optional<string>
       is_tracked: optional<boolean>
-      tracking_frequency: optional<optional<string>>
+      tracking_frequency: optional<_InlinedType32>
       updated_at: optional<string>
       created_at: optional<string>
-      _links: optional<_InlinedType34>
-  _InlinedType31:
+      _links: optional<_InlinedType36>
+  _InlinedType32:
+    docs: >-
+      The frequency of which tracking should be performed. This value is \`never\`
+      when tracking is disabled.
+    enum:
+      - daily
+      - weekly
+      - monthly
+      - never
+      - on_demand
+  _InlinedType33:
     docs: Link to retrieve the link's details.
     properties:
       href: optional<string>
-  _InlinedType32:
+  _InlinedType34:
     docs: Link to the carrier's logo.
     properties:
       href: optional<string>
-  _InlinedType33:
+  _InlinedType35:
     properties:
       href: optional<string>
       content_type: optional<string>
-  _InlinedType34:
+  _InlinedType36:
     properties:
-      self: optional<_InlinedType31>
-      carrier_logo: optional<_InlinedType32>
-      uploaded_documents: optional<list<_InlinedType33>>
+      self: optional<_InlinedType33>
+      carrier_logo: optional<_InlinedType34>
+      uploaded_documents: optional<list<_InlinedType35>>
   Links:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType35>
-  _InlinedType35:
+      _embedded: optional<_InlinedType37>
+  _InlinedType37:
     properties:
       links: optional<list<Link_2>>
   Webhook:
@@ -265,15 +275,15 @@ services:
           method: POST
           docs: Rebroadcast an event.
           display-name: Rebroadcast Event
-          response: _InlinedType23
+          response: _InlinedType24
 types:
-  _InlinedType22:
-    properties:
-      broadcasts: optional<list<commons.EventBroadcast>>
   _InlinedType23:
     properties:
+      broadcasts: optional<list<commons.EventBroadcast>>
+  _InlinedType24:
+    properties:
       count: optional<integer>
-      _embedded: optional<_InlinedType22>
+      _embedded: optional<_InlinedType23>
 ",
                 "name": "event.yml",
                 "type": "file",
@@ -312,8 +322,8 @@ services:
             body:
               properties:
                 name: string
-                policyRequirements: optional<_InlinedType9>
-                configuration: optional<_InlinedType12>
+                policyRequirements: optional<_InlinedType10>
+                configuration: optional<_InlinedType13>
         getIntegration:
           path: /integrations/{integration_id}
           method: GET
@@ -335,8 +345,8 @@ services:
               properties:
                 name: optional<string>
                 status: optional<string>
-                configuration: optional<_InlinedType15>
-                policy_requirements: optional<_InlinedType16>
+                configuration: optional<_InlinedType16>
+                policy_requirements: optional<_InlinedType17>
           response: commons.Integration_2
         getIntegrationPolicies:
           path: /integrations/{integration_id}/policies
@@ -386,7 +396,7 @@ services:
           method: PUT
           docs: Upload the agency logo for the hosted integration.
           display-name: Update Agency Logo
-          response: _InlinedType17
+          response: _InlinedType18
         deleteIntegrationsIntegrationIdAgencyLogo:
           path: /integrations/{integration_id}/agency_logo
           method: DELETE
@@ -402,7 +412,7 @@ services:
           method: PUT
           docs: Upload an agent photo for the hosted integration.
           display-name: Update Agent Photo
-          response: _InlinedType18
+          response: _InlinedType19
         deleteIntegrationsIntegrationIdAgentPhoto:
           path: /integrations/{integration_id}/agent_photo
           method: DELETE
@@ -418,7 +428,7 @@ services:
           method: PUT
           docs: Upload the brand logo for the hosted integration.
           display-name: Update Brand Logo
-          response: _InlinedType19
+          response: _InlinedType20
         deleteIntegrationsIntegrationIdBrandLogo:
           path: /integrations/{integration_id}/brand_logo
           method: DELETE
@@ -428,74 +438,74 @@ types:
   Integrations:
     properties:
       count: optional<integer>
-      _links: optional<_InlinedType4>
-      _embedded: optional<_InlinedType5>
-  _InlinedType3:
-    properties:
-      href: optional<string>
+      _links: optional<_InlinedType5>
+      _embedded: optional<_InlinedType6>
   _InlinedType4:
     properties:
-      self: optional<_InlinedType3>
+      href: optional<string>
   _InlinedType5:
+    properties:
+      self: optional<_InlinedType4>
+  _InlinedType6:
     properties:
       integrations: optional<list<commons.Integration>>
   Providers:
     properties:
       count: optional<integer>
-      _links: optional<_InlinedType7>
-      _embedded: optional<_InlinedType8>
-  _InlinedType6:
-    properties:
-      href: optional<string>
+      _links: optional<_InlinedType8>
+      _embedded: optional<_InlinedType9>
   _InlinedType7:
     properties:
-      self: optional<_InlinedType6>
+      href: optional<string>
   _InlinedType8:
     properties:
-      providers: optional<list<commons.Provider>>
+      self: optional<_InlinedType7>
   _InlinedType9:
     properties:
-      effective_date: optional<string>
-      allow_inactive: optional<boolean>
+      providers: optional<list<commons.Provider>>
   _InlinedType10:
     properties:
-      primary: optional<string>
+      effective_date: optional<string>
+      allow_inactive: optional<boolean>
   _InlinedType11:
+    properties:
+      primary: optional<string>
+  _InlinedType12:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
-      colors: optional<_InlinedType10>
-  _InlinedType12:
-    properties:
-      brand: optional<_InlinedType11>
-      display_name: optional<string>
-      use_name_as_display_name: optional<boolean>
+      colors: optional<_InlinedType11>
   _InlinedType13:
     properties:
-      primary: optional<string>
+      brand: optional<_InlinedType12>
+      display_name: optional<string>
+      use_name_as_display_name: optional<boolean>
   _InlinedType14:
+    properties:
+      primary: optional<string>
+  _InlinedType15:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
-      colors: optional<_InlinedType13>
-  _InlinedType15:
+      colors: optional<_InlinedType14>
+  _InlinedType16:
     properties:
-      brand: optional<_InlinedType14>
+      brand: optional<_InlinedType15>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
-  _InlinedType16:
+  _InlinedType17:
     properties:
       allow_inactive: optional<boolean>
       effective_date: optional<string>
-  _InlinedType17:
-    properties:
-      href: optional<string>
   _InlinedType18:
     properties:
       href: optional<string>
   _InlinedType19:
+    properties:
+      href: optional<string>
+  _InlinedType20:
     properties:
       href: optional<string>
 ",
@@ -689,8 +699,8 @@ types:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType20>
-  _InlinedType20:
+      _embedded: optional<_InlinedType21>
+  _InlinedType21:
     properties:
       links: optional<list<commons.LinkWithPolicies>>
 ",
@@ -758,24 +768,35 @@ types:
       inception_date: optional<string>
       expiration_date: optional<string>
       cancellation_date: optional<optional<string>>
-      cancellation_reason: optional<optional<string>>
+      cancellation_reason: optional<_InlinedType0>
       linked_at: optional<string>
       last_synced_at: optional<string>
-      _links: optional<_InlinedType1>
-      _embedded: optional<_InlinedType2>
+      _links: optional<_InlinedType2>
+      _embedded: optional<_InlinedType3>
       link_id: optional<string>
   _InlinedType0:
+    docs: >-
+      The determined reason for the cancellation, such as insured_non_payment or
+      carrier_non_renew or insured_action. This value is null when cancellation
+      is not active or not explicitly indicated by the carrier systems and is
+      not guaranteed to be provided in any circumstance.
+    enum:
+      - carrier_non_renew
+      - insured_non_payment
+      - insured_requested
+      - other
+  _InlinedType1:
     docs: A link to the logo for the carrier on the policy.
     properties:
       href: optional<string>
-  _InlinedType1:
+  _InlinedType2:
     docs: >-
       A polymorphic list of externally linked resources related to this policy
       such as documents or logos for carriers.
     properties:
       documents: optional<list<commons.DocumentRef>>
-      carrier_logo: optional<_InlinedType0>
-  _InlinedType2:
+      carrier_logo: optional<_InlinedType1>
+  _InlinedType3:
     docs: A container for objects wrapped by the current object.
     properties:
       missing_fields: optional<list<string>>
@@ -859,8 +880,8 @@ types:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType21>
-  _InlinedType21:
+      _embedded: optional<_InlinedType22>
+  _InlinedType22:
     properties:
       webhooks: optional<list<commons.Webhook>>
 ",
@@ -921,10 +942,28 @@ types:
       object: string
       id: string
       imei: optional<string>
-      model: optional<unknown>
+      model: _InlinedType21
       name: optional<string>
       sims: list<SIMs.sim>
-      user: optional<unknown>
+      user: _InlinedType22
+      createdAt: string
+  _InlinedType21:
+    properties:
+      object: string
+      id: string
+      brand: string
+      name: string
+      simTypes: list<string>
+      type: string
+  _InlinedType22:
+    properties:
+      object: string
+      id: string
+      birthday: optional<string>
+      email: string
+      emailVerified: boolean
+      fullName: optional<string>
+      preferredLocale: string
       createdAt: string
   plan:
     properties:
@@ -936,29 +975,29 @@ types:
       description: optional<string>
       image: optional<string>
       name: string
-      price: _InlinedType18
+      price: _InlinedType23
       provider: string
-      requirements: _InlinedType19
+      requirements: _InlinedType24
       simTypes: list<string>
       sms: integer
       smsUnit: string
       status: string
       tags: list<string>
-      validity: _InlinedType20
+      validity: _InlinedType25
       voice: integer
       voiceUnit: string
       createdAt: string
-  _InlinedType18:
+  _InlinedType23:
     properties:
       amount: integer
       currency: string
-  _InlinedType19:
+  _InlinedType24:
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
-  _InlinedType20:
+  _InlinedType25:
     properties:
       minimumPeriods: integer
       type: string
@@ -977,12 +1016,12 @@ types:
       accountNumber: optional<string>
       birthday: optional<string>
       declinedAttempts: integer
-      donorProvider: optional<unknown>
+      donorProvider: _InlinedType26
       firstName: optional<string>
       lastName: optional<string>
       phoneNumber: string
       provider: string
-      recipientProvider: list<unknown>
+      recipientProvider: _InlinedType27
       required: list<string>
       status: string
       subscription: optional<string>
@@ -992,6 +1031,20 @@ types:
       createdAt: string
       lastDeclinedAt: optional<string>
       lastRequestedAt: optional<string>
+  _InlinedType26:
+    docs: The service provider from whom the number is ported.
+    properties:
+      object: string
+      id: string
+      name: string
+      recipientProviders: list<string>
+  _InlinedType27:
+    docs: The service provider to whom the number is ported.
+    properties:
+      object: string
+      id: string
+      name: string
+      recipientProviders: list<string>
   organization:
     properties:
       object: string
@@ -1002,11 +1055,11 @@ types:
     properties:
       object: string
       id: string
-      currentPeriod: optional<unknown>
+      currentPeriod: _InlinedType28
       phoneNumber: optional<string>
       plan: plan
       porting: optional<string>
-      sim: optional<unknown>
+      sim: _InlinedType29
       status: string
       user: user
       activatedAt: optional<string>
@@ -1014,6 +1067,20 @@ types:
       createdAt: string
       endedAt: optional<string>
       firstUsageAt: optional<string>
+  _InlinedType28:
+    properties:
+      number: integer
+      start: string
+      end: string
+  _InlinedType29:
+    properties:
+      object: string
+      id: string
+      iccid: string
+      provider: string
+      status: string
+      type: string
+      createdAt: string
   user:
     properties:
       object: string
@@ -1687,7 +1754,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve the project credentials
-          response: _InlinedType9
+          response: _InlinedType12
         projectsList:
           path: /projects
           method: GET
@@ -1718,7 +1785,7 @@ services:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType10
+          response: _InlinedType13
 types:
   project:
     properties:
@@ -1727,13 +1794,13 @@ types:
       domain: optional<string>
       image: optional<string>
       images: _InlinedType8
-      legal: optional<unknown>
+      legal: _InlinedType9
       locales: list<string>
       name: string
       organization: commons.organization
-      payments: optional<unknown>
+      payments: _InlinedType10
       subscriptionOwner: string
-      support: optional<unknown>
+      support: _InlinedType11
       createdAt: string
   _InlinedType8:
     docs: >-
@@ -1744,10 +1811,30 @@ types:
       icon: optional<string>
       logoHorizontal: optional<string>
   _InlinedType9:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name: string
+      city: string
+      country: string
+      line1: string
+      line2: optional<string>
+      postalCode: string
+      state: optional<string>
+  _InlinedType10:
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency: string
+      mode: string
+  _InlinedType11:
+    docs: Contact details for consumer support requests regarding the project.
+    properties:
+      email: optional<string>
+      phoneNumber: optional<string>
+  _InlinedType12:
     properties:
       object: string
       paymentsKey: optional<string>
-  _InlinedType10:
+  _InlinedType13:
     properties:
       object: string
       items: list<project>
@@ -1788,7 +1875,7 @@ types:
               properties:
                 iccid: string
                 type: optional<list<string>>
-          response: _InlinedType11
+          response: _InlinedType14
         siMsList:
           path: /projects/{project}/sims
           method: GET
@@ -1827,7 +1914,7 @@ types:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType12
+          response: _InlinedType15
 types:
   simCredentials:
     properties:
@@ -1844,13 +1931,13 @@ types:
       status: string
       type: string
       createdAt: string
-  _InlinedType11:
+  _InlinedType14:
     properties:
       object: string
       items: list<sim>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
-  _InlinedType12:
+  _InlinedType15:
     properties:
       object: string
       items: list<sim>
@@ -1947,7 +2034,7 @@ services:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType13
+          response: _InlinedType16
         subscriptionsCreate:
           path: /projects/{project}/subscriptions
           method: POST
@@ -1964,7 +2051,7 @@ services:
                 user: string
                 porting: optional<optional<string>>
 types:
-  _InlinedType13:
+  _InlinedType16:
     properties:
       object: string
       items: list<commons.subscription>
@@ -2013,9 +2100,9 @@ types:
                   \`period\` provides a single aggregated value for the time range
                   or period requested.
                 type: optional<string>
-          response: _InlinedType14
+          response: _InlinedType17
 types:
-  _InlinedType14:
+  _InlinedType17:
     properties:
       object: string
       items: list<commons.usageRecord>
@@ -2042,7 +2129,7 @@ services:
             returned are sorted by creation date, with the most recently created
             addresses appearing first.
           display-name: List all user addresses
-          response: _InlinedType15
+          response: _InlinedType18
         userAddressesCreate:
           path: /projects/{project}/users/{user}/addresses
           method: POST
@@ -2071,7 +2158,7 @@ services:
           display-name: Delete a user address
           response: commons.userAddress
 types:
-  _InlinedType15:
+  _InlinedType18:
     properties:
       object: string
       items: list<commons.userAddress>
@@ -2129,7 +2216,7 @@ services:
             body:
               properties:
                 email: string
-          response: _InlinedType16
+          response: _InlinedType19
         usersList:
           path: /projects/{project}/users
           method: GET
@@ -2156,7 +2243,7 @@ services:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType17
+          response: _InlinedType20
         usersCreate:
           path: /projects/{project}/users
           method: POST
@@ -2171,13 +2258,13 @@ services:
                 fullName: optional<optional<string>>
                 preferredLocale: optional<string>
 types:
-  _InlinedType16:
+  _InlinedType19:
     properties:
       object: string
       items: list<commons.user>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
-  _InlinedType17:
+  _InlinedType20:
     properties:
       object: string
       items: list<commons.user>

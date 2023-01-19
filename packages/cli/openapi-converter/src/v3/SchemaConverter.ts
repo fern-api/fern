@@ -160,6 +160,18 @@ export class SchemaConverter {
             } else if (extendedObjects.length > 0) {
                 typeDeclaration = { extends: extendedObjects };
             }
+        } else if (isListOfStrings(schema.type)) {
+            const types: string[] = schema.type;
+            let resolvedType = "unknown";
+            for (const type of types) {
+                if (VALID_BOXED_TYPES.has(type)) {
+                    resolvedType = type;
+                }
+            }
+            if (types.includes("null")) {
+                resolvedType = `optional<${resolvedType}>`;
+            }
+            typeDeclaration = resolvedType;
         }
 
         if (typeDeclaration != null && schema.description != null) {
@@ -174,20 +186,6 @@ export class SchemaConverter {
                     ...typeDeclaration,
                 };
             }
-        }
-
-        if (isListOfStrings(schema.type)) {
-            let boxedType = "unknown";
-            for (const val of schema.type) {
-                if (VALID_BOXED_TYPES.has(val)) {
-                    boxedType = val;
-                }
-            }
-            let arrayType = `list<${boxedType}>`;
-            if (schema.type.includes("null")) {
-                arrayType = `optional<${boxedType}>`;
-            }
-            typeDeclaration = arrayType;
         }
 
         return typeDeclaration != null
