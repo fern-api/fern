@@ -176,8 +176,26 @@ export class SchemaConverter {
             }
         }
 
+        // cast as unknown so we can handle extra cases
+        const unknownSchemaType = schema.type as unknown;
+        if (typeof unknownSchemaType === "array") {
+            const listSchemaType = unknownSchemaType as string[];
+            let boxedType = "unknown";
+            for (const val of listSchemaType) {
+                if (VALID_BOXED_TYPES.has(boxedType)) {
+                    boxedType = val;
+                }
+            }
+            if (listSchemaType.find("null") != null) {
+                boxedType = `optional${boxedType}`;
+            }
+            typeDeclaration = boxedType;
+        }
+
         return typeDeclaration != null
             ? { typeDeclaration, additionalTypeDeclarations, imports: this.imports }
             : undefined;
     }
 }
+
+const VALID_BOXED_TYPES = new Set<string>(["string", "integer", "boolean"]);
