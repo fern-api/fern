@@ -25193,7 +25193,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 },
                 "pascalCase": {
                     "unsafeName": "Error",
-                    "safeName": "Error"
+                    "safeName": "Error_"
                 }
             },
             "wireValue": "error"
@@ -31109,7 +31109,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 },
                 "pascalCase": {
                     "unsafeName": "Error",
-                    "safeName": "Error"
+                    "safeName": "Error_"
                 }
             },
             "wireValue": "error"
