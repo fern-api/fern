@@ -62,6 +62,8 @@ export const RESERVED_KEYWORDS: Record<Language, Set<string>> = {
         "while",
         "with",
         "yield",
+        "Date",
+        "Error",
     ]),
     [Language.JAVA]: new Set([
         "abstract",
