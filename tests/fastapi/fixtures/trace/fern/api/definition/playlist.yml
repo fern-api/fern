@@ -53,6 +53,12 @@ services:
             query-parameters:
               limit: optional<integer>
               otherField: string
+              optionalMultipleField:
+                type: optional<string>
+                allow-multiple: true
+              multipleField:
+                type: string
+                allow-multiple: true
 
         getPlaylist:
           docs: Returns a playlist
