@@ -65,6 +65,6 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
     }
 
     private getEnumValueName(enumValue: EnumValue): string {
-        return enumValue.name.name.pascalCase.unsafeName;
+        return enumValue.name.name.pascalCase.safeName;
     }
 }

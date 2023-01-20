@@ -25,6 +25,7 @@ types:
     enum:
       - is
       - as
+      - date
 
 services:
   http:
