@@ -21,6 +21,11 @@ types:
     union:
       playlistId: PlaylistId
 
+  DateUnion:
+    union:
+      date: commons.Date
+      datetime: datetime
+
   ReservedKeywordEnum:
     enum:
       - is

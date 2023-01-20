@@ -142,3 +142,6 @@ types:
           foo: hello
           bar:
             yo: 123
+  Date:
+    type: string
+    docs: ISO 8601 date; formatted YYYY-MM-DD (i.e. 2012-02-01)

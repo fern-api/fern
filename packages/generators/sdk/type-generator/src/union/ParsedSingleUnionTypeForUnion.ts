@@ -55,7 +55,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
     }
 
     public getInterfaceName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.unsafeName;
+        return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName;
     }
 
     public getDiscriminantValue(): string {
