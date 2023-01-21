@@ -284,16 +284,33 @@ export class OpenApiV3Context {
         const schemaReferences = new Set<OpenAPIV3.ReferenceObject>();
         if (schema.properties != null) {
             for (const [_, propertySchema] of Object.entries(schema.properties)) {
-                if (!isReferenceObject(propertySchema)) {
-                    continue;
-                }
-                schemaReferences.add(propertySchema);
-                const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
-                if (resolvedSchema != null) {
-                    this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
+                if (isReferenceObject(propertySchema)) {
+                    schemaReferences.add(propertySchema);
+                    const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
+                    if (resolvedSchema != null) {
+                        this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
+                            schemaReferences.add(referencedSchema);
+                        });
+                    }
+                } else if (
+                    propertySchema.properties != null &&
+                    propertySchema.type === "array" &&
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    propertySchema.items != null
+                ) {
+                    this.getAllReferencedSchemas(propertySchema).forEach((referencedSchema) => {
                         schemaReferences.add(referencedSchema);
                     });
                 }
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        } else if (schema.type === "array" && schema.items != null && isReferenceObject(schema.items)) {
+            schemaReferences.add(schema.items);
+            const resolvedSchema = this.maybeResolveSchemaReference(schema.items);
+            if (resolvedSchema != null) {
+                this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
+                    schemaReferences.add(referencedSchema);
+                });
             }
         }
         return schemaReferences;
