@@ -296,9 +296,9 @@ export class OpenApiV3Context {
                     this.getAllReferencedSchemas(propertySchema, schemaReferences);
                 }
             }
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         } else if (
             schema.type === "array" &&
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             schema.items != null &&
             isReferenceObject(schema.items) &&
             !schemaReferences.has(schema.items)
