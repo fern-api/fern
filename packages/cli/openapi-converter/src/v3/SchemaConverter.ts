@@ -95,6 +95,31 @@ export class SchemaConverter {
             typeDeclaration = {
                 enum: schema.enum,
             };
+        } else if (schema.additionalProperties != null) {
+            if (typeof schema.additionalProperties === "boolean") {
+                typeDeclaration = "map<string, unknown>";
+            } else if (isReferenceObject(schema.additionalProperties)) {
+                const valueType = getFernReferenceForSchema(
+                    schema.additionalProperties,
+                    this.context,
+                    this.tag,
+                    this.imports
+                );
+                typeDeclaration = `map<string, ${valueType}>`;
+            } else {
+                const convertedSchema = this.convertSchema(schema.additionalProperties, [
+                    ...breadcrumbs,
+                    "additionalProperties",
+                ]);
+                if (convertedSchema != null) {
+                    const valueType = this.inlinedTypeNamer.getName();
+                    additionalTypeDeclarations = {
+                        ...additionalTypeDeclarations,
+                        [valueType]: convertedSchema.typeDeclaration,
+                    };
+                    typeDeclaration = `map<string, ${valueType}>`;
+                }
+            }
         } else if (schema.type === "object" || schema.properties != null || schema.allOf != null) {
             schema.allOf?.map((parent, index) => {
                 const parentBreadcrumbs = [...breadcrumbs, "allOf", `${index}`];
@@ -104,7 +129,7 @@ export class SchemaConverter {
                     const schemaName = this.inlinedTypeNamer.getName();
                     const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
                     if (convertedSchema == null) {
-                        this.taskContext.logger.warn(`${parentBreadcrumbs.join(" -> ")}: Failed to convert schema`);
+                        this.taskContext.logger.warn(`#${parentBreadcrumbs.join("/")}: Failed to convert schema`);
                     } else {
                         extendedObjects.push(schemaName);
                         additionalTypeDeclarations = {

@@ -308,6 +308,17 @@ export class OpenApiV3Context {
             if (resolvedSchema != null) {
                 this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
             }
+        } else if (
+            schema.additionalProperties != null &&
+            typeof schema.additionalProperties !== "boolean" &&
+            isReferenceObject(schema.additionalProperties) &&
+            !schemaReferences.has(schema.additionalProperties)
+        ) {
+            schemaReferences.add(schema.additionalProperties);
+            const resolvedSchema = this.maybeResolveSchemaReference(schema.additionalProperties);
+            if (resolvedSchema != null) {
+                this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
+            }
         }
     }
 }

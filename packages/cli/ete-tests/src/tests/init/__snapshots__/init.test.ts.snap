@@ -1488,6 +1488,7 @@ headers: {}
       name: string
       organization: organization
       payments: _InlinedType26
+      settings: map<string, unknown>
       subscriptionOwner: string
       support: _InlinedType27
       createdAt: string
@@ -2834,6 +2835,25 @@ headers: {}
     properties:
       region_id: string
       display_name: string
+  MatchmakerLobbyJoinInfoPorts:
+    docs: A list of lobby ports.
+    type: map<string, MatchmakerLobbyJoinInfoPort>
+  MatchmakerLobbyJoinInfoPort:
+    docs: |-
+      A matchmaker lobby port.
+
+      Configured by \`rivet.cloud#LobbyGroupRuntimeDockerPort$label\`.
+    properties:
+      host: optional<string>
+      hostname: string
+      port: optional<double>
+      port_range: optional<MatchmakerLobbyJoinInfoPortRange>
+      is_tls: boolean
+  MatchmakerLobbyJoinInfoPortRange:
+    docs: Inclusive range of ports that can be connected to.
+    properties:
+      min: double
+      max: double
   MatchmakerLobbyJoinInfoPlayer:
     docs: A matchmaker lobby player.
     properties:
