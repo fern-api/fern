@@ -1,5 +1,3032 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`open api converter partnerstack simple 1`] = `
+{
+  "rootApiFile": {
+    "headers": {},
+    "name": "api",
+  },
+  "serviceFiles": {
+    "actions.yml": {
+      "services": {
+        "http": {
+          "ActionsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all actions",
+                "docs": "Returns a list of your actions. The actions are returned sorted by creation date by default, with the most recent actions appearing first.",
+                "method": "GET",
+                "path": "/v2/actions",
+                "request": {
+                  "query-parameters": {
+                    "action_type": {
+                      "docs": "Will filter for actions with the specified name.",
+                      "type": "optional<string>",
+                    },
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "order_by": {
+                      "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
+                      "type": "optional<string>",
+                    },
+                    "partnership_key": {
+                      "docs": "Partnership key in which the results are filtered by.",
+                      "type": "optional<string>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType82",
+              },
+              "_unnamedOperation10": {
+                "display-name": "Archive an action",
+                "docs": "Archives an action. Any associated rewards or drip rewards will be archived as well.",
+                "method": "DELETE",
+                "path": "/v2/actions/{action_key}",
+                "path-parameters": {
+                  "action_key": {
+                    "docs": "Unique identifier for actions",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType89",
+              },
+              "_unnamedOperation9": {
+                "display-name": "Record action",
+                "docs": "Records a new action taken by a given partner or customer, and the number of times that action was performed.",
+                "method": "POST",
+                "path": "/v2/actions",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType83",
+                    ],
+                  },
+                },
+                "response": "_InlinedType88",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType76": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType77": {
+          "docs": "An **Action** represents a specific action a partner or customer took on your platform",
+          "extends": undefined,
+          "properties": {
+            "archived": "optional<boolean>",
+            "company": "optional<_InlinedType78>",
+            "customer": "optional<_InlinedType79>",
+            "partnership_key": "optional<string>",
+            "type": "optional<string>",
+            "value": "optional<integer>",
+          },
+        },
+        "_InlinedType80": {
+          "extends": [
+            "_InlinedType76",
+            "_InlinedType77",
+          ],
+        },
+        "_InlinedType81": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType80>>",
+            "total": "optional<integer>",
+          },
+        },
+        "_InlinedType82": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType81",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType83": {
+          "docs": "**Actions** represent a specific action a partner or customer took on your platform",
+          "extends": undefined,
+          "properties": {
+            "external_key": "optional<string>",
+            "target_key": "optional<string>",
+            "target_type": "optional<string>",
+            "type": "optional<string>",
+            "value": "optional<integer>",
+          },
+        },
+        "_InlinedType85": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType86": {
+          "docs": "**Actions** represent a specific action a partner or customer took on your platform",
+          "extends": undefined,
+          "properties": {
+            "external_key": "optional<string>",
+            "target_key": "optional<string>",
+            "target_type": "optional<string>",
+            "type": "optional<string>",
+            "value": "optional<integer>",
+          },
+        },
+        "_InlinedType87": {
+          "extends": [
+            "_InlinedType85",
+            "_InlinedType86",
+          ],
+        },
+        "_InlinedType88": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType87",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType89": {
+          "extends": undefined,
+          "properties": {
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "applications.yml": {
+      "services": {
+        "http": {
+          "ApplicationsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "Bulk Decision Applications",
+                "docs": "Update the decision of the given Applications provided",
+                "method": "PATCH",
+                "path": "/v2/applications/decision",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "application_keys": "optional<list<unknown>>",
+                      "approved": "optional<boolean>",
+                      "decline_reason": "optional<string>",
+                      "group_id_override": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "_InlinedType95",
+              },
+              "_unnamedOperation11": {
+                "display-name": "Decision an Application",
+                "docs": "Update the decision of the given Application",
+                "method": "PATCH",
+                "path": "/v2/applications/{application_key}/decision",
+                "path-parameters": {
+                  "application_key": {
+                    "docs": "The key of the application we're applying a decision to",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "approved": "optional<boolean>",
+                      "decline_reason": "optional<string>",
+                      "group_id_override": "optional<integer>",
+                      "group_key_override": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType100",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType100": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType99",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType90": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType91": {
+          "docs": "Applications represent partnerstack partners attempting to join vendor programs via public form",
+          "extends": undefined,
+          "properties": {
+            "actioned_by": "optional<string>",
+            "approved": "optional<boolean>",
+            "content": "optional<_InlinedType92>",
+            "decline_reason": "optional<string>",
+            "flag_reasons": "optional<list<unknown>>",
+            "fraud_flagged": "optional<boolean>",
+            "group_name": "optional<string>",
+            "team_blocked": "optional<boolean>",
+            "team_key": "optional<string>",
+            "team_name": "optional<string>",
+          },
+        },
+        "_InlinedType93": {
+          "extends": [
+            "_InlinedType90",
+            "_InlinedType91",
+          ],
+        },
+        "_InlinedType94": {
+          "extends": undefined,
+          "properties": {
+            "items": "optional<list<_InlinedType93>>",
+          },
+        },
+        "_InlinedType95": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType94",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType96": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType97": {
+          "docs": "Applications represent partnerstack partners attempting to join vendor programs via public form",
+          "extends": undefined,
+          "properties": {
+            "actioned_by": "optional<string>",
+            "approved": "optional<boolean>",
+            "content": "optional<_InlinedType98>",
+            "decline_reason": "optional<string>",
+            "flag_reasons": "optional<list<unknown>>",
+            "fraud_flagged": "optional<boolean>",
+            "group_name": "optional<string>",
+            "team_blocked": "optional<boolean>",
+            "team_key": "optional<string>",
+            "team_name": "optional<string>",
+          },
+        },
+        "_InlinedType99": {
+          "extends": [
+            "_InlinedType96",
+            "_InlinedType97",
+          ],
+        },
+      },
+    },
+    "commons.yml": {},
+    "customers.yml": {
+      "services": {
+        "http": {
+          "CustomersService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all customers",
+                "docs": "Returns a list of your customers. The customers are returned sorted by creation date by default, with the most recent customers appearing first.",
+                "method": "GET",
+                "path": "/v2/customers",
+                "request": {
+                  "query-parameters": {
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "group": {
+                      "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "partner_key": {
+                      "docs": "Will filter to a specific partnership's \`partner_key\`, which can be found using the partnership's get endpoint or from the partnership view in your PartnerStack dashboard.",
+                      "type": "optional<string>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType108",
+              },
+              "_unnamedOperation12": {
+                "display-name": "Create a customer",
+                "docs": "Creates a new customer with the data provided.",
+                "method": "POST",
+                "path": "/v2/customers",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType109",
+                      "_InlinedType110",
+                    ],
+                  },
+                },
+                "response": "_InlinedType118",
+              },
+              "_unnamedOperation13": {
+                "display-name": "Retrieve a customer",
+                "docs": "Gets a customer with a given customer key.",
+                "method": "GET",
+                "path": "/v2/customers/{customer_key}",
+                "path-parameters": {
+                  "customer_key": {
+                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType125",
+              },
+              "_unnamedOperation14": {
+                "display-name": "Delete a customer",
+                "docs": "Deletes a customer with a given customer key.",
+                "method": "DELETE",
+                "path": "/v2/customers/{customer_key}",
+                "path-parameters": {
+                  "customer_key": {
+                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType127",
+              },
+              "_unnamedOperation15": {
+                "display-name": "Update a customer",
+                "docs": "Updates a customer with the data provided. Any parameters not passed will not be updated.",
+                "method": "PATCH",
+                "path": "/v2/customers/{customer_key}",
+                "path-parameters": {
+                  "customer_key": {
+                    "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "customer_key": "optional<string>",
+                      "email": "optional<string>",
+                      "name": "optional<string>",
+                      "provider_key": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType134",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType101": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType102": {
+          "docs": "**Customers** represent the users who have been referred by a **Partner**.
+
+**Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
+
+The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
+          "extends": [
+            "_InlinedType103",
+            "_InlinedType104",
+          ],
+        },
+        "_InlinedType106": {
+          "extends": [
+            "_InlinedType101",
+            "_InlinedType102",
+          ],
+        },
+        "_InlinedType107": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType106>>",
+            "total": "optional<integer>",
+          },
+        },
+        "_InlinedType108": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType107",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType109": {
+          "extends": undefined,
+          "properties": {
+            "customer_key": "optional<string>",
+            "email": "optional<string>",
+            "name": "optional<string>",
+            "provider_key": "optional<string>",
+          },
+        },
+        "_InlinedType110": {
+          "extends": undefined,
+          "properties": {
+            "partner_key": "optional<string>",
+          },
+        },
+        "_InlinedType112": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType113": {
+          "docs": "**Customers** represent the users who have been referred by a **Partner**.
+
+**Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
+
+The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
+          "extends": [
+            "_InlinedType114",
+            "_InlinedType115",
+          ],
+        },
+        "_InlinedType117": {
+          "extends": [
+            "_InlinedType112",
+            "_InlinedType113",
+          ],
+        },
+        "_InlinedType118": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType117",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType119": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType120": {
+          "docs": "**Customers** represent the users who have been referred by a **Partner**.
+
+**Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
+
+The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
+          "extends": [
+            "_InlinedType121",
+            "_InlinedType122",
+          ],
+        },
+        "_InlinedType124": {
+          "extends": [
+            "_InlinedType119",
+            "_InlinedType120",
+          ],
+        },
+        "_InlinedType125": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType124",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType126": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType127": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType126",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType128": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType129": {
+          "docs": "**Customers** represent the users who have been referred by a **Partner**.
+
+**Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
+
+The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
+          "extends": [
+            "_InlinedType130",
+            "_InlinedType131",
+          ],
+        },
+        "_InlinedType133": {
+          "extends": [
+            "_InlinedType128",
+            "_InlinedType129",
+          ],
+        },
+        "_InlinedType134": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType133",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "deals.yml": {
+      "services": {
+        "http": {
+          "DealsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "Assign partnership to deal",
+                "docs": "Assign the provided partnership to the provided deal.",
+                "method": "POST",
+                "path": "/deals/{deal_key}/assignment/{partnership_key}/{stack_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of the deal",
+                    "type": "string",
+                  },
+                  "partnership_key": {
+                    "docs": "Unique identifier of the partnership",
+                    "type": "string",
+                  },
+                  "stack_key": {
+                    "docs": "Personal stack key",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType0",
+              },
+              "_unnamedOperation0": {
+                "display-name": "Get deal file",
+                "docs": "Get the file for the deal.",
+                "method": "GET",
+                "path": "/deals/{deal_key}/file/{file_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of the deal",
+                    "type": "string",
+                  },
+                  "file_key": {
+                    "docs": "Unique identifier of the file",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType2",
+              },
+              "_unnamedOperation1": {
+                "display-name": "List all deals",
+                "docs": "Returns a list of your deals. The deals are
+    returned sorted by creation date, with the most recent deals
+    appearing first.",
+                "method": "GET",
+                "path": "/v2/deals",
+                "request": {
+                  "query-parameters": {
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "group": {
+                      "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "partner_key": {
+                      "docs": "Will filter to a specific partnership's \`partner_key\`, which can be found using the partnership's get endpoint or from the partnership view in your PartnerStack dashboard.",
+                      "type": "optional<string>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType14",
+              },
+              "_unnamedOperation2": {
+                "display-name": "Create a deal",
+                "docs": "Creates a deal with desired params.",
+                "method": "POST",
+                "path": "/v2/deals",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType15",
+                    ],
+                  },
+                },
+                "response": "_InlinedType27",
+              },
+              "_unnamedOperation3": {
+                "display-name": "Retrieve the form templates for a deal",
+                "docs": "Fetches the specified form templates for a deal.",
+                "method": "GET",
+                "path": "/v2/deals/form-templates",
+                "request": {
+                  "query-parameters": {
+                    "group_key": "optional<string>",
+                    "mold_key": "optional<string>",
+                    "partner_key": "optional<string>",
+                  },
+                },
+                "response": "_InlinedType35",
+              },
+              "_unnamedOperation4": {
+                "display-name": "Retrieve a deal",
+                "docs": "Retrieves the details of an existing deal. You need only supply the unique deal key that was returned upon deal creation.",
+                "method": "GET",
+                "path": "/v2/deals/{deal_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of deal. Can be \`external_key\`, if one configured for deal.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType46",
+              },
+              "_unnamedOperation5": {
+                "display-name": "Archive a deal",
+                "docs": "Archives the specified deal",
+                "method": "DELETE",
+                "path": "/v2/deals/{deal_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of deal.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType47",
+              },
+              "_unnamedOperation6": {
+                "display-name": "Update a deal",
+                "docs": "Updates the specified deal by setting the values of
+    the parameters passed. Any parameters not provided will be left
+    unchanged.",
+                "method": "PATCH",
+                "path": "/v2/deals/{deal_key}",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of deal. Can be \`external_key\`, if one configured for deal.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "docs": "**Deals** allow your partners to submit accounts they are working to your sales team to avoid channel conflicts and earn commissions for closed accounts.
+
+Typically the Deals experience is handled through a CRM integration like Salesforce. However you may opt to use the Deals API to have PartnerStack interact with a custom data warehouse rather than directly with your CRM.",
+                    "extends": undefined,
+                    "properties": {
+                      "account_name": "optional<string>",
+                      "amount": "optional<integer>",
+                      "close_date": "optional<string>",
+                      "contact_first_name": "optional<string>",
+                      "contact_last_name": "optional<string>",
+                      "external_key": "optional<string>",
+                      "fields": "optional<list<_InlinedType48>>",
+                      "group_key": "optional<string>",
+                      "lost_reason": "optional<string>",
+                      "mold_key": "optional<string>",
+                      "partner_key": "optional<string>",
+                      "source": "optional<string>",
+                      "stage": "optional<string>",
+                      "team": "optional<_InlinedType51>",
+                      "team_member": "optional<_InlinedType54>",
+                    },
+                  },
+                },
+                "response": "_InlinedType65",
+              },
+              "_unnamedOperation7": {
+                "display-name": "Convert a deal",
+                "docs": "Converts a deal to a customer",
+                "method": "POST",
+                "path": "/v2/deals/{deal_key}/convert",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of deal.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "customer_key": "optional<string>",
+                      "email": "string",
+                    },
+                  },
+                },
+                "response": "_InlinedType72",
+              },
+              "_unnamedOperation8": {
+                "display-name": "Get files attached to a deal",
+                "docs": "Gets the files attached to the specified deal",
+                "method": "GET",
+                "path": "/v2/deals/{deal_key}/files",
+                "path-parameters": {
+                  "deal_key": {
+                    "docs": "Unique identifier of the deal",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType75",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType0": {
+          "extends": undefined,
+          "properties": {
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType1": {
+          "extends": undefined,
+          "properties": {
+            "url": "optional<string>",
+          },
+        },
+        "_InlinedType12": {
+          "extends": [
+            "_InlinedType3",
+            "_InlinedType4",
+          ],
+        },
+        "_InlinedType13": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType12>>",
+          },
+        },
+        "_InlinedType14": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType13",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType15": {
+          "extends": undefined,
+          "properties": {
+            "account_name": "string",
+            "amount": "integer",
+            "close_date": "string",
+            "contact_first_name": "string",
+            "contact_last_name": "string",
+            "fields": "optional<list<_InlinedType16>>",
+            "source": "optional<string>",
+            "stage": "string",
+          },
+        },
+        "_InlinedType17": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType18": {
+          "docs": "**Deals** allow your partners to submit accounts they are working to your sales team to avoid channel conflicts and earn commissions for closed accounts.
+
+Typically the Deals experience is handled through a CRM integration like Salesforce. However you may opt to use the Deals API to have PartnerStack interact with a custom data warehouse rather than directly with your CRM.",
+          "extends": undefined,
+          "properties": {
+            "account_name": "optional<string>",
+            "amount": "optional<integer>",
+            "close_date": "optional<string>",
+            "contact_first_name": "optional<string>",
+            "contact_last_name": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType19>>",
+            "group_key": "optional<string>",
+            "lost_reason": "optional<string>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "source": "optional<string>",
+            "stage": "optional<string>",
+            "team": "optional<_InlinedType22>",
+            "team_member": "optional<_InlinedType25>",
+          },
+        },
+        "_InlinedType2": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType1",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType26": {
+          "extends": [
+            "_InlinedType17",
+            "_InlinedType18",
+          ],
+        },
+        "_InlinedType27": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType26",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType28": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType29": {
+          "docs": "**FormTemplates** are configurable on many of our supported objects. These forms act as a way to collect additional information on object create",
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "fields": "optional<list<_InlinedType30>>",
+            "groups": "optional<list<_InlinedType33>>",
+            "name": "optional<string>",
+            "title": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
+        "_InlinedType3": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType34": {
+          "extends": [
+            "_InlinedType28",
+            "_InlinedType29",
+          ],
+        },
+        "_InlinedType35": {
+          "extends": undefined,
+          "properties": {
+            "data": "list<_InlinedType34>",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType36": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType37": {
+          "docs": "**Deals** allow your partners to submit accounts they are working to your sales team to avoid channel conflicts and earn commissions for closed accounts.
+
+Typically the Deals experience is handled through a CRM integration like Salesforce. However you may opt to use the Deals API to have PartnerStack interact with a custom data warehouse rather than directly with your CRM.",
+          "extends": undefined,
+          "properties": {
+            "account_name": "optional<string>",
+            "amount": "optional<integer>",
+            "close_date": "optional<string>",
+            "contact_first_name": "optional<string>",
+            "contact_last_name": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType38>>",
+            "group_key": "optional<string>",
+            "lost_reason": "optional<string>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "source": "optional<string>",
+            "stage": "optional<string>",
+            "team": "optional<_InlinedType41>",
+            "team_member": "optional<_InlinedType44>",
+          },
+        },
+        "_InlinedType4": {
+          "docs": "**Deals** allow your partners to submit accounts they are working to your sales team to avoid channel conflicts and earn commissions for closed accounts.
+
+Typically the Deals experience is handled through a CRM integration like Salesforce. However you may opt to use the Deals API to have PartnerStack interact with a custom data warehouse rather than directly with your CRM.",
+          "extends": undefined,
+          "properties": {
+            "account_name": "optional<string>",
+            "amount": "optional<integer>",
+            "close_date": "optional<string>",
+            "contact_first_name": "optional<string>",
+            "contact_last_name": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType5>>",
+            "group_key": "optional<string>",
+            "lost_reason": "optional<string>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "source": "optional<string>",
+            "stage": "optional<string>",
+            "team": "optional<_InlinedType8>",
+            "team_member": "optional<_InlinedType11>",
+          },
+        },
+        "_InlinedType45": {
+          "extends": [
+            "_InlinedType36",
+            "_InlinedType37",
+          ],
+        },
+        "_InlinedType46": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType45",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType47": {
+          "extends": undefined,
+          "properties": {
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType48": {
+          "docs": "**FieldData** combines attributes about a field with its submitted value on target object",
+          "extends": undefined,
+          "properties": {
+            "api_name": "optional<string>",
+            "external_type": "optional<string>",
+            "field_key": "optional<string>",
+            "help_text": "optional<string>",
+            "hidden": "optional<boolean>",
+            "internal_name": "optional<string>",
+            "name": "optional<string>",
+            "placeholder_text": "optional<string>",
+            "position": "optional<integer>",
+            "required": "optional<boolean>",
+            "type": "optional<string>",
+          },
+        },
+        "_InlinedType49": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType50": {
+          "docs": "Details of team used in public API.",
+          "extends": undefined,
+          "properties": {
+            "name": "optional<string>",
+          },
+        },
+        "_InlinedType51": {
+          "extends": [
+            "_InlinedType49",
+            "_InlinedType50",
+          ],
+        },
+        "_InlinedType52": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType53": {
+          "docs": "Details of team member used in public API.",
+          "extends": undefined,
+          "properties": {
+            "email": "optional<string>",
+            "first_name": "optional<string>",
+            "last_name": "optional<string>",
+          },
+        },
+        "_InlinedType54": {
+          "extends": [
+            "_InlinedType52",
+            "_InlinedType53",
+          ],
+        },
+        "_InlinedType55": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType56": {
+          "docs": "**Deals** allow your partners to submit accounts they are working to your sales team to avoid channel conflicts and earn commissions for closed accounts.
+
+Typically the Deals experience is handled through a CRM integration like Salesforce. However you may opt to use the Deals API to have PartnerStack interact with a custom data warehouse rather than directly with your CRM.",
+          "extends": undefined,
+          "properties": {
+            "account_name": "optional<string>",
+            "amount": "optional<integer>",
+            "close_date": "optional<string>",
+            "contact_first_name": "optional<string>",
+            "contact_last_name": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType57>>",
+            "group_key": "optional<string>",
+            "lost_reason": "optional<string>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "source": "optional<string>",
+            "stage": "optional<string>",
+            "team": "optional<_InlinedType60>",
+            "team_member": "optional<_InlinedType63>",
+          },
+        },
+        "_InlinedType64": {
+          "extends": [
+            "_InlinedType55",
+            "_InlinedType56",
+          ],
+        },
+        "_InlinedType65": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType64",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType66": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType67": {
+          "docs": "**Customers** represent the users who have been referred by a **Partner**.
+
+**Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
+
+The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
+          "extends": [
+            "_InlinedType68",
+            "_InlinedType69",
+          ],
+        },
+        "_InlinedType71": {
+          "extends": [
+            "_InlinedType66",
+            "_InlinedType67",
+          ],
+        },
+        "_InlinedType72": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType71",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType73": {
+          "extends": undefined,
+          "properties": {
+            "field_key": "optional<string>",
+            "key": "optional<string>",
+            "name": "optional<string>",
+          },
+        },
+        "_InlinedType74": {
+          "extends": undefined,
+          "properties": {
+            "deal_files": "optional<list<_InlinedType73>>",
+          },
+        },
+        "_InlinedType75": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType74",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "formTemplates.yml": {
+      "services": {
+        "http": {
+          "FormTemplatesService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "getFormTemplates": {
+                "display-name": "List all form templates",
+                "docs": "Returns a list of your form templates. The form templates are returned sorted by creation date, with the most recent form templates appearing first.",
+                "method": "GET",
+                "path": "/v2/form-templates",
+                "request": {
+                  "query-parameters": {
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "group": {
+                      "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "mold_keys": {
+                      "docs": "The keys of the molds to filter by. If empty, returns fields for all molds.",
+                      "type": "optional<string>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                    "target_type": {
+                      "docs": "The molds' target type. If empty, filter by all types.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType143",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType135": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType136": {
+          "docs": "**FormTemplates** are configurable on many of our supported objects. These forms act as a way to collect additional information on object create",
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "fields": "optional<list<_InlinedType137>>",
+            "groups": "optional<list<_InlinedType140>>",
+            "name": "optional<string>",
+            "title": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
+        "_InlinedType141": {
+          "extends": [
+            "_InlinedType135",
+            "_InlinedType136",
+          ],
+        },
+        "_InlinedType142": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType141>>",
+          },
+        },
+        "_InlinedType143": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType142",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "groups.yml": {
+      "services": {
+        "http": {
+          "GroupsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all groups",
+                "docs": "Returns a list of your groups. The groups are returned sorted by creation date, with the most recent groups appearing first.",
+                "method": "GET",
+                "path": "/v2/groups",
+                "request": {
+                  "query-parameters": {
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType148",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType144": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType145": {
+          "docs": "**Groups** are a way to segment partners within PartnerStack to selectively distribute access to things such as Campaigns, Marketing Assets, and Rewards",
+          "extends": undefined,
+          "properties": {
+            "archived": "optional<boolean>",
+            "default": "optional<boolean>",
+            "name": "optional<string>",
+            "slug": "optional<string>",
+          },
+        },
+        "_InlinedType146": {
+          "extends": [
+            "_InlinedType144",
+            "_InlinedType145",
+          ],
+        },
+        "_InlinedType147": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType146>>",
+          },
+        },
+        "_InlinedType148": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType147",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "leads.yml": {
+      "services": {
+        "http": {
+          "LeadsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all leads",
+                "docs": "Returns a list of your leads. The leads are
+    returned sorted by creation date, with the most recent leads
+    appearing first.",
+                "method": "GET",
+                "path": "/v2/leads",
+                "request": {
+                  "query-parameters": {
+                    "group": {
+                      "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
+                      "type": "optional<string>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "partner_key": {
+                      "docs": "Will filter to a specific partnership's \`partner_key\`, which can be found using the partnership's get endpoint or from the partnership view in your PartnerStack dashboard.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType155",
+              },
+              "_unnamedOperation16": {
+                "display-name": "Create a lead",
+                "docs": "Creates a lead with desired params.",
+                "method": "POST",
+                "path": "/v2/leads",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType156",
+                    ],
+                  },
+                },
+                "response": "_InlinedType164",
+              },
+              "_unnamedOperation17": {
+                "display-name": "Retrieve the form templates for a lead",
+                "docs": "Fetches the specified form templates for a lead.",
+                "method": "GET",
+                "path": "/v2/leads/form-templates",
+                "request": {
+                  "query-parameters": {
+                    "group_key": "optional<string>",
+                    "mold_key": "optional<string>",
+                  },
+                },
+                "response": "_InlinedType172",
+              },
+              "_unnamedOperation18": {
+                "display-name": "Retrieve a lead",
+                "docs": "Retrieves the details of an existing
+    lead. You need only supply the unique lead key that was returned
+    upon lead creation.",
+                "method": "GET",
+                "path": "/v2/leads/{lead_key}",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType178",
+              },
+              "_unnamedOperation19": {
+                "display-name": "Archive a lead",
+                "docs": "Archives the specified lead.",
+                "method": "DELETE",
+                "path": "/v2/leads/{lead_key}",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType179",
+              },
+              "_unnamedOperation20": {
+                "display-name": "Update a lead",
+                "docs": "Updates the specified lead by setting the values
+    of the parameters passed. Any parameters not provided will be left
+    unchanged.",
+                "method": "PATCH",
+                "path": "/v2/leads/{lead_key}",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
+                    "extends": undefined,
+                    "properties": {
+                      "amount": "optional<integer>",
+                      "approved": "optional<boolean>",
+                      "customer_key": "optional<string>",
+                      "external_key": "optional<string>",
+                      "fields": "optional<list<_InlinedType180>>",
+                      "group_key": "optional<string>",
+                      "meta": "optional<_InlinedType181>",
+                      "mold_key": "optional<string>",
+                      "partner_key": "optional<string>",
+                      "status": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType187",
+              },
+              "_unnamedOperation21": {
+                "display-name": "Convert a lead",
+                "docs": "Converts a lead to a customer",
+                "method": "POST",
+                "path": "/v2/leads/{lead_key}/convert",
+                "path-parameters": {
+                  "lead_key": {
+                    "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "customer_key": "optional<string>",
+                      "email": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType194",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType149": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType150": {
+          "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<integer>",
+            "approved": "optional<boolean>",
+            "customer_key": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType151>>",
+            "group_key": "optional<string>",
+            "meta": "optional<_InlinedType152>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "status": "optional<string>",
+          },
+        },
+        "_InlinedType153": {
+          "extends": [
+            "_InlinedType149",
+            "_InlinedType150",
+          ],
+        },
+        "_InlinedType154": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType153>>",
+          },
+        },
+        "_InlinedType155": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType154",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType156": {
+          "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<integer>",
+            "approved": "optional<boolean>",
+            "external_key": "string",
+            "fields": "optional<list<_InlinedType157>>",
+            "group_key": "optional<string>",
+            "meta": "_InlinedType158",
+            "mold_key": "optional<string>",
+            "partner_key": "string",
+            "status": "string",
+          },
+        },
+        "_InlinedType159": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType160": {
+          "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<integer>",
+            "approved": "optional<boolean>",
+            "customer_key": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType161>>",
+            "group_key": "optional<string>",
+            "meta": "optional<_InlinedType162>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "status": "optional<string>",
+          },
+        },
+        "_InlinedType163": {
+          "extends": [
+            "_InlinedType159",
+            "_InlinedType160",
+          ],
+        },
+        "_InlinedType164": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType163",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType165": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType166": {
+          "docs": "**FormTemplates** are configurable on many of our supported objects. These forms act as a way to collect additional information on object create",
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "fields": "optional<list<_InlinedType167>>",
+            "groups": "optional<list<_InlinedType170>>",
+            "name": "optional<string>",
+            "title": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
+        "_InlinedType171": {
+          "extends": [
+            "_InlinedType165",
+            "_InlinedType166",
+          ],
+        },
+        "_InlinedType172": {
+          "extends": undefined,
+          "properties": {
+            "data": "list<_InlinedType171>",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType173": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType174": {
+          "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<integer>",
+            "approved": "optional<boolean>",
+            "customer_key": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType175>>",
+            "group_key": "optional<string>",
+            "meta": "optional<_InlinedType176>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "status": "optional<string>",
+          },
+        },
+        "_InlinedType177": {
+          "extends": [
+            "_InlinedType173",
+            "_InlinedType174",
+          ],
+        },
+        "_InlinedType178": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType177",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType179": {
+          "extends": undefined,
+          "properties": {
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType180": {
+          "docs": "**FieldData** combines attributes about a field with its submitted value on target object",
+          "extends": undefined,
+          "properties": {
+            "api_name": "optional<string>",
+            "external_type": "optional<string>",
+            "field_key": "optional<string>",
+            "help_text": "optional<string>",
+            "hidden": "optional<boolean>",
+            "internal_name": "optional<string>",
+            "name": "optional<string>",
+            "placeholder_text": "optional<string>",
+            "position": "optional<integer>",
+            "required": "optional<boolean>",
+            "type": "optional<string>",
+          },
+        },
+        "_InlinedType181": {
+          "docs": "Key value pairs that store additional information about this lead. First and last name required. Other eligible keys are based on Lead forms created. Use the /leads/form-template to view field names",
+          "extends": undefined,
+          "properties": {
+            "company": "optional<string>",
+            "email": "optional<string>",
+            "first_name": "optional<string>",
+            "last_name": "optional<string>",
+          },
+        },
+        "_InlinedType182": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType183": {
+          "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<integer>",
+            "approved": "optional<boolean>",
+            "customer_key": "optional<string>",
+            "external_key": "optional<string>",
+            "fields": "optional<list<_InlinedType184>>",
+            "group_key": "optional<string>",
+            "meta": "optional<_InlinedType185>",
+            "mold_key": "optional<string>",
+            "partner_key": "optional<string>",
+            "status": "optional<string>",
+          },
+        },
+        "_InlinedType186": {
+          "extends": [
+            "_InlinedType182",
+            "_InlinedType183",
+          ],
+        },
+        "_InlinedType187": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType186",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType188": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType189": {
+          "docs": "**Customers** represent the users who have been referred by a **Partner**.
+
+**Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
+
+The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
+          "extends": [
+            "_InlinedType190",
+            "_InlinedType191",
+          ],
+        },
+        "_InlinedType193": {
+          "extends": [
+            "_InlinedType188",
+            "_InlinedType189",
+          ],
+        },
+        "_InlinedType194": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType193",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "marketplace.yml": {
+      "services": {
+        "http": {
+          "MarketplaceService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all programs",
+                "docs": "Returns a list of all active marketplace-listed programs and their details. The programs are returned sorted by creation date by default, with the most recent programs appearing first.",
+                "method": "GET",
+                "path": "/v2/marketplace/programs",
+                "request": {
+                  "query-parameters": {
+                    "category": {
+                      "docs": "Marketplace category of the programs",
+                      "type": "optional<string>",
+                    },
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType199",
+              },
+              "_unnamedOperation22": {
+                "display-name": "Retrieve a marketplace program",
+                "docs": "Retrieves a marketplace program given its program key.",
+                "method": "GET",
+                "path": "/v2/marketplace/programs/{company_key}",
+                "path-parameters": {
+                  "company_key": {
+                    "docs": "Unique identifier of the program.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType203",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType195": {
+          "docs": "Returns a list of all marketplace-listed programs and their details",
+          "extends": undefined,
+          "properties": {
+            "category": "optional<list<unknown>>",
+            "country": "optional<string>",
+            "created_at": "optional<integer>",
+            "description": "optional<string>",
+            "key": "optional<string>",
+            "logo": "optional<string>",
+            "name": "optional<string>",
+            "offers": "optional<list<_InlinedType196>>",
+            "website": "optional<string>",
+          },
+        },
+        "_InlinedType197": {
+          "extends": [
+            "_InlinedType195",
+          ],
+        },
+        "_InlinedType198": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType197>>",
+            "total": "optional<integer>",
+          },
+        },
+        "_InlinedType199": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType198",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType200": {
+          "docs": "Returns a list of all marketplace-listed programs and their details",
+          "extends": undefined,
+          "properties": {
+            "category": "optional<list<unknown>>",
+            "country": "optional<string>",
+            "created_at": "optional<integer>",
+            "description": "optional<string>",
+            "key": "optional<string>",
+            "logo": "optional<string>",
+            "name": "optional<string>",
+            "offers": "optional<list<_InlinedType201>>",
+            "website": "optional<string>",
+          },
+        },
+        "_InlinedType202": {
+          "extends": [
+            "_InlinedType200",
+          ],
+        },
+        "_InlinedType203": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType202",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "partnerships.yml": {
+      "services": {
+        "http": {
+          "PartnershipsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all partnerships",
+                "docs": "Returns a list of your partnerships. The partnerships are returned sorted by creation date by default, with the most recent partnerships appearing first.",
+                "method": "GET",
+                "path": "/v2/partnerships",
+                "request": {
+                  "query-parameters": {
+                    "email": {
+                      "docs": "The email of the user with the partnership you're looking for.",
+                      "type": "optional<string>",
+                    },
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "group": {
+                      "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "max_updated": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_updated": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "order_by": {
+                      "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
+                      "type": "optional<string>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType213",
+              },
+              "_unnamedOperation23": {
+                "display-name": "Create a partnership",
+                "docs": "Creates a new partnership with the data provided.",
+                "method": "POST",
+                "path": "/v2/partnerships",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType214",
+                      "_InlinedType216",
+                    ],
+                  },
+                },
+                "response": "_InlinedType227",
+              },
+              "_unnamedOperation24": {
+                "display-name": "Retrieve a partnership",
+                "docs": "Retrieves the details of an existing partnership.",
+                "method": "GET",
+                "path": "/v2/partnerships/{partnership_key}",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "Unique identifier of partnership. Can be \`partner_key\`, if one configured for partnership.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType241",
+              },
+              "_unnamedOperation25": {
+                "display-name": "Archive a partnership",
+                "docs": "Archives a partnership.",
+                "method": "DELETE",
+                "path": "/v2/partnerships/{partnership_key}",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "The specific internal key that identifies the partnership.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType242",
+              },
+              "_unnamedOperation26": {
+                "display-name": "Update a partnership",
+                "docs": "Updates the specific partnership by setting the values of the parameters passed.",
+                "method": "PATCH",
+                "path": "/v2/partnerships/{partnership_key}",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "The specific key for the partnership",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "docs": "UpdateTarget",
+                    "extends": undefined,
+                    "properties": {
+                      "fields": "optional<list<_InlinedType243>>",
+                      "group_key": "optional<string>",
+                      "manager_email": "optional<string>",
+                      "tier_key": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType252",
+              },
+              "_unnamedOperation27": {
+                "display-name": "Updates a partnership's tags",
+                "docs": "Add or remove tags from the specified partnership.",
+                "method": "PATCH",
+                "path": "/v2/partnerships/{partnership_key}/tags",
+                "path-parameters": {
+                  "partnership_key": {
+                    "docs": "The specific key for the partnership",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "docs": "UpdateTagsForTarget",
+                    "extends": undefined,
+                    "properties": {
+                      "add": "optional<list<string>>",
+                      "remove": "optional<list<string>>",
+                    },
+                  },
+                },
+                "response": "_InlinedType264",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType204": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType205": {
+          "docs": "Partnerships represent companies that you are partnered with and promoting on PartnerStack",
+          "extends": undefined,
+          "properties": {
+            "address": "optional<_InlinedType206>",
+            "email": "optional<string>",
+            "first_name": "optional<string>",
+            "group": "optional<_InlinedType207>",
+            "joined_at": "optional<integer>",
+            "last_name": "optional<string>",
+            "manager": "optional<_InlinedType208>",
+            "partner_key": "optional<string>",
+            "tags": "optional<list<string>>",
+          },
+        },
+        "_InlinedType209": {
+          "extends": undefined,
+          "properties": {
+            "team": "optional<_InlinedType210>",
+          },
+        },
+        "_InlinedType211": {
+          "extends": [
+            "_InlinedType204",
+            "_InlinedType205",
+            "_InlinedType209",
+          ],
+        },
+        "_InlinedType212": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType211>>",
+            "total": "optional<integer>",
+          },
+        },
+        "_InlinedType213": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType212",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType214": {
+          "docs": "**Partners** represent users on PartnerStack that will be promoting your company.",
+          "extends": undefined,
+          "properties": {
+            "email": "optional<string>",
+            "fields": "optional<list<_InlinedType215>>",
+            "first_name": "optional<string>",
+            "last_name": "optional<string>",
+            "manager_email": "optional<string>",
+            "manager_name": "optional<string>",
+            "partner_key": "optional<string>",
+            "tags": "optional<list<string>>",
+          },
+        },
+        "_InlinedType216": {
+          "extends": undefined,
+          "properties": {
+            "group_key": "optional<string>",
+          },
+        },
+        "_InlinedType217": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType218": {
+          "extends": [
+            "_InlinedType219",
+            "_InlinedType221",
+          ],
+        },
+        "_InlinedType226": {
+          "extends": [
+            "_InlinedType217",
+            "_InlinedType218",
+          ],
+        },
+        "_InlinedType227": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType226",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType228": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType229": {
+          "extends": [
+            "_InlinedType230",
+            "_InlinedType232",
+          ],
+        },
+        "_InlinedType237": {
+          "extends": undefined,
+          "properties": {
+            "address": "optional<_InlinedType238>",
+            "team": "optional<_InlinedType239>",
+          },
+        },
+        "_InlinedType240": {
+          "extends": [
+            "_InlinedType228",
+            "_InlinedType229",
+            "_InlinedType237",
+          ],
+        },
+        "_InlinedType241": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType240",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType242": {
+          "extends": undefined,
+          "properties": {
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType243": {
+          "extends": undefined,
+          "properties": {
+            "api_name": "optional<string>",
+          },
+        },
+        "_InlinedType244": {
+          "docs": "**Partners** represent users on PartnerStack that will be promoting your company.",
+          "extends": undefined,
+          "properties": {
+            "email": "optional<string>",
+            "fields": "optional<list<_InlinedType245>>",
+            "first_name": "optional<string>",
+            "last_name": "optional<string>",
+            "manager_email": "optional<string>",
+            "manager_name": "optional<string>",
+            "partner_key": "optional<string>",
+            "tags": "optional<list<string>>",
+          },
+        },
+        "_InlinedType246": {
+          "extends": undefined,
+          "properties": {
+            "group": "optional<_InlinedType249>",
+            "tier": "optional<_InlinedType250>",
+          },
+        },
+        "_InlinedType251": {
+          "extends": [
+            "_InlinedType244",
+            "_InlinedType246",
+          ],
+        },
+        "_InlinedType252": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType251",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType253": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType254": {
+          "extends": [
+            "_InlinedType255",
+            "_InlinedType257",
+          ],
+        },
+        "_InlinedType262": {
+          "extends": [
+            "_InlinedType253",
+            "_InlinedType254",
+          ],
+        },
+        "_InlinedType263": {
+          "docs": "Response schema for the PatchUpdateTagsForPartnership endpoint",
+          "extends": undefined,
+          "properties": {
+            "partnership": "optional<_InlinedType262>",
+            "tags_added": "optional<list<string>>",
+            "tags_not_found": "optional<list<string>>",
+            "tags_removed": "optional<list<string>>",
+          },
+        },
+        "_InlinedType264": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType263",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "rewards.yml": {
+      "services": {
+        "http": {
+          "RewardsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all rewards",
+                "docs": "Returns a list of your rewards. The rewards are returned sorted by creation date by default, with the most recent rewards appearing first.",
+                "method": "GET",
+                "path": "/v2/rewards",
+                "request": {
+                  "query-parameters": {
+                    "customer_key": {
+                      "docs": "Customer key in which the results are filtered by",
+                      "type": "optional<string>",
+                    },
+                    "decline_reason": {
+                      "docs": "Text that the decline_reason must contain",
+                      "type": "optional<string>",
+                    },
+                    "description": {
+                      "docs": "Text that the description must contain",
+                      "type": "optional<string>",
+                    },
+                    "distinct_decline_reason": {
+                      "docs": "Flag the returned results should have distinct decline reasons or not",
+                      "type": "optional<boolean>",
+                    },
+                    "distinct_description": {
+                      "docs": "Flag the returned results should have distinct descriptions or not",
+                      "type": "optional<boolean>",
+                    },
+                    "empty_line_id": {
+                      "docs": "Flag if drip rewards returned have a line_id (invoice) attached or not",
+                      "type": "optional<boolean>",
+                    },
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "exclude_drip_rewards": {
+                      "docs": "Flag if drip rewards should be included into the results",
+                      "type": "optional<string>",
+                    },
+                    "group_key": {
+                      "docs": "Group key in which the results are filtered by",
+                      "type": "optional<string>",
+                    },
+                    "hide_archived_rewards": {
+                      "docs": "Flag to hide rewards that have been archived",
+                      "type": "optional<boolean>",
+                    },
+                    "invoice_key": {
+                      "docs": "Invoice key in which the results are filtered by",
+                      "type": "optional<string>",
+                    },
+                    "invoiceable": {
+                      "docs": "Flag if the returned results should have only pending and approved rewards which do not have an associated payment line.",
+                      "type": "optional<boolean>",
+                    },
+                    "keywords": {
+                      "docs": "Free keywords that will filter on the followingReward key, Customer name, Partner first name, Partner last name, Partner email, Partner key",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "max_created": {
+                      "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "min_created": {
+                      "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
+                      "type": "optional<integer>",
+                    },
+                    "order_by": {
+                      "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
+                      "type": "optional<string>",
+                    },
+                    "partnership_key": {
+                      "docs": "Partnership key in which the results are filtered by.",
+                      "type": "optional<string>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                    "status": {
+                      "docs": "The status of the rewards",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType280",
+              },
+              "_unnamedOperation28": {
+                "display-name": "Create a reward",
+                "docs": "Creates a new reward for a given target.",
+                "method": "POST",
+                "path": "/v2/rewards",
+                "request": {
+                  "body": {
+                    "docs": "Reward is what the Partner earns.",
+                    "extends": undefined,
+                    "properties": {
+                      "amount": "integer",
+                      "description": "string",
+                      "target": "_InlinedType281",
+                    },
+                  },
+                },
+                "response": "_InlinedType286",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType265": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType266": {
+          "extends": [
+            "_InlinedType267",
+            "_InlinedType268",
+          ],
+        },
+        "_InlinedType278": {
+          "extends": [
+            "_InlinedType265",
+            "_InlinedType266",
+          ],
+        },
+        "_InlinedType279": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType278>>",
+            "total": "optional<integer>",
+          },
+        },
+        "_InlinedType280": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType279",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType281": {
+          "extends": undefined,
+          "properties": {
+            "key": "string",
+            "type": "string",
+          },
+        },
+        "_InlinedType282": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType283": {
+          "docs": "Reward is what the Partner earns.",
+          "extends": undefined,
+          "properties": {
+            "amount": "integer",
+            "description": "string",
+            "target": "_InlinedType284",
+          },
+        },
+        "_InlinedType285": {
+          "extends": [
+            "_InlinedType282",
+            "_InlinedType283",
+          ],
+        },
+        "_InlinedType286": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType285",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "transactions.yml": {
+      "services": {
+        "http": {
+          "TransactionsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all transactions",
+                "docs": "Returns a list of your transactions. The transactions are returned sorted by creation date, with the most recent transactions appearing first. ",
+                "method": "GET",
+                "path": "/v2/transactions",
+                "request": {
+                  "query-parameters": {
+                    "customer_email": {
+                      "docs": "Customer's email address.",
+                      "type": "optional<string>",
+                    },
+                    "customer_external_key": {
+                      "docs": "An external key that can be used to reference the customer.                 This is the same as the \`customer_key\` value used when creating the customer                 with PartnerStackJS.",
+                      "type": "optional<string>",
+                    },
+                    "customer_key": {
+                      "docs": "Key of customer who made the transaction.",
+                      "type": "optional<string>",
+                    },
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType295",
+              },
+              "_unnamedOperation29": {
+                "display-name": "Create a transaction",
+                "docs": "Creates a new transaction
+
+Note that \`customer_external_key\` or \`customer_email\` can be provided in
+place of \`customer_key\` to reference the customer.
+
+These customer reference fields are required, but mutually exclusive
+(i.e. you must provide exactly and only one of the three).",
+                "method": "POST",
+                "path": "/v2/transactions",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType296",
+                    ],
+                  },
+                },
+                "response": "_InlinedType307",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType287": {
+          "docs": "Transaction",
+          "extends": [
+            "_InlinedType288",
+            "_InlinedType289",
+            "_InlinedType290",
+          ],
+        },
+        "_InlinedType291": {
+          "extends": undefined,
+          "properties": {
+            "approved": "optional<boolean>",
+            "customer": "optional<_InlinedType292>",
+          },
+        },
+        "_InlinedType293": {
+          "docs": "Transaction",
+          "extends": [
+            "_InlinedType287",
+            "_InlinedType291",
+          ],
+        },
+        "_InlinedType294": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType293>>",
+            "total": "optional<integer>",
+          },
+        },
+        "_InlinedType295": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType294",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType296": {
+          "docs": "Transaction Base",
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<integer>",
+            "category_key": "optional<string>",
+            "currency": "optional<string>",
+            "customer_key": "optional<string>",
+            "key": "optional<string>",
+            "product_key": "optional<string>",
+          },
+        },
+        "_InlinedType299": {
+          "docs": "Transaction",
+          "extends": [
+            "_InlinedType300",
+            "_InlinedType304",
+          ],
+        },
+        "_InlinedType306": {
+          "extends": [
+            "_InlinedType299",
+          ],
+        },
+        "_InlinedType307": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType306",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+    "webhooks.yml": {
+      "services": {
+        "http": {
+          "WebhooksService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "": {
+                "display-name": "List all webhooks",
+                "docs": "Returns a list of your webhooks. The webhooks are
+    returned sorted by creation date, with the most recent webhooks
+    appearing first.",
+                "method": "GET",
+                "path": "/v2/webhooks",
+                "request": {
+                  "query-parameters": {
+                    "ending_before": {
+                      "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
+                      "type": "optional<integer>",
+                    },
+                    "starting_after": {
+                      "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "_InlinedType312",
+              },
+              "_unnamedOperation30": {
+                "display-name": "Create a webhook",
+                "docs": "Webhooks deliver POST requests to the target URL when the specified events are triggered.",
+                "method": "POST",
+                "path": "/v2/webhooks",
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType313",
+                    ],
+                  },
+                },
+                "response": "_InlinedType318",
+              },
+              "_unnamedOperation31": {
+                "display-name": "Retrieve a webhook",
+                "docs": "Retrieves the details of an existing webhook. You
+    need only supply the unique webhook key that was returned upon
+    webhook creation.",
+                "method": "GET",
+                "path": "/v2/webhooks/{webhook_key}",
+                "path-parameters": {
+                  "webhook_key": {
+                    "docs": "Unique identifier of a webhook.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType322",
+              },
+              "_unnamedOperation32": {
+                "display-name": "Archive a webhook",
+                "docs": "Webhook events will no longer be delivered to the attached endpoints.",
+                "method": "DELETE",
+                "path": "/v2/webhooks/{webhook_key}",
+                "path-parameters": {
+                  "webhook_key": {
+                    "docs": "Unique identifier of a webhook.",
+                    "type": "string",
+                  },
+                },
+                "response": "_InlinedType326",
+              },
+              "_unnamedOperation33": {
+                "display-name": "Update a webhook",
+                "docs": "Updates the specified webhook by setting the values of the parameters passed.",
+                "method": "PATCH",
+                "path": "/v2/webhooks/{webhook_key}",
+                "path-parameters": {
+                  "webhook_key": {
+                    "docs": "Unique identifier of a webhook.",
+                    "type": "string",
+                  },
+                },
+                "request": {
+                  "body": {
+                    "extends": [
+                      "_InlinedType327",
+                    ],
+                  },
+                },
+                "response": "_InlinedType332",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType308": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType309": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType310": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType308",
+            "_InlinedType309",
+          ],
+        },
+        "_InlinedType311": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "boolean",
+            "items": "list<_InlinedType310>",
+          },
+        },
+        "_InlinedType312": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType311",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType313": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType315": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType316": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType317": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType315",
+            "_InlinedType316",
+          ],
+        },
+        "_InlinedType318": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType317",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType319": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType320": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType321": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType319",
+            "_InlinedType320",
+          ],
+        },
+        "_InlinedType322": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType321",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType323": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType324": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType325": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType323",
+            "_InlinedType324",
+          ],
+        },
+        "_InlinedType326": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType325",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType327": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType329": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<integer>",
+            "key": "optional<string>",
+            "updated_at": "optional<integer>",
+          },
+        },
+        "_InlinedType330": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<string>>",
+            "target_url": "optional<string>",
+          },
+        },
+        "_InlinedType331": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType329",
+            "_InlinedType330",
+          ],
+        },
+        "_InlinedType332": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType331",
+            "message": "string",
+            "status": "integer",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
 exports[`open api converter rivet simple 1`] = `
 {
   "rootApiFile": {
