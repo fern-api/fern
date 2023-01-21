@@ -271,49 +271,44 @@ export class OpenApiV3Context {
         if (resolvedSchema == null) {
             return;
         }
-        const schemasToAdd = this.getAllReferencedSchemas(resolvedSchema);
-        for (const schemaToAdd of schemasToAdd) {
-            referencedSchemas.add(schemaToAdd);
-        }
+        this.getAllReferencedSchemas(resolvedSchema, referencedSchemas);
     }
 
     /**
      * Recursively find all reference objects from this schema object
      */
-    private getAllReferencedSchemas(schema: OpenAPIV3.SchemaObject): Set<OpenAPIV3.ReferenceObject> {
-        const schemaReferences = new Set<OpenAPIV3.ReferenceObject>();
-        if (schema.properties != null) {
+    private getAllReferencedSchemas(
+        schema: OpenAPIV3.SchemaObject,
+        schemaReferences: Set<OpenAPIV3.ReferenceObject>
+    ): void {
+        if (schema.properties != null && Object.entries(schema.properties).length > 0) {
             for (const [_, propertySchema] of Object.entries(schema.properties)) {
                 if (isReferenceObject(propertySchema)) {
+                    if (schemaReferences.has(propertySchema)) {
+                        continue; // skip because schema reference has already been explored
+                    }
                     schemaReferences.add(propertySchema);
                     const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
                     if (resolvedSchema != null) {
-                        this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
-                            schemaReferences.add(referencedSchema);
-                        });
+                        this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
                     }
-                } else if (
-                    propertySchema.properties != null &&
-                    propertySchema.type === "array" &&
-                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    propertySchema.items != null
-                ) {
-                    this.getAllReferencedSchemas(propertySchema).forEach((referencedSchema) => {
-                        schemaReferences.add(referencedSchema);
-                    });
+                } else {
+                    this.getAllReferencedSchemas(propertySchema, schemaReferences);
                 }
             }
+        } else if (
+            schema.type === "array" &&
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        } else if (schema.type === "array" && schema.items != null && isReferenceObject(schema.items)) {
+            schema.items != null &&
+            isReferenceObject(schema.items) &&
+            !schemaReferences.has(schema.items)
+        ) {
             schemaReferences.add(schema.items);
             const resolvedSchema = this.maybeResolveSchemaReference(schema.items);
             if (resolvedSchema != null) {
-                this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
-                    schemaReferences.add(referencedSchema);
-                });
+                this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
             }
         }
-        return schemaReferences;
     }
 }
 

@@ -136,6 +136,168 @@ services:
       issued a policy.
     properties:
       name: optional<string>
+  Policyholder:
+    docs: >-
+      Describes the company or person which is legally listed on, and entitled
+      to benefits from the policy for which they are attached.
+    properties:
+      type: optional<string>
+      name: optional<Name>
+      email_addresses: optional<list<EMail>>
+      phone_numbers: optional<list<Phone>>
+      is_primary: optional<boolean>
+  Name:
+    docs: Contains a name for a person or business
+    properties:
+      full: optional<string>
+  EMail:
+    docs: >-
+      A universal base object encapsulating the e-mail address related to
+      another object.
+    properties:
+      address: optional<string>
+      is_primary: optional<boolean>
+  Phone:
+    docs: >-
+      A universal base object encapsulating the phone number related to another
+      object.
+    properties:
+      type: optional<string>
+      number: optional<string>
+      is_primary: optional<boolean>
+  Vehicle:
+    docs: >-
+      Describes the motor vehicle which is covered under the terms of a policy.
+      This object contains details of the specific coverages provided for this
+      vehicle and information about the drivers who are covered.
+    properties:
+      vin: optional<string>
+      make: optional<string>
+      model: optional<string>
+      year: optional<string>
+      trim: optional<string>
+      series: optional<string>
+      annual_mileage: optional<integer>
+      usage: optional<_InlinedType26>
+      ownership: optional<_InlinedType27>
+      drivers: optional<list<Driver>>
+      interests: optional<list<Interest>>
+      coverages: optional<_InlinedType28>
+      discounts: optional<list<Discount>>
+  _InlinedType26:
+    docs: The intended usage of the vehicle by the insured.
+    enum:
+      - commute
+      - pleasure
+      - business
+  _InlinedType27:
+    docs: >-
+      Whether or not the vehicle specified is owned, leased, or financed by the
+      insured.
+    enum:
+      - own
+      - lease
+      - finance
+  _InlinedType28:
+    docs: >-
+      A list of all coverages that apply to this vehicle. The omission of any
+      coverage indicates that coverage was either declined or does not apply to
+      this vehicle.
+    properties:
+      bodily_injury: optional<Coverage>
+      property_damage: optional<Coverage>
+      medical_payments: optional<Coverage>
+      personal_injury_protection: optional<Coverage>
+      comprehensive: optional<Coverage>
+      collision: optional<Coverage>
+      uninsured_bodily_injury: optional<Coverage>
+      uninsured_property_damage: optional<Coverage>
+      underinsured_bodily_injury: optional<Coverage>
+      underinsured_property_damage: optional<Coverage>
+      roadside: optional<Coverage>
+      rental_car: optional<Coverage>
+      full_glass: optional<Coverage>
+      nonowned_bodily_injury: optional<Coverage>
+      nonowned_property_damage: optional<Coverage>
+      nonowned_medical_payments: optional<Coverage>
+      nonowned_physical_damage: optional<Coverage>
+      oem_parts: optional<Coverage>
+      ride_share: optional<Coverage>
+      all_risk: optional<Coverage>
+      new_vehicle_replacement: optional<Coverage>
+      collision_deductible_waiver: optional<Coverage>
+      loan_lease_payoff: optional<Coverage>
+      custom_parts: optional<Coverage>
+      automobile_death_benefit: optional<Coverage>
+      trip_interruption: optional<Coverage>
+      personal_property: optional<Coverage>
+      limited_property_damage: optional<Coverage>
+      property_protection: optional<Coverage>
+      personal_injury_attendant_rider: optional<Coverage>
+      rented_vehicle_liability: optional<Coverage>
+      motorcycle_enhanced_injury: optional<Coverage>
+      limited_personal_injury_protection: optional<Coverage>
+      carried_contents: optional<Coverage>
+  Driver:
+    docs: >-
+      Describes the individual driver who is considered the routine operator of
+      the vehicle it is attached to and who is explicitly included under the
+      coverage terms selected for the vehicle.
+    properties:
+      name: optional<Name>
+      date_of_birth: optional<string>
+      marital_status: optional<_InlinedType29>
+      gender: optional<_InlinedType30>
+      age_licensed: optional<integer>
+      license_number: optional<string>
+      license_state: optional<string>
+      is_primary: optional<boolean>
+  _InlinedType29:
+    docs: >-
+      The current marital status of the driver, if provided. The \`separated\`
+      value includes divorced status.
+    enum:
+      - married
+      - single
+      - separated
+      - widowed
+  _InlinedType30:
+    docs: The reported gender of the driver, when provided by the insurer.
+    enum:
+      - male
+      - female
+      - non-binary
+  Interest:
+    docs: >-
+      Describes an entity, person or company, that has a legal interest in a
+      piece of covered property. This could represent a bank or other financial
+      institution who owns a loan/mortgage/lien over a covered property, a
+      landlord who owns the property a tenant is leasing, or some other
+      recognized stakeholder who is entitled to certain information rights from
+      the insurance company regarding the covered property.
+    properties:
+      type: optional<string>
+      name: optional<Name>
+      email_addresses: optional<list<EMail>>
+      phone_numbers: optional<list<Phone>>
+  Coverage:
+    docs: >-
+      Describes the features of a specific coverage element for a person or
+      property, encapsulating the limits, deductibles, and premium information
+      therein. 
+    properties:
+      name: optional<string>
+      limits: optional<_InlinedType31>
+  _InlinedType31:
+    docs: >-
+      A breakout of different limits and sublimits that apply to this coverage
+      item. When the limits property is null, then the coverage described is
+      selected but limits are not applicable for the coverage feature. The
+      ommission of any limit scope indicates that it does not apply to the
+      coverage.
+    properties:
+      duration: optional<PeriodValue>
+      term: optional<CurrencyValue>
   PeriodValue:
     docs: >-
       Describes a value that represents a period of time, such as days, weeks,
@@ -143,14 +305,101 @@ services:
     properties:
       unit: optional<string>
       value: optional<integer>
+  CurrencyValue:
+    docs: >-
+      Describes a value that is tied to a monetary amount. Most frequently used
+      to describe limits, premiums, and deductibles.
+    properties:
+      unit: optional<string>
+      value: optional<double>
+  Discount:
+    docs: >-
+      Describes a discount which a policyholder is receiving for a particular
+      covered property under a policy. When available, this object also
+      describes the amount of savings.
+    properties:
+      code: optional<string>
+      friendly_name: optional<string>
+  Location:
+    docs: >-
+      Describes a physical location and/or structure which is covered under the
+      terms of an insurance policy.
+    properties:
+      address: optional<Address>
+      coverages: optional<_InlinedType32>
+      other_deductibles: optional<_InlinedType33>
+      discounts: optional<list<Discount>>
+      interests: optional<list<Interest>>
+  _InlinedType32:
+    docs: A list of coverages that apply to the location being insured.
+    properties:
+      dwelling: optional<Coverage>
+      dwelling_extension: optional<Coverage>
+      personal_property: optional<Coverage>
+      personal_property_off_premises: optional<Coverage>
+      loss_of_use: optional<Coverage>
+      service_line: optional<Coverage>
+      personal_liability: optional<Coverage>
+      medical_payments: optional<Coverage>
+      property_damage_others: optional<Coverage>
+      fire_service: optional<Coverage>
+      loss_assessment: optional<Coverage>
+      sewer_backup: optional<Coverage>
+      arson_reward: optional<Coverage>
+      credit_card_fraud: optional<Coverage>
+      debris_removal: optional<Coverage>
+      oil_release: optional<Coverage>
+      locks: optional<Coverage>
+      landscaping: optional<Coverage>
+      additional_structures: optional<Coverage>
+  _InlinedType33:
+    docs: >-
+      A list of deductibles that apply in addition to the coverage-specific
+      deductibles.
+    properties: {}
+  Address:
+    docs: >-
+      A universal base object encapsulating the physical address related to
+      another object.
+    properties:
+      line1: optional<string>
+      line2: optional<string>
+      city: optional<string>
+      state: optional<string>
+      postal_code: optional<string>
+  DocumentRef:
+    docs: >-
+      Describes the individual insurance document available for download from a
+      given insurance policy, including the content-type (or mimetype) of the
+      document.
+    properties:
+      type: optional<string>
+      content_type: optional<string>
+      href: optional<string>
   Events:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType25>
-  _InlinedType25:
+      _embedded: optional<_InlinedType34>
+  _InlinedType34:
     properties:
       events: optional<list<Event>>
+  Event:
+    docs: >-
+      Represents an event delivered via webhook on the occurrence of certain
+      policy changes.
+    properties:
+      id: optional<string>
+      event_type: optional<string>
+      occurred_at: optional<string>
+      _links: optional<_InlinedType36>
+  _InlinedType35:
+    docs: Link to view the full event payload.
+    properties:
+      href: optional<string>
+  _InlinedType36:
+    properties:
+      payload: optional<_InlinedType35>
   Integration:
     docs: >-
       Represents a connection between a client application and Covie's systems
@@ -162,40 +411,150 @@ services:
       status: optional<string>
       created_at: optional<string>
       updated_at: optional<string>
-      configuration: optional<_InlinedType30>
-  _InlinedType26:
+      configuration: optional<_InlinedType46>
+  _InlinedType37:
     properties:
       primary: optional<string>
-  _InlinedType27:
+  _InlinedType38:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
-      colors: optional<_InlinedType26>
-  _InlinedType28:
+      colors: optional<_InlinedType37>
+  _InlinedType39:
     properties:
       agency_logo: optional<string>
       agency_photo: optional<string>
-  _InlinedType29:
+  _InlinedType40:
     properties:
       agency_name: optional<string>
       agent_name: optional<string>
       agent_email: optional<string>
-      image_urls: optional<_InlinedType28>
-  _InlinedType30:
+      image_urls: optional<_InlinedType39>
+  _InlinedType41:
     properties:
-      brand: optional<_InlinedType27>
+      brand: optional<_InlinedType38>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
-      hosted: optional<_InlinedType29>
+      hosted: optional<_InlinedType40>
+  _InlinedType42:
+    properties:
+      primary: optional<string>
+  _InlinedType43:
+    docs: Branding configuration for the embed.
+    properties:
+      logo: optional<string>
+      hide_logo: optional<boolean>
+      colors: optional<_InlinedType42>
+  _InlinedType44:
+    properties:
+      agency_logo: optional<string>
+      agency_photo: optional<string>
+  _InlinedType45:
+    properties:
+      agency_name: optional<string>
+      agent_name: optional<string>
+      agent_email: optional<string>
+      image_urls: optional<_InlinedType44>
+  _InlinedType46:
+    properties:
+      brand: optional<_InlinedType43>
+      display_name: optional<string>
+      use_name_as_display_name: optional<boolean>
+      hosted: optional<_InlinedType45>
   Policies:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType31>
-  _InlinedType31:
+      _embedded: optional<_InlinedType47>
+  _InlinedType47:
     properties:
       policies: optional<list<Policy>>
+  Policy:
+    docs: >-
+      This describes, in high level, the insurance policy record that is
+      provided by a link. This object encapsulates all the necessary details to
+      understand the policy's status, policyholders, and covered persons or
+      properties. 
+    properties:
+      id: optional<string>
+      object: optional<string>
+      fingerprint: optional<string>
+      carrier: optional<Carrier>
+      number: optional<string>
+      masked_number: optional<string>
+      line: optional<string>
+      policyholders: optional<list<Policyholder>>
+      vehicles: optional<list<Vehicle>>
+      locations: optional<list<Location>>
+      status: optional<string>
+      term_length: optional<PeriodValue>
+      inception_date: optional<string>
+      expiration_date: optional<string>
+      cancellation_date: optional<string>
+      cancellation_reason: optional<_InlinedType48>
+      linked_at: optional<string>
+      last_synced_at: optional<string>
+      _links: optional<_InlinedType50>
+      _embedded: optional<_InlinedType51>
+      link_id: optional<string>
+  _InlinedType48:
+    docs: >-
+      The determined reason for the cancellation, such as insured_non_payment or
+      carrier_non_renew or insured_action. This value is null when cancellation
+      is not active or not explicitly indicated by the carrier systems and is
+      not guaranteed to be provided in any circumstance.
+    enum:
+      - carrier_non_renew
+      - insured_non_payment
+      - insured_requested
+      - other
+  _InlinedType49:
+    docs: A link to the logo for the carrier on the policy.
+    properties:
+      href: optional<string>
+  _InlinedType50:
+    docs: >-
+      A polymorphic list of externally linked resources related to this policy
+      such as documents or logos for carriers.
+    properties:
+      documents: optional<list<DocumentRef>>
+      carrier_logo: optional<_InlinedType49>
+  _InlinedType51:
+    docs: A container for objects wrapped by the current object.
+    properties:
+      missing_fields: optional<list<string>>
+  Provider:
+    docs: >-
+      Represents a connected insurance partner that can be used to authenticate
+      and return policy data.
+    properties:
+      id: optional<string>
+      name: optional<string>
+      _links: optional<_InlinedType54>
+      _embedded: optional<_InlinedType55>
+  _InlinedType52:
+    docs: The logo image to be used when describing a given provider.
+    properties:
+      href: optional<string>
+  _InlinedType53:
+    docs: A reference to the provider's primary website.
+    properties:
+      href: optional<string>
+  _InlinedType54:
+    docs: >-
+      A collection of externally referenced material pertaining to the provider,
+      such as web addresses and images.
+    properties:
+      image: optional<_InlinedType52>
+      website: optional<_InlinedType53>
+  _InlinedType55:
+    docs: >-
+      A collection of sub objects that are related to this provider, most
+      commonly consisting of co-branded or sub-issuing providers affiliated with
+      this provider.
+    properties:
+      alternative_providers: optional<list<Provider>>
   Link_2:
     docs: >-
       Represents the individual connections between Covie and a Policyholder's
@@ -208,45 +567,67 @@ services:
       policy_count: optional<integer>
       status: optional<string>
       is_tracked: optional<boolean>
-      tracking_frequency: optional<_InlinedType32>
+      tracking_frequency: optional<_InlinedType62>
       updated_at: optional<string>
       created_at: optional<string>
-      _links: optional<_InlinedType36>
-  _InlinedType32:
+      _links: optional<_InlinedType66>
+  _InlinedType56:
     docs: >-
       The frequency of which tracking should be performed. This value is \`never\`
       when tracking is disabled.
-    enum:
+    enum: &ref_0
       - daily
       - weekly
       - monthly
       - never
       - on_demand
-  _InlinedType33:
+  _InlinedType57:
     docs: Link to retrieve the link's details.
     properties:
       href: optional<string>
-  _InlinedType34:
+  _InlinedType58:
     docs: Link to the carrier's logo.
     properties:
       href: optional<string>
-  _InlinedType35:
+  _InlinedType59:
     properties:
       href: optional<string>
       content_type: optional<string>
-  _InlinedType36:
+  _InlinedType60:
     properties:
-      self: optional<_InlinedType33>
-      carrier_logo: optional<_InlinedType34>
-      uploaded_documents: optional<list<_InlinedType35>>
+      self: optional<_InlinedType57>
+      carrier_logo: optional<_InlinedType58>
+      uploaded_documents: optional<list<_InlinedType59>>
   Links:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType37>
-  _InlinedType37:
+      _embedded: optional<_InlinedType61>
+  _InlinedType61:
     properties:
       links: optional<list<Link_2>>
+  _InlinedType62:
+    docs: >-
+      The frequency of which tracking should be performed. This value is \`never\`
+      when tracking is disabled.
+    enum: *ref_0
+  _InlinedType63:
+    docs: Link to retrieve the link's details.
+    properties:
+      href: optional<string>
+  _InlinedType64:
+    docs: Link to the carrier's logo.
+    properties:
+      href: optional<string>
+  _InlinedType65:
+    properties:
+      href: optional<string>
+      content_type: optional<string>
+  _InlinedType66:
+    properties:
+      self: optional<_InlinedType63>
+      carrier_logo: optional<_InlinedType64>
+      uploaded_documents: optional<list<_InlinedType65>>
   Webhook:
     docs: Represents a webhook in the Covie system.
     properties:
@@ -275,15 +656,24 @@ services:
           method: POST
           docs: Rebroadcast an event.
           display-name: Rebroadcast Event
-          response: _InlinedType24
+          response: _InlinedType25
 types:
-  _InlinedType23:
+  EventBroadcast:
+    docs: Record of a broadcast to a webhook endpoint when an event is triggered.
     properties:
-      broadcasts: optional<list<commons.EventBroadcast>>
+      id: optional<string>
+      queued_at: optional<string>
+      broadcast_at: optional<string>
+      request_uri: optional<string>
+      response_code: optional<integer>
+      response_body: optional<string>
   _InlinedType24:
     properties:
+      broadcasts: optional<list<EventBroadcast>>
+  _InlinedType25:
+    properties:
       count: optional<integer>
-      _embedded: optional<_InlinedType23>
+      _embedded: optional<_InlinedType24>
 ",
                 "name": "event.yml",
                 "type": "file",
@@ -702,7 +1092,18 @@ types:
       _embedded: optional<_InlinedType21>
   _InlinedType21:
     properties:
-      links: optional<list<commons.LinkWithPolicies>>
+      links: optional<list<LinkWithPolicies>>
+  LinkWithPolicies:
+    docs: >-
+      Represents the individual connections between Covie and a Policyholder's
+      account with a carrier and wraps the policies retrieved from it that have
+      been made available to the consumer.
+    extends:
+      - commons.Link_2
+      - _InlinedType22
+  _InlinedType22:
+    properties:
+      policies: optional<list<commons.Policy>>
 ",
                 "name": "link.yml",
                 "type": "file",
@@ -880,8 +1281,8 @@ types:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
-      _embedded: optional<_InlinedType22>
-  _InlinedType22:
+      _embedded: optional<_InlinedType23>
+  _InlinedType23:
     properties:
       webhooks: optional<list<commons.Webhook>>
 ",
@@ -934,20 +1335,8 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "imports:
-  SIMs: SIMs.yml
-types:
-  device:
-    properties:
-      object: string
-      id: string
-      imei: optional<string>
-      model: _InlinedType21
-      name: optional<string>
-      sims: list<SIMs.sim>
-      user: _InlinedType22
-      createdAt: string
-  _InlinedType21:
+                "contents": "types:
+  deviceModel:
     properties:
       object: string
       id: string
@@ -955,7 +1344,25 @@ types:
       name: string
       simTypes: list<string>
       type: string
-  _InlinedType22:
+  device:
+    properties:
+      object: string
+      id: string
+      imei: optional<string>
+      model: _InlinedType17
+      name: optional<string>
+      sims: list<sim>
+      user: _InlinedType18
+      createdAt: string
+  _InlinedType17:
+    properties:
+      object: string
+      id: string
+      brand: string
+      name: string
+      simTypes: list<string>
+      type: string
+  _InlinedType18:
     properties:
       object: string
       id: string
@@ -964,6 +1371,15 @@ types:
       emailVerified: boolean
       fullName: optional<string>
       preferredLocale: string
+      createdAt: string
+  sim:
+    properties:
+      object: string
+      id: string
+      iccid: string
+      provider: string
+      status: string
+      type: string
       createdAt: string
   plan:
     properties:
@@ -975,29 +1391,29 @@ types:
       description: optional<string>
       image: optional<string>
       name: string
-      price: _InlinedType23
+      price: _InlinedType19
       provider: string
-      requirements: _InlinedType24
+      requirements: _InlinedType20
       simTypes: list<string>
       sms: integer
       smsUnit: string
       status: string
       tags: list<string>
-      validity: _InlinedType25
+      validity: _InlinedType21
       voice: integer
       voiceUnit: string
       createdAt: string
-  _InlinedType23:
+  _InlinedType19:
     properties:
       amount: integer
       currency: string
-  _InlinedType24:
+  _InlinedType20:
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
-  _InlinedType25:
+  _InlinedType21:
     properties:
       minimumPeriods: integer
       type: string
@@ -1009,6 +1425,15 @@ types:
       id: string
       countries: list<string>
       name: string
+  planDocument:
+    properties:
+      object: string
+      id: string
+      name: string
+      plan: string
+      type: string
+      url: string
+      createdAt: string
   porting:
     properties:
       object: string
@@ -1016,12 +1441,12 @@ types:
       accountNumber: optional<string>
       birthday: optional<string>
       declinedAttempts: integer
-      donorProvider: _InlinedType26
+      donorProvider: _InlinedType22
       firstName: optional<string>
       lastName: optional<string>
       phoneNumber: string
       provider: string
-      recipientProvider: _InlinedType27
+      recipientProvider: _InlinedType23
       required: list<string>
       status: string
       subscription: optional<string>
@@ -1031,20 +1456,69 @@ types:
       createdAt: string
       lastDeclinedAt: optional<string>
       lastRequestedAt: optional<string>
-  _InlinedType26:
+  _InlinedType22:
     docs: The service provider from whom the number is ported.
     properties:
       object: string
       id: string
       name: string
       recipientProviders: list<string>
-  _InlinedType27:
+  _InlinedType23:
     docs: The service provider to whom the number is ported.
     properties:
       object: string
       id: string
       name: string
       recipientProviders: list<string>
+  serviceProvider:
+    properties:
+      object: string
+      id: string
+      name: string
+      recipientProviders: list<string>
+  project:
+    properties:
+      object: string
+      id: string
+      domain: optional<string>
+      image: optional<string>
+      images: _InlinedType24
+      legal: _InlinedType25
+      locales: list<string>
+      name: string
+      organization: organization
+      payments: _InlinedType26
+      subscriptionOwner: string
+      support: _InlinedType27
+      createdAt: string
+  _InlinedType24:
+    docs: >-
+      Deprecated object of project images. Please use the image property
+      instead.
+    properties:
+      favicon: optional<string>
+      icon: optional<string>
+      logoHorizontal: optional<string>
+  _InlinedType25:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name: string
+      city: string
+      country: string
+      line1: string
+      line2: optional<string>
+      postalCode: string
+      state: optional<string>
+  _InlinedType26:
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency: string
+      mode: string
+  _InlinedType27:
+    docs: Contact details for consumer support requests regarding the project.
+    properties:
+      email: optional<string>
+      phoneNumber: optional<string>
   organization:
     properties:
       object: string
@@ -1121,7 +1595,7 @@ services:
           method: GET
           docs: Retrieves the details of an existing device model.
           display-name: Retrieve a device model
-          response: deviceModel
+          response: commons.deviceModel
         deviceModelsSearch:
           path: /deviceModels/search
           method: POST
@@ -1272,24 +1746,16 @@ services:
                 sims: optional<list<string>>
                 name: optional<string>
 types:
-  deviceModel:
-    properties:
-      object: string
-      id: string
-      brand: string
-      name: string
-      simTypes: list<string>
-      type: string
   _InlinedType0:
     properties:
       object: string
-      items: list<deviceModel>
+      items: list<commons.deviceModel>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
   _InlinedType1:
     properties:
       object: string
-      items: list<deviceModel>
+      items: list<commons.deviceModel>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
   _InlinedType2:
@@ -1346,7 +1812,7 @@ services:
           method: GET
           docs: Retrieves the details of an existing document for a given plan.
           display-name: Retrieve a plan document
-          response: planDocument
+          response: commons.planDocument
         planDocumentsList:
           path: /projects/{project}/plans/{plan}/documents
           method: GET
@@ -1437,19 +1903,10 @@ services:
                 type: optional<integer>
           response: _InlinedType5
 types:
-  planDocument:
-    properties:
-      object: string
-      id: string
-      name: string
-      plan: string
-      type: string
-      url: string
-      createdAt: string
   _InlinedType4:
     properties:
       object: string
-      items: list<planDocument>
+      items: list<commons.planDocument>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
   _InlinedType5:
@@ -1661,7 +2118,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a service provider
-          response: serviceProvider
+          response: commons.serviceProvider
         serviceProvidersList:
           path: /serviceProviders
           method: GET
@@ -1693,12 +2150,6 @@ services:
                 type: optional<string>
           response: _InlinedType7
 types:
-  serviceProvider:
-    properties:
-      object: string
-      id: string
-      name: string
-      recipientProviders: list<string>
   _InlinedType6:
     properties:
       object: string
@@ -1708,7 +2159,7 @@ types:
   _InlinedType7:
     properties:
       object: string
-      items: list<serviceProvider>
+      items: list<commons.serviceProvider>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
 ",
@@ -1731,7 +2182,7 @@ services:
             Retrieves the details of an existing project accessible by the API
             client.
           display-name: Retrieve a project
-          response: project
+          response: commons.project
         projectsCredentialsRetrieve:
           path: /projects/{project}/credentials
           method: GET
@@ -1754,7 +2205,7 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve the project credentials
-          response: _InlinedType12
+          response: _InlinedType8
         projectsList:
           path: /projects
           method: GET
@@ -1785,59 +2236,16 @@ services:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType13
+          response: _InlinedType9
 types:
-  project:
-    properties:
-      object: string
-      id: string
-      domain: optional<string>
-      image: optional<string>
-      images: _InlinedType8
-      legal: _InlinedType9
-      locales: list<string>
-      name: string
-      organization: commons.organization
-      payments: _InlinedType10
-      subscriptionOwner: string
-      support: _InlinedType11
-      createdAt: string
   _InlinedType8:
-    docs: >-
-      Deprecated object of project images. Please use the image property
-      instead.
-    properties:
-      favicon: optional<string>
-      icon: optional<string>
-      logoHorizontal: optional<string>
-  _InlinedType9:
-    docs: The legal address for the company that manages the project.
-    properties:
-      name: string
-      city: string
-      country: string
-      line1: string
-      line2: optional<string>
-      postalCode: string
-      state: optional<string>
-  _InlinedType10:
-    docs: Configuration parameters for the project use of payments.
-    properties:
-      currency: string
-      mode: string
-  _InlinedType11:
-    docs: Contact details for consumer support requests regarding the project.
-    properties:
-      email: optional<string>
-      phoneNumber: optional<string>
-  _InlinedType12:
     properties:
       object: string
       paymentsKey: optional<string>
-  _InlinedType13:
+  _InlinedType9:
     properties:
       object: string
-      items: list<project>
+      items: list<commons.project>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
 ",
@@ -1845,7 +2253,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "imports:
+  commons: commons.yml
+services:
   http:
     SiMsService:
       auth: true
@@ -1864,7 +2274,7 @@ types:
             Retrieve the details of an existing SIM which the authenticated user
             is authorized to view.
           display-name: Retrieve a SIM
-          response: sim
+          response: commons.sim
         siMsSearch:
           path: /projects/{project}/sims/search
           method: POST
@@ -1875,7 +2285,7 @@ types:
               properties:
                 iccid: string
                 type: optional<list<string>>
-          response: _InlinedType14
+          response: _InlinedType10
         siMsList:
           path: /projects/{project}/sims
           method: GET
@@ -1914,7 +2324,7 @@ types:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType15
+          response: _InlinedType11
 types:
   simCredentials:
     properties:
@@ -1922,25 +2332,16 @@ types:
       activationCode: optional<string>
       qrCodeUrl: optional<string>
       sim: string
-  sim:
+  _InlinedType10:
     properties:
       object: string
-      id: string
-      iccid: string
-      provider: string
-      status: string
-      type: string
-      createdAt: string
-  _InlinedType14:
-    properties:
-      object: string
-      items: list<sim>
+      items: list<commons.sim>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
-  _InlinedType15:
+  _InlinedType11:
     properties:
       object: string
-      items: list<sim>
+      items: list<commons.sim>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
 ",
@@ -2034,7 +2435,7 @@ services:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType16
+          response: _InlinedType12
         subscriptionsCreate:
           path: /projects/{project}/subscriptions
           method: POST
@@ -2051,7 +2452,7 @@ services:
                 user: string
                 porting: optional<string>
 types:
-  _InlinedType16:
+  _InlinedType12:
     properties:
       object: string
       items: list<commons.subscription>
@@ -2100,12 +2501,20 @@ types:
                   \`period\` provides a single aggregated value for the time range
                   or period requested.
                 type: optional<string>
-          response: _InlinedType17
+          response: _InlinedType13
 types:
-  _InlinedType17:
+  usageRecord:
     properties:
       object: string
-      items: list<commons.usageRecord>
+      start: string
+      end: string
+      data: integer
+      voice: integer
+      sms: integer
+  _InlinedType13:
+    properties:
+      object: string
+      items: list<usageRecord>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
 ",
@@ -2129,7 +2538,7 @@ services:
             returned are sorted by creation date, with the most recently created
             addresses appearing first.
           display-name: List all user addresses
-          response: _InlinedType18
+          response: _InlinedType14
         userAddressesCreate:
           path: /projects/{project}/users/{user}/addresses
           method: POST
@@ -2158,7 +2567,7 @@ services:
           display-name: Delete a user address
           response: commons.userAddress
 types:
-  _InlinedType18:
+  _InlinedType14:
     properties:
       object: string
       items: list<commons.userAddress>
@@ -2216,7 +2625,7 @@ services:
             body:
               properties:
                 email: string
-          response: _InlinedType19
+          response: _InlinedType15
         usersList:
           path: /projects/{project}/users
           method: GET
@@ -2243,7 +2652,7 @@ services:
                   The limit of items to be returned in the list, between 0 and
                   200.
                 type: optional<integer>
-          response: _InlinedType20
+          response: _InlinedType16
         usersCreate:
           path: /projects/{project}/users
           method: POST
@@ -2258,13 +2667,13 @@ services:
                 fullName: optional<string>
                 preferredLocale: optional<string>
 types:
-  _InlinedType19:
+  _InlinedType15:
     properties:
       object: string
       items: list<commons.user>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
-  _InlinedType20:
+  _InlinedType16:
     properties:
       object: string
       items: list<commons.user>
@@ -2429,6 +2838,38 @@ headers: {}
     docs: A matchmaker lobby player.
     properties:
       token: string
+  GameModeInfo:
+    docs: A game mode that the player can join.
+    properties:
+      game_mode_id: string
+  RegionInfo:
+    docs: A region that the player can connect to.
+    properties:
+      region_id: string
+      provider_display_name: string
+      region_display_name: string
+      datacenter_coord: Coord
+      datacenter_distance_from_client: Distance
+  Coord:
+    docs: Geographical coordinates for a location on Planet Earth.
+    properties:
+      latitude: double
+      longitude: double
+  Distance:
+    docs: Distance available in multiple units.
+    properties:
+      kilometers: double
+      miles: double
+  LobbyInfo:
+    docs: A public lobby in the lobby list.
+    properties:
+      region_id: string
+      game_mode_id: string
+      lobby_id: string
+      max_players_normal: double
+      max_players_direct: double
+      max_players_party: double
+      total_player_count: double
 ",
                 "name": "commons.yml",
                 "type": "file",
@@ -2768,7 +3209,12 @@ headers: {}
             body:
               properties:
                 user: optional<string>
-                vehicles: optional<list<commons.Callback_DTO>>
+                vehicles: optional<list<Callback_DTO>>
+types:
+  Callback_DTO:
+    properties:
+      registration: string
+      id: string
 ",
                 "name": "sampleCallback.yml",
                 "type": "file",

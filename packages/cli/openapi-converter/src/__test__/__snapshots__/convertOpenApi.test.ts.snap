@@ -145,6 +145,17 @@ exports[`open api converter covie simple 1`] = `
     },
     "commons.yml": {
       "types": {
+        "Address": {
+          "docs": "A universal base object encapsulating the physical address related to another object.",
+          "extends": undefined,
+          "properties": {
+            "city": "optional<string>",
+            "line1": "optional<string>",
+            "line2": "optional<string>",
+            "postal_code": "optional<string>",
+            "state": "optional<string>",
+          },
+        },
         "Carrier": {
           "docs": "A basic object describing the individual insurance company which has issued a policy.",
           "extends": undefined,
@@ -152,10 +163,75 @@ exports[`open api converter covie simple 1`] = `
             "name": "optional<string>",
           },
         },
+        "Coverage": {
+          "docs": "Describes the features of a specific coverage element for a person or property, encapsulating the limits, deductibles, and premium information therein. ",
+          "extends": undefined,
+          "properties": {
+            "limits": "optional<_InlinedType31>",
+            "name": "optional<string>",
+          },
+        },
+        "CurrencyValue": {
+          "docs": "Describes a value that is tied to a monetary amount. Most frequently used to describe limits, premiums, and deductibles.",
+          "extends": undefined,
+          "properties": {
+            "unit": "optional<string>",
+            "value": "optional<double>",
+          },
+        },
+        "Discount": {
+          "docs": "Describes a discount which a policyholder is receiving for a particular covered property under a policy. When available, this object also describes the amount of savings.",
+          "extends": undefined,
+          "properties": {
+            "code": "optional<string>",
+            "friendly_name": "optional<string>",
+          },
+        },
+        "DocumentRef": {
+          "docs": "Describes the individual insurance document available for download from a given insurance policy, including the content-type (or mimetype) of the document.",
+          "extends": undefined,
+          "properties": {
+            "content_type": "optional<string>",
+            "href": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
+        "Driver": {
+          "docs": "Describes the individual driver who is considered the routine operator of the vehicle it is attached to and who is explicitly included under the coverage terms selected for the vehicle.",
+          "extends": undefined,
+          "properties": {
+            "age_licensed": "optional<integer>",
+            "date_of_birth": "optional<string>",
+            "gender": "optional<_InlinedType30>",
+            "is_primary": "optional<boolean>",
+            "license_number": "optional<string>",
+            "license_state": "optional<string>",
+            "marital_status": "optional<_InlinedType29>",
+            "name": "optional<Name>",
+          },
+        },
+        "EMail": {
+          "docs": "A universal base object encapsulating the e-mail address related to another object.",
+          "extends": undefined,
+          "properties": {
+            "address": "optional<string>",
+            "is_primary": "optional<boolean>",
+          },
+        },
+        "Event": {
+          "docs": "Represents an event delivered via webhook on the occurrence of certain policy changes.",
+          "extends": undefined,
+          "properties": {
+            "_links": "optional<_InlinedType36>",
+            "event_type": "optional<string>",
+            "id": "optional<string>",
+            "occurred_at": "optional<string>",
+          },
+        },
         "Events": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType25>",
+            "_embedded": "optional<_InlinedType34>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
           },
@@ -164,7 +240,7 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Represents a connection between a client application and Covie's systems allowing a client users to create and process links.",
           "extends": undefined,
           "properties": {
-            "configuration": "optional<_InlinedType30>",
+            "configuration": "optional<_InlinedType46>",
             "created_at": "optional<string>",
             "id": "optional<string>",
             "key": "optional<string>",
@@ -173,11 +249,21 @@ exports[`open api converter covie simple 1`] = `
             "updated_at": "optional<string>",
           },
         },
+        "Interest": {
+          "docs": "Describes an entity, person or company, that has a legal interest in a piece of covered property. This could represent a bank or other financial institution who owns a loan/mortgage/lien over a covered property, a landlord who owns the property a tenant is leasing, or some other recognized stakeholder who is entitled to certain information rights from the insurance company regarding the covered property.",
+          "extends": undefined,
+          "properties": {
+            "email_addresses": "optional<list<EMail>>",
+            "name": "optional<Name>",
+            "phone_numbers": "optional<list<Phone>>",
+            "type": "optional<string>",
+          },
+        },
         "Link_2": {
           "docs": "Represents the individual connections between Covie and a Policyholder's account with a carrier and wraps the policies retrieved from it that have been made available to the consumer.",
           "extends": undefined,
           "properties": {
-            "_links": "optional<_InlinedType36>",
+            "_links": "optional<_InlinedType66>",
             "created_at": "optional<string>",
             "id": "optional<string>",
             "integration_id": "optional<string>",
@@ -185,16 +271,34 @@ exports[`open api converter covie simple 1`] = `
             "object": "optional<string>",
             "policy_count": "optional<integer>",
             "status": "optional<string>",
-            "tracking_frequency": "optional<_InlinedType32>",
+            "tracking_frequency": "optional<_InlinedType62>",
             "updated_at": "optional<string>",
           },
         },
         "Links": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType37>",
+            "_embedded": "optional<_InlinedType61>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
+          },
+        },
+        "Location": {
+          "docs": "Describes a physical location and/or structure which is covered under the terms of an insurance policy.",
+          "extends": undefined,
+          "properties": {
+            "address": "optional<Address>",
+            "coverages": "optional<_InlinedType32>",
+            "discounts": "optional<list<Discount>>",
+            "interests": "optional<list<Interest>>",
+            "other_deductibles": "optional<_InlinedType33>",
+          },
+        },
+        "Name": {
+          "docs": "Contains a name for a person or business",
+          "extends": undefined,
+          "properties": {
+            "full": "optional<string>",
           },
         },
         "PeriodValue": {
@@ -205,12 +309,88 @@ exports[`open api converter covie simple 1`] = `
             "value": "optional<integer>",
           },
         },
+        "Phone": {
+          "docs": "A universal base object encapsulating the phone number related to another object.",
+          "extends": undefined,
+          "properties": {
+            "is_primary": "optional<boolean>",
+            "number": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
         "Policies": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType31>",
+            "_embedded": "optional<_InlinedType47>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
+          },
+        },
+        "Policy": {
+          "docs": "This describes, in high level, the insurance policy record that is provided by a link. This object encapsulates all the necessary details to understand the policy's status, policyholders, and covered persons or properties. ",
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType51>",
+            "_links": "optional<_InlinedType50>",
+            "cancellation_date": "optional<string>",
+            "cancellation_reason": "optional<_InlinedType48>",
+            "carrier": "optional<Carrier>",
+            "expiration_date": "optional<string>",
+            "fingerprint": "optional<string>",
+            "id": "optional<string>",
+            "inception_date": "optional<string>",
+            "last_synced_at": "optional<string>",
+            "line": "optional<string>",
+            "link_id": "optional<string>",
+            "linked_at": "optional<string>",
+            "locations": "optional<list<Location>>",
+            "masked_number": "optional<string>",
+            "number": "optional<string>",
+            "object": "optional<string>",
+            "policyholders": "optional<list<Policyholder>>",
+            "status": "optional<string>",
+            "term_length": "optional<PeriodValue>",
+            "vehicles": "optional<list<Vehicle>>",
+          },
+        },
+        "Policyholder": {
+          "docs": "Describes the company or person which is legally listed on, and entitled to benefits from the policy for which they are attached.",
+          "extends": undefined,
+          "properties": {
+            "email_addresses": "optional<list<EMail>>",
+            "is_primary": "optional<boolean>",
+            "name": "optional<Name>",
+            "phone_numbers": "optional<list<Phone>>",
+            "type": "optional<string>",
+          },
+        },
+        "Provider": {
+          "docs": "Represents a connected insurance partner that can be used to authenticate and return policy data.",
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType55>",
+            "_links": "optional<_InlinedType54>",
+            "id": "optional<string>",
+            "name": "optional<string>",
+          },
+        },
+        "Vehicle": {
+          "docs": "Describes the motor vehicle which is covered under the terms of a policy. This object contains details of the specific coverages provided for this vehicle and information about the drivers who are covered.",
+          "extends": undefined,
+          "properties": {
+            "annual_mileage": "optional<integer>",
+            "coverages": "optional<_InlinedType28>",
+            "discounts": "optional<list<Discount>>",
+            "drivers": "optional<list<Driver>>",
+            "interests": "optional<list<Interest>>",
+            "make": "optional<string>",
+            "model": "optional<string>",
+            "ownership": "optional<_InlinedType27>",
+            "series": "optional<string>",
+            "trim": "optional<string>",
+            "usage": "optional<_InlinedType26>",
+            "vin": "optional<string>",
+            "year": "optional<string>",
           },
         },
         "Webhook": {
@@ -228,59 +408,283 @@ exports[`open api converter covie simple 1`] = `
             "uri": "optional<string>",
           },
         },
-        "_InlinedType25": {
+        "_InlinedType26": {
+          "docs": "The intended usage of the vehicle by the insured.",
+          "enum": [
+            "commute",
+            "pleasure",
+            "business",
+          ],
+        },
+        "_InlinedType27": {
+          "docs": "Whether or not the vehicle specified is owned, leased, or financed by the insured.",
+          "enum": [
+            "own",
+            "lease",
+            "finance",
+          ],
+        },
+        "_InlinedType28": {
+          "docs": "A list of all coverages that apply to this vehicle. The omission of any coverage indicates that coverage was either declined or does not apply to this vehicle.",
+          "extends": undefined,
+          "properties": {
+            "all_risk": "optional<Coverage>",
+            "automobile_death_benefit": "optional<Coverage>",
+            "bodily_injury": "optional<Coverage>",
+            "carried_contents": "optional<Coverage>",
+            "collision": "optional<Coverage>",
+            "collision_deductible_waiver": "optional<Coverage>",
+            "comprehensive": "optional<Coverage>",
+            "custom_parts": "optional<Coverage>",
+            "full_glass": "optional<Coverage>",
+            "limited_personal_injury_protection": "optional<Coverage>",
+            "limited_property_damage": "optional<Coverage>",
+            "loan_lease_payoff": "optional<Coverage>",
+            "medical_payments": "optional<Coverage>",
+            "motorcycle_enhanced_injury": "optional<Coverage>",
+            "new_vehicle_replacement": "optional<Coverage>",
+            "nonowned_bodily_injury": "optional<Coverage>",
+            "nonowned_medical_payments": "optional<Coverage>",
+            "nonowned_physical_damage": "optional<Coverage>",
+            "nonowned_property_damage": "optional<Coverage>",
+            "oem_parts": "optional<Coverage>",
+            "personal_injury_attendant_rider": "optional<Coverage>",
+            "personal_injury_protection": "optional<Coverage>",
+            "personal_property": "optional<Coverage>",
+            "property_damage": "optional<Coverage>",
+            "property_protection": "optional<Coverage>",
+            "rental_car": "optional<Coverage>",
+            "rented_vehicle_liability": "optional<Coverage>",
+            "ride_share": "optional<Coverage>",
+            "roadside": "optional<Coverage>",
+            "trip_interruption": "optional<Coverage>",
+            "underinsured_bodily_injury": "optional<Coverage>",
+            "underinsured_property_damage": "optional<Coverage>",
+            "uninsured_bodily_injury": "optional<Coverage>",
+            "uninsured_property_damage": "optional<Coverage>",
+          },
+        },
+        "_InlinedType29": {
+          "docs": "The current marital status of the driver, if provided. The \`separated\` value includes divorced status.",
+          "enum": [
+            "married",
+            "single",
+            "separated",
+            "widowed",
+          ],
+        },
+        "_InlinedType30": {
+          "docs": "The reported gender of the driver, when provided by the insurer.",
+          "enum": [
+            "male",
+            "female",
+            "non-binary",
+          ],
+        },
+        "_InlinedType31": {
+          "docs": "A breakout of different limits and sublimits that apply to this coverage item. When the limits property is null, then the coverage described is selected but limits are not applicable for the coverage feature. The ommission of any limit scope indicates that it does not apply to the coverage.",
+          "extends": undefined,
+          "properties": {
+            "duration": "optional<PeriodValue>",
+            "term": "optional<CurrencyValue>",
+          },
+        },
+        "_InlinedType32": {
+          "docs": "A list of coverages that apply to the location being insured.",
+          "extends": undefined,
+          "properties": {
+            "additional_structures": "optional<Coverage>",
+            "arson_reward": "optional<Coverage>",
+            "credit_card_fraud": "optional<Coverage>",
+            "debris_removal": "optional<Coverage>",
+            "dwelling": "optional<Coverage>",
+            "dwelling_extension": "optional<Coverage>",
+            "fire_service": "optional<Coverage>",
+            "landscaping": "optional<Coverage>",
+            "locks": "optional<Coverage>",
+            "loss_assessment": "optional<Coverage>",
+            "loss_of_use": "optional<Coverage>",
+            "medical_payments": "optional<Coverage>",
+            "oil_release": "optional<Coverage>",
+            "personal_liability": "optional<Coverage>",
+            "personal_property": "optional<Coverage>",
+            "personal_property_off_premises": "optional<Coverage>",
+            "property_damage_others": "optional<Coverage>",
+            "service_line": "optional<Coverage>",
+            "sewer_backup": "optional<Coverage>",
+          },
+        },
+        "_InlinedType33": {
+          "docs": "A list of deductibles that apply in addition to the coverage-specific deductibles.",
+          "extends": undefined,
+          "properties": {},
+        },
+        "_InlinedType34": {
           "extends": undefined,
           "properties": {
             "events": "optional<list<Event>>",
           },
         },
-        "_InlinedType26": {
+        "_InlinedType35": {
+          "docs": "Link to view the full event payload.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType36": {
+          "extends": undefined,
+          "properties": {
+            "payload": "optional<_InlinedType35>",
+          },
+        },
+        "_InlinedType37": {
           "extends": undefined,
           "properties": {
             "primary": "optional<string>",
           },
         },
-        "_InlinedType27": {
+        "_InlinedType38": {
           "docs": "Branding configuration for the embed.",
           "extends": undefined,
           "properties": {
-            "colors": "optional<_InlinedType26>",
+            "colors": "optional<_InlinedType37>",
             "hide_logo": "optional<boolean>",
             "logo": "optional<string>",
           },
         },
-        "_InlinedType28": {
+        "_InlinedType39": {
           "extends": undefined,
           "properties": {
             "agency_logo": "optional<string>",
             "agency_photo": "optional<string>",
           },
         },
-        "_InlinedType29": {
+        "_InlinedType40": {
           "extends": undefined,
           "properties": {
             "agency_name": "optional<string>",
             "agent_email": "optional<string>",
             "agent_name": "optional<string>",
-            "image_urls": "optional<_InlinedType28>",
+            "image_urls": "optional<_InlinedType39>",
           },
         },
-        "_InlinedType30": {
+        "_InlinedType41": {
           "extends": undefined,
           "properties": {
-            "brand": "optional<_InlinedType27>",
+            "brand": "optional<_InlinedType38>",
             "display_name": "optional<string>",
-            "hosted": "optional<_InlinedType29>",
+            "hosted": "optional<_InlinedType40>",
             "use_name_as_display_name": "optional<boolean>",
           },
         },
-        "_InlinedType31": {
+        "_InlinedType42": {
+          "extends": undefined,
+          "properties": {
+            "primary": "optional<string>",
+          },
+        },
+        "_InlinedType43": {
+          "docs": "Branding configuration for the embed.",
+          "extends": undefined,
+          "properties": {
+            "colors": "optional<_InlinedType42>",
+            "hide_logo": "optional<boolean>",
+            "logo": "optional<string>",
+          },
+        },
+        "_InlinedType44": {
+          "extends": undefined,
+          "properties": {
+            "agency_logo": "optional<string>",
+            "agency_photo": "optional<string>",
+          },
+        },
+        "_InlinedType45": {
+          "extends": undefined,
+          "properties": {
+            "agency_name": "optional<string>",
+            "agent_email": "optional<string>",
+            "agent_name": "optional<string>",
+            "image_urls": "optional<_InlinedType44>",
+          },
+        },
+        "_InlinedType46": {
+          "extends": undefined,
+          "properties": {
+            "brand": "optional<_InlinedType43>",
+            "display_name": "optional<string>",
+            "hosted": "optional<_InlinedType45>",
+            "use_name_as_display_name": "optional<boolean>",
+          },
+        },
+        "_InlinedType47": {
           "extends": undefined,
           "properties": {
             "policies": "optional<list<Policy>>",
           },
         },
-        "_InlinedType32": {
+        "_InlinedType48": {
+          "docs": "The determined reason for the cancellation, such as insured_non_payment or carrier_non_renew or insured_action. This value is null when cancellation is not active or not explicitly indicated by the carrier systems and is not guaranteed to be provided in any circumstance.",
+          "enum": [
+            "carrier_non_renew",
+            "insured_non_payment",
+            "insured_requested",
+            "other",
+          ],
+        },
+        "_InlinedType49": {
+          "docs": "A link to the logo for the carrier on the policy.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType50": {
+          "docs": "A polymorphic list of externally linked resources related to this policy such as documents or logos for carriers.",
+          "extends": undefined,
+          "properties": {
+            "carrier_logo": "optional<_InlinedType49>",
+            "documents": "optional<list<DocumentRef>>",
+          },
+        },
+        "_InlinedType51": {
+          "docs": "A container for objects wrapped by the current object.",
+          "extends": undefined,
+          "properties": {
+            "missing_fields": "optional<list<string>>",
+          },
+        },
+        "_InlinedType52": {
+          "docs": "The logo image to be used when describing a given provider.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType53": {
+          "docs": "A reference to the provider's primary website.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType54": {
+          "docs": "A collection of externally referenced material pertaining to the provider, such as web addresses and images.",
+          "extends": undefined,
+          "properties": {
+            "image": "optional<_InlinedType52>",
+            "website": "optional<_InlinedType53>",
+          },
+        },
+        "_InlinedType55": {
+          "docs": "A collection of sub objects that are related to this provider, most commonly consisting of co-branded or sub-issuing providers affiliated with this provider.",
+          "extends": undefined,
+          "properties": {
+            "alternative_providers": "optional<list<Provider>>",
+          },
+        },
+        "_InlinedType56": {
           "docs": "The frequency of which tracking should be performed. This value is \`never\` when tracking is disabled.",
           "enum": [
             "daily",
@@ -290,39 +694,78 @@ exports[`open api converter covie simple 1`] = `
             "on_demand",
           ],
         },
-        "_InlinedType33": {
+        "_InlinedType57": {
           "docs": "Link to retrieve the link's details.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType34": {
+        "_InlinedType58": {
           "docs": "Link to the carrier's logo.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType35": {
+        "_InlinedType59": {
           "extends": undefined,
           "properties": {
             "content_type": "optional<string>",
             "href": "optional<string>",
           },
         },
-        "_InlinedType36": {
+        "_InlinedType60": {
           "extends": undefined,
           "properties": {
-            "carrier_logo": "optional<_InlinedType34>",
-            "self": "optional<_InlinedType33>",
-            "uploaded_documents": "optional<list<_InlinedType35>>",
+            "carrier_logo": "optional<_InlinedType58>",
+            "self": "optional<_InlinedType57>",
+            "uploaded_documents": "optional<list<_InlinedType59>>",
           },
         },
-        "_InlinedType37": {
+        "_InlinedType61": {
           "extends": undefined,
           "properties": {
             "links": "optional<list<Link_2>>",
+          },
+        },
+        "_InlinedType62": {
+          "docs": "The frequency of which tracking should be performed. This value is \`never\` when tracking is disabled.",
+          "enum": [
+            "daily",
+            "weekly",
+            "monthly",
+            "never",
+            "on_demand",
+          ],
+        },
+        "_InlinedType63": {
+          "docs": "Link to retrieve the link's details.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType64": {
+          "docs": "Link to the carrier's logo.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType65": {
+          "extends": undefined,
+          "properties": {
+            "content_type": "optional<string>",
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType66": {
+          "extends": undefined,
+          "properties": {
+            "carrier_logo": "optional<_InlinedType64>",
+            "self": "optional<_InlinedType63>",
+            "uploaded_documents": "optional<list<_InlinedType65>>",
           },
         },
       },
@@ -339,23 +782,35 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Rebroadcast an event.",
                 "method": "POST",
                 "path": "/events/{event_id}/broadcasts",
-                "response": "_InlinedType24",
+                "response": "_InlinedType25",
               },
             },
           },
         },
       },
       "types": {
-        "_InlinedType23": {
+        "EventBroadcast": {
+          "docs": "Record of a broadcast to a webhook endpoint when an event is triggered.",
           "extends": undefined,
           "properties": {
-            "broadcasts": "optional<list<commons.EventBroadcast>>",
+            "broadcast_at": "optional<string>",
+            "id": "optional<string>",
+            "queued_at": "optional<string>",
+            "request_uri": "optional<string>",
+            "response_body": "optional<string>",
+            "response_code": "optional<integer>",
           },
         },
         "_InlinedType24": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType23>",
+            "broadcasts": "optional<list<EventBroadcast>>",
+          },
+        },
+        "_InlinedType25": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType24>",
             "count": "optional<integer>",
           },
         },
@@ -902,6 +1357,13 @@ exports[`open api converter covie simple 1`] = `
         },
       },
       "types": {
+        "LinkWithPolicies": {
+          "docs": "Represents the individual connections between Covie and a Policyholder's account with a carrier and wraps the policies retrieved from it that have been made available to the consumer.",
+          "extends": [
+            "commons.Link_2",
+            "_InlinedType22",
+          ],
+        },
         "LinksWithPolicies": {
           "extends": undefined,
           "properties": {
@@ -913,7 +1375,13 @@ exports[`open api converter covie simple 1`] = `
         "_InlinedType21": {
           "extends": undefined,
           "properties": {
-            "links": "optional<list<commons.LinkWithPolicies>>",
+            "links": "optional<list<LinkWithPolicies>>",
+          },
+        },
+        "_InlinedType22": {
+          "extends": undefined,
+          "properties": {
+            "policies": "optional<list<commons.Policy>>",
           },
         },
       },
@@ -1133,12 +1601,12 @@ exports[`open api converter covie simple 1`] = `
         "Webhooks": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType22>",
+            "_embedded": "optional<_InlinedType23>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
           },
         },
-        "_InlinedType22": {
+        "_InlinedType23": {
           "extends": undefined,
           "properties": {
             "webhooks": "optional<list<commons.Webhook>>",
@@ -4186,6 +4654,42 @@ exports[`open api converter rivet simple 1`] = `
   "serviceFiles": {
     "commons.yml": {
       "types": {
+        "Coord": {
+          "docs": "Geographical coordinates for a location on Planet Earth.",
+          "extends": undefined,
+          "properties": {
+            "latitude": "double",
+            "longitude": "double",
+          },
+        },
+        "Distance": {
+          "docs": "Distance available in multiple units.",
+          "extends": undefined,
+          "properties": {
+            "kilometers": "double",
+            "miles": "double",
+          },
+        },
+        "GameModeInfo": {
+          "docs": "A game mode that the player can join.",
+          "extends": undefined,
+          "properties": {
+            "game_mode_id": "string",
+          },
+        },
+        "LobbyInfo": {
+          "docs": "A public lobby in the lobby list.",
+          "extends": undefined,
+          "properties": {
+            "game_mode_id": "string",
+            "lobby_id": "string",
+            "max_players_direct": "double",
+            "max_players_normal": "double",
+            "max_players_party": "double",
+            "region_id": "string",
+            "total_player_count": "double",
+          },
+        },
         "MatchmakerLobbyJoinInfo": {
           "docs": "A matchmaker lobby.",
           "extends": undefined,
@@ -4208,6 +4712,17 @@ exports[`open api converter rivet simple 1`] = `
           "extends": undefined,
           "properties": {
             "display_name": "string",
+            "region_id": "string",
+          },
+        },
+        "RegionInfo": {
+          "docs": "A region that the player can connect to.",
+          "extends": undefined,
+          "properties": {
+            "datacenter_coord": "Coord",
+            "datacenter_distance_from_client": "Distance",
+            "provider_display_name": "string",
+            "region_display_name": "string",
             "region_id": "string",
           },
         },
@@ -4558,10 +5073,168 @@ exports[`open api converter suger simple 1`] = `
       },
     },
     "commons.yml": {
-      "imports": {
-        "Product": "Product.yml",
-      },
       "types": {
+        "marketplacemetering.BatchMeterUsageOutput": {
+          "extends": undefined,
+          "properties": {
+            "resultMetadata": "optional<middleware.Metadata>",
+            "results": "optional<list<types.UsageRecordResult>>",
+            "unprocessedRecords": "optional<list<types.UsageRecord>>",
+          },
+        },
+        "marketplacemeteringv1.BatchUsageEventOkResponse": {
+          "extends": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "result": "optional<list<marketplacemeteringv1.UsageBatchEventOkMessage>>",
+          },
+        },
+        "marketplacemeteringv1.UsageBatchEventOkMessage": {
+          "extends": undefined,
+          "properties": {
+            "dimension": "optional<string>",
+            "effectiveStartTime": "optional<string>",
+            "error": "optional<marketplacemeteringv1.UsageEventConflictResponse>",
+            "messageTime": "optional<string>",
+            "planId": "optional<string>",
+            "quantity": "optional<double>",
+            "resourceId": "optional<string>",
+            "resourceUri": "optional<string>",
+            "status": "optional<string>",
+            "usageEventId": "optional<string>",
+          },
+        },
+        "marketplacemeteringv1.UsageEventConflictResponse": {
+          "extends": undefined,
+          "properties": {
+            "additionalInfo": "optional<marketplacemeteringv1.UsageEventConflictResponseAdditionalInfo>",
+            "code": "optional<string>",
+            "message": "optional<string>",
+          },
+        },
+        "marketplacemeteringv1.UsageEventConflictResponseAdditionalInfo": {
+          "extends": undefined,
+          "properties": {
+            "acceptedMessage": "optional<marketplacemeteringv1.UsageEventOkResponse>",
+          },
+        },
+        "marketplacemeteringv1.UsageEventOkResponse": {
+          "extends": undefined,
+          "properties": {
+            "dimension": "optional<string>",
+            "effectiveStartTime": "optional<string>",
+            "messageTime": "optional<string>",
+            "planId": "optional<string>",
+            "quantity": "optional<double>",
+            "resourceId": "optional<string>",
+            "resourceUri": "optional<string>",
+            "status": "optional<string>",
+            "usageEventId": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureAudience": {
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "id": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureGovernmentCertification": {
+          "extends": undefined,
+          "properties": {
+            "title": "optional<string>",
+            "uri": "optional<string>",
+            "validationResults": "optional<list<partnercentersubmission.AzureValidationResult>>",
+          },
+        },
+        "partnercentersubmission.AzureListingContact": {
+          "extends": undefined,
+          "properties": {
+            "email": "optional<string>",
+            "name": "optional<string>",
+            "phone": "optional<string>",
+            "type": "optional<string>",
+            "uri": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureListingUri": {
+          "extends": undefined,
+          "properties": {
+            "displayText": "optional<string>",
+            "subtype": "optional<string>",
+            "type": "optional<string>",
+            "uri": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureLocalizedDateTime": {
+          "extends": undefined,
+          "properties": {
+            "dateTimeInUtc": "optional<string>",
+            "localizePerMarket": "optional<boolean>",
+          },
+        },
+        "partnercentersubmission.AzureLocalizedTimeRange": {
+          "extends": undefined,
+          "properties": {
+            "endAt": "optional<partnercentersubmission.AzureLocalizedDateTime>",
+            "startAt": "optional<partnercentersubmission.AzureLocalizedDateTime>",
+          },
+        },
+        "partnercentersubmission.AzureMarket": {
+          "extends": undefined,
+          "properties": {
+            "friendlyName": "optional<string>",
+            "marketCode": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureMarketState": {
+          "extends": undefined,
+          "properties": {
+            "marketCode": "optional<string>",
+            "state": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzurePendingUpdateInfo": {
+          "extends": undefined,
+          "properties": {
+            "status": "optional<string>",
+            "updateType": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzurePrice": {
+          "extends": undefined,
+          "properties": {
+            "currencyCode": "optional<string>",
+            "openPrice": "optional<double>",
+            "priceTierID": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzurePriceCadence": {
+          "extends": undefined,
+          "properties": {
+            "type": "optional<string>",
+            "value": "optional<integer>",
+          },
+        },
+        "partnercentersubmission.AzurePriceSchedule": {
+          "extends": undefined,
+          "properties": {
+            "priceCadence": "optional<partnercentersubmission.AzurePriceCadence>",
+            "pricingModel": "optional<string>",
+            "pricingUnits": "optional<list<partnercentersubmission.AzurePricingUnit>>",
+            "retailPrice": "optional<partnercentersubmission.AzurePrice>",
+          },
+        },
+        "partnercentersubmission.AzurePricingUnit": {
+          "extends": undefined,
+          "properties": {
+            "isUnlimitedUnit": "optional<boolean>",
+            "lowerUnit": "optional<integer>",
+            "name": "optional<string>",
+            "unitType": "optional<string>",
+            "upperUnit": "optional<integer>",
+          },
+        },
         "partnercentersubmission.AzureProduct": {
           "extends": undefined,
           "properties": {
@@ -4580,6 +5253,114 @@ exports[`open api converter suger simple 1`] = `
             "variants": "optional<list<partnercentersubmission.AzureProductVariant>>",
           },
         },
+        "partnercentersubmission.AzureProductAvailability": {
+          "extends": undefined,
+          "properties": {
+            "emailAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
+            "enterpriseLicensing": "optional<string>",
+            "id": "optional<string>",
+            "resourceType": "optional<string>",
+            "subscriptionAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
+            "visibility": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductBranch": {
+          "extends": undefined,
+          "properties": {
+            "currentDraftInstanceID": "optional<string>",
+            "friendlyName": "optional<string>",
+            "id": "optional<string>",
+            "module": "optional<string>",
+            "resourceType": "optional<string>",
+            "type": "optional<string>",
+            "variantID": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductFeatureAvailability": {
+          "extends": undefined,
+          "properties": {
+            "customMeters": "optional<list<partnercentersubmission.AzureProductVariantCustomMeter>>",
+            "id": "optional<string>",
+            "isHidden": "optional<boolean>",
+            "marketStates": "optional<list<partnercentersubmission.AzureMarketState>>",
+            "markets": "optional<list<partnercentersubmission.AzureMarket>>",
+            "priceSchedules": "optional<list<partnercentersubmission.AzureProductVariantPriceSchedule>>",
+            "properties": "optional<list<partnercentersubmission.TypeValue>>",
+            "resourceType": "optional<string>",
+            "subscriptionAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
+            "tenantAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
+            "trial": "optional<partnercentersubmission.AzureProductVariantTrial>",
+            "visibility": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductListing": {
+          "extends": undefined,
+          "properties": {
+            "accessInformation": "optional<string>",
+            "assets": "optional<list<partnercentersubmission.AzureProductListingAsset>>",
+            "compatibleProducts": "optional<list<string>>",
+            "description": "optional<string>",
+            "gettingStartedInstructions": "optional<string>",
+            "id": "optional<string>",
+            "keywords": "optional<list<string>>",
+            "languageCode": "optional<string>",
+            "listingContacts": "optional<list<partnercentersubmission.AzureListingContact>>",
+            "listingUris": "optional<list<partnercentersubmission.AzureListingUri>>",
+            "productDisplayName": "optional<string>",
+            "publisherName": "optional<string>",
+            "resourceType": "optional<string>",
+            "shortDescription": "optional<string>",
+            "summary": "optional<string>",
+            "title": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductListingAsset": {
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "fileName": "optional<string>",
+            "fileSasUri": "optional<string>",
+            "friendlyName": "optional<string>",
+            "id": "optional<string>",
+            "order": "optional<integer>",
+            "publisherDefinedSasUri": "optional<string>",
+            "resourceType": "optional<string>",
+            "state": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductPackageConfiguration": {
+          "extends": undefined,
+          "properties": {
+            "azureActiveDirectoryApplicationID": "optional<string>",
+            "azureActiveDirectoryTenantID": "optional<string>",
+            "connectionWebhook": "optional<string>",
+            "id": "optional<string>",
+            "landingPageUri": "optional<string>",
+            "resourceType": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductProperty": {
+          "extends": undefined,
+          "properties": {
+            "additionalCategories": "optional<list<string>>",
+            "appVersion": "optional<string>",
+            "applicableProducts": "optional<list<string>>",
+            "categories": "optional<list<string>>",
+            "customAmendments": "optional<list<string>>",
+            "extendedProperties": "optional<list<string>>",
+            "globalAmendmentTerms": "optional<string>",
+            "hideKeys": "optional<list<string>>",
+            "id": "optional<string>",
+            "industries": "optional<list<string>>",
+            "marketingOnlyChange": "optional<boolean>",
+            "productTags": "optional<list<string>>",
+            "resourceType": "optional<string>",
+            "submissionVersion": "optional<string>",
+            "termsOfUse": "optional<string>",
+            "useEnterpriseContract": "optional<boolean>",
+          },
+        },
         "partnercentersubmission.AzureProductSetup": {
           "extends": undefined,
           "properties": {
@@ -4590,6 +5371,23 @@ exports[`open api converter suger simple 1`] = `
             "sellingOption": "optional<string>",
             "testDriveType": "optional<string>",
             "trialUri": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductSubmission": {
+          "extends": undefined,
+          "properties": {
+            "areResourcesReady": "optional<boolean>",
+            "friendlyName": "optional<string>",
+            "id": "optional<string>",
+            "pendingUpdateInfo": "optional<partnercentersubmission.AzurePendingUpdateInfo>",
+            "publishedTimeInUtc": "optional<string>",
+            "releaseNumber": "optional<integer>",
+            "resourceType": "optional<string>",
+            "resources": "optional<list<partnercentersubmission.TypeValue>>",
+            "state": "optional<string>",
+            "subState": "optional<string>",
+            "targets": "optional<list<partnercentersubmission.TypeValue>>",
+            "variantResources": "optional<list<partnercentersubmission.AzureVariantResource>>",
           },
         },
         "partnercentersubmission.AzureProductVariant": {
@@ -4607,6 +5405,91 @@ exports[`open api converter suger simple 1`] = `
             "referenceVariantID": "optional<string>",
             "resourceType": "optional<string>",
             "state": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductVariantCustomMeter": {
+          "extends": undefined,
+          "properties": {
+            "displayName": "optional<string>",
+            "id": "optional<string>",
+            "includedBaseQuantities": "optional<list<partnercentersubmission.IncludedBaseQuantity>>",
+            "isEnabled": "optional<boolean>",
+            "priceInUsd": "optional<double>",
+            "uniqueID": "optional<string>",
+            "unitOfMeasure": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureProductVariantPriceSchedule": {
+          "extends": undefined,
+          "properties": {
+            "dateTimeRange": "optional<partnercentersubmission.AzureLocalizedTimeRange>",
+            "friendlyName": "optional<string>",
+            "isBaseSchedule": "optional<boolean>",
+            "marketCodes": "optional<list<string>>",
+            "schedules": "optional<list<partnercentersubmission.AzurePriceSchedule>>",
+          },
+        },
+        "partnercentersubmission.AzureProductVariantTrial": {
+          "extends": undefined,
+          "properties": {
+            "dateTimeRange": "optional<partnercentersubmission.AzureLocalizedTimeRange>",
+            "duration": "optional<integer>",
+            "durationType": "optional<string>",
+            "type": "optional<string>",
+          },
+        },
+        "partnercentersubmission.AzureValidationResult": {
+          "extends": undefined,
+          "properties": {
+            "errorMessage": "optional<string>",
+            "memberNames": "optional<list<string>>",
+          },
+        },
+        "partnercentersubmission.AzureVariantResource": {
+          "extends": undefined,
+          "properties": {
+            "resources": "optional<list<partnercentersubmission.TypeValue>>",
+            "variantID": "optional<string>",
+          },
+        },
+        "partnercentersubmission.IncludedBaseQuantity": {
+          "extends": undefined,
+          "properties": {
+            "isInfinite": "optional<boolean>",
+            "quantity": "optional<double>",
+            "recurringUnit": "optional<string>",
+          },
+        },
+        "partnercentersubmission.TypeValue": {
+          "extends": undefined,
+          "properties": {
+            "type": "optional<string>",
+            "value": "optional<string>",
+          },
+        },
+        "servicecontrol.ReportError": {
+          "extends": undefined,
+          "properties": {
+            "operationId": "optional<string>",
+            "status": "optional<servicecontrol.Status>",
+          },
+        },
+        "servicecontrol.ReportResponse": {
+          "extends": undefined,
+          "properties": {
+            "header": "optional<http.Header>",
+            "httpstatusCode": "optional<integer>",
+            "reportErrors": "optional<list<servicecontrol.ReportError>>",
+            "serviceConfigId": "optional<string>",
+            "serviceRolloutId": "optional<string>",
+          },
+        },
+        "servicecontrol.Status": {
+          "extends": undefined,
+          "properties": {
+            "code": "optional<integer>",
+            "details": "optional<list<list<integer>>>",
+            "message": "optional<string>",
           },
         },
         "shared.AwsAccountIdentifier": {
@@ -4639,12 +5522,28 @@ exports[`open api converter suger simple 1`] = `
           "extends": undefined,
           "properties": {
             "Description": "optional<shared.AwsSaasProductDescription>",
-            "Dimensions": "optional<list<Product.shared.AwsSaasProductDimension>>",
+            "Dimensions": "optional<list<shared.AwsSaasProductDimension>>",
             "PromotionalResources": "optional<shared.AwsSaasProductPromotionalResources>",
             "SupportInformation": "optional<shared.AwsSaasProductSupportInformation>",
             "Versions": "optional<list<shared.AwsSaasProductVersion>>",
             "dataFeedProductId": "optional<string>",
             "productId": "optional<string>",
+          },
+        },
+        "shared.AwsSaasProductAdditionalResource": {
+          "extends": undefined,
+          "properties": {
+            "Text": "optional<string>",
+            "Type": "optional<string>",
+            "Url": "optional<string>",
+          },
+        },
+        "shared.AwsSaasProductDeliveryOption": {
+          "extends": undefined,
+          "properties": {
+            "FulfillmentUrl": "optional<string>",
+            "Id": "optional<string>",
+            "Type": "optional<string>",
           },
         },
         "shared.AwsSaasProductDescription": {
@@ -4666,6 +5565,16 @@ exports[`open api converter suger simple 1`] = `
             "Visibility": "optional<string>",
           },
         },
+        "shared.AwsSaasProductDimension": {
+          "extends": undefined,
+          "properties": {
+            "Description": "optional<string>",
+            "Key": "optional<string>",
+            "Name": "optional<string>",
+            "Types": "optional<list<string>>",
+            "Unit": "optional<string>",
+          },
+        },
         "shared.AwsSaasProductPromotionalResources": {
           "extends": undefined,
           "properties": {
@@ -4677,6 +5586,23 @@ exports[`open api converter suger simple 1`] = `
           "extends": undefined,
           "properties": {
             "Description": "optional<string>",
+          },
+        },
+        "shared.AwsSaasProductVersion": {
+          "extends": undefined,
+          "properties": {
+            "DeliveryOptions": "optional<list<shared.AwsSaasProductDeliveryOption>>",
+            "Id": "optional<string>",
+          },
+        },
+        "shared.AwsSnsSubscription": {
+          "extends": undefined,
+          "properties": {
+            "Endpoint": "optional<string>",
+            "Protocol": "optional<string>",
+            "Status": "optional<string>",
+            "SubscriptionArn": "optional<string>",
+            "TopicArn": "optional<string>",
           },
         },
         "shared.AzureADIdentifier": {
@@ -4716,6 +5642,41 @@ exports[`open api converter suger simple 1`] = `
             "credential": "optional<shared.AzureCredential>",
           },
         },
+        "shared.AzureMarketplaceSubscription": {
+          "extends": undefined,
+          "properties": {
+            "allowedCustomerOperations": "optional<list<string>>",
+            "autoRenew": "optional<boolean>",
+            "beneficiary": "optional<shared.AzureADIdentifier>",
+            "created": "optional<string>",
+            "fulfillmentId": "optional<string>",
+            "id": "optional<string>",
+            "isFreeTrial": "optional<boolean>",
+            "isTest": "optional<boolean>",
+            "lastModified": "optional<string>",
+            "name": "optional<string>",
+            "offerId": "optional<string>",
+            "planId": "optional<string>",
+            "publisherId": "optional<string>",
+            "purchaser": "optional<shared.AzureADIdentifier>",
+            "quantity": "optional<integer>",
+            "saasSubscriptionStatus": "optional<string>",
+            "sandboxType": "optional<string>",
+            "sessionId": "optional<string>",
+            "sessionMode": "optional<string>",
+            "storeFront": "optional<string>",
+            "term": "optional<shared.AzureTerm>",
+          },
+        },
+        "shared.AzureTerm": {
+          "extends": undefined,
+          "properties": {
+            "chargeDuration": "optional<string>",
+            "endDate": "optional<string>",
+            "startDate": "optional<string>",
+            "termUnit": "optional<string>",
+          },
+        },
         "shared.BuyerInfo": {
           "extends": undefined,
           "properties": {
@@ -4725,6 +5686,24 @@ exports[`open api converter suger simple 1`] = `
             "disbursedAmount": "optional<double>",
             "gcpBuyer": "optional<shared.GcpMarketplaceUserAccount>",
             "invoicedAmount": "optional<double>",
+          },
+        },
+        "shared.CommitDimension": {
+          "docs": "The commit dimension. There may be one or more commit dimensions defined in single product, offer or entitlement.",
+          "extends": undefined,
+          "properties": {
+            "category": "optional<string>",
+            "description": "optional<string>",
+            "key": "optional<string>",
+            "length": "optional<integer>",
+            "maximumUsers": "optional<integer>",
+            "minimumUsers": "optional<integer>",
+            "name": "optional<string>",
+            "quantity": "optional<integer>",
+            "rate": "optional<double>",
+            "timeUnit": "optional<string>",
+            "type": "optional<string>",
+            "types": "optional<list<string>>",
           },
         },
         "shared.CompanyInfo": {
@@ -4801,6 +5780,63 @@ exports[`open api converter suger simple 1`] = `
             "title": "optional<string>",
           },
         },
+        "shared.GcpCommerceProducerPrice": {
+          "extends": undefined,
+          "properties": {
+            "currencyCode": "optional<string>",
+            "nanos": "optional<integer>",
+            "units": "optional<integer>",
+          },
+        },
+        "shared.GcpCommerceProducerPriceInfo": {
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "priceModel": "optional<string>",
+            "subscriptionPlans": "optional<list<shared.GcpCommerceProducerPriceSubscription>>",
+            "usageFees": "optional<list<shared.GcpCommerceProducerPriceUsage>>",
+          },
+        },
+        "shared.GcpCommerceProducerPriceSubscription": {
+          "extends": undefined,
+          "properties": {
+            "period": "optional<string>",
+            "price": "optional<shared.GcpCommerceProducerPrice>",
+            "taxCategoryOverride": "optional<string>",
+          },
+        },
+        "shared.GcpCommerceProducerPriceTier": {
+          "extends": undefined,
+          "properties": {
+            "endUsageAmount": "optional<double>",
+            "price": "optional<shared.GcpCommerceProducerPrice>",
+            "startUsageAmount": "optional<double>",
+          },
+        },
+        "shared.GcpCommerceProducerPriceUsage": {
+          "extends": undefined,
+          "properties": {
+            "displayQuantity": "optional<integer>",
+            "metricId": "optional<string>",
+            "priceTiers": "optional<list<shared.GcpCommerceProducerPriceTier>>",
+            "taxCategoryOverride": "optional<string>",
+          },
+        },
+        "shared.GcpCommerceProducerPurchaseMetric": {
+          "extends": undefined,
+          "properties": {
+            "description": "optional<string>",
+            "displayName": "optional<string>",
+            "displayUnit": "optional<string>",
+            "displayUnitDescription": "optional<string>",
+            "id": "optional<string>",
+            "metricKind": "optional<string>",
+            "name": "optional<string>",
+            "reportingUnit": "optional<string>",
+            "unit": "optional<string>",
+            "valueType": "optional<string>",
+          },
+        },
         "shared.GcpCommerceProducerPurchaseSpec": {
           "extends": undefined,
           "properties": {
@@ -4848,6 +5884,42 @@ exports[`open api converter suger simple 1`] = `
             "workloadIdentityPoolId": "optional<string>",
           },
         },
+        "shared.GcpMarketplaceConsumer": {
+          "extends": undefined,
+          "properties": {
+            "project": "optional<string>",
+          },
+        },
+        "shared.GcpMarketplaceEntitlement": {
+          "extends": undefined,
+          "properties": {
+            "account": "optional<string>",
+            "consumers": "optional<list<shared.GcpMarketplaceConsumer>>",
+            "createTime": "optional<string>",
+            "id": "optional<string>",
+            "inputProperties": "optional<list<integer>>",
+            "messageToUser": "optional<string>",
+            "name": "optional<string>",
+            "newOfferDuration": "optional<string>",
+            "newOfferEndTime": "optional<string>",
+            "newPendingOffer": "optional<string>",
+            "newPendingOfferDuration": "optional<string>",
+            "newPendingPlan": "optional<string>",
+            "newPlan": "optional<string>",
+            "offer": "optional<string>",
+            "offerDuration": "optional<string>",
+            "offerEndTime": "optional<string>",
+            "plan": "optional<string>",
+            "product": "optional<string>",
+            "productExternalName": "optional<string>",
+            "provider": "optional<string>",
+            "quoteExternalName": "optional<string>",
+            "state": "optional<string>",
+            "subscriptionEndTime": "optional<string>",
+            "updateTime": "optional<string>",
+            "usageReportingId": "optional<string>",
+          },
+        },
         "shared.GcpMarketplaceUserAccount": {
           "extends": undefined,
           "properties": {
@@ -4862,6 +5934,15 @@ exports[`open api converter suger simple 1`] = `
             "userInfo": "optional<shared.GcpUserInfo>",
           },
         },
+        "shared.GcpMarketplaceUserAccountApproval": {
+          "extends": undefined,
+          "properties": {
+            "name": "optional<string>",
+            "reason": "optional<string>",
+            "state": "optional<string>",
+            "updateTime": "optional<string>",
+          },
+        },
         "shared.GcpProduct": {
           "extends": undefined,
           "properties": {
@@ -4872,6 +5953,15 @@ exports[`open api converter suger simple 1`] = `
             "name": "optional<string>",
             "service": "optional<string>",
             "serviceConfig": "optional<shared.GcpCommerceProducerServiceConfig>",
+          },
+        },
+        "shared.GcpPurchasePlan": {
+          "extends": undefined,
+          "properties": {
+            "name": "optional<string>",
+            "priceInfo": "optional<shared.GcpCommerceProducerPriceInfo>",
+            "purchaseMode": "optional<string>",
+            "title": "optional<string>",
           },
         },
         "shared.GcpUserInfo": {
@@ -4924,6 +6014,21 @@ exports[`open api converter suger simple 1`] = `
             "usageRecordGroups": "optional<list<shared.MeteringUsageRecordGroup>>",
           },
         },
+        "shared.MeteringDimension": {
+          "docs": "The dimension to meter usage in entitlement.",
+          "extends": undefined,
+          "properties": {
+            "category": "optional<string>",
+            "description": "optional<string>",
+            "includedBaseQuantities": "optional<list<partnercentersubmission.IncludedBaseQuantity>>",
+            "key": "optional<string>",
+            "name": "optional<string>",
+            "rate": "optional<double>",
+            "types": "optional<list<string>>",
+            "usageCount": "optional<shared.UsageCount>",
+            "valueType": "optional<string>",
+          },
+        },
         "shared.MeteringUsageRecordGroup": {
           "extends": undefined,
           "properties": {
@@ -4935,6 +6040,35 @@ exports[`open api converter suger simple 1`] = `
             "serialID": "optional<integer>",
             "status": "optional<string>",
             "usageRecordReportID": "optional<string>",
+          },
+        },
+        "shared.MeteringUsageRecordReport": {
+          "extends": undefined,
+          "properties": {
+            "creationTime": "optional<string>",
+            "entitlementID": "optional<string>",
+            "entitlementTermID": "optional<string>",
+            "id": "optional<string>",
+            "info": "optional<shared.MeteringUsageRecordReportInfo>",
+            "organizationID": "optional<string>",
+            "productID": "optional<string>",
+          },
+        },
+        "shared.MeteringUsageRecordReportInfo": {
+          "extends": undefined,
+          "properties": {
+            "awsMeteringResponse": "optional<marketplacemetering.BatchMeterUsageOutput>",
+            "azureMeteringResponse": "optional<marketplacemeteringv1.BatchUsageEventOkResponse>",
+            "commitAmount": "optional<double>",
+            "creditAmount": "optional<double>",
+            "endTime": "optional<string>",
+            "gcpMeteringResponse": "optional<servicecontrol.ReportResponse>",
+            "startTime": "optional<string>",
+            "usageRecordGroupIds": "optional<list<string>>",
+            "usedCommitAmount": "optional<double>",
+            "usedCommitAmountIncrement": "optional<double>",
+            "usedCreditAmount": "optional<double>",
+            "usedCreditAmountIncrement": "optional<double>",
           },
         },
         "shared.OfferInfo": {
@@ -4959,6 +6093,13 @@ exports[`open api converter suger simple 1`] = `
             "visibility": "optional<string>",
           },
         },
+        "shared.PaymentInstallment": {
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<double>",
+            "chargeOn": "optional<string>",
+          },
+        },
         "shared.ProductInfo": {
           "extends": undefined,
           "properties": {
@@ -4972,6 +6113,21 @@ exports[`open api converter suger simple 1`] = `
             "gcpProduct": "optional<shared.GcpProduct>",
             "refundCancelationPolicy": "optional<string>",
             "sellerNotes": "optional<string>",
+          },
+        },
+        "shared.RevenueRecord": {
+          "extends": undefined,
+          "properties": {
+            "amount": "optional<double>",
+            "date": "optional<string>",
+          },
+        },
+        "shared.UsageCount": {
+          "extends": undefined,
+          "properties": {
+            "creditCount": "optional<double>",
+            "includedCount": "optional<double>",
+            "reportedCount": "optional<double>",
           },
         },
         "shared.WorkloadEntitlement": {
@@ -5058,6 +6214,47 @@ exports[`open api converter suger simple 1`] = `
             "productType": "optional<string>",
             "service": "optional<string>",
             "status": "optional<string>",
+          },
+        },
+        "types.Entitlement": {
+          "extends": undefined,
+          "properties": {
+            "customerIdentifier": "optional<string>",
+            "dimension": "optional<string>",
+            "expirationDate": "optional<string>",
+            "productCode": "optional<string>",
+          },
+        },
+        "types.Tag": {
+          "extends": undefined,
+          "properties": {
+            "key": "optional<string>",
+            "value": "optional<string>",
+          },
+        },
+        "types.UsageAllocation": {
+          "extends": undefined,
+          "properties": {
+            "allocatedUsageQuantity": "optional<integer>",
+            "tags": "optional<list<types.Tag>>",
+          },
+        },
+        "types.UsageRecord": {
+          "extends": undefined,
+          "properties": {
+            "customerIdentifier": "optional<string>",
+            "dimension": "optional<string>",
+            "quantity": "optional<integer>",
+            "timestamp": "optional<string>",
+            "usageAllocations": "optional<list<types.UsageAllocation>>",
+          },
+        },
+        "types.UsageRecordResult": {
+          "extends": undefined,
+          "properties": {
+            "meteringRecordId": "optional<string>",
+            "status": "optional<string>",
+            "usageRecord": "optional<types.UsageRecord>",
           },
         },
       },
@@ -5927,23 +7124,13 @@ exports[`open api converter suger simple 1`] = `
                     "type": "string",
                   },
                 },
-                "response": "list<shared.AwsSaasProductDimension>",
+                "response": "list<commons.shared.AwsSaasProductDimension>",
               },
             },
           },
         },
       },
       "types": {
-        "shared.AwsSaasProductDimension": {
-          "extends": undefined,
-          "properties": {
-            "Description": "optional<string>",
-            "Key": "optional<string>",
-            "Name": "optional<string>",
-            "Types": "optional<list<string>>",
-            "Unit": "optional<string>",
-          },
-        },
         "shared.CreateProductParams": {
           "extends": undefined,
           "properties": {
@@ -6016,6 +7203,15 @@ exports[`open api converter suger simple 1`] = `
         },
       },
       "types": {
+        "shared.EntitlementUsageRecord": {
+          "extends": undefined,
+          "properties": {
+            "amounts": "optional<list<double>>",
+            "date": "optional<string>",
+            "keys": "optional<list<string>>",
+            "quantities": "optional<list<double>>",
+          },
+        },
         "shared.GetRevenueReportParams": {
           "extends": undefined,
           "properties": {
@@ -6055,7 +7251,7 @@ exports[`open api converter suger simple 1`] = `
             "entitlementID": "optional<string>",
             "organizationID": "optional<string>",
             "reportDate": "optional<string>",
-            "usageRecords": "optional<list<commons.shared.EntitlementUsageRecord>>",
+            "usageRecords": "optional<list<shared.EntitlementUsageRecord>>",
           },
         },
       },
@@ -6145,12 +7341,21 @@ Please share the POST callback endpoint created in your app's backend with Telem
                     "extends": undefined,
                     "properties": {
                       "user": "optional<string>",
-                      "vehicles": "optional<list<commons.Callback_DTO>>",
+                      "vehicles": "optional<list<Callback_DTO>>",
                     },
                   },
                 },
               },
             },
+          },
+        },
+      },
+      "types": {
+        "Callback_DTO": {
+          "extends": undefined,
+          "properties": {
+            "id": "string",
+            "registration": "string",
           },
         },
       },
