@@ -11,6 +11,7 @@ describe("open api converter", () => {
     testFixture("rivet");
     testFixture("partnerstack");
     testFixture("suger");
+    testFixture("covie");
 });
 
 function testFixture(fixtureName: string) {

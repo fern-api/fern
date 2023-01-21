@@ -292,7 +292,11 @@ export class OpenApiV3Context {
                             schemaReferences.add(referencedSchema);
                         });
                     }
-                } else {
+                } else if (
+                    propertySchema.properties != null &&
+                    propertySchema.type === "array" &&
+                    propertySchema.items != null
+                ) {
                     this.getAllReferencedSchemas(propertySchema).forEach((referencedSchema) => {
                         schemaReferences.add(referencedSchema);
                     });

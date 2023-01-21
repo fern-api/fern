@@ -1,5 +1,1155 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`open api converter covie simple 1`] = `
+{
+  "rootApiFile": {
+    "headers": {},
+    "name": "api",
+  },
+  "serviceFiles": {
+    "account.yml": {
+      "services": {
+        "http": {
+          "AccountService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "disableAccountMfaRequired": {
+                "display-name": "Disable Account MFA Requirement",
+                "docs": "Remove requirement for all account users to have an MFA application configured",
+                "method": "DELETE",
+                "path": "/accounts/{account_id}/mfa_requirements",
+              },
+              "enableAccountMfaRequired": {
+                "display-name": "Enable Account MFA Requirement",
+                "docs": "Require all account users to have an MFA application configured",
+                "method": "POST",
+                "path": "/accounts/{account_id}/mfa_requirements",
+                "response": "AccountWithConfig",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "AccountWithConfig": {
+          "extends": undefined,
+          "properties": {},
+        },
+      },
+    },
+    "application.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
+      "services": {
+        "http": {
+          "ApplicationService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "getApplicationLinks": {
+                "display-name": "List Application Links",
+                "docs": "Lists an application's links.",
+                "method": "GET",
+                "path": "/applications/{application_id}/links",
+                "request": {
+                  "query-parameters": {
+                    "created_since": {
+                      "docs": "Limit results to links created on or after this date.",
+                      "type": "optional<string>",
+                    },
+                    "created_until": {
+                      "docs": "Limit results to links created on or before this date.",
+                      "type": "optional<string>",
+                    },
+                    "has_metadata": {
+                      "docs": "Filter whether a link has metadata attached",
+                      "type": "optional<boolean>",
+                    },
+                    "integration_ids": {
+                      "docs": "If provided, only show items with any of the specified integration IDs, comma-separated.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                    "policy_type": {
+                      "docs": "The type of policy linked.",
+                      "type": "optional<string>",
+                    },
+                    "provider": {
+                      "docs": "Partial name of a provider to search against",
+                      "type": "optional<string>",
+                    },
+                    "q": {
+                      "docs": "Search for link via ID",
+                      "type": "optional<string>",
+                    },
+                    "status": {
+                      "docs": "Filter link status; separate multiple statuses (OR'd) with commas",
+                      "type": "optional<string>",
+                    },
+                    "synced_since": {
+                      "docs": "Limit results to links last synced on or after this date.",
+                      "type": "optional<string>",
+                    },
+                    "synced_until": {
+                      "docs": "Limit results to links last synced on or before this date.",
+                      "type": "optional<string>",
+                    },
+                    "updated_since": {
+                      "docs": "Limit results to links last updated on or since this date.",
+                      "type": "optional<string>",
+                    },
+                    "updated_until": {
+                      "docs": "Limit results to links last updated on or before this date.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "commons.Links",
+              },
+              "getApplicationPolicies": {
+                "display-name": "List Application Policies",
+                "docs": "Lists an application's policies.",
+                "method": "GET",
+                "path": "/applications/{application_id}/policies",
+                "request": {
+                  "query-parameters": {
+                    "integration_ids": {
+                      "docs": "If provided, only show items with any of the specified integration IDs, comma-separated.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "commons.Policies",
+              },
+            },
+          },
+        },
+      },
+    },
+    "commons.yml": {
+      "types": {
+        "Carrier": {
+          "docs": "A basic object describing the individual insurance company which has issued a policy.",
+          "extends": undefined,
+          "properties": {
+            "name": "optional<string>",
+          },
+        },
+        "Events": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType25>",
+            "count": "optional<integer>",
+            "filtered_count": "optional<integer>",
+          },
+        },
+        "Integration": {
+          "docs": "Represents a connection between a client application and Covie's systems allowing a client users to create and process links.",
+          "extends": undefined,
+          "properties": {
+            "configuration": "optional<_InlinedType30>",
+            "created_at": "optional<string>",
+            "id": "optional<string>",
+            "key": "optional<string>",
+            "name": "optional<string>",
+            "status": "optional<string>",
+            "updated_at": "optional<string>",
+          },
+        },
+        "Link_2": {
+          "docs": "Represents the individual connections between Covie and a Policyholder's account with a carrier and wraps the policies retrieved from it that have been made available to the consumer.",
+          "extends": undefined,
+          "properties": {
+            "_links": "optional<_InlinedType36>",
+            "created_at": "optional<string>",
+            "id": "optional<string>",
+            "integration_id": "optional<string>",
+            "is_tracked": "optional<boolean>",
+            "object": "optional<string>",
+            "policy_count": "optional<integer>",
+            "status": "optional<string>",
+            "tracking_frequency": "optional<_InlinedType32>",
+            "updated_at": "optional<string>",
+          },
+        },
+        "Links": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType37>",
+            "count": "optional<integer>",
+            "filtered_count": "optional<integer>",
+          },
+        },
+        "PeriodValue": {
+          "docs": "Describes a value that represents a period of time, such as days, weeks, or months.",
+          "extends": undefined,
+          "properties": {
+            "unit": "optional<string>",
+            "value": "optional<integer>",
+          },
+        },
+        "Policies": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType31>",
+            "count": "optional<integer>",
+            "filtered_count": "optional<integer>",
+          },
+        },
+        "Webhook": {
+          "docs": "Represents a webhook in the Covie system.",
+          "extends": undefined,
+          "properties": {
+            "created_at": "optional<string>",
+            "event_types": "optional<list<string>>",
+            "id": "optional<string>",
+            "is_enabled": "optional<boolean>",
+            "last_called_at": "optional<string>",
+            "last_response_body": "optional<string>",
+            "last_response_code": "optional<string>",
+            "updated_at": "optional<string>",
+            "uri": "optional<string>",
+          },
+        },
+        "_InlinedType25": {
+          "extends": undefined,
+          "properties": {
+            "events": "optional<list<Event>>",
+          },
+        },
+        "_InlinedType26": {
+          "extends": undefined,
+          "properties": {
+            "primary": "optional<string>",
+          },
+        },
+        "_InlinedType27": {
+          "docs": "Branding configuration for the embed.",
+          "extends": undefined,
+          "properties": {
+            "colors": "optional<_InlinedType26>",
+            "hide_logo": "optional<boolean>",
+            "logo": "optional<string>",
+          },
+        },
+        "_InlinedType28": {
+          "extends": undefined,
+          "properties": {
+            "agency_logo": "optional<string>",
+            "agency_photo": "optional<string>",
+          },
+        },
+        "_InlinedType29": {
+          "extends": undefined,
+          "properties": {
+            "agency_name": "optional<string>",
+            "agent_email": "optional<string>",
+            "agent_name": "optional<string>",
+            "image_urls": "optional<_InlinedType28>",
+          },
+        },
+        "_InlinedType30": {
+          "extends": undefined,
+          "properties": {
+            "brand": "optional<_InlinedType27>",
+            "display_name": "optional<string>",
+            "hosted": "optional<_InlinedType29>",
+            "use_name_as_display_name": "optional<boolean>",
+          },
+        },
+        "_InlinedType31": {
+          "extends": undefined,
+          "properties": {
+            "policies": "optional<list<Policy>>",
+          },
+        },
+        "_InlinedType32": {
+          "docs": "The frequency of which tracking should be performed. This value is \`never\` when tracking is disabled.",
+          "enum": [
+            "daily",
+            "weekly",
+            "monthly",
+            "never",
+            "on_demand",
+          ],
+        },
+        "_InlinedType33": {
+          "docs": "Link to retrieve the link's details.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType34": {
+          "docs": "Link to the carrier's logo.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType35": {
+          "extends": undefined,
+          "properties": {
+            "content_type": "optional<string>",
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType36": {
+          "extends": undefined,
+          "properties": {
+            "carrier_logo": "optional<_InlinedType34>",
+            "self": "optional<_InlinedType33>",
+            "uploaded_documents": "optional<list<_InlinedType35>>",
+          },
+        },
+        "_InlinedType37": {
+          "extends": undefined,
+          "properties": {
+            "links": "optional<list<Link_2>>",
+          },
+        },
+      },
+    },
+    "event.yml": {
+      "services": {
+        "http": {
+          "EventService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "postEventsEventIdBroadcasts": {
+                "display-name": "Rebroadcast Event",
+                "docs": "Rebroadcast an event.",
+                "method": "POST",
+                "path": "/events/{event_id}/broadcasts",
+                "response": "_InlinedType24",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "_InlinedType23": {
+          "extends": undefined,
+          "properties": {
+            "broadcasts": "optional<list<commons.EventBroadcast>>",
+          },
+        },
+        "_InlinedType24": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType23>",
+            "count": "optional<integer>",
+          },
+        },
+      },
+    },
+    "integration.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
+      "services": {
+        "http": {
+          "IntegrationService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "createIntegration": {
+                "display-name": "Create Integration",
+                "docs": "Creates a new integration.",
+                "method": "POST",
+                "path": "/integrations",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "configuration": "optional<_InlinedType13>",
+                      "name": "string",
+                      "policyRequirements": "optional<_InlinedType10>",
+                    },
+                  },
+                },
+              },
+              "deleteIntegration": {
+                "display-name": "Delete Integration",
+                "docs": "Deletes an integration.",
+                "method": "DELETE",
+                "path": "/integrations/{integration_id}",
+              },
+              "deleteIntegrationsIntegrationIdAgencyLogo": {
+                "display-name": "Delete Agency Logo",
+                "docs": "Delete the agency logo and/or config if present.",
+                "method": "DELETE",
+                "path": "/integrations/{integration_id}/agency_logo",
+              },
+              "deleteIntegrationsIntegrationIdAgentPhoto": {
+                "display-name": "Delete Agent Photo",
+                "docs": "Delete the agent photo and/or config if present.",
+                "method": "DELETE",
+                "path": "/integrations/{integration_id}/agent_photo",
+              },
+              "deleteIntegrationsIntegrationIdBrandLogo": {
+                "display-name": "Delete Brand Logo",
+                "docs": "Delete the brand logo and/or config if present.",
+                "method": "DELETE",
+                "path": "/integrations/{integration_id}/brand_logo",
+              },
+              "getIntegration": {
+                "display-name": "Get Integration",
+                "docs": "Retrieve the details of an integration.",
+                "method": "GET",
+                "path": "/integrations/{integration_id}",
+                "response": "commons.Integration_2",
+              },
+              "getIntegrationPolicies": {
+                "display-name": "List Integration Policies",
+                "docs": "List all policies that have been linked to an integration.",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/policies",
+                "request": {
+                  "query-parameters": {
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "commons.Policies",
+              },
+              "getIntegrationProviders": {
+                "display-name": "Supported Providers List",
+                "docs": "Retrieve a list of supported carriers for a given integration, along with their identifiers.",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/providers",
+                "request": {
+                  "query-parameters": {
+                    "required_policy_types": {
+                      "docs": "A pipe delineated list of policy types desired. Providers who do not support at least one required policy type will be excluded. ",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "Providers",
+              },
+              "getIntegrationsIntegrationIdAgencyLogo": {
+                "display-name": "View Agency Logo",
+                "docs": "View the agency logo for the hosted integration.",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/agency_logo",
+              },
+              "getIntegrationsIntegrationIdAgentPhoto": {
+                "display-name": "View Agent Photo",
+                "docs": "View the agent photo for the hosted integration.",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/agent_photo",
+              },
+              "getIntegrationsIntegrationIdBrandLogo": {
+                "display-name": "View Brand Logo",
+                "docs": "View the brand logo for the integration.",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/brand_logo",
+              },
+              "listIntegrations": {
+                "display-name": "List Integrations",
+                "docs": "List integrations associated to an application",
+                "method": "GET",
+                "path": "/integrations",
+                "request": {
+                  "query-parameters": {
+                    "q": {
+                      "docs": "Partial integration name, ID, or integration key to search against, with or without leading in_/ik_",
+                      "type": "optional<string>",
+                    },
+                    "status": {
+                      "docs": "Filter active or archived integrations",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "Integrations",
+              },
+              "putIntegrationsIntegrationIdAgencyLogo": {
+                "display-name": "Update Agency Logo",
+                "docs": "Upload the agency logo for the hosted integration.",
+                "method": "PUT",
+                "path": "/integrations/{integration_id}/agency_logo",
+                "response": "_InlinedType18",
+              },
+              "putIntegrationsIntegrationIdAgentPhoto": {
+                "display-name": "Update Agent Photo",
+                "docs": "Upload an agent photo for the hosted integration.",
+                "method": "PUT",
+                "path": "/integrations/{integration_id}/agent_photo",
+                "response": "_InlinedType19",
+              },
+              "putIntegrationsIntegrationIdBrandLogo": {
+                "display-name": "Update Brand Logo",
+                "docs": "Upload the brand logo for the hosted integration.",
+                "method": "PUT",
+                "path": "/integrations/{integration_id}/brand_logo",
+                "response": "_InlinedType20",
+              },
+              "regenerateIntegrationKey": {
+                "display-name": "Regenerate Integration Key",
+                "docs": "Replaces the existing integration key with a new randomly generated key.",
+                "method": "POST",
+                "path": "/integrations/{integration_id}/regenerate_key",
+                "response": "commons.Integration_2",
+              },
+              "updateIntegration": {
+                "display-name": "Update Integration",
+                "docs": "Edit the name and archived status of an integration.",
+                "method": "PATCH",
+                "path": "/integrations/{integration_id}",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "configuration": "optional<_InlinedType16>",
+                      "name": "optional<string>",
+                      "policy_requirements": "optional<_InlinedType17>",
+                      "status": "optional<string>",
+                    },
+                  },
+                },
+                "response": "commons.Integration_2",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "Integrations": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType6>",
+            "_links": "optional<_InlinedType5>",
+            "count": "optional<integer>",
+          },
+        },
+        "Providers": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType9>",
+            "_links": "optional<_InlinedType8>",
+            "count": "optional<integer>",
+          },
+        },
+        "_InlinedType10": {
+          "extends": undefined,
+          "properties": {
+            "allow_inactive": "optional<boolean>",
+            "effective_date": "optional<string>",
+          },
+        },
+        "_InlinedType11": {
+          "extends": undefined,
+          "properties": {
+            "primary": "optional<string>",
+          },
+        },
+        "_InlinedType12": {
+          "docs": "Branding configuration for the embed.",
+          "extends": undefined,
+          "properties": {
+            "colors": "optional<_InlinedType11>",
+            "hide_logo": "optional<boolean>",
+            "logo": "optional<string>",
+          },
+        },
+        "_InlinedType13": {
+          "extends": undefined,
+          "properties": {
+            "brand": "optional<_InlinedType12>",
+            "display_name": "optional<string>",
+            "use_name_as_display_name": "optional<boolean>",
+          },
+        },
+        "_InlinedType14": {
+          "extends": undefined,
+          "properties": {
+            "primary": "optional<string>",
+          },
+        },
+        "_InlinedType15": {
+          "docs": "Branding configuration for the embed.",
+          "extends": undefined,
+          "properties": {
+            "colors": "optional<_InlinedType14>",
+            "hide_logo": "optional<boolean>",
+            "logo": "optional<string>",
+          },
+        },
+        "_InlinedType16": {
+          "extends": undefined,
+          "properties": {
+            "brand": "optional<_InlinedType15>",
+            "display_name": "optional<string>",
+            "use_name_as_display_name": "optional<boolean>",
+          },
+        },
+        "_InlinedType17": {
+          "extends": undefined,
+          "properties": {
+            "allow_inactive": "optional<boolean>",
+            "effective_date": "optional<string>",
+          },
+        },
+        "_InlinedType18": {
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType19": {
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType20": {
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType4": {
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType5": {
+          "extends": undefined,
+          "properties": {
+            "self": "optional<_InlinedType4>",
+          },
+        },
+        "_InlinedType6": {
+          "extends": undefined,
+          "properties": {
+            "integrations": "optional<list<commons.Integration>>",
+          },
+        },
+        "_InlinedType7": {
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType8": {
+          "extends": undefined,
+          "properties": {
+            "self": "optional<_InlinedType7>",
+          },
+        },
+        "_InlinedType9": {
+          "extends": undefined,
+          "properties": {
+            "providers": "optional<list<commons.Provider>>",
+          },
+        },
+      },
+    },
+    "link.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
+      "services": {
+        "http": {
+          "LinkService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "attachLinkDocument": {
+                "display-name": "Upload Document To Link",
+                "docs": "Attach a policy document to a Link. If the document can be parsed, select the parsed policy for sharing.",
+                "method": "POST",
+                "path": "/links/{id}/documents",
+              },
+              "deleteLink": {
+                "display-name": "Delete Link",
+                "docs": "Deletes a link.",
+                "method": "DELETE",
+                "path": "/links/{id}",
+              },
+              "getIntegrationLinks": {
+                "display-name": "List Integration Links",
+                "docs": "Retrieves a list of links associated to the requested integration",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/links",
+                "request": {
+                  "query-parameters": {
+                    "created_since": {
+                      "docs": "Limit results to links created on or after this date.",
+                      "type": "optional<string>",
+                    },
+                    "created_until": {
+                      "docs": "Limit results to links created on or before this date.",
+                      "type": "optional<string>",
+                    },
+                    "has_metadata": {
+                      "docs": "Filter whether a link has metadata attached",
+                      "type": "optional<boolean>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                    "policy_type": {
+                      "docs": "The type of policy linked.",
+                      "type": "optional<string>",
+                    },
+                    "provider": {
+                      "docs": "Partial name of a provider to search against",
+                      "type": "optional<string>",
+                    },
+                    "q": {
+                      "docs": "Search for link via ID",
+                      "type": "optional<string>",
+                    },
+                    "status": {
+                      "docs": "Filter link status; separate multiple statuses (OR'd) with commas",
+                      "type": "optional<string>",
+                    },
+                    "synced_since": {
+                      "docs": "Limit results to links last synced on or after this date.",
+                      "type": "optional<string>",
+                    },
+                    "synced_until": {
+                      "docs": "Limit results to links last synced on or before this date.",
+                      "type": "optional<string>",
+                    },
+                    "updated_since": {
+                      "docs": "Limit results to links last updated on or since this date.",
+                      "type": "optional<string>",
+                    },
+                    "updated_until": {
+                      "docs": "Limit results to links last updated on or before this date.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "commons.Links",
+              },
+              "getIntegrationLinksWithPolicies": {
+                "display-name": "List Integration Links With Policies",
+                "docs": "Retrieves a list of links and selected policies associated to the requested integration",
+                "method": "GET",
+                "path": "/integrations/{integration_id}/links_with_policies",
+                "request": {
+                  "query-parameters": {
+                    "created_since": {
+                      "docs": "Limit results to links created on or after this date.",
+                      "type": "optional<string>",
+                    },
+                    "created_until": {
+                      "docs": "Limit results to links created on or before this date.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                    "policy_filter_type": {
+                      "docs": "Show only these types of policies within each link. Does not affect which links are shown. Comma-separate to allow multiple policy types.",
+                      "type": "optional<string>",
+                    },
+                    "policy_type": {
+                      "docs": "The type of policy linked.",
+                      "type": "optional<string>",
+                    },
+                    "provider": {
+                      "docs": "Partial name of a provider to search against",
+                      "type": "optional<string>",
+                    },
+                    "synced_since": {
+                      "docs": "Limit results to links last synced on or after this date.",
+                      "type": "optional<string>",
+                    },
+                    "synced_until": {
+                      "docs": "Limit results to links last synced on or before this date.",
+                      "type": "optional<string>",
+                    },
+                    "updated_since": {
+                      "docs": "Limit results to links last updated on or since this date.",
+                      "type": "optional<string>",
+                    },
+                    "updated_until": {
+                      "docs": "Limit results to links last updated on or before this date.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "response": "LinksWithPolicies",
+              },
+              "getLink": {
+                "display-name": "Retrieve link",
+                "docs": "Retrieves a Link",
+                "method": "GET",
+                "path": "/links/{id}",
+                "response": "commons.Link",
+              },
+              "getLinkEvents": {
+                "display-name": "List Link Events",
+                "docs": "Retrieves a list of events triggered for the requested link",
+                "method": "GET",
+                "path": "/links/{id}/events",
+                "request": {
+                  "query-parameters": {
+                    "event_type": {
+                      "docs": "Filter events by type.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "commons.Events",
+              },
+              "getLinkPolicies": {
+                "display-name": "List Link Policies",
+                "docs": "Retrieves a list of policies associated with the requested link",
+                "method": "GET",
+                "path": "/links/{id}/policies",
+                "request": {
+                  "query-parameters": {
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "commons.Policies",
+              },
+              "initializeLinkViaIntegration": {
+                "display-name": "Initialize link",
+                "docs": "Creates a link and optionally sets metadata and selects a carrier, allowing for seeding initial data before an insured continues the linking process via the embed",
+                "method": "POST",
+                "path": "/integrations/{integration_id}/links",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "provider_id": "optional<string>",
+                    },
+                  },
+                },
+                "response": "commons.Link",
+              },
+              "syncLinkManually": {
+                "display-name": "Manually Sync Link",
+                "docs": "Sync a tracked link with the provider using the stored user credentials",
+                "method": "POST",
+                "path": "/links/{id}/syncs",
+              },
+              "updateLinkSettings": {
+                "display-name": "Update Link Settings",
+                "docs": undefined,
+                "method": "PATCH",
+                "path": "/links/{id}",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "tracking_frequency": "optional<string>",
+                    },
+                  },
+                },
+                "response": "commons.Link",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "LinksWithPolicies": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType21>",
+            "count": "optional<integer>",
+            "filtered_count": "optional<integer>",
+          },
+        },
+        "_InlinedType21": {
+          "extends": undefined,
+          "properties": {
+            "links": "optional<list<commons.LinkWithPolicies>>",
+          },
+        },
+      },
+    },
+    "policy.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
+      "services": {
+        "http": {
+          "PolicyService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "getPoliciesPolicyId": {
+                "display-name": "Retrieve Policy",
+                "docs": "Retrieve a Policy object that was previously connected via a Link",
+                "method": "GET",
+                "path": "/policies/{policy_id}",
+                "response": "Policy_2",
+              },
+              "getPolicyDocument": {
+                "display-name": "Retrieve Policy Document",
+                "docs": "Retrieve the contents of a Policy document",
+                "method": "GET",
+                "path": "/policies/{policy_id}/documents/{document_type}",
+                "response": "FileContents",
+              },
+              "listPolicyEvents": {
+                "display-name": "List Policy Events",
+                "docs": "List all events that have been triggered for the selected policy",
+                "method": "GET",
+                "path": "/policies/{policy_id}/events",
+                "request": {
+                  "query-parameters": {
+                    "event_type": {
+                      "docs": "Filter events by type.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "commons.Events",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "Policy": {
+          "docs": "This describes, in high level, the insurance policy record that is provided by a link. This object encapsulates all the necessary details to understand the policy's status, policyholders, and covered persons or properties. ",
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType3>",
+            "_links": "optional<_InlinedType2>",
+            "cancellation_date": "optional<string>",
+            "cancellation_reason": "optional<_InlinedType0>",
+            "carrier": "optional<commons.Carrier>",
+            "expiration_date": "optional<string>",
+            "fingerprint": "optional<string>",
+            "id": "optional<string>",
+            "inception_date": "optional<string>",
+            "last_synced_at": "optional<string>",
+            "line": "optional<string>",
+            "link_id": "optional<string>",
+            "linked_at": "optional<string>",
+            "locations": "optional<list<commons.Location>>",
+            "masked_number": "optional<string>",
+            "number": "optional<string>",
+            "object": "optional<string>",
+            "policyholders": "optional<list<commons.Policyholder>>",
+            "status": "optional<string>",
+            "term_length": "optional<commons.PeriodValue>",
+            "vehicles": "optional<list<commons.Vehicle>>",
+          },
+        },
+        "_InlinedType0": {
+          "docs": "The determined reason for the cancellation, such as insured_non_payment or carrier_non_renew or insured_action. This value is null when cancellation is not active or not explicitly indicated by the carrier systems and is not guaranteed to be provided in any circumstance.",
+          "enum": [
+            "carrier_non_renew",
+            "insured_non_payment",
+            "insured_requested",
+            "other",
+          ],
+        },
+        "_InlinedType1": {
+          "docs": "A link to the logo for the carrier on the policy.",
+          "extends": undefined,
+          "properties": {
+            "href": "optional<string>",
+          },
+        },
+        "_InlinedType2": {
+          "docs": "A polymorphic list of externally linked resources related to this policy such as documents or logos for carriers.",
+          "extends": undefined,
+          "properties": {
+            "carrier_logo": "optional<_InlinedType1>",
+            "documents": "optional<list<commons.DocumentRef>>",
+          },
+        },
+        "_InlinedType3": {
+          "docs": "A container for objects wrapped by the current object.",
+          "extends": undefined,
+          "properties": {
+            "missing_fields": "optional<list<string>>",
+          },
+        },
+      },
+    },
+    "webhook.yml": {
+      "imports": {
+        "commons": "commons.yml",
+      },
+      "services": {
+        "http": {
+          "WebhookService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "createWebhook": {
+                "display-name": "Create Webhook",
+                "docs": "Create a new webhook",
+                "method": "POST",
+                "path": "/webhooks",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "event_types": "optional<list<string>>",
+                      "uri": "optional<string>",
+                    },
+                  },
+                },
+              },
+              "getWebhook": {
+                "display-name": "Get Webhook",
+                "docs": "Get the details of a webhook.",
+                "method": "GET",
+                "path": "/webhooks/{webhook_id}",
+                "response": "commons.Webhook_2",
+              },
+              "listWebhookEvents": {
+                "display-name": "List Webhook Events",
+                "docs": "List the events that have been triggered for a webhook.",
+                "method": "GET",
+                "path": "/webhooks/{webhook_id}/events",
+                "request": {
+                  "query-parameters": {
+                    "event_type": {
+                      "docs": "Filter events by type.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "commons.Events",
+              },
+              "listWebhooks": {
+                "display-name": "List Webhooks",
+                "docs": "List an application's configured webhooks.",
+                "method": "GET",
+                "path": "/webhooks",
+                "request": {
+                  "query-parameters": {
+                    "event_type": {
+                      "docs": "Filter events by type.",
+                      "type": "optional<string>",
+                    },
+                    "limit": {
+                      "docs": "Number of results to return.",
+                      "type": "optional<integer>",
+                    },
+                    "offset": {
+                      "docs": "Specifies the offset of the first result to return.",
+                      "type": "optional<integer>",
+                    },
+                  },
+                },
+                "response": "Webhooks",
+              },
+              "updateWebhook": {
+                "display-name": "Update Webhook",
+                "docs": "Update a webhook.",
+                "method": "PATCH",
+                "path": "/webhooks/{webhook_id}",
+                "request": {
+                  "body": {
+                    "extends": undefined,
+                    "properties": {
+                      "event_types": "optional<list<string>>",
+                      "is_enabled": "optional<boolean>",
+                      "uri": "optional<string>",
+                    },
+                  },
+                },
+                "response": "commons.Webhook_2",
+              },
+            },
+          },
+        },
+      },
+      "types": {
+        "Webhooks": {
+          "extends": undefined,
+          "properties": {
+            "_embedded": "optional<_InlinedType22>",
+            "count": "optional<integer>",
+            "filtered_count": "optional<integer>",
+          },
+        },
+        "_InlinedType22": {
+          "extends": undefined,
+          "properties": {
+            "webhooks": "optional<list<commons.Webhook>>",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
 exports[`open api converter partnerstack simple 1`] = `
 {
   "rootApiFile": {
@@ -3036,42 +4186,6 @@ exports[`open api converter rivet simple 1`] = `
   "serviceFiles": {
     "commons.yml": {
       "types": {
-        "Coord": {
-          "docs": "Geographical coordinates for a location on Planet Earth.",
-          "extends": undefined,
-          "properties": {
-            "latitude": "double",
-            "longitude": "double",
-          },
-        },
-        "Distance": {
-          "docs": "Distance available in multiple units.",
-          "extends": undefined,
-          "properties": {
-            "kilometers": "double",
-            "miles": "double",
-          },
-        },
-        "GameModeInfo": {
-          "docs": "A game mode that the player can join.",
-          "extends": undefined,
-          "properties": {
-            "game_mode_id": "string",
-          },
-        },
-        "LobbyInfo": {
-          "docs": "A public lobby in the lobby list.",
-          "extends": undefined,
-          "properties": {
-            "game_mode_id": "string",
-            "lobby_id": "string",
-            "max_players_direct": "double",
-            "max_players_normal": "double",
-            "max_players_party": "double",
-            "region_id": "string",
-            "total_player_count": "double",
-          },
-        },
         "MatchmakerLobbyJoinInfo": {
           "docs": "A matchmaker lobby.",
           "extends": undefined,
@@ -3094,17 +4208,6 @@ exports[`open api converter rivet simple 1`] = `
           "extends": undefined,
           "properties": {
             "display_name": "string",
-            "region_id": "string",
-          },
-        },
-        "RegionInfo": {
-          "docs": "A region that the player can connect to.",
-          "extends": undefined,
-          "properties": {
-            "datacenter_coord": "Coord",
-            "datacenter_distance_from_client": "Distance",
-            "provider_display_name": "string",
-            "region_display_name": "string",
             "region_id": "string",
           },
         },
@@ -3455,168 +4558,10 @@ exports[`open api converter suger simple 1`] = `
       },
     },
     "commons.yml": {
+      "imports": {
+        "Product": "Product.yml",
+      },
       "types": {
-        "marketplacemetering.BatchMeterUsageOutput": {
-          "extends": undefined,
-          "properties": {
-            "resultMetadata": "optional<middleware.Metadata>",
-            "results": "optional<list<types.UsageRecordResult>>",
-            "unprocessedRecords": "optional<list<types.UsageRecord>>",
-          },
-        },
-        "marketplacemeteringv1.BatchUsageEventOkResponse": {
-          "extends": undefined,
-          "properties": {
-            "count": "optional<integer>",
-            "result": "optional<list<marketplacemeteringv1.UsageBatchEventOkMessage>>",
-          },
-        },
-        "marketplacemeteringv1.UsageBatchEventOkMessage": {
-          "extends": undefined,
-          "properties": {
-            "dimension": "optional<string>",
-            "effectiveStartTime": "optional<string>",
-            "error": "optional<marketplacemeteringv1.UsageEventConflictResponse>",
-            "messageTime": "optional<string>",
-            "planId": "optional<string>",
-            "quantity": "optional<double>",
-            "resourceId": "optional<string>",
-            "resourceUri": "optional<string>",
-            "status": "optional<string>",
-            "usageEventId": "optional<string>",
-          },
-        },
-        "marketplacemeteringv1.UsageEventConflictResponse": {
-          "extends": undefined,
-          "properties": {
-            "additionalInfo": "optional<marketplacemeteringv1.UsageEventConflictResponseAdditionalInfo>",
-            "code": "optional<string>",
-            "message": "optional<string>",
-          },
-        },
-        "marketplacemeteringv1.UsageEventConflictResponseAdditionalInfo": {
-          "extends": undefined,
-          "properties": {
-            "acceptedMessage": "optional<marketplacemeteringv1.UsageEventOkResponse>",
-          },
-        },
-        "marketplacemeteringv1.UsageEventOkResponse": {
-          "extends": undefined,
-          "properties": {
-            "dimension": "optional<string>",
-            "effectiveStartTime": "optional<string>",
-            "messageTime": "optional<string>",
-            "planId": "optional<string>",
-            "quantity": "optional<double>",
-            "resourceId": "optional<string>",
-            "resourceUri": "optional<string>",
-            "status": "optional<string>",
-            "usageEventId": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureAudience": {
-          "extends": undefined,
-          "properties": {
-            "description": "optional<string>",
-            "id": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureGovernmentCertification": {
-          "extends": undefined,
-          "properties": {
-            "title": "optional<string>",
-            "uri": "optional<string>",
-            "validationResults": "optional<list<partnercentersubmission.AzureValidationResult>>",
-          },
-        },
-        "partnercentersubmission.AzureListingContact": {
-          "extends": undefined,
-          "properties": {
-            "email": "optional<string>",
-            "name": "optional<string>",
-            "phone": "optional<string>",
-            "type": "optional<string>",
-            "uri": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureListingUri": {
-          "extends": undefined,
-          "properties": {
-            "displayText": "optional<string>",
-            "subtype": "optional<string>",
-            "type": "optional<string>",
-            "uri": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureLocalizedDateTime": {
-          "extends": undefined,
-          "properties": {
-            "dateTimeInUtc": "optional<string>",
-            "localizePerMarket": "optional<boolean>",
-          },
-        },
-        "partnercentersubmission.AzureLocalizedTimeRange": {
-          "extends": undefined,
-          "properties": {
-            "endAt": "optional<partnercentersubmission.AzureLocalizedDateTime>",
-            "startAt": "optional<partnercentersubmission.AzureLocalizedDateTime>",
-          },
-        },
-        "partnercentersubmission.AzureMarket": {
-          "extends": undefined,
-          "properties": {
-            "friendlyName": "optional<string>",
-            "marketCode": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureMarketState": {
-          "extends": undefined,
-          "properties": {
-            "marketCode": "optional<string>",
-            "state": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzurePendingUpdateInfo": {
-          "extends": undefined,
-          "properties": {
-            "status": "optional<string>",
-            "updateType": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzurePrice": {
-          "extends": undefined,
-          "properties": {
-            "currencyCode": "optional<string>",
-            "openPrice": "optional<double>",
-            "priceTierID": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzurePriceCadence": {
-          "extends": undefined,
-          "properties": {
-            "type": "optional<string>",
-            "value": "optional<integer>",
-          },
-        },
-        "partnercentersubmission.AzurePriceSchedule": {
-          "extends": undefined,
-          "properties": {
-            "priceCadence": "optional<partnercentersubmission.AzurePriceCadence>",
-            "pricingModel": "optional<string>",
-            "pricingUnits": "optional<list<partnercentersubmission.AzurePricingUnit>>",
-            "retailPrice": "optional<partnercentersubmission.AzurePrice>",
-          },
-        },
-        "partnercentersubmission.AzurePricingUnit": {
-          "extends": undefined,
-          "properties": {
-            "isUnlimitedUnit": "optional<boolean>",
-            "lowerUnit": "optional<integer>",
-            "name": "optional<string>",
-            "unitType": "optional<string>",
-            "upperUnit": "optional<integer>",
-          },
-        },
         "partnercentersubmission.AzureProduct": {
           "extends": undefined,
           "properties": {
@@ -3635,114 +4580,6 @@ exports[`open api converter suger simple 1`] = `
             "variants": "optional<list<partnercentersubmission.AzureProductVariant>>",
           },
         },
-        "partnercentersubmission.AzureProductAvailability": {
-          "extends": undefined,
-          "properties": {
-            "emailAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
-            "enterpriseLicensing": "optional<string>",
-            "id": "optional<string>",
-            "resourceType": "optional<string>",
-            "subscriptionAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
-            "visibility": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductBranch": {
-          "extends": undefined,
-          "properties": {
-            "currentDraftInstanceID": "optional<string>",
-            "friendlyName": "optional<string>",
-            "id": "optional<string>",
-            "module": "optional<string>",
-            "resourceType": "optional<string>",
-            "type": "optional<string>",
-            "variantID": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductFeatureAvailability": {
-          "extends": undefined,
-          "properties": {
-            "customMeters": "optional<list<partnercentersubmission.AzureProductVariantCustomMeter>>",
-            "id": "optional<string>",
-            "isHidden": "optional<boolean>",
-            "marketStates": "optional<list<partnercentersubmission.AzureMarketState>>",
-            "markets": "optional<list<partnercentersubmission.AzureMarket>>",
-            "priceSchedules": "optional<list<partnercentersubmission.AzureProductVariantPriceSchedule>>",
-            "properties": "optional<list<partnercentersubmission.TypeValue>>",
-            "resourceType": "optional<string>",
-            "subscriptionAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
-            "tenantAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
-            "trial": "optional<partnercentersubmission.AzureProductVariantTrial>",
-            "visibility": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductListing": {
-          "extends": undefined,
-          "properties": {
-            "accessInformation": "optional<string>",
-            "assets": "optional<list<partnercentersubmission.AzureProductListingAsset>>",
-            "compatibleProducts": "optional<list<string>>",
-            "description": "optional<string>",
-            "gettingStartedInstructions": "optional<string>",
-            "id": "optional<string>",
-            "keywords": "optional<list<string>>",
-            "languageCode": "optional<string>",
-            "listingContacts": "optional<list<partnercentersubmission.AzureListingContact>>",
-            "listingUris": "optional<list<partnercentersubmission.AzureListingUri>>",
-            "productDisplayName": "optional<string>",
-            "publisherName": "optional<string>",
-            "resourceType": "optional<string>",
-            "shortDescription": "optional<string>",
-            "summary": "optional<string>",
-            "title": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductListingAsset": {
-          "extends": undefined,
-          "properties": {
-            "description": "optional<string>",
-            "fileName": "optional<string>",
-            "fileSasUri": "optional<string>",
-            "friendlyName": "optional<string>",
-            "id": "optional<string>",
-            "order": "optional<integer>",
-            "publisherDefinedSasUri": "optional<string>",
-            "resourceType": "optional<string>",
-            "state": "optional<string>",
-            "type": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductPackageConfiguration": {
-          "extends": undefined,
-          "properties": {
-            "azureActiveDirectoryApplicationID": "optional<string>",
-            "azureActiveDirectoryTenantID": "optional<string>",
-            "connectionWebhook": "optional<string>",
-            "id": "optional<string>",
-            "landingPageUri": "optional<string>",
-            "resourceType": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductProperty": {
-          "extends": undefined,
-          "properties": {
-            "additionalCategories": "optional<list<string>>",
-            "appVersion": "optional<string>",
-            "applicableProducts": "optional<list<string>>",
-            "categories": "optional<list<string>>",
-            "customAmendments": "optional<list<string>>",
-            "extendedProperties": "optional<list<string>>",
-            "globalAmendmentTerms": "optional<string>",
-            "hideKeys": "optional<list<string>>",
-            "id": "optional<string>",
-            "industries": "optional<list<string>>",
-            "marketingOnlyChange": "optional<boolean>",
-            "productTags": "optional<list<string>>",
-            "resourceType": "optional<string>",
-            "submissionVersion": "optional<string>",
-            "termsOfUse": "optional<string>",
-            "useEnterpriseContract": "optional<boolean>",
-          },
-        },
         "partnercentersubmission.AzureProductSetup": {
           "extends": undefined,
           "properties": {
@@ -3753,23 +4590,6 @@ exports[`open api converter suger simple 1`] = `
             "sellingOption": "optional<string>",
             "testDriveType": "optional<string>",
             "trialUri": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductSubmission": {
-          "extends": undefined,
-          "properties": {
-            "areResourcesReady": "optional<boolean>",
-            "friendlyName": "optional<string>",
-            "id": "optional<string>",
-            "pendingUpdateInfo": "optional<partnercentersubmission.AzurePendingUpdateInfo>",
-            "publishedTimeInUtc": "optional<string>",
-            "releaseNumber": "optional<integer>",
-            "resourceType": "optional<string>",
-            "resources": "optional<list<partnercentersubmission.TypeValue>>",
-            "state": "optional<string>",
-            "subState": "optional<string>",
-            "targets": "optional<list<partnercentersubmission.TypeValue>>",
-            "variantResources": "optional<list<partnercentersubmission.AzureVariantResource>>",
           },
         },
         "partnercentersubmission.AzureProductVariant": {
@@ -3787,91 +4607,6 @@ exports[`open api converter suger simple 1`] = `
             "referenceVariantID": "optional<string>",
             "resourceType": "optional<string>",
             "state": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductVariantCustomMeter": {
-          "extends": undefined,
-          "properties": {
-            "displayName": "optional<string>",
-            "id": "optional<string>",
-            "includedBaseQuantities": "optional<list<partnercentersubmission.IncludedBaseQuantity>>",
-            "isEnabled": "optional<boolean>",
-            "priceInUsd": "optional<double>",
-            "uniqueID": "optional<string>",
-            "unitOfMeasure": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureProductVariantPriceSchedule": {
-          "extends": undefined,
-          "properties": {
-            "dateTimeRange": "optional<partnercentersubmission.AzureLocalizedTimeRange>",
-            "friendlyName": "optional<string>",
-            "isBaseSchedule": "optional<boolean>",
-            "marketCodes": "optional<list<string>>",
-            "schedules": "optional<list<partnercentersubmission.AzurePriceSchedule>>",
-          },
-        },
-        "partnercentersubmission.AzureProductVariantTrial": {
-          "extends": undefined,
-          "properties": {
-            "dateTimeRange": "optional<partnercentersubmission.AzureLocalizedTimeRange>",
-            "duration": "optional<integer>",
-            "durationType": "optional<string>",
-            "type": "optional<string>",
-          },
-        },
-        "partnercentersubmission.AzureValidationResult": {
-          "extends": undefined,
-          "properties": {
-            "errorMessage": "optional<string>",
-            "memberNames": "optional<list<string>>",
-          },
-        },
-        "partnercentersubmission.AzureVariantResource": {
-          "extends": undefined,
-          "properties": {
-            "resources": "optional<list<partnercentersubmission.TypeValue>>",
-            "variantID": "optional<string>",
-          },
-        },
-        "partnercentersubmission.IncludedBaseQuantity": {
-          "extends": undefined,
-          "properties": {
-            "isInfinite": "optional<boolean>",
-            "quantity": "optional<double>",
-            "recurringUnit": "optional<string>",
-          },
-        },
-        "partnercentersubmission.TypeValue": {
-          "extends": undefined,
-          "properties": {
-            "type": "optional<string>",
-            "value": "optional<string>",
-          },
-        },
-        "servicecontrol.ReportError": {
-          "extends": undefined,
-          "properties": {
-            "operationId": "optional<string>",
-            "status": "optional<servicecontrol.Status>",
-          },
-        },
-        "servicecontrol.ReportResponse": {
-          "extends": undefined,
-          "properties": {
-            "header": "optional<http.Header>",
-            "httpstatusCode": "optional<integer>",
-            "reportErrors": "optional<list<servicecontrol.ReportError>>",
-            "serviceConfigId": "optional<string>",
-            "serviceRolloutId": "optional<string>",
-          },
-        },
-        "servicecontrol.Status": {
-          "extends": undefined,
-          "properties": {
-            "code": "optional<integer>",
-            "details": "optional<list<list<integer>>>",
-            "message": "optional<string>",
           },
         },
         "shared.AwsAccountIdentifier": {
@@ -3904,28 +4639,12 @@ exports[`open api converter suger simple 1`] = `
           "extends": undefined,
           "properties": {
             "Description": "optional<shared.AwsSaasProductDescription>",
-            "Dimensions": "optional<list<shared.AwsSaasProductDimension>>",
+            "Dimensions": "optional<list<Product.shared.AwsSaasProductDimension>>",
             "PromotionalResources": "optional<shared.AwsSaasProductPromotionalResources>",
             "SupportInformation": "optional<shared.AwsSaasProductSupportInformation>",
             "Versions": "optional<list<shared.AwsSaasProductVersion>>",
             "dataFeedProductId": "optional<string>",
             "productId": "optional<string>",
-          },
-        },
-        "shared.AwsSaasProductAdditionalResource": {
-          "extends": undefined,
-          "properties": {
-            "Text": "optional<string>",
-            "Type": "optional<string>",
-            "Url": "optional<string>",
-          },
-        },
-        "shared.AwsSaasProductDeliveryOption": {
-          "extends": undefined,
-          "properties": {
-            "FulfillmentUrl": "optional<string>",
-            "Id": "optional<string>",
-            "Type": "optional<string>",
           },
         },
         "shared.AwsSaasProductDescription": {
@@ -3947,16 +4666,6 @@ exports[`open api converter suger simple 1`] = `
             "Visibility": "optional<string>",
           },
         },
-        "shared.AwsSaasProductDimension": {
-          "extends": undefined,
-          "properties": {
-            "Description": "optional<string>",
-            "Key": "optional<string>",
-            "Name": "optional<string>",
-            "Types": "optional<list<string>>",
-            "Unit": "optional<string>",
-          },
-        },
         "shared.AwsSaasProductPromotionalResources": {
           "extends": undefined,
           "properties": {
@@ -3968,23 +4677,6 @@ exports[`open api converter suger simple 1`] = `
           "extends": undefined,
           "properties": {
             "Description": "optional<string>",
-          },
-        },
-        "shared.AwsSaasProductVersion": {
-          "extends": undefined,
-          "properties": {
-            "DeliveryOptions": "optional<list<shared.AwsSaasProductDeliveryOption>>",
-            "Id": "optional<string>",
-          },
-        },
-        "shared.AwsSnsSubscription": {
-          "extends": undefined,
-          "properties": {
-            "Endpoint": "optional<string>",
-            "Protocol": "optional<string>",
-            "Status": "optional<string>",
-            "SubscriptionArn": "optional<string>",
-            "TopicArn": "optional<string>",
           },
         },
         "shared.AzureADIdentifier": {
@@ -4024,41 +4716,6 @@ exports[`open api converter suger simple 1`] = `
             "credential": "optional<shared.AzureCredential>",
           },
         },
-        "shared.AzureMarketplaceSubscription": {
-          "extends": undefined,
-          "properties": {
-            "allowedCustomerOperations": "optional<list<string>>",
-            "autoRenew": "optional<boolean>",
-            "beneficiary": "optional<shared.AzureADIdentifier>",
-            "created": "optional<string>",
-            "fulfillmentId": "optional<string>",
-            "id": "optional<string>",
-            "isFreeTrial": "optional<boolean>",
-            "isTest": "optional<boolean>",
-            "lastModified": "optional<string>",
-            "name": "optional<string>",
-            "offerId": "optional<string>",
-            "planId": "optional<string>",
-            "publisherId": "optional<string>",
-            "purchaser": "optional<shared.AzureADIdentifier>",
-            "quantity": "optional<integer>",
-            "saasSubscriptionStatus": "optional<string>",
-            "sandboxType": "optional<string>",
-            "sessionId": "optional<string>",
-            "sessionMode": "optional<string>",
-            "storeFront": "optional<string>",
-            "term": "optional<shared.AzureTerm>",
-          },
-        },
-        "shared.AzureTerm": {
-          "extends": undefined,
-          "properties": {
-            "chargeDuration": "optional<string>",
-            "endDate": "optional<string>",
-            "startDate": "optional<string>",
-            "termUnit": "optional<string>",
-          },
-        },
         "shared.BuyerInfo": {
           "extends": undefined,
           "properties": {
@@ -4068,24 +4725,6 @@ exports[`open api converter suger simple 1`] = `
             "disbursedAmount": "optional<double>",
             "gcpBuyer": "optional<shared.GcpMarketplaceUserAccount>",
             "invoicedAmount": "optional<double>",
-          },
-        },
-        "shared.CommitDimension": {
-          "docs": "The commit dimension. There may be one or more commit dimensions defined in single product, offer or entitlement.",
-          "extends": undefined,
-          "properties": {
-            "category": "optional<string>",
-            "description": "optional<string>",
-            "key": "optional<string>",
-            "length": "optional<integer>",
-            "maximumUsers": "optional<integer>",
-            "minimumUsers": "optional<integer>",
-            "name": "optional<string>",
-            "quantity": "optional<integer>",
-            "rate": "optional<double>",
-            "timeUnit": "optional<string>",
-            "type": "optional<string>",
-            "types": "optional<list<string>>",
           },
         },
         "shared.CompanyInfo": {
@@ -4162,63 +4801,6 @@ exports[`open api converter suger simple 1`] = `
             "title": "optional<string>",
           },
         },
-        "shared.GcpCommerceProducerPrice": {
-          "extends": undefined,
-          "properties": {
-            "currencyCode": "optional<string>",
-            "nanos": "optional<integer>",
-            "units": "optional<integer>",
-          },
-        },
-        "shared.GcpCommerceProducerPriceInfo": {
-          "extends": undefined,
-          "properties": {
-            "description": "optional<string>",
-            "priceModel": "optional<string>",
-            "subscriptionPlans": "optional<list<shared.GcpCommerceProducerPriceSubscription>>",
-            "usageFees": "optional<list<shared.GcpCommerceProducerPriceUsage>>",
-          },
-        },
-        "shared.GcpCommerceProducerPriceSubscription": {
-          "extends": undefined,
-          "properties": {
-            "period": "optional<string>",
-            "price": "optional<shared.GcpCommerceProducerPrice>",
-            "taxCategoryOverride": "optional<string>",
-          },
-        },
-        "shared.GcpCommerceProducerPriceTier": {
-          "extends": undefined,
-          "properties": {
-            "endUsageAmount": "optional<double>",
-            "price": "optional<shared.GcpCommerceProducerPrice>",
-            "startUsageAmount": "optional<double>",
-          },
-        },
-        "shared.GcpCommerceProducerPriceUsage": {
-          "extends": undefined,
-          "properties": {
-            "displayQuantity": "optional<integer>",
-            "metricId": "optional<string>",
-            "priceTiers": "optional<list<shared.GcpCommerceProducerPriceTier>>",
-            "taxCategoryOverride": "optional<string>",
-          },
-        },
-        "shared.GcpCommerceProducerPurchaseMetric": {
-          "extends": undefined,
-          "properties": {
-            "description": "optional<string>",
-            "displayName": "optional<string>",
-            "displayUnit": "optional<string>",
-            "displayUnitDescription": "optional<string>",
-            "id": "optional<string>",
-            "metricKind": "optional<string>",
-            "name": "optional<string>",
-            "reportingUnit": "optional<string>",
-            "unit": "optional<string>",
-            "valueType": "optional<string>",
-          },
-        },
         "shared.GcpCommerceProducerPurchaseSpec": {
           "extends": undefined,
           "properties": {
@@ -4266,42 +4848,6 @@ exports[`open api converter suger simple 1`] = `
             "workloadIdentityPoolId": "optional<string>",
           },
         },
-        "shared.GcpMarketplaceConsumer": {
-          "extends": undefined,
-          "properties": {
-            "project": "optional<string>",
-          },
-        },
-        "shared.GcpMarketplaceEntitlement": {
-          "extends": undefined,
-          "properties": {
-            "account": "optional<string>",
-            "consumers": "optional<list<shared.GcpMarketplaceConsumer>>",
-            "createTime": "optional<string>",
-            "id": "optional<string>",
-            "inputProperties": "optional<list<integer>>",
-            "messageToUser": "optional<string>",
-            "name": "optional<string>",
-            "newOfferDuration": "optional<string>",
-            "newOfferEndTime": "optional<string>",
-            "newPendingOffer": "optional<string>",
-            "newPendingOfferDuration": "optional<string>",
-            "newPendingPlan": "optional<string>",
-            "newPlan": "optional<string>",
-            "offer": "optional<string>",
-            "offerDuration": "optional<string>",
-            "offerEndTime": "optional<string>",
-            "plan": "optional<string>",
-            "product": "optional<string>",
-            "productExternalName": "optional<string>",
-            "provider": "optional<string>",
-            "quoteExternalName": "optional<string>",
-            "state": "optional<string>",
-            "subscriptionEndTime": "optional<string>",
-            "updateTime": "optional<string>",
-            "usageReportingId": "optional<string>",
-          },
-        },
         "shared.GcpMarketplaceUserAccount": {
           "extends": undefined,
           "properties": {
@@ -4316,15 +4862,6 @@ exports[`open api converter suger simple 1`] = `
             "userInfo": "optional<shared.GcpUserInfo>",
           },
         },
-        "shared.GcpMarketplaceUserAccountApproval": {
-          "extends": undefined,
-          "properties": {
-            "name": "optional<string>",
-            "reason": "optional<string>",
-            "state": "optional<string>",
-            "updateTime": "optional<string>",
-          },
-        },
         "shared.GcpProduct": {
           "extends": undefined,
           "properties": {
@@ -4335,15 +4872,6 @@ exports[`open api converter suger simple 1`] = `
             "name": "optional<string>",
             "service": "optional<string>",
             "serviceConfig": "optional<shared.GcpCommerceProducerServiceConfig>",
-          },
-        },
-        "shared.GcpPurchasePlan": {
-          "extends": undefined,
-          "properties": {
-            "name": "optional<string>",
-            "priceInfo": "optional<shared.GcpCommerceProducerPriceInfo>",
-            "purchaseMode": "optional<string>",
-            "title": "optional<string>",
           },
         },
         "shared.GcpUserInfo": {
@@ -4396,21 +4924,6 @@ exports[`open api converter suger simple 1`] = `
             "usageRecordGroups": "optional<list<shared.MeteringUsageRecordGroup>>",
           },
         },
-        "shared.MeteringDimension": {
-          "docs": "The dimension to meter usage in entitlement.",
-          "extends": undefined,
-          "properties": {
-            "category": "optional<string>",
-            "description": "optional<string>",
-            "includedBaseQuantities": "optional<list<partnercentersubmission.IncludedBaseQuantity>>",
-            "key": "optional<string>",
-            "name": "optional<string>",
-            "rate": "optional<double>",
-            "types": "optional<list<string>>",
-            "usageCount": "optional<shared.UsageCount>",
-            "valueType": "optional<string>",
-          },
-        },
         "shared.MeteringUsageRecordGroup": {
           "extends": undefined,
           "properties": {
@@ -4422,35 +4935,6 @@ exports[`open api converter suger simple 1`] = `
             "serialID": "optional<integer>",
             "status": "optional<string>",
             "usageRecordReportID": "optional<string>",
-          },
-        },
-        "shared.MeteringUsageRecordReport": {
-          "extends": undefined,
-          "properties": {
-            "creationTime": "optional<string>",
-            "entitlementID": "optional<string>",
-            "entitlementTermID": "optional<string>",
-            "id": "optional<string>",
-            "info": "optional<shared.MeteringUsageRecordReportInfo>",
-            "organizationID": "optional<string>",
-            "productID": "optional<string>",
-          },
-        },
-        "shared.MeteringUsageRecordReportInfo": {
-          "extends": undefined,
-          "properties": {
-            "awsMeteringResponse": "optional<marketplacemetering.BatchMeterUsageOutput>",
-            "azureMeteringResponse": "optional<marketplacemeteringv1.BatchUsageEventOkResponse>",
-            "commitAmount": "optional<double>",
-            "creditAmount": "optional<double>",
-            "endTime": "optional<string>",
-            "gcpMeteringResponse": "optional<servicecontrol.ReportResponse>",
-            "startTime": "optional<string>",
-            "usageRecordGroupIds": "optional<list<string>>",
-            "usedCommitAmount": "optional<double>",
-            "usedCommitAmountIncrement": "optional<double>",
-            "usedCreditAmount": "optional<double>",
-            "usedCreditAmountIncrement": "optional<double>",
           },
         },
         "shared.OfferInfo": {
@@ -4475,13 +4959,6 @@ exports[`open api converter suger simple 1`] = `
             "visibility": "optional<string>",
           },
         },
-        "shared.PaymentInstallment": {
-          "extends": undefined,
-          "properties": {
-            "amount": "optional<double>",
-            "chargeOn": "optional<string>",
-          },
-        },
         "shared.ProductInfo": {
           "extends": undefined,
           "properties": {
@@ -4495,21 +4972,6 @@ exports[`open api converter suger simple 1`] = `
             "gcpProduct": "optional<shared.GcpProduct>",
             "refundCancelationPolicy": "optional<string>",
             "sellerNotes": "optional<string>",
-          },
-        },
-        "shared.RevenueRecord": {
-          "extends": undefined,
-          "properties": {
-            "amount": "optional<double>",
-            "date": "optional<string>",
-          },
-        },
-        "shared.UsageCount": {
-          "extends": undefined,
-          "properties": {
-            "creditCount": "optional<double>",
-            "includedCount": "optional<double>",
-            "reportedCount": "optional<double>",
           },
         },
         "shared.WorkloadEntitlement": {
@@ -4596,47 +5058,6 @@ exports[`open api converter suger simple 1`] = `
             "productType": "optional<string>",
             "service": "optional<string>",
             "status": "optional<string>",
-          },
-        },
-        "types.Entitlement": {
-          "extends": undefined,
-          "properties": {
-            "customerIdentifier": "optional<string>",
-            "dimension": "optional<string>",
-            "expirationDate": "optional<string>",
-            "productCode": "optional<string>",
-          },
-        },
-        "types.Tag": {
-          "extends": undefined,
-          "properties": {
-            "key": "optional<string>",
-            "value": "optional<string>",
-          },
-        },
-        "types.UsageAllocation": {
-          "extends": undefined,
-          "properties": {
-            "allocatedUsageQuantity": "optional<integer>",
-            "tags": "optional<list<types.Tag>>",
-          },
-        },
-        "types.UsageRecord": {
-          "extends": undefined,
-          "properties": {
-            "customerIdentifier": "optional<string>",
-            "dimension": "optional<string>",
-            "quantity": "optional<integer>",
-            "timestamp": "optional<string>",
-            "usageAllocations": "optional<list<types.UsageAllocation>>",
-          },
-        },
-        "types.UsageRecordResult": {
-          "extends": undefined,
-          "properties": {
-            "meteringRecordId": "optional<string>",
-            "status": "optional<string>",
-            "usageRecord": "optional<types.UsageRecord>",
           },
         },
       },
@@ -5506,13 +5927,23 @@ exports[`open api converter suger simple 1`] = `
                     "type": "string",
                   },
                 },
-                "response": "list<commons.shared.AwsSaasProductDimension>",
+                "response": "list<shared.AwsSaasProductDimension>",
               },
             },
           },
         },
       },
       "types": {
+        "shared.AwsSaasProductDimension": {
+          "extends": undefined,
+          "properties": {
+            "Description": "optional<string>",
+            "Key": "optional<string>",
+            "Name": "optional<string>",
+            "Types": "optional<list<string>>",
+            "Unit": "optional<string>",
+          },
+        },
         "shared.CreateProductParams": {
           "extends": undefined,
           "properties": {
@@ -5585,15 +6016,6 @@ exports[`open api converter suger simple 1`] = `
         },
       },
       "types": {
-        "shared.EntitlementUsageRecord": {
-          "extends": undefined,
-          "properties": {
-            "amounts": "optional<list<double>>",
-            "date": "optional<string>",
-            "keys": "optional<list<string>>",
-            "quantities": "optional<list<double>>",
-          },
-        },
         "shared.GetRevenueReportParams": {
           "extends": undefined,
           "properties": {
@@ -5633,7 +6055,7 @@ exports[`open api converter suger simple 1`] = `
             "entitlementID": "optional<string>",
             "organizationID": "optional<string>",
             "reportDate": "optional<string>",
-            "usageRecords": "optional<list<shared.EntitlementUsageRecord>>",
+            "usageRecords": "optional<list<commons.shared.EntitlementUsageRecord>>",
           },
         },
       },
@@ -5723,21 +6145,12 @@ Please share the POST callback endpoint created in your app's backend with Telem
                     "extends": undefined,
                     "properties": {
                       "user": "optional<string>",
-                      "vehicles": "optional<list<Callback_DTO>>",
+                      "vehicles": "optional<list<commons.Callback_DTO>>",
                     },
                   },
                 },
               },
             },
-          },
-        },
-      },
-      "types": {
-        "Callback_DTO": {
-          "extends": undefined,
-          "properties": {
-            "id": "string",
-            "registration": "string",
           },
         },
       },
