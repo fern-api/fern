@@ -47,7 +47,7 @@ export class ErrorResolverImpl implements ErrorResolver {
             return undefined;
         }
 
-        const declaration = serviceFile.errors?.[parsedReference.typeName];
+        const declaration = serviceFile.contents.errors?.[parsedReference.typeName];
         if (declaration == null) {
             return undefined;
         }
@@ -55,7 +55,7 @@ export class ErrorResolverImpl implements ErrorResolver {
         return {
             declaration,
             file: constructFernFileContext({
-                serviceFile,
+                serviceFile: serviceFile.contents,
                 relativeFilepath: parsedReference.relativeFilepath,
                 casingsGenerator: file.casingsGenerator,
             }),

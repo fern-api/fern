@@ -1,7 +1,7 @@
 import { keys } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { getResolvedPathOfImportedFile } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { Workspace } from "@fern-api/workspace-loader";
 import { Rule } from "../../Rule";
 
 type CircularImports = Record<RelativeFilePath, CircularImport[]>;
@@ -51,7 +51,7 @@ export const NoCircularImportsRule: Rule = {
     },
 };
 
-function findCircularImports(serviceFiles: Record<RelativeFilePath, RawSchemas.ServiceFileSchema>): CircularImports {
+function findCircularImports(serviceFiles: Workspace["serviceFiles"]): CircularImports {
     const circularImports: CircularImports = {};
 
     for (const filepath of keys(serviceFiles)) {
@@ -64,7 +64,7 @@ function findCircularImports(serviceFiles: Record<RelativeFilePath, RawSchemas.S
 function findCircularImportsRecursive(
     filepath: RelativeFilePath,
     path: RelativeFilePath[],
-    serviceFiles: Record<RelativeFilePath, RawSchemas.ServiceFileSchema>
+    serviceFiles: Workspace["serviceFiles"]
 ): CircularImport[] {
     const circularImports: CircularImport[] = [];
 
@@ -75,8 +75,8 @@ function findCircularImportsRecursive(
         return [];
     }
 
-    if (file.imports != null) {
-        for (const importPath of Object.values(file.imports)) {
+    if (file.contents.imports != null) {
+        for (const importPath of Object.values(file.contents.imports)) {
             const resolvedImportPath = getResolvedPathOfImportedFile({
                 referencedIn: filepath,
                 importPath: RelativeFilePath.of(importPath),

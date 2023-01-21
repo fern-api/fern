@@ -46,16 +46,15 @@ export async function loadWorkspace({
     return {
         didSucceed: true,
         workspace: {
-            name: structuralValidationResult.rootApiFile.name,
+            name: structuralValidationResult.rootApiFile.contents.name,
             absolutePathToWorkspace,
             absolutePathToDefinition,
             generatorsConfiguration,
             dependenciesConfiguration,
             rootApiFile: structuralValidationResult.rootApiFile,
-            serviceFiles: {
-                ...structuralValidationResult.serviceFiles,
-                ...processPackageMarkersResult.newServiceFiles,
-            },
+            serviceFiles: structuralValidationResult.serviceFiles,
+            importedServiceFiles: processPackageMarkersResult.importedServiceFiles,
+            packageMarkers: processPackageMarkersResult.packageMarkers,
         },
     };
 }

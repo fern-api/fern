@@ -2,9 +2,10 @@ import { entries, keys } from "@fern-api/core-utils";
 import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { ServiceFileSchema } from "@fern-api/yaml-schema";
+import { PackageMarkerFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { size } from "lodash-es";
 import { loadDependency } from "./loadDependency";
+import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
@@ -13,7 +14,8 @@ export declare namespace processPackageMarkers {
 
     export interface SuccessfulResult {
         didSucceed: true;
-        newServiceFiles: Record<RelativeFilePath, ServiceFileSchema>;
+        importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
+        packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
     }
 
     export interface FailedResult {
@@ -33,47 +35,46 @@ export async function processPackageMarkers({
     context: TaskContext;
     cliVersion: string;
 }): Promise<processPackageMarkers.Return> {
-    const newServiceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
+    const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
+    const importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
-        entries(structuralValidationResult.packageMarkers).map(
-            async ([pathOfPackageMarker, { export: export_, ...serviceFile }]) => {
-                if (export_ == null) {
-                    newServiceFiles[pathOfPackageMarker] = serviceFile;
+        entries(structuralValidationResult.packageMarkers).map(async ([pathOfPackageMarker, packageMarker]) => {
+            if (packageMarker.contents.export == null) {
+                packageMarkers[pathOfPackageMarker] = packageMarker;
+            } else {
+                const { types = {}, errors = {}, services: { http = {} } = {} } = packageMarker.contents;
+                const pathToPackage = dirname(pathOfPackageMarker);
+                const areDefinitionsDefinedInPackage =
+                    size(types) > 0 ||
+                    size(errors) > 0 ||
+                    size(http) ||
+                    keys(structuralValidationResult.serviceFiles).some(
+                        (filepath) => filepath !== pathOfPackageMarker && filepath.startsWith(pathToPackage)
+                    );
+                if (areDefinitionsDefinedInPackage) {
+                    failures[pathOfPackageMarker] = {
+                        type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS,
+                        pathToPackage,
+                    };
                 } else {
-                    const { types = {}, errors = {}, services: { http = {} } = {} } = serviceFile;
-                    const pathToPackage = dirname(pathOfPackageMarker);
-                    const areDefinitionsDefinedInPackage =
-                        size(types) > 0 ||
-                        size(errors) > 0 ||
-                        size(http) ||
-                        keys(structuralValidationResult.serviceFiles).some(
-                            (filepath) => filepath !== pathOfPackageMarker && filepath.startsWith(pathToPackage)
-                        );
-                    if (areDefinitionsDefinedInPackage) {
-                        failures[pathOfPackageMarker] = {
-                            type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS,
-                            pathToPackage,
-                        };
+                    const loadDependencyResult = await loadDependency({
+                        dependencyName: packageMarker.contents.export,
+                        dependenciesConfiguration,
+                        pathOfPackageMarker,
+                        context,
+                        rootApiFile: structuralValidationResult.rootApiFile.contents,
+                        cliVersion,
+                    });
+                    if (loadDependencyResult.didSucceed) {
+                        Object.assign(importedServiceFiles, loadDependencyResult.serviceFiles);
                     } else {
-                        const loadDependencyResult = await loadDependency({
-                            dependencyName: export_,
-                            dependenciesConfiguration,
-                            pathOfPackageMarker,
-                            context,
-                            rootApiFile: structuralValidationResult.rootApiFile,
-                            cliVersion,
-                        });
-                        if (loadDependencyResult.didSucceed) {
-                            Object.assign(newServiceFiles, loadDependencyResult.newServiceFiles);
-                        } else {
-                            failures[pathOfPackageMarker] = loadDependencyResult.failure;
-                        }
+                        failures[pathOfPackageMarker] = loadDependencyResult.failure;
                     }
                 }
             }
-        )
+        })
     );
 
     if (size(failures) > 0) {
@@ -84,7 +85,8 @@ export async function processPackageMarkers({
     } else {
         return {
             didSucceed: true,
-            newServiceFiles,
+            packageMarkers,
+            importedServiceFiles,
         };
     }
 }

@@ -1,6 +1,5 @@
 import { entries, noop, visitObject } from "@fern-api/core-utils";
 import { Workspace } from "@fern-api/workspace-loader";
-import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -34,21 +33,21 @@ export async function generateIntermediateRepresentation({
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",
-        serviceFile: workspace.rootApiFile,
+        serviceFile: workspace.rootApiFile.contents,
         casingsGenerator,
     });
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig"> = {
         apiName: casingsGenerator.generateName(workspace.name),
-        apiDisplayName: workspace.rootApiFile["display-name"],
-        apiDocs: workspace.rootApiFile.docs,
+        apiDisplayName: workspace.rootApiFile.contents["display-name"],
+        apiDocs: workspace.rootApiFile.contents.docs,
         auth: convertApiAuth({
-            rawApiFileSchema: workspace.rootApiFile,
+            rawApiFileSchema: workspace.rootApiFile.contents,
             file: rootApiFileContext,
         }),
         headers:
-            workspace.rootApiFile.headers != null
-                ? Object.entries(workspace.rootApiFile.headers).map(([headerKey, header]) =>
+            workspace.rootApiFile.contents.headers != null
+                ? Object.entries(workspace.rootApiFile.contents.headers).map(([headerKey, header]) =>
                       convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
@@ -56,9 +55,9 @@ export async function generateIntermediateRepresentation({
         errors: [],
         services: [],
         constants: generateFernConstants(casingsGenerator),
-        environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile }),
+        environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile.contents }),
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
-            workspace.rootApiFile["error-discrimination"],
+            workspace.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
         ),
     };
@@ -67,8 +66,8 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
 
-    const visitServiceFile = async ({ file, schema }: { file: FernFileContext; schema: ServiceFileSchema }) => {
-        await visitObject(schema, {
+    const visitServiceFile = async (file: FernFileContext) => {
+        await visitObject(file.serviceFile, {
             imports: noop,
 
             types: (types) => {
@@ -95,7 +94,7 @@ export async function generateIntermediateRepresentation({
                 if (errors == null) {
                     return;
                 }
-                const errorDiscriminationSchema = workspace.rootApiFile["error-discrimination"];
+                const errorDiscriminationSchema = workspace.rootApiFile.contents["error-discrimination"];
                 if (errorDiscriminationSchema == null) {
                     throw new Error("error-discrimination is missing in api.yml but there are declared errors.");
                 }
@@ -155,11 +154,24 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    for (const [filepath, schema] of entries(workspace.serviceFiles)) {
-        await visitServiceFile({
-            file: constructFernFileContext({ relativeFilepath: filepath, serviceFile: schema, casingsGenerator }),
-            schema,
-        });
+    for (const [filepath, file] of entries(workspace.serviceFiles)) {
+        await visitServiceFile(
+            constructFernFileContext({
+                relativeFilepath: filepath,
+                serviceFile: file.contents,
+                casingsGenerator,
+            })
+        );
+    }
+
+    for (const [filepath, file] of entries(workspace.packageMarkers)) {
+        await visitServiceFile(
+            constructFernFileContext({
+                relativeFilepath: filepath,
+                serviceFile: file.contents,
+                casingsGenerator,
+            })
+        );
     }
 
     const intermediateRepresentationForAudiences =
@@ -168,7 +180,7 @@ export async function generateIntermediateRepresentation({
             : intermediateRepresentation;
 
     const isAuthMandatory =
-        workspace.rootApiFile.auth != null &&
+        workspace.rootApiFile.contents.auth != null &&
         intermediateRepresentationForAudiences.services.every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });

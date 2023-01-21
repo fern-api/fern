@@ -67,7 +67,7 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
-        const declaration = serviceFile.types?.[parsedReference.typeName];
+        const declaration = serviceFile.contents.types?.[parsedReference.typeName];
         if (declaration == null) {
             return undefined;
         }
@@ -77,7 +77,7 @@ export class TypeResolverImpl implements TypeResolver {
             declaration,
             file: constructFernFileContext({
                 relativeFilepath: parsedReference.relativeFilepath,
-                serviceFile,
+                serviceFile: serviceFile.contents,
                 casingsGenerator: file.casingsGenerator,
             }),
         };
@@ -232,7 +232,7 @@ export class TypeResolverImpl implements TypeResolver {
             originalTypeReference: parsedTypeReference,
             file: constructFernFileContext({
                 relativeFilepath: fileOfResolvedDeclaration.relativeFilepath,
-                serviceFile,
+                serviceFile: serviceFile.contents,
                 casingsGenerator: file.casingsGenerator,
             }),
         };

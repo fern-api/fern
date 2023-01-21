@@ -4,6 +4,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/proje
 import { PackageMarkerFileSchema, RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
 import { ZodError } from "zod";
+import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 
 export declare namespace validateStructureOfYamlFiles {
@@ -11,9 +12,9 @@ export declare namespace validateStructureOfYamlFiles {
 
     export interface SuccessfulResult {
         didSucceed: true;
-        rootApiFile: RootApiFileSchema;
-        serviceFiles: Record<RelativeFilePath, ServiceFileSchema>;
-        packageMarkers: Record<RelativeFilePath, PackageMarkerFileSchema>;
+        rootApiFile: ParsedFernFile<RootApiFileSchema>;
+        serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
+        packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
     }
 
     export interface FailedResult {
@@ -26,18 +27,20 @@ export declare namespace validateStructureOfYamlFiles {
 }
 
 export function validateStructureOfYamlFiles(
-    files: Record<RelativeFilePath, unknown>
+    files: Record<RelativeFilePath, ParsedFernFile<unknown>>
 ): validateStructureOfYamlFiles.Return {
-    let rootApiFile: RootApiFileSchema | undefined = undefined;
-    const serviceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
-    const packageMarkers: Record<RelativeFilePath, PackageMarkerFileSchema> = {};
+    let rootApiFile: ParsedFernFile<RootApiFileSchema> | undefined = undefined;
+    const serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> = {};
+    const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
 
     const failures: Record<
         RelativeFilePath,
         WorkspaceLoader.StructureValidationFailure | WorkspaceLoader.MissingFileFailure
     > = {};
 
-    for (const [relativeFilepath, parsedFileContents] of entries(files)) {
+    for (const [relativeFilepath, file] of entries(files)) {
+        const parsedFileContents = file.contents;
+
         const addFailure = (error: ZodError) => {
             failures[relativeFilepath] = {
                 type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION,
@@ -46,25 +49,34 @@ export function validateStructureOfYamlFiles(
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
-            const parsed = RootApiFileSchema.safeParse(parsedFileContents);
-            if (parsed.success) {
-                rootApiFile = parsed.data;
+            const maybeValidFileContents = RootApiFileSchema.safeParse(parsedFileContents);
+            if (maybeValidFileContents.success) {
+                rootApiFile = {
+                    contents: maybeValidFileContents.data,
+                    rawContents: file.rawContents,
+                };
             } else {
-                addFailure(parsed.error);
+                addFailure(maybeValidFileContents.error);
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
-            const parsed = PackageMarkerFileSchema.safeParse(parsedFileContents);
-            if (parsed.success) {
-                packageMarkers[relativeFilepath] = parsed.data;
+            const maybeValidFileContents = PackageMarkerFileSchema.safeParse(parsedFileContents);
+            if (maybeValidFileContents.success) {
+                packageMarkers[relativeFilepath] = {
+                    contents: maybeValidFileContents.data,
+                    rawContents: file.rawContents,
+                };
             } else {
-                addFailure(parsed.error);
+                addFailure(maybeValidFileContents.error);
             }
         } else {
-            const parsed = ServiceFileSchema.safeParse(parsedFileContents);
-            if (parsed.success) {
-                serviceFiles[relativeFilepath] = parsed.data;
+            const maybeValidFileContents = ServiceFileSchema.safeParse(parsedFileContents);
+            if (maybeValidFileContents.success) {
+                serviceFiles[relativeFilepath] = {
+                    contents: maybeValidFileContents.data,
+                    rawContents: file.rawContents,
+                };
             } else {
-                addFailure(parsed.error);
+                addFailure(maybeValidFileContents.error);
             }
         }
     }

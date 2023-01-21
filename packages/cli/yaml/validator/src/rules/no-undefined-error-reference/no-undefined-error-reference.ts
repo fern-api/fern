@@ -56,7 +56,7 @@ async function getErrorsByFilepath(workspace: Workspace) {
         const errorsForFile = new Set<ErrorName>();
         erorrsByFilepath[relativeFilepath] = errorsForFile;
 
-        await visitFernServiceFileYamlAst(file, {
+        await visitFernServiceFileYamlAst(file.contents, {
             errorDeclaration: ({ errorName }) => {
                 errorsForFile.add(errorName);
             },

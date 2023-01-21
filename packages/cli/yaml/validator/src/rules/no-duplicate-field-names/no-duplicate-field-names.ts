@@ -119,7 +119,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
-                                            serviceFile,
+                                            serviceFile: serviceFile.contents,
                                             workspace,
                                             typeResolver,
                                         });

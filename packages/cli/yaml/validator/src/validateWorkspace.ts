@@ -19,16 +19,16 @@ export async function validateWorkspace(workspace: Workspace, logger: Logger): P
 
     const violationsForRoot = await validateRootApiFile({
         workspace,
-        contents: workspace.rootApiFile,
+        contents: workspace.rootApiFile.contents,
         logger,
     });
     violations.push(...violationsForRoot);
 
-    for (const [relativeFilepath, contents] of entries(workspace.serviceFiles)) {
+    for (const [relativeFilepath, file] of entries(workspace.serviceFiles)) {
         const violationsForFile = await validateServiceFile({
             workspace,
             relativeFilepath,
-            contents,
+            contents: file.contents,
             logger,
         });
         violations.push(...violationsForFile);

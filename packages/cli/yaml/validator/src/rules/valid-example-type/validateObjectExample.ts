@@ -89,7 +89,7 @@ export function validateObjectExample({
                     example: exampleValue,
                     file: constructFernFileContext({
                         relativeFilepath: propertyWithPath.filepathOfDeclaration,
-                        serviceFile,
+                        serviceFile: serviceFile.contents,
                         casingsGenerator: file.casingsGenerator,
                     }),
                     workspace,

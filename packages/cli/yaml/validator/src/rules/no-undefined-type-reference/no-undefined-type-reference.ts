@@ -59,7 +59,7 @@ async function getTypesByFilepath(workspace: Workspace) {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitFernServiceFileYamlAst(file, {
+        await visitFernServiceFileYamlAst(file.contents, {
             typeDeclaration: ({ typeName }) => {
                 typesForFile.add(typeName);
             },

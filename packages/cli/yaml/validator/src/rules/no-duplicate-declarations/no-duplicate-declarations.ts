@@ -65,7 +65,7 @@ async function getDeclarations(workspace: Workspace): Promise<Declarations> {
             (declarationsForDirectory[declaredName] ??= []).push(relativeFilepath);
         };
 
-        await visitFernServiceFileYamlAst(file, {
+        await visitFernServiceFileYamlAst(file.contents, {
             typeName: (typeName) => {
                 addDeclaration(typeName);
             },

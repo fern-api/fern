@@ -105,7 +105,7 @@ export function getAllPropertiesForObject({
                             typeName: resolvedTypeOfExtension.rawName,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
-                            serviceFile,
+                            serviceFile: serviceFile.contents,
                             workspace,
                             typeResolver,
                             path: [

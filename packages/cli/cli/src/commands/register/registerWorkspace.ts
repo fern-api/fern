@@ -1,5 +1,4 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
-import { LogLevel } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { createFiddleService } from "@fern-api/services";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -36,7 +35,7 @@ export async function registerApiDefinitions({
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const registerApiResponse = await fiddle.definitionRegistry.registerUsingOrgToken({
-                    apiId: FernFiddle.ApiId(workspace.rootApiFile.name),
+                    apiId: FernFiddle.ApiId(workspace.rootApiFile.contents.name),
                     version,
                     cliVersion: cliContext.environment.packageVersion,
                 });
@@ -46,11 +45,7 @@ export async function registerApiDefinitions({
                             context.failAndThrow(`Version ${version ?? ""} is already registered`);
                         },
                         _other: (value) => {
-                            if (cliContext.getLogLevel() === LogLevel.Debug) {
-                                context.failAndThrow("Failed to register", value);
-                            } else {
-                                context.failAndThrow("Failed to register");
-                            }
+                            context.failAndThrow("Failed to register", value);
                         },
                     });
                     return;
@@ -66,7 +61,7 @@ export async function registerApiDefinitions({
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));
 
                 context.logger.info(
-                    `Registered @${project.config.organization}/${workspace.rootApiFile.name}:${registerApiResponse.body.version}`
+                    `Registered @${project.config.organization}/${workspace.rootApiFile.contents.name}:${registerApiResponse.body.version}`
                 );
             });
         })

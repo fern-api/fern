@@ -6,7 +6,7 @@ import { Rule, RuleViolation } from "../../Rule";
 export const NoErrorStatusCodeConflict: Rule = {
     name: "no-error-status-code-conflict",
     create: async ({ workspace }) => {
-        if (workspace.rootApiFile["error-discrimination"]?.strategy !== "status-code") {
+        if (workspace.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
             return {};
         }
         const errorDeclarations = await getErrorDeclarations(workspace);
@@ -49,7 +49,7 @@ export const NoErrorStatusCodeConflict: Rule = {
 async function getErrorDeclarations(workspace: Workspace): Promise<Record<string, RawSchemas.ErrorDeclarationSchema>> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
     for (const [_, file] of Object.entries(workspace.serviceFiles)) {
-        await visitFernServiceFileYamlAst(file, {
+        await visitFernServiceFileYamlAst(file.contents, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {
                 errorDeclarations[errorName] = declaration;

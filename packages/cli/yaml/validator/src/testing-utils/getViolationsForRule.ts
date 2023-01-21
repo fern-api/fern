@@ -35,25 +35,25 @@ export async function getViolationsForRule({
 
     const rootApiFileVisitor = createRootApiFileAstVisitorForRules({
         relativeFilepath: "api.yml",
-        contents: parseResult.workspace.rootApiFile,
+        contents: parseResult.workspace.rootApiFile.contents,
         allRuleVisitors: [ruleVisitors],
         addViolations: (newViolations) => {
             violations.push(...newViolations);
         },
     });
 
-    await visitFernRootApiFileYamlAst(parseResult.workspace.rootApiFile, rootApiFileVisitor);
+    await visitFernRootApiFileYamlAst(parseResult.workspace.rootApiFile.contents, rootApiFileVisitor);
 
-    for (const [relativeFilepath, contents] of entries(parseResult.workspace.serviceFiles)) {
+    for (const [relativeFilepath, file] of entries(parseResult.workspace.serviceFiles)) {
         const visitor = createServiceFileAstVisitorForRules({
             relativeFilepath,
-            contents,
+            contents: file.contents,
             allRuleVisitors: [ruleVisitors],
             addViolations: (newViolations) => {
                 violations.push(...newViolations);
             },
         });
-        await visitFernServiceFileYamlAst(contents, visitor);
+        await visitFernServiceFileYamlAst(file.contents, visitor);
     }
 
     return violations.map((violation) => ({

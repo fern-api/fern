@@ -30,7 +30,7 @@ export const NoMissingErrorDiscriminantRule: Rule = {
 
 function doesApiDeclareErrors(workspace: Workspace): boolean {
     for (const file of Object.values(workspace.serviceFiles)) {
-        if (file.errors != null && !isEmpty(file.errors)) {
+        if (file.contents.errors != null && !isEmpty(file.contents.errors)) {
             return true;
         }
     }
