@@ -295,6 +295,7 @@ export class OpenApiV3Context {
                 } else if (
                     propertySchema.properties != null &&
                     propertySchema.type === "array" &&
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     propertySchema.items != null
                 ) {
                     this.getAllReferencedSchemas(propertySchema).forEach((referencedSchema) => {
@@ -302,6 +303,7 @@ export class OpenApiV3Context {
                     });
                 }
             }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         } else if (schema.type === "array" && schema.items != null && isReferenceObject(schema.items)) {
             schemaReferences.add(schema.items);
             const resolvedSchema = this.maybeResolveSchemaReference(schema.items);
