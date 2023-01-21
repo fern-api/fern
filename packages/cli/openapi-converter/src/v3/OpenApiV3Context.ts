@@ -284,16 +284,30 @@ export class OpenApiV3Context {
         const schemaReferences = new Set<OpenAPIV3.ReferenceObject>();
         if (schema.properties != null) {
             for (const [_, propertySchema] of Object.entries(schema.properties)) {
-                if (!isReferenceObject(propertySchema)) {
-                    continue;
-                }
-                schemaReferences.add(propertySchema);
-                const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
-                if (resolvedSchema != null) {
-                    this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
+                if (
+                    !isReferenceObject(propertySchema) &&
+                    (propertySchema.properties != null || propertySchema.type === "object")
+                ) {
+                    this.getAllReferencedSchemas(propertySchema).forEach((referencedSchema) => {
                         schemaReferences.add(referencedSchema);
                     });
+                } else if (isReferenceObject(propertySchema)) {
+                    schemaReferences.add(propertySchema);
+                    const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
+                    if (resolvedSchema != null) {
+                        this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
+                            schemaReferences.add(referencedSchema);
+                        });
+                    }
                 }
+            }
+        } else if (schema.type === "array" && isReferenceObject(schema.items)) {
+            schemaReferences.add(schema.items);
+            const resolvedSchema = this.maybeResolveSchemaReference(schema.items);
+            if (resolvedSchema != null) {
+                this.getAllReferencedSchemas(resolvedSchema.schemaObject).forEach((referencedSchema) => {
+                    schemaReferences.add(referencedSchema);
+                });
             }
         }
         return schemaReferences;

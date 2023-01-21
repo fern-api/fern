@@ -10,6 +10,7 @@ describe("open api converter", () => {
     testFixture("telematica");
     testFixture("rivet");
     testFixture("partnerstack");
+    testFixture("suger");
 });
 
 function testFixture(fixtureName: string) {
