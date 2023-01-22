@@ -5,6 +5,7 @@ import {
     getUnionDiscriminantName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
+import { getServiceFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -111,7 +112,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         isRawObjectDefinition(resolvedType.declaration)
                                     ) {
                                         const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
-                                        const serviceFile = workspace.serviceFiles[resolvedType.filepath];
+                                        const serviceFile = getServiceFile(workspace, resolvedType.filepath);
                                         if (serviceFile == null) {
                                             continue;
                                         }
@@ -119,7 +120,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
-                                            serviceFile: serviceFile.contents,
+                                            serviceFile,
                                             workspace,
                                             typeResolver,
                                         });

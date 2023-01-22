@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { constructFernFileContext, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { keyBy } from "lodash-es";
 import { RuleViolation } from "../../Rule";
@@ -79,7 +79,7 @@ export function validateObjectExample({
                 message: `Unexpected property "${exampleKey}"`,
             });
         } else {
-            const serviceFile = workspace.serviceFiles[propertyWithPath.filepathOfDeclaration];
+            const serviceFile = getServiceFile(workspace, propertyWithPath.filepathOfDeclaration);
             if (serviceFile == null) {
                 throw new Error("Service file does not exist for property: " + propertyWithPath.wireKey);
             }
@@ -89,7 +89,7 @@ export function validateObjectExample({
                     example: exampleValue,
                     file: constructFernFileContext({
                         relativeFilepath: propertyWithPath.filepathOfDeclaration,
-                        serviceFile: serviceFile.contents,
+                        serviceFile,
                         casingsGenerator: file.casingsGenerator,
                     }),
                     workspace,

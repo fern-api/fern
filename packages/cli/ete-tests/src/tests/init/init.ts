@@ -14,6 +14,7 @@ export async function init({
     const cliArgs = ["init", "--organization", "fern"];
     if (openApiPath != null) {
         cliArgs.push("--openapi", openApiPath);
+        cliArgs.push("--log-level", "error");
     }
 
     await runFernCli(cliArgs, {

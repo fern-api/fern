@@ -1,4 +1,4 @@
-import { Workspace } from "@fern-api/workspace-loader";
+import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
@@ -62,12 +62,12 @@ export class TypeResolverImpl implements TypeResolver {
         if (parsedReference == null) {
             return undefined;
         }
-        const serviceFile = this.workspace.serviceFiles[parsedReference.relativeFilepath];
+        const serviceFile = getServiceFile(this.workspace, parsedReference.relativeFilepath);
         if (serviceFile == null) {
             return undefined;
         }
 
-        const declaration = serviceFile.contents.types?.[parsedReference.typeName];
+        const declaration = serviceFile.types?.[parsedReference.typeName];
         if (declaration == null) {
             return undefined;
         }
@@ -77,7 +77,7 @@ export class TypeResolverImpl implements TypeResolver {
             declaration,
             file: constructFernFileContext({
                 relativeFilepath: parsedReference.relativeFilepath,
-                serviceFile: serviceFile.contents,
+                serviceFile,
                 casingsGenerator: file.casingsGenerator,
             }),
         };
@@ -217,7 +217,7 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
-        const serviceFile = this.workspace.serviceFiles[fileOfResolvedDeclaration.relativeFilepath];
+        const serviceFile = getServiceFile(this.workspace, fileOfResolvedDeclaration.relativeFilepath);
         if (serviceFile == null) {
             return undefined;
         }
@@ -232,7 +232,7 @@ export class TypeResolverImpl implements TypeResolver {
             originalTypeReference: parsedTypeReference,
             file: constructFernFileContext({
                 relativeFilepath: fileOfResolvedDeclaration.relativeFilepath,
-                serviceFile: serviceFile.contents,
+                serviceFile,
                 casingsGenerator: file.casingsGenerator,
             }),
         };

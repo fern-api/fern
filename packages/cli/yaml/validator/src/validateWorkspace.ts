@@ -1,8 +1,7 @@
-import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
-import { Workspace } from "@fern-api/workspace-loader";
+import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
 import {
     RootApiFileSchema,
     ServiceFileSchema,
@@ -24,15 +23,15 @@ export async function validateWorkspace(workspace: Workspace, logger: Logger): P
     });
     violations.push(...violationsForRoot);
 
-    for (const [relativeFilepath, file] of entries(workspace.serviceFiles)) {
+    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
         const violationsForFile = await validateServiceFile({
             workspace,
             relativeFilepath,
-            contents: file.contents,
+            contents: file,
             logger,
         });
         violations.push(...violationsForFile);
-    }
+    });
 
     return violations;
 }

@@ -1,5 +1,5 @@
-import { entries, noop, visitObject } from "@fern-api/core-utils";
-import { Workspace } from "@fern-api/workspace-loader";
+import { noop, visitObject } from "@fern-api/core-utils";
+import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -154,25 +154,15 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    for (const [filepath, file] of entries(workspace.serviceFiles)) {
+    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
         await visitServiceFile(
             constructFernFileContext({
-                relativeFilepath: filepath,
-                serviceFile: file.contents,
+                relativeFilepath,
+                serviceFile: file,
                 casingsGenerator,
             })
         );
-    }
-
-    for (const [filepath, file] of entries(workspace.packageMarkers)) {
-        await visitServiceFile(
-            constructFernFileContext({
-                relativeFilepath: filepath,
-                serviceFile: file.contents,
-                casingsGenerator,
-            })
-        );
-    }
+    });
 
     const intermediateRepresentationForAudiences =
         audienceIrGraph != null

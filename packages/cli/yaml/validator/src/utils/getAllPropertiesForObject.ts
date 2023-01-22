@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, getPropertyName, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { CASINGS_GENERATOR } from "./casingsGenerator";
 
@@ -98,14 +98,14 @@ export function getAllPropertiesForObject({
                 resolvedTypeOfExtension?._type === "named" &&
                 isRawObjectDefinition(resolvedTypeOfExtension.declaration)
             ) {
-                const serviceFile = workspace.serviceFiles[resolvedTypeOfExtension.filepath];
+                const serviceFile = getServiceFile(workspace, resolvedTypeOfExtension.filepath);
                 if (serviceFile != null) {
                     properties.push(
                         ...getAllPropertiesForObject({
                             typeName: resolvedTypeOfExtension.rawName,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
-                            serviceFile: serviceFile.contents,
+                            serviceFile,
                             workspace,
                             typeResolver,
                             path: [

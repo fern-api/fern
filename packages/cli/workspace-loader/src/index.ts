@@ -1,4 +1,5 @@
 export { loadWorkspace } from "./loadWorkspace";
-export { type FernFile } from "./types/FernFile";
+export { type FernFile, type ParsedFernFile } from "./types/FernFile";
 export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result";
 export { type Workspace } from "./types/Workspace";
+export * from "./utils";

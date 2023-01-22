@@ -1,7 +1,6 @@
-import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
 import { recursivelyVisitRawTypeReference, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
@@ -54,18 +53,16 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
 async function getTypesByFilepath(workspace: Workspace) {
     const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
-
-    for (const [relativeFilepath, file] of entries(workspace.serviceFiles)) {
+    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitFernServiceFileYamlAst(file.contents, {
+        await visitFernServiceFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 typesForFile.add(typeName);
             },
         });
-    }
-
+    });
     return typesByFilepath;
 }
 
