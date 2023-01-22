@@ -32,6 +32,21 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff
+
+  generate-sdks:
+    docker:
+      - image: cimg/node:current
+    resource_class: medium
+    steps:
+      - checkout
+      - run:
+          name: Install fern
+          command: sudo npm install -g fern-api
+      - run: |
+          export FERN_TOKEN="${FERN_ORG_TOKEN_PROD}"
+          git_version="$(scripts/git-version.sh)"
+          fern generate --group sdks --log-level debug
+
   publish:
     machine:
       image: ubuntu-2004:current
@@ -60,6 +75,16 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - generate-sdks:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+          context:
+            - fern-tokens
+          requires:
+            - check
       - publish:
           filters:
             branches:

@@ -3,7 +3,7 @@ services:
     WorkspaceService:
       auth: true
       base-path: /workspaces
-      endpoints: 
+      endpoints:
         getWorkspace:
           method: GET
           path: /{workspaceId}
@@ -11,14 +11,35 @@ services:
             workspaceId: WorkspaceId
           response: GetWorkspaceResponse
 
-types: 
+        create:
+          method: POST
+          path: ""
+          request:
+            name: CreateWorkspaceRequest
+            body:
+              properties:
+                name: string
+                description: string
+                type: WorkspaceType
+          response: CreateWorkspaceResponse
+
+types:
   WorkspaceId: string
 
-  GetWorkspaceResponse: 
-    properties: 
+  GetWorkspaceResponse:
+    properties:
       workspace: Workspace
 
-  Workspace: 
-    properties: 
+  Workspace:
+    properties:
       id: WorkspaceId
       name: string
+
+  WorkspaceType:
+    enum:
+      - public
+      - private
+
+  CreateWorkspaceResponse:
+    properties:
+      workspace: Workspace

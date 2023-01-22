@@ -165,9 +165,11 @@ services:
         createCollection:
           method: POST
           path: /
-          query-parameters:
-            workspace: optional<workspace.WorkspaceId>
-          request: PostmanCollection
+          request:
+            name: CreateCollectionRequest
+            body: PostmanCollection
+            query-parameters:
+              workspace: optional<workspace.WorkspaceId>
 
         getCollection:
           method: GET
@@ -179,8 +181,10 @@ services:
         getAllCollectionMetadata:
           method: GET
           path: /
-          query-parameters:
-            workspace: optional<workspace.WorkspaceId>
+          request:
+            name: GetAllCollectionMetadataRequest
+            query-parameters:
+              workspace: optional<workspace.WorkspaceId>
           response: GetAllCollectionMetadataResponse
 
         updateCollection:
