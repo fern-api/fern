@@ -1,6 +1,7 @@
+import { TaskContext } from "@fern-api/task-context";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenApiV3Context } from "./OpenApiV3Context";
+import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
@@ -64,4 +65,39 @@ export function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarati
         union: () => undefined,
         enum: () => undefined,
     });
+}
+
+export function convertParameterSchema(
+    parameter: OpenAPIV3.ParameterObject,
+    context: OpenApiV3Context,
+    taskContext: TaskContext,
+    endpoint: OpenAPIV3Endpoint
+): string | undefined {
+    if (parameter.schema == null) {
+        return undefined;
+    }
+
+    const resolvedSchema = isReferenceObject(parameter.schema)
+        ? context.maybeResolveSchemaReference(parameter.schema)?.schemaObject
+        : parameter.schema;
+    if (resolvedSchema == null) {
+        return undefined;
+    }
+
+    const convertedPrimitive = maybeConvertSchemaToPrimitive(resolvedSchema);
+    if (convertedPrimitive == null) {
+        taskContext.logger.warn(
+            `${endpoint.httpMethod} ${endpoint.path} parameter ${
+                parameter.name
+            } has non primitive schema: ${JSON.stringify(resolvedSchema, undefined, 2)}`
+        );
+    }
+
+    const parameterType =
+        parameter.required != null && parameter.required ? convertedPrimitive : `optional<${convertedPrimitive}>`;
+    return parameterType;
+}
+
+export function diff(a: string[], b: string[]): string[] {
+    return a.filter((x) => !b.includes(x));
 }
