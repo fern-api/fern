@@ -28,7 +28,8 @@ exports[`fern init covie openapi 1`] = `
             Remove requirement for all account users to have an MFA application
             configured
           display-name: Disable Account MFA Requirement
-      path-parameters: {}
+      path-parameters:
+        account_id: string
 types:
   AccountWithConfig:
     properties: {}
@@ -659,7 +660,8 @@ services:
           docs: Rebroadcast an event.
           display-name: Rebroadcast Event
           response: _InlinedType25
-      path-parameters: {}
+      path-parameters:
+        event_id: string
 types:
   EventBroadcast:
     docs: Record of a broadcast to a webhook endpoint when an event is triggered.
@@ -1907,7 +1909,8 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType5
-      path-parameters: {}
+      path-parameters:
+        project: string
 types:
   _InlinedType4:
     properties:
@@ -2331,7 +2334,8 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType11
-      path-parameters: {}
+      path-parameters:
+        project: string
 types:
   simCredentials:
     properties:
@@ -2458,7 +2462,8 @@ services:
                 userAddress: optional<string>
                 user: string
                 porting: optional<string>
-      path-parameters: {}
+      path-parameters:
+        project: string
 types:
   _InlinedType12:
     properties:
@@ -2575,7 +2580,9 @@ services:
           docs: Retrieves the details of an existing user address and deletes it.
           display-name: Delete a user address
           response: commons.userAddress
-      path-parameters: {}
+      path-parameters:
+        project: string
+        user: string
 types:
   _InlinedType14:
     properties:
@@ -2676,7 +2683,8 @@ services:
                 email: string
                 fullName: optional<string>
                 preferredLocale: optional<string>
-      path-parameters: {}
+      path-parameters:
+        project: string
 types:
   _InlinedType15:
     properties:

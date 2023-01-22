@@ -28,7 +28,9 @@ exports[`open api converter covie simple 1`] = `
                 "response": "AccountWithConfig",
               },
             },
-            "path-parameters": {},
+            "path-parameters": {
+              "account_id": "string",
+            },
           },
         },
       },
@@ -787,7 +789,9 @@ exports[`open api converter covie simple 1`] = `
                 "response": "_InlinedType25",
               },
             },
-            "path-parameters": {},
+            "path-parameters": {
+              "event_id": "string",
+            },
           },
         },
       },

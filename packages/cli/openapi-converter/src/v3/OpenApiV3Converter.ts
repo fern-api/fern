@@ -193,10 +193,12 @@ export class OpenAPIConverter {
     }
 
     private getServicePathParameters(endpoint: OpenAPIV3Endpoint, basePathParameters: string[]) {
-        if (endpoint.definition.parameters == null) {
-            this.taskContext.logger.error(`Failed to find service path parameters ${basePathParameters.join(", ")}`);
-        }
         const pathParameters: Record<string, RawSchemas.HttpHeaderSchema> = {};
+        if (endpoint.definition.parameters == null) {
+            basePathParameters.forEach((basePathParameter) => {
+                pathParameters[basePathParameter] = "string";
+            });
+        }
         (endpoint.definition.parameters ?? []).forEach((parameter) => {
             const resolvedParameter = isReferenceObject(parameter)
                 ? this.context.maybeResolveParameterReference(parameter)
