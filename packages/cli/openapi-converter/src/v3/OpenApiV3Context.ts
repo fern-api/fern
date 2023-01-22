@@ -46,7 +46,10 @@ export class OpenApiV3Context {
                 this.endpoints.push({
                     path,
                     httpMethod,
-                    definition: httpMethodDefinition,
+                    definition: {
+                        ...httpMethodDefinition,
+                        parameters: [...(httpMethodDefinition.parameters ?? []), ...(pathDefinition.parameters ?? [])],
+                    },
                 });
             });
         });

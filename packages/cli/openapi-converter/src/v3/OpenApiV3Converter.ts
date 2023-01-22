@@ -10,7 +10,7 @@ import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV3Context";
 import { SchemaConverter } from "./SchemaConverter";
-import { COMMONS_SERVICE_FILE_NAME } from "./utils";
+import { COMMONS_SERVICE_FILE_NAME, convertParameterSchema, diff, isReferenceObject } from "./utils";
 
 const SCHEMAS_BREADCRUMBS = ["components", "schemas"];
 const ENDPOINT_BREADCRUMBS = ["paths"];
@@ -89,6 +89,7 @@ export class OpenAPIConverter {
         let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
         const convertedEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
         const imports = new Set<string>();
+        const filename = `${camelCasedTag}.yml`;
         schemas.forEach((schema) => {
             const schemaConverter = new SchemaConverter({
                 schema: schema.schemaObject,
@@ -110,6 +111,8 @@ export class OpenAPIConverter {
                 this.taskContext.logger.debug();
             }
         });
+
+        const serviceBasePath = calculateBasePath(endpoints);
         endpoints.forEach((endpoint) => {
             const endpointConverter = new EndpointConverter(
                 endpoint,
@@ -117,7 +120,8 @@ export class OpenAPIConverter {
                 this.taskContext,
                 this.inlinedTypeNamer,
                 ENDPOINT_BREADCRUMBS,
-                tag
+                tag,
+                serviceBasePath
             );
             const convertedEndpoint = endpointConverter.convert();
             if (convertedEndpoint != null) {
@@ -145,14 +149,35 @@ export class OpenAPIConverter {
             serviceFile.imports = serviceFileImports;
         }
 
+        const serviceName = `${pascalCasedTag}Service`;
         if (size(convertedEndpoints) > 0) {
+            const partialService: Omit<RawSchemas.HttpServiceSchema, "endpoints"> = {
+                auth: true,
+                "base-path": serviceBasePath.parts.join("/"),
+            };
+
+            if (size(serviceBasePath.pathParameters) > 0) {
+                const endpointToExtractPathParamsFrom = endpoints[0];
+                if (endpointToExtractPathParamsFrom != null) {
+                    partialService["path-parameters"] = this.getServicePathParameters(
+                        endpointToExtractPathParamsFrom,
+                        serviceBasePath.pathParameters
+                    );
+                } else {
+                    this.taskContext.logger.error(`${serviceName}: failed to add service path parameters.`);
+                }
+            }
+
+            const service: RawSchemas.HttpServiceSchema = {
+                auth: partialService.auth,
+                "base-path": partialService["base-path"],
+                "path-parameters": partialService["path-parameters"],
+                endpoints: convertedEndpoints,
+            };
+
             serviceFile.services = {
                 http: {
-                    [`${pascalCasedTag}Service`]: {
-                        auth: true,
-                        "base-path": "",
-                        endpoints: convertedEndpoints,
-                    },
+                    [serviceName]: service,
                 },
             };
         }
@@ -162,8 +187,87 @@ export class OpenAPIConverter {
         }
 
         return {
-            filename: `${camelCasedTag}.yml`,
+            filename,
             serviceFile,
         };
     }
+
+    private getServicePathParameters(
+        endpoint: OpenAPIV3Endpoint,
+        basePathParameters: string[]
+    ): Record<string, RawSchemas.HttpHeaderSchema> {
+        const pathParameters: Record<string, RawSchemas.HttpHeaderSchema> = {};
+        (endpoint.definition.parameters ?? []).forEach((parameter) => {
+            const resolvedParameter = isReferenceObject(parameter)
+                ? this.context.maybeResolveParameterReference(parameter)
+                : parameter;
+            if (
+                resolvedParameter != null &&
+                resolvedParameter.in === "path" &&
+                basePathParameters.includes(resolvedParameter.name)
+            ) {
+                const parameterType = convertParameterSchema(
+                    resolvedParameter,
+                    this.context,
+                    this.taskContext,
+                    endpoint
+                );
+                if (parameterType == null) {
+                    return;
+                }
+                const schema =
+                    resolvedParameter.description != null
+                        ? {
+                              docs: resolvedParameter.description,
+                              type: parameterType,
+                          }
+                        : parameterType;
+                pathParameters[resolvedParameter.name] = schema;
+            }
+        });
+        const excludedPathParameters = diff(basePathParameters, Object.keys(pathParameters));
+        excludedPathParameters.forEach((pathParameter) => {
+            pathParameters[pathParameter] = "string";
+        });
+        return pathParameters;
+    }
+}
+
+function calculateBasePath(endpoints: OpenAPIV3Endpoint[]): ServiceBasePath {
+    const endpointPaths = endpoints.map((endpoint) => endpoint.path.split("/"));
+    const minPathLength = Math.min(...endpointPaths.map((arr) => arr.length));
+    const pathParameters: string[] = [];
+    const basePath = [];
+    for (let i = 0; i < minPathLength; i++) {
+        let part: string | undefined;
+        let partInitialized = false;
+        let partsIdentical = true;
+        for (const endpointPath of endpointPaths) {
+            if (partInitialized) {
+                partsIdentical = partsIdentical && part === endpointPath[i];
+            } else {
+                part = endpointPath[i];
+                partInitialized = true;
+            }
+        }
+        if (part != null && partInitialized && partsIdentical) {
+            basePath.push(part);
+        } else {
+            break;
+        }
+    }
+    for (const part of basePath) {
+        if (part.startsWith("{") && part.endsWith("}")) {
+            pathParameters.push(part.substring(1, part.length - 1));
+        }
+    }
+    return {
+        parts: basePath,
+        pathParameters,
+    };
+}
+
+export interface ServiceBasePath {
+    parts: string[];
+    pathParameters: string[];
 }
