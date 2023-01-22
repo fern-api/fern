@@ -1,1 +1,1 @@
-export { NoObjectSinglePropertyKeyRule as default } from "./no-object-single-property-key";
+export { NoObjectSinglePropertyKeyRule } from "./no-object-single-property-key";

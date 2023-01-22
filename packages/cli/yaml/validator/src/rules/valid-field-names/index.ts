@@ -1,1 +1,1 @@
-export { ValidFieldNamesRule as default } from "./valid-field-names";
+export { ValidFieldNamesRule } from "./valid-field-names";

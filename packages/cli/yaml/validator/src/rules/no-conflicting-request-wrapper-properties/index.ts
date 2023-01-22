@@ -1,1 +1,1 @@
-export { NoConflictingRequestWrapperPropertiesRule as default } from "./no-conflicting-request-wrapper-properties";
+export { NoConflictingRequestWrapperPropertiesRule } from "./no-conflicting-request-wrapper-properties";

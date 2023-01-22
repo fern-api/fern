@@ -1,1 +1,1 @@
-export { NoMissingRequestNameRule as default } from "./no-missing-request-name";
+export { NoMissingRequestNameRule } from "./no-missing-request-name";

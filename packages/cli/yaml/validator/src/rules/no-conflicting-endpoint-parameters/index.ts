@@ -1,1 +1,1 @@
-export { NoConflictingEndpointParametersRule as default } from "./no-conflicting-endpoint-parameters";
+export { NoConflictingEndpointParametersRule } from "./no-conflicting-endpoint-parameters";
