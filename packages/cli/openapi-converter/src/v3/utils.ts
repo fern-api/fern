@@ -97,3 +97,7 @@ export function convertParameterSchema(
         parameter.required != null && parameter.required ? convertedPrimitive : `optional<${convertedPrimitive}>`;
     return parameterType;
 }
+
+export function diff(a: string[], b: string[]): string[] {
+    return a.filter((x) => !b.includes(x));
+}

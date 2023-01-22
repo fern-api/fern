@@ -142,7 +142,9 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Policies",
               },
             },
-            "path-parameters": {},
+            "path-parameters": {
+              "application_id": "string",
+            },
           },
         },
       },
@@ -854,30 +856,45 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Deletes an integration.",
                 "method": "DELETE",
                 "path": "/{integration_id}",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "deleteIntegrationsIntegrationIdAgencyLogo": {
                 "display-name": "Delete Agency Logo",
                 "docs": "Delete the agency logo and/or config if present.",
                 "method": "DELETE",
                 "path": "/{integration_id}/agency_logo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "deleteIntegrationsIntegrationIdAgentPhoto": {
                 "display-name": "Delete Agent Photo",
                 "docs": "Delete the agent photo and/or config if present.",
                 "method": "DELETE",
                 "path": "/{integration_id}/agent_photo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "deleteIntegrationsIntegrationIdBrandLogo": {
                 "display-name": "Delete Brand Logo",
                 "docs": "Delete the brand logo and/or config if present.",
                 "method": "DELETE",
                 "path": "/{integration_id}/brand_logo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "getIntegration": {
                 "display-name": "Get Integration",
                 "docs": "Retrieve the details of an integration.",
                 "method": "GET",
                 "path": "/{integration_id}",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "response": "commons.Integration_2",
               },
               "getIntegrationPolicies": {
@@ -885,6 +902,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "List all policies that have been linked to an integration.",
                 "method": "GET",
                 "path": "/{integration_id}/policies",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "limit": {
@@ -904,6 +924,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Retrieve a list of supported carriers for a given integration, along with their identifiers.",
                 "method": "GET",
                 "path": "/{integration_id}/providers",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "required_policy_types": {
@@ -919,18 +942,27 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "View the agency logo for the hosted integration.",
                 "method": "GET",
                 "path": "/{integration_id}/agency_logo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "getIntegrationsIntegrationIdAgentPhoto": {
                 "display-name": "View Agent Photo",
                 "docs": "View the agent photo for the hosted integration.",
                 "method": "GET",
                 "path": "/{integration_id}/agent_photo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "getIntegrationsIntegrationIdBrandLogo": {
                 "display-name": "View Brand Logo",
                 "docs": "View the brand logo for the integration.",
                 "method": "GET",
                 "path": "/{integration_id}/brand_logo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
               },
               "listIntegrations": {
                 "display-name": "List Integrations",
@@ -956,6 +988,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Upload the agency logo for the hosted integration.",
                 "method": "PUT",
                 "path": "/{integration_id}/agency_logo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "response": "_InlinedType18",
               },
               "putIntegrationsIntegrationIdAgentPhoto": {
@@ -963,6 +998,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Upload an agent photo for the hosted integration.",
                 "method": "PUT",
                 "path": "/{integration_id}/agent_photo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "response": "_InlinedType19",
               },
               "putIntegrationsIntegrationIdBrandLogo": {
@@ -970,6 +1008,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Upload the brand logo for the hosted integration.",
                 "method": "PUT",
                 "path": "/{integration_id}/brand_logo",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "response": "_InlinedType20",
               },
               "regenerateIntegrationKey": {
@@ -977,6 +1018,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Replaces the existing integration key with a new randomly generated key.",
                 "method": "POST",
                 "path": "/{integration_id}/regenerate_key",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "response": "commons.Integration_2",
               },
               "updateIntegration": {
@@ -984,6 +1028,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Edit the name and archived status of an integration.",
                 "method": "PATCH",
                 "path": "/{integration_id}",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -998,6 +1045,7 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Integration_2",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -1149,18 +1197,27 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Attach a policy document to a Link. If the document can be parsed, select the parsed policy for sharing.",
                 "method": "POST",
                 "path": "/links/{id}/documents",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "deleteLink": {
                 "display-name": "Delete Link",
                 "docs": "Deletes a link.",
                 "method": "DELETE",
                 "path": "/links/{id}",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "getIntegrationLinks": {
                 "display-name": "List Integration Links",
                 "docs": "Retrieves a list of links associated to the requested integration",
                 "method": "GET",
                 "path": "/integrations/{integration_id}/links",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "created_since": {
@@ -1224,6 +1281,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Retrieves a list of links and selected policies associated to the requested integration",
                 "method": "GET",
                 "path": "/integrations/{integration_id}/links_with_policies",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "created_since": {
@@ -1279,6 +1339,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Retrieves a Link",
                 "method": "GET",
                 "path": "/links/{id}",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "response": "commons.Link",
               },
               "getLinkEvents": {
@@ -1286,6 +1349,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Retrieves a list of events triggered for the requested link",
                 "method": "GET",
                 "path": "/links/{id}/events",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1309,6 +1375,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Retrieves a list of policies associated with the requested link",
                 "method": "GET",
                 "path": "/links/{id}/policies",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "limit": {
@@ -1328,6 +1397,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Creates a link and optionally sets metadata and selects a carrier, allowing for seeding initial data before an insured continues the linking process via the embed",
                 "method": "POST",
                 "path": "/integrations/{integration_id}/links",
+                "path-parameters": {
+                  "integration_id": "string",
+                },
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1343,12 +1415,18 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Sync a tracked link with the provider using the stored user credentials",
                 "method": "POST",
                 "path": "/links/{id}/syncs",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "updateLinkSettings": {
                 "display-name": "Update Link Settings",
                 "docs": undefined,
                 "method": "PATCH",
                 "path": "/links/{id}",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1360,6 +1438,7 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Link",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -1415,6 +1494,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Retrieve the contents of a Policy document",
                 "method": "GET",
                 "path": "/documents/{document_type}",
+                "path-parameters": {
+                  "document_type": "string",
+                },
                 "response": "FileContents",
               },
               "listPolicyEvents": {
@@ -1441,7 +1523,9 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Events",
               },
             },
-            "path-parameters": {},
+            "path-parameters": {
+              "policy_id": "string",
+            },
           },
         },
       },
@@ -1536,6 +1620,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Get the details of a webhook.",
                 "method": "GET",
                 "path": "/{webhook_id}",
+                "path-parameters": {
+                  "webhook_id": "string",
+                },
                 "response": "commons.Webhook_2",
               },
               "listWebhookEvents": {
@@ -1543,6 +1630,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "List the events that have been triggered for a webhook.",
                 "method": "GET",
                 "path": "/{webhook_id}/events",
+                "path-parameters": {
+                  "webhook_id": "string",
+                },
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1589,6 +1679,9 @@ exports[`open api converter covie simple 1`] = `
                 "docs": "Update a webhook.",
                 "method": "PATCH",
                 "path": "/{webhook_id}",
+                "path-parameters": {
+                  "webhook_id": "string",
+                },
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1602,6 +1695,7 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Webhook_2",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -1719,6 +1813,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "response": "_InlinedType88",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -1854,6 +1949,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "response": "_InlinedType100",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -2043,6 +2139,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "response": "_InlinedType134",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -2449,6 +2546,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
                 "response": "_InlinedType75",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -2900,6 +2998,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "response": "_InlinedType143",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -2995,6 +3094,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "response": "_InlinedType148",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -3196,6 +3296,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "response": "_InlinedType188",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -3529,6 +3630,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "response": "_InlinedType197",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -3747,6 +3849,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "response": "_InlinedType254",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -4096,6 +4199,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "response": "_InlinedType276",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -4241,6 +4345,7 @@ These customer reference fields are required, but mutually exclusive
                 "response": "_InlinedType297",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -4412,6 +4517,7 @@ These customer reference fields are required, but mutually exclusive
                 "response": "_InlinedType322",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -4791,6 +4897,7 @@ lobby.",
                 },
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -4876,6 +4983,7 @@ Does not shutdown the lobby.",
                 },
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -4959,6 +5067,7 @@ exports[`open api converter suger simple 1`] = `
                 "response": "shared.ApiClientAccessToken",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -7212,6 +7321,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 },
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -7341,6 +7451,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "response": "commons.StaticAttributes_ResponseDTO",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },
@@ -7461,6 +7572,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "response": "commons.StaticAttributes_ResponseDTO",
               },
             },
+            "path-parameters": undefined,
           },
         },
       },

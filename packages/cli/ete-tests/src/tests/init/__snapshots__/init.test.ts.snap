@@ -14,6 +14,8 @@ exports[`fern init covie openapi 1`] = `
     AccountService:
       auth: true
       base-path: /accounts/{account_id}/mfa_requirements
+      path-parameters:
+        account_id: string
       endpoints:
         enableAccountMfaRequired:
           path: ''
@@ -28,8 +30,6 @@ exports[`fern init covie openapi 1`] = `
             Remove requirement for all account users to have an MFA application
             configured
           display-name: Disable Account MFA Requirement
-      path-parameters:
-        account_id: string
 types:
   AccountWithConfig:
     properties: {}
@@ -52,6 +52,8 @@ services:
     ApplicationService:
       auth: true
       base-path: /applications/{application_id}
+      path-parameters:
+        application_id: string
       endpoints:
         getApplicationLinks:
           path: /links
@@ -126,7 +128,6 @@ services:
                 docs: Specifies the offset of the first result to return.
                 type: optional<integer>
           response: commons.Policies
-      path-parameters: {}
 ",
                 "name": "application.yml",
                 "type": "file",
@@ -653,6 +654,8 @@ services:
     EventService:
       auth: true
       base-path: /events/{event_id}/broadcasts
+      path-parameters:
+        event_id: string
       endpoints:
         postEventsEventIdBroadcasts:
           path: ''
@@ -660,8 +663,6 @@ services:
           docs: Rebroadcast an event.
           display-name: Rebroadcast Event
           response: _InlinedType25
-      path-parameters:
-        event_id: string
 types:
   EventBroadcast:
     docs: Record of a broadcast to a webhook endpoint when an event is triggered.
@@ -724,17 +725,23 @@ services:
           method: GET
           docs: Retrieve the details of an integration.
           display-name: Get Integration
+          path-parameters:
+            integration_id: string
           response: commons.Integration_2
         deleteIntegration:
           path: /{integration_id}
           method: DELETE
           docs: Deletes an integration.
           display-name: Delete Integration
+          path-parameters:
+            integration_id: string
         updateIntegration:
           path: /{integration_id}
           method: PATCH
           docs: Edit the name and archived status of an integration.
           display-name: Update Integration
+          path-parameters:
+            integration_id: string
           request:
             body:
               properties:
@@ -748,6 +755,8 @@ services:
           method: GET
           docs: List all policies that have been linked to an integration.
           display-name: List Integration Policies
+          path-parameters:
+            integration_id: string
           request:
             query-parameters:
               limit:
@@ -764,6 +773,8 @@ services:
             Retrieve a list of supported carriers for a given integration, along
             with their identifiers.
           display-name: Supported Providers List
+          path-parameters:
+            integration_id: string
           request:
             query-parameters:
               required_policy_types:
@@ -780,55 +791,75 @@ services:
             Replaces the existing integration key with a new randomly generated
             key.
           display-name: Regenerate Integration Key
+          path-parameters:
+            integration_id: string
           response: commons.Integration_2
         getIntegrationsIntegrationIdAgencyLogo:
           path: /{integration_id}/agency_logo
           method: GET
           docs: View the agency logo for the hosted integration.
           display-name: View Agency Logo
+          path-parameters:
+            integration_id: string
         putIntegrationsIntegrationIdAgencyLogo:
           path: /{integration_id}/agency_logo
           method: PUT
           docs: Upload the agency logo for the hosted integration.
           display-name: Update Agency Logo
+          path-parameters:
+            integration_id: string
           response: _InlinedType18
         deleteIntegrationsIntegrationIdAgencyLogo:
           path: /{integration_id}/agency_logo
           method: DELETE
           docs: Delete the agency logo and/or config if present.
           display-name: Delete Agency Logo
+          path-parameters:
+            integration_id: string
         getIntegrationsIntegrationIdAgentPhoto:
           path: /{integration_id}/agent_photo
           method: GET
           docs: View the agent photo for the hosted integration.
           display-name: View Agent Photo
+          path-parameters:
+            integration_id: string
         putIntegrationsIntegrationIdAgentPhoto:
           path: /{integration_id}/agent_photo
           method: PUT
           docs: Upload an agent photo for the hosted integration.
           display-name: Update Agent Photo
+          path-parameters:
+            integration_id: string
           response: _InlinedType19
         deleteIntegrationsIntegrationIdAgentPhoto:
           path: /{integration_id}/agent_photo
           method: DELETE
           docs: Delete the agent photo and/or config if present.
           display-name: Delete Agent Photo
+          path-parameters:
+            integration_id: string
         getIntegrationsIntegrationIdBrandLogo:
           path: /{integration_id}/brand_logo
           method: GET
           docs: View the brand logo for the integration.
           display-name: View Brand Logo
+          path-parameters:
+            integration_id: string
         putIntegrationsIntegrationIdBrandLogo:
           path: /{integration_id}/brand_logo
           method: PUT
           docs: Upload the brand logo for the hosted integration.
           display-name: Update Brand Logo
+          path-parameters:
+            integration_id: string
           response: _InlinedType20
         deleteIntegrationsIntegrationIdBrandLogo:
           path: /{integration_id}/brand_logo
           method: DELETE
           docs: Delete the brand logo and/or config if present.
           display-name: Delete Brand Logo
+          path-parameters:
+            integration_id: string
 types:
   Integrations:
     properties:
@@ -921,16 +952,22 @@ services:
           method: GET
           docs: Retrieves a Link
           display-name: Retrieve link
+          path-parameters:
+            id: string
           response: commons.Link
         deleteLink:
           path: /links/{id}
           method: DELETE
           docs: Deletes a link.
           display-name: Delete Link
+          path-parameters:
+            id: string
         updateLinkSettings:
           path: /links/{id}
           method: PATCH
           display-name: Update Link Settings
+          path-parameters:
+            id: string
           request:
             body:
               properties:
@@ -941,6 +978,8 @@ services:
           method: GET
           docs: Retrieves a list of policies associated with the requested link
           display-name: List Link Policies
+          path-parameters:
+            id: string
           request:
             query-parameters:
               limit:
@@ -955,6 +994,8 @@ services:
           method: GET
           docs: Retrieves a list of events triggered for the requested link
           display-name: List Link Events
+          path-parameters:
+            id: string
           request:
             query-parameters:
               limit:
@@ -974,6 +1015,8 @@ services:
             Attach a policy document to a Link. If the document can be parsed,
             select the parsed policy for sharing.
           display-name: Upload Document To Link
+          path-parameters:
+            id: string
         syncLinkManually:
           path: /links/{id}/syncs
           method: POST
@@ -981,11 +1024,15 @@ services:
             Sync a tracked link with the provider using the stored user
             credentials
           display-name: Manually Sync Link
+          path-parameters:
+            id: string
         getIntegrationLinks:
           path: /integrations/{integration_id}/links
           method: GET
           docs: Retrieves a list of links associated to the requested integration
           display-name: List Integration Links
+          path-parameters:
+            integration_id: string
           request:
             query-parameters:
               limit:
@@ -1038,6 +1085,8 @@ services:
             allowing for seeding initial data before an insured continues the
             linking process via the embed
           display-name: Initialize link
+          path-parameters:
+            integration_id: string
           request:
             body:
               properties:
@@ -1050,6 +1099,8 @@ services:
             Retrieves a list of links and selected policies associated to the
             requested integration
           display-name: List Integration Links With Policies
+          path-parameters:
+            integration_id: string
           request:
             query-parameters:
               limit:
@@ -1121,6 +1172,8 @@ services:
     PolicyService:
       auth: true
       base-path: /policies/{policy_id}
+      path-parameters:
+        policy_id: string
       endpoints:
         getPoliciesPolicyId:
           path: ''
@@ -1133,6 +1186,8 @@ services:
           method: GET
           docs: Retrieve the contents of a Policy document
           display-name: Retrieve Policy Document
+          path-parameters:
+            document_type: string
           response: FileContents
         listPolicyEvents:
           path: /events
@@ -1151,7 +1206,6 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: commons.Events
-      path-parameters: {}
 types:
   Policy:
     docs: >-
@@ -1252,12 +1306,16 @@ services:
           method: GET
           docs: Get the details of a webhook.
           display-name: Get Webhook
+          path-parameters:
+            webhook_id: string
           response: commons.Webhook_2
         updateWebhook:
           path: /{webhook_id}
           method: PATCH
           docs: Update a webhook.
           display-name: Update Webhook
+          path-parameters:
+            webhook_id: string
           request:
             body:
               properties:
@@ -1270,6 +1328,8 @@ services:
           method: GET
           docs: List the events that have been triggered for a webhook.
           display-name: List Webhook Events
+          path-parameters:
+            webhook_id: string
           request:
             query-parameters:
               limit:
@@ -1602,6 +1662,8 @@ services:
           method: GET
           docs: Retrieves the details of an existing device model.
           display-name: Retrieve a device model
+          path-parameters:
+            id: string
           response: commons.deviceModel
         deviceModelsSearch:
           path: /deviceModels/search
@@ -1657,12 +1719,18 @@ services:
             Retrieves the details of an existing device owned by the
             authenticated user.
           display-name: Retrieve a device
+          path-parameters:
+            project: string
+            id: string
           response: commons.device
         devicesDelete:
           path: /projects/{project}/devices/{id}
           method: DELETE
           docs: Retrieves the details of an existing device and deletes it.
           display-name: Delete a device
+          path-parameters:
+            project: string
+            id: string
           response: commons.device
         devicesUpdate:
           path: /projects/{project}/devices/{id}
@@ -1686,6 +1754,9 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Update a device
+          path-parameters:
+            project: string
+            id: string
           request:
             body:
               properties:
@@ -1701,6 +1772,8 @@ services:
             search will only return factory devices not yet assigned to any
             user, or devices already owned by the current user.
           display-name: Search for devices
+          path-parameters:
+            project: string
           request:
             body:
               properties:
@@ -1714,6 +1787,8 @@ services:
             creation date, with the most recently created devices appearing
             first.
           display-name: List all devices
+          path-parameters:
+            project: string
           request:
             query-parameters:
               sim:
@@ -1745,6 +1820,8 @@ services:
           method: POST
           docs: Creates a new device with the given parameters.
           display-name: Create a device
+          path-parameters:
+            project: string
           request:
             body:
               properties:
@@ -1789,6 +1866,8 @@ services:
     PlansService:
       auth: true
       base-path: /projects/{project}/plans
+      path-parameters:
+        project: string
       endpoints:
         plansArchive:
           path: /{id}/archive
@@ -1813,12 +1892,17 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Archive a plan
+          path-parameters:
+            id: string
           response: commons.plan
         planDocumentRetrieve:
           path: /{plan}/documents/{id}
           method: GET
           docs: Retrieves the details of an existing document for a given plan.
           display-name: Retrieve a plan document
+          path-parameters:
+            plan: string
+            id: string
           response: commons.planDocument
         planDocumentsList:
           path: /{plan}/documents
@@ -1828,12 +1912,16 @@ services:
             returned are sorted by creation date, with the most recently created
             documents appearing first.
           display-name: List all plan documents
+          path-parameters:
+            plan: string
           response: _InlinedType4
         plansRetrieve:
           path: /{id}
           method: GET
           docs: Retrieve the details of an existing plan.
           display-name: Retrieve a plan
+          path-parameters:
+            id: string
           response: commons.plan
         plansUpdate:
           path: /{id}
@@ -1842,6 +1930,8 @@ services:
             Updates the specified plan by setting the values of the parameters
             passed.
           display-name: Update a plan
+          path-parameters:
+            id: string
           request:
             body:
               properties:
@@ -1872,6 +1962,8 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Publish a plan
+          path-parameters:
+            id: string
           response: commons.plan
         plansList:
           path: ''
@@ -1909,8 +2001,6 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType5
-      path-parameters:
-        project: string
 types:
   _InlinedType4:
     properties:
@@ -1960,6 +2050,9 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Cancel a porting
+          path-parameters:
+            project: string
+            id: string
           response: commons.porting
         portingRetrieve:
           path: /projects/{project}/portings/{id}
@@ -1983,6 +2076,9 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a Porting
+          path-parameters:
+            project: string
+            id: string
           response: commons.porting
         portingUpdate:
           path: /projects/{project}/portings/{id}
@@ -2007,6 +2103,9 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Update a porting
+          path-parameters:
+            project: string
+            id: string
           request:
             body:
               properties:
@@ -2043,6 +2142,8 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all portings
+          path-parameters:
+            project: string
           request:
             query-parameters:
               after:
@@ -2093,6 +2194,8 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Create a porting
+          path-parameters:
+            project: string
           request:
             body:
               properties:
@@ -2127,6 +2230,8 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a service provider
+          path-parameters:
+            id: string
           response: commons.serviceProvider
         serviceProvidersList:
           path: /serviceProviders
@@ -2191,6 +2296,8 @@ services:
             Retrieves the details of an existing project accessible by the API
             client.
           display-name: Retrieve a project
+          path-parameters:
+            project: string
           response: commons.project
         projectsCredentialsRetrieve:
           path: /{project}/credentials
@@ -2214,6 +2321,8 @@ services:
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve the project credentials
+          path-parameters:
+            project: string
           response: _InlinedType8
         projectsList:
           path: ''
@@ -2269,12 +2378,16 @@ services:
     SiMsService:
       auth: true
       base-path: /projects/{project}/sims
+      path-parameters:
+        project: string
       endpoints:
         siMsCredentialsRetrieve:
           path: /{id}/credentials
           method: GET
           docs: Retrieve the credentials of an existing SIM.
           display-name: Retrieve the SIM credentials
+          path-parameters:
+            id: string
           response: simCredentials
         siMsRetrieve:
           path: /{id}
@@ -2283,6 +2396,8 @@ services:
             Retrieve the details of an existing SIM which the authenticated user
             is authorized to view.
           display-name: Retrieve a SIM
+          path-parameters:
+            id: string
           response: commons.sim
         siMsSearch:
           path: /search
@@ -2334,8 +2449,6 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType11
-      path-parameters:
-        project: string
 types:
   simCredentials:
     properties:
@@ -2367,6 +2480,8 @@ services:
     SubscriptionsService:
       auth: true
       base-path: /projects/{project}/subscriptions
+      path-parameters:
+        project: string
       endpoints:
         subscriptionsCancel:
           path: /{id}/cancel
@@ -2377,6 +2492,8 @@ services:
             need only supply the unique subscription identifier that was
             returned upon purchasing a plan.
           display-name: Cancel an active subscription
+          path-parameters:
+            id: string
           response: commons.subscription
         subscriptionsRetrieve:
           path: /{id}
@@ -2386,6 +2503,8 @@ services:
             supply the unique subscription identifier that was returned upon
             purchasing a plan.
           display-name: Retrieve a subscription
+          path-parameters:
+            id: string
           response: commons.subscription
         subscriptionsEnd:
           path: /{id}
@@ -2395,6 +2514,8 @@ services:
             supply the unique subscription identifier that was returned upon
             purchasing a plan.
           display-name: End an active subscription
+          path-parameters:
+            id: string
           response: commons.subscription
         subscriptionsResume:
           path: /{id}/resume
@@ -2403,6 +2524,8 @@ services:
             Removes the cancellation and end times of the subscription. The
             subscription will continue to auto-renew until canceled again.
           display-name: Resume a canceled subscription
+          path-parameters:
+            id: string
           response: commons.subscription
         subscriptionsList:
           path: ''
@@ -2462,8 +2585,6 @@ services:
                 userAddress: optional<string>
                 user: string
                 porting: optional<string>
-      path-parameters:
-        project: string
 types:
   _InlinedType12:
     properties:
@@ -2481,6 +2602,9 @@ types:
     UsageService:
       auth: true
       base-path: /projects/{project}/subscriptions/{id}/usage
+      path-parameters:
+        project: string
+        id: string
       endpoints:
         subscriptionUsageRecordList:
           path: ''
@@ -2515,7 +2639,6 @@ types:
                   or period requested.
                 type: optional<string>
           response: _InlinedType13
-      path-parameters: {}
 types:
   usageRecord:
     properties:
@@ -2543,6 +2666,9 @@ services:
     UserAddressesService:
       auth: true
       base-path: /projects/{project}/users/{user}/addresses
+      path-parameters:
+        project: string
+        user: string
       endpoints:
         userAddressesList:
           path: ''
@@ -2573,16 +2699,17 @@ services:
           method: GET
           docs: Retrieves the details of an existing address for a given user.
           display-name: Retrieve a user address
+          path-parameters:
+            id: string
           response: commons.userAddress
         userAddressesDelete:
           path: /{id}
           method: DELETE
           docs: Retrieves the details of an existing user address and deletes it.
           display-name: Delete a user address
+          path-parameters:
+            id: string
           response: commons.userAddress
-      path-parameters:
-        project: string
-        user: string
 types:
   _InlinedType14:
     properties:
@@ -2602,6 +2729,8 @@ services:
     UsersService:
       auth: true
       base-path: /projects/{project}/users
+      path-parameters:
+        project: string
       endpoints:
         usersRetrieve:
           path: /{id}
@@ -2610,12 +2739,16 @@ services:
             Retrieves the details of an existing user. You need only supply the
             unique user identifier that was returned upon user creation.
           display-name: Retrieve a user
+          path-parameters:
+            id: string
           response: commons.user
         usersDelete:
           path: /{id}
           method: DELETE
           docs: Retrieves the details of an existing user and deletes it.
           display-name: Delete a user
+          path-parameters:
+            id: string
           response: commons.user
         usersUpdate:
           path: /{id}
@@ -2624,6 +2757,8 @@ services:
             Updates the specified user by setting the values of the parameters
             passed.
           display-name: Update a user
+          path-parameters:
+            id: string
           request:
             body:
               properties:
@@ -2683,8 +2818,6 @@ services:
                 email: string
                 fullName: optional<string>
                 preferredLocale: optional<string>
-      path-parameters:
-        project: string
 types:
   _InlinedType15:
     properties:

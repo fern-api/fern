@@ -10,6 +10,7 @@ import {
     APPLICATION_JSON_CONTENT,
     COMMONS_SERVICE_FILE_NAME,
     convertParameterSchema,
+    diff,
     getFernReferenceForSchema,
     isReferenceObject,
     maybeGetAliasReference,
@@ -68,7 +69,17 @@ export class EndpointConverter {
         if (convertedHttpMethod == null) {
             return undefined;
         }
-        const pathParameters = this.getPathParameters();
+
+        const endpointPathParts = this.endpoint.path.split("/").slice(this.serviceBasePath.parts.length);
+        const endpointPathParameters = [];
+        for (const part of endpointPathParts) {
+            if (part.startsWith("{") && part.endsWith("}")) {
+                endpointPathParameters.push(part.substring(1, part.length - 1));
+            }
+        }
+        const endpointPath = endpointPathParts.join("/");
+
+        const pathParameters = this.getPathParameters(endpointPathParameters);
         const queryParameters = this.getQueryParameters();
         const headerParameters = this.getHeaderParameters();
         const requestBody =
@@ -81,8 +92,6 @@ export class EndpointConverter {
             ...requestBody?.additionalTypes,
             ...responseBody?.additionalTypes,
         };
-
-        const endpointPath = this.endpoint.path.split("/").slice(this.serviceBasePath.parts.length).join("/");
 
         const endpoint: RawSchemas.HttpEndpointSchema = {
             path: endpointPath.startsWith("/") || endpointPath.length === 0 ? endpointPath : `/${endpointPath}`,
@@ -133,7 +142,7 @@ export class EndpointConverter {
         };
     }
 
-    private getPathParameters(): Record<string, RawSchemas.HttpPathParameterSchema> {
+    private getPathParameters(endpointPathParameters: string[]): Record<string, RawSchemas.HttpPathParameterSchema> {
         const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "path") {
@@ -154,6 +163,10 @@ export class EndpointConverter {
                 pathParameters[parameter.name] = schema;
             }
         }
+        const excludedPathParameters = diff(endpointPathParameters, Object.keys(pathParameters));
+        excludedPathParameters.forEach((pathParameter) => {
+            pathParameters[pathParameter] = "string";
+        });
         return pathParameters;
     }
 

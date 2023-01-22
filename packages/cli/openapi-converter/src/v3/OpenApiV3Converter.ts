@@ -10,7 +10,7 @@ import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV3Context";
 import { SchemaConverter } from "./SchemaConverter";
-import { COMMONS_SERVICE_FILE_NAME, convertParameterSchema, isReferenceObject } from "./utils";
+import { COMMONS_SERVICE_FILE_NAME, convertParameterSchema, diff, isReferenceObject } from "./utils";
 
 const SCHEMAS_BREADCRUMBS = ["components", "schemas"];
 const ENDPOINT_BREADCRUMBS = ["paths"];
@@ -151,35 +151,35 @@ export class OpenAPIConverter {
 
         const serviceName = `${pascalCasedTag}Service`;
         if (size(convertedEndpoints) > 0) {
-            serviceFile.services = {
-                http: {
-                    [serviceName]: {
-                        auth: true,
-                        "base-path": serviceBasePath.parts.join("/"),
-                        endpoints: convertedEndpoints,
-                    },
-                },
+            const partialService: Omit<RawSchemas.HttpServiceSchema, "endpoints"> = {
+                auth: true,
+                "base-path": serviceBasePath.parts.join("/"),
             };
-        }
 
-        const firstEndpoint = endpoints[0];
-        if (size(serviceBasePath.pathParameters) > 0) {
-            if (
-                serviceFile.services != null &&
-                serviceFile.services.http != null &&
-                serviceFile.services.http[serviceName] != null &&
-                firstEndpoint != null
-            ) {
-                const service = serviceFile.services.http[serviceName];
-                if (service != null) {
-                    service["path-parameters"] = this.getServicePathParameters(
-                        firstEndpoint,
+            if (size(serviceBasePath.pathParameters) > 0) {
+                const endpointToExtractPathParamsFrom = endpoints[0];
+                if (endpointToExtractPathParamsFrom != null) {
+                    partialService["path-parameters"] = this.getServicePathParameters(
+                        endpointToExtractPathParamsFrom,
                         serviceBasePath.pathParameters
                     );
+                } else {
+                    this.taskContext.logger.error(`${serviceName}: failed to add service path parameters.`);
                 }
-            } else {
-                this.taskContext.logger.error(`${filename} Failed to resolve service path parameters`);
             }
+
+            const service: RawSchemas.HttpServiceSchema = {
+                auth: partialService.auth,
+                "base-path": partialService["base-path"],
+                "path-parameters": partialService["path-parameters"],
+                endpoints: convertedEndpoints,
+            };
+
+            serviceFile.services = {
+                http: {
+                    [serviceName]: service,
+                },
+            };
         }
 
         if (size(types) > 0) {
@@ -192,13 +192,11 @@ export class OpenAPIConverter {
         };
     }
 
-    private getServicePathParameters(endpoint: OpenAPIV3Endpoint, basePathParameters: string[]) {
+    private getServicePathParameters(
+        endpoint: OpenAPIV3Endpoint,
+        basePathParameters: string[]
+    ): Record<string, RawSchemas.HttpHeaderSchema> {
         const pathParameters: Record<string, RawSchemas.HttpHeaderSchema> = {};
-        if (endpoint.definition.parameters == null) {
-            basePathParameters.forEach((basePathParameter) => {
-                pathParameters[basePathParameter] = "string";
-            });
-        }
         (endpoint.definition.parameters ?? []).forEach((parameter) => {
             const resolvedParameter = isReferenceObject(parameter)
                 ? this.context.maybeResolveParameterReference(parameter)
@@ -226,6 +224,10 @@ export class OpenAPIConverter {
                         : parameterType;
                 pathParameters[resolvedParameter.name] = schema;
             }
+        });
+        const excludedPathParameters = diff(basePathParameters, Object.keys(pathParameters));
+        excludedPathParameters.forEach((pathParameter) => {
+            pathParameters[pathParameter] = "string";
         });
         return pathParameters;
     }
