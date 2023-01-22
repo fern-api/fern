@@ -96,7 +96,7 @@ export class OpenAPIConverter {
                 taskContext: this.taskContext,
                 inlinedTypeNamer: this.inlinedTypeNamer,
                 context: this.context,
-                breadcrumbs: SCHEMAS_BREADCRUMBS,
+                breadcrumbs: [...SCHEMAS_BREADCRUMBS, schema.name],
                 tag,
             });
             const convertedSchema = schemaConverter.convert();

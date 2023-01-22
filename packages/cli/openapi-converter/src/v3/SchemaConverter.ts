@@ -155,7 +155,7 @@ export class SchemaConverter {
                     } else {
                         const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
                         if (convertedSchema == null) {
-                            this.taskContext.logger.warn(`${breadcrumbs.join(" -> ")}: Failed to convert ${property}`);
+                            this.taskContext.logger.warn(`#${breadcrumbs.join("/")}: Failed to convert ${property}`);
                             continue;
                         }
                         const maybeAliasType = maybeGetAliasReference(convertedSchema.typeDeclaration);
