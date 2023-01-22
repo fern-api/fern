@@ -85,7 +85,7 @@ export class EndpointConverter {
         const endpointPath = this.endpoint.path.split("/").slice(this.serviceBasePath.parts.length).join("/");
 
         const endpoint: RawSchemas.HttpEndpointSchema = {
-            path: endpointPath.startsWith("/") ? endpointPath : `/${endpointPath}`,
+            path: endpointPath.startsWith("/") || endpointPath.length === 0 ? endpointPath : `/${endpointPath}`,
             method: convertedHttpMethod,
             docs: this.endpoint.definition.description,
             "display-name": this.endpoint.definition.summary,

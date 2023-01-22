@@ -18,13 +18,13 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Disable Account MFA Requirement",
                 "docs": "Remove requirement for all account users to have an MFA application configured",
                 "method": "DELETE",
-                "path": "/",
+                "path": "",
               },
               "enableAccountMfaRequired": {
                 "display-name": "Enable Account MFA Requirement",
                 "docs": "Require all account users to have an MFA application configured",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "response": "AccountWithConfig",
               },
             },
@@ -783,7 +783,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Rebroadcast Event",
                 "docs": "Rebroadcast an event.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "response": "_InlinedType25",
               },
             },
@@ -833,7 +833,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Create Integration",
                 "docs": "Creates a new integration.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -932,7 +932,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "List Integrations",
                 "docs": "List integrations associated to an application",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "q": {
@@ -1403,7 +1403,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Retrieve Policy",
                 "docs": "Retrieve a Policy object that was previously connected via a Link",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "response": "Policy_2",
               },
               "getPolicyDocument": {
@@ -1516,7 +1516,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Create Webhook",
                 "docs": "Create a new webhook",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1561,7 +1561,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "List Webhooks",
                 "docs": "List an application's configured webhooks.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1640,7 +1640,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "List all actions",
                 "docs": "Returns a list of your actions. The actions are returned sorted by creation date by default, with the most recent actions appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "action_type": {
@@ -1704,7 +1704,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Record action",
                 "docs": "Records a new action taken by a given partner or customer, and the number of times that action was performed.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -1930,7 +1930,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "List all customers",
                 "docs": "Returns a list of your customers. The customers are returned sorted by creation date by default, with the most recent customers appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -1977,7 +1977,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Create a customer",
                 "docs": "Creates a new customer with the data provided.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -2848,7 +2848,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "List all form templates",
                 "docs": "Returns a list of your form templates. The form templates are returned sorted by creation date, with the most recent form templates appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -2955,7 +2955,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "List all groups",
                 "docs": "Returns a list of your groups. The groups are returned sorted by creation date, with the most recent groups appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -3050,7 +3050,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     returned sorted by creation date, with the most recent leads
     appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "group": {
@@ -3085,7 +3085,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a lead",
                 "docs": "Creates a lead with desired params.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -3480,7 +3480,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "List all programs",
                 "docs": "Returns a list of all active marketplace-listed programs and their details. The programs are returned sorted by creation date by default, with the most recent programs appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "category": {
@@ -3606,7 +3606,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "List all partnerships",
                 "docs": "Returns a list of your partnerships. The partnerships are returned sorted by creation date by default, with the most recent partnerships appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "email": {
@@ -3657,7 +3657,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a partnership",
                 "docs": "Creates a new partnership with the data provided.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -3986,7 +3986,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "List all rewards",
                 "docs": "Returns a list of your rewards. The rewards are returned sorted by creation date by default, with the most recent rewards appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "customer_key": {
@@ -4077,7 +4077,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a reward",
                 "docs": "Creates a new reward for a given target.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "docs": "Reward is what the Partner earns.",
@@ -4185,7 +4185,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "List all transactions",
                 "docs": "Returns a list of your transactions. The transactions are returned sorted by creation date, with the most recent transactions appearing first. ",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "customer_email": {
@@ -4226,7 +4226,7 @@ place of \`customer_key\` to reference the customer.
 These customer reference fields are required, but mutually exclusive
 (i.e. you must provide exactly and only one of the three).",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -4326,7 +4326,7 @@ These customer reference fields are required, but mutually exclusive
     returned sorted by creation date, with the most recent webhooks
     appearing first.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -4349,7 +4349,7 @@ These customer reference fields are required, but mutually exclusive
                 "display-name": "Create a webhook",
                 "docs": "Webhooks deliver POST requests to the target URL when the specified events are triggered.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -4948,7 +4948,7 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Get the Bearer Access Token to access Suger API",
                 "docs": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": "shared.GetApiClientAccessTokenParams",
                 },
@@ -4991,7 +4991,7 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all buyers under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "response": "list<commons.shared.IdentityBuyer>",
               },
               "_unnamedOperation7": {
@@ -6413,7 +6413,7 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all Entitlement Terms of the Entitlement.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "response": "list<commons.shared.WorkloadEntitlementTerm>",
               },
               "_unnamedOperation9": {
@@ -6458,14 +6458,14 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all integrations under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "response": "list<commons.shared.IdentityIntegration>",
               },
               "_unnamedOperation15": {
                 "display-name": "Create an integration.",
                 "docs": "For each organization, partner & service, there should be at most one integration.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": "shared.CreateIntegrationParams",
                 },
@@ -6852,7 +6852,7 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "list all long running operations under the given organization, offer or entitlement.",
                 "docs": "The operations can be filtered by offerId or entitlementId. If both of them are provided, then it is filtered by entitlementId only.",
                 "method": "GET",
-                "path": "/",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "entitlementId": {
@@ -7196,7 +7196,7 @@ exports[`open api converter telematica simple 1`] = `
                 "docs": "This is a dummy callback endpoint.
 Please share the POST callback endpoint created in your app's backend with Telematica to get callback requests of this format.",
                 "method": "POST",
-                "path": "/",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,

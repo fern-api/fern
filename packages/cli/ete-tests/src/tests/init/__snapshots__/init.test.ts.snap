@@ -16,13 +16,13 @@ exports[`fern init covie openapi 1`] = `
       base-path: /accounts/{account_id}/mfa_requirements
       endpoints:
         enableAccountMfaRequired:
-          path: /
+          path: ''
           method: POST
           docs: Require all account users to have an MFA application configured
           display-name: Enable Account MFA Requirement
           response: AccountWithConfig
         disableAccountMfaRequired:
-          path: /
+          path: ''
           method: DELETE
           docs: >-
             Remove requirement for all account users to have an MFA application
@@ -654,7 +654,7 @@ services:
       base-path: /events/{event_id}/broadcasts
       endpoints:
         postEventsEventIdBroadcasts:
-          path: /
+          path: ''
           method: POST
           docs: Rebroadcast an event.
           display-name: Rebroadcast Event
@@ -691,7 +691,7 @@ services:
       base-path: /integrations
       endpoints:
         listIntegrations:
-          path: /
+          path: ''
           method: GET
           docs: List integrations associated to an application
           display-name: List Integrations
@@ -707,7 +707,7 @@ services:
                 type: optional<string>
           response: Integrations
         createIntegration:
-          path: /
+          path: ''
           method: POST
           docs: Creates a new integration.
           display-name: Create Integration
@@ -1121,7 +1121,7 @@ services:
       base-path: /policies/{policy_id}
       endpoints:
         getPoliciesPolicyId:
-          path: /
+          path: ''
           method: GET
           docs: Retrieve a Policy object that was previously connected via a Link
           display-name: Retrieve Policy
@@ -1219,7 +1219,7 @@ services:
       base-path: /webhooks
       endpoints:
         listWebhooks:
-          path: /
+          path: ''
           method: GET
           docs: List an application's configured webhooks.
           display-name: List Webhooks
@@ -1236,7 +1236,7 @@ services:
                 type: optional<string>
           response: Webhooks
         createWebhook:
-          path: /
+          path: ''
           method: POST
           docs: Create a new webhook
           display-name: Create Webhook
@@ -1872,7 +1872,7 @@ services:
           display-name: Publish a plan
           response: commons.plan
         plansList:
-          path: /
+          path: ''
           method: GET
           docs: Returns a list of plans.
           display-name: List all plans
@@ -2213,7 +2213,7 @@ services:
           display-name: Retrieve the project credentials
           response: _InlinedType8
         projectsList:
-          path: /
+          path: ''
           method: GET
           docs: >-
             Returns a list of projects. The projects returned are sorted by
@@ -2293,7 +2293,7 @@ services:
                 type: optional<list<string>>
           response: _InlinedType10
         siMsList:
-          path: /
+          path: ''
           method: GET
           docs: >-
             Returns a list of SIMs. The SIMs returned are sorted by creation
@@ -2401,7 +2401,7 @@ services:
           display-name: Resume a canceled subscription
           response: commons.subscription
         subscriptionsList:
-          path: /
+          path: ''
           method: GET
           docs: >-
             Returns a list of subscriptions. The subscriptions returned are
@@ -2444,7 +2444,7 @@ services:
                 type: optional<integer>
           response: _InlinedType12
         subscriptionsCreate:
-          path: /
+          path: ''
           method: POST
           docs: >-
             Creates a new subscription for an existing user in the specified
@@ -2478,7 +2478,7 @@ types:
       base-path: /projects/{project}/subscriptions/{id}/usage
       endpoints:
         subscriptionUsageRecordList:
-          path: /
+          path: ''
           method: GET
           docs: >-
             Lists usage records in ascending order for a subscription,
@@ -2540,7 +2540,7 @@ services:
       base-path: /projects/{project}/users/{user}/addresses
       endpoints:
         userAddressesList:
-          path: /
+          path: ''
           method: GET
           docs: >-
             Returns a list of addresses owned by the given user. The addresses
@@ -2549,7 +2549,7 @@ services:
           display-name: List all user addresses
           response: _InlinedType14
         userAddressesCreate:
-          path: /
+          path: ''
           method: POST
           docs: Create a new address for the given user with the given parameters.
           display-name: Create a user address
@@ -2637,7 +2637,7 @@ services:
                 email: string
           response: _InlinedType15
         usersList:
-          path: /
+          path: ''
           method: GET
           docs: >-
             Returns a list of users. The users returned are sorted by creation
@@ -2664,7 +2664,7 @@ services:
                 type: optional<integer>
           response: _InlinedType16
         usersCreate:
-          path: /
+          path: ''
           method: POST
           docs: Creates a new user with the given parameters.
           display-name: Create a user
@@ -3227,7 +3227,7 @@ headers: {}
       base-path: /callback
       endpoints:
         appControllerCallback:
-          path: /
+          path: ''
           method: POST
           docs: >-
             This is a dummy callback endpoint.
