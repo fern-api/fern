@@ -29,7 +29,10 @@ exports[`open api converter covie simple 1`] = `
               },
             },
             "path-parameters": {
-              "account_id": "string",
+              "account_id": {
+                "docs": "Unique identifier of the account.",
+                "type": "string",
+              },
             },
           },
         },
@@ -143,7 +146,10 @@ exports[`open api converter covie simple 1`] = `
               },
             },
             "path-parameters": {
-              "application_id": "string",
+              "application_id": {
+                "docs": "Unique identifier of the application.",
+                "type": "string",
+              },
             },
           },
         },
@@ -857,7 +863,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "DELETE",
                 "path": "/{integration_id}",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "deleteIntegrationsIntegrationIdAgencyLogo": {
@@ -866,7 +875,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "DELETE",
                 "path": "/{integration_id}/agency_logo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "deleteIntegrationsIntegrationIdAgentPhoto": {
@@ -875,7 +887,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "DELETE",
                 "path": "/{integration_id}/agent_photo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "deleteIntegrationsIntegrationIdBrandLogo": {
@@ -884,7 +899,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "DELETE",
                 "path": "/{integration_id}/brand_logo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "getIntegration": {
@@ -893,7 +911,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{integration_id}",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "response": "commons.Integration_2",
               },
@@ -903,7 +924,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{integration_id}/policies",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -925,7 +949,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{integration_id}/providers",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -943,7 +970,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{integration_id}/agency_logo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "getIntegrationsIntegrationIdAgentPhoto": {
@@ -952,7 +982,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{integration_id}/agent_photo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "getIntegrationsIntegrationIdBrandLogo": {
@@ -961,7 +994,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{integration_id}/brand_logo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
               },
               "listIntegrations": {
@@ -989,7 +1025,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "PUT",
                 "path": "/{integration_id}/agency_logo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "response": "_InlinedType18",
               },
@@ -999,7 +1038,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "PUT",
                 "path": "/{integration_id}/agent_photo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "response": "_InlinedType19",
               },
@@ -1009,7 +1051,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "PUT",
                 "path": "/{integration_id}/brand_logo",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "response": "_InlinedType20",
               },
@@ -1019,7 +1064,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "POST",
                 "path": "/{integration_id}/regenerate_key",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "response": "commons.Integration_2",
               },
@@ -1029,7 +1077,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "PATCH",
                 "path": "/{integration_id}",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "body": {
@@ -1198,7 +1249,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "POST",
                 "path": "/links/{id}/documents",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
               },
               "deleteLink": {
@@ -1207,7 +1261,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "DELETE",
                 "path": "/links/{id}",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
               },
               "getIntegrationLinks": {
@@ -1216,7 +1273,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/integrations/{integration_id}/links",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -1282,7 +1342,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/integrations/{integration_id}/links_with_policies",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -1340,7 +1403,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/links/{id}",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
                 "response": "commons.Link",
               },
@@ -1350,7 +1416,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/links/{id}/events",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -1376,7 +1445,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/links/{id}/policies",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -1398,7 +1470,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "POST",
                 "path": "/integrations/{integration_id}/links",
                 "path-parameters": {
-                  "integration_id": "string",
+                  "integration_id": {
+                    "docs": "The unique identifier of the integration being inspected. Must be a valid integration under the application associated with the authenticated Client ID and Secret.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "body": {
@@ -1416,7 +1491,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "POST",
                 "path": "/links/{id}/syncs",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
               },
               "updateLinkSettings": {
@@ -1425,7 +1503,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "PATCH",
                 "path": "/links/{id}",
                 "path-parameters": {
-                  "id": "string",
+                  "id": {
+                    "docs": "The unique identifier of the link being inspected.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "body": {
@@ -1495,7 +1576,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/documents/{document_type}",
                 "path-parameters": {
-                  "document_type": "string",
+                  "document_type": {
+                    "docs": "The document type being requested.",
+                    "type": "string",
+                  },
                 },
                 "response": "FileContents",
               },
@@ -1524,7 +1608,10 @@ exports[`open api converter covie simple 1`] = `
               },
             },
             "path-parameters": {
-              "policy_id": "string",
+              "policy_id": {
+                "docs": "The unique identifier of the policy object being sought.",
+                "type": "string",
+              },
             },
           },
         },
@@ -1621,7 +1708,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{webhook_id}",
                 "path-parameters": {
-                  "webhook_id": "string",
+                  "webhook_id": {
+                    "docs": "Unique identifier of the webhook.",
+                    "type": "string",
+                  },
                 },
                 "response": "commons.Webhook_2",
               },
@@ -1631,7 +1721,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "GET",
                 "path": "/{webhook_id}/events",
                 "path-parameters": {
-                  "webhook_id": "string",
+                  "webhook_id": {
+                    "docs": "Unique identifier of the webhook.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "query-parameters": {
@@ -1680,7 +1773,10 @@ exports[`open api converter covie simple 1`] = `
                 "method": "PATCH",
                 "path": "/{webhook_id}",
                 "path-parameters": {
-                  "webhook_id": "string",
+                  "webhook_id": {
+                    "docs": "Unique identifier of the webhook.",
+                    "type": "string",
+                  },
                 },
                 "request": {
                   "body": {
