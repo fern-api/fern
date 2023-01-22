@@ -53,7 +53,7 @@ services:
       base-path: /applications/{application_id}
       endpoints:
         getApplicationLinks:
-          path: ''
+          path: links
           method: GET
           docs: Lists an application's links.
           display-name: List Application Links
@@ -107,7 +107,7 @@ services:
                 type: optional<string>
           response: commons.Links
         getApplicationPolicies:
-          path: ''
+          path: policies
           method: GET
           docs: Lists an application's policies.
           display-name: List Application Policies
@@ -718,18 +718,18 @@ services:
                 policyRequirements: optional<_InlinedType10>
                 configuration: optional<_InlinedType13>
         getIntegration:
-          path: ''
+          path: '{integration_id}'
           method: GET
           docs: Retrieve the details of an integration.
           display-name: Get Integration
           response: commons.Integration_2
         deleteIntegration:
-          path: ''
+          path: '{integration_id}'
           method: DELETE
           docs: Deletes an integration.
           display-name: Delete Integration
         updateIntegration:
-          path: ''
+          path: '{integration_id}'
           method: PATCH
           docs: Edit the name and archived status of an integration.
           display-name: Update Integration
@@ -742,7 +742,7 @@ services:
                 policy_requirements: optional<_InlinedType17>
           response: commons.Integration_2
         getIntegrationPolicies:
-          path: policies
+          path: '{integration_id}/policies'
           method: GET
           docs: List all policies that have been linked to an integration.
           display-name: List Integration Policies
@@ -756,7 +756,7 @@ services:
                 type: optional<integer>
           response: commons.Policies
         getIntegrationProviders:
-          path: providers
+          path: '{integration_id}/providers'
           method: GET
           docs: >-
             Retrieve a list of supported carriers for a given integration, along
@@ -772,7 +772,7 @@ services:
                 type: optional<string>
           response: Providers
         regenerateIntegrationKey:
-          path: regenerate_key
+          path: '{integration_id}/regenerate_key'
           method: POST
           docs: >-
             Replaces the existing integration key with a new randomly generated
@@ -780,50 +780,50 @@ services:
           display-name: Regenerate Integration Key
           response: commons.Integration_2
         getIntegrationsIntegrationIdAgencyLogo:
-          path: agency_logo
+          path: '{integration_id}/agency_logo'
           method: GET
           docs: View the agency logo for the hosted integration.
           display-name: View Agency Logo
         putIntegrationsIntegrationIdAgencyLogo:
-          path: agency_logo
+          path: '{integration_id}/agency_logo'
           method: PUT
           docs: Upload the agency logo for the hosted integration.
           display-name: Update Agency Logo
           response: _InlinedType18
         deleteIntegrationsIntegrationIdAgencyLogo:
-          path: agency_logo
+          path: '{integration_id}/agency_logo'
           method: DELETE
           docs: Delete the agency logo and/or config if present.
           display-name: Delete Agency Logo
         getIntegrationsIntegrationIdAgentPhoto:
-          path: agent_photo
+          path: '{integration_id}/agent_photo'
           method: GET
           docs: View the agent photo for the hosted integration.
           display-name: View Agent Photo
         putIntegrationsIntegrationIdAgentPhoto:
-          path: agent_photo
+          path: '{integration_id}/agent_photo'
           method: PUT
           docs: Upload an agent photo for the hosted integration.
           display-name: Update Agent Photo
           response: _InlinedType19
         deleteIntegrationsIntegrationIdAgentPhoto:
-          path: agent_photo
+          path: '{integration_id}/agent_photo'
           method: DELETE
           docs: Delete the agent photo and/or config if present.
           display-name: Delete Agent Photo
         getIntegrationsIntegrationIdBrandLogo:
-          path: brand_logo
+          path: '{integration_id}/brand_logo'
           method: GET
           docs: View the brand logo for the integration.
           display-name: View Brand Logo
         putIntegrationsIntegrationIdBrandLogo:
-          path: brand_logo
+          path: '{integration_id}/brand_logo'
           method: PUT
           docs: Upload the brand logo for the hosted integration.
           display-name: Update Brand Logo
           response: _InlinedType20
         deleteIntegrationsIntegrationIdBrandLogo:
-          path: brand_logo
+          path: '{integration_id}/brand_logo'
           method: DELETE
           docs: Delete the brand logo and/or config if present.
           display-name: Delete Brand Logo
@@ -915,18 +915,18 @@ services:
       base-path: ''
       endpoints:
         getLink:
-          path: '{id}'
+          path: links/{id}
           method: GET
           docs: Retrieves a Link
           display-name: Retrieve link
           response: commons.Link
         deleteLink:
-          path: '{id}'
+          path: links/{id}
           method: DELETE
           docs: Deletes a link.
           display-name: Delete Link
         updateLinkSettings:
-          path: '{id}'
+          path: links/{id}
           method: PATCH
           display-name: Update Link Settings
           request:
@@ -935,7 +935,7 @@ services:
                 tracking_frequency: optional<string>
           response: commons.Link
         getLinkPolicies:
-          path: '{id}/policies'
+          path: links/{id}/policies
           method: GET
           docs: Retrieves a list of policies associated with the requested link
           display-name: List Link Policies
@@ -949,7 +949,7 @@ services:
                 type: optional<integer>
           response: commons.Policies
         getLinkEvents:
-          path: '{id}/events'
+          path: links/{id}/events
           method: GET
           docs: Retrieves a list of events triggered for the requested link
           display-name: List Link Events
@@ -966,21 +966,21 @@ services:
                 type: optional<string>
           response: commons.Events
         attachLinkDocument:
-          path: '{id}/documents'
+          path: links/{id}/documents
           method: POST
           docs: >-
             Attach a policy document to a Link. If the document can be parsed,
             select the parsed policy for sharing.
           display-name: Upload Document To Link
         syncLinkManually:
-          path: '{id}/syncs'
+          path: links/{id}/syncs
           method: POST
           docs: >-
             Sync a tracked link with the provider using the stored user
             credentials
           display-name: Manually Sync Link
         getIntegrationLinks:
-          path: '{integration_id}/links'
+          path: integrations/{integration_id}/links
           method: GET
           docs: Retrieves a list of links associated to the requested integration
           display-name: List Integration Links
@@ -1029,7 +1029,7 @@ services:
                 type: optional<string>
           response: commons.Links
         initializeLinkViaIntegration:
-          path: '{integration_id}/links'
+          path: integrations/{integration_id}/links
           method: POST
           docs: >-
             Creates a link and optionally sets metadata and selects a carrier,
@@ -1042,7 +1042,7 @@ services:
                 provider_id: optional<string>
           response: commons.Link
         getIntegrationLinksWithPolicies:
-          path: '{integration_id}/links_with_policies'
+          path: integrations/{integration_id}/links_with_policies
           method: GET
           docs: >-
             Retrieves a list of links and selected policies associated to the
@@ -1127,13 +1127,13 @@ services:
           display-name: Retrieve Policy
           response: Policy_2
         getPolicyDocument:
-          path: '{document_type}'
+          path: documents/{document_type}
           method: GET
           docs: Retrieve the contents of a Policy document
           display-name: Retrieve Policy Document
           response: FileContents
         listPolicyEvents:
-          path: ''
+          path: events
           method: GET
           docs: List all events that have been triggered for the selected policy
           display-name: List Policy Events
@@ -1246,13 +1246,13 @@ services:
                 uri: optional<string>
                 event_types: optional<list<string>>
         getWebhook:
-          path: ''
+          path: '{webhook_id}'
           method: GET
           docs: Get the details of a webhook.
           display-name: Get Webhook
           response: commons.Webhook_2
         updateWebhook:
-          path: ''
+          path: '{webhook_id}'
           method: PATCH
           docs: Update a webhook.
           display-name: Update Webhook
@@ -1264,7 +1264,7 @@ services:
                 event_types: optional<list<string>>
           response: commons.Webhook_2
         listWebhookEvents:
-          path: events
+          path: '{webhook_id}/events'
           method: GET
           docs: List the events that have been triggered for a webhook.
           display-name: List Webhook Events
@@ -1596,13 +1596,13 @@ services:
       base-path: ''
       endpoints:
         deviceModelsRetrieve:
-          path: '{id}'
+          path: deviceModels/{id}
           method: GET
           docs: Retrieves the details of an existing device model.
           display-name: Retrieve a device model
           response: commons.deviceModel
         deviceModelsSearch:
-          path: search
+          path: deviceModels/search
           method: POST
           docs: Searches for existing devices models matching the given parameters.
           display-name: Search for device models
@@ -1612,7 +1612,7 @@ services:
                 imei: string
           response: _InlinedType0
         deviceModelsList:
-          path: ''
+          path: deviceModels
           method: GET
           docs: >-
             Returns a list of device models. The models returned are sorted by
@@ -1649,7 +1649,7 @@ services:
                 type: optional<integer>
           response: _InlinedType1
         devicesRetrieve:
-          path: '{project}/devices/{id}'
+          path: projects/{project}/devices/{id}
           method: GET
           docs: >-
             Retrieves the details of an existing device owned by the
@@ -1657,13 +1657,13 @@ services:
           display-name: Retrieve a device
           response: commons.device
         devicesDelete:
-          path: '{project}/devices/{id}'
+          path: projects/{project}/devices/{id}
           method: DELETE
           docs: Retrieves the details of an existing device and deletes it.
           display-name: Delete a device
           response: commons.device
         devicesUpdate:
-          path: '{project}/devices/{id}'
+          path: projects/{project}/devices/{id}
           method: PATCH
           docs: >
             Updates the given properties of an existing device.
@@ -1692,7 +1692,7 @@ services:
                 user: optional<string>
           response: commons.device
         devicesSearch:
-          path: '{project}/devices/search'
+          path: projects/{project}/devices/search
           method: POST
           docs: >-
             Searches for existing devices matching the given parameters. The
@@ -1705,7 +1705,7 @@ services:
                 imei: string
           response: _InlinedType2
         devicesList:
-          path: '{project}/devices'
+          path: projects/{project}/devices
           method: GET
           docs: >-
             Returns a list of devices. The devices returned are sorted by
@@ -1739,7 +1739,7 @@ services:
                 type: optional<integer>
           response: _InlinedType3
         devicesCreate:
-          path: '{project}/devices'
+          path: projects/{project}/devices
           method: POST
           docs: Creates a new device with the given parameters.
           display-name: Create a device
@@ -1789,7 +1789,7 @@ services:
       base-path: /projects/{project}/plans
       endpoints:
         plansArchive:
-          path: archive
+          path: '{id}/archive'
           method: POST
           docs: >
             Set the status of a plan to archived. An archived plan can not be
@@ -1813,13 +1813,13 @@ services:
           display-name: Archive a plan
           response: commons.plan
         planDocumentRetrieve:
-          path: documents/{id}
+          path: '{plan}/documents/{id}'
           method: GET
           docs: Retrieves the details of an existing document for a given plan.
           display-name: Retrieve a plan document
           response: commons.planDocument
         planDocumentsList:
-          path: documents
+          path: '{plan}/documents'
           method: GET
           docs: >-
             Returns a list of documents related to the given plan. The documents
@@ -1828,13 +1828,13 @@ services:
           display-name: List all plan documents
           response: _InlinedType4
         plansRetrieve:
-          path: ''
+          path: '{id}'
           method: GET
           docs: Retrieve the details of an existing plan.
           display-name: Retrieve a plan
           response: commons.plan
         plansUpdate:
-          path: ''
+          path: '{id}'
           method: PATCH
           docs: >-
             Updates the specified plan by setting the values of the parameters
@@ -1848,7 +1848,7 @@ services:
                 image: optional<string>
           response: commons.plan
         plansPublish:
-          path: publish
+          path: '{id}/publish'
           method: POST
           docs: >
             Set the status of a plan to available. Available plans can be used
@@ -1935,7 +1935,7 @@ services:
       base-path: ''
       endpoints:
         portingCancel:
-          path: '{project}/portings/{id}/cancel'
+          path: projects/{project}/portings/{id}/cancel
           method: POST
           docs: >
             Retrieves the details of an existing porting and cancels it. Only
@@ -1959,7 +1959,7 @@ services:
           display-name: Cancel a porting
           response: commons.porting
         portingRetrieve:
-          path: '{project}/portings/{id}'
+          path: projects/{project}/portings/{id}
           method: GET
           docs: >
             Retrieves the details of an existing porting.
@@ -1982,7 +1982,7 @@ services:
           display-name: Retrieve a Porting
           response: commons.porting
         portingUpdate:
-          path: '{project}/portings/{id}'
+          path: projects/{project}/portings/{id}
           method: PATCH
           docs: >
             Updates the specified porting by setting the values of the
@@ -2017,7 +2017,7 @@ services:
                 provider: optional<string>
           response: commons.porting
         portingsList:
-          path: '{project}/portings'
+          path: projects/{project}/portings
           method: GET
           docs: >
             Returns a list of portings. The portings returned are sorted by
@@ -2061,7 +2061,7 @@ services:
                 type: optional<integer>
           response: _InlinedType6
         portingsCreate:
-          path: '{project}/portings'
+          path: projects/{project}/portings
           method: POST
           docs: >
             Creates a new porting with the parameters passed. The porting will
@@ -2103,7 +2103,7 @@ services:
                 provider: string
                 user: string
         serviceProviderRetrieve:
-          path: '{id}'
+          path: serviceProviders/{id}
           method: GET
           docs: >
             Retrieves the details of a service provider.
@@ -2126,7 +2126,7 @@ services:
           display-name: Retrieve a service provider
           response: commons.serviceProvider
         serviceProvidersList:
-          path: ''
+          path: serviceProviders
           method: GET
           docs: >
             Returns a list of service providers.
@@ -2182,7 +2182,7 @@ services:
       base-path: /projects
       endpoints:
         projectsRetrieve:
-          path: ''
+          path: '{project}'
           method: GET
           docs: >-
             Retrieves the details of an existing project accessible by the API
@@ -2190,7 +2190,7 @@ services:
           display-name: Retrieve a project
           response: commons.project
         projectsCredentialsRetrieve:
-          path: credentials
+          path: '{project}/credentials'
           method: GET
           docs: >
             Retrieve the credentials of an existing project.
@@ -2268,13 +2268,13 @@ services:
       base-path: /projects/{project}/sims
       endpoints:
         siMsCredentialsRetrieve:
-          path: credentials
+          path: '{id}/credentials'
           method: GET
           docs: Retrieve the credentials of an existing SIM.
           display-name: Retrieve the SIM credentials
           response: simCredentials
         siMsRetrieve:
-          path: ''
+          path: '{id}'
           method: GET
           docs: >-
             Retrieve the details of an existing SIM which the authenticated user
@@ -2282,7 +2282,7 @@ services:
           display-name: Retrieve a SIM
           response: commons.sim
         siMsSearch:
-          path: ''
+          path: search
           method: POST
           docs: Searches for existing SIMs matching the given parameters.
           display-name: Search for SIMs
@@ -2365,7 +2365,7 @@ services:
       base-path: /projects/{project}/subscriptions
       endpoints:
         subscriptionsCancel:
-          path: cancel
+          path: '{id}/cancel'
           method: POST
           docs: >-
             Retrieves the details of an existing subscription and schedules
@@ -2375,7 +2375,7 @@ services:
           display-name: Cancel an active subscription
           response: commons.subscription
         subscriptionsRetrieve:
-          path: ''
+          path: '{id}'
           method: GET
           docs: >-
             Retrieves the details of an existing subscription. You need only
@@ -2384,7 +2384,7 @@ services:
           display-name: Retrieve a subscription
           response: commons.subscription
         subscriptionsEnd:
-          path: ''
+          path: '{id}'
           method: DELETE
           docs: >-
             Ends an active plan subscription immediately. You only need to
@@ -2393,7 +2393,7 @@ services:
           display-name: End an active subscription
           response: commons.subscription
         subscriptionsResume:
-          path: resume
+          path: '{id}/resume'
           method: POST
           docs: >-
             Removes the cancellation and end times of the subscription. The
@@ -2564,13 +2564,13 @@ services:
                 postalCode: optional<string>
                 country: string
         userAddressesRetrieve:
-          path: ''
+          path: '{id}'
           method: GET
           docs: Retrieves the details of an existing address for a given user.
           display-name: Retrieve a user address
           response: commons.userAddress
         userAddressesDelete:
-          path: ''
+          path: '{id}'
           method: DELETE
           docs: Retrieves the details of an existing user address and deletes it.
           display-name: Delete a user address
@@ -2597,7 +2597,7 @@ services:
       base-path: /projects/{project}/users
       endpoints:
         usersRetrieve:
-          path: ''
+          path: '{id}'
           method: GET
           docs: >-
             Retrieves the details of an existing user. You need only supply the
@@ -2605,13 +2605,13 @@ services:
           display-name: Retrieve a user
           response: commons.user
         usersDelete:
-          path: ''
+          path: '{id}'
           method: DELETE
           docs: Retrieves the details of an existing user and deletes it.
           display-name: Delete a user
           response: commons.user
         usersUpdate:
-          path: ''
+          path: '{id}'
           method: PATCH
           docs: >-
             Updates the specified user by setting the values of the parameters
@@ -2627,7 +2627,7 @@ services:
                 preferredLocale: optional<string>
           response: commons.user
         usersSearch:
-          path: ''
+          path: search
           method: POST
           docs: Searches for existing users matching the given parameters.
           display-name: Search for users
@@ -2912,7 +2912,7 @@ headers: {}
       base-path: ''
       endpoints:
         lobbyReady:
-          path: ready
+          path: lobbies/ready
           method: POST
           docs: >-
             Marks the current lobby as ready to accept connections. Players will
@@ -2920,7 +2920,7 @@ headers: {}
 
             able to connect to this lobby until the lobby is flagged as ready.
         playerConnected:
-          path: connected
+          path: players/connected
           method: POST
           docs: >-
             Validates the player token is valid and has not already been
@@ -3013,7 +3013,7 @@ headers: {}
           request:
             body: PlayerConnectedRequestContent
         playerDisconnected:
-          path: disconnected
+          path: players/disconnected
           method: POST
           docs: >-
             Marks a player as disconnected.
@@ -3052,7 +3052,7 @@ services:
       base-path: ''
       endpoints:
         setLobbyClosed:
-          path: closed
+          path: lobbies/closed
           method: PUT
           docs: >-
             If \`is_closed\` is \`true\`, players will be prevented from joining the
@@ -3063,7 +3063,7 @@ services:
           request:
             body: SetLobbyClosedRequestContent
         findLobby:
-          path: find
+          path: lobbies/find
           method: POST
           docs: >-
             Finds a lobby based on the given criteria.
@@ -3077,7 +3077,7 @@ services:
             body: FindLobbyRequestContent
           response: FindLobbyResponseContent
         joinLobby:
-          path: join
+          path: lobbies/join
           method: POST
           docs: >-
             Joins a specific lobby.
@@ -3091,12 +3091,12 @@ services:
             body: JoinLobbyRequestContent
           response: JoinLobbyResponseContent
         listLobbies:
-          path: list
+          path: lobbies/list
           method: GET
           docs: Lists all open lobbies.
           response: ListLobbiesResponseContent
         listRegions:
-          path: ''
+          path: regions
           method: GET
           docs: >-
             Returns a list of regions available to this namespace.
@@ -3259,7 +3259,7 @@ services:
       base-path: /vehicle-data
       endpoints:
         getSocTest:
-          path: test
+          path: soc/test
           method: GET
           display-name: Test SOC (battery level)
           request:
@@ -3271,7 +3271,7 @@ services:
                 type: string
           response: commons.SOC_ResponseDTO
         getRangeTest:
-          path: test
+          path: range/test
           method: GET
           display-name: Test range
           request:
@@ -3283,7 +3283,7 @@ services:
                 type: string
           response: commons.Range_ResponseDTO
         getRangeSocTest:
-          path: test
+          path: range-soc/test
           method: GET
           display-name: Test range-soc
           request:
@@ -3295,7 +3295,7 @@ services:
                 type: string
           response: commons.RangeSoc_ResponseDTO
         getLocationTest:
-          path: test
+          path: location/test
           method: GET
           display-name: Test location
           request:
@@ -3307,7 +3307,7 @@ services:
                 type: string
           response: commons.Location_ResponseDTO
         getChargingStatusTest:
-          path: test
+          path: charging-status/test
           method: GET
           display-name: Test charging status
           request:
@@ -3319,7 +3319,7 @@ services:
                 type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdoTest:
-          path: test
+          path: odo/test
           method: GET
           display-name: Test odo
           request:
@@ -3331,7 +3331,7 @@ services:
                 type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributesTest:
-          path: test
+          path: static-attributes/test
           method: GET
           display-name: Test static attributes
           request:
@@ -3356,7 +3356,7 @@ services:
       base-path: /vehicle-data
       endpoints:
         getSoc:
-          path: ''
+          path: soc
           method: GET
           display-name: SOC (battery level)
           request:
@@ -3368,7 +3368,7 @@ services:
                 type: string
           response: commons.SOC_ResponseDTO
         getRange:
-          path: ''
+          path: range
           method: GET
           display-name: Range
           request:
@@ -3380,7 +3380,7 @@ services:
                 type: string
           response: commons.Range_ResponseDTO
         getRangeSoc:
-          path: ''
+          path: range-soc
           method: GET
           docs: >-
             This endpoint returns the SOC and range for the vehicle in a single
@@ -3395,7 +3395,7 @@ services:
                 type: string
           response: commons.RangeSoc_ResponseDTO
         getLocation:
-          path: ''
+          path: location
           method: GET
           display-name: Location
           request:
@@ -3407,7 +3407,7 @@ services:
                 type: string
           response: commons.Location_ResponseDTO
         getChargingStatus:
-          path: ''
+          path: charging-status
           method: GET
           display-name: Charging Status
           request:
@@ -3419,7 +3419,7 @@ services:
                 type: string
           response: commons.ChargingStatus_ResponseDTO
         getOdo:
-          path: ''
+          path: odo
           method: GET
           display-name: Odometer
           request:
@@ -3431,7 +3431,7 @@ services:
                 type: string
           response: commons.Odo_ResponseDTO
         getStaticAttributes:
-          path: ''
+          path: static-attributes
           method: GET
           docs: >-
             Static vehicle attributes like VIN, registration number, model, year

@@ -82,10 +82,7 @@ export class EndpointConverter {
             ...responseBody?.additionalTypes,
         };
 
-        const endpointPath = this.endpoint.path
-            .split("/")
-            .slice(this.serviceBasePath.parts.length + 1)
-            .join("/");
+        const endpointPath = this.endpoint.path.split("/").slice(this.serviceBasePath.parts.length).join("/");
 
         const endpoint: RawSchemas.HttpEndpointSchema = {
             path: endpointPath,
