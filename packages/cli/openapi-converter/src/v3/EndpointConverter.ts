@@ -4,13 +4,14 @@ import { size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
+import { ServiceBasePath } from "./OpenApiV3Converter";
 import { SchemaConverter } from "./SchemaConverter";
 import {
     APPLICATION_JSON_CONTENT,
     COMMONS_SERVICE_FILE_NAME,
+    convertParameterSchema,
     getFernReferenceForSchema,
     isReferenceObject,
-    maybeConvertSchemaToPrimitive,
     maybeGetAliasReference,
     REQUEST_REFERENCE_PREFIX,
     RESPONSE_REFERENCE_PREFIX,
@@ -34,6 +35,7 @@ export class EndpointConverter {
     private breadcrumbs: string[];
     private tag: string;
     private imports = new Set<string>();
+    private serviceBasePath: ServiceBasePath;
 
     constructor(
         endpoint: OpenAPIV3Endpoint,
@@ -41,7 +43,8 @@ export class EndpointConverter {
         taskContext: TaskContext,
         inlinedTypeNamer: InlinedTypeNamer,
         breadcrumbs: string[],
-        tag: string
+        tag: string,
+        serviceBasePath: ServiceBasePath
     ) {
         this.endpoint = endpoint;
         this.context = context;
@@ -49,6 +52,7 @@ export class EndpointConverter {
         this.inlinedTypeNamer = inlinedTypeNamer;
         this.breadcrumbs = [...breadcrumbs, endpoint.path, endpoint.httpMethod];
         this.tag = tag;
+        this.serviceBasePath = serviceBasePath;
         (this.endpoint.definition.parameters ?? []).forEach((parameter) => {
             const resolvedParameter = isReferenceObject(parameter)
                 ? this.context.maybeResolveParameterReference(parameter)
@@ -78,8 +82,13 @@ export class EndpointConverter {
             ...responseBody?.additionalTypes,
         };
 
+        const endpointPath = this.endpoint.path
+            .split("/")
+            .slice(this.serviceBasePath.parts.length + 1)
+            .join("/");
+
         const endpoint: RawSchemas.HttpEndpointSchema = {
-            path: this.endpoint.path,
+            path: endpointPath,
             method: convertedHttpMethod,
             docs: this.endpoint.definition.description,
             "display-name": this.endpoint.definition.summary,
@@ -131,6 +140,9 @@ export class EndpointConverter {
         const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "path") {
+                if (this.serviceBasePath.pathParameters.includes(parameter.name)) {
+                    continue;
+                }
                 const parameterType = this.convertParameterSchema(parameter);
                 if (parameterType == null) {
                     continue;
@@ -197,29 +209,7 @@ export class EndpointConverter {
     }
 
     private convertParameterSchema(parameter: OpenAPIV3.ParameterObject): string | undefined {
-        if (parameter.schema == null) {
-            return undefined;
-        }
-
-        const resolvedSchema = isReferenceObject(parameter.schema)
-            ? this.context.maybeResolveSchemaReference(parameter.schema)?.schemaObject
-            : parameter.schema;
-        if (resolvedSchema == null) {
-            return undefined;
-        }
-
-        const convertedPrimitive = maybeConvertSchemaToPrimitive(resolvedSchema);
-        if (convertedPrimitive == null) {
-            this.taskContext.logger.warn(
-                `${this.endpoint.httpMethod} ${this.endpoint.path} parameter ${
-                    parameter.name
-                } has non primitive schema: ${JSON.stringify(resolvedSchema, undefined, 2)}`
-            );
-        }
-
-        const parameterType =
-            parameter.required != null && parameter.required ? convertedPrimitive : `optional<${convertedPrimitive}>`;
-        return parameterType;
+        return convertParameterSchema(parameter, this.context, this.taskContext, this.endpoint);
     }
 
     private convertRequestBody(

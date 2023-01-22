@@ -12,22 +12,23 @@ exports[`open api converter covie simple 1`] = `
         "http": {
           "AccountService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/accounts/{account_id}/mfa_requirements",
             "endpoints": {
               "disableAccountMfaRequired": {
                 "display-name": "Disable Account MFA Requirement",
                 "docs": "Remove requirement for all account users to have an MFA application configured",
                 "method": "DELETE",
-                "path": "/accounts/{account_id}/mfa_requirements",
+                "path": "",
               },
               "enableAccountMfaRequired": {
                 "display-name": "Enable Account MFA Requirement",
                 "docs": "Require all account users to have an MFA application configured",
                 "method": "POST",
-                "path": "/accounts/{account_id}/mfa_requirements",
+                "path": "",
                 "response": "AccountWithConfig",
               },
             },
+            "path-parameters": {},
           },
         },
       },
@@ -46,13 +47,13 @@ exports[`open api converter covie simple 1`] = `
         "http": {
           "ApplicationService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/applications/{application_id}",
             "endpoints": {
               "getApplicationLinks": {
                 "display-name": "List Application Links",
                 "docs": "Lists an application's links.",
                 "method": "GET",
-                "path": "/applications/{application_id}/links",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "created_since": {
@@ -119,7 +120,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "List Application Policies",
                 "docs": "Lists an application's policies.",
                 "method": "GET",
-                "path": "/applications/{application_id}/policies",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "integration_ids": {
@@ -139,6 +140,7 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Policies",
               },
             },
+            "path-parameters": {},
           },
         },
       },
@@ -775,16 +777,17 @@ exports[`open api converter covie simple 1`] = `
         "http": {
           "EventService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/events/{event_id}/broadcasts",
             "endpoints": {
               "postEventsEventIdBroadcasts": {
                 "display-name": "Rebroadcast Event",
                 "docs": "Rebroadcast an event.",
                 "method": "POST",
-                "path": "/events/{event_id}/broadcasts",
+                "path": "",
                 "response": "_InlinedType25",
               },
             },
+            "path-parameters": {},
           },
         },
       },
@@ -824,13 +827,13 @@ exports[`open api converter covie simple 1`] = `
         "http": {
           "IntegrationService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/integrations",
             "endpoints": {
               "createIntegration": {
                 "display-name": "Create Integration",
                 "docs": "Creates a new integration.",
                 "method": "POST",
-                "path": "/integrations",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -846,38 +849,38 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Delete Integration",
                 "docs": "Deletes an integration.",
                 "method": "DELETE",
-                "path": "/integrations/{integration_id}",
+                "path": "",
               },
               "deleteIntegrationsIntegrationIdAgencyLogo": {
                 "display-name": "Delete Agency Logo",
                 "docs": "Delete the agency logo and/or config if present.",
                 "method": "DELETE",
-                "path": "/integrations/{integration_id}/agency_logo",
+                "path": "agency_logo",
               },
               "deleteIntegrationsIntegrationIdAgentPhoto": {
                 "display-name": "Delete Agent Photo",
                 "docs": "Delete the agent photo and/or config if present.",
                 "method": "DELETE",
-                "path": "/integrations/{integration_id}/agent_photo",
+                "path": "agent_photo",
               },
               "deleteIntegrationsIntegrationIdBrandLogo": {
                 "display-name": "Delete Brand Logo",
                 "docs": "Delete the brand logo and/or config if present.",
                 "method": "DELETE",
-                "path": "/integrations/{integration_id}/brand_logo",
+                "path": "brand_logo",
               },
               "getIntegration": {
                 "display-name": "Get Integration",
                 "docs": "Retrieve the details of an integration.",
                 "method": "GET",
-                "path": "/integrations/{integration_id}",
+                "path": "",
                 "response": "commons.Integration_2",
               },
               "getIntegrationPolicies": {
                 "display-name": "List Integration Policies",
                 "docs": "List all policies that have been linked to an integration.",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/policies",
+                "path": "policies",
                 "request": {
                   "query-parameters": {
                     "limit": {
@@ -896,7 +899,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Supported Providers List",
                 "docs": "Retrieve a list of supported carriers for a given integration, along with their identifiers.",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/providers",
+                "path": "providers",
                 "request": {
                   "query-parameters": {
                     "required_policy_types": {
@@ -911,25 +914,25 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "View Agency Logo",
                 "docs": "View the agency logo for the hosted integration.",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/agency_logo",
+                "path": "agency_logo",
               },
               "getIntegrationsIntegrationIdAgentPhoto": {
                 "display-name": "View Agent Photo",
                 "docs": "View the agent photo for the hosted integration.",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/agent_photo",
+                "path": "agent_photo",
               },
               "getIntegrationsIntegrationIdBrandLogo": {
                 "display-name": "View Brand Logo",
                 "docs": "View the brand logo for the integration.",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/brand_logo",
+                "path": "brand_logo",
               },
               "listIntegrations": {
                 "display-name": "List Integrations",
                 "docs": "List integrations associated to an application",
                 "method": "GET",
-                "path": "/integrations",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "q": {
@@ -948,35 +951,35 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Update Agency Logo",
                 "docs": "Upload the agency logo for the hosted integration.",
                 "method": "PUT",
-                "path": "/integrations/{integration_id}/agency_logo",
+                "path": "agency_logo",
                 "response": "_InlinedType18",
               },
               "putIntegrationsIntegrationIdAgentPhoto": {
                 "display-name": "Update Agent Photo",
                 "docs": "Upload an agent photo for the hosted integration.",
                 "method": "PUT",
-                "path": "/integrations/{integration_id}/agent_photo",
+                "path": "agent_photo",
                 "response": "_InlinedType19",
               },
               "putIntegrationsIntegrationIdBrandLogo": {
                 "display-name": "Update Brand Logo",
                 "docs": "Upload the brand logo for the hosted integration.",
                 "method": "PUT",
-                "path": "/integrations/{integration_id}/brand_logo",
+                "path": "brand_logo",
                 "response": "_InlinedType20",
               },
               "regenerateIntegrationKey": {
                 "display-name": "Regenerate Integration Key",
                 "docs": "Replaces the existing integration key with a new randomly generated key.",
                 "method": "POST",
-                "path": "/integrations/{integration_id}/regenerate_key",
+                "path": "regenerate_key",
                 "response": "commons.Integration_2",
               },
               "updateIntegration": {
                 "display-name": "Update Integration",
                 "docs": "Edit the name and archived status of an integration.",
                 "method": "PATCH",
-                "path": "/integrations/{integration_id}",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1141,19 +1144,19 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Upload Document To Link",
                 "docs": "Attach a policy document to a Link. If the document can be parsed, select the parsed policy for sharing.",
                 "method": "POST",
-                "path": "/links/{id}/documents",
+                "path": "{id}/documents",
               },
               "deleteLink": {
                 "display-name": "Delete Link",
                 "docs": "Deletes a link.",
                 "method": "DELETE",
-                "path": "/links/{id}",
+                "path": "{id}",
               },
               "getIntegrationLinks": {
                 "display-name": "List Integration Links",
                 "docs": "Retrieves a list of links associated to the requested integration",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/links",
+                "path": "{integration_id}/links",
                 "request": {
                   "query-parameters": {
                     "created_since": {
@@ -1216,7 +1219,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "List Integration Links With Policies",
                 "docs": "Retrieves a list of links and selected policies associated to the requested integration",
                 "method": "GET",
-                "path": "/integrations/{integration_id}/links_with_policies",
+                "path": "{integration_id}/links_with_policies",
                 "request": {
                   "query-parameters": {
                     "created_since": {
@@ -1271,14 +1274,14 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Retrieve link",
                 "docs": "Retrieves a Link",
                 "method": "GET",
-                "path": "/links/{id}",
+                "path": "{id}",
                 "response": "commons.Link",
               },
               "getLinkEvents": {
                 "display-name": "List Link Events",
                 "docs": "Retrieves a list of events triggered for the requested link",
                 "method": "GET",
-                "path": "/links/{id}/events",
+                "path": "{id}/events",
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1301,7 +1304,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "List Link Policies",
                 "docs": "Retrieves a list of policies associated with the requested link",
                 "method": "GET",
-                "path": "/links/{id}/policies",
+                "path": "{id}/policies",
                 "request": {
                   "query-parameters": {
                     "limit": {
@@ -1320,7 +1323,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Initialize link",
                 "docs": "Creates a link and optionally sets metadata and selects a carrier, allowing for seeding initial data before an insured continues the linking process via the embed",
                 "method": "POST",
-                "path": "/integrations/{integration_id}/links",
+                "path": "{integration_id}/links",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1335,13 +1338,13 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Manually Sync Link",
                 "docs": "Sync a tracked link with the provider using the stored user credentials",
                 "method": "POST",
-                "path": "/links/{id}/syncs",
+                "path": "{id}/syncs",
               },
               "updateLinkSettings": {
                 "display-name": "Update Link Settings",
                 "docs": undefined,
                 "method": "PATCH",
-                "path": "/links/{id}",
+                "path": "{id}",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1394,27 +1397,27 @@ exports[`open api converter covie simple 1`] = `
         "http": {
           "PolicyService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/policies/{policy_id}",
             "endpoints": {
               "getPoliciesPolicyId": {
                 "display-name": "Retrieve Policy",
                 "docs": "Retrieve a Policy object that was previously connected via a Link",
                 "method": "GET",
-                "path": "/policies/{policy_id}",
+                "path": "",
                 "response": "Policy_2",
               },
               "getPolicyDocument": {
                 "display-name": "Retrieve Policy Document",
                 "docs": "Retrieve the contents of a Policy document",
                 "method": "GET",
-                "path": "/policies/{policy_id}/documents/{document_type}",
+                "path": "{document_type}",
                 "response": "FileContents",
               },
               "listPolicyEvents": {
                 "display-name": "List Policy Events",
                 "docs": "List all events that have been triggered for the selected policy",
                 "method": "GET",
-                "path": "/policies/{policy_id}/events",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1434,6 +1437,7 @@ exports[`open api converter covie simple 1`] = `
                 "response": "commons.Events",
               },
             },
+            "path-parameters": {},
           },
         },
       },
@@ -1506,13 +1510,13 @@ exports[`open api converter covie simple 1`] = `
         "http": {
           "WebhookService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/webhooks",
             "endpoints": {
               "createWebhook": {
                 "display-name": "Create Webhook",
                 "docs": "Create a new webhook",
                 "method": "POST",
-                "path": "/webhooks",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1527,14 +1531,14 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Get Webhook",
                 "docs": "Get the details of a webhook.",
                 "method": "GET",
-                "path": "/webhooks/{webhook_id}",
+                "path": "",
                 "response": "commons.Webhook_2",
               },
               "listWebhookEvents": {
                 "display-name": "List Webhook Events",
                 "docs": "List the events that have been triggered for a webhook.",
                 "method": "GET",
-                "path": "/webhooks/{webhook_id}/events",
+                "path": "events",
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1557,7 +1561,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "List Webhooks",
                 "docs": "List an application's configured webhooks.",
                 "method": "GET",
-                "path": "/webhooks",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "event_type": {
@@ -1580,7 +1584,7 @@ exports[`open api converter covie simple 1`] = `
                 "display-name": "Update Webhook",
                 "docs": "Update a webhook.",
                 "method": "PATCH",
-                "path": "/webhooks/{webhook_id}",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -1630,13 +1634,13 @@ exports[`open api converter partnerstack simple 1`] = `
         "http": {
           "ActionsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/actions",
             "endpoints": {
               "": {
                 "display-name": "List all actions",
                 "docs": "Returns a list of your actions. The actions are returned sorted by creation date by default, with the most recent actions appearing first.",
                 "method": "GET",
-                "path": "/v2/actions",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "action_type": {
@@ -1687,7 +1691,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Archive an action",
                 "docs": "Archives an action. Any associated rewards or drip rewards will be archived as well.",
                 "method": "DELETE",
-                "path": "/v2/actions/{action_key}",
+                "path": "",
                 "path-parameters": {
                   "action_key": {
                     "docs": "Unique identifier for actions",
@@ -1700,7 +1704,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Record action",
                 "docs": "Records a new action taken by a given partner or customer, and the number of times that action was performed.",
                 "method": "POST",
-                "path": "/v2/actions",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -1817,13 +1821,13 @@ exports[`open api converter partnerstack simple 1`] = `
         "http": {
           "ApplicationsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/applications",
             "endpoints": {
               "": {
                 "display-name": "Bulk Decision Applications",
                 "docs": "Update the decision of the given Applications provided",
                 "method": "PATCH",
-                "path": "/v2/applications/decision",
+                "path": "",
                 "request": {
                   "body": "_InlinedType90",
                 },
@@ -1833,7 +1837,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Decision an Application",
                 "docs": "Update the decision of the given Application",
                 "method": "PATCH",
-                "path": "/v2/applications/{application_key}/decision",
+                "path": "decision",
                 "path-parameters": {
                   "application_key": {
                     "docs": "The key of the application we're applying a decision to",
@@ -1920,13 +1924,13 @@ exports[`open api converter partnerstack simple 1`] = `
         "http": {
           "CustomersService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/customers",
             "endpoints": {
               "": {
                 "display-name": "List all customers",
                 "docs": "Returns a list of your customers. The customers are returned sorted by creation date by default, with the most recent customers appearing first.",
                 "method": "GET",
-                "path": "/v2/customers",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -1973,7 +1977,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Create a customer",
                 "docs": "Creates a new customer with the data provided.",
                 "method": "POST",
-                "path": "/v2/customers",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -1988,7 +1992,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Retrieve a customer",
                 "docs": "Gets a customer with a given customer key.",
                 "method": "GET",
-                "path": "/v2/customers/{customer_key}",
+                "path": "",
                 "path-parameters": {
                   "customer_key": {
                     "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
@@ -2001,7 +2005,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Delete a customer",
                 "docs": "Deletes a customer with a given customer key.",
                 "method": "DELETE",
-                "path": "/v2/customers/{customer_key}",
+                "path": "",
                 "path-parameters": {
                   "customer_key": {
                     "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
@@ -2014,7 +2018,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "display-name": "Update a customer",
                 "docs": "Updates a customer with the data provided. Any parameters not passed will not be updated.",
                 "method": "PATCH",
-                "path": "/v2/customers/{customer_key}",
+                "path": "",
                 "path-parameters": {
                   "customer_key": {
                     "docs": "Unique identifier for customers. This is the same as the \`customer_key\` that can be assigned using PartnerStackJS.",
@@ -2228,7 +2232,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Assign partnership to deal",
                 "docs": "Assign the provided partnership to the provided deal.",
                 "method": "POST",
-                "path": "/deals/{deal_key}/assignment/{partnership_key}/{stack_key}",
+                "path": "{deal_key}/assignment/{partnership_key}/{stack_key}",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of the deal",
@@ -2249,7 +2253,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Get deal file",
                 "docs": "Get the file for the deal.",
                 "method": "GET",
-                "path": "/deals/{deal_key}/file/{file_key}",
+                "path": "{deal_key}/file/{file_key}",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of the deal",
@@ -2268,7 +2272,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     returned sorted by creation date, with the most recent deals
     appearing first.",
                 "method": "GET",
-                "path": "/v2/deals",
+                "path": "deals",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -2315,7 +2319,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a deal",
                 "docs": "Creates a deal with desired params.",
                 "method": "POST",
-                "path": "/v2/deals",
+                "path": "deals",
                 "request": {
                   "body": {
                     "extends": [
@@ -2329,7 +2333,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Retrieve the form templates for a deal",
                 "docs": "Fetches the specified form templates for a deal.",
                 "method": "GET",
-                "path": "/v2/deals/form-templates",
+                "path": "deals/form-templates",
                 "request": {
                   "query-parameters": {
                     "group_key": "optional<string>",
@@ -2343,7 +2347,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Retrieve a deal",
                 "docs": "Retrieves the details of an existing deal. You need only supply the unique deal key that was returned upon deal creation.",
                 "method": "GET",
-                "path": "/v2/deals/{deal_key}",
+                "path": "deals/{deal_key}",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of deal. Can be \`external_key\`, if one configured for deal.",
@@ -2356,7 +2360,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Archive a deal",
                 "docs": "Archives the specified deal",
                 "method": "DELETE",
-                "path": "/v2/deals/{deal_key}",
+                "path": "deals/{deal_key}",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of deal.",
@@ -2371,7 +2375,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     the parameters passed. Any parameters not provided will be left
     unchanged.",
                 "method": "PATCH",
-                "path": "/v2/deals/{deal_key}",
+                "path": "deals/{deal_key}",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of deal. Can be \`external_key\`, if one configured for deal.",
@@ -2409,7 +2413,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
                 "display-name": "Convert a deal",
                 "docs": "Converts a deal to a customer",
                 "method": "POST",
-                "path": "/v2/deals/{deal_key}/convert",
+                "path": "deals/{deal_key}/convert",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of deal.",
@@ -2431,7 +2435,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
                 "display-name": "Get files attached to a deal",
                 "docs": "Gets the files attached to the specified deal",
                 "method": "GET",
-                "path": "/v2/deals/{deal_key}/files",
+                "path": "deals/{deal_key}/files",
                 "path-parameters": {
                   "deal_key": {
                     "docs": "Unique identifier of the deal",
@@ -2838,13 +2842,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "FormTemplatesService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/form-templates",
             "endpoints": {
               "getFormTemplates": {
                 "display-name": "List all form templates",
                 "docs": "Returns a list of your form templates. The form templates are returned sorted by creation date, with the most recent form templates appearing first.",
                 "method": "GET",
-                "path": "/v2/form-templates",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -2945,13 +2949,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "GroupsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/groups",
             "endpoints": {
               "": {
                 "display-name": "List all groups",
                 "docs": "Returns a list of your groups. The groups are returned sorted by creation date, with the most recent groups appearing first.",
                 "method": "GET",
-                "path": "/v2/groups",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -3038,7 +3042,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "LeadsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/leads",
             "endpoints": {
               "": {
                 "display-name": "List all leads",
@@ -3046,7 +3050,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     returned sorted by creation date, with the most recent leads
     appearing first.",
                 "method": "GET",
-                "path": "/v2/leads",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "group": {
@@ -3081,7 +3085,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a lead",
                 "docs": "Creates a lead with desired params.",
                 "method": "POST",
-                "path": "/v2/leads",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -3095,7 +3099,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Retrieve the form templates for a lead",
                 "docs": "Fetches the specified form templates for a lead.",
                 "method": "GET",
-                "path": "/v2/leads/form-templates",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "group_key": "optional<string>",
@@ -3110,7 +3114,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     lead. You need only supply the unique lead key that was returned
     upon lead creation.",
                 "method": "GET",
-                "path": "/v2/leads/{lead_key}",
+                "path": "",
                 "path-parameters": {
                   "lead_key": {
                     "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
@@ -3123,7 +3127,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Archive a lead",
                 "docs": "Archives the specified lead.",
                 "method": "DELETE",
-                "path": "/v2/leads/{lead_key}",
+                "path": "",
                 "path-parameters": {
                   "lead_key": {
                     "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
@@ -3138,7 +3142,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     of the parameters passed. Any parameters not provided will be left
     unchanged.",
                 "method": "PATCH",
-                "path": "/v2/leads/{lead_key}",
+                "path": "",
                 "path-parameters": {
                   "lead_key": {
                     "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
@@ -3169,7 +3173,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Convert a lead",
                 "docs": "Converts a lead to a customer",
                 "method": "POST",
-                "path": "/v2/leads/{lead_key}/convert",
+                "path": "convert",
                 "path-parameters": {
                   "lead_key": {
                     "docs": "A unique key that identifies this lead. Can be either the lead's \`external_key\` or \`key\` value.",
@@ -3470,13 +3474,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "MarketplaceService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/marketplace/programs",
             "endpoints": {
               "": {
                 "display-name": "List all programs",
                 "docs": "Returns a list of all active marketplace-listed programs and their details. The programs are returned sorted by creation date by default, with the most recent programs appearing first.",
                 "method": "GET",
-                "path": "/v2/marketplace/programs",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "category": {
@@ -3511,7 +3515,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Retrieve a marketplace program",
                 "docs": "Retrieves a marketplace program given its program key.",
                 "method": "GET",
-                "path": "/v2/marketplace/programs/{company_key}",
+                "path": "",
                 "path-parameters": {
                   "company_key": {
                     "docs": "Unique identifier of the program.",
@@ -3596,13 +3600,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "PartnershipsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/partnerships",
             "endpoints": {
               "": {
                 "display-name": "List all partnerships",
                 "docs": "Returns a list of your partnerships. The partnerships are returned sorted by creation date by default, with the most recent partnerships appearing first.",
                 "method": "GET",
-                "path": "/v2/partnerships",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "email": {
@@ -3653,7 +3657,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a partnership",
                 "docs": "Creates a new partnership with the data provided.",
                 "method": "POST",
-                "path": "/v2/partnerships",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -3668,7 +3672,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Retrieve a partnership",
                 "docs": "Retrieves the details of an existing partnership.",
                 "method": "GET",
-                "path": "/v2/partnerships/{partnership_key}",
+                "path": "",
                 "path-parameters": {
                   "partnership_key": {
                     "docs": "Unique identifier of partnership. Can be \`partner_key\`, if one configured for partnership.",
@@ -3681,7 +3685,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Archive a partnership",
                 "docs": "Archives a partnership.",
                 "method": "DELETE",
-                "path": "/v2/partnerships/{partnership_key}",
+                "path": "",
                 "path-parameters": {
                   "partnership_key": {
                     "docs": "The specific internal key that identifies the partnership.",
@@ -3694,7 +3698,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Update a partnership",
                 "docs": "Updates the specific partnership by setting the values of the parameters passed.",
                 "method": "PATCH",
-                "path": "/v2/partnerships/{partnership_key}",
+                "path": "",
                 "path-parameters": {
                   "partnership_key": {
                     "docs": "The specific key for the partnership",
@@ -3719,7 +3723,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Updates a partnership's tags",
                 "docs": "Add or remove tags from the specified partnership.",
                 "method": "PATCH",
-                "path": "/v2/partnerships/{partnership_key}/tags",
+                "path": "tags",
                 "path-parameters": {
                   "partnership_key": {
                     "docs": "The specific key for the partnership",
@@ -3976,13 +3980,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "RewardsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/rewards",
             "endpoints": {
               "": {
                 "display-name": "List all rewards",
                 "docs": "Returns a list of your rewards. The rewards are returned sorted by creation date by default, with the most recent rewards appearing first.",
                 "method": "GET",
-                "path": "/v2/rewards",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "customer_key": {
@@ -4073,7 +4077,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "display-name": "Create a reward",
                 "docs": "Creates a new reward for a given target.",
                 "method": "POST",
-                "path": "/v2/rewards",
+                "path": "",
                 "request": {
                   "body": {
                     "docs": "Reward is what the Partner earns.",
@@ -4175,13 +4179,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
         "http": {
           "TransactionsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/transactions",
             "endpoints": {
               "": {
                 "display-name": "List all transactions",
                 "docs": "Returns a list of your transactions. The transactions are returned sorted by creation date, with the most recent transactions appearing first. ",
                 "method": "GET",
-                "path": "/v2/transactions",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "customer_email": {
@@ -4222,7 +4226,7 @@ place of \`customer_key\` to reference the customer.
 These customer reference fields are required, but mutually exclusive
 (i.e. you must provide exactly and only one of the three).",
                 "method": "POST",
-                "path": "/v2/transactions",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -4314,7 +4318,7 @@ These customer reference fields are required, but mutually exclusive
         "http": {
           "WebhooksService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/v2/webhooks",
             "endpoints": {
               "": {
                 "display-name": "List all webhooks",
@@ -4322,7 +4326,7 @@ These customer reference fields are required, but mutually exclusive
     returned sorted by creation date, with the most recent webhooks
     appearing first.",
                 "method": "GET",
-                "path": "/v2/webhooks",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "ending_before": {
@@ -4345,7 +4349,7 @@ These customer reference fields are required, but mutually exclusive
                 "display-name": "Create a webhook",
                 "docs": "Webhooks deliver POST requests to the target URL when the specified events are triggered.",
                 "method": "POST",
-                "path": "/v2/webhooks",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": [
@@ -4361,7 +4365,7 @@ These customer reference fields are required, but mutually exclusive
     need only supply the unique webhook key that was returned upon
     webhook creation.",
                 "method": "GET",
-                "path": "/v2/webhooks/{webhook_key}",
+                "path": "",
                 "path-parameters": {
                   "webhook_key": {
                     "docs": "Unique identifier of a webhook.",
@@ -4374,7 +4378,7 @@ These customer reference fields are required, but mutually exclusive
                 "display-name": "Archive a webhook",
                 "docs": "Webhook events will no longer be delivered to the attached endpoints.",
                 "method": "DELETE",
-                "path": "/v2/webhooks/{webhook_key}",
+                "path": "",
                 "path-parameters": {
                   "webhook_key": {
                     "docs": "Unique identifier of a webhook.",
@@ -4387,7 +4391,7 @@ These customer reference fields are required, but mutually exclusive
                 "display-name": "Update a webhook",
                 "docs": "Updates the specified webhook by setting the values of the parameters passed.",
                 "method": "PATCH",
-                "path": "/v2/webhooks/{webhook_key}",
+                "path": "",
                 "path-parameters": {
                   "webhook_key": {
                     "docs": "Unique identifier of a webhook.",
@@ -4717,7 +4721,7 @@ Configured by \`rivet.cloud#LobbyGroupRuntimeDockerPort$label\`.",
                 "docs": "Marks the current lobby as ready to accept connections. Players will not be
 able to connect to this lobby until the lobby is flagged as ready.",
                 "method": "POST",
-                "path": "/lobbies/ready",
+                "path": "ready",
               },
               "playerConnected": {
                 "display-name": undefined,
@@ -4762,7 +4766,7 @@ Otherwise, the player token will likely be automatically sent by the client
 once the socket opens. As mentioned above, nothing else should happen until
 the player token is validated.",
                 "method": "POST",
-                "path": "/players/connected",
+                "path": "connected",
                 "request": {
                   "body": "PlayerConnectedRequestContent",
                 },
@@ -4777,7 +4781,7 @@ If players are not marked as disconnected, lobbies will result with "ghost
 players" that the matchmaker thinks exist but are no longer connected to the
 lobby.",
                 "method": "POST",
-                "path": "/players/disconnected",
+                "path": "disconnected",
                 "request": {
                   "body": "PlayerDisconnectedRequestContent",
                 },
@@ -4817,7 +4821,7 @@ lobby.",
 
 If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a new lobby will be created.",
                 "method": "POST",
-                "path": "/lobbies/find",
+                "path": "find",
                 "request": {
                   "body": "FindLobbyRequestContent",
                   "headers": {
@@ -4833,7 +4837,7 @@ If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a new lob
 This request will use the direct player count configured for the lobby
 group.",
                 "method": "POST",
-                "path": "/lobbies/join",
+                "path": "join",
                 "request": {
                   "body": "JoinLobbyRequestContent",
                 },
@@ -4843,7 +4847,7 @@ group.",
                 "display-name": undefined,
                 "docs": "Lists all open lobbies.",
                 "method": "GET",
-                "path": "/lobbies/list",
+                "path": "list",
                 "response": "ListLobbiesResponseContent",
               },
               "listRegions": {
@@ -4853,7 +4857,7 @@ group.",
 Regions are sorted by most optimal to least optimal. The player's IP address
 is used to calculate the regions' optimality.",
                 "method": "GET",
-                "path": "/regions",
+                "path": "",
                 "response": "ListRegionsResponseContent",
               },
               "setLobbyClosed": {
@@ -4862,7 +4866,7 @@ is used to calculate the regions' optimality.",
 
 Does not shutdown the lobby.",
                 "method": "PUT",
-                "path": "/lobbies/closed",
+                "path": "closed",
                 "request": {
                   "body": "SetLobbyClosedRequestContent",
                 },
@@ -4938,13 +4942,13 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "ApiAuthService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/public/apiClient/accessToken",
             "endpoints": {
               "": {
                 "display-name": "Get the Bearer Access Token to access Suger API",
                 "docs": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
                 "method": "POST",
-                "path": "/public/apiClient/accessToken",
+                "path": "",
                 "request": {
                   "body": "shared.GetApiClientAccessTokenParams",
                 },
@@ -4981,33 +4985,23 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "BuyerService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}/buyer",
             "endpoints": {
               "": {
                 "display-name": "List all buyers under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/buyer",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "response": "list<commons.shared.IdentityBuyer>",
               },
               "_unnamedOperation7": {
                 "display-name": "Get the buyer",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/buyer/{buyerId}",
+                "path": "",
                 "path-parameters": {
                   "buyerId": {
                     "docs": "Buyer ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -5017,14 +5011,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Update the name & description of the buyer",
                 "docs": undefined,
                 "method": "PATCH",
-                "path": "/org/{orgId}/buyer/{buyerId}",
+                "path": "",
                 "path-parameters": {
                   "buyerId": {
                     "docs": "Buyer ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -5032,6 +5022,12 @@ exports[`open api converter suger simple 1`] = `
                   "body": "lib.UpdateBuyerNameDescriptionParams",
                 },
                 "response": "commons.shared.IdentityBuyer",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -6264,19 +6260,13 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "EntitlementService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}",
             "endpoints": {
               "": {
                 "display-name": "Add Credit Amount in Entitlement.",
                 "docs": "Add Credit Amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
                 "method": "POST",
-                "path": "/org/{orgId}/addEntitlementCredit",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "body": "shared.AddEntitlementCreditParams",
                 },
@@ -6286,14 +6276,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all entitlements of the buyer",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
+                "path": "{buyerId}/entitlement",
                 "path-parameters": {
                   "buyerId": {
                     "docs": "Buyer ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6303,27 +6289,17 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all entitlements under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/entitlement",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "response": "list<commons.shared.WorkloadEntitlement>",
               },
               "_unnamedOperation2": {
                 "display-name": "Get entitlement",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/entitlement/{entitlementId}",
+                "path": "{entitlementId}",
                 "path-parameters": {
                   "entitlementId": {
                     "docs": "Entitlement ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6333,14 +6309,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Update entitlement name",
                 "docs": undefined,
                 "method": "PATCH",
-                "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
+                "path": "{entitlementId}/entitlementName",
                 "path-parameters": {
                   "entitlementId": {
                     "docs": "Entitlement ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6353,14 +6325,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all entitlements under the offer",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/offer/{offerId}/entitlement",
+                "path": "{offerId}/entitlement",
                 "path-parameters": {
                   "offerId": {
                     "docs": "Offer ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6370,12 +6338,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all entitlements under the partner",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/partner/{partner}/entitlement",
+                "path": "{partner}/entitlement",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -6387,18 +6351,20 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all entitlements under the product",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/product/{productId}/entitlement",
+                "path": "{productId}/entitlement",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
                   },
                 },
                 "response": "list<commons.shared.WorkloadEntitlement>",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -6441,45 +6407,37 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "EntitlementTermService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
             "endpoints": {
               "": {
                 "display-name": "List all Entitlement Terms of the Entitlement.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
-                "path-parameters": {
-                  "entitlementId": {
-                    "docs": "Entitlement ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "response": "list<commons.shared.WorkloadEntitlementTerm>",
               },
               "_unnamedOperation9": {
                 "display-name": "Get an Entitlement Term.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
+                "path": "",
                 "path-parameters": {
-                  "entitlementId": {
-                    "docs": "Entitlement ID",
-                    "type": "string",
-                  },
                   "entitlementTermId": {
                     "docs": "Entitlement Term ID",
                     "type": "string",
                   },
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                 },
                 "response": "commons.shared.WorkloadEntitlementTerm",
+              },
+            },
+            "path-parameters": {
+              "entitlementId": {
+                "docs": "Entitlement ID",
+                "type": "string",
+              },
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -6494,32 +6452,20 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "IntegrationService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}/integration",
             "endpoints": {
               "": {
                 "display-name": "List all integrations under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/integration",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "response": "list<commons.shared.IdentityIntegration>",
               },
               "_unnamedOperation15": {
                 "display-name": "Create an integration.",
                 "docs": "For each organization, partner & service, there should be at most one integration.",
                 "method": "POST",
-                "path": "/org/{orgId}/integration",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "body": "shared.CreateIntegrationParams",
                 },
@@ -6529,12 +6475,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Get the integration for the given organization, partner & service.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/integration/{partner}/{service}",
+                "path": "{service}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -6550,12 +6492,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Delete the integration.",
                 "docs": undefined,
                 "method": "DELETE",
-                "path": "/org/{orgId}/integration/{partner}/{service}",
+                "path": "{service}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -6571,12 +6509,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Update the integration.",
                 "docs": undefined,
                 "method": "PATCH",
-                "path": "/org/{orgId}/integration/{partner}/{service}",
+                "path": "{service}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -6595,12 +6529,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Verify the integration, check whether it works correctly.",
                 "docs": undefined,
                 "method": "POST",
-                "path": "/org/{orgId}/integration/{partner}/{service}/verify",
+                "path": "{service}/verify",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -6611,6 +6541,12 @@ exports[`open api converter suger simple 1`] = `
                   },
                 },
                 "response": "boolean",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -6645,20 +6581,16 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "MeteringService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}",
             "endpoints": {
               "": {
                 "display-name": "list all UsageRecordGroups under the given entitlement",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
+                "path": "{entitlementId}/usageRecordGroup",
                 "path-parameters": {
                   "entitlementId": {
                     "docs": "Entitlement ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6680,14 +6612,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Report new UsageRecordGroup.",
                 "docs": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
                 "method": "POST",
-                "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
+                "path": "{entitlementId}/usageRecordGroup",
                 "path-parameters": {
                   "entitlementId": {
                     "docs": "Entitlement ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6700,14 +6628,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "list all UsageRecordReports under the given entitlement",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
+                "path": "{entitlementId}/usageRecordReport",
                 "path-parameters": {
                   "entitlementId": {
                     "docs": "Entitlement ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6725,12 +6649,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "list all UsageRecordGroups under the given product",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
+                "path": "{productId}/usageRecordGroup",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
@@ -6754,13 +6674,7 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "list all UsageRecordGroups under the given organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/usageRecordGroup",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "limit": {
@@ -6779,18 +6693,20 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "get an UsageRecordGroup by organization_entitlement_usageRecordGroup id",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
+                "path": "{usageRecordGroupId}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "usageRecordGroupId": {
                     "docs": "UsageRecordGroup ID",
                     "type": "string",
                   },
                 },
                 "response": "commons.shared.MeteringUsageRecordGroup",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -6823,32 +6739,20 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "OfferService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}",
             "endpoints": {
               "": {
                 "display-name": "List all offers under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/offer",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "response": "list<commons.shared.WorkloadOffer>",
               },
               "_unnamedOperation20": {
                 "display-name": "Create a private offer.",
                 "docs": undefined,
                 "method": "POST",
-                "path": "/org/{orgId}/offer",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "body": "shared.CreateOfferParams",
                 },
@@ -6858,14 +6762,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Get the offer.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/offer/{offerId}",
+                "path": "{offerId}",
                 "path-parameters": {
                   "offerId": {
                     "docs": "Offer ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6875,14 +6775,10 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Delete the offer.",
                 "docs": "Currently only the offer with status = "CREATE_PENDING" or "CREATE_FAILED" is allowed to be deleted.",
                 "method": "DELETE",
-                "path": "/org/{orgId}/offer/{offerId}",
+                "path": "{offerId}",
                 "path-parameters": {
                   "offerId": {
                     "docs": "Offer ID",
-                    "type": "string",
-                  },
-                  "orgId": {
-                    "docs": "Organization ID",
                     "type": "string",
                   },
                 },
@@ -6892,12 +6788,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all offers under the cloud partner.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/partner/{partner}/offer",
+                "path": "{partner}/offer",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -6909,18 +6801,20 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all offers under the product.",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/product/{productId}/offer",
+                "path": "{productId}/offer",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
                   },
                 },
                 "response": "list<commons.shared.WorkloadOffer>",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -6952,19 +6846,13 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "OperationService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}/operation",
             "endpoints": {
               "": {
                 "display-name": "list all long running operations under the given organization, offer or entitlement.",
                 "docs": "The operations can be filtered by offerId or entitlementId. If both of them are provided, then it is filtered by entitlementId only.",
                 "method": "GET",
-                "path": "/org/{orgId}/operation",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "entitlementId": {
@@ -6978,6 +6866,12 @@ exports[`open api converter suger simple 1`] = `
                   },
                 },
                 "response": "list<shared.Operation>",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -7006,18 +6900,14 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "ProductService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}",
             "endpoints": {
               "": {
                 "display-name": "List all products under the cloud partner",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/partner/{partner}/product",
+                "path": "{partner}/product",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "partner": {
                     "docs": "Cloud Partner",
                     "type": "string",
@@ -7029,26 +6919,14 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List all products under the organization",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/product",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "response": "list<commons.shared.WorkloadProduct>",
               },
               "_unnamedOperation26": {
                 "display-name": "Create an Product & List it to the Partner's marketplace.",
                 "docs": undefined,
                 "method": "POST",
-                "path": "/org/{orgId}/product",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "body": "shared.CreateProductParams",
                 },
@@ -7058,12 +6936,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Get the Product",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/product/{productId}",
+                "path": "{productId}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
@@ -7075,12 +6949,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Delete the product.",
                 "docs": "Currently only the product with status = "CREATE_PENDING" or "CREATE_FAILED" is allowed to be deleted.",
                 "method": "DELETE",
-                "path": "/org/{orgId}/product/{productId}",
+                "path": "{productId}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
@@ -7092,12 +6962,8 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Currently, only the Fulfillment URL is allowed to update.",
                 "docs": undefined,
                 "method": "PATCH",
-                "path": "/org/{orgId}/product/{productId}",
+                "path": "{productId}",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
@@ -7112,18 +6978,20 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "List the Metering Dimensions of the Product",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/org/{orgId}/product/{productId}/dimension",
+                "path": "{productId}/dimension",
                 "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
                   "productId": {
                     "docs": "Product ID",
                     "type": "string",
                   },
                 },
                 "response": "list<commons.shared.AwsSaasProductDimension>",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -7163,19 +7031,13 @@ exports[`open api converter suger simple 1`] = `
         "http": {
           "ReportService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/org/{orgId}",
             "endpoints": {
               "": {
                 "display-name": "Get the revenue report.",
                 "docs": "Get the revenue report of the given organization, product, entitlement, or buyer.",
                 "method": "POST",
-                "path": "/org/{orgId}/revenueReport",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "body": "shared.GetRevenueReportParams",
                 },
@@ -7185,17 +7047,17 @@ exports[`open api converter suger simple 1`] = `
                 "display-name": "Get the usage report.",
                 "docs": "Get the daily usage report of the given entitlement, the default timespan is lifetime.",
                 "method": "POST",
-                "path": "/org/{orgId}/usageReport",
-                "path-parameters": {
-                  "orgId": {
-                    "docs": "Organization ID",
-                    "type": "string",
-                  },
-                },
+                "path": "",
                 "request": {
                   "body": "shared.GetUsageReportParams",
                 },
                 "response": "shared.UsageReport",
+              },
+            },
+            "path-parameters": {
+              "orgId": {
+                "docs": "Organization ID",
+                "type": "string",
               },
             },
           },
@@ -7327,14 +7189,14 @@ exports[`open api converter telematica simple 1`] = `
         "http": {
           "SampleCallbackService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/callback",
             "endpoints": {
               "appControllerCallback": {
                 "display-name": "Dummy callback endpoint",
                 "docs": "This is a dummy callback endpoint.
 Please share the POST callback endpoint created in your app's backend with Telematica to get callback requests of this format.",
                 "method": "POST",
-                "path": "/callback",
+                "path": "",
                 "request": {
                   "body": {
                     "extends": undefined,
@@ -7367,13 +7229,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
         "http": {
           "TestingEndpointsService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/vehicle-data",
             "endpoints": {
               "getChargingStatusTest": {
                 "display-name": "Test charging status",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/charging-status/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7388,7 +7250,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Test location",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/location/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7403,7 +7265,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Test odo",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/odo/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7418,7 +7280,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Test range-soc",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/range-soc/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7433,7 +7295,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Test range",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/range/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7448,7 +7310,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Test SOC (battery level)",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/soc/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7463,7 +7325,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Test static attributes",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/static-attributes/test",
+                "path": "test",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7487,13 +7349,13 @@ Please share the POST callback endpoint created in your app's backend with Telem
         "http": {
           "VehicleDataService": {
             "auth": true,
-            "base-path": "",
+            "base-path": "/vehicle-data",
             "endpoints": {
               "getChargingStatus": {
                 "display-name": "Charging Status",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/charging-status",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7508,7 +7370,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Location",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/location",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7523,7 +7385,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Odometer",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/odo",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7538,7 +7400,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Range",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/range",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7553,7 +7415,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Range-SOC",
                 "docs": "This endpoint returns the SOC and range for the vehicle in a single call",
                 "method": "GET",
-                "path": "/vehicle-data/range-soc",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7568,7 +7430,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "SOC (battery level)",
                 "docs": undefined,
                 "method": "GET",
-                "path": "/vehicle-data/soc",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
@@ -7583,7 +7445,7 @@ Please share the POST callback endpoint created in your app's backend with Telem
                 "display-name": "Static attributes",
                 "docs": "Static vehicle attributes like VIN, registration number, model, year and make",
                 "method": "GET",
-                "path": "/vehicle-data/static-attributes",
+                "path": "",
                 "request": {
                   "query-parameters": {
                     "vehicleId": {
