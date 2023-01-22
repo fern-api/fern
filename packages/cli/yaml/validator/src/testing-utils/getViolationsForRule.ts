@@ -1,8 +1,7 @@
-import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { visitFernRootApiFileYamlAst, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import stripAnsi from "strip-ansi";
 import { createRootApiFileAstVisitorForRules } from "../createRootApiFileAstVisitorForRules";
@@ -35,26 +34,26 @@ export async function getViolationsForRule({
 
     const rootApiFileVisitor = createRootApiFileAstVisitorForRules({
         relativeFilepath: "api.yml",
-        contents: parseResult.workspace.rootApiFile,
+        contents: parseResult.workspace.rootApiFile.contents,
         allRuleVisitors: [ruleVisitors],
         addViolations: (newViolations) => {
             violations.push(...newViolations);
         },
     });
 
-    await visitFernRootApiFileYamlAst(parseResult.workspace.rootApiFile, rootApiFileVisitor);
+    await visitFernRootApiFileYamlAst(parseResult.workspace.rootApiFile.contents, rootApiFileVisitor);
 
-    for (const [relativeFilepath, contents] of entries(parseResult.workspace.serviceFiles)) {
+    await visitAllServiceFiles(parseResult.workspace, async (relativeFilepath, file) => {
         const visitor = createServiceFileAstVisitorForRules({
             relativeFilepath,
-            contents,
+            contents: file,
             allRuleVisitors: [ruleVisitors],
             addViolations: (newViolations) => {
                 violations.push(...newViolations);
             },
         });
-        await visitFernServiceFileYamlAst(contents, visitor);
-    }
+        await visitFernServiceFileYamlAst(file, visitor);
+    });
 
     return violations.map((violation) => ({
         ...violation,

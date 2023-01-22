@@ -1,4 +1,4 @@
-import { Workspace } from "@fern-api/workspace-loader";
+import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import { noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -6,7 +6,7 @@ import { Rule, RuleViolation } from "../../Rule";
 export const NoErrorStatusCodeConflict: Rule = {
     name: "no-error-status-code-conflict",
     create: async ({ workspace }) => {
-        if (workspace.rootApiFile["error-discrimination"]?.strategy !== "status-code") {
+        if (workspace.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
             return {};
         }
         const errorDeclarations = await getErrorDeclarations(workspace);
@@ -48,7 +48,7 @@ export const NoErrorStatusCodeConflict: Rule = {
 
 async function getErrorDeclarations(workspace: Workspace): Promise<Record<string, RawSchemas.ErrorDeclarationSchema>> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
-    for (const [_, file] of Object.entries(workspace.serviceFiles)) {
+    await visitAllServiceFiles(workspace, async (_relativeFilepath, file) => {
         await visitFernServiceFileYamlAst(file, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {
@@ -56,6 +56,6 @@ async function getErrorDeclarations(workspace: Workspace): Promise<Record<string
             },
             httpService: noop,
         });
-    }
+    });
     return errorDeclarations;
 }

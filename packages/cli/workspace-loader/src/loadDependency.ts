@@ -15,6 +15,7 @@ import { pipeline } from "stream/promises";
 import tar from "tar";
 import tmp from "tmp-promise";
 import { loadWorkspace } from "./loadWorkspace";
+import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 
 const FIDDLE = createFiddleService();
@@ -24,7 +25,7 @@ export declare namespace loadDependency {
 
     export interface SuccessfulResult {
         didSucceed: true;
-        newServiceFiles: Record<RelativeFilePath, ServiceFileSchema>;
+        serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
     }
 
     export interface FailedResult {
@@ -48,7 +49,7 @@ export async function loadDependency({
     cliVersion: string;
     pathOfPackageMarker: RelativeFilePath;
 }): Promise<loadDependency.Return> {
-    const newServiceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
+    const serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> = {};
     let failure: WorkspaceLoader.DependencyFailure | undefined;
 
     // look up dependency in dependencies configuration
@@ -76,7 +77,7 @@ export async function loadDependency({
                 for (const [relativeFilePathOfDependencyServiceFile, serviceFile] of entries(
                     serviceFileFromDependency
                 )) {
-                    newServiceFiles[join(dirname(pathOfPackageMarker), relativeFilePathOfDependencyServiceFile)] =
+                    serviceFiles[join(dirname(pathOfPackageMarker), relativeFilePathOfDependencyServiceFile)] =
                         serviceFile;
                 }
             }
@@ -86,7 +87,7 @@ export async function loadDependency({
     if (failure != null) {
         return { didSucceed: false, failure };
     } else {
-        return { didSucceed: true, newServiceFiles };
+        return { didSucceed: true, serviceFiles };
     }
 }
 
@@ -100,7 +101,7 @@ async function validateDependencyAndGetServiceFiles({
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
-}): Promise<Record<RelativeFilePath, ServiceFileSchema> | undefined> {
+}): Promise<Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> | undefined> {
     // load API
     context.logger.info("Downloading manifest...");
     const response = await FIDDLE.definitionRegistry.get(
@@ -172,10 +173,13 @@ async function validateDependencyAndGetServiceFiles({
         imports: noop,
         "display-name": noop,
         auth: (auth) => {
-            areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.workspace.rootApiFile.auth);
+            areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.workspace.rootApiFile.contents.auth);
         },
         "auth-schemes": (auth) => {
-            areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.workspace.rootApiFile["auth-schemes"]);
+            areRootApiFilesEquivalent &&= isEqual(
+                auth,
+                workspaceOfDependency.workspace.rootApiFile.contents["auth-schemes"]
+            );
         },
         docs: noop,
         headers: noop,
@@ -184,7 +188,7 @@ async function validateDependencyAndGetServiceFiles({
         "error-discrimination": (errorDiscrimination) => {
             areRootApiFilesEquivalent &&= isEqual(
                 errorDiscrimination,
-                workspaceOfDependency.workspace.rootApiFile["error-discrimination"]
+                workspaceOfDependency.workspace.rootApiFile.contents["error-discrimination"]
             );
         },
         audiences: noop,

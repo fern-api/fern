@@ -70,10 +70,6 @@ export class CliContext {
         this.logLevel = logLevel;
     }
 
-    public getLogLevel(): LogLevel {
-        return this.logLevel;
-    }
-
     public logDebugInfo(): void {
         this.logger.debug(
             `Running ${chalk.bold(`${this.environment.cliName}`)} (${this.environment.packageName}@${

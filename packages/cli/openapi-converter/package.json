@@ -27,6 +27,7 @@
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "lodash-es": "^4.17.21",

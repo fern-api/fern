@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { NOOP_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { convertOpenApi } from "../convertOpenApi";
@@ -21,7 +22,7 @@ function testFixture(fixtureName: string) {
             const openApiPath = path.join(FIXTURES_PATH, fixtureName, OPENAPI_JSON_FILENAME);
             const fernDefinition = await convertOpenApi({
                 openApiPath: AbsoluteFilePath.of(openApiPath),
-                taskContext: createMockTaskContext(),
+                taskContext: createMockTaskContext({ logger: NOOP_LOGGER }),
             });
             expect(fernDefinition).toMatchSnapshot();
         });
