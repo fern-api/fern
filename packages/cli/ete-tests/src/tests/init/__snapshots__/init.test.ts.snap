@@ -3758,6 +3758,9 @@ types:
     extends:
       - ILocation
 
+  ILocation:
+    properties: {}
+
   ChargingStatus_ResponseDTO:
     properties:
       isCharging: boolean

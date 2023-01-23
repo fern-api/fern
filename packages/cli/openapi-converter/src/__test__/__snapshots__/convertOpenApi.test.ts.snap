@@ -2081,6 +2081,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "BusinessOptional",
           ],
         },
+        "BusinessBase": {
+          "docs": "Model for a business user base fields",
+          "extends": undefined,
+          "properties": {
+            "createdTimestamp": "double",
+            "legalEntity": "LegalEntity",
+            "riskLevel": "optional<RiskLevel>",
+            "userId": "string",
+          },
+        },
         "BusinessOptional": {
           "docs": "Model for a business user - optional fields",
           "extends": undefined,
@@ -2099,6 +2109,37 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "BusinessUserEvent": {
           "docs": "Model for business user-related events",
           "type": "map<string, unknown>",
+        },
+        "CompanyFinancialDetails": {
+          "docs": "Model for business user company financial details",
+          "extends": undefined,
+          "properties": {
+            "expectedTransactionAmountPerMonth": "optional<Amount>",
+            "expectedTurnoverPerMonth": "optional<Amount>",
+            "tags": "optional<list<Tag>>",
+          },
+        },
+        "CompanyGeneralDetails": {
+          "docs": "Model for business user company general details",
+          "extends": undefined,
+          "properties": {
+            "businessIndustry": "optional<list<string>>",
+            "legalName": "string",
+            "mainProductsServicesSold": "optional<list<string>>",
+            "tags": "optional<list<Tag>>",
+          },
+        },
+        "CompanyRegistrationDetails": {
+          "docs": "Model for business user company registration details",
+          "extends": undefined,
+          "properties": {
+            "dateOfRegistration": "optional<string>",
+            "legalEntityType": "optional<string>",
+            "registrationCountry": "CountryCode",
+            "registrationIdentifier": "string",
+            "tags": "optional<list<Tag>>",
+            "taxIdentifier": "optional<string>",
+          },
         },
         "ConsumerName": {
           "docs": "Model for a generic consumer name",
@@ -2164,6 +2205,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "tags": "optional<list<Tag>>",
           },
         },
+        "LegalEntity": {
+          "docs": "Model for business user legal entity details",
+          "extends": undefined,
+          "properties": {
+            "companyFinancialDetails": "optional<CompanyFinancialDetails>",
+            "companyGeneralDetails": "CompanyGeneralDetails",
+            "companyRegistrationDetails": "optional<CompanyRegistrationDetails>",
+            "contactDetails": "optional<ContactDetails>",
+            "reasonForAccountOpening": "optional<list<string>>",
+          },
+        },
         "MCCDetails": {
           "extends": undefined,
           "properties": {
@@ -2225,6 +2277,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "year": "optional<Amount>",
           },
         },
+        "TransactionBase": {
+          "docs": "Model for transaction base Payload",
+          "extends": undefined,
+          "properties": {
+            "destinationUserId": "optional<string>",
+            "originUserId": "optional<string>",
+            "timestamp": "double",
+            "transactionId": "string",
+            "type": "optional<TransactionType>",
+          },
+        },
         "TransactionCountLimit": {
           "extends": undefined,
           "properties": {
@@ -2263,6 +2326,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
           "type": "string",
         },
+        "TransactionType": "string",
         "TransactionUpdatable": {
           "docs": "Model for transaction additional payload",
           "extends": undefined,
@@ -2291,6 +2355,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "UserBase",
             "UserOptional",
           ],
+        },
+        "UserBase": {
+          "docs": "Model for User details",
+          "extends": undefined,
+          "properties": {
+            "createdTimestamp": "double",
+            "userDetails": "optional<UserDetails>",
+            "userId": "string",
+          },
         },
         "UserDetails": {
           "docs": "Model for consumer user personal details",
@@ -7881,6 +7954,10 @@ exports[`open api converter telematica simple 1`] = `
           "properties": {
             "isCharging": "boolean",
           },
+        },
+        "ILocation": {
+          "extends": undefined,
+          "properties": {},
         },
         "Location_ResponseDTO": {
           "extends": undefined,

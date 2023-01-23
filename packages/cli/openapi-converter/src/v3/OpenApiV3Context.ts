@@ -305,7 +305,9 @@ export class OpenApiV3Context {
                     this.getAllReferencedSchemas(propertySchema, schemaReferences);
                 }
             }
-        } else if (
+        }
+
+        if (
             schema.type === "array" &&
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             schema.items != null &&
@@ -317,7 +319,9 @@ export class OpenApiV3Context {
             if (resolvedSchema != null) {
                 this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
             }
-        } else if (
+        }
+
+        if (
             schema.additionalProperties != null &&
             typeof schema.additionalProperties !== "boolean" &&
             isReferenceObject(schema.additionalProperties) &&
@@ -327,6 +331,18 @@ export class OpenApiV3Context {
             const resolvedSchema = this.maybeResolveSchemaReference(schema.additionalProperties);
             if (resolvedSchema != null) {
                 this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
+            }
+        }
+
+        if (schema.allOf != null) {
+            for (const allOfElement of schema.allOf) {
+                if (isReferenceObject(allOfElement)) {
+                    schemaReferences.add(allOfElement);
+                    const resolvedSchema = this.maybeResolveSchemaReference(allOfElement);
+                    if (resolvedSchema != null) {
+                        this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
+                    }
+                }
             }
         }
     }
