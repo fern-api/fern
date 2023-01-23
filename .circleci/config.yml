@@ -16,16 +16,8 @@ jobs:
           name: Check root package
           command: yarn root-package:check
       - run:
-          # compilation is needed for some typescript-eslint rules,
-          # so we do it before the eslint check
-          name: compile
-          command: yarn compile
-      - run:
           name: Check dependencies
           command: yarn depcheck
-      - run:
-          name: lint:eslint
-          command: yarn lint:eslint
       - run:
           name: lint:style
           command: yarn lint:style
@@ -57,6 +49,32 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
+
+  eslint:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          # compilation is needed for some typescript-eslint rules
+          name: compile
+          command: yarn compile
+      - run:
+          name: lint:eslint
+          command: yarn lint:eslint
+
+  compile:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: compile
+          command: yarn compile
 
   test:
     # this is machine because of the docker-utils tests
@@ -249,7 +267,17 @@ workflows:
             tags:
               only: /.*/
 
+      - eslint:
+          filters:
+            tags:
+              only: /.*/
+
       - organize-imports:
+          filters:
+            tags:
+              only: /.*/
+
+      - compile:
           filters:
             tags:
               only: /.*/
@@ -292,6 +320,8 @@ workflows:
           requires:
             - check
             - organize-imports
+            - compile
+            - eslint
             - test
             - ete-tests
           context:
@@ -307,6 +337,8 @@ workflows:
           requires:
             - check
             - organize-imports
+            - compile
+            - eslint
             - test
             - ete-tests
             - live-test-dev
@@ -324,6 +356,8 @@ workflows:
             - check-release-is-allowed
             - check
             - organize-imports
+            - compile
+            - eslint
             - test
             - ete-tests
             - live-test-dev
@@ -341,6 +375,8 @@ workflows:
           requires:
             - check
             - organize-imports
+            - compile
+            - eslint
             - test
             - ete-tests
             - live-test-dev
