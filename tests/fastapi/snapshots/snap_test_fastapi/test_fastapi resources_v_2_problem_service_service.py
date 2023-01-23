@@ -95,7 +95,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
-            description=cls.get_lightweight_problems.__doc__,
+            description=AbstractProblemInfoServicV2.get_lightweight_problems.__doc__,
             **get_route_args(cls.get_lightweight_problems, default_tag="v_2.problem"),
         )(wrapper)
 
@@ -129,7 +129,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
-            description=cls.get_problems.__doc__,
+            description=AbstractProblemInfoServicV2.get_problems.__doc__,
             **get_route_args(cls.get_problems, default_tag="v_2.problem"),
         )(wrapper)
 
@@ -165,7 +165,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
-            description=cls.get_latest_problem.__doc__,
+            description=AbstractProblemInfoServicV2.get_latest_problem.__doc__,
             **get_route_args(cls.get_latest_problem, default_tag="v_2.problem"),
         )(wrapper)
 
@@ -203,6 +203,6 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
-            description=cls.get_problem_version.__doc__,
+            description=AbstractProblemInfoServicV2.get_problem_version.__doc__,
             **get_route_args(cls.get_problem_version, default_tag="v_2.problem"),
         )(wrapper)

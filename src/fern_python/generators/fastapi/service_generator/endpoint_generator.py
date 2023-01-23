@@ -115,71 +115,76 @@ class EndpointGenerator:
                     ],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=AST.CodeWriter(self._write_init_body),
+                body=AST.CodeWriter(self._get_write_init_body(class_declaration=class_declaration)),
             ),
         )
 
-    def _write_init_body(self, writer: AST.NodeWriter) -> None:
-        method_on_cls = self._get_reference_to_method_on_cls()
+    def _get_write_init_body(self, class_declaration: AST.ClassDeclaration) -> AST.CodeWriterFunction:
+        def _write_init_body(writer: AST.NodeWriter) -> None:
+            method_on_cls = self._get_reference_to_method_on_cls()
 
-        self._write_update_endpoint_signature(writer=writer)
-        writer.write_line()
+            self._write_update_endpoint_signature(writer=writer)
+            writer.write_line()
 
-        _TRY_EXCEPT_WRAPPER_NAME = "wrapper"
-        writer.write_node(
-            node=AST.FunctionDeclaration(
-                name=_TRY_EXCEPT_WRAPPER_NAME,
-                body=AST.CodeWriter(self._write_try_except_wrapper_body),
-                signature=AST.FunctionSignature(
-                    include_args=True, include_kwargs=True, return_type=self._get_return_type()
-                ),
-                decorators=[
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            qualified_name_excluding_import=("wraps",),
-                            import_=AST.ReferenceImport(module=AST.Module.built_in("functools")),
-                        ),
-                        args=[AST.Expression(method_on_cls)],
-                    )
-                ],
-            )
-        )
-        writer.write_line()
-
-        writer.write_line("# this is necessary for FastAPI to find forward-ref'ed type hints.")
-        writer.write_line("# https://github.com/tiangolo/fastapi/pull/5077")
-        writer.write_line(
-            f"{_TRY_EXCEPT_WRAPPER_NAME}.__globals__.update(" + self._get_reference_to_method_on_cls() + ".__globals__)"
-        )
-        writer.write_line()
-
-        writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
-        writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
-        writer.write_line("(")
-        with writer.indent():
-            writer.write_line(f'path="{self._get_endpoint_path()}",')
-            if self._endpoint.response.type is not None:
-                writer.write("response_model=")
-                writer.write_node(self._get_return_type())
-                writer.write_line(",")
-            else:
-                writer.write("status_code=")
-                writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
-                writer.write_line(",")
-            writer.write(f"description={method_on_cls}.__doc__")
-            writer.write_line(",")
-            writer.write("**")
-            default_tag = ".".join(
-                [package.snake_case.unsafe_name for package in self._service.name.fern_filepath.get_as_list()]
-            )
+            _TRY_EXCEPT_WRAPPER_NAME = "wrapper"
             writer.write_node(
-                self._context.core_utilities.get_route_args(
-                    endpoint_method=AST.Expression(method_on_cls),
-                    default_tag=default_tag,
+                node=AST.FunctionDeclaration(
+                    name=_TRY_EXCEPT_WRAPPER_NAME,
+                    body=AST.CodeWriter(self._write_try_except_wrapper_body),
+                    signature=AST.FunctionSignature(
+                        include_args=True, include_kwargs=True, return_type=self._get_return_type()
+                    ),
+                    decorators=[
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                qualified_name_excluding_import=("wraps",),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in("functools")),
+                            ),
+                            args=[AST.Expression(method_on_cls)],
+                        )
+                    ],
                 )
             )
-            writer.write_line(",")
-        writer.write(f")({_TRY_EXCEPT_WRAPPER_NAME})")
+            writer.write_line()
+
+            writer.write_line("# this is necessary for FastAPI to find forward-ref'ed type hints.")
+            writer.write_line("# https://github.com/tiangolo/fastapi/pull/5077")
+            writer.write_line(
+                f"{_TRY_EXCEPT_WRAPPER_NAME}.__globals__.update("
+                + self._get_reference_to_method_on_cls()
+                + ".__globals__)"
+            )
+            writer.write_line()
+
+            writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
+            writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
+            writer.write_line("(")
+            with writer.indent():
+                writer.write_line(f'path="{self._get_endpoint_path()}",')
+                if self._endpoint.response.type is not None:
+                    writer.write("response_model=")
+                    writer.write_node(self._get_return_type())
+                    writer.write_line(",")
+                else:
+                    writer.write("status_code=")
+                    writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
+                    writer.write_line(",")
+                writer.write(f"description={class_declaration.name}.{self._get_method_name()}.__doc__")
+                writer.write_line(",")
+                writer.write("**")
+                default_tag = ".".join(
+                    [package.snake_case.unsafe_name for package in self._service.name.fern_filepath.get_as_list()]
+                )
+                writer.write_node(
+                    self._context.core_utilities.get_route_args(
+                        endpoint_method=AST.Expression(method_on_cls),
+                        default_tag=default_tag,
+                    )
+                )
+                writer.write_line(",")
+            writer.write(f")({_TRY_EXCEPT_WRAPPER_NAME})")
+
+        return _write_init_body
 
     def _write_update_endpoint_signature(self, writer: AST.NodeWriter) -> None:
         method_on_cls = self._get_reference_to_method_on_cls()
