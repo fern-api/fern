@@ -15,9 +15,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
-  "bin": {
-    "demo-setup": "./dist/bundle.cjs"
-  },
+  "bin": "./dist/bundle.cjs",
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
