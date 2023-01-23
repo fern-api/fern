@@ -95,7 +95,11 @@ export class SchemaConverter {
                     }
                 }
             }
-        } else if (schema.additionalProperties != null) {
+        } else if (
+            schema.additionalProperties != null &&
+            // additionalProperties must be true if it is a boolean
+            !(typeof schema.additionalProperties === "boolean" && !schema.additionalProperties)
+        ) {
             if (typeof schema.additionalProperties === "boolean") {
                 typeDeclaration = "map<string, unknown>";
             } else if (isReferenceObject(schema.additionalProperties)) {
