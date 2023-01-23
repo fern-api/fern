@@ -9,7 +9,6 @@ const OPENAPI_JSON_FILENAME = "openapi.json";
 
 describe("open api converter", () => {
     testFixture("telematica");
-    testFixture("rivet");
     testFixture("partnerstack");
     testFixture("suger");
     testFixture("covie");

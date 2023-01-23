@@ -35,7 +35,7 @@ export class AudienceIrGraph {
         const typeId = getTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
-            descendants: new Set(...descendants.map((declaredTypeName) => getTypeId(declaredTypeName))),
+            descendants: new Set(descendants.map((declaredTypeName) => getTypeId(declaredTypeName))),
         };
         this.types[typeId] = typeNode;
     }
