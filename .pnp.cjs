@@ -8152,10 +8152,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/json-schema", "workspace:packages/cli/yaml/json-schema"],\
-            ["@fern-fern/postman-sdk", "npm:0.0.19"],\
+            ["@fern-fern/postman-sdk", "npm:0.0.20"],\
             ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/libsodium-wrappers", "npm:0.7.10"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.12"],\
@@ -9056,10 +9057,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/postman-sdk", [\
-        ["npm:0.0.19", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-postman-sdk-npm-0.0.19-c79edd1421-89c13ebb41.zip/node_modules/@fern-fern/postman-sdk/",\
+        ["npm:0.0.20", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-postman-sdk-npm-0.0.20-561f21e5ba-dba670df63.zip/node_modules/@fern-fern/postman-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/postman-sdk", "npm:0.0.19"],\
+            ["@fern-fern/postman-sdk", "npm:0.0.20"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
@@ -11470,6 +11471,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/latest-version", "npm:4.0.1"],\
             ["latest-version", "npm:7.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/libsodium-wrappers", [\
+        ["npm:0.7.10", {\
+          "packageLocation": "./.yarn/cache/@types-libsodium-wrappers-npm-0.7.10-1977488a6a-717054ebcb.zip/node_modules/@types/libsodium-wrappers/",\
+          "packageDependencies": [\
+            ["@types/libsodium-wrappers", "npm:0.7.10"]\
           ],\
           "linkType": "HARD"\
         }]\
