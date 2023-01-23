@@ -1,5 +1,4 @@
-export const SAMPLE_IMDB_API = `# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
+export const SAMPLE_IMDB_API = `
 types:
   MovieId: string
 

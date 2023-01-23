@@ -18,16 +18,13 @@ export async function formatWorkspace({
         const formatted = formatServiceFile({
             fileContents: file.rawContents,
             absoluteFilepath: file.absoluteFilepath,
-            context,
         });
-        if (formatted === file.rawContents) {
-            context.logger.info(chalk.dim(relativeFilepath));
-        } else {
+        if (formatted !== file.rawContents) {
             if (shouldFix) {
-                await writeFile(relativeFilepath, formatted);
-                context.logger.info(chalk.green(relativeFilepath));
+                await writeFile(file.absoluteFilepath, formatted);
+                context.logger.info(chalk.green(`Formatted ${chalk.bold(relativeFilepath)}`));
             } else {
-                context.logger.info(chalk.red(relativeFilepath));
+                context.logger.info(chalk.red(`Invalid formatting: ${chalk.bold(relativeFilepath)}`));
                 context.failWithoutThrowing();
             }
         }

@@ -10,6 +10,7 @@
     { "path": "../config-management/project-configuration" },
     { "path": "../openapi-converter" },
     { "path": "../task-context" },
+    { "path": "../yaml/formatter" },
     { "path": "../yaml/yaml-schema" }
   ]
 }

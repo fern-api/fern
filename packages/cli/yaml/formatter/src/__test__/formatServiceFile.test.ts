@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { formatServiceFile } from "../formatServiceFile";
 
@@ -27,6 +26,5 @@ async function formatForTest(fixturePath: RelativeFilePath): Promise<string> {
     return formatServiceFile({
         absoluteFilepath,
         fileContents: (await readFile(absoluteFilepath)).toString(),
-        context: createMockTaskContext(),
     });
 }

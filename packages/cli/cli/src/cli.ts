@@ -49,7 +49,10 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+        const versionOfCliToRun =
+            process.env.FERN_NO_VERSION_REDIRECTION === "true"
+                ? cliContext.environment.packageVersion
+                : await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
         } else {
@@ -192,7 +195,10 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "string",
                     demandOption: true,
                 })
-                .option(API_ARGV_OPTION_KEY, API_ARGV_OPTION),
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
         async (argv) => {
             await addGeneratorToWorkspaces(
                 await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -220,7 +226,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The version for the generated packages",
                 })
-                .option(API_ARGV_OPTION_KEY, API_ARGV_OPTION)
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
                 .option("printZipUrl", {
                     boolean: true,
                     hidden: true,
@@ -252,7 +261,10 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Path to write intermediate representation (IR)",
                     demandOption: true,
                 })
-                .option(API_ARGV_OPTION_KEY, API_ARGV_OPTION)
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
                 .option("language", {
                     choices: Object.values(Language),
                     description: "Generate ir for a particular language",
@@ -287,7 +299,10 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The version for the registered api",
                 })
-                .option(API_ARGV_OPTION_KEY, API_ARGV_OPTION),
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineWorkspace: argv.api,
@@ -311,7 +326,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
     cli.command(
         "check",
         "Validates your Fern Definition",
-        (yargs) => yargs.option(API_ARGV_OPTION_KEY, API_ARGV_OPTION),
+        (yargs) =>
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API",
+            }),
         async (argv) => {
             await validateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -368,7 +387,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "check",
+        "format",
         "Formats your Fern Definition",
         (yargs) =>
             yargs
@@ -377,7 +396,10 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: false,
                     description: "Fail with non-zero exit status if files are not formatted correctly.",
                 })
-                .option(API_ARGV_OPTION_KEY, API_ARGV_OPTION),
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
         async (argv) => {
             await formatWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -407,9 +429,3 @@ async function loadProjectAndRegisterWorkspacesWithContext(
     cliContext.registerWorkspaces(project.workspaces);
     return project;
 }
-
-const API_ARGV_OPTION_KEY = "api";
-const API_ARGV_OPTION = {
-    string: true,
-    description: "Only run the command on the provided API",
-} as const;

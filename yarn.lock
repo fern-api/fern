@@ -3615,6 +3615,7 @@ __metadata:
     "@fern-api/openapi-converter": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
