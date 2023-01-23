@@ -1816,6 +1816,543 @@ exports[`open api converter covie simple 1`] = `
 }
 `;
 
+exports[`open api converter flagright simple 1`] = `
+{
+  "rootApiFile": {
+    "headers": {},
+    "name": "api",
+  },
+  "serviceFiles": {
+    "commons.yml": {
+      "services": {
+        "http": {
+          "CommonsService": {
+            "auth": true,
+            "base-path": "",
+            "endpoints": {
+              "getBusinessUserUserId": {
+                "display-name": "Retrieve a Business User",
+                "docs": "### GET Business User
+
+\`/business/user\` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
+
+Calling \`GET /business/user/{userId}\` will return the entire User payload and rule execution results for the User with the corresponding \`userId\`",
+                "method": "GET",
+                "path": "/business/users/{userId}",
+                "path-parameters": {
+                  "userId": {
+                    "docs": "",
+                    "type": "string",
+                  },
+                },
+                "response": "Business",
+              },
+              "getConsumerTransaction": {
+                "display-name": "Retrieve a Transaction",
+                "docs": "### GET Transactions
+
+\`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
+
+Calling \`GET /transactions/{transactionId}\` will return the entire transaction payload and rule execution results for the transaction with the corresponding \`transactionId\`",
+                "method": "GET",
+                "path": "/transactions/{transactionId}",
+                "path-parameters": {
+                  "transactionId": {
+                    "docs": "Unique Transaction Identifier",
+                    "type": "string",
+                  },
+                },
+                "response": "TransactionWithRulesResult",
+              },
+              "getConsumerUser": {
+                "display-name": "Retrieve a Consumer User",
+                "docs": "### GET Consumer User
+
+\`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
+
+Calling \`GET /consumer/user/{userId}\` will return the entire user payload and rule execution results for the user with the corresponding \`userId\`",
+                "method": "GET",
+                "path": "/consumer/users/{userId}",
+                "path-parameters": {
+                  "userId": {
+                    "docs": "",
+                    "type": "string",
+                  },
+                },
+                "response": "User",
+              },
+              "postBusinessUser": {
+                "display-name": "Create a Business User",
+                "docs": "## POST Business User
+
+\`/business/user\` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
+
+In order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
+
+### Payload
+
+
+Each consumer Business entity needs three mandatory fields:
+
+* \`userId\` - Unique identifier for the user
+* \`legalEntity\` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only \`legalName\`in \`CompanyGeneralDetails\` is mandatory
+* \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system",
+                "method": "POST",
+                "path": "/business/users",
+                "request": {
+                  "body": "Business",
+                },
+              },
+              "postBusinessUserEvent": {
+                "display-name": "Create a Business User Event",
+                "docs": "## POST Business User Events
+
+\`/events/business/user\` endpoint allows you to operate on the Business User Events entity.
+
+User events are created after the initial \`POST /business/users\` call (which creates a user) and are used to:
+
+* Update the STATE and KYC Status of the user, using the \`userStateDetails\` or \`kycStatusDetails\` field
+* Update the user details, using the \`updatedBusinessUserAttributes\` field.
+
+> If you have neither of the above two use cases, you do not need to use user events. 
+
+### Payload
+
+Each user event needs three mandatory fields:
+
+* \`timestamp\`- the timestamp of when the event was created or occured in your system
+* \`userId\` - The ID of the transaction for which this event is generated. 
+
+In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
+",
+                "method": "POST",
+                "path": "/events/business/user",
+                "request": {
+                  "body": "BusinessUserEvent",
+                },
+              },
+              "postConsumerTransaction": {
+                "display-name": "Verify a Transaction",
+                "docs": "## POST Transactions
+
+\`/transactions\` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)
+
+In order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup. 
+
+
+### Payload
+
+Here are some of the most used payload fields explained (you can find the full payload [schema below](https://docs.flagright.com/docs/flagright-api/87742ed31b30e-verify-a-transaction#request-body) with 1 line descriptions):
+
+* \`type\`: Type of transaction (Ex: \`WITHDRAWAL\`, \`DEPOSIT\`, \`TRANSFER\` etc). 
+* \`transactionId\` - Unique Identifier for the transaction. Flagright API will generate a \`transactionId\` if this field is left empty
+* \`timestamp\` - UNIX timestamp in *milliseconds* of when the transaction took place
+* \`transactionState\` - The state of the transaction, set to \`CREATED\` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)
+* \`originUserId\` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
+* \`destinationUserId\` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
+* \`originAmountDetails\` - Details of the amount being sent from the origin
+* \`destinationAmountDetails\` - Details of the amount being received at the destination
+* \`originPaymentDetails\` - Payment details (if any) used at the origin (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
+* \`originPaymentDetails\` - Payment details (if any) used at the destination (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
+                "method": "POST",
+                "path": "/transactions",
+                "request": {
+                  "body": "Transaction",
+                  "query-parameters": {
+                    "validateDestinationUserId": {
+                      "docs": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
+                      "type": "optional<string>",
+                    },
+                    "validateOriginUserId": {
+                      "docs": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+              },
+              "postConsumerUser": {
+                "display-name": "Create a Consumer User",
+                "docs": "## POST Consumer User
+
+\`/consumer/user\` endpoint allows you to operate on the [Consumer user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
+
+In order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
+
+### Payload
+
+Each consumer User entity needs three mandatory fields:
+
+* \`userId\` - Unique identifier for the user
+* \`userDetails\` - Details of the user (name, DOB, country of residence and nationality etc) - only \`name\` is mandatory
+* \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system
+",
+                "method": "POST",
+                "path": "/consumer/users",
+                "request": {
+                  "body": "User",
+                },
+              },
+              "postTransactionEvent": {
+                "display-name": "Create a Transaction Event",
+                "docs": "## POST Transaction Events
+
+\`/events/transaction\` endpoint allows you to operate on the [Transaction Events entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-event)
+
+Transaction events are created after the initial \`POST /transactions\` call (which creates a transaction) and are used to:
+
+* Update the STATE of the transaction, using the \`transactionState\` field and manage the [Transaction Lifecycle](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-lifecycle-through-transaction-events)
+* Update the transaction details, using the \`updatedTransactionAttributes\` field.
+
+> If you have neither of the above two use cases, you do not need to use transaction events. 
+
+### Payload
+
+Each transaction event needs three mandatory fields:
+
+* \`transactionState\` - STATE of the transaction -> value is set to \`CREATED\` after \`POST /transactions\` call
+* \`timestamp\`- the timestamp of when the event was created or occured in your system
+* \`transactionId\` - The ID of the transaction for which this event is generated. 
+
+In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
+",
+                "method": "POST",
+                "path": "/events/transaction",
+                "request": {
+                  "body": "TransactionEvent",
+                },
+              },
+              "postUserEvent": {
+                "display-name": "Create a Consumer User Event",
+                "docs": "## POST Consumer User Events
+
+\`/events/consumer/user\` endpoint allows you to operate on the Consumer User Events entity.
+
+User events are created after the initial \`POST /consumer/users\` call (which creates a user) and are used to:
+
+* Update the STATE and KYC Status of the user, using the \`userStateDetails\` or \`kycStatusDetails\` field
+* Update the user details, using the \`updatedConsumerUserAttributes\` field.
+
+> If you have neither of the above two use cases, you do not need to use user events. 
+
+### Payload
+
+Each user event needs three mandatory fields:
+
+* \`timestamp\`- the timestamp of when the event was created or occured in your system
+* \`userId\` - The ID of the transaction for which this event is generated. 
+
+In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
+",
+                "method": "POST",
+                "path": "/events/consumer/user",
+                "request": {
+                  "body": "ConsumerUserEvent",
+                },
+              },
+            },
+            "path-parameters": undefined,
+          },
+        },
+      },
+      "types": {
+        "Address": {
+          "docs": "Model for standardized address",
+          "extends": undefined,
+          "properties": {
+            "addressLines": "list<unknown>",
+            "city": "string",
+            "country": "string",
+            "postcode": "string",
+            "state": "optional<string>",
+            "tags": "optional<list<Tag>>",
+          },
+        },
+        "Amount": {
+          "docs": "Model for amount",
+          "extends": undefined,
+          "properties": {
+            "amountCurrency": "CurrencyCode",
+            "amountValue": "double",
+          },
+        },
+        "Business": {
+          "extends": [
+            "BusinessBase",
+            "BusinessOptional",
+          ],
+        },
+        "BusinessOptional": {
+          "docs": "Model for a business user - optional fields",
+          "extends": undefined,
+          "properties": {
+            "allowedPaymentMethods": "optional<list<PaymentMethods>>",
+            "directors": "optional<list<Person>>",
+            "kycStatusDetails": "optional<KYCStatusDetails>",
+            "mccDetails": "optional<MCCDetails>",
+            "riskLevel": "optional<RiskLevel>",
+            "shareHolders": "optional<list<Person>>",
+            "tags": "optional<list<Tag>>",
+            "transactionLimits": "optional<TransactionLimits>",
+            "userStateDetails": "optional<UserStateDetails>",
+          },
+        },
+        "BusinessUserEvent": {
+          "docs": "Model for business user-related events",
+          "type": "map<string, unknown>",
+        },
+        "ConsumerName": {
+          "docs": "Model for a generic consumer name",
+          "extends": undefined,
+          "properties": {
+            "firstName": "string",
+            "lastName": "optional<string>",
+            "middleName": "optional<string>",
+          },
+        },
+        "ConsumerUserEvent": {
+          "docs": "Model for consumer user-related events",
+          "type": "map<string, unknown>",
+        },
+        "ContactDetails": {
+          "docs": "Model for business user contact information details",
+          "extends": undefined,
+          "properties": {
+            "addresses": "optional<list<Address>>",
+            "contactNumbers": "optional<list<string>>",
+            "emailIds": "optional<list<string>>",
+            "faxNumbers": "optional<list<string>>",
+            "websites": "optional<list<string>>",
+          },
+        },
+        "CountryCode": "string",
+        "CurrencyCode": "string",
+        "DeviceData": {
+          "docs": "Model for device data",
+          "extends": undefined,
+          "properties": {
+            "appVersion": "optional<string>",
+            "batteryLevel": "optional<double>",
+            "deviceIdentifier": "optional<string>",
+            "deviceLatitude": "optional<double>",
+            "deviceLongitude": "optional<double>",
+            "deviceMaker": "optional<string>",
+            "deviceModel": "optional<string>",
+            "deviceYear": "optional<string>",
+            "ipAddress": "optional<string>",
+            "operatingSystem": "optional<string>",
+            "vpnUsed": "optional<boolean>",
+          },
+        },
+        "KYCStatus": "string",
+        "KYCStatusDetails": {
+          "extends": undefined,
+          "properties": {
+            "reason": "optional<string>",
+            "status": "optional<KYCStatus>",
+          },
+        },
+        "LegalDocument": {
+          "docs": "LegalDocument model generalizes User's identity document type (ex: Passport)",
+          "extends": undefined,
+          "properties": {
+            "documentExpirationDate": "optional<double>",
+            "documentIssuedCountry": "CountryCode",
+            "documentIssuedDate": "optional<double>",
+            "documentNumber": "string",
+            "documentType": "string",
+            "nameOnDocument": "optional<ConsumerName>",
+            "tags": "optional<list<Tag>>",
+          },
+        },
+        "MCCDetails": {
+          "extends": undefined,
+          "properties": {
+            "code": "double",
+            "description": "optional<string>",
+          },
+        },
+        "PEPStatus": {
+          "enum": [
+            "SUCCESSFUL",
+            "FAILED",
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "MANUAL_REVIEW",
+          ],
+        },
+        "PaymentMethods": "string",
+        "Person": {
+          "docs": "Model for a generic individual - different from User model by not having userId field",
+          "extends": undefined,
+          "properties": {
+            "contactDetails": "optional<ContactDetails>",
+            "generalDetails": "UserDetails",
+            "legalDocuments": "optional<list<LegalDocument>>",
+            "pepStatus": "optional<list<PEPStatus>>",
+            "tags": "optional<list<Tag>>",
+          },
+        },
+        "RiskLevel": "string",
+        "Tag": {
+          "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
+          "extends": undefined,
+          "properties": {
+            "key": "string",
+            "value": "string",
+          },
+        },
+        "Transaction": {
+          "extends": [
+            "TransactionBase",
+            "TransactionUpdatable",
+          ],
+        },
+        "TransactionAmountDetails": {
+          "docs": "Model for transaction amount details",
+          "extends": undefined,
+          "properties": {
+            "country": "optional<CountryCode>",
+            "transactionAmount": "double",
+            "transactionCurrency": "CurrencyCode",
+          },
+        },
+        "TransactionAmountLimit": {
+          "extends": undefined,
+          "properties": {
+            "day": "optional<Amount>",
+            "month": "optional<Amount>",
+            "week": "optional<Amount>",
+            "year": "optional<Amount>",
+          },
+        },
+        "TransactionCountLimit": {
+          "extends": undefined,
+          "properties": {
+            "day": "optional<double>",
+            "month": "optional<double>",
+            "week": "optional<double>",
+            "year": "optional<double>",
+          },
+        },
+        "TransactionEvent": {
+          "docs": "Model for transaction-related events",
+          "type": "map<string, unknown>",
+        },
+        "TransactionLimit": {
+          "extends": undefined,
+          "properties": {
+            "averageTransactionAmountLimit": "optional<TransactionAmountLimit>",
+            "transactionAmountLimit": "optional<TransactionAmountLimit>",
+            "transactionCountLimit": "optional<TransactionCountLimit>",
+          },
+        },
+        "TransactionLimits": {
+          "docs": "Model for transaction limits for a given user",
+          "extends": undefined,
+          "properties": {
+            "maximumDailyTransactionLimit": "optional<Amount>",
+            "maximumMonthlyTransactionLimit": "optional<Amount>",
+            "maximumQuarterlyTransactionLimit": "optional<Amount>",
+            "maximumTransactionLimit": "optional<Amount>",
+            "maximumWeeklyTransactionLimit": "optional<Amount>",
+            "maximumYearlyTransactionLimit": "optional<Amount>",
+            "paymentMethodLimits": "optional<_InlinedType1>",
+          },
+        },
+        "TransactionState": {
+          "docs": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
+          "type": "string",
+        },
+        "TransactionUpdatable": {
+          "docs": "Model for transaction additional payload",
+          "extends": undefined,
+          "properties": {
+            "destinationAmountDetails": "optional<TransactionAmountDetails>",
+            "deviceData": "optional<DeviceData>",
+            "originAmountDetails": "optional<TransactionAmountDetails>",
+            "productType": "optional<string>",
+            "promotionCodeUsed": "optional<boolean>",
+            "reference": "optional<string>",
+            "relatedTransactionIds": "optional<list<string>>",
+            "tags": "optional<list<Tag>>",
+            "transactionState": "optional<TransactionState>",
+          },
+        },
+        "TransactionWithRulesResult": {
+          "docs": "Model for transaction payload with rules result",
+          "extends": [
+            "Transaction",
+            "_InlinedType0",
+          ],
+        },
+        "User": {
+          "docs": "Model for User details",
+          "extends": [
+            "UserBase",
+            "UserOptional",
+          ],
+        },
+        "UserDetails": {
+          "docs": "Model for consumer user personal details",
+          "extends": undefined,
+          "properties": {
+            "countryOfNationality": "optional<CountryCode>",
+            "countryOfResidence": "optional<CountryCode>",
+            "dateOfBirth": "optional<string>",
+            "name": "ConsumerName",
+          },
+        },
+        "UserOptional": {
+          "docs": "Model for User details",
+          "extends": undefined,
+          "properties": {
+            "contactDetails": "optional<ContactDetails>",
+            "kycStatusDetails": "optional<KYCStatusDetails>",
+            "legalDocuments": "optional<list<LegalDocument>>",
+            "pepStatus": "optional<list<PEPStatus>>",
+            "reasonForAccountOpening": "optional<list<string>>",
+            "riskLevel": "optional<RiskLevel>",
+            "tags": "optional<list<Tag>>",
+            "transactionLimits": "optional<TransactionLimits>",
+            "userStateDetails": "optional<UserStateDetails>",
+          },
+        },
+        "UserState": "string",
+        "UserStateDetails": {
+          "extends": undefined,
+          "properties": {
+            "reason": "optional<string>",
+            "state": "UserState",
+            "userId": "optional<string>",
+          },
+        },
+        "_InlinedType0": {
+          "extends": undefined,
+          "properties": {
+            "executedRules": "list<ExecutedRulesResult>",
+            "hitRules": "list<HitRulesDetails>",
+          },
+        },
+        "_InlinedType1": {
+          "extends": undefined,
+          "properties": {
+            "ACH": "optional<TransactionLimit>",
+            "CARD": "optional<TransactionLimit>",
+            "CHECK": "optional<TransactionLimit>",
+            "GENERIC_BANK_ACCOUNT": "optional<TransactionLimit>",
+            "IBAN": "optional<TransactionLimit>",
+            "MPESA": "optional<TransactionLimit>",
+            "SWIFT": "optional<TransactionLimit>",
+            "UPI": "optional<TransactionLimit>",
+            "WALLET": "optional<TransactionLimit>",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
 exports[`open api converter partnerstack simple 1`] = `
 {
   "rootApiFile": {
